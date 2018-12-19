@@ -1,0 +1,42 @@
+//
+//  OSTRuleEntity.swift
+//  OstSdk
+//
+//  Created by aniket ayachit on 10/12/18.
+//  Copyright © 2018 aniket ayachit. All rights reserved.
+//
+
+import Foundation
+
+public class OSTRule: OSTBaseEntity {
+    
+    init(jsonData: [String: Any])throws {
+        super.init()
+        if !validJSON(jsonData){
+            throw EntityErrors.validationError("Invalid JSON passed.")
+        }
+        setJsonValues(jsonData)
+    }
+}
+
+public extension OSTRule {
+    var economy_id : String? {
+        return data["economy_id"] as? String ?? nil
+    }
+    
+    var name : String? {
+        return data["name"] as? String ?? nil
+    }
+    
+    var address : String? {
+        return data["address"] as? String ?? nil
+    }
+    
+    var abi : String? {
+        return data["abi"] as? String ?? nil
+    }
+    
+    var status: String? {
+        return data["status"] as? String ?? nil
+    }
+}

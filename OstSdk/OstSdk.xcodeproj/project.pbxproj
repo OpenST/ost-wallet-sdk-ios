@@ -1,0 +1,977 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05EA5867C57A90AA6F13DD26 /* Pods_OstSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71D746DF125377A2150AA39 /* Pods_OstSdkTests.framework */; };
+		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
+		4B75F1ED21B65CF700898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
+		4B75F1EE21B65D2300898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
+		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
+		4B75F1F821B6A31D00898960 /* OSTSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */; };
+		4B75F1FA21B6B09000898960 /* OSTBaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */; };
+		4B75F1FC21B6B0E400898960 /* OSTMigration_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */; };
+		4B75F20021B7B53200898960 /* OSTMigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1FF21B7B53200898960 /* OSTMigrationManager.swift */; };
+		4B75F21121B7E38A00898960 /* OSTBaseDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F21021B7E38A00898960 /* OSTBaseDbQueries.swift */; };
+		4B75F21321B7E39700898960 /* OSTUserDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F21221B7E39700898960 /* OSTUserDbQueries.swift */; };
+		4B75F21521BA4ADF00898960 /* OSTDBQueriesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F21421BA4ADF00898960 /* OSTDBQueriesProtocol.swift */; };
+		4B75F21D21BA908D00898960 /* OSTBaseDBQueriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F21C21BA908D00898960 /* OSTBaseDBQueriesTests.swift */; };
+		4B75F22121BE3FE900898960 /* OSTBaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22021BE3FE900898960 /* OSTBaseEntity.swift */; };
+		4B75F22421BE45A700898960 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22321BE45A700898960 /* Date+Timestamp.swift */; };
+		4B75F22621BE504700898960 /* String+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22521BE504700898960 /* String+Operations.swift */; };
+		4B75F22A21BE581E00898960 /* OSTBaseEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22921BE581E00898960 /* OSTBaseEntityTests.swift */; };
+		4B75F22C21BE644400898960 /* OSTUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22B21BE644400898960 /* OSTUser.swift */; };
+		4B75F23021BE725E00898960 /* OSTUserEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F22F21BE725E00898960 /* OSTUserEntityTests.swift */; };
+		4B75F23221BE758500898960 /* OSTExecutableRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23121BE758500898960 /* OSTExecutableRule.swift */; };
+		4B75F23421BE759800898960 /* OSTRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23321BE759800898960 /* OSTRule.swift */; };
+		4B75F23621BE75A900898960 /* OSTSecureKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23521BE75A900898960 /* OSTSecureKey.swift */; };
+		4B75F23821BE75CF00898960 /* OSTTokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23721BE75CF00898960 /* OSTTokenHolder.swift */; };
+		4B75F23A21BE75E100898960 /* OSTMultiSig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23921BE75E100898960 /* OSTMultiSig.swift */; };
+		4B75F23C21BE75F600898960 /* OSTMultiSigWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23B21BE75F600898960 /* OSTMultiSigWallet.swift */; };
+		4B75F23E21BE761200898960 /* OSTTokenHolderSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23D21BE761200898960 /* OSTTokenHolderSession.swift */; };
+		4B75F24021BE762400898960 /* OSTMultiSigOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F23F21BE762400898960 /* OSTMultiSigOperation.swift */; };
+		4B75F24821BF8FA200898960 /* OSTEconomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F24721BF8FA200898960 /* OSTEconomy.swift */; };
+		4B75F24A21BF90B400898960 /* OSTUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F24921BF90B400898960 /* OSTUserModel.swift */; };
+		4B75F25321BF935900898960 /* OSTUserModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F25221BF935900898960 /* OSTUserModelRepository.swift */; };
+		4B75F26121BF9A5C00898960 /* OSTBaseModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F26021BF9A5C00898960 /* OSTBaseModelRepository.swift */; };
+		4B75F26A21BFA46300898960 /* OSTUserModelRepositoryGetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F26921BFA46300898960 /* OSTUserModelRepositoryGetTests.swift */; };
+		4B75F26D21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F26C21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift */; };
+		4B75F26F21C10DC500898960 /* Data+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F26E21C10DC500898960 /* Data+Conversion.swift */; };
+		4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F27021C10DEC00898960 /* Dictionary+Conversion.swift */; };
+		4B75F27521C1334800898960 /* OSTUserRepositoryDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F27421C1334800898960 /* OSTUserRepositoryDeleteTests.swift */; };
+		4B75F27721C23C8800898960 /* OSTBaseCacheModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F27621C23C8800898960 /* OSTBaseCacheModelRepository.swift */; };
+		4B75F27B21C391DB00898960 /* OstSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F27A21C391DB00898960 /* OstSdk.swift */; };
+		4B75F28021C3A08600898960 /* OstSdkUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F27F21C3A08600898960 /* OstSdkUserTests.swift */; };
+		4B75F28221C3AFE400898960 /* OSTRuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28121C3AFE400898960 /* OSTRuleModel.swift */; };
+		4B75F28421C3B03800898960 /* OSTRuleModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28321C3B03800898960 /* OSTRuleModelRepository.swift */; };
+		4B75F28621C3BB4E00898960 /* OSTRuleDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28521C3BB4E00898960 /* OSTRuleDbQueries.swift */; };
+		4B75F28A21C3C27B00898960 /* OstSdkRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28921C3C27B00898960 /* OstSdkRuleTests.swift */; };
+		4B75F28C21C3CB1400898960 /* OSTTokenHolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28B21C3CB1400898960 /* OSTTokenHolderModel.swift */; };
+		4B75F28E21C3CB5100898960 /* OSTTokenHolderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28D21C3CB5100898960 /* OSTTokenHolderRepository.swift */; };
+		4B75F29021C3CD2700898960 /* OSTTokenHolderDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28F21C3CD2700898960 /* OSTTokenHolderDbQueries.swift */; };
+		4B75F29221C3CEA900898960 /* OstSdkTokenHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29121C3CEA900898960 /* OstSdkTokenHolderTests.swift */; };
+		4B75F29521C3D8B900898960 /* OSTSecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29421C3D8B900898960 /* OSTSecureStore.swift */; };
+		4B75F29821C3E4D600898960 /* OSTSecureStoreImpls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29721C3E4D600898960 /* OSTSecureStoreImpls.swift */; };
+		4B75F29C21C7763C00898960 /* ScryptParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29A21C7763C00898960 /* ScryptParams.swift */; };
+		4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29B21C7763C00898960 /* Scrypt.swift */; };
+		4B75F29F21C7771A00898960 /* OSTCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29E21C7771A00898960 /* OSTCrypto.swift */; };
+		4B75F2A121C7775900898960 /* OSTCryptoImpls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F2A021C7775900898960 /* OSTCryptoImpls.swift */; };
+		4B75F2A421C77F2D00898960 /* OSTCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F2A321C77F2D00898960 /* OSTCryptoTests.swift */; };
+		4B75F2A721C7A41800898960 /* EIP1077.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F2A621C7A41800898960 /* EIP1077.swift */; };
+		4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F33E21C91DDE00898960 /* EIP1077Tests.swift */; };
+		4B75F34421C93EB600898960 /* SoliditySHA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F34321C93EB600898960 /* SoliditySHA3.swift */; };
+		4B7C930F21B006E900EC0A9F /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; };
+		4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C931321B006E900EC0A9F /* OstSdkTests.swift */; };
+		4B7C931621B006E900EC0A9F /* OstSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7C930821B006E900EC0A9F /* OstSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C933D21B15BAB00EC0A9F /* Test.swift */; };
+		6F252E031901D07B378B0918 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4B7C931021B006E900EC0A9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B7C92FC21B006E900EC0A9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B7C930421B006E900EC0A9F;
+			remoteInfo = OstSdk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0F42642A119B05E550AE521B /* Pods-OstSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OstSdk/Pods-OstSdk.debug.xcconfig"; sourceTree = "<group>"; };
+		3A31F9D3341099C74134FDA7 /* Pods-OstSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSdkDatabase.swift; sourceTree = "<group>"; };
+		4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseMigration.swift; sourceTree = "<group>"; };
+		4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMigration_1.swift; sourceTree = "<group>"; };
+		4B75F1FF21B7B53200898960 /* OSTMigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMigrationManager.swift; sourceTree = "<group>"; };
+		4B75F21021B7E38A00898960 /* OSTBaseDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseDbQueries.swift; sourceTree = "<group>"; };
+		4B75F21221B7E39700898960 /* OSTUserDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserDbQueries.swift; sourceTree = "<group>"; };
+		4B75F21421BA4ADF00898960 /* OSTDBQueriesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTDBQueriesProtocol.swift; sourceTree = "<group>"; };
+		4B75F21C21BA908D00898960 /* OSTBaseDBQueriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseDBQueriesTests.swift; sourceTree = "<group>"; };
+		4B75F22021BE3FE900898960 /* OSTBaseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseEntity.swift; sourceTree = "<group>"; };
+		4B75F22321BE45A700898960 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
+		4B75F22521BE504700898960 /* String+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Operations.swift"; sourceTree = "<group>"; };
+		4B75F22921BE581E00898960 /* OSTBaseEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseEntityTests.swift; sourceTree = "<group>"; };
+		4B75F22B21BE644400898960 /* OSTUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUser.swift; sourceTree = "<group>"; };
+		4B75F22F21BE725E00898960 /* OSTUserEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserEntityTests.swift; sourceTree = "<group>"; };
+		4B75F23121BE758500898960 /* OSTExecutableRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTExecutableRule.swift; sourceTree = "<group>"; };
+		4B75F23321BE759800898960 /* OSTRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRule.swift; sourceTree = "<group>"; };
+		4B75F23521BE75A900898960 /* OSTSecureKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSecureKey.swift; sourceTree = "<group>"; };
+		4B75F23721BE75CF00898960 /* OSTTokenHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTTokenHolder.swift; sourceTree = "<group>"; };
+		4B75F23921BE75E100898960 /* OSTMultiSig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSig.swift; sourceTree = "<group>"; };
+		4B75F23B21BE75F600898960 /* OSTMultiSigWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigWallet.swift; sourceTree = "<group>"; };
+		4B75F23D21BE761200898960 /* OSTTokenHolderSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTTokenHolderSession.swift; sourceTree = "<group>"; };
+		4B75F23F21BE762400898960 /* OSTMultiSigOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigOperation.swift; sourceTree = "<group>"; };
+		4B75F24721BF8FA200898960 /* OSTEconomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTEconomy.swift; sourceTree = "<group>"; };
+		4B75F24921BF90B400898960 /* OSTUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserModel.swift; sourceTree = "<group>"; };
+		4B75F25221BF935900898960 /* OSTUserModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserModelRepository.swift; sourceTree = "<group>"; };
+		4B75F26021BF9A5C00898960 /* OSTBaseModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseModelRepository.swift; sourceTree = "<group>"; };
+		4B75F26921BFA46300898960 /* OSTUserModelRepositoryGetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserModelRepositoryGetTests.swift; sourceTree = "<group>"; };
+		4B75F26C21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserModelRepositoryInsertTests.swift; sourceTree = "<group>"; };
+		4B75F26E21C10DC500898960 /* Data+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Conversion.swift"; sourceTree = "<group>"; };
+		4B75F27021C10DEC00898960 /* Dictionary+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Conversion.swift"; sourceTree = "<group>"; };
+		4B75F27421C1334800898960 /* OSTUserRepositoryDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTUserRepositoryDeleteTests.swift; sourceTree = "<group>"; };
+		4B75F27621C23C8800898960 /* OSTBaseCacheModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseCacheModelRepository.swift; sourceTree = "<group>"; };
+		4B75F27A21C391DB00898960 /* OstSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdk.swift; sourceTree = "<group>"; };
+		4B75F27F21C3A08600898960 /* OstSdkUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkUserTests.swift; sourceTree = "<group>"; };
+		4B75F28121C3AFE400898960 /* OSTRuleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleModel.swift; sourceTree = "<group>"; };
+		4B75F28321C3B03800898960 /* OSTRuleModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleModelRepository.swift; sourceTree = "<group>"; };
+		4B75F28521C3BB4E00898960 /* OSTRuleDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleDbQueries.swift; sourceTree = "<group>"; };
+		4B75F28921C3C27B00898960 /* OstSdkRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkRuleTests.swift; sourceTree = "<group>"; };
+		4B75F28B21C3CB1400898960 /* OSTTokenHolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTTokenHolderModel.swift; sourceTree = "<group>"; };
+		4B75F28D21C3CB5100898960 /* OSTTokenHolderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTTokenHolderRepository.swift; sourceTree = "<group>"; };
+		4B75F28F21C3CD2700898960 /* OSTTokenHolderDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTTokenHolderDbQueries.swift; sourceTree = "<group>"; };
+		4B75F29121C3CEA900898960 /* OstSdkTokenHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkTokenHolderTests.swift; sourceTree = "<group>"; };
+		4B75F29421C3D8B900898960 /* OSTSecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OSTSecureStore.swift; path = OstSdk/Data/Database/OSTSecureStore.swift; sourceTree = SOURCE_ROOT; };
+		4B75F29721C3E4D600898960 /* OSTSecureStoreImpls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSecureStoreImpls.swift; sourceTree = "<group>"; };
+		4B75F29A21C7763C00898960 /* ScryptParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScryptParams.swift; sourceTree = "<group>"; };
+		4B75F29B21C7763C00898960 /* Scrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrypt.swift; sourceTree = "<group>"; };
+		4B75F29E21C7771A00898960 /* OSTCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTCrypto.swift; sourceTree = "<group>"; };
+		4B75F2A021C7775900898960 /* OSTCryptoImpls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTCryptoImpls.swift; sourceTree = "<group>"; };
+		4B75F2A321C77F2D00898960 /* OSTCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTCryptoTests.swift; sourceTree = "<group>"; };
+		4B75F2A621C7A41800898960 /* EIP1077.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP1077.swift; sourceTree = "<group>"; };
+		4B75F33E21C91DDE00898960 /* EIP1077Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP1077Tests.swift; sourceTree = "<group>"; };
+		4B75F34321C93EB600898960 /* SoliditySHA3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoliditySHA3.swift; sourceTree = "<group>"; };
+		4B7C930521B006E900EC0A9F /* OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B7C930821B006E900EC0A9F /* OstSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OstSdk.h; sourceTree = "<group>"; };
+		4B7C930921B006E900EC0A9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B7C930E21B006E900EC0A9F /* OstSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B7C931321B006E900EC0A9F /* OstSdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkTests.swift; sourceTree = "<group>"; };
+		4B7C931521B006E900EC0A9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B7C933921B150AF00EC0A9F /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
+		4B7C933D21B15BAB00EC0A9F /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		4B7C934A21B501CC00EC0A9F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
+		9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA169DE547F71A835EDE650 /* Pods-OstSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-OstSdk/Pods-OstSdk.release.xcconfig"; sourceTree = "<group>"; };
+		B71D746DF125377A2150AA39 /* Pods_OstSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F580147CA4D97E508355A1 /* Pods-OstSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4B7C930221B006E900EC0A9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B75F1ED21B65CF700898960 /* FMDB.framework in Frameworks */,
+				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
+				6F252E031901D07B378B0918 /* Pods_OstSdk.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B7C930B21B006E900EC0A9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */,
+				4B75F1EE21B65D2300898960 /* FMDB.framework in Frameworks */,
+				4B7C930F21B006E900EC0A9F /* OstSdk.framework in Frameworks */,
+				05EA5867C57A90AA6F13DD26 /* Pods_OstSdkTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4B75F21E21BE3F9900898960 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F25121BF930C00898960 /* Impls */,
+				4B75F21F21BE3FCE00898960 /* Entities */,
+				4B75F24921BF90B400898960 /* OSTUserModel.swift */,
+				4B75F28121C3AFE400898960 /* OSTRuleModel.swift */,
+				4B75F28B21C3CB1400898960 /* OSTTokenHolderModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4B75F21F21BE3FCE00898960 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F22021BE3FE900898960 /* OSTBaseEntity.swift */,
+				4B75F24721BF8FA200898960 /* OSTEconomy.swift */,
+				4B75F22B21BE644400898960 /* OSTUser.swift */,
+				4B75F23321BE759800898960 /* OSTRule.swift */,
+				4B75F23521BE75A900898960 /* OSTSecureKey.swift */,
+				4B75F23721BE75CF00898960 /* OSTTokenHolder.swift */,
+				4B75F23921BE75E100898960 /* OSTMultiSig.swift */,
+				4B75F23B21BE75F600898960 /* OSTMultiSigWallet.swift */,
+				4B75F23D21BE761200898960 /* OSTTokenHolderSession.swift */,
+				4B75F23121BE758500898960 /* OSTExecutableRule.swift */,
+				4B75F23F21BE762400898960 /* OSTMultiSigOperation.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		4B75F22221BE439B00898960 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F29921C7749800898960 /* SCrypt */,
+				4B75F22321BE45A700898960 /* Date+Timestamp.swift */,
+				4B75F22521BE504700898960 /* String+Operations.swift */,
+				4B75F26E21C10DC500898960 /* Data+Conversion.swift */,
+				4B75F27021C10DEC00898960 /* Dictionary+Conversion.swift */,
+				4B75F2A621C7A41800898960 /* EIP1077.swift */,
+				4B75F34321C93EB600898960 /* SoliditySHA3.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		4B75F22721BE57F300898960 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F26821BFA43D00898960 /* Impls */,
+				4B75F22821BE57FC00898960 /* Entities */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4B75F22821BE57FC00898960 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F22921BE581E00898960 /* OSTBaseEntityTests.swift */,
+				4B75F22F21BE725E00898960 /* OSTUserEntityTests.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		4B75F25121BF930C00898960 /* Impls */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F26021BF9A5C00898960 /* OSTBaseModelRepository.swift */,
+				4B75F27621C23C8800898960 /* OSTBaseCacheModelRepository.swift */,
+				4B75F25221BF935900898960 /* OSTUserModelRepository.swift */,
+				4B75F28321C3B03800898960 /* OSTRuleModelRepository.swift */,
+				4B75F28D21C3CB5100898960 /* OSTTokenHolderRepository.swift */,
+			);
+			path = Impls;
+			sourceTree = "<group>";
+		};
+		4B75F26821BFA43D00898960 /* Impls */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F26B21BFBE5500898960 /* OSTUserModelRepository */,
+			);
+			path = Impls;
+			sourceTree = "<group>";
+		};
+		4B75F26B21BFBE5500898960 /* OSTUserModelRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F26921BFA46300898960 /* OSTUserModelRepositoryGetTests.swift */,
+				4B75F26C21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift */,
+				4B75F27421C1334800898960 /* OSTUserRepositoryDeleteTests.swift */,
+			);
+			path = OSTUserModelRepository;
+			sourceTree = "<group>";
+		};
+		4B75F27E21C39F8000898960 /* DevInterface */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F27F21C3A08600898960 /* OstSdkUserTests.swift */,
+				4B75F28921C3C27B00898960 /* OstSdkRuleTests.swift */,
+				4B75F29121C3CEA900898960 /* OstSdkTokenHolderTests.swift */,
+			);
+			path = DevInterface;
+			sourceTree = "<group>";
+		};
+		4B75F29321C3D73A00898960 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F29621C3E4B100898960 /* Impls */,
+				4B75F29421C3D8B900898960 /* OSTSecureStore.swift */,
+				4B75F29E21C7771A00898960 /* OSTCrypto.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		4B75F29621C3E4B100898960 /* Impls */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F29721C3E4D600898960 /* OSTSecureStoreImpls.swift */,
+				4B75F2A021C7775900898960 /* OSTCryptoImpls.swift */,
+			);
+			path = Impls;
+			sourceTree = "<group>";
+		};
+		4B75F29921C7749800898960 /* SCrypt */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F29B21C7763C00898960 /* Scrypt.swift */,
+				4B75F29A21C7763C00898960 /* ScryptParams.swift */,
+			);
+			path = SCrypt;
+			sourceTree = "<group>";
+		};
+		4B75F2A221C77F1000898960 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F2A321C77F2D00898960 /* OSTCryptoTests.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		4B75F33D21C91DCC00898960 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F33E21C91DDE00898960 /* EIP1077Tests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		4B7C92FB21B006E900EC0A9F = {
+			isa = PBXGroup;
+			children = (
+				4B7C930721B006E900EC0A9F /* OstSdk */,
+				4B7C931221B006E900EC0A9F /* OstSdkTests */,
+				4B7C930621B006E900EC0A9F /* Products */,
+				4B7C933821B150AF00EC0A9F /* Frameworks */,
+				9DEF42BEB49ACCF1241993EE /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		4B7C930621B006E900EC0A9F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4B7C930521B006E900EC0A9F /* OstSdk.framework */,
+				4B7C930E21B006E900EC0A9F /* OstSdkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4B7C930721B006E900EC0A9F /* OstSdk */ = {
+			isa = PBXGroup;
+			children = (
+				4B7C932C21B1141200EC0A9F /* Data */,
+				4B7C930821B006E900EC0A9F /* OstSdk.h */,
+				4B7C930921B006E900EC0A9F /* Info.plist */,
+			);
+			path = OstSdk;
+			sourceTree = "<group>";
+		};
+		4B7C931221B006E900EC0A9F /* OstSdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F33D21C91DCC00898960 /* Utils */,
+				4B75F2A221C77F1000898960 /* Security */,
+				4B75F27E21C39F8000898960 /* DevInterface */,
+				4B75F22721BE57F300898960 /* Models */,
+				4B7C932321B00EBF00EC0A9F /* Database */,
+				4B7C931321B006E900EC0A9F /* OstSdkTests.swift */,
+				4B7C931521B006E900EC0A9F /* Info.plist */,
+				4B7C933D21B15BAB00EC0A9F /* Test.swift */,
+			);
+			path = OstSdkTests;
+			sourceTree = "<group>";
+		};
+		4B7C932321B00EBF00EC0A9F /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F21C21BA908D00898960 /* OSTBaseDBQueriesTests.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		4B7C932C21B1141200EC0A9F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F29321C3D73A00898960 /* Security */,
+				4B75F22221BE439B00898960 /* Utils */,
+				4B75F21E21BE3F9900898960 /* Models */,
+				4B7C932D21B1148E00EC0A9F /* Database */,
+				4B75F27A21C391DB00898960 /* OstSdk.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4B7C932D21B1148E00EC0A9F /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */,
+				4B75F1FF21B7B53200898960 /* OSTMigrationManager.swift */,
+				4B7C933321B1159B00EC0A9F /* DBQueries */,
+				4B7C933221B114D300EC0A9F /* Migrations */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		4B7C933221B114D300EC0A9F /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */,
+				4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
+		4B7C933321B1159B00EC0A9F /* DBQueries */ = {
+			isa = PBXGroup;
+			children = (
+				4B75F21421BA4ADF00898960 /* OSTDBQueriesProtocol.swift */,
+				4B75F21021B7E38A00898960 /* OSTBaseDbQueries.swift */,
+				4B75F21221B7E39700898960 /* OSTUserDbQueries.swift */,
+				4B75F28521C3BB4E00898960 /* OSTRuleDbQueries.swift */,
+				4B75F28F21C3CD2700898960 /* OSTTokenHolderDbQueries.swift */,
+			);
+			path = DBQueries;
+			sourceTree = "<group>";
+		};
+		4B7C933821B150AF00EC0A9F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4B7C934A21B501CC00EC0A9F /* FMDB.framework */,
+				4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */,
+				4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */,
+				4B7C933921B150AF00EC0A9F /* SQLite.framework */,
+				9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */,
+				B71D746DF125377A2150AA39 /* Pods_OstSdkTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9DEF42BEB49ACCF1241993EE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0F42642A119B05E550AE521B /* Pods-OstSdk.debug.xcconfig */,
+				AAA169DE547F71A835EDE650 /* Pods-OstSdk.release.xcconfig */,
+				3A31F9D3341099C74134FDA7 /* Pods-OstSdkTests.debug.xcconfig */,
+				F1F580147CA4D97E508355A1 /* Pods-OstSdkTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4B7C930021B006E900EC0A9F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B7C931621B006E900EC0A9F /* OstSdk.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4B7C930421B006E900EC0A9F /* OstSdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B7C931921B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdk" */;
+			buildPhases = (
+				6761177BAC026E9CDE1695A1 /* [CP] Check Pods Manifest.lock */,
+				4B7C930021B006E900EC0A9F /* Headers */,
+				4B7C930121B006E900EC0A9F /* Sources */,
+				4B7C930221B006E900EC0A9F /* Frameworks */,
+				4B7C930321B006E900EC0A9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OstSdk;
+			productName = OstSdk;
+			productReference = 4B7C930521B006E900EC0A9F /* OstSdk.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4B7C930D21B006E900EC0A9F /* OstSdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B7C931C21B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdkTests" */;
+			buildPhases = (
+				BEF9CCC0DD89E1642EE7FD22 /* [CP] Check Pods Manifest.lock */,
+				4B7C930A21B006E900EC0A9F /* Sources */,
+				4B7C930B21B006E900EC0A9F /* Frameworks */,
+				4B7C930C21B006E900EC0A9F /* Resources */,
+				DBD1EEE5C6DB537032CF689C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4B7C931121B006E900EC0A9F /* PBXTargetDependency */,
+			);
+			name = OstSdkTests;
+			productName = OstSdkTests;
+			productReference = 4B7C930E21B006E900EC0A9F /* OstSdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4B7C92FC21B006E900EC0A9F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "aniket ayachit";
+				TargetAttributes = {
+					4B7C930421B006E900EC0A9F = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
+					};
+					4B7C930D21B006E900EC0A9F = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = 4B7C92FF21B006E900EC0A9F /* Build configuration list for PBXProject "OstSdk" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4B7C92FB21B006E900EC0A9F;
+			productRefGroup = 4B7C930621B006E900EC0A9F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4B7C930421B006E900EC0A9F /* OstSdk */,
+				4B7C930D21B006E900EC0A9F /* OstSdkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4B7C930321B006E900EC0A9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B7C930C21B006E900EC0A9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6761177BAC026E9CDE1695A1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OstSdk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEF9CCC0DD89E1642EE7FD22 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OstSdkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBD1EEE5C6DB537032CF689C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4B7C930121B006E900EC0A9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B75F23621BE75A900898960 /* OSTSecureKey.swift in Sources */,
+				4B75F23821BE75CF00898960 /* OSTTokenHolder.swift in Sources */,
+				4B75F1FC21B6B0E400898960 /* OSTMigration_1.swift in Sources */,
+				4B75F28C21C3CB1400898960 /* OSTTokenHolderModel.swift in Sources */,
+				4B75F23A21BE75E100898960 /* OSTMultiSig.swift in Sources */,
+				4B75F28221C3AFE400898960 /* OSTRuleModel.swift in Sources */,
+				4B75F21321B7E39700898960 /* OSTUserDbQueries.swift in Sources */,
+				4B75F21521BA4ADF00898960 /* OSTDBQueriesProtocol.swift in Sources */,
+				4B75F27B21C391DB00898960 /* OstSdk.swift in Sources */,
+				4B75F1F821B6A31D00898960 /* OSTSdkDatabase.swift in Sources */,
+				4B75F28621C3BB4E00898960 /* OSTRuleDbQueries.swift in Sources */,
+				4B75F29021C3CD2700898960 /* OSTTokenHolderDbQueries.swift in Sources */,
+				4B75F23C21BE75F600898960 /* OSTMultiSigWallet.swift in Sources */,
+				4B75F22421BE45A700898960 /* Date+Timestamp.swift in Sources */,
+				4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */,
+				4B75F24A21BF90B400898960 /* OSTUserModel.swift in Sources */,
+				4B75F28E21C3CB5100898960 /* OSTTokenHolderRepository.swift in Sources */,
+				4B75F29F21C7771A00898960 /* OSTCrypto.swift in Sources */,
+				4B75F23221BE758500898960 /* OSTExecutableRule.swift in Sources */,
+				4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */,
+				4B75F23E21BE761200898960 /* OSTTokenHolderSession.swift in Sources */,
+				4B75F24021BE762400898960 /* OSTMultiSigOperation.swift in Sources */,
+				4B75F27721C23C8800898960 /* OSTBaseCacheModelRepository.swift in Sources */,
+				4B75F25321BF935900898960 /* OSTUserModelRepository.swift in Sources */,
+				4B75F21121B7E38A00898960 /* OSTBaseDbQueries.swift in Sources */,
+				4B75F29821C3E4D600898960 /* OSTSecureStoreImpls.swift in Sources */,
+				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
+				4B75F26121BF9A5C00898960 /* OSTBaseModelRepository.swift in Sources */,
+				4B75F29C21C7763C00898960 /* ScryptParams.swift in Sources */,
+				4B75F24821BF8FA200898960 /* OSTEconomy.swift in Sources */,
+				4B75F29521C3D8B900898960 /* OSTSecureStore.swift in Sources */,
+				4B75F28421C3B03800898960 /* OSTRuleModelRepository.swift in Sources */,
+				4B75F20021B7B53200898960 /* OSTMigrationManager.swift in Sources */,
+				4B75F26F21C10DC500898960 /* Data+Conversion.swift in Sources */,
+				4B75F23421BE759800898960 /* OSTRule.swift in Sources */,
+				4B75F34421C93EB600898960 /* SoliditySHA3.swift in Sources */,
+				4B75F22C21BE644400898960 /* OSTUser.swift in Sources */,
+				4B75F22121BE3FE900898960 /* OSTBaseEntity.swift in Sources */,
+				4B75F2A721C7A41800898960 /* EIP1077.swift in Sources */,
+				4B75F1FA21B6B09000898960 /* OSTBaseMigration.swift in Sources */,
+				4B75F2A121C7775900898960 /* OSTCryptoImpls.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B7C930A21B006E900EC0A9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B75F27521C1334800898960 /* OSTUserRepositoryDeleteTests.swift in Sources */,
+				4B75F23021BE725E00898960 /* OSTUserEntityTests.swift in Sources */,
+				4B75F26D21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift in Sources */,
+				4B75F28A21C3C27B00898960 /* OstSdkRuleTests.swift in Sources */,
+				4B75F26A21BFA46300898960 /* OSTUserModelRepositoryGetTests.swift in Sources */,
+				4B75F22A21BE581E00898960 /* OSTBaseEntityTests.swift in Sources */,
+				4B75F28021C3A08600898960 /* OstSdkUserTests.swift in Sources */,
+				4B75F29221C3CEA900898960 /* OstSdkTokenHolderTests.swift in Sources */,
+				4B75F21D21BA908D00898960 /* OSTBaseDBQueriesTests.swift in Sources */,
+				4B75F2A421C77F2D00898960 /* OSTCryptoTests.swift in Sources */,
+				4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */,
+				4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */,
+				4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4B7C931121B006E900EC0A9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4B7C930421B006E900EC0A9F /* OstSdk */;
+			targetProxy = 4B7C931021B006E900EC0A9F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4B7C931721B006E900EC0A9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4B7C931821B006E900EC0A9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4B7C931A21B006E900EC0A9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F42642A119B05E550AE521B /* Pods-OstSdk.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstSdk/Info.plist;
+				INFOPLIST_PREPROCESS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4B7C931B21B006E900EC0A9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAA169DE547F71A835EDE650 /* Pods-OstSdk.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstSdk/Info.plist;
+				INFOPLIST_PREPROCESS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4B7C931D21B006E900EC0A9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A31F9D3341099C74134FDA7 /* Pods-OstSdkTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstSdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4B7C931E21B006E900EC0A9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1F580147CA4D97E508355A1 /* Pods-OstSdkTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstSdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4B7C92FF21B006E900EC0A9F /* Build configuration list for PBXProject "OstSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B7C931721B006E900EC0A9F /* Debug */,
+				4B7C931821B006E900EC0A9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B7C931921B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B7C931A21B006E900EC0A9F /* Debug */,
+				4B7C931B21B006E900EC0A9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B7C931C21B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B7C931D21B006E900EC0A9F /* Debug */,
+				4B7C931E21B006E900EC0A9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4B7C92FC21B006E900EC0A9F /* Project object */;
+}
