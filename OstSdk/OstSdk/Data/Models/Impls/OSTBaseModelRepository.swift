@@ -119,12 +119,12 @@ class OSTBaseModelRepository {
     
     func bulkInsertOrUpdate(_ entityArray: Array<OSTBaseEntity>) -> (Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) {
 
-            let (successArray, failuarArray) = OSTUserDbQueries().saveAll(entityArray as! Array<OSTUser>)
+            let (successArray, failuarArray) = saveAllEntities(entityArray)
             return (successArray ?? nil, failuarArray ?? nil)
     }
     
     func save(_ data: [String : Any], success: ((OSTBaseEntity?) -> Void)?, failure: ((Error) -> Void)?) {
-        OSTUserModelRepository.DBQUEUE.async {
+        OSTBaseModelRepository.DBQUEUE.async {
             do {
                 let entityObj = try self.getEntity(data)
                 let entity: OSTBaseEntity? = self.insertOrUpdate(entityObj)
@@ -136,7 +136,7 @@ class OSTBaseModelRepository {
     }
     
     func saveAll(_ dataArray: Array<[String: Any]>, success: ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void)?, failure: ((Error) -> Void)?) {
-        OSTUserModelRepository.DBQUEUE.async {
+        OSTBaseModelRepository.DBQUEUE.async {
             do {
                 var entities: Array<OSTBaseEntity> = []
                 for data in dataArray {

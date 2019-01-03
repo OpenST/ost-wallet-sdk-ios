@@ -19,7 +19,7 @@ class OSTUserModelRepositoryGetTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testGetUser() {
+    func testGet() {
         do{
             let id = "2"
             let userEntity: OSTUser? = try OSTUserModelRepository.sharedUser.get(id)
@@ -29,10 +29,10 @@ class OSTUserModelRepositoryGetTests: XCTestCase {
         }catch {
             XCTAssertFalse(true, "error is not excepted.")
         }
-        testGetUserInMemory()
+        testGetInMemory()
     }
 
-    func testGetUserInMemory() {
+    func testGetInMemory() {
         do{
             let id = "1"
             let userEntity: OSTUser? = try OSTUserModelRepository.sharedUser.get(id)

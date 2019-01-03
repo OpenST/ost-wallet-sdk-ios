@@ -32,7 +32,7 @@ extension OSTMultiSig {
     }
     
     var wallets : Array<String>? {
-        return data["user_id"] as? Array<String> ?? nil
+        return data["wallets"] as? Array<String> ?? nil
     }
     
     var requirement: String? {

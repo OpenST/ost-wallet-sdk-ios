@@ -26,7 +26,7 @@ class OSTUserModelRepositoryInsertTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    //with block
+    
     func testInsert() {
         
              OSTUserModelRepository.sharedUser.save(params, success: { (userEntity: OSTUser?) in

@@ -20,6 +20,6 @@ class OSTMultiSigDbQueries: OSTBaseDbQueries {
     }
     
     override func activityName() -> String{
-        return "multisig"
+        return "multi_sig"
     }
 }

@@ -26,6 +26,15 @@
 		4B00CBBA21DDE38B005A5696 /* OSTMultiSigOperationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBB921DDE38B005A5696 /* OSTMultiSigOperationModel.swift */; };
 		4B00CBBC21DDE396005A5696 /* OSTMultiSigOperationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBBB21DDE396005A5696 /* OSTMultiSigOperationRepository.swift */; };
 		4B00CBBE21DDE3A2005A5696 /* OSTMultiSigOperationDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBBD21DDE3A2005A5696 /* OSTMultiSigOperationDbQueries.swift */; };
+		4B00CBC721DDF826005A5696 /* OSTRuleInsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBC621DDF826005A5696 /* OSTRuleInsertTests.swift */; };
+		4B00CBC921DDF838005A5696 /* OSTRuleGetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBC821DDF838005A5696 /* OSTRuleGetTests.swift */; };
+		4B00CBCB21DDF84D005A5696 /* OSTRuleDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBCA21DDF84D005A5696 /* OSTRuleDeleteTests.swift */; };
+		4B00CBCE21DE279A005A5696 /* OSTEconomyInsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBCD21DE279A005A5696 /* OSTEconomyInsertTests.swift */; };
+		4B00CBD021DE27A3005A5696 /* OSTEconomyGetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBCF21DE27A3005A5696 /* OSTEconomyGetTests.swift */; };
+		4B00CBD221DE27AE005A5696 /* OSTEconomyDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD121DE27AE005A5696 /* OSTEconomyDeleteTests.swift */; };
+		4B00CBD521DE2A37005A5696 /* OSTMultiSigInsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD421DE2A37005A5696 /* OSTMultiSigInsertTests.swift */; };
+		4B00CBD721DE2A41005A5696 /* OSTMultiSigGetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD621DE2A41005A5696 /* OSTMultiSigGetTests.swift */; };
+		4B00CBD921DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1ED21B65CF700898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
 		4B75F1EE21B65D2300898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
@@ -122,6 +131,15 @@
 		4B00CBB921DDE38B005A5696 /* OSTMultiSigOperationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigOperationModel.swift; sourceTree = "<group>"; };
 		4B00CBBB21DDE396005A5696 /* OSTMultiSigOperationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigOperationRepository.swift; sourceTree = "<group>"; };
 		4B00CBBD21DDE3A2005A5696 /* OSTMultiSigOperationDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigOperationDbQueries.swift; sourceTree = "<group>"; };
+		4B00CBC621DDF826005A5696 /* OSTRuleInsertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleInsertTests.swift; sourceTree = "<group>"; };
+		4B00CBC821DDF838005A5696 /* OSTRuleGetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleGetTests.swift; sourceTree = "<group>"; };
+		4B00CBCA21DDF84D005A5696 /* OSTRuleDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTRuleDeleteTests.swift; sourceTree = "<group>"; };
+		4B00CBCD21DE279A005A5696 /* OSTEconomyInsertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTEconomyInsertTests.swift; sourceTree = "<group>"; };
+		4B00CBCF21DE27A3005A5696 /* OSTEconomyGetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTEconomyGetTests.swift; sourceTree = "<group>"; };
+		4B00CBD121DE27AE005A5696 /* OSTEconomyDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTEconomyDeleteTests.swift; sourceTree = "<group>"; };
+		4B00CBD421DE2A37005A5696 /* OSTMultiSigInsertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigInsertTests.swift; sourceTree = "<group>"; };
+		4B00CBD621DE2A41005A5696 /* OSTMultiSigGetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigGetTests.swift; sourceTree = "<group>"; };
+		4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigDeleteTests.swift; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMigration_1.swift; sourceTree = "<group>"; };
@@ -216,6 +234,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B00CBBF21DDF5E9005A5696 /* OSTRuleModelRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CBC621DDF826005A5696 /* OSTRuleInsertTests.swift */,
+				4B00CBC821DDF838005A5696 /* OSTRuleGetTests.swift */,
+				4B00CBCA21DDF84D005A5696 /* OSTRuleDeleteTests.swift */,
+			);
+			path = OSTRuleModelRepository;
+			sourceTree = "<group>";
+		};
+		4B00CBCC21DE2779005A5696 /* OSTEconomyRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CBCD21DE279A005A5696 /* OSTEconomyInsertTests.swift */,
+				4B00CBCF21DE27A3005A5696 /* OSTEconomyGetTests.swift */,
+				4B00CBD121DE27AE005A5696 /* OSTEconomyDeleteTests.swift */,
+			);
+			path = OSTEconomyRepository;
+			sourceTree = "<group>";
+		};
+		4B00CBD321DE2A11005A5696 /* OSTMultiSigRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CBD421DE2A37005A5696 /* OSTMultiSigInsertTests.swift */,
+				4B00CBD621DE2A41005A5696 /* OSTMultiSigGetTests.swift */,
+				4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */,
+			);
+			path = OSTMultiSigRepository;
+			sourceTree = "<group>";
+		};
 		4B27DFF321CA8A5300CB7D69 /* SoliditySha3 */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +361,9 @@
 		4B75F26821BFA43D00898960 /* Impls */ = {
 			isa = PBXGroup;
 			children = (
+				4B00CBD321DE2A11005A5696 /* OSTMultiSigRepository */,
+				4B00CBCC21DE2779005A5696 /* OSTEconomyRepository */,
+				4B00CBBF21DDF5E9005A5696 /* OSTRuleModelRepository */,
 				4B75F26B21BFBE5500898960 /* OSTUserModelRepository */,
 			);
 			path = Impls;
@@ -788,15 +839,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B00CBCE21DE279A005A5696 /* OSTEconomyInsertTests.swift in Sources */,
 				4B75F27521C1334800898960 /* OSTUserRepositoryDeleteTests.swift in Sources */,
 				4B75F23021BE725E00898960 /* OSTUserEntityTests.swift in Sources */,
+				4B00CBD521DE2A37005A5696 /* OSTMultiSigInsertTests.swift in Sources */,
 				4B75F26D21BFC8EF00898960 /* OSTUserModelRepositoryInsertTests.swift in Sources */,
 				4B75F28A21C3C27B00898960 /* OstSdkRuleTests.swift in Sources */,
+				4B00CBD721DE2A41005A5696 /* OSTMultiSigGetTests.swift in Sources */,
+				4B00CBD921DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift in Sources */,
 				4B75F26A21BFA46300898960 /* OSTUserModelRepositoryGetTests.swift in Sources */,
+				4B00CBD021DE27A3005A5696 /* OSTEconomyGetTests.swift in Sources */,
+				4B00CBD221DE27AE005A5696 /* OSTEconomyDeleteTests.swift in Sources */,
 				4B75F22A21BE581E00898960 /* OSTBaseEntityTests.swift in Sources */,
 				4B75F28021C3A08600898960 /* OstSdkUserTests.swift in Sources */,
+				4B00CBCB21DDF84D005A5696 /* OSTRuleDeleteTests.swift in Sources */,
 				4B75F29221C3CEA900898960 /* OstSdkTokenHolderTests.swift in Sources */,
+				4B00CBC921DDF838005A5696 /* OSTRuleGetTests.swift in Sources */,
 				4B75F21D21BA908D00898960 /* OSTBaseDBQueriesTests.swift in Sources */,
+				4B00CBC721DDF826005A5696 /* OSTRuleInsertTests.swift in Sources */,
 				4B75F2A421C77F2D00898960 /* OSTCryptoTests.swift in Sources */,
 				4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */,
 				4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */,
