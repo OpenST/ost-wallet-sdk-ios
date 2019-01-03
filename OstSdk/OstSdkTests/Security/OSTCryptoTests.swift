@@ -86,8 +86,40 @@ class OSTCryptoTests: XCTestCase {
 //        }
 //    }
     
-    func testValues() {
- 
+    func testGenerateCryptoKeys() {
+        let expectedSignedTx = "0x34daffa295320477d88e6b9597f97cd3a852de50fc471a6b39a5525a2b00459d47d43367f48d24ac9f8f986bb0b4e1b349eb7ab9dc028a4f5d0d2f0909acd5611c"
+        do {
+            let ostCrypto = OSTCryptoImpls()
+            let privateKey = try ostCrypto.generateCryptoKeys()
+            let pKey = "0ac03c260512582a94295185cfa899e0cb8067a89a61b7b5435ec524c088203c"
+            let txHash = getEIP1077TxHash()
+            
+            let signedTx = try ostCrypto.signTx(txHash, withPrivatekey: pKey)
+            XCTAssertEqual(expectedSignedTx, signedTx)
+        }catch let error {
+            XCTAssertNil(error, "error should be nil")
+        }
+    }
+    
+    func getEIP1077TxHash() -> String {
+        var tx: [String: String] = [:]
+        
+        tx["from"] = "0x5a85a1E5a749A76dDf378eC2A0a2Ac310ca86Ba8"
+        tx["to"] = "0xF281e85a0B992efA5fda4f52b35685dC5Ee67BEa"
+        tx["value"] = "1"
+        tx["gasPrice"] = "0"
+        tx["gas"] = "0"
+        tx["data"] = "0xF281e85a0B992efA5fda4f52b35685dC5Ee67BEa"
+        tx["nonce"] = "1"
+        tx["callPrefix"] = "0x"
+        
+        do {
+            let eip1077TxHash = try EIP1077(transaction: tx).toEIP1077transactionHash()
+            return eip1077TxHash
+        }catch {
+            return ""
+        }
+       // XCTAssertEqual(eip1077TxHash, "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
     }
     
     func testPerformanceExample() {

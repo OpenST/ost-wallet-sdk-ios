@@ -7,9 +7,15 @@
 //
 
 import Foundation
+import CryptoSwift
 
 extension Data{
     func toDictionary() -> Dictionary<String, Any> {
         return NSKeyedUnarchiver.unarchiveObject(with: self) as! Dictionary<String, Any>
+    }
+    
+    var soliditySHA3Hash: String {
+        return sha3(SHA3.Variant.keccak256).toHexString()
+        
     }
 }

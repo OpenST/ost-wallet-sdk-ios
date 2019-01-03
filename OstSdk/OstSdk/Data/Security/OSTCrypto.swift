@@ -15,4 +15,8 @@ protocol OSTCrypto {
     func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8]
     
     func genDigest(bytes: [UInt8]) -> [UInt8]
+    
+    func generateCryptoKeys() throws -> String
+    
+    func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CryptoSwift
+import EthereumKit
 
 class OSTCryptoImpls: OSTCrypto {
     
@@ -66,6 +67,35 @@ class OSTCryptoImpls: OSTCrypto {
             let decrypted =  try aes.decrypt(dataToDecrypt)
             return decrypted
         }catch let error{
+            throw error
+        }
+    }
+    
+    func generateCryptoKeys() throws  -> String {
+        let mnemonics : [String] = Mnemonic.create()
+        print("mnemonics : \(mnemonics)")
+        let seed = try! Mnemonic.createSeed(mnemonic: mnemonics)
+        let wallet: Wallet
+        do {
+            wallet = try Wallet(seed: seed, network: .ropsten, debugPrints: true)
+        } catch let error {
+            fatalError("Error: \(error.localizedDescription)")
+        }
+        
+        let priavteKey = wallet.privateKey()
+        return priavteKey.toHexString()
+    }
+    
+    func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
+        let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
+        
+        do {
+            var singedData = try priKey.sign(hash: Data(hex: tx))
+            singedData[64] += 27
+            let singedTx = singedData.toHexString().addHexPrefix();
+            return singedTx
+        }catch let error {
+            print("signTx :: error : \(error.localizedDescription)")
             throw error
         }
     }

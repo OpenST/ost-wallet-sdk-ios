@@ -21,7 +21,7 @@ class OSTUserModelRepositoryGetTests: XCTestCase {
     
     func testGetUser() {
         do{
-            let id = "6"
+            let id = "2"
             let userEntity: OSTUser? = try OSTUserModelRepository.sharedUser.get(id)
             print(userEntity?.name ?? "unknown")
             print("testGetUser :: id :: \(id) :: userEntity :: \(userEntity?.data ?? [:])")

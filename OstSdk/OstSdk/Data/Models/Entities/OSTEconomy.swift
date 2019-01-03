@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class OSTEconomyEntity: OSTBaseEntity {
+public class OSTEconomy: OSTBaseEntity {
     init(jsonData: [String: Any])throws {
         super.init()
         if !validJSON(jsonData){

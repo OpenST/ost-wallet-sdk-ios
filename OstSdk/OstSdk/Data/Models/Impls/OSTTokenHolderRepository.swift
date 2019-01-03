@@ -27,8 +27,8 @@ class OSTTokenHolderRepository: OSTBaseCacheModelRepository, OSTTokenHolderModel
         return super.save(tokenHolderData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
     }
     
-    func saveAll(_ ruleDataArray: Array<[String : Any]>, success: ((Array<OSTTokenHolder>?, Array<OSTTokenHolder>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(ruleDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+    func saveAll(_ tokenHolderDataArray: Array<[String : Any]>, success: ((Array<OSTTokenHolder>?, Array<OSTTokenHolder>?) -> Void)?, failure: ((Error) -> Void)?) {
+        return super.saveAll(tokenHolderDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
     }
     
     //MARK: - overrider
