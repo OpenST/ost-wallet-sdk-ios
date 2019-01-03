@@ -1,0 +1,10 @@
+Carthage/
+Carthage.resolved
+
+
+# Pod
+Pods/
+Podfile.lock
+*.xcworkspace
+
+
