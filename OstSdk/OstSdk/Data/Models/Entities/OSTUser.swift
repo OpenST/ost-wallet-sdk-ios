@@ -19,7 +19,7 @@ public class OSTUser: OSTBaseEntity {
     }
 }
 
-public extension OSTUser {
+extension OSTUser {
     var name: String? {
         return data["name"] as? String ?? nil
     }

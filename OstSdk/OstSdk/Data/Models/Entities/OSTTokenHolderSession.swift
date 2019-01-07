@@ -9,7 +9,7 @@
 import Foundation
 
 public class OSTTokenHolderSession: OSTBaseEntity {
-    public init(jsonData: [String: Any])throws {
+    init(jsonData: [String: Any])throws {
         super.init()
         if !validJSON(jsonData){
             throw EntityErrors.validationError("Invalid JSON passed.")
