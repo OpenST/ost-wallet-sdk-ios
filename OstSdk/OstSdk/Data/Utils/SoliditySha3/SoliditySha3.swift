@@ -8,7 +8,6 @@
 
 import Foundation
 import BigInt
-import BigNumber
 
 public enum Sha3Error: Error {
     case invalidType(String?), invalidInput(String)

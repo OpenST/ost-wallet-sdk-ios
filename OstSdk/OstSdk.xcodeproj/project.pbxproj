@@ -35,8 +35,12 @@
 		4B00CBD521DE2A37005A5696 /* OSTMultiSigInsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD421DE2A37005A5696 /* OSTMultiSigInsertTests.swift */; };
 		4B00CBD721DE2A41005A5696 /* OSTMultiSigGetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD621DE2A41005A5696 /* OSTMultiSigGetTests.swift */; };
 		4B00CBD921DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */; };
+		4B00CC1321DF89E6005A5696 /* OSTSecureEnclaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1221DF89E6005A5696 /* OSTSecureEnclaveHelper.swift */; };
+		4B00CC1521DF89FD005A5696 /* OSTKeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */; };
+		4B00CC1F21E1D6B8005A5696 /* OSTSecureStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1E21E1D6B8005A5696 /* OSTSecureStoreTests.swift */; };
+		4B00CC4C21E3339C005A5696 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC4B21E3339C005A5696 /* Pods_OstSdk.framework */; };
+		4B00CC5021E33E88005A5696 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC4F21E33E88005A5696 /* CryptoSwift.framework */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
-		4B75F1ED21B65CF700898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
 		4B75F1EE21B65D2300898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F821B6A31D00898960 /* OSTSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */; };
@@ -95,7 +99,6 @@
 		4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C931321B006E900EC0A9F /* OstSdkTests.swift */; };
 		4B7C931621B006E900EC0A9F /* OstSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7C930821B006E900EC0A9F /* OstSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C933D21B15BAB00EC0A9F /* Test.swift */; };
-		6F252E031901D07B378B0918 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +143,11 @@
 		4B00CBD421DE2A37005A5696 /* OSTMultiSigInsertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigInsertTests.swift; sourceTree = "<group>"; };
 		4B00CBD621DE2A41005A5696 /* OSTMultiSigGetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigGetTests.swift; sourceTree = "<group>"; };
 		4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMultiSigDeleteTests.swift; sourceTree = "<group>"; };
+		4B00CC1221DF89E6005A5696 /* OSTSecureEnclaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSTSecureEnclaveHelper.swift; sourceTree = "<group>"; };
+		4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTKeychainHelper.swift; sourceTree = "<group>"; };
+		4B00CC1E21E1D6B8005A5696 /* OSTSecureStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSecureStoreTests.swift; sourceTree = "<group>"; };
+		4B00CC4B21E3339C005A5696 /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B00CC4F21E33E88005A5696 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = SOURCE_ROOT; };
 		4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMigration_1.swift; sourceTree = "<group>"; };
@@ -203,6 +211,7 @@
 		4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		4B7C934A21B501CC00EC0A9F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
+		5975FB92C23BCE105D8A028F /* Pods_OstSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA169DE547F71A835EDE650 /* Pods-OstSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-OstSdk/Pods-OstSdk.release.xcconfig"; sourceTree = "<group>"; };
 		B71D746DF125377A2150AA39 /* Pods_OstSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,9 +223,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B75F1ED21B65CF700898960 /* FMDB.framework in Frameworks */,
+				4B00CC5021E33E88005A5696 /* CryptoSwift.framework in Frameworks */,
+				4B00CC4C21E3339C005A5696 /* Pods_OstSdk.framework in Frameworks */,
 				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
-				6F252E031901D07B378B0918 /* Pods_OstSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +271,23 @@
 				4B00CBD821DE2A4B005A5696 /* OSTMultiSigDeleteTests.swift */,
 			);
 			path = OSTMultiSigRepository;
+			sourceTree = "<group>";
+		};
+		4B00CC1121DF89C7005A5696 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CC1221DF89E6005A5696 /* OSTSecureEnclaveHelper.swift */,
+				4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		4B00CC4E21E33E79005A5696 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CC4F21E33E88005A5696 /* CryptoSwift.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		4B27DFF321CA8A5300CB7D69 /* SoliditySha3 */ = {
@@ -392,6 +418,7 @@
 		4B75F29321C3D73A00898960 /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				4B00CC1121DF89C7005A5696 /* Storage */,
 				4B75F29621C3E4B100898960 /* Impls */,
 				4B75F29421C3D8B900898960 /* OSTSecureStore.swift */,
 				4B75F29E21C7771A00898960 /* OSTCrypto.swift */,
@@ -421,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				4B75F2A321C77F2D00898960 /* OSTCryptoTests.swift */,
+				4B00CC1E21E1D6B8005A5696 /* OSTSecureStoreTests.swift */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -456,6 +484,7 @@
 		4B7C930721B006E900EC0A9F /* OstSdk */ = {
 			isa = PBXGroup;
 			children = (
+				4B00CC4E21E33E79005A5696 /* Frameworks */,
 				4B7C932C21B1141200EC0A9F /* Data */,
 				4B7C930821B006E900EC0A9F /* OstSdk.h */,
 				4B7C930921B006E900EC0A9F /* Info.plist */,
@@ -539,6 +568,7 @@
 		4B7C933821B150AF00EC0A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B00CC4B21E3339C005A5696 /* Pods_OstSdk.framework */,
 				4B00CB9721DC949E005A5696 /* CryptoEthereumSwift.framework */,
 				4B00CB9621DC949E005A5696 /* EthereumKit.framework */,
 				4B7C934A21B501CC00EC0A9F /* FMDB.framework */,
@@ -547,6 +577,7 @@
 				4B7C933921B150AF00EC0A9F /* SQLite.framework */,
 				9CD9B92F69110581A5B7E9DE /* Pods_OstSdk.framework */,
 				B71D746DF125377A2150AA39 /* Pods_OstSdkTests.framework */,
+				5975FB92C23BCE105D8A028F /* Pods_OstSdkExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -682,6 +713,11 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/KeychainSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
 			);
 			name = "Run Script";
 			outputFileListPaths = (
@@ -747,7 +783,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BigNumber/BigNumber.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 			);
@@ -757,7 +792,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigNumber.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 			);
@@ -799,6 +833,7 @@
 				4B75F28E21C3CB5100898960 /* OSTTokenHolderRepository.swift in Sources */,
 				4B75F29F21C7771A00898960 /* OSTCrypto.swift in Sources */,
 				4B75F23221BE758500898960 /* OSTExecutableRule.swift in Sources */,
+				4B00CC1521DF89FD005A5696 /* OSTKeychainHelper.swift in Sources */,
 				4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */,
 				4B00CBA821DCDA43005A5696 /* OSTMultiSigWalletModel.swift in Sources */,
 				4B00CBA021DCD669005A5696 /* OSTEconomyDbQueries.swift in Sources */,
@@ -811,6 +846,7 @@
 				4B75F21121B7E38A00898960 /* OSTBaseDbQueries.swift in Sources */,
 				4B00CBA221DCD87F005A5696 /* OSTMultiSigModel.swift in Sources */,
 				4B75F29821C3E4D600898960 /* OSTSecureStoreImpls.swift in Sources */,
+				4B00CC1321DF89E6005A5696 /* OSTSecureEnclaveHelper.swift in Sources */,
 				4B00CBB621DDE1B5005A5696 /* OSTExecutableRuleModel.swift in Sources */,
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OSTBaseModelRepository.swift in Sources */,
@@ -858,6 +894,7 @@
 				4B75F21D21BA908D00898960 /* OSTBaseDBQueriesTests.swift in Sources */,
 				4B00CBC721DDF826005A5696 /* OSTRuleInsertTests.swift in Sources */,
 				4B75F2A421C77F2D00898960 /* OSTCryptoTests.swift in Sources */,
+				4B00CC1F21E1D6B8005A5696 /* OSTSecureStoreTests.swift in Sources */,
 				4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */,
 				4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */,
 				4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */,

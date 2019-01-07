@@ -14,6 +14,10 @@ protocol OSTCrypto {
     
     func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8]
     
+    func aesGCMEncrypt(aesKey: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] 
+    
+    func aesGCMDecryption(aesKey: [UInt8], dataToDecrypt : [UInt8]) throws -> [UInt8] 
+    
     func genDigest(bytes: [UInt8]) -> [UInt8]
     
     func generateCryptoKeys() throws -> String

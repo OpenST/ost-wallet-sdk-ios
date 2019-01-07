@@ -10,8 +10,7 @@ import Foundation
 
 protocol OSTSecureStore{
     
-    func encrypt(data: [UInt8]);
+    func encrypt(data: Data) throws -> Data?
     
-    func decrypt(data: [UInt8]);
-    
+    func decrypt(data: Data) throws -> Data?
 }

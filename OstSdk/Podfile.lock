@@ -1,7 +1,6 @@
 PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
-  - BigNumber (2.0)
   - CryptoSwift (0.13.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -10,7 +9,6 @@ PODS:
 
 DEPENDENCIES:
   - BigInt
-  - BigNumber (from `https://github.com/mkrd/Swift-Big-Integer.git`)
   - CryptoSwift
   - FMDB
 
@@ -21,22 +19,12 @@ SPEC REPOS:
     - FMDB
     - SipHash
 
-EXTERNAL SOURCES:
-  BigNumber:
-    :git: https://github.com/mkrd/Swift-Big-Integer.git
-
-CHECKOUT OPTIONS:
-  BigNumber:
-    :commit: e1c4bc15a6b11c5fa7f8cb678f59b55c0b238f23
-    :git: https://github.com/mkrd/Swift-Big-Integer.git
-
 SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  BigNumber: bcc393c06b3e7e2752e5121be58c032c45c6f36b
   CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
 
-PODFILE CHECKSUM: 2c12d2f95f39f389e40a6d0233adc67126a99c4c
+PODFILE CHECKSUM: bccbf921bebdc551a591fedf2b2a327200c19f61
 
 COCOAPODS: 1.5.3

@@ -1,1 +1,4 @@
 github "OpenSTFoundation/EthereumKit" "aniket/ios8"
+github "evgenyneu/keychain-swift" ~> 13.0
+github "attaswift/BigInt"
+github "ccgus/fmdb"

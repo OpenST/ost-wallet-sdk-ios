@@ -7,7 +7,7 @@ target 'OstSdk' do
   pod 'FMDB'
   pod 'CryptoSwift'
   pod 'BigInt'
-pod 'BigNumber', :git => 'https://github.com/mkrd/Swift-Big-Integer.git'
+
 
   # Pods for OstSdk
 

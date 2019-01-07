@@ -46,12 +46,12 @@ class OSTCryptoImpls: OSTCrypto {
         return keccakOutput
     }
     
-    func aesGCMEncrypt(aesKey: [UInt8], dataToEncrypt: String) throws -> [UInt8] {
+    func aesGCMEncrypt(aesKey: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] {
         do {
             let gcm = GCM(iv: Array("iv".utf8), mode: .combined)
             let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
             
-            let encrypted = try aes.encrypt(Array("Aniket".utf8))
+            let encrypted = try aes.encrypt(dataToEncrypt)
             
             return encrypted
         }catch let error{
