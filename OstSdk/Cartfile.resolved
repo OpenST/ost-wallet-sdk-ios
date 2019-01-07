@@ -1,7 +1,0 @@
-github "OpenSTFoundation/CryptoEthereumSwift" "ab4730f21d7dbd3d78ce1e997793660325d8f6e5"
-github "OpenSTFoundation/EthereumKit" "49cf97943db3da79767d47749bc23e3fce424a42"
-github "attaswift/BigInt" "v3.1.0"
-github "attaswift/SipHash" "v1.2.2"
-github "ccgus/fmdb" "2.7.5"
-github "evgenyneu/keychain-swift" "13.0.0"
-github "krzyzanowskim/CryptoSwift" "0.13.1"
