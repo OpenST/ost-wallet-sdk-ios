@@ -34,4 +34,52 @@ public class OstSdk {
     public static func initTokenHolder(_ tokenHolderJson: [String: Any], success: ((OSTTokenHolder?) -> Void)?, failure: ((Error) -> Void)?) {
         return OSTTokenHolderRepository.sharedTokenHolder.save(tokenHolderJson, success: success, failure: failure)
     }
+    
+    public static func getEconomy(_ id: String) throws -> OSTEconomy? {
+        return try OSTEconomyRepository.sharedEconomy.get(id)
+    }
+    
+    public static func initEconomy(_ economyJson: [String: Any], success: ((OSTEconomy?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTEconomyRepository.sharedEconomy.save(economyJson, success: success, failure: failure)
+    }
+    
+    public static func getTokenHolderSession(_ id: String) throws -> OSTTokenHolderSession? {
+        return try OSTTokenHolderSessionRepository.sharedTokenHolderSession.get(id)
+    }
+    
+    public static func initTokenHolderSession(_ tokenHolderSessionJson: [String: Any], success: ((OSTTokenHolderSession?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTTokenHolderSessionRepository.sharedTokenHolderSession.save(tokenHolderSessionJson, success: success, failure: failure)
+    }
+    
+    public static func getMultiSig(_ id: String) throws -> OSTMultiSig? {
+        return try OSTMultiSigRepository.sharedMultiSig.get(id)
+    }
+    
+    public static func initTokenHolderSession(_ multiSigJson: [String: Any], success: ((OSTMultiSig?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTMultiSigRepository.sharedMultiSig.save(multiSigJson, success: success, failure: failure)
+    }
+    
+    public static func getMultiSigWallet(_ id: String) throws -> OSTMultiSigWallet? {
+        return try OSTMultiSigWalletRepository.sharedMultiSigWallet.get(id)
+    }
+    
+    public static func initTokenHolderSession(_ multiSigWalletJson: [String: Any], success: ((OSTMultiSigWallet?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTMultiSigWalletRepository.sharedMultiSigWallet.save(multiSigWalletJson, success: success, failure: failure)
+    }
+    
+    public static func getMultiSigOperation(_ id: String) throws -> OSTMultiSigOperation? {
+        return try OSTMultiSigOperationRepository.sharedMultiSigOperation.get(id)
+    }
+    
+    public static func initMultiSigOperation(_ multiSigOperationJson: [String: Any], success: ((OSTMultiSigOperation?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTMultiSigOperationRepository.sharedMultiSigOperation.save(multiSigOperationJson, success: success, failure: failure)
+    }
+    
+    public static func getExecutableRule(_ id: String) throws -> OSTExecutableRule? {
+        return try OSTExecutableRuleRepository.sharedExecutableRule.get(id)
+    }
+    
+    public static func initExecutableRule(_ executableRuleJson: [String: Any], success: ((OSTExecutableRule?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTExecutableRuleRepository.sharedExecutableRule.save(executableRuleJson, success: success, failure: failure)
+    }
 }
