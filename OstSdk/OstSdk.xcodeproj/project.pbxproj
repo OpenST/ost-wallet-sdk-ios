@@ -39,6 +39,9 @@
 		4B00CC1521DF89FD005A5696 /* OSTKeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */; };
 		4B00CC1F21E1D6B8005A5696 /* OSTSecureStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1E21E1D6B8005A5696 /* OSTSecureStoreTests.swift */; };
 		4B00CC4C21E3339C005A5696 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC4B21E3339C005A5696 /* Pods_OstSdk.framework */; };
+		4B00CC5421E352B9005A5696 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC5321E352B9005A5696 /* BigInt.framework */; };
+		4B00CC9321E35553005A5696 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC9121E35553005A5696 /* CryptoSwift.framework */; };
+		4B00CC9421E35553005A5696 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B00CC9221E35553005A5696 /* CryptoEthereumSwift.framework */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1EE21B65D2300898960 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934A21B501CC00EC0A9F /* FMDB.framework */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
@@ -146,6 +149,9 @@
 		4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTKeychainHelper.swift; sourceTree = "<group>"; };
 		4B00CC1E21E1D6B8005A5696 /* OSTSecureStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSecureStoreTests.swift; sourceTree = "<group>"; };
 		4B00CC4B21E3339C005A5696 /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B00CC5321E352B9005A5696 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = SOURCE_ROOT; };
+		4B00CC9121E35553005A5696 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = "<group>"; };
+		4B00CC9221E35553005A5696 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CryptoEthereumSwift.framework; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OSTSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OSTBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OSTMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTMigration_1.swift; sourceTree = "<group>"; };
@@ -222,7 +228,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B00CC4C21E3339C005A5696 /* Pods_OstSdk.framework in Frameworks */,
+				4B00CC5421E352B9005A5696 /* BigInt.framework in Frameworks */,
 				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
+				4B00CC9321E35553005A5696 /* CryptoSwift.framework in Frameworks */,
+				4B00CC9421E35553005A5696 /* CryptoEthereumSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +286,16 @@
 				4B00CC1421DF89FD005A5696 /* OSTKeychainHelper.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		4B00CC5221E3425F005A5696 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4B00CC9221E35553005A5696 /* CryptoEthereumSwift.framework */,
+				4B00CC9121E35553005A5696 /* CryptoSwift.framework */,
+				4B00CC5321E352B9005A5696 /* BigInt.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		4B27DFF321CA8A5300CB7D69 /* SoliditySha3 */ = {
@@ -473,6 +492,7 @@
 		4B7C930721B006E900EC0A9F /* OstSdk */ = {
 			isa = PBXGroup;
 			children = (
+				4B00CC5221E3425F005A5696 /* Frameworks */,
 				4B7C932C21B1141200EC0A9F /* Data */,
 				4B7C930821B006E900EC0A9F /* OstSdk.h */,
 				4B7C930921B006E900EC0A9F /* Info.plist */,
@@ -1037,6 +1057,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
@@ -1071,6 +1092,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;

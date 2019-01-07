@@ -10,7 +10,7 @@ import Foundation
 
 public class OSTSecureKey: OSTBaseEntity {
    
-    init(jsonPram: [String: Any])throws {
+    public init(jsonPram: [String: Any])throws {
         super.init()
         if !validJSON(jsonPram){
             throw EntityErrors.validationError("Invalid JSON passed.")
