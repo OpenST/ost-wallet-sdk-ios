@@ -5,5 +5,5 @@ Cartfile.resolved
 # Pod
 Pods/
 *.xcworkspace
-
+*.xcuserstate
 *.xcconfig

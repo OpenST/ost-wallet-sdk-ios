@@ -10,7 +10,7 @@ import Foundation
 
 public class OSTUser: OSTBaseEntity {
    
-    public init(jsonData: [String: Any])throws {
+    init(jsonData: [String: Any])throws {
         super.init()
         if !validJSON(jsonData){
             throw EntityErrors.validationError("Invalid JSON passed.")
@@ -19,7 +19,7 @@ public class OSTUser: OSTBaseEntity {
     }
 }
 
-extension OSTUser {
+public extension OSTUser {
     var name: String? {
         return data["name"] as? String ?? nil
     }
