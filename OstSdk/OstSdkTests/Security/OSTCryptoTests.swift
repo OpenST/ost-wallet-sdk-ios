@@ -91,10 +91,9 @@ class OSTCryptoTests: XCTestCase {
         do {
             let ostCrypto = OSTCryptoImpls()
             let privateKey = try ostCrypto.generateCryptoKeys()
-            let pKey = "0ac03c260512582a94295185cfa899e0cb8067a89a61b7b5435ec524c088203c"
             let txHash = getEIP1077TxHash()
             
-            let signedTx = try ostCrypto.signTx(txHash, withPrivatekey: pKey)
+            let signedTx = try ostCrypto.signTx(txHash, withPrivatekey: privateKey)
             XCTAssertEqual(expectedSignedTx, signedTx)
         }catch let error {
             XCTAssertNil(error, "error should be nil")

@@ -7,3 +7,4 @@ Pods/
 *.xcworkspace
 *.xcuserstate
 *.xcconfig
+*.xcbkptlist

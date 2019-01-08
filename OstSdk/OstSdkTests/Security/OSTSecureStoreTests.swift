@@ -24,7 +24,6 @@ class OSTSecureStoreTests: XCTestCase {
         
         do {
             let encData = try OSTSecureStoreImpls(address: "0x123").encrypt(data: text.data(using: .utf8)!)
-            print(encData?.toHexString())
         }catch let error{
             print(error)
             XCTAssertFalse(true,"error should not receive")

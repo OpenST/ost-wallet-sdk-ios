@@ -11,15 +11,16 @@ import Foundation
 public class OSTMultiSigOperation: OSTBaseEntity {
     init(jsonData: [String: Any])throws {
         super.init()
-        if !validJSON(jsonData){
-            throw EntityErrors.validationError("Invalid JSON passed.")
+        let (isValidJSON, errorString): (Bool, String?) = validJSON(jsonData)
+        if !isValidJSON{
+            throw EntityErrors.validationError("Invalid JSON passed. error:\(errorString!)")
         }
         setJsonValues(jsonData)
     }
 }
 
 
-extension OSTMultiSigOperation {
+public extension OSTMultiSigOperation {
     var local_entity_id : String? {
         return data["local_entity_id"] as? String ?? nil
     }

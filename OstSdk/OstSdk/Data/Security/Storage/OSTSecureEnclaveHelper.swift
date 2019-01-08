@@ -68,18 +68,12 @@ class OSTSecureEnclaveHelper {
     // MARK: - fileprivate methods
     
     fileprivate var attrKeyTypeEllipticCurve: String {
-        
-        if #available(iOS 10.0, *) {
-            return kSecAttrKeyTypeECSECPrimeRandom as String
-        }
-        else {
-            return kSecAttrKeyTypeEC as String
-        }
+        return kSecAttrKeyTypeECSECPrimeRandom as String
     }
     
     fileprivate var namespace: String {
         let bundle: Bundle = Bundle(for: type(of: self))
-        let namespace = bundle.infoDictionary!["CFBundleExecutable"] as! String;
+        let namespace = bundle.infoDictionary!["CFBundleIdentifier"] as! String;
         return namespace
     }
     

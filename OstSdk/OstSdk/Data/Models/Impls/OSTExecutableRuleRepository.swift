@@ -24,11 +24,15 @@ class OSTExecutableRuleRepository: OSTBaseCacheModelRepository, OSTExecutableRul
     }
     
     override func save(_ executableRuleData: [String : Any], success: ((OSTExecutableRule?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(executableRuleData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(executableRuleData, success: { (entity) in
+            success?(entity as? OSTExecutableRule)
+        }, failure: failure)
     }
     
     func saveAll(_ executableRuleDataArray: Array<[String : Any]>, success: ((Array<OSTExecutableRule>?, Array<OSTExecutableRule>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(executableRuleDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(executableRuleDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTExecutableRule>, failuarEntityArray as? Array<OSTExecutableRule>)
+        }, failure: failure)
     }
     
     //MARK: - overrider

@@ -11,14 +11,15 @@ import Foundation
 public class OSTTokenHolder: OSTBaseEntity {
     init(jsonData: [String: Any])throws {
         super.init()
-        if !validJSON(jsonData){
-            throw EntityErrors.validationError("Invalid JSON passed.")
+        let (isValidJSON, errorString): (Bool, String?) = validJSON(jsonData)
+        if !isValidJSON{
+            throw EntityErrors.validationError("Invalid JSON passed. error:\(errorString!)")
         }
         setJsonValues(jsonData)
     }
 }
 
-extension OSTTokenHolder {
+public extension OSTTokenHolder {
     var user_id : String? {
         return data["user_id"] as? String ?? nil
     }

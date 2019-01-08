@@ -24,11 +24,15 @@ class OSTTokenHolderSessionRepository: OSTBaseCacheModelRepository, OSTTokenHold
     }
     
     override func save(_ tokenHolderSessionData: [String : Any], success: ((OSTTokenHolderSession?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(tokenHolderSessionData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(tokenHolderSessionData, success: { (entity) in
+            success?(entity as? OSTTokenHolderSession)
+        }, failure: failure)
     }
     
     func saveAll(_ tokenHolderSessionDataArray: Array<[String : Any]>, success: ((Array<OSTTokenHolderSession>?, Array<OSTTokenHolderSession>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(tokenHolderSessionDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(tokenHolderSessionDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTTokenHolderSession>, failuarEntityArray as? Array<OSTTokenHolderSession>)
+        }, failure: failure)
     }
     
     //MARK: - overrider

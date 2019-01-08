@@ -24,11 +24,15 @@ class OSTMultiSigOperationRepository: OSTBaseCacheModelRepository, OSTMultiSigOp
     }
     
     override func save(_ multiSigOperationData: [String : Any], success: ((OSTMultiSigOperation?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(multiSigOperationData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(multiSigOperationData, success: { (entity) in
+            success?(entity as? OSTMultiSigOperation)
+        }, failure: failure)
     }
     
     func saveAll(_ multiSigOperationDataArray: Array<[String : Any]>, success: ((Array<OSTMultiSigOperation>?, Array<OSTMultiSigOperation>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(multiSigOperationDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(multiSigOperationDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTMultiSigOperation>, failuarEntityArray as? Array<OSTMultiSigOperation>)
+        }, failure: failure)
     }
     
     //MARK: - overrider

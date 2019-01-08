@@ -25,11 +25,15 @@ class OSTUserModelRepository: OSTBaseCacheModelRepository, OSTUserModel{
     }
     
     override func save(_ userData: [String : Any], success: ((OSTUser?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(userData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(userData, success: { (entity) in
+            success?(entity as? OSTUser)
+        }, failure: failure)
     }
     
     func saveAll(_ userDataArray: Array<[String: Any]>, success: ((Array<OSTUser>?, Array<OSTUser>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(userDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(userDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTUser>, failuarEntityArray as? Array<OSTUser>)
+        }, failure: failure)
     }
 
     //MARK: - overrider

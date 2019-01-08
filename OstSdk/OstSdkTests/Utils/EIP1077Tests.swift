@@ -36,17 +36,6 @@ class EIP1077Tests: XCTestCase {
     
     func testSoliditySha3() {
         
-        let val = "uint8"
-        let regex = "^\\D+(\\d+).*$"
-        let output = val.groups(for: regex)
-//        let range = NSRange(location: 0, length: val.utf16.count)
-//        let regex = try! NSRegularExpression(pattern: "^\\D+(\\d+).*$")
-        
-//        if let val1 = try? EIP1077.processSHA3Arg(type: "bytes32", value: "0x00") {
-//            print(val1)
-//            XCTAssertTrue(val1.count == 64)
-//        }
-        
         if let x = try? Utils.SoliditySha3([["t":"bytes32","v":"0x00"]]) {
             print(x)
             XCTAssertTrue(x.count == 64)

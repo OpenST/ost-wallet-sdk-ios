@@ -69,7 +69,8 @@ internal class OSTMigrationManager{
         /// get namespace
         let namespace = bundle.infoDictionary!["CFBundleExecutable"] as! String;
         let cls: AnyClass = NSClassFromString("\(namespace).\(className)")!;
-        
+        print("OSTMigrationManager :: namespace : \(namespace)")
+        print("OSTMigrationManager :: cls : \(cls)")
         // return AnyClass!
         return cls;
     }

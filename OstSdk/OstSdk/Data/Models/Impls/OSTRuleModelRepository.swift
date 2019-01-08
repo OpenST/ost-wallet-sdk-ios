@@ -25,11 +25,15 @@ class OSTRuleModelRepository: OSTBaseCacheModelRepository, OSTRuleModel{
     }
     
     override func save(_ ruleData: [String : Any], success: ((OSTRule?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(ruleData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(ruleData, success: { (entity) in
+            success?(entity as? OSTRule)
+        }, failure: failure)
     }
     
     func saveAll(_ ruleDataArray: Array<[String : Any]>, success: ((Array<OSTRule>?, Array<OSTRule>?) -> Void)?, failure: ((Error) -> Void)?) {
-       return super.saveAll(ruleDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(ruleDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTRule>, failuarEntityArray as? Array<OSTRule>)
+        }, failure: failure)
     }
     
     //MARK: - overrider

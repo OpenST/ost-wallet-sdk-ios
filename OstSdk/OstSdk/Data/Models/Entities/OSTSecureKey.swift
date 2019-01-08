@@ -10,11 +10,12 @@ import Foundation
 
 public class OSTSecureKey: OSTBaseEntity {
    
-    init(jsonPram: [String: Any])throws {
+    init(jsonData: [String: Any])throws {
         super.init()
-        if !validJSON(jsonPram){
-            throw EntityErrors.validationError("Invalid JSON passed.")
+        let (isValidJSON, errorString): (Bool, String?) = validJSON(jsonData)
+        if !isValidJSON{
+            throw EntityErrors.validationError("Invalid JSON passed. error:\(errorString!)")
         }
-        setJsonValues(jsonPram)
+        setJsonValues(jsonData)
     }
 }

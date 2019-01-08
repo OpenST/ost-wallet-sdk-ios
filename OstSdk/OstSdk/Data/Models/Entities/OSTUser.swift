@@ -12,14 +12,15 @@ public class OSTUser: OSTBaseEntity {
    
     init(jsonData: [String: Any])throws {
         super.init()
-        if !validJSON(jsonData){
-            throw EntityErrors.validationError("Invalid JSON passed.")
+        let (isValidJSON, errorString): (Bool, String?) = validJSON(jsonData)
+        if !isValidJSON{
+            throw EntityErrors.validationError("Invalid JSON passed. error:\(errorString!)")
         }
         setJsonValues(jsonData)
     }
 }
 
-extension OSTUser {
+public extension OSTUser {
     var name: String? {
         return data["name"] as? String ?? nil
     }

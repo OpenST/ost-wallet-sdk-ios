@@ -39,41 +39,43 @@ public class OSTBaseEntity: NSObject {
     }
     
     //MARK: - validate
-    func validJSON(_ json: [String: Any]) -> Bool {
+    func validJSON(_ json: [String: Any]) -> (Bool, String?) {
         var isValidJSON: Bool = false
         let idVal: String? = getStringVal(json[OSTBaseEntity.ID])
         if (idVal != nil) {
             isValidJSON = isValidID(idVal!)
-            if !isValidJSON {return isValidJSON}
+            if !isValidJSON {
+                return (isValidJSON, "id is not valid")
+            }
         }else{
-            return false
+            return (false, "id is missing")
         }
         
         let parentIdVal: String? = getStringVal(json[OSTBaseEntity.PARENT_ID])
         if (parentIdVal != nil) {
             isValidJSON = isValidParnetId(parentIdVal!)
-            if !isValidJSON {return isValidJSON}
+            if !isValidJSON {return (isValidJSON,"parent_id is not valid")}
         }else if (parentIdVal == nil && json[OSTBaseEntity.PARENT_ID] != nil){
-            return false
+            return (false, "parent_id is not valid")
         }
         
         let statusVal: String? = getStringVal(json[OSTBaseEntity.STATUS])
         if (statusVal != nil){
             isValidJSON = isValidStatus(statusVal!)
-            if !isValidJSON {return isValidJSON}
+            if !isValidJSON {return (isValidJSON, "status is not valid")}
         }else if (statusVal == nil && json[OSTBaseEntity.STATUS] != nil){
-            return false
+            return (false, "status is not valid")
         }
         
         let utsVal: String? = getStringVal(json[OSTBaseEntity.UTS])
         if (utsVal != nil){
             isValidJSON = isValidUTS(utsVal!)
-            if !isValidJSON {return isValidJSON}
+            if !isValidJSON {return (isValidJSON,"uts is not valid")}
         }else if (utsVal == nil && json[OSTBaseEntity.UTS] != nil){
-            return false
+            return (false, "uts is not valid")
         }
         
-        return isValidJSON
+        return (isValidJSON, nil)
     }
     
     fileprivate func isValidID(_ id: String) -> Bool {

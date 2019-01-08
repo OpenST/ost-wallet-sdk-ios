@@ -128,7 +128,7 @@ class OSTBaseModelRepository {
             do {
                 let entityObj = try self.getEntity(data)
                 let entity: OSTBaseEntity? = self.insertOrUpdate(entityObj)
-                (entity != nil) ? success?(entity!) : failure?(OSTError.actionFailed("Insertion of UserData failed."))
+                (entity != nil) ? success?(entity!) : failure?(OSTError.actionFailed("Insertion of entity failed."))
             }catch let error {
                 failure?(error)
             }

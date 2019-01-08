@@ -9,13 +9,13 @@
 import Foundation
 import FMDB
 
-internal class OSTSdkDatabase {
+class OSTSdkDatabase {
     private static let dbName: String = "OSTSDK-ios.sqlite";
-    public private(set) var database: FMDatabase
+    private(set) var database: FMDatabase
     
     static let sharedInstance = OSTSdkDatabase()
     
-    private init() {
+    init() {
         database = FMDatabase(path: OSTSdkDatabase.dbPath())
         database.open()
         let migrationManager = OSTMigrationManager(database: database, bundle: Bundle(for: type(of: self)))
@@ -44,5 +44,4 @@ internal class OSTSdkDatabase {
             filemanager.createFile(atPath: (path?.path)!, contents: nil, attributes: nil)
         }
     }
-    
 }

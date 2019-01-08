@@ -21,7 +21,8 @@ public class OSTKeychainHelper {
     
     fileprivate var namespace: String {
         let bundle: Bundle = Bundle(for: type(of: self))
-        let namespace = bundle.infoDictionary!["CFBundleExecutable"] as! String;
+        let namespace = bundle.infoDictionary!["CFBundleIdentifier"] as! String;
+        print("OSTKeychainHelper :: namespace : \(namespace)")
         return namespace
     }
     

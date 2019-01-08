@@ -23,11 +23,15 @@ class OSTEconomyRepository: OSTBaseCacheModelRepository, OSTEconomyModel {
     }
     
     override func save(_ economyData: [String : Any], success: ((OSTEconomy?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(economyData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(economyData, success: { (entity) in
+            success?(entity as? OSTEconomy)
+        }, failure: failure)
     }
     
     func saveAll(_ economyDataArray: Array<[String : Any]>, success: ((Array<OSTEconomy>?, Array<OSTEconomy>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(economyDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(economyDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTEconomy>, failuarEntityArray as? Array<OSTEconomy>)
+        }, failure: failure)
     }
     
     //MARK: - overrider

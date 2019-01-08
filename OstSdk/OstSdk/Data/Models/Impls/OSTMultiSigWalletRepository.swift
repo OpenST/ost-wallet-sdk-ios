@@ -24,11 +24,15 @@ class OSTMultiSigWalletRepository: OSTBaseCacheModelRepository, OSTMultiSigWalle
     }
     
     override func save(_ multiSigWalletData: [String : Any], success: ((OSTMultiSigWallet?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.save(multiSigWalletData, success: success as? ((OSTBaseEntity?) -> Void), failure: failure)
+        super.save(multiSigWalletData, success: { (entity) in
+            success?(entity as? OSTMultiSigWallet)
+        }, failure: failure)
     }
     
     func saveAll(_ multiSigWalletDataArray: Array<[String : Any]>, success: ((Array<OSTMultiSigWallet>?, Array<OSTMultiSigWallet>?) -> Void)?, failure: ((Error) -> Void)?) {
-        return super.saveAll(multiSigWalletDataArray, success: success as? ((Array<OSTBaseEntity>?, Array<OSTBaseEntity>?) -> Void), failure: failure)
+        super.saveAll(multiSigWalletDataArray, success: { (successEntityArray, failuarEntityArray) in
+            success?(successEntityArray as? Array<OSTMultiSigWallet>, failuarEntityArray as? Array<OSTMultiSigWallet>)
+        }, failure: failure)
     }
     
     //MARK: - overrider
