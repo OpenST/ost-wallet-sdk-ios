@@ -24,8 +24,8 @@ public class OSTBaseEntity: NSObject {
     
     public private(set) var id: String = String(Date.negativeTimestamp())
     public private(set) var parnet_id: String = "-1"
-    internal private(set) var data: [String: Any] = ["id": String(Date.negativeTimestamp())]
-    internal private(set) var baseStatus: String = OSTBaseEntity.DEFAULTSTATUS
+    private(set) var data: [String: Any] = ["id": String(Date.negativeTimestamp())]
+    private(set) var baseStatus: String = OSTBaseEntity.DEFAULTSTATUS
     public private(set) var uts: String = String(Date.negativeTimestamp())
     
     

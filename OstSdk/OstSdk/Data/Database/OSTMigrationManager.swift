@@ -19,6 +19,14 @@ internal class OSTMigrationManager{
     fileprivate static let verisonInt: Int = 1
     fileprivate static let migrationFilePrefix: String = "OSTMigration_"
     
+    var migrationPrefix: String {
+        return OSTMigrationManager.migrationFilePrefix
+    }
+    
+    var version: Int {
+        return OSTMigrationManager.verisonInt
+    }
+    
     private let database: FMDatabase
     private let bundle: Bundle
     
@@ -41,9 +49,9 @@ internal class OSTMigrationManager{
     
     fileprivate func executeMigration() {
         let savedVersion = self.getLastMigration()
-        for var currentVersion in savedVersion..<OSTMigrationManager.verisonInt{
+        for var currentVersion in savedVersion..<version{
             currentVersion = currentVersion+1
-            let classOb = stringClassFromString("\(OSTMigrationManager.migrationFilePrefix)\(currentVersion)") as! OSTBaseMigration.Type
+            let classOb = stringClassFromString("\(migrationPrefix)\(currentVersion)") as! OSTBaseMigration.Type
             let migrationClass = classOb.init(db: database)
             let isExecutionSuccess = migrationClass.execute()
             if isExecutionSuccess{

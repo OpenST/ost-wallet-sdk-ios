@@ -160,13 +160,13 @@ class OSTBaseCacheModelRepository: OSTBaseModelRepository {
         inMemoryCache[key] = nil
     }
     
-    fileprivate func saveDataInCache(key: String, val: OSTBaseEntity) {
+    func saveDataInCache(key: String, val: OSTBaseEntity) {
         if (isCacheEnable()) {
             entityCache.setObject(val, forKey: key as NSString)
         }
     }
 
-    fileprivate func removeFromCache(key: String) {
+    func removeFromCache(key: String) {
         if (isCacheEnable()) {
             entityCache.removeObject(forKey: key as NSString)
         }

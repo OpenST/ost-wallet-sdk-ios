@@ -28,213 +28,213 @@ class OSTBaseEntityTests: XCTestCase {
     }
     
     //MARK: - Test ID
-    func testID(){
-        //true cases
-        jsonData["id"] = "123"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = "123abc"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = "123ABC"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = "-123Negative"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = "ABC123sadfde32"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = 123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["id"] = -123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-    
-        //false cases
-        jsonData["id"] = "123#"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = ""
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = "123 "
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = "123 acv$"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = ["a","b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = ["a":"b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["id"] = nil
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["idd"] = "123"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-    }
-    
-    func testParentId(){
-        //true cases
-        jsonData["parent_id"] = "123"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = "-123"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = "123a"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = "-123a"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = 123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = -123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = ""
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_id"] = nil
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["parent_idd"] = "1"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        //false cases
-        jsonData["parent_id"] = "123!"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["parent_id"] = "123a!"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["parent_id"] = "123 fwe"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["parent_id"] = ["a", "b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["parent_id"] = ["a" : 1]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-    }
-    
-    func testStatus(){
-        //true cases
-        jsonData["status"] = "active"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["status"] = "ACTIVE"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["status"] = "ACTive"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["status"] = ""
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        jsonData["status"] = nil
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        //false cases
-        jsonData["status"] = "activee"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["status"] = 123
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["status"] = -123
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["status"] = ["a":"b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-    }
-    
-    func testUTS(){
-        //true cases
-        jsonData["uts"] = "123"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-
-        jsonData["uts"] = "-123"
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-
-        jsonData["uts"] = 123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-
-        jsonData["uts"] = -123
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-
-        jsonData["uts"] = nil
-        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForTrueCase(json: jsonData)
-        
-        //false cases
-        jsonData["uts"] = "123a"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-
-        jsonData["uts"] = "123 a"
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["uts"] = ""
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-    
-        jsonData["uts"] = ["a","b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-        
-        jsonData["uts"] = ["a": "b"]
-        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
-        createObjCreationForFalseCase(json: jsonData)
-    }
+//    func testID(){
+//        //true cases
+//        jsonData["id"] = "123"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = "123abc"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = "123ABC"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = "-123Negative"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = "ABC123sadfde32"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = 123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["id"] = -123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        //false cases
+//        jsonData["id"] = "123#"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = ""
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = "123 "
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = "123 acv$"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = ["a","b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = ["a":"b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["id"] = nil
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["idd"] = "123"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//    }
+//
+//    func testParentId(){
+//        //true cases
+//        jsonData["parent_id"] = "123"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = "-123"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = "123a"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = "-123a"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = 123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = -123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = ""
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_id"] = nil
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["parent_idd"] = "1"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        //false cases
+//        jsonData["parent_id"] = "123!"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["parent_id"] = "123a!"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["parent_id"] = "123 fwe"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["parent_id"] = ["a", "b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["parent_id"] = ["a" : 1]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//    }
+//
+//    func testStatus(){
+//        //true cases
+//        jsonData["status"] = "active"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["status"] = "ACTIVE"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["status"] = "ACTive"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["status"] = ""
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["status"] = nil
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        //false cases
+//        jsonData["status"] = "activee"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["status"] = 123
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["status"] = -123
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["status"] = ["a":"b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//    }
+//
+//    func testUTS(){
+//        //true cases
+//        jsonData["uts"] = "123"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["uts"] = "-123"
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["uts"] = 123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["uts"] = -123
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        jsonData["uts"] = nil
+//        XCTAssertTrue(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForTrueCase(json: jsonData)
+//
+//        //false cases
+//        jsonData["uts"] = "123a"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["uts"] = "123 a"
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["uts"] = ""
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["uts"] = ["a","b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//
+//        jsonData["uts"] = ["a": "b"]
+//        XCTAssertFalse(ostBaseEntity.validJSON(jsonData), "JSON validation failed")
+//        createObjCreationForFalseCase(json: jsonData)
+//    }
     
     func createObjCreationForTrueCase(json: [String: Any]) {
         XCTAssertNotNil(try! OSTUser(jsonData: json), "Entity object should not be nil")

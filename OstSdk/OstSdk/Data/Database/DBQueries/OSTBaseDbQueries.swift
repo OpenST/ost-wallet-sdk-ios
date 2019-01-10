@@ -18,15 +18,18 @@ class OSTBaseDbQueries: OSTDBQueriesProtocol {
     static let UTS = "uts"
     
     static let queue = DispatchQueue(label: "db", qos: .background, attributes: .concurrent)
-    fileprivate weak var db: FMDatabase?
+    weak var db: FMDatabase?
     init() {
-        db = OSTSdkDatabase.sharedInstance.database
+        db = getDb()
         db?.open()
     }
     deinit {
         db?.close()
     }
     
+    func getDb() -> FMDatabase {
+        return OSTSdkDatabase.sharedInstance.database
+    }
     //MARK: - override
     //************************************* Methods to override *************************************
     internal func activityName() -> String{
@@ -102,7 +105,7 @@ class OSTBaseDbQueries: OSTDBQueriesProtocol {
     }
     
     //MARK: - query string
-    fileprivate func getSelectQueryById(_ id: String) -> String {
+    func getSelectQueryById(_ id: String) -> String {
         return "SELECT * FROM \(activityName()) WHERE id=\(id)"
     }
     
@@ -111,15 +114,11 @@ class OSTBaseDbQueries: OSTDBQueriesProtocol {
         return query
     }
     
-    fileprivate func getInsertQuery() -> String {
+    func getInsertQuery() -> String {
         return "INSERT OR REPLACE INTO \(activityName()) (id, parent_id, data, status, uts) VALUES (:id, :parent_id, :data, :status, :uts)"
     }
     
-    fileprivate func getUpdateQuery() -> String {
-        return "UPDATE \(activityName()) SET uts = :uts, data = :data WHERE id = :id;"
-    }
-    
-    fileprivate func getDeleteQueryForId(_ id: String) -> String{
+    func getDeleteQueryForId(_ id: String) -> String{
         return "DELETE FROM \(activityName()) WHERE id=\(id)"
     }
     
@@ -128,7 +127,7 @@ class OSTBaseDbQueries: OSTDBQueriesProtocol {
     }
     
     //MARK: - dictionary
-    fileprivate func getInsertQueryParam(_ params: OSTBaseEntity) -> [String: Any] {
+    func getInsertQueryParam(_ params: OSTBaseEntity) -> [String: Any] {
         let queryParams : [String: Any] = [OSTBaseDbQueries.ID: params.id,
                                            OSTBaseDbQueries.PARENT_ID: params.parnet_id,
                                            OSTBaseDbQueries.DATA: params.data.toData(),
@@ -138,7 +137,7 @@ class OSTBaseDbQueries: OSTDBQueriesProtocol {
         return queryParams
     }
     
-    fileprivate func getDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
+    func getDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
         var resultData: Array<[String: Any]> = []
         
         while resultSet.next() {

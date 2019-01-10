@@ -16,11 +16,24 @@ class OSTBaseMigration {
         self.database = db
     }
     
+    //************************ override mthods *************************
     func version() -> Int {
         return -1
     }
-    func execute() -> Bool {
-        fatalError("activityName didnot override in \(self)")
+    
+    func getExecuteStatement() -> String {
+        fatalError("************ getExecuteStatement did not override ************")
     }
-  
+    //********************** override mthods ends ***********************
+    
+    func execute() -> Bool {
+        let statement = getExecuteStatement()
+        return executeStatement(statement)
+    }
+    
+    func executeStatement(_ statement: String) -> Bool {
+        let isSuccess: Bool = self.database.executeStatements(statement)
+        return isSuccess
+    }
+    
 }
