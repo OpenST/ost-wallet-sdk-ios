@@ -30,7 +30,7 @@ public class OSTKeychainHelper {
         guard let keyToEncrypt = getKey() else {
             throw OSTKeychainError.invalidData
         }
-        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(keyToEncrypt), dataToEncrypt: Array(data))
+        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(keyToEncrypt), iv: Array("iv".data(using: .utf8)!), ahead: Array("iv".data(using: .utf8)!), dataToEncrypt: Array(data))
         return Data(bytes: result)
     }
     
@@ -48,7 +48,7 @@ public class OSTKeychainHelper {
         guard let keyToEncrypt = getKey() else {
             throw OSTKeychainError.invalidData
         }
-        let result = try OSTCryptoImpls().aesGCMDecryption(aesKey: Array(keyToEncrypt), dataToDecrypt: Array(data))
+        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(keyToEncrypt), iv: Array("iv".data(using: .utf8)!), ahead: Array("iv".data(using: .utf8)!), dataToEncrypt: Array(data))
         return Data(bytes: result)
     }
     

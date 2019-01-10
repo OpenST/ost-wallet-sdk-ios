@@ -46,24 +46,23 @@ class OSTCryptoImpls: OSTCrypto {
         return keccakOutput
     }
     
-    func aesGCMEncrypt(aesKey: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] {
+    func aesGCMEncrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] {
         do {
-            let gcm = GCM(iv: Array("iv".utf8), mode: .combined)
+            let gcm = GCM(iv: iv, authenticationTag: ahead, mode: .combined)
             let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
-            
             let encrypted = try aes.encrypt(dataToEncrypt)
-            
             return encrypted
         }catch let error{
             throw error
         }
     }
     
-    func aesGCMDecryption(aesKey: [UInt8], dataToDecrypt : [UInt8]) throws -> [UInt8] {
+    func aesGCMDecrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8]?, dataToDecrypt : [UInt8]) throws -> [UInt8] {
         do {
-            let gcm = GCM(iv: Array("iv".utf8), mode: .combined)
+            let gcm = GCM(iv: iv, mode: .combined)
+            gcm.authenticationTag = ahead
+        
             let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
-            
             let decrypted =  try aes.decrypt(dataToDecrypt)
             return decrypted
         }catch let error{
@@ -71,7 +70,7 @@ class OSTCryptoImpls: OSTCrypto {
         }
     }
     
-    func generateCryptoKeys() throws  -> String {
+    func generateCryptoKeys() throws  -> OSTWalletKeys {
         let mnemonics : [String] = Mnemonic.create()
         print("mnemonics : \(mnemonics)")
         let seed = try! Mnemonic.createSeed(mnemonic: mnemonics)
@@ -82,8 +81,10 @@ class OSTCryptoImpls: OSTCrypto {
             fatalError("Error: \(error.localizedDescription)")
         }
         
-        let priavteKey = wallet.privateKey()
-        return priavteKey.toHexString()
+        let privateKey = wallet.privateKey()
+        let publicKey = wallet.publicKey()
+        let address = wallet.address()
+        return OSTWalletKeys(privateKey: privateKey.toHexString(), publicKey: publicKey.toHexString(), address: address)
     }
     
     func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
