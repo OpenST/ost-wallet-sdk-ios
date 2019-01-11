@@ -12,7 +12,7 @@ import XCTest
 class OSTRuleInsert: XCTestCase {
     
     var params: Dictionary<String,Any> =  ["id": "1",
-                                           "economy_id": "1234",
+                                           "token_id": "1234",
                                            "name": "value tobe inserted for id 1",
                                            "address": "0x123",
                                            "abi": "JSON_STRING_NEEDS_PARSING",

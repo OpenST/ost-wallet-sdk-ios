@@ -12,7 +12,7 @@ import XCTest
 class OstSdkRuleTests: XCTestCase {
     
     var params: Dictionary<String,String> = ["id": "123",
-                                             "economy_id": "1234",
+                                             "token_id": "1234",
                                              "name": "ASCKJS",
                                              "address": "0x12..",
                                              "abi": "JSON_STRING_NEEDS_PARSING"]
@@ -30,7 +30,7 @@ class OstSdkRuleTests: XCTestCase {
         do {
             let ostRule: OSTRule? = try OstSdk.getRule(ruleId)
             XCTAssertNotNil(ostRule, "User should not nil")
-            XCTAssertTrue(params["economy_id"] == ostRule!.economy_id , "economy_id should be same")
+            XCTAssertTrue(params["token_id"] == ostRule!.token_id , "token_id should be same")
             XCTAssertTrue(params["name"] == ostRule!.name, "name should be same")
             XCTAssertTrue(params["address"] == ostRule!.address, "address should be same")
         }catch let error {

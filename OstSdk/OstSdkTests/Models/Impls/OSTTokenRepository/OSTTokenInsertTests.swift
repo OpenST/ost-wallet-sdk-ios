@@ -1,5 +1,5 @@
 //
-//  OSTEconomyInsertTests.swift
+//  OSTTokenInsertTests.swift
 //  OstSdkTests
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OSTEconomyInsertTests: XCTestCase {
+class OSTTokenInsertTests: XCTestCase {
     var params: Dictionary<String,Any> =  ["id": "1",
                                            "uts": Date.negativeTimestamp()
     ]
@@ -24,7 +24,7 @@ class OSTEconomyInsertTests: XCTestCase {
 
     func testInsert() {
         
-        OSTEconomyRepository.sharedEconomy.save(params, success: { (entity: OSTEconomy?) in
+        OSTTokenRepository.sharedToken.save(params, success: { (entity: OSTToken?) in
             XCTAssertEqual((self.params["id"] as! String), entity?.id ?? "", "Id not equal")
             XCTAssertEqual((self.params["uts"] as! String), entity?.uts ?? "", "uts not equal")
         }, failure: { error in
@@ -34,7 +34,7 @@ class OSTEconomyInsertTests: XCTestCase {
     }
     
     func testInsert1() {
-        OSTEconomyRepository.sharedEconomy.save(params, success: { (entity: OSTEconomy?) in
+        OSTTokenRepository.sharedToken.save(params, success: { (entity: OSTToken?) in
             XCTAssertEqual((self.params["id"] as! String), entity?.id ?? "", "Id not equal")
             XCTAssertEqual((self.params["uts"] as! String), entity?.uts ?? "", "uts not equal")
         }, failure: nil)
@@ -55,8 +55,8 @@ class OSTEconomyInsertTests: XCTestCase {
         paramDict[id] = param2
         paramArray.append(param2)
         
-        OSTEconomyRepository.sharedEconomy.saveAll(paramArray, success: { (entities, failuarArray) in
-            for entity: OSTEconomy in (entities as? Array<OSTEconomy> ?? []) {
+        OSTTokenRepository.sharedToken.saveAll(paramArray, success: { (entities, failuarArray) in
+            for entity: OSTToken in (entities as? Array<OSTToken> ?? []) {
                 let param = paramDict[entity.id]!
                 XCTAssertEqual((param["id"] as! String), entity.id, "not equal")
                 XCTAssertEqual(String(param["uts"] as! Int), String(entity.uts) , "uts not equal")

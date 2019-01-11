@@ -1,5 +1,5 @@
 //
-//  OSTEconomyDbQueries.swift
+//  OSTTokenDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 02/01/19.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class OSTEconomyDbQueries: OSTBaseDbQueries {
+class OSTTokenDbQueries: OSTBaseDbQueries {
     
-    func save(_ entity: OSTEconomy) -> Bool {
+    func save(_ entity: OSTToken) -> Bool {
         return insertOrUpdateInDB(params: entity as OSTBaseEntity)
     }
     
-    func saveAll(_ entities: Array<OSTEconomy>) -> (Array<OSTEconomy>?, Array<OSTEconomy>?) {
+    func saveAll(_ entities: Array<OSTToken>) -> (Array<OSTToken>?, Array<OSTToken>?) {
         let (successArray, failuarArray) = bulkInsertOrUpdateInDB(params: (entities as Array<OSTBaseEntity>))
-        return ((successArray as? Array<OSTEconomy>) ?? nil , (failuarArray as? Array<OSTEconomy>) ?? nil)
+        return ((successArray as? Array<OSTToken>) ?? nil , (failuarArray as? Array<OSTToken>) ?? nil)
     }
     
     override func activityName() -> String{

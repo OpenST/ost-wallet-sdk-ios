@@ -21,8 +21,8 @@ public class OSTRule: OSTBaseEntity {
 }
 
 public extension OSTRule {
-    var economy_id : String? {
-        return data["economy_id"] as? String ?? nil
+    var token_id : String? {
+        return data["token_id"] as? String ?? nil
     }
     
     var name : String? {

@@ -35,12 +35,12 @@ public class OstSdk {
         return OSTTokenHolderRepository.sharedTokenHolder.save(tokenHolderJson, success: success, failure: failure)
     }
     
-    public static func getEconomy(_ id: String) throws -> OSTEconomy? {
-        return try OSTEconomyRepository.sharedEconomy.get(id)
+    public static func getToken(_ id: String) throws -> OSTToken? {
+        return try OSTTokenRepository.sharedToken.get(id)
     }
     
-    public static func initEconomy(_ economyJson: [String: Any], success: ((OSTEconomy?) -> Void)?, failure: ((Error) -> Void)?) {
-        return OSTEconomyRepository.sharedEconomy.save(economyJson, success: success, failure: failure)
+    public static func initToken(_ tokenJson: [String: Any], success: ((OSTToken?) -> Void)?, failure: ((Error) -> Void)?) {
+        return OSTTokenRepository.sharedToken.save(tokenJson, success: success, failure: failure)
     }
     
     public static func getTokenHolderSession(_ id: String) throws -> OSTTokenHolderSession? {

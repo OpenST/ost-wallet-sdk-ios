@@ -1,5 +1,5 @@
 //
-//  OSTEconomyDeleteTests.swift
+//  OSTTokenDeleteTests.swift
 //  OstSdkTests
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OSTEconomyDeleteTests: XCTestCase {
+class OSTTokenDeleteTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -21,7 +21,7 @@ class OSTEconomyDeleteTests: XCTestCase {
 
     func testDelete() {
         let id = "1"
-        OSTEconomyRepository.sharedEconomy.delete(id, success: { (isSuccess) in
+        OSTTokenRepository.sharedToken.delete(id, success: { (isSuccess) in
             XCTAssertTrue(isSuccess, "Data is not deleted.")
             if isSuccess {
                 self.testExistance(id)
@@ -33,7 +33,7 @@ class OSTEconomyDeleteTests: XCTestCase {
     
     func testExistance(_ id: String) {
         do {
-            let ruleEntity: OSTEconomy? = try OSTEconomyRepository.sharedEconomy.get(id)
+            let ruleEntity: OSTToken? = try OSTTokenRepository.sharedToken.get(id)
             XCTAssertNil(ruleEntity, "User entity should be nil")
         }catch {
             XCTAssertTrue(false, "should not receive error")
@@ -42,7 +42,7 @@ class OSTEconomyDeleteTests: XCTestCase {
     
     func testNonExistingDelete() {
         let id = "100000000"
-        OSTEconomyRepository.sharedEconomy.delete(id, success: { (isSuccess) in
+        OSTTokenRepository.sharedToken.delete(id, success: { (isSuccess) in
             XCTAssertTrue(isSuccess, "Data is not deleted.")
             if isSuccess {
                 self.testExistance(id)
@@ -52,13 +52,13 @@ class OSTEconomyDeleteTests: XCTestCase {
     
     
     func testDeleteAll() {
-        OSTEconomyRepository.sharedEconomy.deleteAll(["2","3"], success: { (isSuccess) in
+        OSTTokenRepository.sharedToken.deleteAll(["2","3"], success: { (isSuccess) in
             XCTAssertTrue(isSuccess)
         })
     }
     
     func testDeleteWithInvalidId() {
-        OSTEconomyRepository.sharedEconomy.delete("1#", success: { (isSuccess) in
+        OSTTokenRepository.sharedToken.delete("1#", success: { (isSuccess) in
             XCTAssertFalse(isSuccess)
         })
     }

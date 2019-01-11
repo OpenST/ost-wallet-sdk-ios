@@ -1,5 +1,5 @@
 //
-//  OSTEconomyGetTests.swift
+//  OSTTokenGetTests.swift
 //  OstSdkTests
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OSTEconomyGetTests: XCTestCase {
+class OSTTokenGetTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,7 +22,7 @@ class OSTEconomyGetTests: XCTestCase {
     func testGet() {
         do{
             let id = "2"
-            let entity: OSTEconomy? = try OSTEconomyRepository.sharedEconomy.get(id)
+            let entity: OSTToken? = try OSTTokenRepository.sharedToken.get(id)
             print("testGet :: id :: \(id) :: Entity :: \(entity?.data ?? [:])")
             XCTAssertEqual(entity?.id, id, "entity is not same")
         }catch {
@@ -34,7 +34,7 @@ class OSTEconomyGetTests: XCTestCase {
     func testGetInMemory() {
         do{
             let id = "2"
-            let entity: OSTEconomy? = try OSTEconomyRepository.sharedEconomy.get(id)
+            let entity: OSTToken? = try OSTTokenRepository.sharedToken.get(id)
             print("testGet :: id :: \(id) :: Entity :: \(entity?.data ?? [:])")
             XCTAssertEqual(entity?.id, id, "entity is not same")
         }catch {
@@ -46,7 +46,7 @@ class OSTEconomyGetTests: XCTestCase {
     func testGetNonExisting() {
         do{
             let id = "10000000"
-            let entity: OSTEconomy? = try OSTEconomyRepository.sharedEconomy.get(id)
+            let entity: OSTToken? = try OSTTokenRepository.sharedToken.get(id)
             XCTAssertNil(entity, "ruleEntity shoule be nil")
         }catch {
             XCTAssertFalse(true, "error is not excepted.")

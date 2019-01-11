@@ -1,5 +1,5 @@
 //
-//  OSTEconomyEntity.swift
+//  OSTToken.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 11/12/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class OSTEconomy: OSTBaseEntity {
+public class OSTToken: OSTBaseEntity {
     init(jsonData: [String: Any])throws {
         super.init()
         let (isValidJSON, errorString) = validJSON(jsonData)
