@@ -41,7 +41,7 @@ class OSTBaseModelRepository {
     //MARK: - prtocol methods
     
     func get(_ id:  String) throws -> OSTBaseEntity? {
-        if (!id.isAlphanumeric) {throw OSTError.invalidInput("id should be not null Int/String")}
+        if (!id.isUUID) {throw OSTError.invalidInput("id should be not null Int/String")}
         if let data: [String : Any] = fetchDataForId(id) {
             do {
                 let entityData = try (getEntity(data))
@@ -57,7 +57,7 @@ class OSTBaseModelRepository {
         var validIds: Array<String> = []
         var invalidIds: [String : OSTBaseEntity?] = [:]
         for id in ids {
-            if (id.isAlphanumeric) {
+            if (id.isUUID) {
                 validIds.append(id)
             }else {
                 invalidIds[id] = nil
@@ -67,7 +67,7 @@ class OSTBaseModelRepository {
     }
     
     func delete(_ id: String, success: ((Bool)->Void)?) {
-        if (!id.isAlphanumeric) {success?(false)}
+        if (!id.isUUID) {success?(false)}
         
         OSTBaseModelRepository.DBQUEUE.async {
             let isSuccess = self.getDBQueriesObj().deleteForId(id)
@@ -79,7 +79,7 @@ class OSTBaseModelRepository {
         OSTBaseModelRepository.DBQUEUE.async {
             var validIds: Array<String> = []
             for id in ids {
-                if (id.isAlphanumeric) { validIds.append(id) }
+                if (id.isUUID) { validIds.append(id) }
             }
             let isSuccess = self.getDBQueriesObj().bulkDeleteForIds(ids)
             success?(isSuccess)

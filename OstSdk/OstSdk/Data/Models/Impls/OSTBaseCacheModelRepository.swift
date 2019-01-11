@@ -124,7 +124,7 @@ class OSTBaseCacheModelRepository: OSTBaseModelRepository {
 
     //MARK: - delete
     override func delete(_ id: String, success: ((Bool)->Void)?) {
-        if (!id.isAlphanumeric) {success?(false)}
+        if (!id.isUUID) {success?(false)}
         super.delete(id, success: { (isSuccess) in
             self.removeFromCache(key: id)
             self.removeInMemoryData(key: id)

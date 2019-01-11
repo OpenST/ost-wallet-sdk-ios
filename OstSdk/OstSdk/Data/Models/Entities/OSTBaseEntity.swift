@@ -79,14 +79,14 @@ public class OSTBaseEntity: NSObject {
     }
     
     fileprivate func isValidID(_ id: String) -> Bool {
-        return id.isAlphanumeric
+        return id.isUUID
     }
     
     fileprivate func isValidParnetId(_ parnetId: String) -> Bool {
         if (parnetId.isEmpty){
             return true
         }
-        return parnetId.isAlphanumeric
+        return parnetId.isUUID
     }
     
     fileprivate func isValidUTS(_ uts: String) -> Bool {
