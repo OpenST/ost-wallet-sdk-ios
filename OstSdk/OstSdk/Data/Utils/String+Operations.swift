@@ -80,7 +80,11 @@ extension String {
     }
     
     public func addHexPrefix() -> String {
-        return "0x".appending(self)
+        let prefix = "0x"
+        if self.hasPrefix(prefix){
+            return self
+        }
+        return prefix.appending(self)
     }
     
     public func toHexString() -> String {
