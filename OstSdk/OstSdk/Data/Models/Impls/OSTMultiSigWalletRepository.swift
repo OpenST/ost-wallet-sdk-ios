@@ -12,7 +12,7 @@ class OSTMultiSigWalletRepository: OSTBaseCacheModelRepository, OSTMultiSigWalle
     
     static let sharedMultiSigWallet = OSTMultiSigWalletRepository()
     private override init() {
-        print("\n**************\ninit for 'OSTEconomyRepository' called\n**************\n")
+        print("\n**************\ninit for 'OSTMultiSigWalletRepository' called\n**************\n")
     }
     
     override func get(_ id: String) throws -> OSTMultiSigWallet? {

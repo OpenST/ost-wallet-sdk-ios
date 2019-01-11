@@ -11,7 +11,7 @@ import Foundation
 class OSTMultiSigRepository: OSTBaseCacheModelRepository, OSTMultiSigModel {
     static let sharedMultiSig = OSTMultiSigRepository()
     private override init() {
-        print("\n**************\ninit for 'OSTEconomyRepository' called\n**************\n")
+        print("\n**************\ninit for 'OSTMultiSigRepository' called\n**************\n")
     }
     
     override func get(_ id: String) throws -> OSTMultiSig? {

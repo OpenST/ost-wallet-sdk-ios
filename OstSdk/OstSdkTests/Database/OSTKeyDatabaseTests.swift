@@ -21,7 +21,7 @@ class OSTKeyDatabase: XCTestCase {
 
     func testKeyDatabase() {
         OSTSecureKeyRepository.sharedSecureKey.save(["key":"0x123","data":"A".data(using: .utf8)!], success: { (secureKey) in
-            print(secureKey)
+            print(secureKey!)
         }, failure: { (error) in
             print(error)
         })
@@ -29,7 +29,7 @@ class OSTKeyDatabase: XCTestCase {
     
     func testA() {
         do {
-            try OSTInitialDeviceProvisioning(params: ["a":"a"]).crateWalletKeys()
+            try OSTInitialDeviceProvisioning(OSTKeyGenerationParams()).perform()
         }catch {
             
         }
