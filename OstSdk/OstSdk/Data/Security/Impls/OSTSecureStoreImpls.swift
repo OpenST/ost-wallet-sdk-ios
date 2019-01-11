@@ -34,7 +34,6 @@ public class OSTSecureStoreImpls: OSTSecureStore {
                 return try OSTSecureEnclaveHelper(address: address).decrypt(data: data)
             }
         }
-        
         return try OSTKeychainHelper(address: address).decrypt(data)
     }
     
