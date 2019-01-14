@@ -48,8 +48,7 @@ class OSTCryptoImpls: OSTCrypto {
     
     func aesGCMEncrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] {
         do {
-//            let gcm = GCM(iv: iv, authenticationTag: ahead, mode: .combined)
-            let gcm = GCM(iv: iv, mode: .combined)
+            let gcm = GCM(iv: iv, authenticationTag: ahead, mode: .combined)
             let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
             let encrypted = try aes.encrypt(dataToEncrypt)
             return encrypted

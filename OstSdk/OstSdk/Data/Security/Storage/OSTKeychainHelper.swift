@@ -30,15 +30,22 @@ public class OSTKeychainHelper {
         guard let aesKey = getKey() else {
             throw OSTKeychainError.invalidData
         }
-        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(aesKey), iv: Array("iv".data(using: .utf8)!), ahead: Array("iv".data(using: .utf8)!), dataToEncrypt: Array(data))
+        let ahead = try OSTCryptoImpls().genHKDFKey(salt: Array("hkdfSalt".data(using: .utf8)!), data:  Array("hkdfData".data(using: .utf8)!))
+        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(aesKey),
+                                                        iv: Array("iv".data(using: .utf8)!),
+                                                        ahead: ahead,
+                                                        dataToEncrypt: Array(data))
         return Data(bytes: result)
     }
     
     func getKey() -> Data? {
         
         guard let key = KeychainSwift(keyPrefix: namespace).getData(address) else {
-            let key = try? OSTCryptoImpls().genSCryptKey(salt: namespace.data(using: .utf8)!, stringToCalculate: address)
-            KeychainSwift(keyPrefix: namespace).set(key!, forKey: address, withAccess: .accessibleWhenUnlockedThisDeviceOnly)
+            let key = try? OSTCryptoImpls().genSCryptKey(salt: namespace.data(using: .utf8)!,
+                                                         stringToCalculate: address)
+            KeychainSwift(keyPrefix: namespace).set(key!,
+                                                    forKey: address,
+                                                    withAccess: .accessibleWhenUnlockedThisDeviceOnly)
             return KeychainSwift(keyPrefix: namespace).getData(address)
         }
         return key
@@ -48,7 +55,10 @@ public class OSTKeychainHelper {
         guard let aesKey = getKey() else {
             throw OSTKeychainError.invalidData
         }
-        let result = try OSTCryptoImpls().aesGCMEncrypt(aesKey: Array(aesKey), iv: Array("iv".data(using: .utf8)!), ahead: Array("iv".data(using: .utf8)!), dataToEncrypt: Array(data))
+        let result = try OSTCryptoImpls().aesGCMDecrypt(aesKey: Array(aesKey),
+                                                        iv: Array("iv".data(using: .utf8)!),
+                                                        ahead: nil,
+                                                        dataToDecrypt: Array(data))
         return Data(bytes: result)
     }
     
