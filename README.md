@@ -1,7 +1,21 @@
 # ost-client-ios-sdk
 OST Client SDK for iOS
 
-1. Set up
-    1. git clone https://github.com/OpenSTFoundation/ost-client-ios-sdk.git
-    2. carthage update --platform ios
+## Installation
+1. Pull branch from github: 
+
+        git clone https://github.com/OpenSTFoundation/ost-client-ios-sdk.git
+        
+2. Checkout aniket/workflows
+
+        git checkout aniket/workflows
+
+3. Install dependencies:
+
+        carthage update --platform ios
+        
+4. open ost-client-ios-sdk
+    
+        1. open .
+        2. open OstSdk/OstSdk.xcodeproj
     
