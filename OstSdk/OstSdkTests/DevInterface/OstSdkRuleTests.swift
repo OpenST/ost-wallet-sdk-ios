@@ -28,11 +28,11 @@ class OstSdkRuleTests: XCTestCase {
         var ruleId = "123"
         XCTAssertNoThrow(try OstSdk.getRule(ruleId), "should not throw error")
         do {
-            let ostRule: OSTRule? = try OstSdk.getRule(ruleId)
-            XCTAssertNotNil(ostRule, "User should not nil")
-            XCTAssertTrue(params["token_id"] == ostRule!.token_id , "token_id should be same")
-            XCTAssertTrue(params["name"] == ostRule!.name, "name should be same")
-            XCTAssertTrue(params["address"] == ostRule!.address, "address should be same")
+            let OstRule: OstRule? = try OstSdk.getRule(ruleId)
+            XCTAssertNotNil(OstRule, "User should not nil")
+            XCTAssertTrue(params["token_id"] == OstRule!.token_id , "token_id should be same")
+            XCTAssertTrue(params["name"] == OstRule!.name, "name should be same")
+            XCTAssertTrue(params["address"] == OstRule!.address, "address should be same")
         }catch let error {
             XCTAssertNil(error, "Error should not occure")
         }
@@ -49,8 +49,8 @@ class OstSdkRuleTests: XCTestCase {
     }
     
     func testInitRule() {
-        OstSdk.initRule(params, success: { (ostRule) in
-            XCTAssertNotNil(ostRule, "Rule should not nil")
+        OstSdk.initRule(params, success: { (OstRule) in
+            XCTAssertNotNil(OstRule, "Rule should not nil")
         }, failure: nil)
         
         params["id"] = "1#"

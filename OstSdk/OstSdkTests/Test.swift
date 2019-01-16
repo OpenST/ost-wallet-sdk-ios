@@ -20,18 +20,18 @@ class Test: XCTestCase {
     }
     
     func testExecuteMigration(){
-        let _ = OSTSdkDatabase.sharedInstance
+        let _ = OstSdkDatabase.sharedInstance
     }
     
 //    func testSingleInsert(){
 //        let params: Dictionary<String,Any> = ["id":4, "name":"Aniket"]
-//        let isSuccess = OSTUserDbQueries().insertInDB(params: params)
+//        let isSuccess = OstUserDbQueries().insertInDB(params: params)
 //        print("testSingleInsert :: isSuccess: \(isSuccess)")
 //    }
 //
 //    func testSingleUpdate(){
 //        let params: Dictionary<String,Any> = ["id":12, "name":"Aniket1"]
-//        let isSuccess = OSTUserDbQueries().updateInDB(params: params)
+//        let isSuccess = OstUserDbQueries().updateInDB(params: params)
 //        print("testSingleUpdate :: isSuccess: \(isSuccess)")
 //    }
 //
@@ -40,7 +40,7 @@ class Test: XCTestCase {
 //                                            ["id":15, "name":"Aniket"],
 //                                            ["id":16, "name":"Aniket"]
 //        ]
-//        let (successArray, failuarArray) = OSTUserDbQueries().bulkInsertInDB(params: params)
+//        let (successArray, failuarArray) = OstUserDbQueries().bulkInsertInDB(params: params)
 //
 //        print("testBulkInsert :: successArray : \(successArray)")
 //        print("testBulkInsert :: failuarArray : \(failuarArray)")
@@ -51,7 +51,7 @@ class Test: XCTestCase {
 //                                            ["id":15, "name":"Aniket1"],
 //                                            ["id":16, "name":"Aniket2"]
 //        ]
-//        let (successArray, failuarArray) = OSTUserDbQueries().bulkUpdateInDB(params: params)
+//        let (successArray, failuarArray) = OstUserDbQueries().bulkUpdateInDB(params: params)
 //
 //        print("testBulkInsert :: successArray : \(successArray)")
 //        print("testBulkInsert :: failuarArray : \(failuarArray)")
@@ -61,7 +61,7 @@ class Test: XCTestCase {
 ////        UserDbQueries().getText(text: "aniket") { (result) in
 ////            print("callbackFunciton: \(result)")
 ////        }
-//        OSTUserDbQueries().test(completion: { (output) in
+//        OstUserDbQueries().test(completion: { (output) in
 //            print("output : \(output)")
 //        })
 //        print("here")

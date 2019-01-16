@@ -27,10 +27,10 @@ class OstSdkUserTests: XCTestCase {
         var userId = "1"
         XCTAssertNoThrow(try OstSdk.getUser(userId), "should not throw error")
         do {
-            let ostUser: OSTUser? = try OstSdk.getUser(userId)
-            XCTAssertNotNil(ostUser, "User should not nil")
-            XCTAssertTrue(params["name"] == ostUser!.name, "name should be same")
-            XCTAssertTrue(params["parent_id"] == ostUser!.parnet_id, "name should be same")
+            let OstUser: OstUser? = try OstSdk.getUser(userId)
+            XCTAssertNotNil(OstUser, "User should not nil")
+            XCTAssertTrue(params["name"] == OstUser!.name, "name should be same")
+            XCTAssertTrue(params["parent_id"] == OstUser!.parnet_id, "name should be same")
         }catch let error {
             XCTAssertNil(error, "Error should not occure")
         }
@@ -48,8 +48,8 @@ class OstSdkUserTests: XCTestCase {
     
     func testInitUser() {
        
-        OstSdk.initUser(params, success: { (ostUser) in
-            XCTAssertNotNil(ostUser, "User should not nil")
+        OstSdk.initUser(params, success: { (OstUser) in
+            XCTAssertNotNil(OstUser, "User should not nil")
         }, failure: nil)
         
         params = ["id":"1#",

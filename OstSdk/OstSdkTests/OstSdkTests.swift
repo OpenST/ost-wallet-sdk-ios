@@ -24,7 +24,7 @@ class OstSdkTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
         do {
-            _ = try OSTSecureStoreImpls(address: "0x123")
+            _ = try OstSecureStoreImpls(address: "0x123")
         }catch let error{
             XCTAssertNil(error)
         }

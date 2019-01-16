@@ -29,15 +29,15 @@ class OstSdkTokenHolderTests: XCTestCase {
         var thId = "1"
         XCTAssertNoThrow(try OstSdk.getTokenHolder(thId), "should not throw error")
         do {
-            let ostTH: OSTTokenHolder? = try OstSdk.getTokenHolder(thId)
-            XCTAssertNotNil(ostTH, "User should not nil")
-            if (ostTH != nil){
-                XCTAssertTrue(params["user_id"] as? String == ostTH!.user_id , "user_id should be same")
-                XCTAssertTrue(params["multisig_id"] as? String == ostTH!.multisig_id, "multisig_id should be same")
-                XCTAssertTrue(params["address"] as? String == ostTH!.address, "address should be same")
-                XCTAssertTrue(params["execute_rule_callprefix"] as? String == ostTH!.execute_rule_callprefix, "execute_rule_callprefix should be same")
-                if (ostTH!.sessions != nil) {
-                    for (index, val) in ostTH!.sessions!.enumerated() {
+            let OstTH: OstTokenHolder? = try OstSdk.getTokenHolder(thId)
+            XCTAssertNotNil(OstTH, "User should not nil")
+            if (OstTH != nil){
+                XCTAssertTrue(params["user_id"] as? String == OstTH!.user_id , "user_id should be same")
+                XCTAssertTrue(params["multisig_id"] as? String == OstTH!.multisig_id, "multisig_id should be same")
+                XCTAssertTrue(params["address"] as? String == OstTH!.address, "address should be same")
+                XCTAssertTrue(params["execute_rule_callprefix"] as? String == OstTH!.execute_rule_callprefix, "execute_rule_callprefix should be same")
+                if (OstTH!.sessions != nil) {
+                    for (index, val) in OstTH!.sessions!.enumerated() {
                         let session = (params["sessions"] as! Array<String>)[index]
                         XCTAssertTrue((val == session),"\(val) and \(session) are not same")
                     }
@@ -59,8 +59,8 @@ class OstSdkTokenHolderTests: XCTestCase {
     }
     
     func testInitTokenHolder() {
-        OstSdk.initTokenHolder(params, success: { (ostRule) in
-            XCTAssertNotNil(ostRule, "Rule should not nil")
+        OstSdk.initTokenHolder(params, success: { (OstRule) in
+            XCTAssertNotNil(OstRule, "Rule should not nil")
         }, failure: nil)
         
         params["id"] = "1#"

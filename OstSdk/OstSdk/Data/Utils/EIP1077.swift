@@ -11,17 +11,17 @@ import CryptoSwift
 
 class EIP1077 {
     
-    private static let TX_FROM = "from"
-    private static let TX_TO = "to"
-    private static let TX_GAS = "gas"
-    private static let TX_GASPRICE = "gasPrice"
-    private static let TX_GASTOKEN = "gasToken"
-    private static let TX_NONCE = "nonce"
-    private static let TX_CALLPREFIX = "callPrefix"
-    private static let TX_OPERATIONTYPE = "operationType"
-    private static let TX_VALUE = "value"
-    private static let TX_DATA = "data"
-    private static let TX_EXTRAHASH = "extraHash"
+    static let TX_FROM = "from"
+    static let TX_TO = "to"
+    static let TX_GAS = "gas"
+    static let TX_GASPRICE = "gasPrice"
+    static let TX_GASTOKEN = "gasToken"
+    static let TX_NONCE = "nonce"
+    static let TX_CALLPREFIX = "callPrefix"
+    static let TX_OPERATIONTYPE = "operationType"
+    static let TX_VALUE = "value"
+    static let TX_DATA = "data"
+    static let TX_EXTRAHASH = "extraHash"
     
     private static let BYTES_BYTE_OFFSET = 5
     private static let UINT_BIT_OFFSET = 4
@@ -90,7 +90,7 @@ class EIP1077 {
 //            }
 //            hexVal = hexVal.stripHexPrefix()
 //            if unitNibble < hexVal.count {
-//                throw OSTError.invalidInput("uint size exceed")
+//                throw OstError.invalidInput("uint size exceed")
 //            }
 //            return hexVal.padLeft(totalWidth: unitNibble, with: "0")
 //
@@ -102,7 +102,7 @@ class EIP1077 {
 //                let filteredVal = value.stripHexPrefix()
 //
 //                if unitNibble < filteredVal.count {
-//                    throw OSTError.invalidInput("bytes size exceed")
+//                    throw OstError.invalidInput("bytes size exceed")
 //                }
 //                return filteredVal.padLeft(totalWidth: unitNibble, with: "0")
 //            }
