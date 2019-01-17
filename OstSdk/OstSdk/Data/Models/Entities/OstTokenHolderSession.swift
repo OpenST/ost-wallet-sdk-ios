@@ -10,20 +10,6 @@ import Foundation
 
 public class OstTokenHolderSession: OstBaseEntity {
     
-//    public override init(_ params: [String: Any]) throws {
-//        try super.init(params)
-//    }
-    
-    public init(_ params: [String: Any]) throws {
-        super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
-        }
-        
-        setParams(params)
-    }
 }
 
 public extension OstTokenHolderSession {

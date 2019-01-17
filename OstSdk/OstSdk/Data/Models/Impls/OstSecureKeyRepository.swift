@@ -38,9 +38,7 @@ class OstSecureKeyRepository: OstBaseCacheModelRepository, OstSecureKeyModel {
         return OstSecureKeyDbQueries()
     }
     
-    override func saveDataInCache(key: String, val: OstBaseEntity) {
-    }
-    
-    override func removeFromCache(key: String) {
+    override func isCacheEnable() -> Bool {
+        return false
     }
 }

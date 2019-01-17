@@ -10,17 +10,6 @@ import Foundation
 
 public class OstMultiSig: OstBaseEntity {
     
-    init(_ params: [String: Any]) throws {
-        super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
-        }
-        
-        setParams(params)
-    }
-    
     public func getDeviceMultiSigWallet() throws -> OstMultiSigWallet? {
         do {
             guard let multiSigWallets: [OstMultiSigWallet] = try OstMultiSigWalletRepository.sharedMultiSigWallet.getByParent(self.id) as? [OstMultiSigWallet] else {

@@ -18,17 +18,19 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
     static let UTS = "uts"
     
     static let queue = DispatchQueue(label: "db", qos: .background, attributes: .concurrent)
+    weak var dbQueue: FMDatabaseQueue?
     weak var db: FMDatabase?
     init() {
         db = getDb()
-        db?.open()
-    }
-    deinit {
-        db?.close()
+        dbQueue = getDbQueue()
     }
     
     func getDb() -> FMDatabase {
         return OstSdkDatabase.sharedInstance.database
+    }
+    
+    func getDbQueue() -> FMDatabaseQueue {
+        return OstSdkDatabase.sharedInstance.databaseQueue!
     }
     //MARK: - override
     //************************************* Methods to override *************************************
@@ -151,10 +153,10 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
     //MARK: - dictionary
     func getInsertQueryParam(_ params: OstBaseEntity) -> [String: Any] {
         let queryParams : [String: Any] = [OstBaseDbQueries.ID: params.id,
-                                           OstBaseDbQueries.PARENT_ID: params.parnet_id,
+                                           OstBaseDbQueries.PARENT_ID: params.parnetId ?? "",
                                            OstBaseDbQueries.DATA: params.data.toData(),
                                            OstBaseDbQueries.UTS: params.updated_timestamp,
-                                           OstBaseDbQueries.STATUS: params.status
+                                           OstBaseDbQueries.STATUS: params.status ?? ""
         ]
         return queryParams
     }
@@ -163,16 +165,9 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
         var resultData: Array<[String: Any]> = []
         
         while resultSet.next() {
-            let dDataVal: [String: Any] = (Data(resultSet.data(forColumn: "data")!)).toDictionary()
-            let r: [String: Any] = [OstBaseDbQueries.ID: resultSet.string(forColumn: OstBaseDbQueries.ID)!,
-                                    OstBaseDbQueries.PARENT_ID: resultSet.string(forColumn: OstBaseDbQueries.PARENT_ID)!,
-                                    OstBaseDbQueries.DATA: dDataVal,
-                                    OstBaseDbQueries.STATUS: resultSet.string(forColumn: OstBaseDbQueries.STATUS)!,
-                                    OstBaseDbQueries.UTS: resultSet.string(forColumn: OstBaseDbQueries.UTS)!
-            ]
-            resultData.append(r)
+            let decodedData: [String: Any] = (Data(resultSet.data(forColumn: "data")!)).toDictionary()
+            resultData.append(decodedData)
         }
-        
         return resultData
     }
 }

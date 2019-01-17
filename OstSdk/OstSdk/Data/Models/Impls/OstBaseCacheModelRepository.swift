@@ -12,11 +12,14 @@ import Foundation
 class OstBaseCacheModelRepository: OstBaseModelRepository {
     
     private var inMemoryCache: [String: OstBaseEntity] = [:]
-    private var entityCache = NSCache<NSString, OstBaseEntity>()
+    private var entityCache: NSCache<NSString, OstBaseEntity>?
     
     override init() {
         super.init()
-        entityCache.countLimit = maxCountToCache()
+        if (isCacheEnable()) {
+            entityCache = NSCache<NSString, OstBaseEntity>()
+            entityCache!.countLimit = maxCountToCache()
+        }
     }
     
     func maxCountToCache() -> Int {
@@ -29,20 +32,13 @@ class OstBaseCacheModelRepository: OstBaseModelRepository {
     
     //MARK: - get
     override func get(_ id: String) throws -> OstBaseEntity? {
-        if let entity = getDataFromCache(id) {
+        if let entity = getDataFromCache(id) { return entity }
+      
+        if let entity: OstBaseEntity = try super.get(id) {
+            saveDataInCache(key: entity.id, val: entity)
             return entity
         }
-        do {
-           
-            if let entity: OstBaseEntity = try super.get(id) {
-                saveDataInCache(key: entity.id, val: entity)
-                return entity
-            }
-            return nil
-        }catch let error {
-            throw error
-        }
-        
+        return nil
     }
     
     override func bulkFetchDataForId(_ ids: Array<String>) -> [String: OstBaseEntity?] {
@@ -134,19 +130,24 @@ class OstBaseCacheModelRepository: OstBaseModelRepository {
     
     //MARK: - Cache Functions
     fileprivate func getDataFromCache(_ id: String) -> OstBaseEntity? {
-        if (isCacheEnable()) {
-            if let cacheData = entityCache.object(forKey: id as NSString) {
-                return cacheData
-            }
+        if let cacheData = getCacheData(forKey: id) {
+            return cacheData
         }
+        
         if let inMemoryData = inMemoryCache[id] {
             return inMemoryData
         }
         return nil
     }
     
+    //MARK: - In memory
     fileprivate func saveDataInMemory(key: String, val: OstBaseEntity) {
-        inMemoryCache[key] = val
+        if (inMemoryCache[key] == nil) {
+            inMemoryCache[key] = val
+        }else {
+            let inMemoryVal: OstBaseEntity = (inMemoryCache[key])!
+            inMemoryVal.data = val.data
+        }
     }
     
     fileprivate func bulkSaveDataInMemory(_ entities: Array<OstBaseEntity>) {
@@ -160,15 +161,30 @@ class OstBaseCacheModelRepository: OstBaseModelRepository {
         inMemoryCache[key] = nil
     }
     
-    func saveDataInCache(key: String, val: OstBaseEntity) {
+    // MARK: - In cache
+    
+    fileprivate func getCacheData(forKey key: String) -> OstBaseEntity? {
         if (isCacheEnable()) {
-            entityCache.setObject(val, forKey: key as NSString)
+            if let cacheData = entityCache!.object(forKey: key as NSString) {
+                return cacheData
+            }
+        }
+        return nil
+    }
+    
+    fileprivate func saveDataInCache(key: String, val: OstBaseEntity) {
+        if (isCacheEnable()) {
+            if let cacheData = getCacheData(forKey: key) {
+                cacheData.data = val.data
+            }else {
+                entityCache!.setObject(val, forKey: key as NSString)
+            }
         }
     }
 
-    func removeFromCache(key: String) {
+    fileprivate func removeFromCache(key: String) {
         if (isCacheEnable()) {
-            entityCache.removeObject(forKey: key as NSString)
+            entityCache!.removeObject(forKey: key as NSString)
         }
     }
     

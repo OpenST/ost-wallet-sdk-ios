@@ -23,7 +23,7 @@ class OstUserEntityTests: XCTestCase {
     func testInitSuccess(){
         var userEntity: OstUser
         do{
-            userEntity = try OstUser(jsonData: jsonData)
+            userEntity = try OstUser(jsonData)
             XCTAssertNotNil(userEntity)
         }catch let error{
             print("Init failed for user entity failed. \(error)")

@@ -15,6 +15,8 @@ public class OstSecureKey: OstBaseEntity {
     init(data: Data, forKey key: String) {
         self.key = key
         self.secData = data
+        
+        super.init()
     }
 }
 

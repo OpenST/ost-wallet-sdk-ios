@@ -8,14 +8,9 @@
 
 import Foundation
 
-enum OstError: Error {
-    case invalidInput(String)
-    case actionFailed(String)
-}
-
 class OstBaseModelRepository {
     
-    internal static let DBQUEUE = DispatchQueue.main
+    internal static let DBQUEUE = DispatchQueue.global()
     
     //MARK: - override
     //************************************* Methods to override *************************************

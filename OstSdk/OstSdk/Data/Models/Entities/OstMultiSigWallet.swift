@@ -10,16 +10,7 @@ import Foundation
 import EthereumKit
 
 public class OstMultiSigWallet: OstBaseEntity {
-    init(_ params: [String: Any]) throws {
-        super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
-        }
-        
-        setParams(params)
-    }
+   
 }
 
 public extension OstMultiSigWallet {

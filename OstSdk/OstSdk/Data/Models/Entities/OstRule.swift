@@ -10,16 +10,6 @@ import Foundation
 
 public class OstRule: OstBaseEntity {
     
-    init(_ params: [String: Any]) throws {
-        super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
-        }
-        
-        setParams(params)
-    }
 }
 
 public extension OstRule {

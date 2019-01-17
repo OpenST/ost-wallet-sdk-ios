@@ -9,19 +9,7 @@
 import Foundation
 
 public class OstUser: OstBaseEntity {
-    
-    init(_ params: [String: Any]) throws {
-        super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
-        }
-        
-        setParams(params)
-    }
-    
-  
+
     public func getMultiSig() throws -> OstMultiSig? {
         if (self.multisig_id != nil) {
             return try OstSdk.getMultiSig(self.multisig_id!)
