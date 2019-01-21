@@ -16,21 +16,13 @@ public class OstBaseEntity: NSObject {
     static let STATUS = "status"
     static let UPDATED_TIMESTAMP = "updated_timestamp"
     
-    public var id: String { return getId(data) }
-    
-    var parnetId: String? { return getParentId(data) }
-    
-    public var status: String? { return getStatus(data) }
-    
-    public var updated_timestamp: Int { return data[OstBaseEntity.UPDATED_TIMESTAMP] as? Int ?? 0 }
-    
-    var data: [String: Any] = ["id": String(Date.negativeTimestamp())]
+    public internal(set) var data: [String: Any?] = ["id":String(Date.negativeTimestamp())]
     
     override init() {
         super.init()
     }
     
-    init(_ params: [String: Any]) throws {
+     init(_ params: [String: Any]) throws {
         super.init()
         
         let isValidParams = try validate(params)
@@ -63,7 +55,7 @@ public class OstBaseEntity: NSObject {
     
     //MARK: - set properties
     func setParams(_ params: [String: Any]) {
-        self.data = params
+        data = params
     }
     
     func getId(_ params: [String: Any]) -> String {
@@ -77,4 +69,19 @@ public class OstBaseEntity: NSObject {
     func getStatus(_ params: [String: Any]) -> String? {
         return OstUtils.toString(params[OstBaseEntity.STATUS])
     }
+    
+    func processJson(_ entityData: [String: Any?]){
+        self.data = entityData
+    }
+}
+
+
+extension OstBaseEntity {
+    public var id: String { return getId(data as [String : Any]) }
+    
+    var parnetId: String? { return getParentId(data as [String : Any]) }
+    
+    public var status: String? { return getStatus(data as [String : Any]) }
+    
+    public var updated_timestamp: Int { return Int(data[OstBaseEntity.UPDATED_TIMESTAMP] as? String ?? "0")!}
 }

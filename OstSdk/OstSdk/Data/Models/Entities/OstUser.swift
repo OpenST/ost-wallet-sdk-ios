@@ -9,12 +9,24 @@
 import Foundation
 
 public class OstUser: OstBaseEntity {
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    }
+    
+    static func getEntityIdentifer() -> String {
+        return "id"
+    }
 
     public func getMultiSig() throws -> OstMultiSig? {
         if (self.multisig_id != nil) {
-            return try OstSdk.getMultiSig(self.multisig_id!)
+            return try OstMultiSigRepository.sharedMultiSig.getById(self.multisig_id!) as? OstMultiSig
         }
         return nil
+    }
+    
+    override func getId(_ params: [String: Any]) -> String {
+        return OstUtils.toString(params[OstUser.getEntityIdentifer()])!
     }
 }
 

@@ -9,7 +9,17 @@
 import Foundation
 
 public class OstTokenHolderSession: OstBaseEntity {
+    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstTokenHolderSessionRepository.sharedTokenHolderSession.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    }
     
+    static func getEntityIdentifer() -> String {
+        return "id"
+    }
+    
+    override func getId(_ params: [String: Any]) -> String {
+        return OstUtils.toString(params[OstTokenHolderSession.getEntityIdentifer()])!
+    }
 }
 
 public extension OstTokenHolderSession {
@@ -86,6 +96,6 @@ extension OstTokenHolderSession{
             return ""
         }
         
-        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: secureKey.privateKey)
+        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: secureKey.privateKey!)
     }
 }

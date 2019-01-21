@@ -23,7 +23,7 @@ class OstSecureStoreTests: XCTestCase {
         let text = "Aniket"
         
         do {
-            let encData = try OstSecureStoreImpls(address: "0x123").encrypt(data: text.data(using: .utf8)!)
+            _ = try OstSecureStoreImpls(address: "0x123").encrypt(data: text.data(using: .utf8)!)
         }catch let error{
             print(error)
             XCTAssertFalse(true,"error should not receive")

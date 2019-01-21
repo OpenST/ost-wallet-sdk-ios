@@ -10,15 +10,6 @@ import Foundation
 
 class OstRuleDbQueries: OstBaseDbQueries {
     
-    func save(_ entity: OstRule) -> Bool {
-        return insertOrUpdateInDB(params: entity as OstBaseEntity)
-    }
-    
-    func saveAll(_ entities: Array<OstRule>) -> (Array<OstRule>?, Array<OstRule>?) {
-        let (successArray, failuarArray) = bulkInsertOrUpdateInDB(params: (entities as Array<OstBaseEntity>))
-        return ((successArray as? Array<OstRule>) ?? nil , (failuarArray as? Array<OstRule>) ?? nil)
-    }
-    
     override func activityName() -> String{
         return "rules"
     }

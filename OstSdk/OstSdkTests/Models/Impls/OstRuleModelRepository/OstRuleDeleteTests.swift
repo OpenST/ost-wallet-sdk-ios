@@ -19,48 +19,6 @@ class OstRuleDeleteTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testDelete() {
-        let id = "1"
-        OstRuleModelRepository.sharedRule.delete(id, success: { (isSuccess) in
-            XCTAssertTrue(isSuccess, "Data is not deleted.")
-            if isSuccess {
-                self.testExistance(id)
-            }
-        })
-    }
-    
-    func testExistance(_ id: String) {
-        do {
-            let ruleEntity: OstRule? = try OstRuleModelRepository.sharedRule.get(id)
-            XCTAssertNil(ruleEntity, "User entity should be nil")
-        }catch {
-            XCTAssertTrue(false, "should not receive error")
-        }
-    }
-    
-    func testNonExistingDelete() {
-        let id = "100000000"
-        OstRuleModelRepository.sharedRule.delete(id, success: { (isSuccess) in
-            XCTAssertTrue(isSuccess, "Data is not deleted.")
-            if isSuccess {
-                self.testExistance(id)
-            }
-        })
-    }
-    
-    
-    func testDeleteAll() {
-        OstRuleModelRepository.sharedRule.deleteAll(["2","3"], success: { (isSuccess) in
-            XCTAssertTrue(isSuccess)
-        })
-    }
-    
-    func testDeleteWithInvalidId() {
-        OstRuleModelRepository.sharedRule.delete("1#", success: { (isSuccess) in
-            XCTAssertFalse(isSuccess)
-        })
-    }
-
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

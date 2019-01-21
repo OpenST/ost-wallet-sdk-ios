@@ -10,154 +10,113 @@ import Foundation
 
 class OstBaseModelRepository {
     
-    internal static let DBQUEUE = DispatchQueue.global()
+    internal static let DBQUEUE = DispatchQueue.main
+    private var inMemoryCache: [String: OstBaseEntity] = [:]
+    
+    static func getId(_ entityData: [String: Any?], forKey key: String) throws -> String {
+        guard let identifer = entityData[key] else {
+            throw OstError.invalidInput("JsonOject doesn't have desired identifier")
+        }
+        return identifer as! String
+    }
+    
+    static func getUpdatedTimestamp(_ entityData: [String: Any?]) -> Int {
+        return Int(entityData[OstBaseEntity.UPDATED_TIMESTAMP] as? String ?? "0")!
+    }
+    
+    final func insertOrUpdate(_ entityData: [String: Any?], forId id: String) throws -> OstBaseEntity? {
+        let idVal: String = try OstBaseModelRepository.getId(entityData, forKey: id)
+        if let dbEntity = try getById(idVal) {
+            let updatedTmestamp = OstBaseModelRepository.getUpdatedTimestamp(entityData)
+            if (updatedTmestamp < dbEntity.updated_timestamp) {
+                return dbEntity
+            }
+            dbEntity.processJson(entityData)
+            return insertOrUpdateEntity(dbEntity)
+        }
+        let entity = try getEntity(entityData)
+        return insertOrUpdateEntity(entity)
+    }
+    
     
     //MARK: - override
-    //************************************* Methods to override *************************************
-    
+//************************************* Methods to override *************************************
     func getDBQueriesObj() -> OstBaseDbQueries {
         fatalError("getDBQueriesObj is not override")
     }
     
-    func getEntity(_ data: [String : Any]) throws -> OstBaseEntity {
+    func getEntity(_ data: [String : Any?]) throws -> OstBaseEntity {
         fatalError("getEntity is not override")
     }
+//************************************ Methods to override end ***********************************
     
-    func saveEntity(_ entity: OstBaseEntity) -> Bool{
-        fatalError("saveEntity is not override")
-    }
-    
-    func saveAllEntities(_ entities: Array<OstBaseEntity>) -> (Array<OstBaseEntity>?,  Array<OstBaseEntity>?){
-        fatalError("saveAllEntities is not override")
-    }
-    
-    //************************************ Methods to override end ***********************************
-    
-    //MARK: - prtocol methods
-    
-    func get(_ id:  String) throws -> OstBaseEntity? {
-        if (!id.isUUID) {throw OstError.invalidInput("id should be not null Int/String")}
-        if let data: [String : Any] = fetchDataForId(id) {
-            do {
-                let entityData = try getEntity(data)
-                return entityData
-            }catch let error {
-                throw error
-            }
+    func getById(_ id: String) throws -> OstBaseEntity? {
+        if let entity = getEntityFromInMemory(ForId: id) {
+            return entity
+        }
+        
+        let dbQueryObj = getDBQueriesObj()
+        if let dbEntityData: [String: Any?] = try dbQueryObj.getById(id) {
+            let entityData = try getEntity(dbEntityData as [String : Any])
+            return entityData
         }
         return nil
     }
     
-    func getByParent(_ parent_id: String) throws -> [OstBaseEntity]? {
-        guard let result: Array<[String: Any]> = getDBQueriesObj().selectByParentId(parent_id) else {
-            return nil
-        }
-        var entities: Array<OstBaseEntity> = []
-        for ele in result {
-            do {
-                let entityData = try getEntity(ele)
+    func getByParentId(_ parent_id: String) throws -> [OstBaseEntity]? {
+        let dbQueryObj = getDBQueriesObj()
+        if let dbEntityDataArray: [[String: Any?]] = try dbQueryObj.getByParentId(parent_id) {
+            var entities: Array<OstBaseEntity> = []
+            for dbEntityData in dbEntityDataArray {
+                let entityData = try getEntity(dbEntityData as [String : Any])
                 entities.append(entityData)
-            }catch let error{
-                throw error
             }
             return entities
         }
         return nil
     }
     
-    func getAll(_ ids: Array<String>) -> [String: OstBaseEntity?] {
-        var validIds: Array<String> = []
-        var invalidIds: [String : OstBaseEntity?] = [:]
-        for id in ids {
-            if (id.isUUID) {
-                validIds.append(id)
-            }else {
-                invalidIds[id] = nil
+    func insertOrUpdateEntity(_ entity: OstBaseEntity) -> OstBaseEntity? {
+        saveEntityInMemory(key: entity.id, val: entity)
+        OstBaseModelRepository.DBQUEUE.async {
+            let dbQueryObj = self.getDBQueriesObj()
+            let isSuccess = dbQueryObj.insertOrUpdate(entity)
+            if isSuccess {
+                self.removeInMemoryEntity(key: entity.id)
             }
         }
-        return bulkFetchDataForId(validIds)
+        return entity
     }
     
-    func delete(_ id: String, success: ((Bool)->Void)?) {
-        if (!id.isUUID) {success?(false)}
-        
+    func deleteForId(_ id: String, callback: ((Bool)->Void)?) {
+        removeInMemoryEntity(key: id)
         OstBaseModelRepository.DBQUEUE.async {
-            let isSuccess = self.getDBQueriesObj().deleteForId(id)
-            success?(isSuccess)
+            let dbQueryObj = self.getDBQueriesObj()
+            let isSuccess = dbQueryObj.deleteForId(id)
+            callback?(isSuccess)
         }
     }
     
-    func deleteAll(_ ids: Array<String>, success: ((Bool) -> Void)?){
-        OstBaseModelRepository.DBQUEUE.async {
-            var validIds: Array<String> = []
-            for id in ids {
-                if (id.isUUID) { validIds.append(id) }
-            }
-            let isSuccess = self.getDBQueriesObj().bulkDeleteForIds(ids)
-            success?(isSuccess)
-        }
-    }
-    
-    //MARK: - base methods
-    
-    func fetchDataForId(_ id: String) -> [String: Any]? {
-        if let data: [String: Any] = getDBQueriesObj().selectForId(id) {
-            return data
+    //MARK: - In memory
+    fileprivate func getEntityFromInMemory(ForId id: String) -> OstBaseEntity? {
+        if let inMemoryData = inMemoryCache[id] {
+            return inMemoryData
         }
         return nil
     }
     
-    
-    func bulkFetchDataForId(_ ids: Array<String>) -> [String: OstBaseEntity?] {
-        let data: [String: [String: Any]?]? = getDBQueriesObj().selectForIds(ids)
-        var entities: [String: OstBaseEntity?] = [:]
-        for id in ids {
-            let entityData: [String: Any]? = data?[id] as? [String: Any] ?? nil
-            do {
-                entities[id] = (entityData != nil) ? try getEntity(entityData!) : nil
-            }catch {
-                entities[id] = nil
-            }
-            
+    fileprivate func saveEntityInMemory(key: String, val: OstBaseEntity) {
+        if (inMemoryCache[key] == nil) {
+            inMemoryCache[key] = val
+        }else {
+            let inMemoryVal: OstBaseEntity = (inMemoryCache[key])!
+            inMemoryVal.data = val.data
         }
-        return entities
     }
     
-    func insertOrUpdate(_ entityObj: OstBaseEntity) -> OstBaseEntity? {
-        
-        let isInsertionSuccess = saveEntity(entityObj)
-        return isInsertionSuccess ? entityObj : nil
+    fileprivate func removeInMemoryEntity(key: String) {
+        inMemoryCache[key] = nil
     }
-    
-    func bulkInsertOrUpdate(_ entityArray: Array<OstBaseEntity>) -> (Array<OstBaseEntity>?, Array<OstBaseEntity>?) {
 
-            let (successArray, failuarArray) = saveAllEntities(entityArray)
-            return (successArray ?? nil, failuarArray ?? nil)
-    }
-    
-    func save(_ data: [String : Any], success: ((OstBaseEntity?) -> Void)?, failure: ((Error) -> Void)?) {
-        OstBaseModelRepository.DBQUEUE.async {
-            do {
-                let entityObj = try self.getEntity(data)
-                let entity: OstBaseEntity? = self.insertOrUpdate(entityObj)
-                (entity != nil) ? success?(entity!) : failure?(OstError.actionFailed("Insertion of entity failed."))
-            }catch let error {
-                failure?(error)
-            }
-        }
-    }
-    
-    func saveAll(_ dataArray: Array<[String: Any]>, success: ((Array<OstBaseEntity>?, Array<OstBaseEntity>?) -> Void)?, failure: ((Error) -> Void)?) {
-        OstBaseModelRepository.DBQUEUE.async {
-            do {
-                var entities: Array<OstBaseEntity> = []
-                for data in dataArray {
-                    let entityObj = try self.getEntity(data)
-                    entities.append(entityObj)
-                }
-                let (successArray, failuarArray) = self.bulkInsertOrUpdate(entities)
-                success?(successArray ?? nil, failuarArray ?? nil)
-            }catch let error { failure?(error) }
-        }
-    }
 }
+

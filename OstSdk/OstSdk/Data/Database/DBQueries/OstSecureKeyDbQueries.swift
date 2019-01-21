@@ -19,15 +19,11 @@ class OstSecureKeyDbQueries: OstBaseDbQueries {
         return "secure_keys"
     }
     
-    func save(_ entity: OstSecureKey) -> Bool {
-        return insertOrUpdateInDB(params: entity as OstBaseEntity)
-    }
-    
-    override func getSelectQueryById(_ key: String) -> String {
+    override func getSelectByIdQuery(_ key: String) -> String {
         return "SELECT * FROM \(activityName()) WHERE key=\"\(key)\""
     }
     
-    override func getInsertQuery() -> String {
+    override func getInsertOrUpdateQuery() -> String {
         return "INSERT OR REPLACE INTO \(activityName()) (key, data) VALUES (:key, :data)"
     }
     
@@ -35,14 +31,14 @@ class OstSecureKeyDbQueries: OstBaseDbQueries {
         return "DELETE FROM \(activityName()) WHERE key=\"\(key)\""
     }
     
-    override func getInsertQueryParam(_ params: OstBaseEntity) -> [String: Any] {
+    override func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
         let queryParams : [String: Any] = ["key": (params as! OstSecureKey).key,
                                            "data": (params as! OstSecureKey).secData
                                           ]
         return queryParams
     }
     
-    override func getDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
+    override func getEntityDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
         var resultData: Array<[String: Any]> = []
         
         while resultSet.next() {

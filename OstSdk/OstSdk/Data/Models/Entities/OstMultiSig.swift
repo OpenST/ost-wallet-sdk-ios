@@ -10,9 +10,21 @@ import Foundation
 
 public class OstMultiSig: OstBaseEntity {
     
+    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstMultiSigRepository.sharedMultiSig.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    }
+    
+    static func getEntityIdentifer() -> String {
+        return "id"
+    }
+    
+    override func getId(_ params: [String: Any]) -> String {
+        return OstUtils.toString(params[OstMultiSig.getEntityIdentifer()])!
+    }
+    
     public func getDeviceMultiSigWallet() throws -> OstMultiSigWallet? {
         do {
-            guard let multiSigWallets: [OstMultiSigWallet] = try OstMultiSigWalletRepository.sharedMultiSigWallet.getByParent(self.id) as? [OstMultiSigWallet] else {
+            guard let multiSigWallets: [OstMultiSigWallet] = try OstMultiSigWalletRepository.sharedMultiSigWallet.getByParentId(self.id) as? [OstMultiSigWallet] else {
                 return nil
             }
             
@@ -20,7 +32,7 @@ public class OstMultiSig: OstBaseEntity {
                 guard let multiSigWalletAddress: String = multiSigWallet.address else {
                     continue
                 }
-                guard let _: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.get(multiSigWalletAddress) else {
+                guard let _: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.getById(multiSigWalletAddress) as? OstSecureKey else {
                     continue
                 }
                 return multiSigWallet

@@ -10,30 +10,35 @@ import XCTest
 @testable import OstSdk
 
 class OstMultiSigWalletSignTransactionTests: XCTestCase {
-
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
+    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testMultiSigSignTransaction() {
-       
+        
         
     }
     
     func testInitUser() {
         //create user
-        let userDict = ["id": 1,
-                        "token_holder_id": 1,
-                        "multisig_id": 1,
-                        "economy_id" : 1,
-                        "uts" : Date.timestamp()]
-        OstSdk.initUser(userDict, success: { (user) in
-            XCTAssertNotNil(user)
-        }, failure: nil)
+        do {
+            let userDict = ["id": 1,
+                            "token_holder_id": 1,
+                            "multisig_id": 1,
+                            "economy_id" : 1,
+                            "uts" : Date.timestamp()]
+            let user = try OstSdk.initUser(userDict)
+            XCTAssertNotNil(user, "user object should not be nil")
+        }catch let error {
+            print(error)
+            XCTAssertNil(error, "error should be nil")
+        }
+        
     }
     
     func testKeyGenerationProcess() {
@@ -48,41 +53,44 @@ class OstMultiSigWalletSignTransactionTests: XCTestCase {
     }
     
     func testInitMultiSig() {
-        let multiSig: [String: Any] = ["id":1,
-                        "user_id": 1,
-                        "address": "0x123",
-                        "token_holder_id": 1,
-                        "wallets": [1,2,3],
-                        "requirement": 1,
-                        "authorize_session_callprefix": "0x",
-                        "uts" : Date.timestamp()]
-        OstSdk.initMultiSig(multiSig, success: { (multiSig) in
-             XCTAssertNotNil(multiSig)
-        }, failure: { (error) in
+        do {
+            let multiSig: [String: Any] = ["id":1,
+                                           "user_id": 1,
+                                           "address": "0x123",
+                                           "token_holder_id": 1,
+                                           "wallets": [1,2,3],
+                                           "requirement": 1,
+                                           "authorize_session_callprefix": "0x",
+                                           "uts" : Date.timestamp()]
+            try OstSdk.initMultiSig(multiSig)
+        }catch let error {
             print(error)
-        })
+            XCTAssertNil(error, "error should be nil")
+        }
     }
     
     func testInitMultiSigWallet() {
-        let multiSigWallet: [String: Any] = ["id": 1,
-                              "local_entity_id": -1,
-                              "address": "0x123a",
-                              "multi_sig_id": "1",
-                              "nonce": "0",
-                              "status": "CREATED",
-                              "uts" : Date.timestamp()]
-        OstSdk.initMultiSigWallet(multiSigWallet, success: { (multiSigWallet) in
-            XCTAssertNotNil(multiSigWallet)
-        }, failure: { (error) in
+        do {
+            let multiSigWallet: [String: Any] = ["id": 1,
+                                                 "local_entity_id": -1,
+                                                 "address": "0x123a",
+                                                 "multi_sig_id": "1",
+                                                 "nonce": "0",
+                                                 "status": "CREATED",
+                                                 "uts" : Date.timestamp()]
+           try OstSdk.initMultiSigWallet(multiSigWallet)
+        }catch let error {
             print(error)
-        })
+            XCTAssertNil(error, "error should be nil")
+        }
     }
-
+    
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
 }

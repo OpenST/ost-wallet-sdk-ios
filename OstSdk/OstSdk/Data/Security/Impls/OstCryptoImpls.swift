@@ -90,14 +90,9 @@ class OstCryptoImpls: OstCrypto {
     func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
         let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
         
-        do {
-            var singedData = try priKey.sign(hash: Data(hex: tx))
-            singedData[64] += 27
-            let singedTx = singedData.toHexString().addHexPrefix();
-            return singedTx
-        }catch let error {
-            print("signTx :: error : \(error.localizedDescription)")
-            throw error
-        }
+        var singedData = try priKey.sign(hash: Data(hex: tx))
+        singedData[64] += 27
+        let singedTx = singedData.toHexString().addHexPrefix();
+        return singedTx
     }
 }

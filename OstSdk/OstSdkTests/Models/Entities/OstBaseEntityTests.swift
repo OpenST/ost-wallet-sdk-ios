@@ -23,16 +23,16 @@ class OstBaseEntityTests: XCTestCase {
     
     func testInitObj() {
         
-        XCTAssertNotNil(try OstUser(jsonData: jsonData), "Object creation failed.")
-        XCTAssertNotNil(try OstUser(jsonData: ["id":1]), "Object creation failed.")
+        XCTAssertNotNil(try OstUser(jsonData), "Object creation failed.")
+        XCTAssertNotNil(try OstUser(["id":1]), "Object creation failed.")
     }
     
     func createObjCreationForTrueCase(json: [String: Any]) {
-        XCTAssertNotNil(try! OstUser(jsonData: json), "Entity object should not be nil")
+        XCTAssertNotNil(try! OstUser(json), "Entity object should not be nil")
     }
     
     func createObjCreationForFalseCase(json: [String: Any]) {
-        XCTAssertThrowsError(try OstUser(jsonData: json))
+        XCTAssertThrowsError(try OstUser(json))
     }
     
     func testPerformanceExample() {

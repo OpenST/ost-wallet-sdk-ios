@@ -10,15 +10,6 @@ import Foundation
 
 class OstUserDbQueries: OstBaseDbQueries {
    
-    func save(_ entity: OstUser) -> Bool {
-        return insertOrUpdateInDB(params: entity as OstBaseEntity)
-    }
-
-    func saveAll(_ entities: Array<OstUser>) -> (Array<OstUser>?, Array<OstUser>?) {
-        let (successArray, failuarArray) = bulkInsertOrUpdateInDB(params: (entities as Array<OstBaseEntity>))
-        return ((successArray as? Array<OstUser>) ?? nil , (failuarArray as? Array<OstUser>) ?? nil)
-    }
-    
     override func activityName() -> String{
         return "users"
     }

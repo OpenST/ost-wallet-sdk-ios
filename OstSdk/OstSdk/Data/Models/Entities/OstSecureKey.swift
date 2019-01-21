@@ -12,6 +12,10 @@ public class OstSecureKey: OstBaseEntity {
     public private(set) var key: String
     public private(set) var secData: Data
     
+    var privateKey: String? {
+        return String(data: secData, encoding: .utf8)
+    }
+    
     init(data: Data, forKey key: String) {
         self.key = key
         self.secData = data
@@ -21,17 +25,10 @@ public class OstSecureKey: OstBaseEntity {
 }
 
 extension OstSecureKey {
-    var privateKey: String {
-        return String(data: secData, encoding: .utf8)!
-    }
-}
-
-
-extension OstSecureKey {
     
     public class func getSecKey(for address: String) throws -> OstSecureKey? {
         do {
-            guard let secureKey: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.get(address.addHexPrefix()) else {
+            guard let secureKey: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.getById(address.addHexPrefix()) as? OstSecureKey else {
                 throw OstError.actionFailed("Issue while getting Data for \(address)")
             }
             guard let decPrivateKey: Data = try OstSecureStoreImpls(address: address.addHexPrefix()).decrypt(data: secureKey.secData) else {
@@ -54,17 +51,15 @@ extension OstSecureKey {
             }
             
             let secureKey: OstSecureKey = OstSecureKey(data: encPrivateKey, forKey: key.addHexPrefix())
-            let isSecureKeyStored = OstSecureKeyRepository.sharedSecureKey.saveEntity(secureKey)
-            
-            if isSecureKeyStored {
+            if OstSecureKeyRepository.sharedSecureKey.insertOrUpdateEntity(secureKey) != nil {
                 guard let decPrivateKey: Data = try OstSecureStoreImpls(address: secureKey.key.addHexPrefix()).decrypt(data: secureKey.secData) else {
                     throw OstError.actionFailed("storing secure key failed")
                 }
                 
                 return OstSecureKey(data: decPrivateKey, forKey: secureKey.key.addHexPrefix())
-            }else {
-                throw OstError.actionFailed("storing secure key failed")
             }
+
+            throw OstError.actionFailed("storing secure key failed")
         }catch {
             throw OstError.actionFailed("storing secure key failed")
         }

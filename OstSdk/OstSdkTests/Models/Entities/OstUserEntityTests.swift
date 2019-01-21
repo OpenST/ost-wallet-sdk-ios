@@ -11,7 +11,6 @@ import XCTest
 
 class OstUserEntityTests: XCTestCase {
     
-    var jsonData: [String: Any] = ["id":"123","parent_id":"1","status":"active","uts": "12324","name": "Aniket"]
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -20,25 +19,42 @@ class OstUserEntityTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testInitSuccess(){
-        var userEntity: OstUser
-        do{
-            userEntity = try OstUser(jsonData)
-            XCTAssertNotNil(userEntity)
+    func testInitUser() {
+        let id = "4"
+        let userDict = ["id": "\(id)a",
+            "token_holder_id": "\(id)a",
+            "multisig_id": "\(id)a",
+            "economy_id" : "\(id)a",
+            "uts" : "\(id)a"] as [String : Any]
+        
+        do {
+            let user: OstUser? = try OstSdk.initUser(userDict)
+            print(user ?? "")
         }catch let error{
-            print("Init failed for user entity failed. \(error)")
-            XCTAssertTrue(false, "User entity creation failed.")
+            print(error)
         }
     }
     
-    func testInitUser() {
-        var userEntity: OstUser
-        do{
-            userEntity = try OstUser(["id":"123d@"])
-            print(userEntity)
-        }catch let error {
+    func testGetUser() {
+        do {
+            let user: OstUser = try OstUserModelRepository.sharedUser.getById("1a") as! OstUser
+            print(user)
+            let user1: OstUser = try OstUserModelRepository.sharedUser.getById("1a") as! OstUser
+            print(user1)
+        }catch let error{
             print(error)
         }
+    }
+    
+    func testDeleteUser() {
+        do {
+            let _ = try OstUserModelRepository.sharedUser.getById("2a") as! OstUser
+            OstUserModelRepository.sharedUser.deleteForId("2a")
+            let _ = try OstUserModelRepository.sharedUser.getById("2a") as! OstUser
+        }catch let error{
+            print(error)
+        }
+       
     }
    
     func testPerformanceExample() {

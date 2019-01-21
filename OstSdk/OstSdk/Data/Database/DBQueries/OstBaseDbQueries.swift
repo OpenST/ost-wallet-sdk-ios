@@ -9,7 +9,7 @@
 import Foundation
 import FMDB
 
-class OstBaseDbQueries: OstDBQueriesProtocol {
+class OstBaseDbQueries {
     
     static let ID = "id"
     static let PARENT_ID = "parent_id"
@@ -32,126 +32,57 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
     func getDbQueue() -> FMDatabaseQueue {
         return OstSdkDatabase.sharedInstance.databaseQueue!
     }
+    
     //MARK: - override
     //************************************* Methods to override *************************************
     internal func activityName() -> String{
-        fatalError("activityName didnot override in \(self)")
+        fatalError("activityName did not override in \(self)")
     }
     //************************************ Methods to override end ***********************************
     
-    //MARK: - db implementaiton
-    func selectForId(_ id: String) -> Dictionary<String, Any>? {
-        let selectQuery = getSelectQueryById(id)
-        
-        var resultToReturn: [String: Any]? = nil
-        do {
-            let resultSet: FMResultSet? = try db?.executeQuery(selectQuery, values: nil) ?? nil
-            if resultSet != nil{
-                let result = getDataFromResultSet(resultSet!)
-                if (result.count > 0) {
-                    resultToReturn =  result.first
-                }
-            }
-        }catch {}
-        
-        return resultToReturn
+    // MARK: - new code
+    func getById(_ id: String) throws -> [String: Any?]? {
+        let selectByIdQuery = getSelectByIdQuery(id)
+        let dbResult = try executeQuery(selectByIdQuery)
+        return dbResult?.first
     }
     
-    func selectByParentId(_ parentId: String) -> [[String: Any]]? {
-        let selectByParentIdQuery = getSelectByParentIdQuery(parentId)
-        var resultToReturn: Array<[String: Any]>? = []
-        
-        do {
-            let resultSet: FMResultSet? = try db?.executeQuery(selectByParentIdQuery, values: nil) ?? nil
-            if resultSet != nil{
-                let result = getDataFromResultSet(resultSet!)
-                if (result.count > 0) {
-                    resultToReturn?.append(result.last!)
-                }
-            }
-        }catch {}
-        
-        return resultToReturn
+    func getByParentId(_ id: String) throws -> Array<[String: Any?]>? {
+        let selectByParentIdQuery = getSelectByParentIdQuery(id)
+        return try executeQuery(selectByParentIdQuery)
     }
     
-    func selectForIds(_ ids: Array<String>) -> [String: [String:Any]?]? {
-        let selectQuery = getSelectQueryByIds(ids)
-        do {
-            let resultSet: FMResultSet? = try db?.executeQuery(selectQuery, values: nil) ?? nil
-            if resultSet != nil{
-                let results = getDataFromResultSet(resultSet!)
-                var resultHash: [String: [String:Any]?] = [:]
-                for result in results {
-                    resultHash[result["id"] as! String] = result
-                }
-                return resultHash
-            }
-            return nil
-        }catch {
-            return nil
-        }
-    }
-    
-    func insertOrUpdateInDB(params: OstBaseEntity) -> Bool {
-        let insertQuery = getInsertQuery()
-        let queryParam = getInsertQueryParam(params)
-        return db?.executeUpdate(insertQuery, withParameterDictionary: queryParam) ?? false
-    }
-    
-    func bulkInsertOrUpdateInDB(params: Array<OstBaseEntity>) -> (Array<OstBaseEntity>, Array<OstBaseEntity>) {
-        let insertQuery: String = getInsertQuery()
-        var insertSuccessArray: Array<OstBaseEntity> = Array()
-        var insertFailuarArray: Array<OstBaseEntity> = Array()
-        for param in params{
-            let queryParam = getInsertQueryParam(param)
-            let isSuccess: Bool = db?.executeUpdate(insertQuery, withParameterDictionary: queryParam) ?? false
-            isSuccess ? insertSuccessArray.append(param) : insertFailuarArray.append(param)
-        }
-        
-        return (insertSuccessArray, insertFailuarArray)
+    func insertOrUpdate(_ entity: OstBaseEntity) -> Bool {
+        let insertOrUpdateQuery = getInsertOrUpdateQuery()
+        let queryParam = getInsertOrUpdateQueryParam(entity)
+        return executeUpdate(insertOrUpdateQuery, values: queryParam)
     }
     
     func deleteForId(_ id: String) -> Bool {
         let deleteQuery = getDeleteQueryForId(id)
-        let isDeleteSuccess: Bool =  db?.executeStatements(deleteQuery) ?? false
-        return isDeleteSuccess
+        return executeStatement(deleteQuery)
     }
     
-    func bulkDeleteForIds(_ ids: Array<String>) -> Bool {
-        let deleteQuery = getDeleteQueryForIds(ids)
-        let isDeleteSuccess: Bool =  db?.executeStatements(deleteQuery) ?? false
-        return isDeleteSuccess
+    // MARK: - Execute
+    func executeQuery(_ query: String) throws -> Array<[String: Any?]>? {
+        if let resultSet: FMResultSet = try db?.executeQuery(query, values: nil) ?? nil {
+            let result = getEntityDataFromResultSet(resultSet)
+            return result
+        }
+        return nil
     }
     
-    //MARK: - query string
-    func getSelectQueryById(_ id: String) -> String {
-        return "SELECT * FROM \(activityName()) WHERE id=\"\(id)\""
+    func executeStatement(_ query: String) -> Bool {
+        let isSuccess: Bool =  db?.executeStatements(query) ?? false
+        return isSuccess
     }
     
-    fileprivate func getSelectQueryByIds(_ ids: Array<String>) -> String {
-        let query: String = "SELECT * FROM \(activityName()) WHERE id IN (\(ids.joined(separator: ",")))"
-        return query
+    func executeUpdate(_ query: String, values: [String: Any]) -> Bool {
+        return db?.executeUpdate(query, withParameterDictionary: values) ?? false
     }
     
-    fileprivate func getSelectByParentIdQuery(_ parentId: String) -> String {
-        let query: String = "SELECT * FROM \(activityName()) WHERE parent_id=\"\(parentId)\""
-        return query
-    }
-    
-    func getInsertQuery() -> String {
-        return "INSERT OR REPLACE INTO \(activityName()) (id, parent_id, data, status, uts) VALUES (:id, :parent_id, :data, :status, :uts)"
-    }
-    
-    func getDeleteQueryForId(_ id: String) -> String{
-        return "DELETE FROM \(activityName()) WHERE id=\"\(id)\""
-    }
-    
-    fileprivate func getDeleteQueryForIds(_ ids: Array<String>) -> String{
-        return "DELETE FROM \(activityName()) WHERE id IN (\(ids.joined(separator: ",")))"
-    }
-    
-    //MARK: - dictionary
-    func getInsertQueryParam(_ params: OstBaseEntity) -> [String: Any] {
+    // MARK: - Database Structure
+    func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
         let queryParams : [String: Any] = [OstBaseDbQueries.ID: params.id,
                                            OstBaseDbQueries.PARENT_ID: params.parnetId ?? "",
                                            OstBaseDbQueries.DATA: params.data.toData(),
@@ -161,7 +92,7 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
         return queryParams
     }
     
-    func getDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
+    func getEntityDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
         var resultData: Array<[String: Any]> = []
         
         while resultSet.next() {
@@ -169,5 +100,23 @@ class OstBaseDbQueries: OstDBQueriesProtocol {
             resultData.append(decodedData)
         }
         return resultData
+    }
+    
+    //MARK: - Query string
+    func getSelectByIdQuery(_ id: String) -> String {
+        return "SELECT * FROM \(activityName()) WHERE id=\"\(id)\""
+    }
+    
+    fileprivate func getSelectByParentIdQuery(_ parentId: String) -> String {
+        let query: String = "SELECT * FROM \(activityName()) WHERE parent_id=\"\(parentId)\""
+        return query
+    }
+    
+    func getInsertOrUpdateQuery() -> String {
+        return "INSERT OR REPLACE INTO \(activityName()) (id, parent_id, data, status, uts) VALUES (:id, :parent_id, :data, :status, :uts)"
+    }
+    
+    func getDeleteQueryForId(_ id: String) -> String{
+        return "DELETE FROM \(activityName()) WHERE id=\"\(id)\""
     }
 }

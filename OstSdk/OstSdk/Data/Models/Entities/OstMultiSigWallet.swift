@@ -10,7 +10,17 @@ import Foundation
 import EthereumKit
 
 public class OstMultiSigWallet: OstBaseEntity {
-   
+    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstMultiSigWalletRepository.sharedMultiSigWallet.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    }
+    
+    static func getEntityIdentifer() -> String {
+        return "id"
+    }
+    
+    override func getId(_ params: [String: Any]) -> String {
+        return OstUtils.toString(params[OstMultiSigWallet.getEntityIdentifer()])!
+    }
 }
 
 public extension OstMultiSigWallet {
