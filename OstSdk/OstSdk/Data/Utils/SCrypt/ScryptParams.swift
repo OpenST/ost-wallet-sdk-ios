@@ -75,7 +75,7 @@ public struct ScryptParams {
         if desiredKeyLength > ((1 << 32 as Int64) - 1 as Int64) * 32 {
             return ValidationError.desiredKeyLengthTooLarge
         }
-        if UInt64(r) * UInt64(p) >= (1 << 30) {
+        if UInt64(r) * UInt64(p) >= (1 << 30 as UInt64) {
             return ValidationError.blockSizeTooLarge
         }
         if n & (n - 1) != 0 || n < 2 {
