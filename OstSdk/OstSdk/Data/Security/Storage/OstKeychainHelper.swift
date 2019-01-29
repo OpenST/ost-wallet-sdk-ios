@@ -42,6 +42,10 @@ public class OstKeychainHelper {
         
         guard let key = KeychainSwift(keyPrefix: namespace).getData(address) else {
             let key = try? OstCryptoImpls().genSCryptKey(salt: namespace.data(using: .utf8)!,
+                                                         n: OstConstants.OST_SCRYPT_N,
+                                                         r: OstConstants.OST_SCRYPT_R,
+                                                         p: OstConstants.OST_SCRYPT_P,
+                                                         size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES,
                                                          stringToCalculate: address)
             KeychainSwift(keyPrefix: namespace).set(key!,
                                                     forKey: address,

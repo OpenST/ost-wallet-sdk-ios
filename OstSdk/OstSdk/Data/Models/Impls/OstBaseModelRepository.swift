@@ -21,14 +21,15 @@ class OstBaseModelRepository {
     }
     
     static func getUpdatedTimestamp(_ entityData: [String: Any?]) -> Int {
-        return Int(entityData[OstBaseEntity.UPDATED_TIMESTAMP] as? String ?? "0")!
+        return OstUtils.toInt(entityData[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0
+        
     }
     
-    final func insertOrUpdate(_ entityData: [String: Any?], forId id: String) throws -> OstBaseEntity? {
-        let idVal: String = try OstBaseModelRepository.getId(entityData, forKey: id)
-        if let dbEntity = try getById(idVal) {
+    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifier identifier: String) throws -> OstBaseEntity? {
+        let id: String = try OstBaseModelRepository.getId(entityData, forKey: identifier)
+        if let dbEntity = try getById(id) {
             let updatedTmestamp = OstBaseModelRepository.getUpdatedTimestamp(entityData)
-            if (updatedTmestamp < dbEntity.updated_timestamp) {
+            if (updatedTmestamp == dbEntity.updated_timestamp) {
                 return dbEntity
             }
             dbEntity.processJson(entityData)

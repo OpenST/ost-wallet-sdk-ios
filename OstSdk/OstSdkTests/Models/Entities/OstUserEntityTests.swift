@@ -19,42 +19,59 @@ class OstUserEntityTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testInitUser() {
-        let id = "4"
+    func testInitUser() throws {
+        let id = "1"
         let userDict = ["id": "\(id)a",
             "token_holder_id": "\(id)a",
             "multisig_id": "\(id)a",
             "economy_id" : "\(id)a",
-            "uts" : "\(id)a"] as [String : Any]
-        
-        do {
-            let user: OstUser? = try OstSdk.initUser(userDict)
+            "updated_timestamp" : Date.timestamp()] as [String : Any]
+            
+            
+        let user: OstUser? = try OstSdk.parseUser(userDict)
+        print(user ?? "")
+        XCTAssertNotNil(user, "user should not be nil")
+        XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
+        XCTAssertEqual(user?.multisig_id, userDict["multisig_id"] as? String, "id is not equal")
+    }
+    
+    func testBulkInitUser() throws {
+        for i in 2..<5 {
+            let id = i
+            let userDict = ["id": "\(id)a",
+                "token_holder_id": "\(id)a",
+                "multisig_id": "\(id)a",
+                "economy_id" : "\(id)a",
+                "updated_timestamp" : Date.timestamp()] as [String : Any]
+            
+            let user: OstUser? = try OstSdk.parseUser(userDict)
             print(user ?? "")
-        }catch let error{
-            print(error)
+            XCTAssertNotNil(user, "user should not be nil")
+            XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
+            XCTAssertEqual(user?.multisig_id, userDict["multisig_id"] as? String, "id is not equal")
         }
     }
     
     func testGetUser() {
         do {
-            let user: OstUser = try OstUserModelRepository.sharedUser.getById("1a") as! OstUser
-            print(user)
-            let user1: OstUser = try OstUserModelRepository.sharedUser.getById("1a") as! OstUser
-            print(user1)
+            let user: OstUser? = try OstUserModelRepository.sharedUser.getById("1a") as? OstUser
+            XCTAssertNil(user)
+            let user1: OstUser? = try OstUserModelRepository.sharedUser.getById("4a") as? OstUser
+            XCTAssertNotNil(user1)
         }catch let error{
             print(error)
         }
     }
     
     func testDeleteUser() {
-        do {
-            let _ = try OstUserModelRepository.sharedUser.getById("2a") as! OstUser
-            OstUserModelRepository.sharedUser.deleteForId("2a")
-            let _ = try OstUserModelRepository.sharedUser.getById("2a") as! OstUser
-        }catch let error{
-            print(error)
+        OstUserModelRepository.sharedUser.deleteForId("1a")
+    }
+    
+    func testBulkDeleteUser() throws {
+        for i in 1..<10 {
+            let id = "\(i)a"
+            OstUserModelRepository.sharedUser.deleteForId(id)
         }
-       
     }
    
     func testPerformanceExample() {

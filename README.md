@@ -2,11 +2,11 @@
 OST Client SDK for iOS
 
 ## Installation
-1. Pull branch from github: 
+1. Clone branch: 
 
         git clone https://github.com/OpenSTFoundation/ost-client-ios-sdk.git
         
-2. Checkout aniket/workflows
+2. Checkout aniket/workflows:
 
         git checkout aniket/workflows
 

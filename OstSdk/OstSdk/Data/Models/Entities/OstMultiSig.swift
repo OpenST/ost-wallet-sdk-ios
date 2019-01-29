@@ -10,14 +10,14 @@ import Foundation
 
 public class OstMultiSig: OstBaseEntity {
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstMultiSigRepository.sharedMultiSig.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstMultiSig? {
+        return try OstMultiSigRepository.sharedMultiSig.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstMultiSig ?? nil
     }
     
     static func getEntityIdentifer() -> String {
-        return "id"
+        return "user_id"
     }
-    
+        
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstMultiSig.getEntityIdentifer()])!
     }

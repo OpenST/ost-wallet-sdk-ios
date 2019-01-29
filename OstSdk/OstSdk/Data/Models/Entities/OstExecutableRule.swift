@@ -9,8 +9,8 @@
 import Foundation
 
 public class OstExecutableRule: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstExecutableRuleRepository.sharedExecutableRule.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstExecutableRule? {
+        return try OstExecutableRuleRepository.sharedExecutableRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstExecutableRule ?? nil
     }
     
     static func getEntityIdentifer() -> String {

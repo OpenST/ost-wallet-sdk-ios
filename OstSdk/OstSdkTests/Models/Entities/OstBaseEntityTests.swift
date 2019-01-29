@@ -12,7 +12,7 @@ import XCTest
 class OstBaseEntityTests: XCTestCase {
     
     
-    var jsonData: [String: Any] = ["id":"123","parent_id":"1","status":"active","uts": "12324","name": "Aniket"]
+    var jsonObject: [String: Any] = ["id":"123","parent_id":"1","status":"active","uts": "12324","name": "Aniket"]
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -23,16 +23,13 @@ class OstBaseEntityTests: XCTestCase {
     
     func testInitObj() {
         
-        XCTAssertNotNil(try OstUser(jsonData), "Object creation failed.")
+        XCTAssertNotNil(try OstUser(jsonObject), "Object creation failed.")
         XCTAssertNotNil(try OstUser(["id":1]), "Object creation failed.")
     }
     
-    func createObjCreationForTrueCase(json: [String: Any]) {
-        XCTAssertNotNil(try! OstUser(json), "Entity object should not be nil")
-    }
-    
-    func createObjCreationForFalseCase(json: [String: Any]) {
-        XCTAssertThrowsError(try OstUser(json))
+    func testObjectCreationFailed() {
+        jsonObject["id"] = nil
+        XCTAssertThrowsError(try OstUser(jsonObject))
     }
     
     func testPerformanceExample() {

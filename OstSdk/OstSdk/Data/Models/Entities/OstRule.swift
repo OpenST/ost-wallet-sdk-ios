@@ -10,8 +10,8 @@ import Foundation
 
 public class OstRule: OstBaseEntity {
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
+        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstRule ?? nil
     }
     
     static func getEntityIdentifer() -> String {

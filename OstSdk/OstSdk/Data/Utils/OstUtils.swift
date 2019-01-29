@@ -21,4 +21,16 @@ class OstUtils {
         }
         return nil
     }
+    
+    static func toInt(_ val: Any?) -> Int? {
+        if val == nil {
+            return nil
+        }
+        if (val is Int){
+            return (val as! Int)
+        }else if (val is String){
+            return Int(val as! String)
+        }
+        return nil
+    }
 }

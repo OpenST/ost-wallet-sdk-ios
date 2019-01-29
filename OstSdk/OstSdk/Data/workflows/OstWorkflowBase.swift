@@ -57,12 +57,17 @@ public class OstWorkflowBase {
     
     func getAesKey() throws -> Data {
         return try OstCryptoImpls().genSCryptKey(salt: keyGenerationParams.aesSaltData,
+                                                 n: OstConstants.OST_SCRYPT_N,
+                                                 r: OstConstants.OST_SCRYPT_R,
+                                                 p: OstConstants.OST_SCRYPT_P,
+                                                 size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES,
                                                  stringToCalculate: keyGenerationParams.uPin)
     }
     
     func getHkdfKey(aesKey: Data) throws -> Data {
         do {
-            let hkdfKey: [UInt8] = try OstCryptoImpls().genHKDFKey(salt: Array(keyGenerationParams.hkdfSaltData), data: Array(aesKey))
+            let hkdfKey: [UInt8] = try OstCryptoImpls().genHKDFKey(salt: Array(keyGenerationParams.hkdfSaltData),
+                                                                   data: Array(aesKey))
             return Data(bytes: hkdfKey)
         }catch let error {
             throw error

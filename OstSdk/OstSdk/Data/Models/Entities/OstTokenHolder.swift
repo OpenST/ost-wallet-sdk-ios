@@ -9,8 +9,8 @@
 import Foundation
 
 public class OstTokenHolder: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstTokenHolderRepository.sharedTokenHolder.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstTokenHolder? {
+        return try OstTokenHolderRepository.sharedTokenHolder.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTokenHolder ?? nil
     }
     
     static func getEntityIdentifer() -> String {

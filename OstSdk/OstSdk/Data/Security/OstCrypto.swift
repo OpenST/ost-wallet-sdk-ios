@@ -8,10 +8,10 @@
 
 import Foundation
 
-public struct OstWalletKeys {
+struct OstWalletKeys {
     var privateKey: String?
-    public var publicKey: String?
-    public var address: String?
+    var publicKey: String?
+    var address: String?
     
     init(privateKey: String? = nil, publicKey: String? = nil, address: String? = nil) {
         self.privateKey = privateKey
@@ -23,7 +23,7 @@ public struct OstWalletKeys {
 
 protocol OstCrypto {
     
-    func genSCryptKey(salt: Data, stringToCalculate: String) throws -> Data
+    func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data
     
     func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8]
     

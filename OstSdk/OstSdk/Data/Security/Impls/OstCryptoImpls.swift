@@ -12,12 +12,12 @@ import EthereumKit
 
 class OstCryptoImpls: OstCrypto {
     
-    func genSCryptKey(salt: Data, stringToCalculate: String) throws -> Data {
+    func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data {
         var params = ScryptParams()
-        params.n = 2
-        params.r = 2
-        params.p = 2
-        params.desiredKeyLength = 32
+        params.n = n
+        params.r = r
+        params.p = p
+        params.desiredKeyLength = size
         params.salt = salt
         
         let scrypt = Scrypt(params: params)
@@ -72,6 +72,7 @@ class OstCryptoImpls: OstCrypto {
     
     func generateCryptoKeys() throws  -> OstWalletKeys {
         let mnemonics : [String] = Mnemonic.create()
+        
         print("mnemonics : \(mnemonics)")
         let seed = try! Mnemonic.createSeed(mnemonic: mnemonics)
         let wallet: Wallet

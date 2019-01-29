@@ -33,6 +33,9 @@ public class Utils {
                         print("r : \(r)")
                         print("messageHex : \(messageHex)")
                     }
+                }else if arg is [String: Any] {
+                    let r = try processArg(arg)
+                    messageHex += r
                 }
             }catch let error {
                 throw error
@@ -229,19 +232,19 @@ public class Utils {
     
     fileprivate static func elementaryName(_ name: String) -> String {
         if (name.starts(with: "int[")) {
-            return "int256"+name.substring(4)
+            return "int256"+name.substring("int[".count)
         }else if ("int" == name) {
             return "int256"
         }else if (name.starts(with: "uint[")) {
-            return "uint256"+name.substring(5)
+            return "uint256"+name.substring("uint[".count)
         }else if ("uint" == name) {
             return "uint256"
         }else if (name.starts(with: "fixed[")) {
-            return "fixed128x128"+name.substring(6)
+            return "fixed128x128"+name.substring("fixed[".count)
         }else if ("fixed" == name) {
             return "fixed128x128"
         }else if (name.starts(with: "ufixed[")) {
-            return "ufixed128x128"+name.substring(7)
+            return "ufixed128x128"+name.substring("ufixed[".count)
         }else if ("ufixed" == name) {
             return "ufixed128x128"
         }

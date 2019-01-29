@@ -9,8 +9,8 @@
 import Foundation
 
 public class OstMultiSigOperation: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstMultiSigOperationRepository.sharedMultiSigOperation.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstMultiSigOperation? {
+        return try OstMultiSigOperationRepository.sharedMultiSigOperation.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstMultiSigOperation ?? nil
     }
     
     static func getEntityIdentifer() -> String {

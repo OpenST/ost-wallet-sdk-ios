@@ -11,7 +11,7 @@ import Foundation
 public class OstUser: OstBaseEntity {
     
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstUser ?? nil
     }
     
     static func getEntityIdentifer() -> String {

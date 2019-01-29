@@ -10,8 +10,8 @@ import Foundation
 
 public class OstToken: OstBaseEntity {
  
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstTokenRepository.sharedToken.insertOrUpdate(entityData, forId: OstUser.getEntityIdentifer()) as? OstUser ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstToken? {
+        return try OstTokenRepository.sharedToken.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstToken ?? nil
     }
     
     static func getEntityIdentifer() -> String {

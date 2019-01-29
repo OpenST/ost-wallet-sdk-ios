@@ -19,18 +19,14 @@ class OstCryptoTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testSCrypt() {
+    func testSCrypt() throws {
         let saltData: Data = "salt".data(using: .utf8)!
         let password: String = "Sachin"
         
         let output: String = "22db5466eb082120723a67ebd334ae93796286759e5640b297bd2bd3054cde8a"
         
-        do {
-            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, stringToCalculate: password)
-            XCTAssertTrue(SCryptOutput.toHexString() == output, "SCrypt output is different")
-        }catch let error {
-            XCTAssertNil(error, "Error should not occure")
-        }
+        let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, n: 2, r: 2, p: 2, size: 32, stringToCalculate: password)
+        XCTAssertEqual(SCryptOutput.toHexString(), output, "SCrypt output is different")
     
     }
     
@@ -42,7 +38,7 @@ class OstCryptoTests: XCTestCase {
         let hkdfOutputVal: String = "08418ad8001d0d099fba60a574df6a1debeff1668c9d6998efb2a51c7fe3996a"
         
         do {
-            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, stringToCalculate: password)
+            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, n: 2, r: 2, p: 2, size: 32, stringToCalculate: password)
             
             let SCryptOutputUInt: Array<UInt8> = Array(SCryptOutput)
             let hkdfOutput: [UInt8] = try OstCryptoImpls().genHKDFKey(salt: saltUInt, data: SCryptOutputUInt)

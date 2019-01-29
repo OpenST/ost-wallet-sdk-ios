@@ -9,7 +9,7 @@
 import Foundation
 import LocalAuthentication
 
-public class OstSecureStoreImpls: OstSecureStore {
+public class OstSecureStoreImpls {
     
     private var address = ""
 
@@ -17,17 +17,17 @@ public class OstSecureStoreImpls: OstSecureStore {
         self.address = address
 
     }
-
+    
     func encrypt(data: Data) throws -> Data? {
         if #available(iOS 10.3, *) {
             if (Device.hasSecureEnclave && !Device.isSimulator) {
                 return try OstSecureEnclaveHelper(address: address).encrypt(data: data)
             }
         }
-        
+
         return try OstKeychainHelper(address: address).encrypt(data)
     }
-    
+
     func decrypt(data: Data) throws -> Data? {
         if #available(iOS 10.3, *) {
             if (Device.hasSecureEnclave && !Device.isSimulator) {
@@ -36,7 +36,6 @@ public class OstSecureStoreImpls: OstSecureStore {
         }
         return try OstKeychainHelper(address: address).decrypt(data)
     }
-    
 }
 
 

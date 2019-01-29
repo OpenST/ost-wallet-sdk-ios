@@ -95,4 +95,16 @@ extension String {
         let data = self.data(using: .utf8)!
         return try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any?]
     }
+    
+    func indexOf(_ input: String,
+                   options: String.CompareOptions = .literal) -> String.Index? {
+        return self.range(of: input, options: options)?.lowerBound
+    }
+        
+    func lastIndexOf(_ input: String) -> Int {
+        guard let lastIndex = indexOf(input, options: .backwards) else {
+            return -1
+        }
+        return self.distance(from: self.startIndex, to: lastIndex)
+    }
 }

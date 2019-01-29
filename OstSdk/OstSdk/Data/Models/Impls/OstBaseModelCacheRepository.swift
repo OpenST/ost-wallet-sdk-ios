@@ -48,11 +48,6 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
     }
     
     override func insertOrUpdateEntity(_ entity: OstBaseEntity) -> OstBaseEntity? {
-        if let cacheEntity = getEntityFromCache(forKey: entity.id) {
-            if (entity.updated_timestamp < cacheEntity.updated_timestamp) {
-                return cacheEntity
-            }
-        }
         saveEntityInCache(key: entity.id, entity: entity)
         return super.insertOrUpdateEntity(entity)
     }

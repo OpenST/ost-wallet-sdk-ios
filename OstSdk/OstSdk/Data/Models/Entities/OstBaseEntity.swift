@@ -37,7 +37,7 @@ public class OstBaseEntity: NSObject {
     func validate(_ params: [String: Any]) throws -> Bool {
         var isValid: Bool = false
        
-        isValid = try isValidId(params[OstBaseEntity.ID])
+        isValid = try isValidId(self.getId(params))
     
         return isValid
     }
@@ -83,5 +83,5 @@ extension OstBaseEntity {
     
     public var status: String? { return getStatus(data as [String : Any]) }
     
-    public var updated_timestamp: Int { return Int(data[OstBaseEntity.UPDATED_TIMESTAMP] as? String ?? "0")!}
+    public var updated_timestamp: Int { return OstUtils.toInt(data[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0}
 }

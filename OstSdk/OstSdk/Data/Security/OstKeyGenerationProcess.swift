@@ -12,7 +12,7 @@ import Foundation
 public class OstKeyGenerationProcess {
     public init() {}
     
-    public func perform() throws -> OstWalletKeys {
+    func perform() throws -> OstWalletKeys {
         do {
             let walletKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
             
