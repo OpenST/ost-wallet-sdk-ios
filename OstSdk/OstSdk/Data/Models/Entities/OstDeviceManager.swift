@@ -60,6 +60,10 @@ public extension OstDeviceManager {
         return data["address"] as? String ?? nil
     }
     
+    var nonce: Int {
+        return OstUtils.toInt(data["nonce"] as Any?) ?? 0
+    }
+    
     var token_holder_id : String? {
         return data["token_holder_id"] as? String ?? nil
     }

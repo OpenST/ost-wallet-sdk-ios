@@ -21,11 +21,12 @@ class OstMigration_1: OstBaseMigration {
             CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS tokens (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS token_holders (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
-            CREATE TABLE IF NOT EXISTS token_holder_sessions (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
+            CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS transactions (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS device_managers (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             CREATE TABLE IF NOT EXISTS device_manager_operations (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
+            CREATE TABLE IF NOT EXISTS credites (id TEXT PRIMARY KEY NOT NULL, parent_id TEXT, data BLOB, status TEXT DEFAULT 'active', uts timestamp);
             """
         
         return statement

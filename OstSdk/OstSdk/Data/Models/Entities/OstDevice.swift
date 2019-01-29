@@ -31,20 +31,24 @@ public class OstDevice: OstBaseEntity {
 }
 
 public extension OstDevice {
-    var local_entity_id : String? {
-        return data["local_entity_id"] as? String ?? nil
+    var local_entity_id: String? {
+        return data["local_entity_id"] as? String 
     }
     
-    var address : String? {
-        return data["address"] as? String ?? nil
+    var address: String? {
+        return data["address"] as? String
     }
     
-    var multi_sig_id : String? {
-        return data["multi_sig_id"] as? String ?? nil
+    var multi_sig_id: String? {
+        return data["multi_sig_id"] as? String
     }
     
-    var user_id : String? {
-        return data["user_id"] as? String ?? nil
+    var user_id: String? {
+        return data["user_id"] as? String
+    }
+    
+    var device_manager_address: String? {
+        return data["device_manager_address"] as? String
     }
 }
 

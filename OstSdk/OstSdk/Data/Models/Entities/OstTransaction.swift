@@ -15,7 +15,7 @@ public class OstTransaction: OstBaseEntity {
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstTransaction? {
-        return try OstTransactionRepository.sharedExecutableRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTransaction ?? nil
+        return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTransaction ?? nil
     }
     
     override func getId(_ params: [String: Any]) -> String {

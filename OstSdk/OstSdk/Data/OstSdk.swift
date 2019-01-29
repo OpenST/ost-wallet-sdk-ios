@@ -56,13 +56,13 @@ public class OstSdk {
 //        return OstTokenRepository.sharedToken.insertOrUpdate((entity as OstBaseEntity)) as? OstToken
 //    }
 //
-//    public static func getTokenHolderSession(_ id: String) throws -> OstTokenHolderSession? {
-//        return try OstTokenHolderSessionRepository.sharedTokenHolderSession.getById(id) as? OstTokenHolderSession
+//    public static func getTokenHolderSession(_ id: String) throws -> OstSession? {
+//        return try OstSessionRepository.sharedSession.getById(id) as? OstSession
 //    }
 //
-//    public static func initTokenHolderSession(_ entityData: [String: Any]) throws -> OstTokenHolderSession? {
-//        let entity: OstTokenHolderSession = try OstTokenHolderSession(entityData)
-//        return OstTokenHolderSessionRepository.sharedTokenHolderSession.insertOrUpdate((entity as OstBaseEntity)) as? OstTokenHolderSession
+//    public static func initTokenHolderSession(_ entityData: [String: Any]) throws -> OstSession? {
+//        let entity: OstSession = try OstSession(entityData)
+//        return OstSessionRepository.sharedSession.insertOrUpdate((entity as OstBaseEntity)) as? OstSession
 //    }
 //
 //    public static func getMultiSig(_ id: String) throws -> OstDeviceManager? {
@@ -93,12 +93,12 @@ public class OstSdk {
 //    }
 //
 //    public static func getExecutableRule(_ id: String) throws -> OstTransaction? {
-//        return try OstTransactionRepository.sharedExecutableRule.getById(id) as? OstTransaction
+//        return try OstTransactionRepository.sharedTransaction.getById(id) as? OstTransaction
 //    }
 //
 //    public static func initExecutableRule(_ entityData: [String: Any]) throws -> OstTransaction? {
 //        let entity: OstTransaction = try OstTransaction(entityData)
-//        return OstTransactionRepository.sharedExecutableRule.insertOrUpdate((entity as OstBaseEntity)) as? OstTransaction
+//        return OstTransactionRepository.sharedTransaction.insertOrUpdate((entity as OstBaseEntity)) as? OstTransaction
 //    }
     
 }

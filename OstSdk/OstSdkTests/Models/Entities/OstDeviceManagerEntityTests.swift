@@ -25,23 +25,23 @@ class OstDeviceManagerEntityTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testInitMultiSig() throws {
+    func testInitEntity() throws {
         XCTAssertNotNil(try OstDeviceManager.parse(multiSigJSON), "Entity should not be nil")
     }
     
-    func testGetMultiSig() throws {
-        let multiSig: OstDeviceManager? = try OstDeviceManagerRepository.sharedDeviceManager.getById("1a") as? OstDeviceManager
+    func testGetEntity() throws {
+        let multiSig: OstDeviceManager? = try OstDeviceManagerRepository.sharedDeviceManager.getById("0x...") as? OstDeviceManager
         XCTAssertNotNil(multiSig, "entity should not be nil")
         XCTAssertEqual(multiSig?.address, multiSigJSON["address"] as? String, "address is not same")
     }
     
-    func testUpdateMultiSig() throws {
-        multiSigJSON["address"] = "0x1..."
+    func testUpdateEntity() throws {
+        multiSigJSON["nonce"] = 2
         multiSigJSON["updated_timestamp"] = Date.timestamp()
         XCTAssertNotNil(try OstDeviceManager.parse(multiSigJSON), "Entity should not be nil")
-        let multiSig: OstDeviceManager? = try OstDeviceManagerRepository.sharedDeviceManager.getById("1a") as? OstDeviceManager
+        let multiSig: OstDeviceManager? = try OstDeviceManagerRepository.sharedDeviceManager.getById("0x...") as? OstDeviceManager
         XCTAssertNotNil(multiSig, "entity should not be nil")
-        XCTAssertEqual(multiSig?.address, multiSigJSON["address"] as? String, "address is not same")
+        XCTAssertEqual(multiSig?.nonce, multiSigJSON["nonce"] as? Int, "address is not same")
     }
     
     

@@ -1,5 +1,5 @@
 //
-//  OstTokenHolderSessionDbQueries.swift
+//  OstSessionDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstTokenHolderSessionDbQueries: OstBaseDbQueries {
+class OstSessionDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "token_holder_sessions"
+        return "sessions"
     }
 }

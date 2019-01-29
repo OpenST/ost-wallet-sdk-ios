@@ -10,7 +10,7 @@ import Foundation
 
 class OstTransactionRepository: OstBaseModelCacheRepository {
     
-    static let sharedExecutableRule = OstTransactionRepository()
+    static let sharedTransaction = OstTransactionRepository()
     private override init() {
         print("\n**************\ninit for 'OstTransactionRepository' called\n**************\n")
     }

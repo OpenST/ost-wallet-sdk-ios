@@ -1,5 +1,5 @@
 //
-//  OstTokenHolderSessionEntity.swift
+//  OstSessionEntity.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 10/12/18.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-public class OstTokenHolderSession: OstBaseEntity {
+public class OstSession: OstBaseEntity {
     
-    static let OSTTOKEN_HOLDER_SESSION_PARENTID = "user_id"
+    static let OSTSESSION_PARENTID = "user_id"
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstTokenHolderSession? {
-        return try OstTokenHolderSessionRepository.sharedTokenHolderSession.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTokenHolderSession ?? nil
+    static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
+        return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstSession
     }
     
     static func getEntityIdentifer() -> String {
@@ -21,47 +21,51 @@ public class OstTokenHolderSession: OstBaseEntity {
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstTokenHolderSession.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstSession.getEntityIdentifer()])!
     }
     
     override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstTokenHolderSession.OSTTOKEN_HOLDER_SESSION_PARENTID])
+        return OstUtils.toString(params[OstSession.OSTSESSION_PARENTID])
     }
 
 }
 
-public extension OstTokenHolderSession {
+public extension OstSession {
     var local_entity_id : String? {
         return data["local_entity_id"] as? String ?? nil
     }
     
     var address : String? {
-        return data["address"] as? String ?? nil
+        return data["address"] as? String
     }
     
     var token_holder_id : String? {
-        return data["token_holder_id"] as? String ?? nil
+        return data["token_holder_id"] as? String
     }
     
     var blockHeight : String? {
-        return data["blockHeight"] as? String ?? nil
+        return data["blockHeight"] as? String
     }
     
     var expiry_time : String? {
-        return data["expiry_time"] as? String ?? nil
+        return data["expiry_time"] as? String
     }
     
     var spending_limit : String? {
-        return data["spending_limit"] as? String ?? nil
+        return data["spending_limit"] as? String
     }
     
     var redemption_limit : String? {
-        return data["redemption_limit"] as? String ?? nil
+        return data["redemption_limit"] as? String
+    }
+    
+    var nonce: Int {
+        return OstUtils.toInt(data["nonce"] as Any?) ?? 0
     }
 }
 
 
-extension OstTokenHolderSession{
+extension OstSession{
     public final class Transaction {
         public var from: String
         public var to: String = "0x"
@@ -95,7 +99,7 @@ extension OstTokenHolderSession{
         }
     }
     
-    public func signTransaction(_ transaction: OstTokenHolderSession.Transaction) throws -> String {
+    public func signTransaction(_ transaction: OstSession.Transaction) throws -> String {
         let txnDict: [String: String] = transaction.toDictionary()
         let eip1077Obj: EIP1077 = EIP1077(transaction: txnDict)
         let eip1077TxnHash = try eip1077Obj.toEIP1077transactionHash()

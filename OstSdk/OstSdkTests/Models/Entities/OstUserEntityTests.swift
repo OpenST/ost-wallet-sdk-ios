@@ -52,7 +52,7 @@ class OstUserEntityTests: XCTestCase {
         }
     }
     
-    func testGetUser() {
+    func testGetEntity() {
         do {
             let user: OstUser? = try OstUserModelRepository.sharedUser.getById("1a") as? OstUser
             XCTAssertNil(user)
@@ -60,17 +60,6 @@ class OstUserEntityTests: XCTestCase {
             XCTAssertNotNil(user1)
         }catch let error{
             print(error)
-        }
-    }
-    
-    func testDeleteUser() {
-        OstUserModelRepository.sharedUser.deleteForId("1a")
-    }
-    
-    func testBulkDeleteUser() throws {
-        for i in 1..<10 {
-            let id = "\(i)a"
-            OstUserModelRepository.sharedUser.deleteForId(id)
         }
     }
    
