@@ -1,5 +1,5 @@
 //
-//  OstExecutableRuleEntity.swift
+//  OstTransactionEntity.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 10/12/18.
@@ -8,21 +8,22 @@
 
 import Foundation
 
-public class OstExecutableRule: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstExecutableRule? {
-        return try OstExecutableRuleRepository.sharedExecutableRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstExecutableRule ?? nil
-    }
+public class OstTransaction: OstBaseEntity {
     
     static func getEntityIdentifer() -> String {
-        return "id"
+        return "transaction_hash"
+    }
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstTransaction? {
+        return try OstTransactionRepository.sharedExecutableRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTransaction ?? nil
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstExecutableRule.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstTransaction.getEntityIdentifer()])!
     }
 }
 
-public extension OstExecutableRule {
+public extension OstTransaction {
     var local_entity_id : String? {
         return data["local_entity_id"] as? String ?? nil
     }

@@ -10,23 +10,29 @@ import Foundation
 
 public class OstUser: OstBaseEntity {
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstUser ?? nil
-    }
+    static let OSTUSER_PARENTID = "token_id"
     
     static func getEntityIdentifer() -> String {
         return "id"
     }
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstUser ?? nil
+    }
 
-    public func getMultiSig() throws -> OstMultiSig? {
+    public func getMultiSig() throws -> OstDeviceManager? {
         if (self.multisig_id != nil) {
-            return try OstMultiSigRepository.sharedMultiSig.getById(self.multisig_id!) as? OstMultiSig
+            return try OstDeviceManagerRepository.sharedDeviceManager.getById(self.multisig_id!) as? OstDeviceManager
         }
         return nil
     }
     
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstUser.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstUser.OSTUSER_PARENTID])
     }
 }
 

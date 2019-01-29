@@ -1,5 +1,5 @@
 //
-//  OstMultiSigDbQueries.swift
+//  OstDeviceDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 02/01/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstMultiSigDbQueries: OstBaseDbQueries {
+class OstDeviceDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "multi_sig"
+        return "devices"
     }
 }

@@ -1,5 +1,5 @@
 //
-//  OstMultiSigWalletDbQueries.swift
+//  OstDeviceManagerDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 02/01/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstMultiSigWalletDbQueries: OstBaseDbQueries {
+class OstDeviceManagerDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "multi_sig_wallets"
+        return "device_managers"
     }
 }

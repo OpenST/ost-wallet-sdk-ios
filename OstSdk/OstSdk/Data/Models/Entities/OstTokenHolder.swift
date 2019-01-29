@@ -9,16 +9,23 @@
 import Foundation
 
 public class OstTokenHolder: OstBaseEntity {
+    
+    static let OSTTOKEN_HOLDER_PARENTID = "user_id"
+    
     static func parse(_ entityData: [String: Any?]) throws -> OstTokenHolder? {
         return try OstTokenHolderRepository.sharedTokenHolder.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTokenHolder ?? nil
     }
     
     static func getEntityIdentifer() -> String {
-        return "id"
+        return "address"
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstUser.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstTokenHolder.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstTokenHolder.OSTTOKEN_HOLDER_PARENTID])
     }
 }
 

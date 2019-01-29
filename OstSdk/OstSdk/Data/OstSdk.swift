@@ -65,40 +65,40 @@ public class OstSdk {
 //        return OstTokenHolderSessionRepository.sharedTokenHolderSession.insertOrUpdate((entity as OstBaseEntity)) as? OstTokenHolderSession
 //    }
 //
-//    public static func getMultiSig(_ id: String) throws -> OstMultiSig? {
-//        return try OstMultiSigRepository.sharedMultiSig.getById(id) as? OstMultiSig
+//    public static func getMultiSig(_ id: String) throws -> OstDeviceManager? {
+//        return try OstDeviceManagerRepository.sharedDeviceManager.getById(id) as? OstDeviceManager
 //    }
 //
-//    public static func initMultiSig(_ entityData: [String: Any]) throws -> OstMultiSig? {
-//        let entity: OstMultiSig = try OstMultiSig(entityData)
-//        return OstMultiSigRepository.sharedMultiSig.insertOrUpdate((entity as OstBaseEntity)) as? OstMultiSig
+//    public static func initMultiSig(_ entityData: [String: Any]) throws -> OstDeviceManager? {
+//        let entity: OstDeviceManager = try OstDeviceManager(entityData)
+//        return OstDeviceManagerRepository.sharedDeviceManager.insertOrUpdate((entity as OstBaseEntity)) as? OstDeviceManager
 //    }
 //
-//    public static func getMultiSigWallet(_ id: String) throws -> OstMultiSigWallet? {
-//        return try OstMultiSigWalletRepository.sharedMultiSigWallet.getById(id) as? OstMultiSigWallet
+//    public static func getMultiSigWallet(_ id: String) throws -> OstDevice? {
+//        return try OstDeviceRepository.sharedDevice.getById(id) as? OstDevice
 //    }
 //
-//    public static func initMultiSigWallet(_ entityData: [String: Any]) throws -> OstMultiSigWallet? {
-//        let entity: OstMultiSigWallet = try OstMultiSigWallet(entityData)
-//        return OstMultiSigWalletRepository.sharedMultiSigWallet.insertOrUpdate((entity as OstBaseEntity)) as? OstMultiSigWallet
+//    public static func initMultiSigWallet(_ entityData: [String: Any]) throws -> OstDevice? {
+//        let entity: OstDevice = try OstDevice(entityData)
+//        return OstDeviceRepository.sharedDevice.insertOrUpdate((entity as OstBaseEntity)) as? OstDevice
 //    }
 //
-//    public static func getMultiSigOperation(_ id: String) throws -> OstMultiSigOperation? {
-//        return try OstMultiSigOperationRepository.sharedMultiSigOperation.getById(id) as? OstMultiSigOperation
+//    public static func getMultiSigOperation(_ id: String) throws -> OstDeviceManagerOperation? {
+//        return try OstDeviceManagerOperationRepository.sharedDeviceManagerOperation.getById(id) as? OstDeviceManagerOperation
 //    }
 //
-//    public static func initMultiSigOperation(_ entityData: [String: Any]) throws -> OstMultiSigOperation? {
-//        let entity: OstMultiSigOperation = try OstMultiSigOperation(entityData)
-//        return OstMultiSigOperationRepository.sharedMultiSigOperation.insertOrUpdate((entity as OstBaseEntity)) as? OstMultiSigOperation
+//    public static func initMultiSigOperation(_ entityData: [String: Any]) throws -> OstDeviceManagerOperation? {
+//        let entity: OstDeviceManagerOperation = try OstDeviceManagerOperation(entityData)
+//        return OstDeviceManagerOperationRepository.sharedDeviceManagerOperation.insertOrUpdate((entity as OstBaseEntity)) as? OstDeviceManagerOperation
 //    }
 //
-//    public static func getExecutableRule(_ id: String) throws -> OstExecutableRule? {
-//        return try OstExecutableRuleRepository.sharedExecutableRule.getById(id) as? OstExecutableRule
+//    public static func getExecutableRule(_ id: String) throws -> OstTransaction? {
+//        return try OstTransactionRepository.sharedExecutableRule.getById(id) as? OstTransaction
 //    }
 //
-//    public static func initExecutableRule(_ entityData: [String: Any]) throws -> OstExecutableRule? {
-//        let entity: OstExecutableRule = try OstExecutableRule(entityData)
-//        return OstExecutableRuleRepository.sharedExecutableRule.insertOrUpdate((entity as OstBaseEntity)) as? OstExecutableRule
+//    public static func initExecutableRule(_ entityData: [String: Any]) throws -> OstTransaction? {
+//        let entity: OstTransaction = try OstTransaction(entityData)
+//        return OstTransactionRepository.sharedExecutableRule.insertOrUpdate((entity as OstBaseEntity)) as? OstTransaction
 //    }
     
 }

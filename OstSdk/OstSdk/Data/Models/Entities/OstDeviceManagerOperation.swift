@@ -1,5 +1,5 @@
 //
-//  OstMultiSigOperationEntity.swift
+//  OstDeviceManagerOperationEntity.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 10/12/18.
@@ -8,9 +8,12 @@
 
 import Foundation
 
-public class OstMultiSigOperation: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstMultiSigOperation? {
-        return try OstMultiSigOperationRepository.sharedMultiSigOperation.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstMultiSigOperation ?? nil
+public class OstDeviceManagerOperation: OstBaseEntity {
+    
+    static let OstDeviceManager_OPERATION_PARENTID = "user_id"
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstDeviceManagerOperation? {
+        return try OstDeviceManagerOperationRepository.sharedDeviceManagerOperation.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstDeviceManagerOperation ?? nil
     }
     
     static func getEntityIdentifer() -> String {
@@ -18,12 +21,16 @@ public class OstMultiSigOperation: OstBaseEntity {
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstMultiSigOperation.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstDeviceManagerOperation.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstDeviceManagerOperation.OstDeviceManager_OPERATION_PARENTID])
     }
 }
 
 
-public extension OstMultiSigOperation {
+public extension OstDeviceManagerOperation {
     var local_entity_id : String? {
         return data["local_entity_id"] as? String ?? nil
     }

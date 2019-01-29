@@ -1,5 +1,5 @@
 //
-//  OstMultiSigEntity.swift
+//  OstDeviceManagerEntity.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 10/12/18.
@@ -8,23 +8,29 @@
 
 import Foundation
 
-public class OstMultiSig: OstBaseEntity {
+public class OstDeviceManager: OstBaseEntity {
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstMultiSig? {
-        return try OstMultiSigRepository.sharedMultiSig.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstMultiSig ?? nil
+    static let OSTDEVICE_MANAGER_PARENTID = "user_id"
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstDeviceManager? {
+        return try OstDeviceManagerRepository.sharedDeviceManager.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstDeviceManager ?? nil
     }
     
     static func getEntityIdentifer() -> String {
-        return "user_id"
-    }
-        
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstMultiSig.getEntityIdentifer()])!
+        return "address"
     }
     
-    public func getDeviceMultiSigWallet() throws -> OstMultiSigWallet? {
+    override func getId(_ params: [String: Any]) -> String {
+        return OstUtils.toString(params[OstDeviceManager.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstDeviceManager.OSTDEVICE_MANAGER_PARENTID])
+    }
+    
+    public func getDeviceMultiSigWallet() throws -> OstDevice? {
         do {
-            guard let multiSigWallets: [OstMultiSigWallet] = try OstMultiSigWalletRepository.sharedMultiSigWallet.getByParentId(self.id) as? [OstMultiSigWallet] else {
+            guard let multiSigWallets: [OstDevice] = try OstDeviceRepository.sharedDevice.getByParentId(self.id) as? [OstDevice] else {
                 return nil
             }
             
@@ -45,7 +51,7 @@ public class OstMultiSig: OstBaseEntity {
     }
 }
 
-public extension OstMultiSig {
+public extension OstDeviceManager {
     var user_id : String? {
         return data["user_id"] as? String ?? nil
     }

@@ -1,5 +1,5 @@
 //
-//  OstExecutableRuleDbQueries.swift
+//  OstDeviceManagerOperationDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstExecutableRuleDbQueries: OstBaseDbQueries {
+class OstDeviceManagerOperationDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "executable_rule_entities"
+        return "device_manager_operations"
     }
 }

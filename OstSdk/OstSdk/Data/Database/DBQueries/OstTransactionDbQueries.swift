@@ -1,5 +1,5 @@
 //
-//  OstMultiSigOperationDbQueries.swift
+//  OstTransactionDbQueries.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstMultiSigOperationDbQueries: OstBaseDbQueries {
+class OstTransactionDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "executable_rules"
+        return "transactions"
     }
 }

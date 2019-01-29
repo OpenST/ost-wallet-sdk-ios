@@ -10,16 +10,23 @@ import Foundation
 
 public class OstRule: OstBaseEntity {
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
-        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstRule ?? nil
-    }
+    static let OSTRULE_PARENTID = "token_id"
     
     static func getEntityIdentifer() -> String {
         return "id"
     }
     
+    static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
+        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstRule ?? nil
+    }
+    
+  
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstRule.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstRule.OSTRULE_PARENTID])
     }
 }
 

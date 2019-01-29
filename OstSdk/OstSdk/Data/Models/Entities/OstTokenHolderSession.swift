@@ -9,17 +9,25 @@
 import Foundation
 
 public class OstTokenHolderSession: OstBaseEntity {
+    
+    static let OSTTOKEN_HOLDER_SESSION_PARENTID = "user_id"
+    
     static func parse(_ entityData: [String: Any?]) throws -> OstTokenHolderSession? {
         return try OstTokenHolderSessionRepository.sharedTokenHolderSession.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTokenHolderSession ?? nil
     }
     
     static func getEntityIdentifer() -> String {
-        return "id"
+        return "address"
     }
     
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstTokenHolderSession.getEntityIdentifer()])!
     }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstTokenHolderSession.OSTTOKEN_HOLDER_SESSION_PARENTID])
+    }
+
 }
 
 public extension OstTokenHolderSession {

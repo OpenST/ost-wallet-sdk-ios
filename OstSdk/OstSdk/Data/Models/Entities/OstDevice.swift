@@ -1,5 +1,5 @@
 //
-//  OstMultiSigWalletEntity.swift
+//  OstDeviceEntity.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 10/12/18.
@@ -9,21 +9,28 @@
 import Foundation
 import EthereumKit
 
-public class OstMultiSigWallet: OstBaseEntity {
-    static func parse(_ entityData: [String: Any?]) throws -> OstMultiSigWallet? {
-        return try OstMultiSigWalletRepository.sharedMultiSigWallet.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstMultiSigWallet ?? nil
+public class OstDevice: OstBaseEntity {
+    
+    static let OSTDEVICE_PARENTID = "user_id"
+    
+    static func parse(_ entityData: [String: Any?]) throws -> OstDevice? {
+        return try OstDeviceRepository.sharedDevice.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstDevice ?? nil
     }
     
     static func getEntityIdentifer() -> String {
-        return "id"
+        return "address"
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstMultiSigWallet.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstDevice.getEntityIdentifer()])!
+    }
+    
+    override func getParentId(_ params: [String: Any]) -> String? {
+        return OstUtils.toString(params[OstDevice.OSTDEVICE_PARENTID])
     }
 }
 
-public extension OstMultiSigWallet {
+public extension OstDevice {
     var local_entity_id : String? {
         return data["local_entity_id"] as? String ?? nil
     }
@@ -42,7 +49,7 @@ public extension OstMultiSigWallet {
 }
 
 
-public extension OstMultiSigWallet {
+public extension OstDevice {
     
     public final class Transaction {
         var rawTransaction: RawTransaction
@@ -52,7 +59,7 @@ public extension OstMultiSigWallet {
         }
     }
     
-    public func signTransaction(_ transaction: OstMultiSigWallet.Transaction) throws -> String {
+    public func signTransaction(_ transaction: OstDevice.Transaction) throws -> String {
         guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
             throw OstError.actionFailed("Sign Transaction failed to perform")
         }

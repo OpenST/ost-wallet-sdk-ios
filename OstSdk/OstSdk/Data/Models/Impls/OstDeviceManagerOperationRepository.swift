@@ -1,5 +1,5 @@
 //
-//  OstMultiSigOperationRepository.swift
+//  OstDeviceManagerOperationRepository.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 03/01/19.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-class OstMultiSigOperationRepository: OstBaseModelCacheRepository {
+class OstDeviceManagerOperationRepository: OstBaseModelCacheRepository {
     
-    static let sharedMultiSigOperation = OstMultiSigOperationRepository()
+    static let sharedDeviceManagerOperation = OstDeviceManagerOperationRepository()
     private override init() {
-        print("\n**************\ninit for 'OstMultiSigOperationRepository' called\n**************\n")
+        print("\n**************\ninit for 'OstDeviceManagerOperationRepository' called\n**************\n")
     }
     
    
     
     //MARK: - overrider
     override func getDBQueriesObj() -> OstBaseDbQueries {
-        return OstMultiSigOperationDbQueries()
+        return OstDeviceManagerOperationDbQueries()
     }
     
     override func getEntity(_ data: [String : Any?]) throws -> OstTokenHolder {
