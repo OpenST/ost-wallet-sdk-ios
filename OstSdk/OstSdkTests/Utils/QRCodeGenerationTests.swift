@@ -23,6 +23,10 @@ class QRCodeGenerationTests: XCTestCase {
         let str = "Testing QR code generation."
         let QRImage = str.qrCode
         XCTAssertNotNil(QRImage)
+        
+        let str1 = QRImage?.readQRCode
+        XCTAssertNotNil(str1)
+        XCTAssertEqual(str, str1?.first!)
     }
 
     func testPerformanceExample() {
