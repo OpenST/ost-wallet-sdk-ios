@@ -134,13 +134,11 @@ class EIP712 {
     
     func  encodeData(_ dataType: String, data: [String: Any]) throws -> String {
         
-        var encTypes: Array<SolidityType> = [];
-        var encValues: Array<ABIEncodable> = [];
+        var encTypes: Array<SolidityType> = []
+        var encValues: Array<ABIEncodable> = []
         
         var solidityType: SolidityType
         var solidityValue: ABIEncodable
-        
-        //        var soliditySha3Array: Array<[String: String]> = []
         
         // Add data-type hash
         solidityType = SolidityType.bytes(length: 32)
