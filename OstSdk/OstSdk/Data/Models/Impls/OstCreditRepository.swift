@@ -17,7 +17,7 @@ class OstCreditRepository: OstBaseModelCacheRepository {
     
     //MARK: - overrider
     override func getDBQueriesObj() -> OstBaseDbQueries {
-        return OstTransactionDbQueries()
+        return OstCreditDbQueries()
     }
     
     override func getEntity(_ data: [String : Any?]) throws -> OstCredit {

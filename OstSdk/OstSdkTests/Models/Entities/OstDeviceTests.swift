@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstDeviceEntityTests: XCTestCase {
+class OstDeviceTests: XCTestCase {
 
     var JSONObject = [
         "address": "0x12",

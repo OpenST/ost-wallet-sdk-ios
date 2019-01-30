@@ -20,7 +20,7 @@ class OstTransactionRepository: OstBaseModelCacheRepository {
         return OstTransactionDbQueries()
     }
     
-    override func getEntity(_ data: [String : Any?]) throws -> OstTokenHolder {
-        return try OstTokenHolder(data as [String : Any])
+    override func getEntity(_ data: [String : Any?]) throws -> OstTransaction {
+        return try OstTransaction(data as [String : Any])
     }
 }

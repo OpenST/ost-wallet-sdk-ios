@@ -11,6 +11,6 @@ import Foundation
 class OstTokenDbQueries: OstBaseDbQueries {
     
     override func activityName() -> String{
-        return "economies"
+        return "tokens"
     }
 }

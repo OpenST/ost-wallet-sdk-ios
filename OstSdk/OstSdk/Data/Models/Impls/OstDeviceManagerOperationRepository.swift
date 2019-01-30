@@ -22,8 +22,8 @@ class OstDeviceManagerOperationRepository: OstBaseModelCacheRepository {
         return OstDeviceManagerOperationDbQueries()
     }
     
-    override func getEntity(_ data: [String : Any?]) throws -> OstTokenHolder {
-        return try OstTokenHolder(data as [String : Any])
+    override func getEntity(_ data: [String : Any?]) throws -> OstDeviceManagerOperation {
+        return try OstDeviceManagerOperation(data as [String : Any])
     }
     
 

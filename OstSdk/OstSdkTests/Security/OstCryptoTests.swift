@@ -55,41 +55,30 @@ class OstCryptoTests: XCTestCase {
         XCTAssertTrue(digestOutputVal == digestOutput.toHexString() , "digest output is different")
     }
     
-//    func testAESEncryption() {
-//        do {
-//            let val = String(Date.negativeTimestamp())
-//
-//            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: val.data(using: .utf8)!, stringToCalculate: "a")
-//            try OstSecureStoreImpls(keyAlias: "").storeData(SCryptOutput, forKey: "a")
-//
-//            let encryptedData: [UInt8] = try OstCryptoImpls().aesGCMEncrypt(aesKey: Array(SCryptOutput), dataToEncrypt: "Aniket")
-//            testAESDecryption(encryptedData: encryptedData)
-//        }catch let error {
-//
-//        }
-//    }
-    
-//    func testAESDecryption(encryptedData: [UInt8]) {
-//        do {
-//            let val: String = try! OstSecureStoreImpls(keyAlias: "").getDataFor(key: "a") as! String
-//
-//            let decryptedData = try OstCryptoImpls().aesGCMDecryption(aesKey: Array(val.utf8), dataToDecrypt: encryptedData)
-//            let decryptedString = String(bytes: decryptedData, encoding: .utf8)
-//
-//            XCTAssertEqual(decryptedString, "Aniket")
-//        }catch let error {
-//            XCTAssertNil(error, "Error should not occure")
-//        }
-//    }
-    
+    func testAESEncryption() {
+        do {
+            let val = String(Date.negativeTimestamp())
+
+            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: val.data(using: .utf8)!, n: 2, r: 2, p: 2, size: 32, stringToCalculate: "a")
+            let encryptedData: [UInt8] = try OstCryptoImpls().aesGCMEncrypt(aesKey: Array(SCryptOutput), iv: Array("iv".utf8), ahead: Array("ahead".utf8), dataToEncrypt: Array("Aniket".utf8))
+            
+            let decryptedData = try OstCryptoImpls().aesGCMDecrypt(aesKey: Array(val.utf8), iv: Array("iv".utf8), ahead: nil, dataToDecrypt: encryptedData)
+            let decryptedString = String(bytes: decryptedData, encoding: .utf8)
+            
+            XCTAssertEqual(decryptedString, "Aniket")
+        }catch let error {
+
+        }
+    }
+
     func testGenerateCryptoKeys() {
         let expectedSignedTx = "0x34daffa295320477d88e6b9597f97cd3a852de50fc471a6b39a5525a2b00459d47d43367f48d24ac9f8f986bb0b4e1b349eb7ab9dc028a4f5d0d2f0909acd5611c"
         do {
             let OstCrypto = OstCryptoImpls()
-            let privateKey = try OstCrypto.generateCryptoKeys()
+            let walletKeys = try OstCrypto.generateCryptoKeys()
             let txHash = getEIP1077TxHash()
-            
-            let signedTx = try OstCrypto.signTx(txHash, withPrivatekey: privateKey.privateKey!)
+            XCTAssertEqual(txHash, "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
+            let signedTx = try OstCrypto.signTx(txHash, withPrivatekey: walletKeys.privateKey!)
             XCTAssertEqual(expectedSignedTx, signedTx)
         }catch let error {
             XCTAssertNil(error, "error should be nil")
@@ -114,7 +103,7 @@ class OstCryptoTests: XCTestCase {
         }catch {
             return ""
         }
-       // XCTAssertEqual(eip1077TxHash, "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
+     
     }
     
     func testPerformanceExample() {

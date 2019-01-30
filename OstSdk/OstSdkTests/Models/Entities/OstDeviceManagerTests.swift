@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstDeviceManagerEntityTests: XCTestCase {
+class OstDeviceManagerTests: XCTestCase {
    
     var multiSigJSON =  ["user_id": "1a",
                      "address": "0x...",

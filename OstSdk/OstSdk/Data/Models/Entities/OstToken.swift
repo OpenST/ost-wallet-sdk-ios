@@ -22,3 +22,17 @@ public class OstToken: OstBaseEntity {
         return OstUtils.toString(params[OstToken.getEntityIdentifer()])!
     }
 }
+
+extension OstToken {
+    var symbol: String? {
+        return data["symbol"] as? String
+    }
+    
+    var name: String? {
+        return data["name"] as? String
+    }
+    
+    var total_supply: Int? {
+        return OstUtils.toInt(data["total_supply"] as Any?)
+    }
+}

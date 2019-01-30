@@ -15,7 +15,7 @@ class OstCredit: OstBaseEntity {
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstCredit? {
-        return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstCredit ?? nil
+        return try OstCreditRepository.sharedCredit.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstCredit ?? nil
     }
     
     override func getId(_ params: [String: Any]) -> String {
@@ -26,4 +26,11 @@ class OstCredit: OstBaseEntity {
 
 extension OstCredit {
     
+    var amount: Int? {
+        return OstUtils.toInt(data["amount"] as Any?)
+    }
+    
+    var user_ids: [String]? {
+        return data["user_ids"] as? Array<String>
+    }
 }

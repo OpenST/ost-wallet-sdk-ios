@@ -55,4 +55,8 @@ public extension OstTransaction {
     var execute_rule_payload : [String: String]? {
         return data["execute_rule_payload"] as? [String:String] ?? nil
     }
+    
+    var gas_price: Int? {
+        return OstUtils.toInt(data["gas_price"] as Any?) 
+    }
 }

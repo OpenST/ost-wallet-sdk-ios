@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstSessionEntityTests: XCTestCase {
+class OstSessionTests: XCTestCase {
 
     var JSONObject = [
         "address": "0x12q",
@@ -37,6 +37,17 @@ class OstSessionEntityTests: XCTestCase {
         let entity: OstSession? = try OstSessionRepository.sharedSession.getById("0x12q") as? OstSession
         XCTAssertNotNil(entity, "entity should not be nil")
         XCTAssertEqual(entity?.address, JSONObject["address"] as? String, "address is not same")
+    }
+    
+    func testGetByParentId() throws {
+        let entities: [OstSession]? = try OstSessionRepository.sharedSession.getByParentId("abcd-kdlkd") as? [OstSession]
+        XCTAssertNotNil(entities?.first, "entity should not be nil")
+        XCTAssertEqual(entities?.first!.address, JSONObject["address"] as? String, "address is not same")
+    }
+    
+    func testGetByInvalidParentId() throws {
+        let entities: [OstTokenHolder]? = try OstTokenHolderRepository.sharedTokenHolder.getByParentId("1233") as? [OstTokenHolder]
+        XCTAssertNil(entities?.first, "entity should be nil")
     }
     
     func testUpdateEntity() throws {

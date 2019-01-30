@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstRuleEntityTests: XCTestCase {
+class OstRuleTests: XCTestCase {
     
     var JSONObject = ["id": "123a",
                       "token_id": "1234",
