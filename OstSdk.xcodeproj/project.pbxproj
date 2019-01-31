@@ -96,7 +96,6 @@
 		4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */; };
 		4B49892821F6F2AF00ED0E94 /* ABIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */; };
 		4B49892921F6F2AF00ED0E94 /* ERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E921F6F2AF00ED0E94 /* ERC20.swift */; };
-		4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */; };
 		4B49892B21F6F2AF00ED0E94 /* ERC165.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */; };
 		4B49892C21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */; };
 		4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */; };
@@ -318,7 +317,6 @@
 		4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityEvent.swift; sourceTree = "<group>"; };
 		4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIObject.swift; sourceTree = "<group>"; };
 		4B4988E921F6F2AF00ED0E94 /* ERC20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20.swift; sourceTree = "<group>"; };
-		4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC721.swift; sourceTree = "<group>"; };
 		4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC165.swift; sourceTree = "<group>"; };
 		4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPromiseExtensions.swift; sourceTree = "<group>"; };
 		4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityFunction.swift; sourceTree = "<group>"; };
@@ -650,7 +648,6 @@
 				4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */,
 				4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */,
 				4B4988E921F6F2AF00ED0E94 /* ERC20.swift */,
-				4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */,
 				4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */,
 				4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */,
 				4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */,
@@ -1311,7 +1308,6 @@
 				4B49893221F6F2AF00ED0E94 /* ABIDecoder.swift in Sources */,
 				4B49892021F6F2AF00ED0E94 /* Exports+Web3.swift in Sources */,
 				4B75F28421C3B03800898960 /* OstRuleModelRepository.swift in Sources */,
-				4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */,
 				4B75F20021B7B53200898960 /* OstMigrationManager.swift in Sources */,
 				4B75F26F21C10DC500898960 /* Data+Conversion.swift in Sources */,
 				4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */,
