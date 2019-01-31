@@ -1,3 +1,13 @@
+Carthage/
+Cartfile.resolved
 
 .DS_Store
-OstSdk/OstSdk.xcodeproj/xcuserdata/*
+*.DS_Store
+
+# Pod
+Pods/
+*.xcworkspace
+*.xcuserstate
+*.xcconfig
+*.xcbkptlist
+OstSdk.xcodeproj/xcuserdata/*
