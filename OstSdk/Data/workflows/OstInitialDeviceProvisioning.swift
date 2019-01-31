@@ -14,7 +14,7 @@ public  class OstInitialDeviceProvisioning: OstWorkflowBase {
         do {
             let walletKeys: OstWalletKeys = try generateWalletKeys()
             guard let privateKeyData: Data = walletKeys.privateKey?.data(using: .utf8) else {
-                throw OstError.actionFailed("key formation failed")
+                throw OstError1(message: "key formation failed", type: .actionFailed)
             }
             
             let aesKeyData: Data = try getAesKey()
