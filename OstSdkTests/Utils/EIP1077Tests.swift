@@ -38,7 +38,7 @@ class EIP1077Tests: XCTestCase {
         
         if let x = try? Utils.SoliditySha3([["t":"bytes32","v":"0x00"]]) {
             print(x)
-            XCTAssertTrue(x.count == 64)
+            XCTAssertEqual(x, "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563")
         }
     }
     

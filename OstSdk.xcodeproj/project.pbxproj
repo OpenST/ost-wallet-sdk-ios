@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
+		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
 		4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */; };
 		4B00CBA421DCD8C4005A5696 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */; };
@@ -225,6 +227,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
 		4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
@@ -819,6 +823,8 @@
 		4B7C92FB21B006E900EC0A9F = {
 			isa = PBXGroup;
 			children = (
+				005AAF6B22032B8A00A2F8E4 /* LICENSE */,
+				005AAF6A22032B8A00A2F8E4 /* README.md */,
 				4B7C930721B006E900EC0A9F /* OstSdk */,
 				4B7C931221B006E900EC0A9F /* OstSdkTests */,
 				4B00CCB421E363EA005A5696 /* Example */,
@@ -1120,6 +1126,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */,
+				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
