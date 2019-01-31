@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
+		005AAF70220335A900A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6E220335A900A2F8E4 /* README.md */; };
+		005AAF71220335A900A2F8E4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6F220335A900A2F8E4 /* LICENSE.txt */; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
 		4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */; };
 		4B00CBA421DCD8C4005A5696 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */; };
@@ -226,6 +228,8 @@
 /* Begin PBXFileReference section */
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		005AAF6E220335A900A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		005AAF6F220335A900A2F8E4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
 		4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
@@ -522,10 +526,10 @@
 		4B4988B121F6F2AF00ED0E94 /* Web3 */ = {
 			isa = PBXGroup;
 			children = (
-				4B49894421F72D2100ED0E94 /* OstSolidityHandler.swift */,
+				005AAF6F220335A900A2F8E4 /* LICENSE.txt */,
+				005AAF6E220335A900A2F8E4 /* README.md */,
 				4B4988B221F6F2AF00ED0E94 /* Core */,
 				4B4988E421F6F2AF00ED0E94 /* ContractABI */,
-				4B49894B21F872E200ED0E94 /* OstSolidityValue.swift */,
 			);
 			path = Web3;
 			sourceTree = "<group>";
@@ -698,6 +702,8 @@
 		4B75F22221BE439B00898960 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4B49894421F72D2100ED0E94 /* OstSolidityHandler.swift */,
+				4B49894B21F872E200ED0E94 /* OstSolidityValue.swift */,
 				4B7EAA24220027E300852DE2 /* TouchIDAuthentication.swift */,
 				4B4988B121F6F2AF00ED0E94 /* Web3 */,
 				4B49872121F5BEF200ED0E94 /* EIP712 */,
@@ -1117,6 +1123,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005AAF71220335A900A2F8E4 /* LICENSE.txt in Resources */,
+				005AAF70220335A900A2F8E4 /* README.md in Resources */,
 				005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */,
 				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
 			);
