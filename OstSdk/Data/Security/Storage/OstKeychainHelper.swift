@@ -7,66 +7,84 @@
 //
 
 import Foundation
-import KeychainSwift
-
-enum OstKeychainError: Error {
-    case invalidData
-}
 
 public class OstKeychainHelper {
-    var address: String
-    public init(address: String) {
-        self.address = address
+    
+    var service: String
+    
+    public init(service: String) {
+        self.service = service
     }
     
-    fileprivate var namespace: String {
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let namespace = bundle.infoDictionary!["CFBundleIdentifier"] as! String;
-        print("OstKeychainHelper :: namespace : \(namespace)")
-        return namespace
-    }
-    
-    public func encrypt(_ data: Data) throws -> Data? {
-        guard let aesKey = getKey() else {
-            throw OstKeychainError.invalidData
-        }
-        let ahead = try OstCryptoImpls().genHKDFKey(salt: Array("\(address)Salt".data(using: .utf8)!), data:  Array(address.data(using: .utf8)!))
-        let result = try OstCryptoImpls().aesGCMEncrypt(aesKey: Array(aesKey),
-                                                        iv: Array("iv".data(using: .utf8)!),
-                                                        ahead: ahead,
-                                                        dataToEncrypt: Array(data))
-        return Data(bytes: result)
-    }
-    
-    func getKey() -> Data? {
+    //MARK: - Keychain Data
+    public func hardSet(data: Data, forKey key: String) throws {
         
-        guard let key = KeychainSwift(keyPrefix: namespace).getData(address) else {
-            let key = try? OstCryptoImpls().genSCryptKey(salt: namespace.data(using: .utf8)!,
-                                                         n: OstConstants.OST_SCRYPT_N,
-                                                         r: OstConstants.OST_SCRYPT_R,
-                                                         p: OstConstants.OST_SCRYPT_P,
-                                                         size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES,
-                                                         stringToCalculate: address)
-            KeychainSwift(keyPrefix: namespace).set(key!,
-                                                    forKey: address,
-                                                    withAccess: .accessibleWhenUnlockedThisDeviceOnly)
-            return KeychainSwift(keyPrefix: namespace).getData(address)
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrAccount as String: key,
+                                    kSecAttrService as String: service,
+                                    kSecAttrAccessControl as String: getAccessControl() as Any,
+                                    kSecValueData as String: data]
+        
+        var status = SecItemAdd(query as CFDictionary, nil)
+        
+        if status == errSecDuplicateItem {
+            status = SecItemDelete(query as CFDictionary)
+            status = SecItemAdd(query as CFDictionary, nil)
         }
-        return key
+        
+        guard status == errSecSuccess else {
+            throw OstError1(message: "storing data failed", type: .actionFailed)
+        }
     }
     
-    public func decrypt(_ data: Data) throws -> Data {
-        guard let aesKey = getKey() else {
-            throw OstKeychainError.invalidData
+    public func get(forKey key: String) -> Data? {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrAccount as String: key,
+                                    kSecAttrService as String: service,
+                                    kSecReturnAttributes as String: true,
+                                    kSecReturnData as String: true]
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        
+        guard status == errSecSuccess else { return nil }
+        
+        if let existingItem =  item as? [String: Any],
+            let data = existingItem[kSecValueData as String] as? Data {
+            print("data got from keychain : \(data.toHexString())")
+            return data
         }
-        let result = try OstCryptoImpls().aesGCMDecrypt(aesKey: Array(aesKey),
-                                                        iv: Array("iv".data(using: .utf8)!),
-                                                        ahead: nil,
-                                                        dataToDecrypt: Array(data))
-        return Data(bytes: result)
+        return nil
     }
     
-    func deleteKey() {
-        KeychainSwift(keyPrefix: namespace).delete(address)
+    //MARK: - Keychain String
+    public func set(string: String, forKey key: String) throws {
+        let data: Data = string.data(using: .utf8)!
+        try hardSet(data: data, forKey: key)
     }
+    
+    public func get(forKey key: String) -> String? {
+        if let data: Data = get(forKey: key) {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
+    
+    public func delete(forKey key: String) throws {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrAccount as String: key,
+                                    kSecAttrService as String: service,
+                                    kSecAttrAccessControl as String: getAccessControl() as Any]
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == errSecSuccess else {
+            throw OstError1(message: "Delete failed", type: .actionFailed)
+        }
+    }
+    
+    func getAccessControl() -> SecAccessControl? {
+        let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+                                                            kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                            .privateKeyUsage, nil)
+        return accessControl
+    }
+    
 }

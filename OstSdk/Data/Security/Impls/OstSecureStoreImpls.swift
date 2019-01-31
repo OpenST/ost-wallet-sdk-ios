@@ -24,8 +24,8 @@ public class OstSecureStoreImpls {
                 return try OstSecureEnclaveHelper(address: address).encrypt(data: data)
             }
         }
-
-        return try OstKeychainHelper(address: address).encrypt(data)
+        return nil
+//        return try OstKeychainHelper(address: address).encrypt(data)
     }
 
     func decrypt(data: Data) throws -> Data? {
@@ -34,7 +34,8 @@ public class OstSecureStoreImpls {
                 return try OstSecureEnclaveHelper(address: address).decrypt(data: data)
             }
         }
-        return try OstKeychainHelper(address: address).decrypt(data)
+//        return try OstKeychainHelper(address: address).decrypt(data)
+        return nil
     }
 }
 

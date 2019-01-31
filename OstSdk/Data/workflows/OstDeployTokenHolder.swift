@@ -31,7 +31,7 @@ public class OstDeployTokenHolder: OstWorkflowBase, OstPinAcceptProtocol, OstDev
     }
     
     public func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        print("uPin: \(uPin) and appUserPassword: \(appUserPassword)")
+        
     }
     
     //MARK: - OstDeviceRegisteredProtocol
