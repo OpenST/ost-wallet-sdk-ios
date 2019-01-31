@@ -1,6 +1,7 @@
 Carthage/
 Cartfile.resolved
 
+*.DS_Store
 
 # Pod
 Pods/
