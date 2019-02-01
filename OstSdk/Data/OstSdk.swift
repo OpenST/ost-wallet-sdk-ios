@@ -100,5 +100,5 @@ public class OstSdk {
 //        let entity: OstTransaction = try OstTransaction(entityData)
 //        return OstTransactionRepository.sharedTransaction.insertOrUpdate((entity as OstBaseEntity)) as? OstTransaction
 //    }
-    
+
 }

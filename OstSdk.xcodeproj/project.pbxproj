@@ -193,6 +193,8 @@
 		4BE9E32F2203306C00427A80 /* OstKeyRecoveryFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */; };
 		4BE9E3332203387800427A80 /* OstWorkFlowCallbackImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3322203387800427A80 /* OstWorkFlowCallbackImplementation.swift */; };
 		4BE9E3372203425100427A80 /* OstKeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3362203425100427A80 /* OstKeychainHelperTests.swift */; };
+		4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E33822041DA800427A80 /* OstBaseStorage.swift */; };
+		4BE9E33B2204372D00427A80 /* OstSecureStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E33A2204372D00427A80 /* OstSecureStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -425,6 +427,8 @@
 		4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstKeyRecoveryFlow.swift; sourceTree = "<group>"; };
 		4BE9E3322203387800427A80 /* OstWorkFlowCallbackImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkFlowCallbackImplementation.swift; sourceTree = "<group>"; };
 		4BE9E3362203425100427A80 /* OstKeychainHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstKeychainHelperTests.swift; sourceTree = "<group>"; };
+		4BE9E33822041DA800427A80 /* OstBaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseStorage.swift; sourceTree = "<group>"; };
+		4BE9E33A2204372D00427A80 /* OstSecureStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecureStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,6 +470,7 @@
 		4B00CC1121DF89C7005A5696 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				4BE9E33822041DA800427A80 /* OstBaseStorage.swift */,
 				4B00CC1221DF89E6005A5696 /* OstSecureEnclaveHelper.swift */,
 				4B00CC1421DF89FD005A5696 /* OstKeychainHelper.swift */,
 			);
@@ -494,6 +499,7 @@
 				4B00CCCD21E363EB005A5696 /* ExampleTests.swift */,
 				4B00CCCF21E363EB005A5696 /* Info.plist */,
 				4BE9E3362203425100427A80 /* OstKeychainHelperTests.swift */,
+				4BE9E33A2204372D00427A80 /* OstSecureStoreTests.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -1176,8 +1182,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KeychainSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -1231,6 +1235,7 @@
 			files = (
 				4BE9E3372203425100427A80 /* OstKeychainHelperTests.swift in Sources */,
 				4B00CCCE21E363EB005A5696 /* ExampleTests.swift in Sources */,
+				4BE9E33B2204372D00427A80 /* OstSecureStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1287,6 +1292,7 @@
 				4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */,
 				4B75F28E21C3CB5100898960 /* OstTokenHolderRepository.swift in Sources */,
 				4B75F29F21C7771A00898960 /* OstCrypto.swift in Sources */,
+				4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */,
 				4B75F23221BE758500898960 /* OstTransaction.swift in Sources */,
 				4B49893521F6F2AF00ED0E94 /* SolidityWrappedValue.swift in Sources */,
 				4B49893721F6F2AF00ED0E94 /* SolidityTuple.swift in Sources */,
@@ -1667,7 +1673,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				DEVELOPMENT_TEAM = N83K86W6P4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1701,7 +1707,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = G2TZMLB5LP;
+				DEVELOPMENT_TEAM = N83K86W6P4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

@@ -13,12 +13,17 @@ enum OstSecureEnclaveError: Error {
 }
 
 @available(iOS 10.3, *)
-class OstSecureEnclaveHelper {
+public class OstSecureEnclaveHelper: OstBaseStorage {
     
-    var address: String
+    var privateKeyTag: String
     
-    init(address: String) {
-        self.address = address
+    fileprivate var attrKeyTypeEllipticCurve: String {
+        return kSecAttrKeyTypeECSECPrimeRandom as String
+    }
+    
+    init(tag: String) {
+        self.privateKeyTag = tag
+        super.init()
     }
     
     // MARK: - Public methods
@@ -34,27 +39,15 @@ class OstSecureEnclaveHelper {
         return try _encrypt(data, publicKey: publicKey)
     }
     
-    fileprivate func getPrivateKey() throws -> SecKey? {
-        
-        guard let privateKey = _getPrivateKey() else {
-            
-            let privateKey = try generatePrivateKey(getAccessControl())
-            try forceStorePrivateKey(privateKey)
-            return _getPrivateKey()
-        }
-        
-        return privateKey
-    }
-    
-    func decrypt(data: Data) throws -> Data{
-        guard let privateKey = _getPrivateKey() else {
+    func decrypt(data: Data) throws -> Data {
+        guard let privateKey = get() else {
             throw OstSecureEnclaveError.invalidData
         }
         return try _decrypt(data, privateKey: privateKey)
     }
     
-    func deletePrivateKey() throws {
-        let tag = "\(namespace).\(address)".data(using: .utf8)!
+    func remove() throws {
+        let tag = privateKeyTag.data(using: .utf8)!
         let query: [String: Any] = [kSecClass as String: kSecClassKey,
                                     kSecAttrApplicationTag as String: tag,
                                     kSecAttrKeyType as String: attrKeyTypeEllipticCurve,
@@ -64,30 +57,21 @@ class OstSecureEnclaveHelper {
             throw OstSecureEnclaveError.invalidData
         }
     }
-    
+
     // MARK: - fileprivate methods
     
-    fileprivate var attrKeyTypeEllipticCurve: String {
-        return kSecAttrKeyTypeECSECPrimeRandom as String
-    }
-    
-    fileprivate var namespace: String {
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let namespace = bundle.infoDictionary!["CFBundleIdentifier"] as! String;
-        return namespace
-    }
-    
-    fileprivate func getAccessControl() -> SecAccessControl {
-        let access =
-            SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-                                            kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                                            .privateKeyUsage,
-                                            nil)!
+    fileprivate func getPrivateKey() throws -> SecKey? {
+        guard let privateKey = get() else {
+            let accessControl = getAccessControl()
+            let privateKey = try generatePrivateKey(accessControl)
+            try hardSet(privateKey)
+            return get()
+        }
         
-        return access
+        return privateKey
     }
     
-    fileprivate func generatePrivateKey(_ access: SecAccessControl) throws -> SecKey {
+    fileprivate func generatePrivateKey(_ accessControl: SecAccessControl) throws -> SecKey {
         
         let attributes: [String: Any] = [
             kSecAttrKeyType as String:            attrKeyTypeEllipticCurve,
@@ -95,8 +79,8 @@ class OstSecureEnclaveHelper {
             kSecAttrTokenID as String:            kSecAttrTokenIDSecureEnclave,
             kSecPrivateKeyAttrs as String: [
                 kSecAttrIsPermanent as String:      true,
-                kSecAttrApplicationTag as String:   "\(namespace).\(address)",
-                kSecAttrAccessControl as String:    access
+                kSecAttrApplicationTag as String:   privateKeyTag,
+                kSecAttrAccessControl as String:    accessControl
             ]
         ]
         
@@ -108,9 +92,9 @@ class OstSecureEnclaveHelper {
         return privateKey
     }
     
-    fileprivate func forceStorePrivateKey(_ privateKey: SecKey) throws {
+    fileprivate func hardSet(_ privateKey: SecKey) throws {
         
-        let tag = "\(namespace).\(address)".data(using: .utf8)!
+        let tag = privateKeyTag.data(using: .utf8)!
         let query: [String: Any] = [kSecClass as String: kSecClassKey,
                                     kSecAttrApplicationTag as String: tag,
                                     kSecValueRef as String: privateKey]
@@ -123,13 +107,13 @@ class OstSecureEnclaveHelper {
         }
         
         guard status == errSecSuccess else {
-            print("value not stored in keychain for kSecAttrAccount: \(address)")
+            print("value not stored in keychain for kSecAttrAccount: \(privateKeyTag)")
             throw OstSecureEnclaveError.invalidData
         }
     }
     
-    fileprivate func _getPrivateKey() -> SecKey? {
-        let tag = "\(namespace).\(address)".data(using: .utf8)!
+    fileprivate func get() -> SecKey? {
+        let tag = privateKeyTag.data(using: .utf8)!
         let getquery: [String: Any] = [kSecClass as String: kSecClassKey,
                                        kSecAttrApplicationTag as String: tag,
                                        kSecAttrKeyType as String: attrKeyTypeEllipticCurve,

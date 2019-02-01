@@ -8,12 +8,13 @@
 
 import Foundation
 
-public class OstKeychainHelper {
+public class OstKeychainHelper: OstBaseStorage {
     
     var service: String
     
     public init(service: String) {
         self.service = service
+        super.init()
     }
     
     //MARK: - Keychain Data
@@ -79,12 +80,4 @@ public class OstKeychainHelper {
             throw OstError1(message: "Delete failed", type: .actionFailed)
         }
     }
-    
-    func getAccessControl() -> SecAccessControl? {
-        let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-                                                            kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                                                            .privateKeyUsage, nil)
-        return accessControl
-    }
-    
 }
