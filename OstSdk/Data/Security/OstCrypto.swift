@@ -12,11 +12,13 @@ struct OstWalletKeys {
     var privateKey: String?
     var publicKey: String?
     var address: String?
+    var mnemonics: [String]?
     
-    init(privateKey: String? = nil, publicKey: String? = nil, address: String? = nil) {
+    init(privateKey: String? = nil, publicKey: String? = nil, address: String? = nil, mnemonics: [String]? = nil) {
         self.privateKey = privateKey
         self.publicKey = publicKey
         self.address = address
+        self.mnemonics = mnemonics
     }
 }
 

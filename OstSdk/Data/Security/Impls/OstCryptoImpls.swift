@@ -81,11 +81,11 @@ class OstCryptoImpls: OstCrypto {
         } catch let error {
             fatalError("Error: \(error.localizedDescription)")
         }
-        
+
         let privateKey = wallet.privateKey()
         let publicKey = wallet.publicKey()
         let address = wallet.address()
-        return OstWalletKeys(privateKey: privateKey.toHexString(), publicKey: publicKey.toHexString(), address: address)
+        return OstWalletKeys(privateKey: privateKey.toHexString(), publicKey: publicKey.toHexString(), address: address, mnemonics: mnemonics)
     }
     
     func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {

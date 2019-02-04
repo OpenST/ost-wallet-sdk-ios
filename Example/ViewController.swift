@@ -11,11 +11,15 @@ import OstSdk
 
 class ViewController: UIViewController {
     
-    let ostWorkFlowCallbackImplementation = OstWorkFlowCallbackImplementation()
-    
+    let userId: String = "123"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        do {
+            try RegisterDevice(userId: userId).perform()
+            
+        }catch let error {
+            print(error)
+        }
     }
-    
+   
 }

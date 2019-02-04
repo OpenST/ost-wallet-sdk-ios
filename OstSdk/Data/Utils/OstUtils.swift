@@ -33,4 +33,28 @@ class OstUtils {
         }
         return nil
     }
+    
+    static func toJSONString(_ val: Any) throws -> String? {
+        if let theJSONData = try? JSONSerialization.data(
+            withJSONObject: val,
+            options: []) {
+            let theJSONText = String(data: theJSONData,
+                                     encoding: .ascii)
+            return theJSONText
+        }
+        throw OstError.actionFailed("Convert to JSON string failed.")
+    }
+    
+    static func toJSONObject(_ val: String) throws -> Any {
+        let data = val.data(using: .utf8)!
+        return try JSONSerialization.jsonObject(with: data, options: [])
+    }
+    
+    static func toEncodedData(_ val: Any) -> Data {
+        return NSKeyedArchiver.archivedData(withRootObject: val)
+    }
+    
+    static func toDecodedValue(_ val: Data) -> Any? {
+        return NSKeyedUnarchiver.unarchiveObject(with: val)
+    }
 }

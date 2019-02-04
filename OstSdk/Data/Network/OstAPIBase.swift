@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import Alamofire
+//import Alamofire
 
 public class OstAPIBase {
     public init(){}
     
-    public func test() {
-        Alamofire.request("https://api.myjson.com/bins/1bsqcn").responseJSON { (httpRespose) in
-            print(((httpRespose.result.value as! [String: Any])["notice_list"] as! Array).first!)
-        }
-    }
+//    public func test() {
+//        Alamofire.request("https://api.myjson.com/bins/1bsqcn").responseJSON { (httpRespose) in
+//            print(((httpRespose.result.value as! [String: Any])["notice_list"] as! Array).first!)
+//        }
+//    }
 }

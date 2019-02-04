@@ -91,11 +91,6 @@ extension String {
         return data(using: .utf8)!.map { String(format: "%02x", $0) }.joined()
     }
     
-    public func toDictionary() throws -> [String: Any?] {
-        let data = self.data(using: .utf8)!
-        return try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any?]
-    }
-    
     func indexOf(_ input: String,
                    options: String.CompareOptions = .literal) -> String.Index? {
         return self.range(of: input, options: options)?.lowerBound

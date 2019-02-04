@@ -28,22 +28,27 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
     
     // MARK: - Public methods
     
-    func encrypt(data: Data) throws -> Data {
-        guard let privateKey = try getPrivateKey() else {
-            throw OstSecureEnclaveError.invalidData
-        }
-        
+    func encrypt(data: Data, withPrivateKey privateKey: SecKey) throws -> Data {
+       
         guard let publicKey = getPublicKeyFor(privateKey) else {
             throw OstSecureEnclaveError.invalidData
         }
         return try _encrypt(data, publicKey: publicKey)
     }
     
-    func decrypt(data: Data) throws -> Data {
-        guard let privateKey = get() else {
-            throw OstSecureEnclaveError.invalidData
-        }
+    func decrypt(data: Data, withPrivateKey privateKey: SecKey) throws -> Data {
         return try _decrypt(data, privateKey: privateKey)
+    }
+    
+    func getPrivateKey() throws -> SecKey? {
+        guard let privateKey = get() else {
+            let accessControl = getAccessControl()
+            let privateKey = try generatePrivateKey(accessControl)
+            try hardSet(privateKey)
+            return get()
+        }
+        
+        return privateKey
     }
     
     func remove() throws {
@@ -59,18 +64,6 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
     }
 
     // MARK: - fileprivate methods
-    
-    fileprivate func getPrivateKey() throws -> SecKey? {
-        guard let privateKey = get() else {
-            let accessControl = getAccessControl()
-            let privateKey = try generatePrivateKey(accessControl)
-            try hardSet(privateKey)
-            return get()
-        }
-        
-        return privateKey
-    }
-    
     fileprivate func generatePrivateKey(_ accessControl: SecAccessControl) throws -> SecKey {
         
         let attributes: [String: Any] = [

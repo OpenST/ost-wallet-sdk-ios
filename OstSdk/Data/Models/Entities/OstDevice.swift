@@ -21,6 +21,10 @@ public class OstDevice: OstBaseEntity {
         return "address"
     }
     
+    static func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
+        return try OstDeviceRepository.sharedDevice.getByParentId(parentId) as? [OstDevice]
+    }
+    
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstDevice.getEntityIdentifer()])!
     }
@@ -37,6 +41,10 @@ public extension OstDevice {
     
     var address: String? {
         return data["address"] as? String
+    }
+    
+    var personal_sign_address: String? {
+        return data["personal_sign_address"] as? String
     }
     
     var multi_sig_id: String? {

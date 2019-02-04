@@ -85,7 +85,7 @@ class OstBaseDbQueries {
     func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
         let queryParams : [String: Any] = [OstBaseDbQueries.ID: params.id,
                                            OstBaseDbQueries.PARENT_ID: params.parnetId ?? "",
-                                           OstBaseDbQueries.DATA: params.data.toEncodedData(),
+                                           OstBaseDbQueries.DATA: OstUtils.toEncodedData(params.data),
                                            OstBaseDbQueries.UTS: params.updated_timestamp,
                                            OstBaseDbQueries.STATUS: params.status ?? ""
         ]
@@ -96,7 +96,7 @@ class OstBaseDbQueries {
         var resultData: Array<[String: Any]> = []
         
         while resultSet.next() {
-            let decodedData: [String: Any] = (Data(resultSet.data(forColumn: "data")!)).toDictionary()
+            let decodedData: [String: Any] = OstUtils.toDecodedValue(Data(resultSet.data(forColumn: "data")!)) as! [String: Any]
             resultData.append(decodedData)
         }
         return resultData
