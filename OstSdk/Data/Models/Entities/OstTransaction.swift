@@ -10,16 +10,16 @@ import Foundation
 
 public class OstTransaction: OstBaseEntity {
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "transaction_hash"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstTransaction? {
-        return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstTransaction ?? nil
+        return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstTransaction
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstTransaction.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstTransaction.getEntityIdentiferKey()])!
     }
 }
 

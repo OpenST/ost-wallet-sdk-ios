@@ -12,8 +12,14 @@ public class OstSdk {
     
     private init() {}
     
-    public static func parse(_ apiResponse: [String: Any]) {
+    public static func parse(_ apiResponse: [String: Any]) throws {
+        if let device: [String: Any] = apiResponse["device"] as? [String : Any] {
+             _ = try OstDevice.parse(device)
+        }
         
+        if let user: [String: Any] = apiResponse["user"] as? [String: Any] {
+            _ = try OstUser.parse(user)
+        }
     }
     
     public static func getUser(_ id: String) throws -> OstUser? {

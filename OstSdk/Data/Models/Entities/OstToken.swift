@@ -11,15 +11,15 @@ import Foundation
 public class OstToken: OstBaseEntity {
  
     static func parse(_ entityData: [String: Any?]) throws -> OstToken? {
-        return try OstTokenRepository.sharedToken.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstToken ?? nil
+        return try OstTokenRepository.sharedToken.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstToken
     }
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "id"
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstToken.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstToken.getEntityIdentiferKey()])!
     }
 }
 

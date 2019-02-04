@@ -14,5 +14,5 @@ public protocol OstDeviceRegisteredProtocol: OstBaseProtocol {
     /// SDK user will use it to acknowledge device registration.
     ///
     /// - Parameter apiResponse: Kit API response
-    func deviceRegistered(_ apiResponse: [String: Any])
+    func deviceRegistered(_ apiResponse: [String: Any]) throws
 }

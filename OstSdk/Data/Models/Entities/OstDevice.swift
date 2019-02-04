@@ -14,10 +14,10 @@ public class OstDevice: OstBaseEntity {
     static let OSTDEVICE_PARENTID = "user_id"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstDevice? {
-        return try OstDeviceRepository.sharedDevice.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstDevice ?? nil
+        return try OstDeviceRepository.sharedDevice.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstDevice
     }
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "address"
     }
     
@@ -26,7 +26,7 @@ public class OstDevice: OstBaseEntity {
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstDevice.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstDevice.getEntityIdentiferKey()])!
     }
     
     override func getParentId(_ params: [String: Any]) -> String? {

@@ -10,16 +10,16 @@ import Foundation
 
 class OstCredit: OstBaseEntity {
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstCredit? {
-        return try OstCreditRepository.sharedCredit.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstCredit ?? nil
+        return try OstCreditRepository.sharedCredit.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstCredit
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstCredit.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstCredit.getEntityIdentiferKey()])!
     }
 }
 

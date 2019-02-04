@@ -9,6 +9,7 @@
 import Foundation
 
 public class OstRegisterDevice: OstDeviceRegisteredProtocol {
+
     let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     var userId: String
     var delegate: OstWorkFlowCallbackProtocol
@@ -41,8 +42,10 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
     
     
     //MARK: - OstDeviceRegisteredProtocol
-    public func deviceRegistered(_ apiResponse: [String : Any]) {
-        
+    public func deviceRegistered(_ apiResponse: [String : Any]) throws {
+        if let deviceJSON = apiResponse["device"] as? [String : Any] {
+            let ostDevice: OstDevice = try OstDevice.parse(deviceJSON)!
+        }
     }
     
     public func cancelFlow(_ cancelReason: String) {

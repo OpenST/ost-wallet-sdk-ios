@@ -12,12 +12,12 @@ public class OstUser: OstBaseEntity {
     
     static let OSTUSER_PARENTID = "token_id"
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstUser ?? nil
+        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
 
     public func getMultiSig() throws -> OstDeviceManager? {
@@ -28,7 +28,7 @@ public class OstUser: OstBaseEntity {
     }
     
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstUser.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstUser.getEntityIdentiferKey()])!
     }
     
     override func getParentId(_ params: [String: Any]) -> String? {

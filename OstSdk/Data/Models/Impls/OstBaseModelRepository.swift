@@ -25,7 +25,7 @@ class OstBaseModelRepository {
         
     }
     
-    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifier identifier: String) throws -> OstBaseEntity? {
+    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifierKey identifier: String) throws -> OstBaseEntity? {
         let id: String = try OstBaseModelRepository.getId(entityData, forKey: identifier)
         if let dbEntity = try getById(id) {
             let updatedTmestamp = OstBaseModelRepository.getUpdatedTimestamp(entityData)

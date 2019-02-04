@@ -12,17 +12,17 @@ public class OstRule: OstBaseEntity {
     
     static let OSTRULE_PARENTID = "token_id"
     
-    static func getEntityIdentifer() -> String {
+    static func getEntityIdentiferKey() -> String {
         return "id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
-        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifier: self.getEntityIdentifer()) as? OstRule ?? nil
+        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstRule
     }
     
   
     override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstRule.getEntityIdentifer()])!
+        return OstUtils.toString(params[OstRule.getEntityIdentiferKey()])!
     }
     
     override func getParentId(_ params: [String: Any]) -> String? {
