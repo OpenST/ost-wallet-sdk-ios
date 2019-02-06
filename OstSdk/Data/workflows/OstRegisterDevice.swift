@@ -25,7 +25,7 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
         ostRegisterDeviceThread.async {
             if self.hasRegisteredDevice() {
                 DispatchQueue.main.async {
-                    self.delegate.flowComplete(OstContextEntity(status: .success))
+                    self.delegate.flowComplete(OstContextEntity(type: .registerDevice))
                 }
             }else {
                 DispatchQueue.main.sync {
@@ -83,7 +83,7 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
     public func deviceRegistered(_ apiResponse: [String : Any]) throws {
         if let deviceJSON = apiResponse["device"] as? [String : Any] {
             let ostDevice: OstDevice = try OstDevice.parse(deviceJSON)!
-            delegate.flowComplete(OstContextEntity(status: .success, entity: ostDevice))
+            delegate.flowComplete(OstContextEntity(type: .registerDevice, entity: ostDevice))
             return
         }
         delegate.flowInterrupt(OstError.invalidInput("api response is not as desired."))

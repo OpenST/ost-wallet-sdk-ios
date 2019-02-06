@@ -10,15 +10,15 @@ import XCTest
 @testable import OstSdk
 
 class OstCryptoTests: XCTestCase {
-
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
+    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testSCrypt() throws {
         let saltData: Data = "salt".data(using: .utf8)!
         let password: String = "Sachin"
@@ -27,7 +27,7 @@ class OstCryptoTests: XCTestCase {
         
         let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, n: 2, r: 2, p: 2, size: 32, stringToCalculate: password)
         XCTAssertEqual(SCryptOutput.toHexString(), output, "SCrypt output is different")
-    
+        
     }
     
     func testHKDF() {
@@ -55,22 +55,19 @@ class OstCryptoTests: XCTestCase {
         XCTAssertTrue(digestOutputVal == digestOutput.toHexString() , "digest output is different")
     }
     
-    func testAESEncryption() {
-        do {
-            let val = String(Date.negativeTimestamp())
-
-            let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: val.data(using: .utf8)!, n: 2, r: 2, p: 2, size: 32, stringToCalculate: "a")
-            let encryptedData: [UInt8] = try OstCryptoImpls().aesGCMEncrypt(aesKey: Array(SCryptOutput), iv: Array("iv".utf8), ahead: Array("ahead".utf8), dataToEncrypt: Array("Aniket".utf8))
-            
-            let decryptedData = try OstCryptoImpls().aesGCMDecrypt(aesKey: Array(val.utf8), iv: Array("iv".utf8), ahead: nil, dataToDecrypt: encryptedData)
-            let decryptedString = String(bytes: decryptedData, encoding: .utf8)
-            
-            XCTAssertEqual(decryptedString, "Aniket")
-        }catch let error {
-
-        }
+    func testAESEncryption() throws{
+        
+        let val = String(Date.negativeTimestamp())
+        
+        let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: val.data(using: .utf8)!, n: 2, r: 2, p: 2, size: 32, stringToCalculate: "a")
+        let encryptedData: [UInt8] = try OstCryptoImpls().aesGCMEncrypt(aesKey: Array(SCryptOutput), iv: Array("iv".utf8), ahead: Array("ahead".utf8), dataToEncrypt: Array("Aniket".utf8))
+        
+        let decryptedData = try OstCryptoImpls().aesGCMDecrypt(aesKey: Array(val.utf8), iv: Array("iv".utf8), ahead: nil, dataToDecrypt: encryptedData)
+        let decryptedString = String(bytes: decryptedData, encoding: .utf8)
+        
+        XCTAssertEqual(decryptedString, "Aniket")
     }
-
+    
     func testGenerateCryptoKeys() {
         let expectedSignedTx = "0x34daffa295320477d88e6b9597f97cd3a852de50fc471a6b39a5525a2b00459d47d43367f48d24ac9f8f986bb0b4e1b349eb7ab9dc028a4f5d0d2f0909acd5611c"
         do {
@@ -103,7 +100,7 @@ class OstCryptoTests: XCTestCase {
         }catch {
             return ""
         }
-     
+        
     }
     
     func testPerformanceExample() {
@@ -112,5 +109,5 @@ class OstCryptoTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
 }
