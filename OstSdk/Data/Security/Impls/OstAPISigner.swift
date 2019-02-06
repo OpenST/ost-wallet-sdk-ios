@@ -62,6 +62,7 @@ class OstAPISigner {
     func sign(resource: String, params: [String: Any?]) throws -> (String, String) {
         let queryString: String = getQueryString(for: params)
         let message = resource + "?" + queryString
+        Logger().DLog(message: "queryString", parameterToPrit: message)
         return (try personalSign(message), message)
     }
     

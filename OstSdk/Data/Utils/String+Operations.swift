@@ -9,9 +9,6 @@
 import Foundation
 
 extension String {
-    var isUUID: Bool {
-        return !isEmpty && range(of: "[^-a-zA-Z0-9]", options: .regularExpression) == nil
-    }
     
     func isMatch(_ regex: String) -> Bool {
         let range = NSRange(location: 0, length: utf16.count)

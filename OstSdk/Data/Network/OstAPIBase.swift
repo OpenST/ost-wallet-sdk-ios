@@ -50,7 +50,7 @@ public class OstAPIBase {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
-    func insetAdditionalParamsIfRequired(_ params: inout [String: Any]) {
+    func insetAdditionalParamsIfRequired(_ params: inout [String: Any?]) {
         if (params["signature_kind"] == nil) {
             params["signature_kind"] = getSignatureKind
         }
@@ -67,8 +67,8 @@ public class OstAPIBase {
             params["token_id"] = OstUser.tokenId
         }
        
-        if (params["personal_sign_address"] == nil) {
-            params["personal_sign_address"] = OstUser.currentDevice!.personal_sign_address!
+        if (params["api_signer_address"] == nil) {
+            params["api_signer_address"] = OstUser.currentDevice!.personal_sign_address!
         }
         
         if (params["wallet_address"] == nil) {
@@ -77,11 +77,14 @@ public class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    func get(params: [String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    func get(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
         
         let url: String = getBaseURL+getResource
         
-        let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader())
+        Logger().DLog(message: "url", parameterToPrit: url)
+        Logger().DLog(message: "params", parameterToPrit: params)
+        
+        let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
             let isSuccess: Bool = OstAPIBase.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {

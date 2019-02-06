@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstTestAPITests: XCTestCase {
+class OstTokensAPITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,19 +20,14 @@ class OstTestAPITests: XCTestCase {
     }
 
     func testGetTokenHoder() throws {
-        let expectation1 = expectation(description: "SomethingWithDelegate calls the delegate as the result of an async method completion")
-        
-        let params: [String : Any] = ["personal_sign_address":"0xf65c7a49981db56AED34beA4617E32e326ACf977",
-                                         "token_id": "58",
-                                         "user_id": "bcffc567-2881-4610-aa86-fa89f37bc197",
-                                         "wallet_address": "0x60A20Cdf6a21a73Fb89475221D252865C695e302"]
-        
-        try OstTokensAPI().getToken(success: { (successResponse) in
+        let exceptionObj = expectation(description: "Get Token with callback")
+         
+        try OstMockTokenAPI().getToken(success: { (successResponse) in
             XCTAssertNotNil(successResponse)
-            expectation1.fulfill()
+            exceptionObj.fulfill()
         }, failuar: { (failuarResponse) in
-            print(failuarResponse)
-            expectation1.fulfill()
+            Logger().DLog(message: "failuar", parameterToPrit: failuarResponse)
+            exceptionObj.fulfill()
             XCTAssertFalse(true, "received failuar response.")
         })
         
@@ -41,10 +36,6 @@ class OstTestAPITests: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
         }
-    }
-    
-    func test1() {
-        
     }
 
     func testPerformanceExample() {
