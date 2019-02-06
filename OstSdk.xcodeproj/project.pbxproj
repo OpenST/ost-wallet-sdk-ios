@@ -118,9 +118,12 @@
 		4B49894E21F99CE300ED0E94 /* OstConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49894D21F99CE300ED0E94 /* OstConstants.swift */; };
 		4B5EF30F220AC5C80049AD8A /* OstUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF30E220AC5C80049AD8A /* OstUtilsTests.swift */; };
 		4B5EF312220AC7BE0049AD8A /* OstMockAPISigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF311220AC7BE0049AD8A /* OstMockAPISigner.swift */; };
-		4B5EF314220AE1D80049AD8A /* OstMockTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF313220AE1D80049AD8A /* OstMockTokenAPI.swift */; };
 		4B5EF316220AE22B0049AD8A /* OstMockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF315220AE22B0049AD8A /* OstMockUser.swift */; };
 		4B5EF318220AE8F70049AD8A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF317220AE8F70049AD8A /* Logger.swift */; };
+		4B5EF31A220AF7A00049AD8A /* OstAPITokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF319220AF7A00049AD8A /* OstAPITokenHolder.swift */; };
+		4B5EF31C220AF9CC0049AD8A /* OstAPITokenHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF31B220AF9CC0049AD8A /* OstAPITokenHolderTests.swift */; };
+		4B5EF322220B0A9D0049AD8A /* OstAPIBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF321220B0A9D0049AD8A /* OstAPIBaseTests.swift */; };
+		4B5EF324220B1EF10049AD8A /* OstConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */; };
@@ -202,8 +205,8 @@
 		4BE9E3DC22080FF300427A80 /* OstRegisterDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3DB22080FF300427A80 /* OstRegisterDeviceTests.swift */; };
 		4BE9E3E022085A3800427A80 /* RegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3DF22085A3800427A80 /* RegisterDevice.swift */; };
 		4BE9E3E322085F5D00427A80 /* OstAPISigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */; };
-		4BE9E3EB22097F6600427A80 /* OstTokensAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstTokensAPITests.swift */; };
-		4BE9E3EF2209A03500427A80 /* OstTokensAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstTokensAPI.swift */; };
+		4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */; };
+		4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */; };
 		4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */; };
 /* End PBXBuildFile section */
 
@@ -359,9 +362,12 @@
 		4B49894D21F99CE300ED0E94 /* OstConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConstants.swift; sourceTree = "<group>"; };
 		4B5EF30E220AC5C80049AD8A /* OstUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUtilsTests.swift; sourceTree = "<group>"; };
 		4B5EF311220AC7BE0049AD8A /* OstMockAPISigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMockAPISigner.swift; sourceTree = "<group>"; };
-		4B5EF313220AE1D80049AD8A /* OstMockTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMockTokenAPI.swift; sourceTree = "<group>"; };
 		4B5EF315220AE22B0049AD8A /* OstMockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMockUser.swift; sourceTree = "<group>"; };
 		4B5EF317220AE8F70049AD8A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		4B5EF319220AF7A00049AD8A /* OstAPITokenHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokenHolder.swift; sourceTree = "<group>"; };
+		4B5EF31B220AF9CC0049AD8A /* OstAPITokenHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokenHolderTests.swift; sourceTree = "<group>"; };
+		4B5EF321220B0A9D0049AD8A /* OstAPIBaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBaseTests.swift; sourceTree = "<group>"; };
+		4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConnectivity.swift; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OstBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OstMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
@@ -446,9 +452,9 @@
 		4BE9E3DB22080FF300427A80 /* OstRegisterDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRegisterDeviceTests.swift; sourceTree = "<group>"; };
 		4BE9E3DF22085A3800427A80 /* RegisterDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterDevice.swift; sourceTree = "<group>"; };
 		4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISigner.swift; sourceTree = "<group>"; };
-		4BE9E3EA22097F6600427A80 /* OstTokensAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokensAPITests.swift; sourceTree = "<group>"; };
+		4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokensTests.swift; sourceTree = "<group>"; };
 		4BE9E3EC220989E600427A80 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		4BE9E3EE2209A03500427A80 /* OstTokensAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokensAPI.swift; sourceTree = "<group>"; };
+		4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokens.swift; sourceTree = "<group>"; };
 		4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCurrentDevice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -730,7 +736,6 @@
 			children = (
 				4B5EF311220AC7BE0049AD8A /* OstMockAPISigner.swift */,
 				4B5EF315220AE22B0049AD8A /* OstMockUser.swift */,
-				4B5EF313220AE1D80049AD8A /* OstMockTokenAPI.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -782,6 +787,7 @@
 				4B49871321EF85C500ED0E94 /* OstError.swift */,
 				4B49894621F743C300ED0E94 /* OstFunctionEncoder.swift */,
 				4B5EF317220AE8F70049AD8A /* Logger.swift */,
+				4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1014,7 +1020,8 @@
 			isa = PBXGroup;
 			children = (
 				4BE9E3022201E6F300427A80 /* OstAPIBase.swift */,
-				4BE9E3EE2209A03500427A80 /* OstTokensAPI.swift */,
+				4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */,
+				4B5EF319220AF7A00049AD8A /* OstAPITokenHolder.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1053,7 +1060,9 @@
 		4BE9E3E922097F5000427A80 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				4BE9E3EA22097F6600427A80 /* OstTokensAPITests.swift */,
+				4B5EF321220B0A9D0049AD8A /* OstAPIBaseTests.swift */,
+				4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */,
+				4B5EF31B220AF9CC0049AD8A /* OstAPITokenHolderTests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1339,6 +1348,7 @@
 				4B75F27B21C391DB00898960 /* OstSdk.swift in Sources */,
 				4B49871421EF85C500ED0E94 /* OstError.swift in Sources */,
 				4B49891021F6F2AF00ED0E94 /* EthereumCall.swift in Sources */,
+				4B5EF324220B1EF10049AD8A /* OstConnectivity.swift in Sources */,
 				4B00CCEA21E4B577005A5696 /* OstSdkBaseDatabase.swift in Sources */,
 				4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */,
 				4B49890721F6F2AF00ED0E94 /* EthereumTransactionReceiptObject.swift in Sources */,
@@ -1359,6 +1369,7 @@
 				4B00CD3021EC9C75005A5696 /* OstKeyGenerationProcess.swift in Sources */,
 				4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */,
 				4B75F28E21C3CB5100898960 /* OstTokenHolderRepository.swift in Sources */,
+				4B5EF31A220AF7A00049AD8A /* OstAPITokenHolder.swift in Sources */,
 				4B75F29F21C7771A00898960 /* OstCrypto.swift in Sources */,
 				4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */,
 				4B75F23221BE758500898960 /* OstTransaction.swift in Sources */,
@@ -1366,7 +1377,7 @@
 				4B49893721F6F2AF00ED0E94 /* SolidityTuple.swift in Sources */,
 				4B49892E21F6F2AF00ED0E94 /* EthereumContract.swift in Sources */,
 				4B49891D21F6F2AF00ED0E94 /* CharacterSet+Hex.swift in Sources */,
-				4BE9E3EF2209A03500427A80 /* OstTokensAPI.swift in Sources */,
+				4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */,
 				4B49890321F6F2AF00ED0E94 /* RLPItemConvertible.swift in Sources */,
 				4B00CC1521DF89FD005A5696 /* OstKeychainHelper.swift in Sources */,
 				4BE9E3152202D9E300427A80 /* OstContextEntity.swift in Sources */,
@@ -1469,12 +1480,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B5EF322220B0A9D0049AD8A /* OstAPIBaseTests.swift in Sources */,
 				4B75F23021BE725E00898960 /* OstUserTests.swift in Sources */,
 				4B7EAA2F2200CDEC00852DE2 /* OstRuleTests.swift in Sources */,
 				4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */,
 				4B00CCE821E4B3AD005A5696 /* OstKeyDatabaseTests.swift in Sources */,
 				4B49872321F61F7000ED0E94 /* EIP712Tests.swift in Sources */,
-				4BE9E3EB22097F6600427A80 /* OstTokensAPITests.swift in Sources */,
+				4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */,
 				4B7EAA272200617900852DE2 /* OstDeviceManagerTests.swift in Sources */,
 				4B75F22A21BE581E00898960 /* OstBaseEntityTests.swift in Sources */,
 				4B7EAA3922018C5C00852DE2 /* OstDeviceManagerOperationTests.swift in Sources */,
@@ -1486,10 +1498,10 @@
 				4B7EAA3B22018E7D00852DE2 /* OstCreditTests.swift in Sources */,
 				4B7EAA312200D30700852DE2 /* OstDeviceTests.swift in Sources */,
 				4B7EAA352201871600852DE2 /* OstTokenHolderTests.swift in Sources */,
+				4B5EF31C220AF9CC0049AD8A /* OstAPITokenHolderTests.swift in Sources */,
 				4B7EAA3D2201906B00852DE2 /* OstTransactionTests.swift in Sources */,
 				4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */,
 				4B5EF312220AC7BE0049AD8A /* OstMockAPISigner.swift in Sources */,
-				4B5EF314220AE1D80049AD8A /* OstMockTokenAPI.swift in Sources */,
 				4B7EAA332200D7CE00852DE2 /* OstSessionTests.swift in Sources */,
 				4B5EF30F220AC5C80049AD8A /* OstUtilsTests.swift in Sources */,
 				4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */,

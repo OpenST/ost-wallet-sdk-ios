@@ -9,7 +9,7 @@
 import XCTest
 @testable import OstSdk
 
-class OstTokensAPITests: XCTestCase {
+class OstAPITokensTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,17 +18,29 @@ class OstTokensAPITests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    class OstAPIMockToken: OstAPITokens {
+        override init() {
+            super.init()
+            _ = try! OstMockUser(["id":OstMockAPISigner.userId])
+        }
+        
+        override func sign(_ params: inout [String: Any]) throws {
+            let (signature, _) =  try OstMockAPISigner(userId: OstUser.currentDevice!.user_id!).sign(resource: getResource, params: params)
+            params["signature"] = signature
+        }
+    }
 
-    func testGetTokenHoder() throws {
+    func testGetToken() throws {
         let exceptionObj = expectation(description: "Get Token with callback")
          
-        try OstMockTokenAPI().getToken(success: { (successResponse) in
+        try OstAPIMockToken().getToken(success: { (successResponse) in
             XCTAssertNotNil(successResponse)
             exceptionObj.fulfill()
         }, failuar: { (failuarResponse) in
-            Logger().DLog(message: "failuar", parameterToPrit: failuarResponse)
+            Logger.log(message: "failuar", parameterToPrint: failuarResponse)
             exceptionObj.fulfill()
-            XCTAssertFalse(true, "received failuar response.")
+            XCTAssertNil(failuarResponse, "received failuar response.")
         })
         
         waitForExpectations(timeout: 10) { error in

@@ -79,7 +79,7 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
         
         var error: Unmanaged<CFError>?
         guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
-            print(error!)
+            Logger.log(message: "error", parameterToPrint: error!)
             throw OstSecureEnclaveError.invalidData
         }
         return privateKey
@@ -100,7 +100,7 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
         }
         
         guard status == errSecSuccess else {
-            print("value not stored in keychain for kSecAttrAccount: \(privateKeyTag)")
+            Logger.log(message: "value not stored in keychain for kSecAttrAccount", parameterToPrint: privateKeyTag)
             throw OstSecureEnclaveError.invalidData
         }
     }
@@ -130,7 +130,7 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
         let result = SecKeyCreateEncryptedData(publicKey, SecKeyAlgorithm.eciesEncryptionStandardX963SHA256AESGCM, data as CFData, &error)
         
         if result == nil {
-            print(error!)
+             Logger.log(message: "error", parameterToPrint: error!)
             throw OstSecureEnclaveError.invalidData
         }
         
@@ -141,7 +141,7 @@ public class OstSecureEnclaveHelper: OstBaseStorage {
         var error : Unmanaged<CFError>?
         let result = SecKeyCreateDecryptedData(privateKey, SecKeyAlgorithm.eciesEncryptionStandardX963SHA256AESGCM, data as CFData, &error)
         if result == nil {
-            print(error!)
+             Logger.log(message: "error", parameterToPrint: error!)
             throw OstSecureEnclaveError.invalidData
         }
         return result! as Data

@@ -18,13 +18,17 @@ public  class OstInitialDeviceProvisioning: OstWorkflowBase {
             }
             
             let aesKeyData: Data = try getAesKey()
-            print("aesKeyData : " + aesKeyData.toHexString())
+            Logger.log(message: "aesKeyData", parameterToPrint: aesKeyData.toHexString())
+            
             let hkdfKeyData: Data = try getHkdfKey(aesKey: aesKeyData)
-            print("hkdfKeyData : " + hkdfKeyData.toHexString())
+            Logger.log(message: "hkdfKeyData", parameterToPrint: hkdfKeyData.toHexString())
+            
             let aheadData: Data = getAHEAD(hkdfKey: hkdfKeyData)
-            print("aheadData : " + aheadData.toHexString())
+            Logger.log(message: "aheadData", parameterToPrint: aheadData.toHexString())
+            
             let encData: Data = try encryptData(aesKey: aesKeyData, ahead: aheadData, dataToEncrypt: privateKeyData)
-            print("encData : " + encData.toHexString())
+            Logger.log(message: "encData", parameterToPrint: encData.toHexString())
+            
             return nil
         }catch let error{
             throw error

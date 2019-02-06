@@ -72,8 +72,8 @@ class OstCryptoImpls: OstCrypto {
     
     func generateCryptoKeys() throws  -> OstWalletKeys {
         let mnemonics : [String] = Mnemonic.create()
+        Logger.log(message: "mnemonics", parameterToPrint: mnemonics)
         
-        print("mnemonics : \(mnemonics)")
         let seed = try! Mnemonic.createSeed(mnemonic: mnemonics)
         let wallet: Wallet
         do {

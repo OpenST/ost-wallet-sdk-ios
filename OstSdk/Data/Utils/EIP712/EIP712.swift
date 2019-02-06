@@ -144,7 +144,7 @@ class EIP712 {
         solidityType = SolidityType.bytes(length: 32)
         encTypes.append(solidityType);
         solidityValue = try OstSolidityValue.getSolidtyValue( hashDataType(dataType), for: solidityType)
-        print("oThis.hashDataType(dataType) :", hashDataType(dataType))
+        Logger.log(message: "oThis.hashDataType(dataType)", parameterToPrint: hashDataType(dataType))
         encValues.append(solidityValue);
         
         // Add field contents

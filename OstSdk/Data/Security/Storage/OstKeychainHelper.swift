@@ -51,7 +51,7 @@ public class OstKeychainHelper: OstBaseStorage {
         
         if let existingItem =  item as? [String: Any],
             let data = existingItem[kSecValueData as String] as? Data {
-            print("data got from keychain : \(data.toHexString())")
+            Logger.log(message: "data got from keychain", parameterToPrint: data.toHexString())
             return data
         }
         return nil

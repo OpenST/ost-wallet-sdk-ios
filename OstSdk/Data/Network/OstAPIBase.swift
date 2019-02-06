@@ -12,6 +12,9 @@ import Alamofire
 public class OstAPIBase {
     
     static func isResponseSuccess(_ response: Any?) -> Bool {
+        #if DEBUG
+            return true
+        #endif
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
             if successValue is Int {
@@ -30,12 +33,8 @@ public class OstAPIBase {
     
     func getHeader() -> [String: String] {
         let httpHeaders = ["Content-Type": "application/x-www-form-urlencoded",
-                           "User-Agent": getUserAgent()]
+                           "User-Agent": OstConstants.OST_USER_AGENT]
         return httpHeaders
-    }
-    
-    func getUserAgent() -> String {
-        return OstConstants.OST_USER_AGENT
     }
     
     var getBaseURL: String {
@@ -50,7 +49,7 @@ public class OstAPIBase {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
-    func insetAdditionalParamsIfRequired(_ params: inout [String: Any?]) {
+    func insetAdditionalParamsIfRequired(_ params: inout [String: Any]) {
         if (params["signature_kind"] == nil) {
             params["signature_kind"] = getSignatureKind
         }
@@ -76,15 +75,43 @@ public class OstAPIBase {
         }
     }
     
+    func sign(_ params: inout [String: Any]) throws {
+        let (signature, _) =  try OstAPISigner(userId: OstUser.currentDevice!.user_id!).sign(resource: getResource, params: params)
+        params["signature"] = signature
+    }
+    
     //MARK: - HttpRequest
-    func get(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+        
+        guard OstConnectivity.isConnectedToInternet else {
+            Logger.log(message: "not reachable")
+            return
+        }
+        Logger.log(message: "reachable")
         
         let url: String = getBaseURL+getResource
         
-        Logger().DLog(message: "url", parameterToPrit: url)
-        Logger().DLog(message: "params", parameterToPrit: params)
+        Logger.log(message: "url", parameterToPrint: url)
+        Logger.log(message: "params", parameterToPrint: params as Any)
         
         let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
+        dataRequest.responseJSON { (httpResponse) in
+            let isSuccess: Bool = OstAPIBase.isResponseSuccess(httpResponse.result.value)
+            if (httpResponse.result.isSuccess && isSuccess) {
+                success(httpResponse.result.value as! [String : Any])
+            }else {
+                failuar(httpResponse.result.value as! [String : Any])
+            }
+        }
+    }
+    
+    func post(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+        let url: String = getBaseURL+getResource
+        
+        Logger.log(message: "url", parameterToPrint: url)
+        Logger.log(message: "params", parameterToPrint: params)
+        
+        let dataRequest = Alamofire.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
             let isSuccess: Bool = OstAPIBase.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {

@@ -10,22 +10,14 @@ import Foundation
 import Alamofire
 
 class Logger {
-    
-    var intFor : Int
-    
-    init() {
-        intFor = 42
-    }
-    
-    func DLog(message: String? = nil, parameterToPrit: Any, function: String = #function) {
+    class func log(message: String? = nil, parameterToPrint: Any? = nil, function: String = #function) {
         #if DEBUG
-            debugPrint("************************ START *********************************")
-            debugPrint("function: \(function)")
-            if (message != nil) {
-                debugPrint("message: \(message!)")
-            }
-            debugPrint(parameterToPrit)
-            debugPrint("************************* END *******************************")
+        debugPrint("************************ START *********************************")
+        debugPrint("function: \(function)")
+        debugPrint("message: \(message ?? "")")
+        
+        debugPrint(parameterToPrint ?? "")
+        debugPrint("************************* END *******************************")
         #endif
     }
 }
