@@ -35,8 +35,8 @@ class OstKeyManagerTests: XCTestCase {
         let apiAddress: String? = keyManagerObj.getAPIAddress()
         XCTAssertNotNil(apiAddress)
 
-        let apiKeyAddress: String? = try keyManagerObj.getAPIKey()
-        XCTAssertNotNil(apiKeyAddress)
+        let apiPrivateKey: String? = try keyManagerObj.getAPIKey()
+        XCTAssertNotNil(apiPrivateKey)
     }
     
     func testPerformanceExample() {

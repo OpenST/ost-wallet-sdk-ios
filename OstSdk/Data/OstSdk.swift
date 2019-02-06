@@ -44,11 +44,8 @@ public class OstSdk {
         return try OstRuleModelRepository.sharedRule.getById(id) as? OstRule
     }
     
-    
-    
     public static func registerDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) throws {
         let registerDeviceObj = try OstRegisterDevice(userId: userId, delegat: delegate)
         registerDeviceObj.perform()
     }
-
 }

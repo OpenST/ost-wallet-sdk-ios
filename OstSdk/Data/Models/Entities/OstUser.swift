@@ -10,6 +10,9 @@ import Foundation
 
 public class OstUser: OstBaseEntity {
     
+    static var tokenId: String = ""
+    static var currentDevice: OstCurrentDevice? = nil
+
     static let OSTUSER_PARENTID = "token_id"
     
     static func getEntityIdentiferKey() -> String {
@@ -20,7 +23,7 @@ public class OstUser: OstBaseEntity {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
 
-    public func getMultiSig() throws -> OstDeviceManager? {
+    public func getDeviceManager() throws -> OstDeviceManager? {
         if (self.multisig_id != nil) {
             return try OstDeviceManagerRepository.sharedDeviceManager.getById(self.multisig_id!) as? OstDeviceManager
         }
@@ -33,6 +36,40 @@ public class OstUser: OstBaseEntity {
     
     override func getParentId(_ params: [String: Any]) -> String? {
         return OstUtils.toString(params[OstUser.OSTUSER_PARENTID])
+    }
+    
+    override func processJson(_ entityData: [String : Any?]) {
+        super.processJson(entityData)
+        OstUser.tokenId = self.token_id!
+    }
+    
+    func hasCurrentDevice() -> Bool {
+        if let _ = getCurrentDevice() {
+            return true
+        }
+        return false
+    }
+    
+    func getCurrentDevice() -> OstCurrentDevice? {
+        
+        if (OstUser.currentDevice != nil) {
+            return OstUser.currentDevice
+        }
+        
+        let devices: [OstDevice] = try! OstDeviceRepository.sharedDevice.getByParentId(self.id) as! [OstDevice]
+        let keyManager = try! OstKeyManager(userId: self.id)
+        for device in devices {
+            if let address = device.address {
+                let isAddressValid = keyManager.hasAddresss(address)
+                if isAddressValid {
+                    do {
+                        OstUser.currentDevice = try OstCurrentDevice(device.data as [String : Any])
+                        return OstUser.currentDevice
+                    }catch { }
+                }
+            }
+        }
+        return nil
     }
 }
 

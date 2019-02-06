@@ -62,6 +62,15 @@ public class OstKeyManager {
         return ethKeys.address!
     }
     
+    func hasAddresss(_ address: String) -> Bool {
+        do {
+            if let _ = try getEthereumKey(forAddresss: address) {
+                return true
+            }
+        }catch { }
+        return false
+    }
+    
     public func getMnemonics(forAddresss address: String) throws -> [String]? {
         if let ethMetaMapping: EthMetaMapping =  getEthKeyMnenonicsMetaMapping(forAddress: address) {
             if let jsonString: String = try getAndDecrypt(forKey: "Etherium_key_Mnenonics_for_", ethMetaMapping: ethMetaMapping) {
@@ -78,7 +87,7 @@ public class OstKeyManager {
         return nil
     }
 
-    func getAPIKey() throws -> String? {
+    public func getAPIKey() throws -> String? {
         if let apiAddrss = getAPIAddress() {
             return try getEthereumKey(forAddresss: apiAddrss)
         }

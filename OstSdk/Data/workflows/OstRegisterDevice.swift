@@ -25,7 +25,7 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
         ostRegisterDeviceThread.async {
             if self.hasRegisteredDevice() {
                 DispatchQueue.main.async {
-                    self.delegate.flowComplete(OstContextEntity())
+                    self.delegate.flowComplete(OstContextEntity(status: .success))
                 }
             }else {
                 DispatchQueue.main.sync {
@@ -38,18 +38,6 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
                 }
             }
         }
-    }
-    
-    
-    //MARK: - OstDeviceRegisteredProtocol
-    public func deviceRegistered(_ apiResponse: [String : Any]) throws {
-        if let deviceJSON = apiResponse["device"] as? [String : Any] {
-            let ostDevice: OstDevice = try OstDevice.parse(deviceJSON)!
-        }
-    }
-    
-    public func cancelFlow(_ cancelReason: String) {
-        
     }
     
     //MARK: - Private
@@ -74,10 +62,13 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
         let apiAddress = keyManager.getAPIAddress()
         let uuid = getDeviceUUID()
         let deviceName = getDeviceName()
-        return  ["address": deviceAddress,
+        let apiParam: [String: Any] = ["address": deviceAddress,
                  "personal_sign_address": apiAddress!,
                  "device_uuid": uuid ?? "",
-                 "device_name": deviceName]
+                 "device_name": deviceName,
+                 "updated_timestamp": Date.negativeTimestamp()]
+        _ = try OstDevice.parse(apiParam)
+        return apiParam
     }
     
     private func getDeviceUUID() -> String? {
@@ -86,5 +77,19 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
     
     private func getDeviceName() -> String {
         return UIDevice.current.name
+    }
+    
+    //MARK: - OstDeviceRegisteredProtocol
+    public func deviceRegistered(_ apiResponse: [String : Any]) throws {
+        if let deviceJSON = apiResponse["device"] as? [String : Any] {
+            let ostDevice: OstDevice = try OstDevice.parse(deviceJSON)!
+            delegate.flowComplete(OstContextEntity(status: .success, entity: ostDevice))
+            return
+        }
+        delegate.flowInterrupt(OstError.invalidInput("api response is not as desired."))
+    }
+    
+    public func cancelFlow(_ cancelReason: String) {
+        
     }
 }

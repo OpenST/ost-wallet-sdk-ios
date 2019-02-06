@@ -59,25 +59,3 @@ public extension OstDevice {
         return data["device_manager_address"] as? String
     }
 }
-
-
-public extension OstDevice {
-    
-    public final class Transaction {
-        var rawTransaction: RawTransaction
-        public init(nonce: Int, value: String, to: String, gasPrice: Int, gasLimit: Int) throws {
-            let wei:BInt = try Converter.toWei(ether: value)
-            self.rawTransaction = RawTransaction(value: wei, to: to, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
-        }
-    }
-    
-    public func signTransaction(_ transaction: OstDevice.Transaction) throws -> String {
-        guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
-            throw OstError.actionFailed("Sign Transaction failed to perform")
-        }
-        
-        let privateKey: String = String(data: secureKey.secData, encoding: .utf8)!
-        let wallet: Wallet = Wallet(network: .mainnet, privateKey: privateKey, debugPrints: true)
-        return try wallet.sign(rawTransaction: transaction.rawTransaction)
-    }
-}
