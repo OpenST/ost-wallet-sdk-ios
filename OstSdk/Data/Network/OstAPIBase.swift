@@ -9,9 +9,9 @@
 import Foundation
 import Alamofire
 
-public class OstAPIBase {
+open class OstAPIBase {
     
-    static func isResponseSuccess(_ response: Any?) -> Bool {
+    func isResponseSuccess(_ response: Any?) -> Bool {
         #if DEBUG
             return true
         #endif
@@ -37,11 +37,11 @@ public class OstAPIBase {
         return httpHeaders
     }
     
-    var getBaseURL: String {
+    open var getBaseURL: String {
         return OstConstants.OST_API_BASE_URL
     }
     
-    var getResource: String {
+    open var getResource: String {
         fatalError("resource not override")
     }
 
@@ -81,7 +81,7 @@ public class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    public func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
@@ -96,7 +96,7 @@ public class OstAPIBase {
         
         let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
-            let isSuccess: Bool = OstAPIBase.isResponseSuccess(httpResponse.result.value)
+            let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 success(httpResponse.result.value as! [String : Any])
             }else {
@@ -105,7 +105,7 @@ public class OstAPIBase {
         }
     }
     
-    func post(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    public func post(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
@@ -113,7 +113,7 @@ public class OstAPIBase {
         
         let dataRequest = Alamofire.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
-            let isSuccess: Bool = OstAPIBase.isResponseSuccess(httpResponse.result.value)
+            let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 success(httpResponse.result.value as! [String : Any])
             }else {

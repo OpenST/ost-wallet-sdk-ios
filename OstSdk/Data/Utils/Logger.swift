@@ -9,14 +9,13 @@
 import Foundation
 import Alamofire
 
-class Logger {
-    class func log(message: String? = nil, parameterToPrint: Any? = nil, function: String = #function) {
+public class Logger {
+    public class func log(message: String? = nil, parameterToPrint: Any? = nil, function: String = #function) {
         #if DEBUG
+        debugPrint()
         debugPrint("************************ START *********************************")
         debugPrint("function: \(function)")
-        debugPrint("message: \(message ?? "")")
-        
-        debugPrint(parameterToPrint ?? "")
+        debugPrint("\(message ?? "") : \(parameterToPrint ?? "") ")
         debugPrint("************************* END *******************************")
         #endif
     }
@@ -25,6 +24,7 @@ class Logger {
 extension Request {
     public func debugLog() -> Self {
         #if DEBUG
+        debugPrint()
         debugPrint("=======================================")
         debugPrint(self)
         debugPrint("=======================================")

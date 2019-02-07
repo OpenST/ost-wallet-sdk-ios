@@ -24,6 +24,4 @@ class RegisterDevice {
             print(error)
         }
     }
-    
-   
 }

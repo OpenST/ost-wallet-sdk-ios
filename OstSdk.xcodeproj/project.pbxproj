@@ -124,6 +124,9 @@
 		4B5EF324220B1EF10049AD8A /* OstConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */; };
 		4B5EF33A220B2D6C0049AD8A /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; };
 		4B5EF33B220B2D6C0049AD8A /* OstSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B5EF344220C17A30049AD8A /* MappyAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF343220C17A30049AD8A /* MappyAPIBase.swift */; };
+		4B5EF346220C3AE70049AD8A /* MappyRegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF345220C3AE70049AD8A /* MappyRegisterDevice.swift */; };
+		4B5EF348220C3BD20049AD8A /* MappyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF347220C3BD20049AD8A /* MappyUser.swift */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */; };
@@ -368,6 +371,9 @@
 		4B5EF31B220AF9CC0049AD8A /* OstAPITokenHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokenHolderTests.swift; sourceTree = "<group>"; };
 		4B5EF321220B0A9D0049AD8A /* OstAPIBaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBaseTests.swift; sourceTree = "<group>"; };
 		4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConnectivity.swift; sourceTree = "<group>"; };
+		4B5EF343220C17A30049AD8A /* MappyAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappyAPIBase.swift; sourceTree = "<group>"; };
+		4B5EF345220C3AE70049AD8A /* MappyRegisterDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappyRegisterDevice.swift; sourceTree = "<group>"; };
+		4B5EF347220C3BD20049AD8A /* MappyUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappyUser.swift; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OstBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OstMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
@@ -507,6 +513,7 @@
 		4B00CCB421E363EA005A5696 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				4B5EF342220C17870049AD8A /* Network */,
 				4BE9E3E122085A3E00427A80 /* Workflows */,
 				4B49893B21F6F7A800ED0E94 /* MockToken.abi */,
 				4B00CCB521E363EA005A5696 /* AppDelegate.swift */,
@@ -738,6 +745,16 @@
 				4B5EF315220AE22B0049AD8A /* OstMockUser.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		4B5EF342220C17870049AD8A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4B5EF343220C17A30049AD8A /* MappyAPIBase.swift */,
+				4B5EF347220C3BD20049AD8A /* MappyUser.swift */,
+				4B5EF345220C3AE70049AD8A /* MappyRegisterDevice.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		4B75F21E21BE3F9900898960 /* Models */ = {
@@ -1323,8 +1340,11 @@
 			files = (
 				4B00CCB821E363EA005A5696 /* ViewController.swift in Sources */,
 				4B00CCBE21E363EA005A5696 /* Example.xcdatamodeld in Sources */,
+				4B5EF348220C3BD20049AD8A /* MappyUser.swift in Sources */,
+				4B5EF346220C3AE70049AD8A /* MappyRegisterDevice.swift in Sources */,
 				4BE9E3332203387800427A80 /* OstWorkFlowCallbackImplementation.swift in Sources */,
 				4B00CCB621E363EA005A5696 /* AppDelegate.swift in Sources */,
+				4B5EF344220C17A30049AD8A /* MappyAPIBase.swift in Sources */,
 				4BE9E3E022085A3800427A80 /* RegisterDevice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

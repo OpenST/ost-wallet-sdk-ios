@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstUtils {
+public class OstUtils {
     
     static func toString(_ val: Any?) -> String? {
         if val == nil {
@@ -34,7 +34,7 @@ class OstUtils {
         return nil
     }
     
-    static func toJSONString(_ val: Any) throws -> String? {
+    public static func toJSONString(_ val: Any) throws -> String? {
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: val,
             options: []) {

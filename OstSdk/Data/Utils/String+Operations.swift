@@ -99,4 +99,26 @@ extension String {
         }
         return self.distance(from: self.startIndex, to: lastIndex)
     }
+    
+    var encodedString: String {
+        let allowedCharacterSet = (CharacterSet(charactersIn: "~`!@#$%^&*()_+-={}[]:;\"'<>,.?/|\\").inverted)
+        if let escapedString = self.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) {
+            return escapedString.replaceCharacter("%20", with: "+")
+        }
+        return self.replaceCharacter("%20", with: "+")
+    }
+    
+    func replaceCharacter(_ pattern: String, with replaceString:String) -> String {
+        let regex = try! NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+        let range = NSMakeRange(0, self.count)
+        let modifiedString = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replaceString)
+        return modifiedString
+    }
+    
+    var decodedString: String {
+        if let unescapedString = self.removingPercentEncoding {
+            return unescapedString
+        }
+        return self
+    }
 }

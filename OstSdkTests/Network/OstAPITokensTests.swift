@@ -35,6 +35,7 @@ class OstAPITokensTests: XCTestCase {
         let exceptionObj = expectation(description: "Get Token with callback")
          
         try OstAPIMockToken().getToken(success: { (successResponse) in
+            Logger.log(message: "successResponse", parameterToPrint: successResponse)
             XCTAssertNotNil(successResponse)
             exceptionObj.fulfill()
         }, failuar: { (failuarResponse) in

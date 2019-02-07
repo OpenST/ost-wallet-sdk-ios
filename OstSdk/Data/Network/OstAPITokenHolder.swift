@@ -18,7 +18,7 @@ class OstAPITokenHolder: OstAPIBase {
     }
     
     override var getResource: String {
-        return "/users/\(userId)/token-holders"
+        return "/users/\(userId)/token-holders/"
     }
     
     func deployTokeHolder(params: [String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) throws {

@@ -69,6 +69,8 @@ class OstAPISigner {
     func getQueryString(for paramValObj:[String: Any?]) -> String {
         var nestedQueryParams: [HttpParam] = []
         _ = OstUtils.buildNestedQuery(params: &nestedQueryParams, paramKeyPrefix: "", paramValObj: paramValObj)
-        return nestedQueryParams.map {"\($0.getParamName())=\($0.getParamValue())"}.joined(separator: "&")
+        return nestedQueryParams.map {
+            let encodedValueString = $0.getParamValue().encodedString
+            return $0.getParamName() + "=" + encodedValueString }.joined(separator: "&")
     }
 }

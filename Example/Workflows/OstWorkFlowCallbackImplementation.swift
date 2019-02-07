@@ -14,21 +14,21 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     init() { }
     
     func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
-        let registerDeviceResponse = ["device": [
-                                                "user_id": "abcd-kdlk",
-                                                "address": "0x123",
-                                                "personal_sign_address": "0x123",
-                                                "device_name": apiParams["device_name"],
-                                                "device_uuid": apiParams["device_uuid"],
-                                                "status": "REGISTERED",
-                                                "updated_timestamp": Date().timeIntervalSince1970
-                                                ]
-                                     ]
-        do {
-            try ostDeviceRegisteredProtocol.deviceRegistered(registerDeviceResponse)
-        }catch let error{
-            print(error)
-        }
+//        let registerDeviceResponse = ["device": [
+//                                                "user_id": "abcd-kdlk",
+//                                                "address": "0x123",
+//                                                "personal_sign_address": "0x123",
+//                                                "device_name": apiParams["device_name"],
+//                                                "device_uuid": apiParams["device_uuid"],
+//                                                "status": "REGISTERED",
+//                                                "updated_timestamp": Date().timeIntervalSince1970
+//                                                ]
+//                                     ]
+//        do {
+//            try ostDeviceRegisteredProtocol.deviceRegistered(registerDeviceResponse)
+//        }catch let error{
+//            print(error)
+//        }
         
     }
     

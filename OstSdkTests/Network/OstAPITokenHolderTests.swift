@@ -35,13 +35,14 @@ class OstAPITokenHolderTests: XCTestCase {
     func testDelpoyTokenHolder() throws {
         let exceptionObj = expectation(description: "deploy Token holder with callback")
         
-        let params:[String: Any] = ["session_addresses":["0x60A20Cdf6a21a73Fb89475221D252865C695e302",
-                                                         "0x60A20Cdf6a21a73Fb89475221D252865C695e302"],
+        let params:[String: Any] = ["session_addresses":["0x60A20Cdf6a21a73Fb89475221D252865C695e302"],
                                     "expiration_height": "123453241",
-                                    "spending_limit": "12431"
+                                    "spending_limit": "12431",
+                                    "device_addresses": ["0x60A20Cdf6a21a73Fb89475221D252865C695e302"],
                                     ]
         
         try OstAPIMockTokenHolder(userId: OstMockAPISigner.userId).deployTokeHolder(params: params, success: { (successResponse) in
+            Logger.log(message: "successResponse", parameterToPrint: successResponse)
             XCTAssertNotNil(successResponse)
             exceptionObj.fulfill()
         }, failuar: { (failuarResponse) in
