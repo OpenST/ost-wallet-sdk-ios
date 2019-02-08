@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
+		005AAF70220335A900A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6E220335A900A2F8E4 /* README.md */; };
+		005AAF71220335A900A2F8E4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6F220335A900A2F8E4 /* LICENSE.txt */; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
 		4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */; };
 		4B00CBA421DCD8C4005A5696 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */; };
@@ -92,9 +94,6 @@
 		4B49892621F6F2AF00ED0E94 /* Eth+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */; };
 		4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */; };
 		4B49892821F6F2AF00ED0E94 /* ABIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */; };
-		4B49892921F6F2AF00ED0E94 /* ERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E921F6F2AF00ED0E94 /* ERC20.swift */; };
-		4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */; };
-		4B49892B21F6F2AF00ED0E94 /* ERC165.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */; };
 		4B49892C21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */; };
 		4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */; };
 		4B49892E21F6F2AF00ED0E94 /* EthereumContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */; };
@@ -254,6 +253,8 @@
 /* Begin PBXFileReference section */
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		005AAF6E220335A900A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		005AAF6F220335A900A2F8E4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
 		4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
@@ -341,9 +342,6 @@
 		4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eth+Contract.swift"; sourceTree = "<group>"; };
 		4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityEvent.swift; sourceTree = "<group>"; };
 		4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIObject.swift; sourceTree = "<group>"; };
-		4B4988E921F6F2AF00ED0E94 /* ERC20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20.swift; sourceTree = "<group>"; };
-		4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC721.swift; sourceTree = "<group>"; };
-		4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC165.swift; sourceTree = "<group>"; };
 		4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPromiseExtensions.swift; sourceTree = "<group>"; };
 		4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityFunction.swift; sourceTree = "<group>"; };
 		4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumContract.swift; sourceTree = "<group>"; };
@@ -590,10 +588,10 @@
 		4B4988B121F6F2AF00ED0E94 /* Web3 */ = {
 			isa = PBXGroup;
 			children = (
-				4B49894421F72D2100ED0E94 /* OstSolidityHandler.swift */,
+				005AAF6F220335A900A2F8E4 /* LICENSE.txt */,
+				005AAF6E220335A900A2F8E4 /* README.md */,
 				4B4988B221F6F2AF00ED0E94 /* Core */,
 				4B4988E421F6F2AF00ED0E94 /* ContractABI */,
-				4B49894B21F872E200ED0E94 /* OstSolidityValue.swift */,
 			);
 			path = Web3;
 			sourceTree = "<group>";
@@ -711,9 +709,6 @@
 				4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */,
 				4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */,
 				4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */,
-				4B4988E921F6F2AF00ED0E94 /* ERC20.swift */,
-				4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */,
-				4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */,
 				4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */,
 				4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */,
 				4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */,
@@ -789,6 +784,8 @@
 		4B75F22221BE439B00898960 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4B49894421F72D2100ED0E94 /* OstSolidityHandler.swift */,
+				4B49894B21F872E200ED0E94 /* OstSolidityValue.swift */,
 				4B7EAA24220027E300852DE2 /* TouchIDAuthentication.swift */,
 				4B4988B121F6F2AF00ED0E94 /* Web3 */,
 				4B49872121F5BEF200ED0E94 /* EIP712 */,
@@ -1244,6 +1241,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005AAF71220335A900A2F8E4 /* LICENSE.txt in Resources */,
+				005AAF70220335A900A2F8E4 /* README.md in Resources */,
 				005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */,
 				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
 			);
@@ -1471,14 +1470,12 @@
 				4B49893221F6F2AF00ED0E94 /* ABIDecoder.swift in Sources */,
 				4B49892021F6F2AF00ED0E94 /* Exports+Web3.swift in Sources */,
 				4B75F28421C3B03800898960 /* OstRuleModelRepository.swift in Sources */,
-				4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */,
 				4B75F20021B7B53200898960 /* OstMigrationManager.swift in Sources */,
 				4B75F26F21C10DC500898960 /* Data+Conversion.swift in Sources */,
 				4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */,
 				4B49891521F6F2AF00ED0E94 /* Bytes+HexString.swift in Sources */,
 				4B00CBB221DDDF74005A5696 /* OstSessionDbQueries.swift in Sources */,
 				4B49890C21F6F2AF00ED0E94 /* EthereumQuantity.swift in Sources */,
-				4B49892921F6F2AF00ED0E94 /* ERC20.swift in Sources */,
 				4B49890621F6F2AF00ED0E94 /* EthereumBlockObject.swift in Sources */,
 				4B00CCF221E4C414005A5696 /* OstSecureKeyDbQueries.swift in Sources */,
 				4B49891321F6F2AF00ED0E94 /* EthereumLogObject.swift in Sources */,
@@ -1514,7 +1511,6 @@
 				4B4988FF21F6F2AF00ED0E94 /* Web3Provider.swift in Sources */,
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,
-				4B49892B21F6F2AF00ED0E94 /* ERC165.swift in Sources */,
 				4B49891221F6F2AF00ED0E94 /* Types+EthereumValueConvertible.swift in Sources */,
 				4B49892221F6F2AF00ED0E94 /* Values+GeneralHashable.swift in Sources */,
 				4B49894521F72D2100ED0E94 /* OstSolidityHandler.swift in Sources */,
