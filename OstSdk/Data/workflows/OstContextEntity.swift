@@ -17,7 +17,7 @@ public class OstContextEntity {
     public private(set) var type: OstWorkflowType
     public private(set) var entity: Any?
     
-    init(message: String = "", type: OstWorkflowType, entity: OstBaseEntity? = nil) {
+    init(message: String = "", type: OstWorkflowType, entity: Any? = nil) {
         self.message = message
         self.type = type
         self.entity = entity as Any

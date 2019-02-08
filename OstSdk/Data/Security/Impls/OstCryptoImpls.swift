@@ -74,14 +74,14 @@ class OstCryptoImpls: OstCrypto {
         let mnemonics : [String] = Mnemonic.create()
         Logger.log(message: "mnemonics", parameterToPrint: mnemonics)
         
-        let seed = try! Mnemonic.createSeed(mnemonic: mnemonics)
+        let seed = try! Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
         let wallet: Wallet
         do {
-            wallet = try Wallet(seed: seed, network: .ropsten, debugPrints: true)
+            wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: true)
         } catch let error {
             fatalError("Error: \(error.localizedDescription)")
         }
-
+    
         let privateKey = wallet.privateKey()
         let publicKey = wallet.publicKey()
         let address = wallet.address()
@@ -95,5 +95,28 @@ class OstCryptoImpls: OstCrypto {
         singedData[64] += 27
         let singedTx = singedData.toHexString().addHexPrefix();
         return singedTx
+    }
+    
+    func generateRecoveryKey(pinPrefix: String, pin: String, pinPostFix: String, salt: String, n:Int, r:Int, p: Int, size: Int) throws -> String {
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH >= pinPrefix.count {
+            throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH >= pinPostFix.count {
+            throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH >= pin.count {
+            throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+        }
+        let stringToCalculate: String = pinPrefix+pin+pinPostFix
+        let seed: Data = try! genSCryptKey(salt: salt.data(using: .utf8)!, n: n, r: r, p: p, size: size, stringToCalculate: stringToCalculate)
+        
+        let privateKey = HDPrivateKey(seed: seed, network: .mainnet)
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK, privateKey: privateKey.privateKey().raw.toHexString(), debugPrints: true)
+        Logger.log(message: "address", parameterToPrint: wallet.address())
+        
+        return wallet.address()
     }
 }

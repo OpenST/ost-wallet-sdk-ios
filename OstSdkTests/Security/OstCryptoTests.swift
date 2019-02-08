@@ -56,7 +56,6 @@ class OstCryptoTests: XCTestCase {
     }
     
     func testAESEncryption() throws{
-        
         let val = String(Date.negativeTimestamp())
         
         let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: val.data(using: .utf8)!, n: 2, r: 2, p: 2, size: 32, stringToCalculate: "a")
@@ -82,6 +81,24 @@ class OstCryptoTests: XCTestCase {
         }
     }
     
+    func testGenerateRecoveryKey() throws {
+        let expectedRecoveryAddress = "0x4D02Ad9F67ed64d128D429b52C37af40f8b17e36"
+        
+        XCTAssertThrowsError(try OstCryptoImpls().generateRecoveryKey(pinPrefix: "password", pin: "123456", pinPostFix: "123", salt: "salt", n: 2, r: 2, p: 2, size: 32))
+        
+        let pinPrefix = "qazwsxcderfvbgtyhnmjuiknklqazwsxcderfvbgtyhnmjuiknkl"
+        let pin = "1234567"
+        let pinPostFix = "12345"
+        
+        let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix, pin: pin, pinPostFix: pinPostFix, salt: "salt", n: 2, r: 2, p: 2, size: 32)
+        
+        let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix, pin: pin, pinPostFix: pinPostFix, salt: "salt", n: 2, r: 2, p: 2, size: 32)
+        
+        XCTAssertEqual(recoveryAddressRepeat, recoveryAddress)
+        XCTAssertEqual(expectedRecoveryAddress, recoveryAddressRepeat)
+        XCTAssertEqual(expectedRecoveryAddress, recoveryAddress)
+    }
+    
     func getEIP1077TxHash() -> String {
         var tx: [String: String] = [:]
         
@@ -100,7 +117,6 @@ class OstCryptoTests: XCTestCase {
         }catch {
             return ""
         }
-        
     }
     
     func testPerformanceExample() {

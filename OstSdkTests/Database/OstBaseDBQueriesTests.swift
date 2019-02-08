@@ -15,10 +15,8 @@ class OstBaseDBQueries: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         let db: FMDatabase = OstSdkDatabase.sharedInstance.database
-        let keyDB: FMDatabase = OstSdkKeyDatabase.sharedInstance.database
         
         XCTAssertTrue((db == OstSdkDatabase.sharedInstance.database), "Database instances are same")
-        XCTAssertTrue((keyDB == OstSdkKeyDatabase.sharedInstance.database), "Database instances are same")
     }
 
     override func tearDown() {

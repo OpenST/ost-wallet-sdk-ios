@@ -40,17 +40,14 @@ public class OstKeyManager {
     public init (userId: String) throws {
         self.userId = userId
         keychainHelper = OstKeychainHelper(service: "com.ost")
-        let apiAddress = getAPIAddress()
-        if (apiAddress == nil) {
-            try createAPIKey()
-        }
     }
     
-    func createAPIKey() throws {
+    func createAPIKey() throws -> String {
         let ethKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
         
         try setEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try setAPIAddress(ethKeys.address!)
+        return ethKeys.address!
     }
     
     public func createKeyWithMnemonics() throws -> String {
@@ -97,6 +94,12 @@ public class OstKeyManager {
     public func getAPIAddress() -> String? {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         return userDeviceInfo["api_address"] as? String
+    }
+    
+    public func getPrivateKey() -> SecKey? {
+        
+        
+        return nil
     }
 }
 

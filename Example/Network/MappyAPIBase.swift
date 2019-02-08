@@ -10,7 +10,7 @@ import Foundation
 import OstSdk
 
 class MappyAPIBase: OstAPIBase {
-    override init() { super.init() }
+    init() { super.init() }
     
     override var getBaseURL: String {
         return "http://localhost:4040"

@@ -10,8 +10,7 @@ import Foundation
 
 public class OstUser: OstBaseEntity {
     
-    static var tokenId: String = ""
-    static var currentDevice: OstCurrentDevice? = nil
+    var currentDevice: OstCurrentDevice? = nil
 
     static let OSTUSER_PARENTID = "token_id"
     
@@ -40,7 +39,6 @@ public class OstUser: OstBaseEntity {
     
     override func processJson(_ entityData: [String : Any?]) {
         super.processJson(entityData)
-        OstUser.tokenId = self.token_id!
     }
     
     func hasCurrentDevice() -> Bool {
@@ -52,8 +50,8 @@ public class OstUser: OstBaseEntity {
     
     func getCurrentDevice() -> OstCurrentDevice? {
         
-        if (OstUser.currentDevice != nil) {
-            return OstUser.currentDevice
+        if (currentDevice != nil) {
+            return currentDevice
         }
         
         let devices: [OstDevice] = try! OstDeviceRepository.sharedDevice.getByParentId(self.id) as! [OstDevice]
@@ -63,8 +61,8 @@ public class OstUser: OstBaseEntity {
                 let isAddressValid = keyManager.hasAddresss(address)
                 if isAddressValid {
                     do {
-                        OstUser.currentDevice = try OstCurrentDevice(device.data as [String : Any])
-                        return OstUser.currentDevice
+                        currentDevice = try OstCurrentDevice(device.data as [String : Any])
+                        return currentDevice
                     }catch { }
                 }
             }

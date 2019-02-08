@@ -24,13 +24,17 @@ class ABIEncoderTests: XCTestCase {
 
     func testABIEncoder()  {
         do {
-            let contractJsonABI = json.data(using: .utf8)!
+            
+            let content = try OstBundle.getContentOf(file: "GnosisSafe.abi", fileExtension: "json")
+            XCTAssertNotNil(content)
+            
+            let contractJsonABI = content.data(using: .utf8)!
             let decoder = JSONDecoder()
             let abi = try decoder.decode([ABIObject].self, from: contractJsonABI)
+            Logger.log(message: "abi", parameterToPrint: abi)
+            
             let spenderAddress = try EthereumAddress(hex:"0x7e68ae93145b393c59e0422978d41f858d88da90", eip55: false)
             
-            
-            print(abi)
             let abiObj: ABIObject = abi[1]
             print("a")
             let solidityHander = OstSolidityHandler()
@@ -38,8 +42,7 @@ class ABIEncoderTests: XCTestCase {
             let _invocation = function!.invoke(spenderAddress, BigInt("100000000000000000000") )
             let str = _invocation.encodeABI();
             print( str!.hex() );
-            
-            
+        
 
         }catch let error {
             print(error)

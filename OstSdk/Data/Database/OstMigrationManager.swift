@@ -69,7 +69,7 @@ internal class OstMigrationManager{
         while resultSet.next(){
             version = max(version, Int(resultSet.int(forColumn: OstMigrationManager.versionString)))
         }
-        print("getLastMigration: \(version)")
+        Logger.log(message: "getLastMigration", parameterToPrint: version)
         return version
     }
     

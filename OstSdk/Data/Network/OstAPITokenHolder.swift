@@ -9,12 +9,8 @@
 import Foundation
 
 class OstAPITokenHolder: OstAPIBase {
-    var userId: String = ""
-    
-    private override init() { }
-    
-    init(userId: String) {
-        self.userId = userId
+    override init(userId: String) {
+        super.init(userId: userId)
     }
     
     override var getResource: String {

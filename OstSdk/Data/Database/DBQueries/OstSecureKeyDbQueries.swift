@@ -11,10 +11,6 @@ import FMDB
 
 class OstSecureKeyDbQueries: OstBaseDbQueries {
 
-    override func getDb() -> FMDatabase {
-        return OstSdkKeyDatabase.sharedInstance.database
-    }
-    
     override func activityName() -> String{
         return "secure_keys"
     }
@@ -32,22 +28,11 @@ class OstSecureKeyDbQueries: OstBaseDbQueries {
     }
     
     override func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
-        let queryParams : [String: Any] = ["key": (params as! OstSecureKey).key,
-                                           "data": (params as! OstSecureKey).secData
+        let entityData: [String: Any] = (params as! OstSecureKey).toDictionary()
+        let queryParams : [String: Any] = ["key": (params as! OstSecureKey).address,
+                                           "data": OstUtils.toEncodedData(entityData)
                                           ]
         return queryParams
-    }
-    
-    override func getEntityDataFromResultSet(_ resultSet: FMResultSet) -> [[String: Any]] {
-        var resultData: Array<[String: Any]> = []
         
-        while resultSet.next() {
-            let dDataVal: Data = resultSet.data(forColumn: "data")!
-            let keyVal: String = resultSet.string(forColumn: "key")!
-            let r: [String: Any] = ["key": keyVal, "data": dDataVal]
-            resultData.append(r)
-        }
-        
-        return resultData
     }
 }

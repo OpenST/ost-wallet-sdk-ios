@@ -11,6 +11,10 @@ import OstSdk
 
 class ViewController: UIViewController {
     
+    static let notificationName: String = "printOutput"
+    static let userId: String = "1231453-43234-3451-412355413"
+    static let tokenId: String = "58"
+    
     @IBOutlet weak var flowNameLabel: UILabel!
     
     @IBOutlet weak var flowOutputTextView: UITextView!
@@ -21,6 +25,17 @@ class ViewController: UIViewController {
     //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        try! initUser()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.printOutput(_:)), name: NSNotification.Name(ViewController.notificationName), object: nil)
+    }
+    
+    func initUser() throws {
+        let userEntity = ["user_id": ViewController.userId,
+                          "token_id": ViewController.tokenId,
+                          "current_timestamp": String(Date().timeIntervalSince1970)]
+        let user: OstUser? = try OstSdk.parseUser(userEntity)
+        Logger.log(message: "user", parameterToPrint: user?.data)
     }
     
     //MARK: - Button Action
@@ -37,7 +52,8 @@ class ViewController: UIViewController {
         self.flowNameLabel.text = flowName
         printOutput("")
     }
-    func printOutput(_ output: Any? = nil) {
+    
+    @objc func printOutput(_ output: Any? = nil) {
         if flowOutputTextView != nil {
             do {
                 if (output is String) {
@@ -75,13 +91,13 @@ class ViewController: UIViewController {
     
     //MARK: - Flows
     func registerDevice() {
-        let params = ["a":1]
-        self.printOutput(params)
         do {
-            try RegisterDevice(userId: mappyUserId).perform()
+            try RegisterDevice(userId: ViewController.userId, tokenId: ViewController.tokenId).perform()
         }catch let error {
             self.printOutput(error.localizedDescription)
         }
     }
+    
+    
    
 }

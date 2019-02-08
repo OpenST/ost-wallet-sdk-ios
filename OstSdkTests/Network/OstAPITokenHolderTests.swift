@@ -27,7 +27,7 @@ class OstAPITokenHolderTests: XCTestCase {
         }
         
         override func sign(_ params: inout [String: Any]) throws {
-            let (signature, _) =  try OstMockAPISigner(userId: OstUser.currentDevice!.user_id!).sign(resource: getResource, params: params)
+            let (signature, _) =  try OstMockAPISigner(userId: userId).sign(resource: getResource, params: params)
             params["signature"] = signature
         }
     }

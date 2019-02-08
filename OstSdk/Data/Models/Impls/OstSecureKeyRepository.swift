@@ -19,7 +19,7 @@ class OstSecureKeyRepository: OstBaseModelRepository {
         return OstSecureKeyDbQueries()
     }
     
-    override func getEntity(_ data: [String : Any?]) throws -> OstBaseEntity {
-        return OstSecureKey(data: data["data"] as! Data, forKey: data["key"] as! String)
+    override func getEntity(_ data: [String : Any?]) throws -> OstSecureKey {
+        return OstSecureKey(address: data["address"] as! String, privateKeyData: data["privateKeyData"] as! Data, isSecureEnclaveEnrypted: data["isSecureEnclaveEnrypted"] as! Bool)
     }
 }

@@ -20,13 +20,12 @@ class OstAPITokensTests: XCTestCase {
     }
     
     class OstAPIMockToken: OstAPITokens {
-        override init() {
-            super.init()
-            _ = try! OstMockUser(["id":OstMockAPISigner.userId])
+        override init(userId: String) {
+            super.init(userId: userId)
         }
         
         override func sign(_ params: inout [String: Any]) throws {
-            let (signature, _) =  try OstMockAPISigner(userId: OstUser.currentDevice!.user_id!).sign(resource: getResource, params: params)
+            let (signature, _) =  try OstMockAPISigner(userId: userId).sign(resource: getResource, params: params)
             params["signature"] = signature
         }
     }
@@ -34,7 +33,7 @@ class OstAPITokensTests: XCTestCase {
     func testGetToken() throws {
         let exceptionObj = expectation(description: "Get Token with callback")
          
-        try OstAPIMockToken().getToken(success: { (successResponse) in
+        try OstAPIMockToken(userId: "123").getToken(success: { (successResponse) in
             Logger.log(message: "successResponse", parameterToPrint: successResponse)
             XCTAssertNotNil(successResponse)
             exceptionObj.fulfill()

@@ -9,17 +9,15 @@
 import Foundation
 import OstSdk
 
-class RegisterDevice {
-    var userId: String
-    init(userId: String) {
-        self.userId = userId
+class RegisterDevice: WorkflowBase {
+    
+    override init(userId: String, tokenId: String) {
+        super.init(userId: userId, tokenId: tokenId)
     }
-
-    func perform() throws {
-        let delegate = OstWorkFlowCallbackImplementation()
-        
+    
+    override func perform() throws {
         do {
-            try OstSdk.registerDevice(userId: userId, delegate: delegate)
+            try OstSdk.registerDevice(userId: userId, tokenId: tokenId, delegate: delegate)
         }catch let error {
             print(error)
         }

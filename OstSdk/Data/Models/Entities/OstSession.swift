@@ -27,6 +27,13 @@ public class OstSession: OstBaseEntity {
     override func getParentId(_ params: [String: Any]) -> String? {
         return OstUtils.toString(params[OstSession.OSTSESSION_PARENTID])
     }
+    
+    
+    static func create() throws {
+        let walletKey: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
+        
+        
+    }
 
 }
 
@@ -104,10 +111,11 @@ extension OstSession{
         let eip1077Obj: EIP1077 = EIP1077(transaction: txnDict)
         let eip1077TxnHash = try eip1077Obj.toEIP1077transactionHash()
         
-        guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
-            return ""
-        }
+//        guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
+//            return ""
+//        }
         
-        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: secureKey.privateKey!)
+//        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: secureKey.privateKey!)
+        return ""
     }
 }

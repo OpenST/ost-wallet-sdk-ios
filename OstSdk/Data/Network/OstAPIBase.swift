@@ -11,25 +11,10 @@ import Alamofire
 
 open class OstAPIBase {
     
-    func isResponseSuccess(_ response: Any?) -> Bool {
-        #if DEBUG
-            return true
-        #endif
-        if (response == nil) { return false }
-        if let successValue = (response as? [String: Any])?["success"] {
-            if successValue is Int {
-                return (successValue as! Int) > 0
-            }else if successValue is String {
-                let successStringValue = successValue as! String
-                if (successStringValue  == "true" || successStringValue != "0") {
-                    return true
-                }
-            }
-        }
-        return false
+    var userId: String
+    public init(userId: String = "") {
+        self.userId = userId
     }
-    
-    public init() { }
     
     func getHeader() -> [String: String] {
         let httpHeaders = ["Content-Type": "application/x-www-form-urlencoded",
@@ -49,7 +34,26 @@ open class OstAPIBase {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
+    func isResponseSuccess(_ response: Any?) -> Bool {
+        #if DEBUG
+        return true
+        #endif
+        if (response == nil) { return false }
+        if let successValue = (response as? [String: Any])?["success"] {
+            if successValue is Int {
+                return (successValue as! Int) > 0
+            }else if successValue is String {
+                let successStringValue = successValue as! String
+                if (successStringValue  == "true" || successStringValue != "0") {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
     func insetAdditionalParamsIfRequired(_ params: inout [String: Any]) {
+    
         if (params["signature_kind"] == nil) {
             params["signature_kind"] = getSignatureKind
         }
@@ -58,25 +62,34 @@ open class OstAPIBase {
             params["request_timestamp"] = OstUtils.toString(Date.timestamp())
         }
         
-        if (params["user_id"] == nil) {
-            params["user_id"] = OstUser.currentDevice!.user_id!
-        }
-        
-        if (params["token_id"] == nil) {
-            params["token_id"] = OstUser.tokenId
-        }
-       
-        if (params["api_signer_address"] == nil) {
-            params["api_signer_address"] = OstUser.currentDevice!.personal_sign_address!
-        }
-        
-        if (params["wallet_address"] == nil) {
-            params["wallet_address"] = OstUser.currentDevice!.address!
+        if (!userId.isEmpty) {
+            do {
+                if let user: OstUser = try OstUserModelRepository.sharedUser.getById(userId) as? OstUser {
+                    if (params["token_id"] == nil && user.token_id != nil) {
+                        params["token_id"] = user.token_id
+                    }
+                    if (params["user_id"] == nil) {
+                        params["user_id"] = userId
+                    }
+                    if let currentDevice = user.getCurrentDevice() {
+                        
+                        if (params["api_signer_address"] == nil) {
+                            params["api_signer_address"] = currentDevice.personal_sign_address!
+                        }
+                        
+                        if (params["wallet_address"] == nil) {
+                            params["wallet_address"] = currentDevice.address!
+                        }
+                    }
+                }
+            }catch {
+                
+            }
         }
     }
     
     func sign(_ params: inout [String: Any]) throws {
-        let (signature, _) =  try OstAPISigner(userId: OstUser.currentDevice!.user_id!).sign(resource: getResource, params: params)
+        let (signature, _) =  try OstAPISigner(userId: userId).sign(resource: getResource, params: params)
         params["signature"] = signature
     }
     

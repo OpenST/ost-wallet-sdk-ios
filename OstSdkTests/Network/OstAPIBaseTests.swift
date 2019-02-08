@@ -20,9 +20,8 @@ class OstAPIBaseTests: XCTestCase {
     }
 
     class OstGetAPIMockBase: OstAPIBase {
-        override init() {
-            super.init()
-            _ = try! OstMockUser(["id":OstMockAPISigner.userId])
+        override init(userId: String) {
+            super.init(userId: userId)
         }
         
         override var getBaseURL: String {
@@ -36,7 +35,7 @@ class OstAPIBaseTests: XCTestCase {
     func testGetAPI() {
         let exceptionObj = expectation(description: "Get user from local with callback")
         
-        OstGetAPIMockBase().get(params: nil, success: { (successObj) in
+        OstGetAPIMockBase(userId: "123").get(params: nil, success: { (successObj) in
             print(successObj)
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)
@@ -54,10 +53,10 @@ class OstAPIBaseTests: XCTestCase {
     }
     
     class OstPostAPIMockBase: OstAPIBase {
-        override init() {
-            super.init()
-            _ = try! OstMockUser(["id":OstMockAPISigner.userId])
+        override init(userId: String) {
+            super.init(userId: userId)
         }
+        
         
         override var getBaseURL: String {
             return "http://127.0.0.1:4040/api/users"
@@ -71,7 +70,7 @@ class OstAPIBaseTests: XCTestCase {
         let exceptionObj = expectation(description: "Get user from local with callback")
         let params = ["username": "aaaaa",
                       "mobile_number": OstUtils.toString(Date.timestamp())]
-        OstPostAPIMockBase().post(params: params as [String : AnyObject], success: { (successObj) in
+        OstPostAPIMockBase(userId: "123").post(params: params as [String : AnyObject], success: { (successObj) in
             Logger.log(message: nil, parameterToPrint: successObj)
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)

@@ -8,20 +8,20 @@
 
 import Foundation
 
-public class OstRegisterDevice: OstDeviceRegisteredProtocol {
+class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
 
     let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
-    var userId: String
     var delegate: OstWorkFlowCallbackProtocol
     var keyManager: OstKeyManager
     
-    public init(userId: String, delegat: OstWorkFlowCallbackProtocol) throws {
-        self.userId = userId
+    public init(userId: String, tokenId: String, delegat: OstWorkFlowCallbackProtocol) throws {
         self.delegate = delegat
         keyManager = try OstKeyManager(userId: userId)
+        
+        super.init(userId: userId)
     }
     
-    func perform(){
+    override func perform() {
         ostRegisterDeviceThread.async {
             if self.hasRegisteredDevice() {
                 DispatchQueue.main.async {
@@ -41,7 +41,7 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
     }
     
     //MARK: - Private
-    private func hasRegisteredDevice() -> Bool {
+    func hasRegisteredDevice() -> Bool {
         do {
             if let deviceArray: [OstDevice] = try OstDevice.getDeviceByParentId(parentId: userId) {
                 if let apiAddress = keyManager.getAPIAddress() {
@@ -57,25 +57,26 @@ public class OstRegisterDevice: OstDeviceRegisteredProtocol {
         return false
     }
     
-    private func getRegisterDeviceRequestParams() throws -> [String: Any] {
+    func getRegisterDeviceRequestParams() throws -> [String: Any] {
         let deviceAddress = try keyManager.createKeyWithMnemonics()
-        let apiAddress = keyManager.getAPIAddress()
-        let uuid = getDeviceUUID()
-        let deviceName = getDeviceName()
-        let apiParam: [String: Any] = ["address": deviceAddress,
-                 "personal_sign_address": apiAddress!,
-                 "device_uuid": uuid ?? "",
-                 "device_name": deviceName,
-                 "updated_timestamp": Date.negativeTimestamp()]
+        let apiAddress = try keyManager.createAPIKey()
+        
+        var apiParam: [String: Any] = [:]
+        apiParam["address"] = deviceAddress
+        apiParam["api_signer_address"] = apiAddress
+        apiParam["device_uuid"] = getDeviceUUID() ?? ""
+        apiParam["device_name"] = getDeviceName()
+        apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
+        
         _ = try OstDevice.parse(apiParam)
         return apiParam
     }
     
-    private func getDeviceUUID() -> String? {
+    func getDeviceUUID() -> String? {
         return UIDevice.current.identifierForVendor?.uuidString
     }
     
-    private func getDeviceName() -> String {
+    func getDeviceName() -> String {
         return UIDevice.current.name
     }
     

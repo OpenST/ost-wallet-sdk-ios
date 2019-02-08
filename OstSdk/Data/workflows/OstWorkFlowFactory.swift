@@ -8,20 +8,17 @@
 
 import Foundation
 
-public class OstWorkFlowFactory {
+class OstWorkFlowFactory {
     
-    public static func deployTokenHolder(pin: String, password: String, delegate: OstWorkFlowCallbackProtocol) {
-        let deployTokenHolderThread = DispatchQueue(label: "com.ost.sdk.deployTokenHolder", qos: .background)
-        
-        let deployTokenHolderCompletionHandler: (OstDeployTokenHolder) -> Void = {ostDeployTokenHolder in
-            
-        }
-        
-        let ostDeployTokenHolder: OstDeployTokenHolder = OstDeployTokenHolder(pin: pin, password: password, handler: deployTokenHolderCompletionHandler, delegate: delegate)
-        deployTokenHolderThread.async {
-            ostDeployTokenHolder.perform()
-        }
+    class func registerDevice(userId: String, tokenId: String, delegate: OstWorkFlowCallbackProtocol) throws -> OstRegisterDevice {
+        let registerDeviceObj = try OstRegisterDevice(userId: userId, tokenId: tokenId, delegat: delegate)
+        registerDeviceObj.perform()
+        return registerDeviceObj
     }
-    
+
+    class func deployTokenHolder(userId: String, spendingLimit: String, expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+        let deployTokenHolderObj = OstDeployTokenHolder(userId: userId, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
+        deployTokenHolderObj.perform()
+    }
     
 }

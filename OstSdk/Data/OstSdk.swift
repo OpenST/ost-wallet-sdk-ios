@@ -10,7 +10,7 @@ import Foundation
 
 public class OstSdk {
     
-    private init() {}
+    init() {}
     
     public static func parse(_ apiResponse: [String: Any]) throws {
         if let device: [String: Any] = apiResponse["device"] as? [String : Any] {
@@ -26,13 +26,13 @@ public class OstSdk {
         return try OstUserModelRepository.sharedUser.getById(id) as? OstUser
     }
     
-    public static func parseUser(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstUser.parse(entityData);
-    }
-    
     public static func initUser(forId id: String) throws -> OstUser? {
         let entityData: [String: Any] = ["id": id]
         return try parseUser(entityData)
+    }
+    
+    public static func parseUser(_ entityData: [String: Any?]) throws -> OstUser? {
+        return try OstUser.parse(entityData);
     }
     
     public static func parseUser(_ jsonString: String) throws -> OstUser? {
@@ -44,8 +44,11 @@ public class OstSdk {
         return try OstRuleModelRepository.sharedRule.getById(id) as? OstRule
     }
     
-    public static func registerDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) throws {
-        let registerDeviceObj = try OstRegisterDevice(userId: userId, delegat: delegate)
-        registerDeviceObj.perform()
+    public static func registerDevice(userId: String, tokenId: String, delegate: OstWorkFlowCallbackProtocol) throws {
+        _ = try OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, delegate: delegate)
+    }
+    
+    public static func deployTokenHolder(userId: String, spendingLimit: String, expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+        try OstWorkFlowFactory.deployTokenHolder(userId: userId, spendingLimit: spendingLimit, expirationHeight:expirationHeight, delegate: delegate)
     }
 }
