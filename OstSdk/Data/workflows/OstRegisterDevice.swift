@@ -9,13 +9,18 @@
 import Foundation
 
 class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
-
+    
     let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     var delegate: OstWorkFlowCallbackProtocol
     var keyManager: OstKeyManager
+    var tokenId: String
+    var forceSync: Bool
     
-    public init(userId: String, tokenId: String, delegat: OstWorkFlowCallbackProtocol) throws {
+    public init(userId: String, tokenId: String, forceSync: Bool,delegat: OstWorkFlowCallbackProtocol) throws {
+        self.tokenId = tokenId
         self.delegate = delegat
+        self.forceSync = forceSync
+        
         keyManager = try OstKeyManager(userId: userId)
         
         super.init(userId: userId)
@@ -23,53 +28,94 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     override func perform() {
         ostRegisterDeviceThread.async {
-            if self.hasRegisteredDevice() {
-                DispatchQueue.main.async {
-                    self.delegate.flowComplete(OstContextEntity(type: .registerDevice))
+            do {
+                let (isValidParams, errorMessage) = self.isValidParams()
+                if (!isValidParams) {
+                    self.postError(OstError.invalidInput(errorMessage))
+                    return
                 }
-            }else {
-                DispatchQueue.main.sync {
-                    do {
-                        let requestParams = try self.getRegisterDeviceRequestParams()
-                        self.delegate.registerDevice(requestParams, delegate: self)
-                    }catch let error{
-                        self.delegate.flowInterrupt(error as! OstError)
-                    }
+                
+                try self.initToken()
+                try self.initUser()
+                
+                let currentDevice = try self.getCurrentDevice()
+                if (currentDevice == nil || currentDevice!.isDeviceRevoked()) {
+                    self.createAndRegisterDevice()
+                    return
                 }
+                
+                if(!currentDevice!.isDeviceRegistered()) {
+                    self.registerDevice(currentDevice!.data as [String : Any])
+                }
+            
+                //self.sync()
+            }catch let error {
+                self.postError(error)
             }
         }
     }
     
-    //MARK: - Private
-    func hasRegisteredDevice() -> Bool {
-        do {
-            if let deviceArray: [OstDevice] = try OstDevice.getDeviceByParentId(parentId: userId) {
-                if let apiAddress = keyManager.getAPIAddress() {
-                    for device in deviceArray {
-                        if (device.personal_sign_address == apiAddress) &&
-                            (device.status?.uppercased() == "REGISTERED"){
-                                return true
-                        }
-                    }
-                }
-            }
-        }catch { }
-        return false
+    func isValidParams() -> (Bool, String?) {
+        if (userId.isEmpty) {
+            return (false, "userId should not be empty string.")
+        }
+        
+        if (tokenId.isEmpty) {
+            return (false, "tokenId should not be empty string.")
+        }
+        
+        return (true, nil)
     }
     
-    func getRegisterDeviceRequestParams() throws -> [String: Any] {
-        let deviceAddress = try keyManager.createKeyWithMnemonics()
-        let apiAddress = try keyManager.createAPIKey()
-        
-        var apiParam: [String: Any] = [:]
-        apiParam["address"] = deviceAddress
-        apiParam["api_signer_address"] = apiAddress
-        apiParam["device_uuid"] = getDeviceUUID() ?? ""
-        apiParam["device_name"] = getDeviceName()
-        apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
-        
-        _ = try OstDevice.parse(apiParam)
-        return apiParam
+    func initUser() throws {
+        _  = try OstSdk.initUser(forId: userId, withTokenId: tokenId)
+    }
+    
+    func initToken() throws {
+        _ = try OstSdk.initToken(tokenId)
+    }
+    
+    func postFlowComplete(entity: OstCurrentDevice) {
+        Logger.log(message: "flowComplete", parameterToPrint: nil)
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .registerDevice , entity: entity)
+            self.delegate.flowComplete(contextEntity);
+        }
+    }
+    
+    func postError(_ error: Error) {
+        DispatchQueue.main.async {
+            self.delegate.flowInterrupt(error as! OstError)
+        }
+    }
+    
+    func registerDevice(_ deviceParams: [String: Any]) {
+        DispatchQueue.main.async {
+            self.delegate.registerDevice(deviceParams, delegate: self)
+        }
+    }
+    
+    func createAndRegisterDevice() {
+        DispatchQueue.main.async {
+            do {
+                let deviceAddress = try self.keyManager.createKeyWithMnemonics()
+                let apiAddress = try self.keyManager.createAPIKey()
+                
+                var apiParam: [String: Any] = [:]
+                apiParam["address"] = deviceAddress
+                apiParam["api_signer_address"] = apiAddress
+                apiParam["device_uuid"] = self.getDeviceUUID() ?? ""
+                apiParam["device_name"] = self.getDeviceName()
+                apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
+                apiParam["status"] = "CREATED"
+                
+                _ = try OstCurrentDevice.parse(apiParam)
+                
+                self.registerDevice(apiParam)
+            }catch let error {
+                self.postError(error)
+            }
+        }
     }
     
     func getDeviceUUID() -> String? {
@@ -80,17 +126,37 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         return UIDevice.current.name
     }
     
+//    func sync() {
+//        OstSdkSync(userId: userId, tokenId: tokenId, syncEntites: .Devices, .User, .Token)
+//        if forceSync {
+//            try! .syncUser(success: { (ostUser) in
+//                Logger.log(message: "", parameterToPrint: ostUser.data)
+//            }) { (error) in
+//                Logger.log(message: "", parameterToPrint: error)
+//            }
+//        }
+//
+//        try! OstSdkSync(userId: userId, tokenId: tokenId, syncEntites: .Devices, .User, .Token).syncToken(success: { (ostToken) in
+//            print()
+//        }, failuar: { (error) in
+//            print()
+//        })
+//    }
+    
     //MARK: - OstDeviceRegisteredProtocol
     public func deviceRegistered(_ apiResponse: [String : Any]) throws {
         if let deviceJSON = apiResponse["device"] as? [String : Any] {
             let ostDevice: OstDevice = try OstDevice.parse(deviceJSON)!
             delegate.flowComplete(OstContextEntity(type: .registerDevice, entity: ostDevice))
-            return
+            sync()
+        }else {
+            delegate.flowInterrupt(OstError.invalidInput("api response is not as desired."))
         }
-        delegate.flowInterrupt(OstError.invalidInput("api response is not as desired."))
+        
     }
     
     public func cancelFlow(_ cancelReason: String) {
         
     }
+    
 }

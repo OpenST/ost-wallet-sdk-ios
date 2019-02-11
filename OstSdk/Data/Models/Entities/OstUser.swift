@@ -15,7 +15,7 @@ public class OstUser: OstBaseEntity {
     static let OSTUSER_PARENTID = "token_id"
     
     static func getEntityIdentiferKey() -> String {
-        return "id"
+        return "user_id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
@@ -49,25 +49,21 @@ public class OstUser: OstBaseEntity {
     }
     
     func getCurrentDevice() -> OstCurrentDevice? {
-        
-        if (currentDevice != nil) {
-            return currentDevice
+        if (self.currentDevice != nil) {
+            return self.currentDevice
         }
         
-        let devices: [OstDevice] = try! OstDeviceRepository.sharedDevice.getByParentId(self.id) as! [OstDevice]
-        let keyManager = try! OstKeyManager(userId: self.id)
-        for device in devices {
-            if let address = device.address {
-                let isAddressValid = keyManager.hasAddresss(address)
-                if isAddressValid {
-                    do {
-                        currentDevice = try OstCurrentDevice(device.data as [String : Any])
-                        return currentDevice
-                    }catch { }
-                }
-            }
+        let deviceAddress = try! OstKeyManager(userId: id).getDeviceAddress()
+        if deviceAddress == nil {
+            return nil
         }
-        return nil
+        
+        let device: OstDevice? = try! OstDeviceRepository.sharedDevice.getById(deviceAddress!) as? OstDevice
+        if (device == nil) {
+            return nil
+        }
+        self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
+        return self.currentDevice
     }
 }
 

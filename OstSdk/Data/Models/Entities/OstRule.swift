@@ -13,7 +13,7 @@ public class OstRule: OstBaseEntity {
     static let OSTRULE_PARENTID = "token_id"
     
     static func getEntityIdentiferKey() -> String {
-        return "id"
+        return "rule_id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstRule? {

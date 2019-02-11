@@ -10,17 +10,17 @@ import Foundation
 
 class OstBaseModelRepository {
     
-    internal static let DBQUEUE = DispatchQueue.main
+    internal static let DBQUEUE = DispatchQueue.init(label: "dbQueue")
     private var inMemoryCache: [String: OstBaseEntity] = [:]
     
-    static func getId(_ entityData: [String: Any?], forKey key: String) throws -> String {
+    class func getId(_ entityData: [String: Any?], forKey key: String) throws -> String {
         guard let identifer = entityData[key] else {
             throw OstError.invalidInput("JsonOject doesn't have desired identifier")
         }
         return identifer as! String
     }
     
-    static func getUpdatedTimestamp(_ entityData: [String: Any?]) -> Int {
+    class func getUpdatedTimestamp(_ entityData: [String: Any?]) -> Int {
         return OstUtils.toInt(entityData[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0
         
     }

@@ -61,4 +61,22 @@ class OstCurrentDevice: OstDevice {
         }
         return String(data: decData, encoding: .utf8)!
     }
+    
+    func isDeviceRegistered() -> Bool {
+        let status = self.status
+        if (status == nil) {
+            return false
+        }
+        
+        return ["REGISTERED", "AUTHORIZED", "AUTHORIZING"].contains(status!)
+    }
+    
+    func isDeviceRevoked() -> Bool {
+        let status = self.status
+        if (status == nil) {
+            return true
+        }
+        
+        return ["REVOKING", "REVOKED"].contains(status!)
+    }
 }

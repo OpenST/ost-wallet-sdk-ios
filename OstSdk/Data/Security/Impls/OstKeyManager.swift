@@ -42,6 +42,7 @@ public class OstKeyManager {
         keychainHelper = OstKeychainHelper(service: "com.ost")
     }
     
+    //MARK: - API key
     func createAPIKey() throws -> String {
         let ethKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
         
@@ -50,22 +51,44 @@ public class OstKeyManager {
         return ethKeys.address!
     }
     
+    func setAPIAddress(_ address: String) throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        
+        userDeviceInfo["api_address"] = address
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+    }
+    
+    public func getAPIAddress() -> String? {
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        return userDeviceInfo["api_address"] as? String
+    }
+    
+    public func getAPIKey() throws -> String? {
+        if let apiAddrss = getAPIAddress() {
+            return try getEthereumKey(forAddresss: apiAddrss)
+        }
+        return nil
+    }
+    
+    //MARK: - Device Key
     public func createKeyWithMnemonics() throws -> String {
         let ethKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
         
         try setMnemonics(ethKeys.mnemonics!, forAddress: ethKeys.address!)
         try setEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
-        
+        try setDeviceAddress(ethKeys.address!)
         return ethKeys.address!
     }
     
-    func hasAddresss(_ address: String) -> Bool {
-        do {
-            if let _ = try getEthereumKey(forAddresss: address) {
-                return true
-            }
-        }catch { }
-        return false
+    public func getDeviceAddress() -> String? {
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        return userDeviceInfo["device_address"] as? String
+    }
+    
+    func setDeviceAddress(_ address: String) throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        userDeviceInfo["device_address"] = address
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
     
     public func getMnemonics(forAddresss address: String) throws -> [String]? {
@@ -79,27 +102,18 @@ public class OstKeyManager {
     
     public func getEthereumKey(forAddresss address: String) throws -> String? {
         if let ethMetaMapping: EthMetaMapping =  getEthKeyMetaMapping(forAddress: address) {
-           return try getAndDecrypt(forKey: "Etherium_key_for_", ethMetaMapping: ethMetaMapping)
-        }
-        return nil
-    }
-
-    public func getAPIKey() throws -> String? {
-        if let apiAddrss = getAPIAddress() {
-            return try getEthereumKey(forAddresss: apiAddrss)
+            return try getAndDecrypt(forKey: "Etherium_key_for_", ethMetaMapping: ethMetaMapping)
         }
         return nil
     }
     
-    public func getAPIAddress() -> String? {
-        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        return userDeviceInfo["api_address"] as? String
-    }
-    
-    public func getPrivateKey() -> SecKey? {
-        
-        
-        return nil
+    func hasAddresss(_ address: String) -> Bool {
+        do {
+            if let _ = try getEthereumKey(forAddresss: address) {
+                return true
+            }
+        }catch { }
+        return false
     }
 }
 
@@ -120,14 +134,6 @@ extension OstKeyManager {
     
     func getEthKeyMnenonicsMetaMapping(forAddress address: String) -> EthMetaMapping?  {
         return getMetaMapping(key: "EthKeyMnenonicsMetaMapping", withAddress: address)
-    }
-    
-    //MARK: - API address
-    func setAPIAddress(_ address: String) throws {
-        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        
-        userDeviceInfo["api_address"] = address
-        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
 }
 

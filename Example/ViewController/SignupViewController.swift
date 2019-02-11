@@ -58,10 +58,8 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func parseUser(_ ostUserObj: [String: Any]) {
         do {
-            var ostUserObj = ostUserObj
-            ostUserObj["id"] = ostUserObj["user_id"]
             if let user: OstUser = try OstSdk.parseUser(ostUserObj) {
-                try RegisterDevice(userId: user.id, tokenId: user.token_id!, mappyUserId: (mappyUser!["_id"] as! String)).perform()
+                try SetupDevice(userId: user.id, tokenId: user.token_id!, mappyUserId: (mappyUser!["_id"] as! String)).perform()
             }
             
         }catch let error{

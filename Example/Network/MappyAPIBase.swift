@@ -20,4 +20,8 @@ class MappyAPIBase: OstAPIBase {
     override var getResource: String {
         return resourceURL
     }
+    
+    open override func isResponseSuccess(_ response: Any?) -> Bool {
+        return true
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import OstSdk
 
-class RegisterDevice: WorkflowBase {
+class SetupDevice: WorkflowBase {
     
     override init(userId: String, tokenId: String, mappyUserId: String) {
         super.init(userId: userId, tokenId: tokenId, mappyUserId: mappyUserId)
@@ -17,7 +17,7 @@ class RegisterDevice: WorkflowBase {
     
     override func perform() throws {
         do {
-            try OstSdk.registerDevice(userId: userId, tokenId: tokenId, delegate: delegate)
+            try OstSdk.setupDevice(userId: userId, tokenId: tokenId, delegate: delegate)
         }catch let error {
             print(error)
         }

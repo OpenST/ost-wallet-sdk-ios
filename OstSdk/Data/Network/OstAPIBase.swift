@@ -12,6 +12,8 @@ import Alamofire
 open class OstAPIBase {
     
     var userId: String
+    var resourceURL: String = ""
+    
     public init(userId: String = "") {
         self.userId = userId
     }
@@ -27,17 +29,14 @@ open class OstAPIBase {
     }
     
     open var getResource: String {
-        fatalError("resource not override")
+        return resourceURL
     }
 
     var getSignatureKind: String {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
-    func isResponseSuccess(_ response: Any?) -> Bool {
-        #if DEBUG
-        return true
-        #endif
+    open func isResponseSuccess(_ response: Any?) -> Bool {
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
             if successValue is Int {
@@ -130,7 +129,7 @@ open class OstAPIBase {
             if (httpResponse.result.isSuccess && isSuccess) {
                 success(httpResponse.result.value as! [String : Any])
             }else {
-                failuar(httpResponse.result.value as! [String : Any])
+                failuar((httpResponse.result.value as? [String : Any]) ?? [:])
             }
         }
     }

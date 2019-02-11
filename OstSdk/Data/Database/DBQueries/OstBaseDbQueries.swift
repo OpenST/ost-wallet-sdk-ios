@@ -73,14 +73,14 @@ class OstBaseDbQueries {
     }
     
     func executeStatement(_ query: String) -> Bool {
-        dbQueue?.inExclusiveTransaction({ (fmdb, nil) in
-            _ =  db?.executeStatements(query) ?? false
-        })
-        return true
+        return db?.executeStatements(query) ?? false
     }
     
     func executeUpdate(_ query: String, values: [String: Any]) -> Bool {
-        return db?.executeUpdate(query, withParameterDictionary: values) ?? false
+        dbQueue?.inTransaction({ (fmdb, nil) in
+            _ = fmdb.executeUpdate(query, withParameterDictionary: values) 
+        })
+        return true
     }
     
     // MARK: - Database Structure

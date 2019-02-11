@@ -92,7 +92,7 @@ class ViewController: UIViewController {
     //MARK: - Flows
     func registerDevice() {
         do {
-            try RegisterDevice(userId: ViewController.userId, tokenId: ViewController.tokenId, mappyUserId: "").perform()
+            try SetupDevice(userId: ViewController.userId, tokenId: ViewController.tokenId, mappyUserId: "").perform()
         }catch let error {
             self.printOutput(error.localizedDescription)
         }
