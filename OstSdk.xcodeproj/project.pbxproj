@@ -87,9 +87,6 @@
 		4B49892621F6F2AF00ED0E94 /* Eth+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */; };
 		4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */; };
 		4B49892821F6F2AF00ED0E94 /* ABIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */; };
-		4B49892921F6F2AF00ED0E94 /* ERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988E921F6F2AF00ED0E94 /* ERC20.swift */; };
-		4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */; };
-		4B49892B21F6F2AF00ED0E94 /* ERC165.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */; };
 		4B49892C21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */; };
 		4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */; };
 		4B49892E21F6F2AF00ED0E94 /* EthereumContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */; };
@@ -127,8 +124,6 @@
 		4B5EF356220D66DA0049AD8A /* DeployTokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF355220D66DA0049AD8A /* DeployTokenHolder.swift */; };
 		4B5EF358220D67110049AD8A /* WorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF357220D67110049AD8A /* WorkflowBase.swift */; };
 		4B5EF35A220D831E0049AD8A /* OstSecureKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */; };
-		4B5EF3BD220DC73A0049AD8A /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF3BB220DC7360049AD8A /* OstSolidityHandler.swift */; };
-		4B5EF3BE220DC73A0049AD8A /* OstSolidityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF3BC220DC73A0049AD8A /* OstSolidityValue.swift */; };
 		4B5EF4D9220DD45A0049AD8A /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */; };
 		4B5EF4DB220DD6270049AD8A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4DA220DD6270049AD8A /* LoginViewController.swift */; };
 		4B5EF4DD220DD6390049AD8A /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4DC220DD6390049AD8A /* SignupViewController.swift */; };
@@ -195,6 +190,10 @@
 		4B7EAA3B22018E7D00852DE2 /* OstCreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA3A22018E7D00852DE2 /* OstCreditTests.swift */; };
 		4B7EAA3D2201906B00852DE2 /* OstTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA3C2201906B00852DE2 /* OstTransactionTests.swift */; };
 		4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */; };
+		4B8CCDA82211508E00124586 /* OstSolidityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA62211508E00124586 /* OstSolidityValue.swift */; };
+		4B8CCDA92211508E00124586 /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */; };
+		4B8CCDB02211519A00124586 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4B8CCDAE2211519A00124586 /* README.md */; };
+		4B8CCDB12211519A00124586 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B8CCDAF2211519A00124586 /* LICENSE.txt */; };
 		4BE9E3032201E6F300427A80 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3022201E6F300427A80 /* OstAPIBase.swift */; };
 		4BE9E3062202CBF100427A80 /* OstBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */; };
 		4BE9E3082202CDBC00427A80 /* OstPinAcceptProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */; };
@@ -344,9 +343,6 @@
 		4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eth+Contract.swift"; sourceTree = "<group>"; };
 		4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityEvent.swift; sourceTree = "<group>"; };
 		4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIObject.swift; sourceTree = "<group>"; };
-		4B4988E921F6F2AF00ED0E94 /* ERC20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20.swift; sourceTree = "<group>"; };
-		4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC721.swift; sourceTree = "<group>"; };
-		4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC165.swift; sourceTree = "<group>"; };
 		4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPromiseExtensions.swift; sourceTree = "<group>"; };
 		4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityFunction.swift; sourceTree = "<group>"; };
 		4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumContract.swift; sourceTree = "<group>"; };
@@ -382,8 +378,6 @@
 		4B5EF355220D66DA0049AD8A /* DeployTokenHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeployTokenHolder.swift; sourceTree = "<group>"; };
 		4B5EF357220D67110049AD8A /* WorkflowBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowBase.swift; sourceTree = "<group>"; };
 		4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecureKeyTests.swift; sourceTree = "<group>"; };
-		4B5EF3BB220DC7360049AD8A /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OstSolidityHandler.swift; path = Web3/OstSolidityHandler.swift; sourceTree = "<group>"; };
-		4B5EF3BC220DC73A0049AD8A /* OstSolidityValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OstSolidityValue.swift; path = Web3/OstSolidityValue.swift; sourceTree = "<group>"; };
 		4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		4B5EF4DA220DD6270049AD8A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4B5EF4DC220DD6390049AD8A /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -453,6 +447,10 @@
 		4B7EAA3A22018E7D00852DE2 /* OstCreditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCreditTests.swift; sourceTree = "<group>"; };
 		4B7EAA3C2201906B00852DE2 /* OstTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTransactionTests.swift; sourceTree = "<group>"; };
 		4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerationTests.swift; sourceTree = "<group>"; };
+		4B8CCDA62211508E00124586 /* OstSolidityValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityValue.swift; sourceTree = "<group>"; };
+		4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityHandler.swift; sourceTree = "<group>"; };
+		4B8CCDAE2211519A00124586 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4B8CCDAF2211519A00124586 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4BE9E3022201E6F300427A80 /* OstAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
 		4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseProtocol.swift; sourceTree = "<group>"; };
 		4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinAcceptProtocol.swift; sourceTree = "<group>"; };
@@ -600,6 +598,8 @@
 		4B4988B121F6F2AF00ED0E94 /* Web3 */ = {
 			isa = PBXGroup;
 			children = (
+				4B8CCDAF2211519A00124586 /* LICENSE.txt */,
+				4B8CCDAE2211519A00124586 /* README.md */,
 				4B4988B221F6F2AF00ED0E94 /* Core */,
 				4B4988E421F6F2AF00ED0E94 /* ContractABI */,
 			);
@@ -719,9 +719,6 @@
 				4B4988E621F6F2AF00ED0E94 /* Eth+Contract.swift */,
 				4B4988E721F6F2AF00ED0E94 /* SolidityEvent.swift */,
 				4B4988E821F6F2AF00ED0E94 /* ABIObject.swift */,
-				4B4988E921F6F2AF00ED0E94 /* ERC20.swift */,
-				4B4988EA21F6F2AF00ED0E94 /* ERC721.swift */,
-				4B4988EB21F6F2AF00ED0E94 /* ERC165.swift */,
 				4B4988EC21F6F2AF00ED0E94 /* ContractPromiseExtensions.swift */,
 				4B4988ED21F6F2AF00ED0E94 /* SolidityFunction.swift */,
 				4B4988EE21F6F2AF00ED0E94 /* EthereumContract.swift */,
@@ -826,8 +823,8 @@
 		4B75F22221BE439B00898960 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				4B5EF3BB220DC7360049AD8A /* OstSolidityHandler.swift */,
-				4B5EF3BC220DC73A0049AD8A /* OstSolidityValue.swift */,
+				4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */,
+				4B8CCDA62211508E00124586 /* OstSolidityValue.swift */,
 				4B7EAA24220027E300852DE2 /* TouchIDAuthentication.swift */,
 				4B4988B121F6F2AF00ED0E94 /* Web3 */,
 				4B49872121F5BEF200ED0E94 /* EIP712 */,
@@ -1286,11 +1283,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B8CCDB02211519A00124586 /* README.md in Resources */,
 				005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */,
 				4B5EF34F220C6B180049AD8A /* TokenRules.abi.json in Resources */,
 				4B5EF34E220C6B180049AD8A /* TokenHolder.abi.json in Resources */,
 				4B5EF34D220C6B180049AD8A /* GnosisSafe.abi.json in Resources */,
 				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
+				4B8CCDB12211519A00124586 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1499,7 +1498,6 @@
 				4BE9E3152202D9E300427A80 /* OstContextEntity.swift in Sources */,
 				4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */,
 				4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */,
-				4B5EF3BE220DC73A0049AD8A /* OstSolidityValue.swift in Sources */,
 				4BE9E32E2203306C00427A80 /* OstDeviceLogin.swift in Sources */,
 				4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */,
 				4B49891B21F6F2AF00ED0E94 /* String+Conversion.swift in Sources */,
@@ -1535,20 +1533,19 @@
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
 				4B75F29C21C7763C00898960 /* ScryptParams.swift in Sources */,
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,
+				4B8CCDA82211508E00124586 /* OstSolidityValue.swift in Sources */,
 				4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */,
 				4B49891C21F6F2AF00ED0E94 /* Data+BytesConvertible.swift in Sources */,
 				4B75F24821BF8FA200898960 /* OstToken.swift in Sources */,
 				4B49893221F6F2AF00ED0E94 /* ABIDecoder.swift in Sources */,
 				4B49892021F6F2AF00ED0E94 /* Exports+Web3.swift in Sources */,
 				4B75F28421C3B03800898960 /* OstRuleModelRepository.swift in Sources */,
-				4B49892A21F6F2AF00ED0E94 /* ERC721.swift in Sources */,
 				4B75F20021B7B53200898960 /* OstMigrationManager.swift in Sources */,
 				4B75F26F21C10DC500898960 /* Data+Conversion.swift in Sources */,
 				4B49892721F6F2AF00ED0E94 /* SolidityEvent.swift in Sources */,
 				4B49891521F6F2AF00ED0E94 /* Bytes+HexString.swift in Sources */,
 				4B00CBB221DDDF74005A5696 /* OstSessionDbQueries.swift in Sources */,
 				4B49890C21F6F2AF00ED0E94 /* EthereumQuantity.swift in Sources */,
-				4B49892921F6F2AF00ED0E94 /* ERC20.swift in Sources */,
 				4B49890621F6F2AF00ED0E94 /* EthereumBlockObject.swift in Sources */,
 				4B00CCF221E4C414005A5696 /* OstSecureKeyDbQueries.swift in Sources */,
 				4B49891321F6F2AF00ED0E94 /* EthereumLogObject.swift in Sources */,
@@ -1576,16 +1573,15 @@
 				4B49892F21F6F2AF00ED0E94 /* SolidityInvocation.swift in Sources */,
 				4B49892121F6F2AF00ED0E94 /* Int+ETH.swift in Sources */,
 				4B75F2A721C7A41800898960 /* EIP1077.swift in Sources */,
+				4B8CCDA92211508E00124586 /* OstSolidityHandler.swift in Sources */,
 				4B75F1FA21B6B09000898960 /* OstBaseMigration.swift in Sources */,
 				4B4988FB21F6F2AF00ED0E94 /* EthereumPublicKey.swift in Sources */,
 				4B75F2A121C7775900898960 /* OstCryptoImpls.swift in Sources */,
 				4B00CBAE21DDDF2A005A5696 /* OstSessionRepository.swift in Sources */,
 				4BE9E32F2203306C00427A80 /* OstKeyRecoveryFlow.swift in Sources */,
 				4B4988FF21F6F2AF00ED0E94 /* Web3Provider.swift in Sources */,
-				4B5EF3BD220DC73A0049AD8A /* OstSolidityHandler.swift in Sources */,
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,
-				4B49892B21F6F2AF00ED0E94 /* ERC165.swift in Sources */,
 				4B49891221F6F2AF00ED0E94 /* Types+EthereumValueConvertible.swift in Sources */,
 				4B49892221F6F2AF00ED0E94 /* Values+GeneralHashable.swift in Sources */,
 			);
