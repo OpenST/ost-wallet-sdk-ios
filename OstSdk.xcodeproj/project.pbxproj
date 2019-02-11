@@ -129,6 +129,12 @@
 		4B5EF35A220D831E0049AD8A /* OstSecureKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */; };
 		4B5EF3BD220DC73A0049AD8A /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF3BB220DC7360049AD8A /* OstSolidityHandler.swift */; };
 		4B5EF3BE220DC73A0049AD8A /* OstSolidityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF3BC220DC73A0049AD8A /* OstSolidityValue.swift */; };
+		4B5EF4D9220DD45A0049AD8A /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */; };
+		4B5EF4DB220DD6270049AD8A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4DA220DD6270049AD8A /* LoginViewController.swift */; };
+		4B5EF4DD220DD6390049AD8A /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4DC220DD6390049AD8A /* SignupViewController.swift */; };
+		4B5EF4DF220DDE620049AD8A /* SharedDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4DE220DDE620049AD8A /* SharedDatabase.swift */; };
+		4B5EF4E3220EB0090049AD8A /* UserDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4E1220EB0090049AD8A /* UserDetailsTableViewCell.swift */; };
+		4B5EF4E4220EB0090049AD8A /* UserDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B5EF4E2220EB0090049AD8A /* UserDetailsTableViewCell.xib */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */; };
@@ -378,6 +384,12 @@
 		4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecureKeyTests.swift; sourceTree = "<group>"; };
 		4B5EF3BB220DC7360049AD8A /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OstSolidityHandler.swift; path = Web3/OstSolidityHandler.swift; sourceTree = "<group>"; };
 		4B5EF3BC220DC73A0049AD8A /* OstSolidityValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OstSolidityValue.swift; path = Web3/OstSolidityValue.swift; sourceTree = "<group>"; };
+		4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		4B5EF4DA220DD6270049AD8A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4B5EF4DC220DD6390049AD8A /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		4B5EF4DE220DDE620049AD8A /* SharedDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDatabase.swift; sourceTree = "<group>"; };
+		4B5EF4E1220EB0090049AD8A /* UserDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		4B5EF4E2220EB0090049AD8A /* UserDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OstBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OstMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
@@ -517,8 +529,11 @@
 		4B00CCB421E363EA005A5696 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				4B5EF4E0220EAEAD0049AD8A /* TableViewCell */,
+				4B5EF4D7220DD4420049AD8A /* ViewController */,
 				4B5EF342220C17870049AD8A /* Network */,
 				4BE9E3E122085A3E00427A80 /* Workflows */,
+				4B5EF4DE220DDE620049AD8A /* SharedDatabase.swift */,
 				4B49893B21F6F7A800ED0E94 /* MockToken.abi */,
 				4B00CCB521E363EA005A5696 /* AppDelegate.swift */,
 				4B00CCB721E363EA005A5696 /* ViewController.swift */,
@@ -758,6 +773,25 @@
 				4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */,
 			);
 			path = abis;
+			sourceTree = "<group>";
+		};
+		4B5EF4D7220DD4420049AD8A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */,
+				4B5EF4DA220DD6270049AD8A /* LoginViewController.swift */,
+				4B5EF4DC220DD6390049AD8A /* SignupViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4B5EF4E0220EAEAD0049AD8A /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				4B5EF4E1220EB0090049AD8A /* UserDetailsTableViewCell.swift */,
+				4B5EF4E2220EB0090049AD8A /* UserDetailsTableViewCell.xib */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		4B75F21E21BE3F9900898960 /* Models */ = {
@@ -1233,6 +1267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B5EF4E4220EB0090049AD8A /* UserDetailsTableViewCell.xib in Resources */,
 				4B49893C21F6F7A800ED0E94 /* MockToken.abi in Resources */,
 				4B00CCC321E363EB005A5696 /* LaunchScreen.storyboard in Resources */,
 				4B00CCC021E363EB005A5696 /* Assets.xcassets in Resources */,
@@ -1370,6 +1405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B5EF4DB220DD6270049AD8A /* LoginViewController.swift in Sources */,
 				4B00CCB821E363EA005A5696 /* ViewController.swift in Sources */,
 				4B00CCBE21E363EA005A5696 /* Example.xcdatamodeld in Sources */,
 				4B5EF348220C3BD20049AD8A /* MappyUser.swift in Sources */,
@@ -1378,8 +1414,12 @@
 				4B5EF356220D66DA0049AD8A /* DeployTokenHolder.swift in Sources */,
 				4B00CCB621E363EA005A5696 /* AppDelegate.swift in Sources */,
 				4B5EF344220C17A30049AD8A /* MappyAPIBase.swift in Sources */,
+				4B5EF4DD220DD6390049AD8A /* SignupViewController.swift in Sources */,
 				4BE9E3E022085A3800427A80 /* RegisterDevice.swift in Sources */,
 				4B5EF358220D67110049AD8A /* WorkflowBase.swift in Sources */,
+				4B5EF4D9220DD45A0049AD8A /* EntryViewController.swift in Sources */,
+				4B5EF4E3220EB0090049AD8A /* UserDetailsTableViewCell.swift in Sources */,
+				4B5EF4DF220DDE620049AD8A /* SharedDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,8 +11,8 @@ import OstSdk
 
 class RegisterDevice: WorkflowBase {
     
-    override init(userId: String, tokenId: String) {
-        super.init(userId: userId, tokenId: tokenId)
+    override init(userId: String, tokenId: String, mappyUserId: String) {
+        super.init(userId: userId, tokenId: tokenId, mappyUserId: mappyUserId)
     }
     
     override func perform() throws {

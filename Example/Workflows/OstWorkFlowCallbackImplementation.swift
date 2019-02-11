@@ -10,14 +10,24 @@ import Foundation
 import OstSdk
 
 class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
-    init() { }
+    var mappyUserId: String
+    init(mappyUserId: String) {
+        self.mappyUserId = mappyUserId
+    }
     
     func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
-        do {
-            try ostDeviceRegisteredProtocol.deviceRegistered(["device":apiParams])
-        }catch {
-            
+        
+        MappyRegisterDevice().registerDevice(apiParams as [String : AnyObject], forUserId: mappyUserId,  success: { (deviceObj) in
+            do {
+                try ostDeviceRegisteredProtocol.deviceRegistered(["device":apiParams])
+            }catch let error{
+                Logger.log(message: "registerDevice", parameterToPrint: error)
+            }
+        }) { (failuarObj) in
+            Logger.log(message: "registerDevice failed", parameterToPrint: failuarObj)
         }
+        
+       
     }
     
     func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
@@ -33,7 +43,14 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func flowComplete(_ ostContextEntity: OstContextEntity) {
+        Logger.log(message: "flowComplete", parameterToPrint: ostContextEntity.message)
         
+        switch ostContextEntity.type {
+        case .registerDevice:
+            return
+        default:
+            return
+        }
     }
     
     func flowInterrupt(_ ostError: OstError) {

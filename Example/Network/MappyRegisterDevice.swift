@@ -11,18 +11,10 @@ import Foundation
 class MappyRegisterDevice: MappyAPIBase {
     override init() { }
     
-    override var getBaseURL: String {
-        return ""
-    }
+    let registerDeviceURL = "/api/users"
     
-    override var getResource: String {
-        return ""
-    }
-    
-    func registerDevice(_ params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (() -> Void)) {
-        
-        post(params: params, success: success) { (failuarResponse) in
-            failuar()
-        }
+    func registerDevice(_ params: [String: AnyObject], forUserId userId: String, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+        resourceURL = registerDeviceURL + "/" + userId + "/devices"
+        post(params: params, success: success, failuar: failuar)
     }
 }

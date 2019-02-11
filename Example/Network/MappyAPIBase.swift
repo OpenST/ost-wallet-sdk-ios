@@ -15,8 +15,9 @@ class MappyAPIBase: OstAPIBase {
     override var getBaseURL: String {
         return "http://localhost:4040"
     }
+    var resourceURL: String = ""
     
     override var getResource: String {
-        fatalError("getResource is not override")
+        return resourceURL
     }
 }

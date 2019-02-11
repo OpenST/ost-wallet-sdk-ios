@@ -73,8 +73,10 @@ class OstBaseDbQueries {
     }
     
     func executeStatement(_ query: String) -> Bool {
-        let isSuccess: Bool =  db?.executeStatements(query) ?? false
-        return isSuccess
+        dbQueue?.inExclusiveTransaction({ (fmdb, nil) in
+            _ =  db?.executeStatements(query) ?? false
+        })
+        return true
     }
     
     func executeUpdate(_ query: String, values: [String: Any]) -> Bool {

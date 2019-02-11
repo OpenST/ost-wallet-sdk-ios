@@ -10,22 +10,37 @@ import Foundation
 
 class MappyUser: MappyAPIBase {
     
-    var resourceURL: String = "/api/users"
+    let usersURL = "/api/users"
     
     override init() { super.init() }
-
-    override var getResource: String {
-        return resourceURL
+    
+    func createUser(params:[String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL
+        post(params: params as [String : AnyObject], success: success, failuar: failuar)
     }
     
-    func createUser(success:@escaping (([String: Any]) -> Void), failuar:@escaping (() -> Void)) {
-        let params = ["user_"]
+    func getUser(userId: String, success: @escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL + "/"+userId
+        get(success: success, failuar: failuar)
     }
     
-    func getUser(userId: String, success: @escaping (([String: Any]) -> Void), failuar:@escaping (() -> Void)) {
-        resourceURL += "/"+userId
-        get(success: success) { (failuarResponse) in
-            failuar()
-        }
+    func validateUser(params:[String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL + "/validate"
+        post(params: params as [String : AnyObject], success: success, failuar: failuar)
+    }
+    
+    func getAllUsers(success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL
+        get(success: success, failuar: failuar)
+    }
+    
+    func createOstUser(for userId: String, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL + "/" + userId + "/ost-users"
+        post(success: success, failuar: failuar)
+    }
+    
+    func getOstUser(userId: String, success: @escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+        resourceURL = usersURL + "/" + userId + "/ost-users"
+        get(success: success, failuar: failuar)
     }
 }

@@ -118,7 +118,7 @@ open class OstAPIBase {
         }
     }
     
-    public func post(params: [String: AnyObject], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    public func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)

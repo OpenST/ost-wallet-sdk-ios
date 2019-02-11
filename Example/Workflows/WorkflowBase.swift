@@ -11,13 +11,16 @@ import Foundation
 class WorkflowBase {
     var userId: String
     var tokenId: String
+    var mappyUserId: String
+    
     let delegate: OstWorkFlowCallbackImplementation
     
-    init(userId: String, tokenId: String) {
+    init(userId: String, tokenId: String, mappyUserId: String) {
         self.userId = userId
         self.tokenId = tokenId
+        self.mappyUserId = mappyUserId
         
-        delegate = OstWorkFlowCallbackImplementation()
+        delegate = OstWorkFlowCallbackImplementation(mappyUserId: mappyUserId)
     }
     
     func perform() throws {
