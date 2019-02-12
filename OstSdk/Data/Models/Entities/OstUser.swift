@@ -22,13 +22,6 @@ public class OstUser: OstBaseEntity {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
 
-    public func getDeviceManager() throws -> OstDeviceManager? {
-        if (self.multisig_id != nil) {
-            return try OstDeviceManagerRepository.sharedDeviceManager.getById(self.multisig_id!) as? OstDeviceManager
-        }
-        return nil
-    }
-    
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstUser.getEntityIdentiferKey()])!
     }
@@ -69,18 +62,27 @@ public class OstUser: OstBaseEntity {
 
 public extension OstUser {
     var name: String? {
-        return data["name"] as? String ?? nil
+        if let loName = data["name"] as? String {
+            return loName.isEmpty ? nil : loName
+        }
+        return nil
     }
     
-    var token_holder_id: String? {
-        return data["token_holder_id"] as? String ?? nil
+    var tokenHolderAddress: String? {
+        if let thAddress = data["token_holder_address"] as? String {
+            return thAddress.isEmpty ? nil : thAddress
+        }
+        return nil
     }
     
-    var multisig_id: String? {
-        return data["multisig_id"] as? String ?? nil
+    var deviceManagerAddress: String? {
+        if let dmAddress = data["device_manager_address"] as? String {
+            return dmAddress.isEmpty ? nil : dmAddress
+        }
+        return nil
     }
     
-    var token_id: String? {
+    var tokenId: String? {
         return data["token_id"] as? String ?? nil
     }
 }

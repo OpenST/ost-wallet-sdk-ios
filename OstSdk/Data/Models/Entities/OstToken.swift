@@ -32,7 +32,7 @@ extension OstToken {
         return data["name"] as? String
     }
     
-    var total_supply: Int? {
+    var totalSupply: Int? {
         return OstUtils.toInt(data["total_supply"] as Any?)
     }
 }
