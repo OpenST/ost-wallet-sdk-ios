@@ -10,7 +10,7 @@ import Foundation
 
 class OstAPIUser: OstAPIBase {
     
-    let userApiResourceBase = "/user"
+    let userApiResourceBase = "/users"
     
     override public init(userId: String) {
         super.init(userId: userId)
@@ -25,10 +25,17 @@ class OstAPIUser: OstAPIBase {
 
         get(params: params as [String : AnyObject], success: { (userEntityData) in
             do {
-                if let ostUser: OstUser = try OstUser.parse(userEntityData) {
-                    success(ostUser)
+                let resultType = userEntityData?["result_type"] as? String ?? ""
+                if (resultType == "user") {
+                    let userEntity = userEntityData![resultType] as! [String: Any]
+                    
+                    if let ostUser: OstUser = try OstUser.parse(userEntity) {
+                        success(ostUser)
+                    }else {
+                        failuar(OstError.actionFailed("User Sync failed"))
+                    }
                 }else {
-                    failuar(OstError.actionFailed("User Sync failed"))
+                    failuar(OstError.actionFailed("User failed due to unexpected data format."))
                 }
             }catch {
                 failuar(OstError.actionFailed("User Sync failed"))

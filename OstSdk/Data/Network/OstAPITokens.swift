@@ -10,30 +10,39 @@ import Foundation
 import Alamofire
 
 class OstAPITokens: OstAPIBase {
+    let tokenApiResourceBase = "/tokens"
     
-    let userApiResourceBase = "/tokens"
-    
-    var tokenId: String
-    
-    init(userId: String, tokenId: String) {
-        self.tokenId = tokenId
+    override init(userId: String) {
         super.init(userId: userId)
     }
     
     public func getToken(success:@escaping ((OstToken) -> Void), failuar:@escaping ((OstError) -> Void)) throws {
+    
+        resourceURL = tokenApiResourceBase + "/"
+        
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)
+    
         try sign(&params)
         
         get(params: params as [String : AnyObject], success: { (tokenEntityData) in
             do {
-                if let ostToken: OstToken = try OstToken.parse(tokenEntityData) {
-                    success(ostToken)
+                let resultType = tokenEntityData?["result_type"] as? String ?? ""
+                if (resultType == "token") {
+                    
+                    let tokenEntity = tokenEntityData![resultType] as! [String : Any?]
+                    
+                    if let ostToken: OstToken = try OstToken.parse(tokenEntity ) {
+                        success(ostToken)
+                    }else {
+                        failuar(OstError.actionFailed("Token Sync failed"))
+                    }
+                    
                 }else {
-                    failuar(OstError.actionFailed("Token Sync failed"))
+                    failuar(OstError.actionFailed("Token Sync failed due to unexpected data format."))
                 }
-            }catch {
-                failuar(OstError.actionFailed("Token Sync failed"))
+            }catch let error{
+                failuar(error as! OstError)
             }
             
         }) { (failuarObj) in

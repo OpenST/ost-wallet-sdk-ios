@@ -15,7 +15,7 @@ public class OstUser: OstBaseEntity {
     static let OSTUSER_PARENTID = "token_id"
     
     static func getEntityIdentiferKey() -> String {
-        return "user_id"
+        return "id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {

@@ -71,6 +71,6 @@ class OstAPISigner {
         _ = OstUtils.buildNestedQuery(params: &nestedQueryParams, paramKeyPrefix: "", paramValObj: paramValObj)
         return nestedQueryParams.map {
             let encodedValueString = $0.getParamValue().encodedString
-            return $0.getParamName() + "=" + encodedValueString }.joined(separator: "&")
+            return $0.getParamName() + "=" + $0.getParamValue() }.joined(separator: "&")
     }
 }

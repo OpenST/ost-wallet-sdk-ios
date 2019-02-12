@@ -15,7 +15,7 @@ public class OstToken: OstBaseEntity {
     }
     
     static func getEntityIdentiferKey() -> String {
-        return "token_id"
+        return "id"
     }
     
     override func getId(_ params: [String: Any]) -> String {

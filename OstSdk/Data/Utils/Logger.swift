@@ -15,7 +15,8 @@ public class Logger {
         debugPrint()
         debugPrint("************************ START *********************************")
         debugPrint("function: \(function)")
-        debugPrint("\(message ?? "") : \(parameterToPrint ?? "") ")
+        debugPrint("\(message ?? "")")
+        debugPrint(parameterToPrint as AnyObject)
         debugPrint("************************* END *******************************")
         #endif
     }

@@ -21,6 +21,6 @@ class OstAPITokenHolder: OstAPIBase {
         var params = params
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
-        post(params: params as [String : AnyObject], success: success, failuar: failuar)
+        post(params: params as [String : AnyObject], success: success as! (([String : Any]?) -> Void), failuar: failuar as! (([String : Any]?) -> Void))
     }
 }

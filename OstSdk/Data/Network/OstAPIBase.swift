@@ -73,7 +73,7 @@ open class OstAPIBase {
                     if let currentDevice = user.getCurrentDevice() {
                         
                         if (params["api_signer_address"] == nil) {
-                            params["api_signer_address"] = currentDevice.personal_sign_address!
+                            params["api_signer_address"] = currentDevice.api_signer_address!
                         }
                         
                         if (params["wallet_address"] == nil) {
@@ -93,7 +93,7 @@ open class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    public func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    public func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
@@ -110,14 +110,14 @@ open class OstAPIBase {
         dataRequest.responseJSON { (httpResponse) in
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
-                success(httpResponse.result.value as! [String : Any])
+                success((httpResponse.result.value as? [String : Any])?["data"] as? [String: Any])
             }else {
-                failuar(httpResponse.result.value as! [String : Any])
+                failuar(httpResponse.result.value as? [String : Any])
             }
         }
     }
     
-    public func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]) -> Void)) {
+    public func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
@@ -127,9 +127,9 @@ open class OstAPIBase {
         dataRequest.responseJSON { (httpResponse) in
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
-                success(httpResponse.result.value as! [String : Any])
+                success(httpResponse.result.value as? [String : Any])
             }else {
-                failuar((httpResponse.result.value as? [String : Any]) ?? [:])
+                failuar((httpResponse.result.value as? [String : Any]))
             }
         }
     }

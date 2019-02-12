@@ -43,8 +43,8 @@ public extension OstDevice {
         return data["address"] as? String
     }
     
-    var personal_sign_address: String? {
-        return data["personal_sign_address"] as? String
+    var api_signer_address: String? {
+        return data["api_signer_address"] as? String
     }
     
     var multi_sig_id: String? {

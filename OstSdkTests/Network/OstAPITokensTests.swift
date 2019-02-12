@@ -18,36 +18,51 @@ class OstAPITokensTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+
+    class OstMockTokensAPI: OstAPIBase {
+        override init(userId: String) {
+            super.init(userId: userId)
+        }
+
+        override var getBaseURL: String {
+            return "https://s4-api.stagingost.com/testnet/v2"
+        }
+        
+        override var getResource: String {
+            return "/tokens/"
+        }
+    }
     
-    class OstAPIMockToken: OstAPITokens {
+    class MockApiSigner: OstAPISigner {
         override init(userId: String) {
             super.init(userId: userId)
         }
         
-        override func sign(_ params: inout [String: Any]) throws {
-            let (signature, _) =  try OstMockAPISigner(userId: userId).sign(resource: getResource, params: params)
-            params["signature"] = signature
+        override func getAPISigner() -> ApiSigner? {
+            return ApiSigner(userId: userId, APIKey: "0x6edc3804eb9f70b26731447b4e43955c5532f2195a6fe77cbed287dbd3c762ce")
         }
     }
-
+    
     func testGetToken() throws {
-        let exceptionObj = expectation(description: "Get Token with callback")
-         
-        try OstAPIMockToken(userId: "123").getToken(success: { (successResponse) in
-            Logger.log(message: "successResponse", parameterToPrint: successResponse)
-            XCTAssertNotNil(successResponse)
-            exceptionObj.fulfill()
-        }, failuar: { (failuarResponse) in
-            Logger.log(message: "failuar", parameterToPrint: failuarResponse)
-            exceptionObj.fulfill()
-            XCTAssertNil(failuarResponse, "received failuar response.")
-        })
+        let userId = "6c6ea645-d86d-4449-8efa-3b54743f83de"
         
-        waitForExpectations(timeout: 10) { error in
-            if let error = error {
-                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
-            }
+        let tokensAPIObj = OstMockTokensAPI(userId: userId)
+        
+        var params: [String: Any] = ["token_id": "58",
+                                     "request_timestamp": String(Date.timestamp()),
+                                     "user_id": userId,
+                                     "api_signer_id":"0xf65c7a49981db56AED34beA4617E32e326ACf977",
+                                     "signature_kind":"OST1-PS",
+                                     "wallet_address": "0x60A20Cdf6a21a73Fb89475221D252865C695e302"]
+        
+        params["signature"] = try! MockApiSigner(userId: userId).sign(resource: tokensAPIObj.getResource, params: params)
+        
+        tokensAPIObj.get(params: params as [String: AnyObject], success: { (httpSuccessResponse) in
+            Logger.log(message: "successResponse", parameterToPrint: httpSuccessResponse)
+        }) { (httpFailuarResponse) in
+            Logger.log(message: "failuarResponse", parameterToPrint: httpFailuarResponse)
         }
+        
     }
 
     func testPerformanceExample() {
