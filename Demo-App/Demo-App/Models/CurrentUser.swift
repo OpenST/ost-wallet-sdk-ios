@@ -7,23 +7,18 @@
 //
 
 import Foundation
-import Alamofire
 
-class CurrentUser {
-  static let MAPPY_APP_SERVER_URL = "http://localhost:4040/api";
-  static let TOKEN_ID = "58";
+class CurrentUser: BaseModel {
   static var sharedInstance:CurrentUser?;
   
-    class func getInstance() -> CurrentUser {
-        if (sharedInstance != nil) {
-            return sharedInstance!;
-        }
-      
-        sharedInstance = CurrentUser(baseUrl:MAPPY_APP_SERVER_URL);
-        return sharedInstance!;
+  class func getInstance() -> CurrentUser {
+    if (sharedInstance != nil) {
+      return sharedInstance!;
     }
-    
-  var baseUrl:String;
+  
+    sharedInstance = CurrentUser();
+    return sharedInstance!;
+  }
 
   var tokenId:String?;
   var appUserId:String?;
@@ -31,8 +26,8 @@ class CurrentUser {
   var skdUser:String?;
   var userPinSalt: String?;
     
-  init(baseUrl:String) {
-    self.baseUrl = baseUrl;
+  override init() {
+    super.init();
     self.tokenId = nil;
     self.appUserId = nil;
     self.ostUserId = nil;
@@ -106,45 +101,5 @@ class CurrentUser {
     }, onFailuar: { ([String : Any]?) in
       onComplete(false);
     })
-  }
-  
-  func post(resource:String, params: [String: AnyObject]?,
-           onSuccess: (([String: Any]?) -> Void)?,
-           onFailuar: (([String: Any]?) -> Void)?) {
-    
-      let url = self.baseUrl + resource
-    
-      let dataRequest = Alamofire.request(url, method: .post, parameters: params)
-    dataRequest.responseJSON { (httpResonse) in
-      if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
-        // Call Success
-        onSuccess?(httpResonse.result.value as? [String: Any])
-      } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode == 401) {
-        // Unauthorized.
-        
-      } else {
-        onFailuar?(httpResonse.result.value as? [String: Any])
-      }
-    }
-  }
-  
-  func get(resource:String, params: [String: AnyObject]?,
-           onSuccess: (([String: Any]?) -> Void)?,
-           onFailuar: (([String: Any]?) -> Void)?) {
-    
-    let url = self.baseUrl + resource
-  
-    let dataRequest = Alamofire.request(url, method: .get, parameters: params)
-    dataRequest.responseJSON { (httpResonse) in
-      if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
-          // Call Success
-          onSuccess?(httpResonse.result.value as? [String: Any])
-    } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 400 && httpResonse.response!.statusCode < 500) {
-      // Unauthorized.
-      
-      } else {
-        onFailuar?(httpResonse.result.value as? [String: Any])
-      }
-    }
   }
 }
