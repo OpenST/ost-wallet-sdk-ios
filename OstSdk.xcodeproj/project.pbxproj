@@ -191,6 +191,7 @@
 		4B8CCDA92211508E00124586 /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */; };
 		4B8CCDB3221167AB00124586 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB2221167AB00124586 /* OstSdkSync.swift */; };
 		4B8CCDB52211754A00124586 /* OstAPIUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB42211754A00124586 /* OstAPIUser.swift */; };
+		4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */; };
 		4BE9E3032201E6F300427A80 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3022201E6F300427A80 /* OstAPIBase.swift */; };
 		4BE9E3062202CBF100427A80 /* OstBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */; };
 		4BE9E3082202CDBC00427A80 /* OstPinAcceptProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */; };
@@ -445,6 +446,7 @@
 		4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityHandler.swift; sourceTree = "<group>"; };
 		4B8CCDB2221167AB00124586 /* OstSdkSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
 		4B8CCDB42211754A00124586 /* OstAPIUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIUser.swift; sourceTree = "<group>"; };
+		4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDevice.swift; sourceTree = "<group>"; };
 		4BE9E3022201E6F300427A80 /* OstAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
 		4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseProtocol.swift; sourceTree = "<group>"; };
 		4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinAcceptProtocol.swift; sourceTree = "<group>"; };
@@ -1058,6 +1060,7 @@
 				4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */,
 				4B8CCDB42211754A00124586 /* OstAPIUser.swift */,
 				4B5EF319220AF7A00049AD8A /* OstAPITokenHolder.swift */,
+				4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1449,6 +1452,7 @@
 				4B5EF324220B1EF10049AD8A /* OstConnectivity.swift in Sources */,
 				4B00CCEA21E4B577005A5696 /* OstSdkBaseDatabase.swift in Sources */,
 				4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */,
+				4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */,
 				4B49890721F6F2AF00ED0E94 /* EthereumTransactionReceiptObject.swift in Sources */,
 				4BE9E30E2202D33300427A80 /* OstDeviceRegisteredProtocol.swift in Sources */,
 				4B49892621F6F2AF00ED0E94 /* Eth+Contract.swift in Sources */,

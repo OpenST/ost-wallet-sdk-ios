@@ -19,6 +19,8 @@ class OstSdkSync {
     var forceSync: Bool
     var onCompletion: ((Bool) -> Void)? = nil
     
+    var user: OstUser? = nil
+    
     init(userId: String, forceSync: Bool, syncEntites: SyncEntity?... , onCompletion:((Bool) -> Void)?) {
         self.userId = userId
         self.syncEntites = syncEntites
@@ -27,20 +29,21 @@ class OstSdkSync {
     }
     
     func perform() {
-        if (!syncEntites.isEmpty) {
-            for syncEntity in syncEntites {
-                switch syncEntity {
-                case .User?:
-                    syncUser()
-                case .Token?:
-                    syncToken()
-                case .Devices?:
-                    continue
-                case .DeviceManager?:
-                    continue
-                default:
-                    continue
-                }
+        
+        user = try! OstUserModelRepository.sharedUser.getById(self.userId) as! OstUser
+        
+        for syncEntity in syncEntites {
+            switch syncEntity {
+            case .User?:
+                syncUser()
+            case .Token?:
+                syncToken()
+            case .Devices?:
+                syncDevice()
+            case .DeviceManager?:
+                continue
+            default:
+                continue
             }
         }
     }
@@ -58,29 +61,90 @@ class OstSdkSync {
         NSLock().unlock()
     }
     
-    //MARK: - Sync entities
+    //MARK: - Sync User
     func syncUser() {
-        do {
-            try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
-                self.processIfRequired(.User)
-            }, failuar: { (error) in
+        if (canSyncUser()) {
+            do {
+                try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
+                    self.processIfRequired(.User)
+                }, failuar: { (error) in
+                    Logger.log(message: "syncUser error:", parameterToPrint: error)
+                })
+            }catch let error {
                 Logger.log(message: "syncUser error:", parameterToPrint: error)
-            })
-        }catch let error {
-            Logger.log(message: "syncUser error:", parameterToPrint: error)
+            }
+        }else {
+            
         }
     }
     
+    func canSyncUser() -> Bool {
+        if (self.forceSync) {
+            return true
+        }
+        
+        if (user != nil &&
+            user!.tokenHolderAddress != nil &&
+            user!.deviceManagerAddress != nil) {
+            return false
+        }
+        return true
+    }
+    
+    //MAKR: - Sync Token
     func syncToken() {
-        do {
-            try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
-                self.processIfRequired(.Token)
-            }, failuar: { (error) in
-                 Logger.log(message: "syncToken error:", parameterToPrint: error)
-            })
-        }catch let error {
-            Logger.log(message: "syncToken error:", parameterToPrint: error)
+        if (canSyncToken()) {
+            do {
+                try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
+                    self.processIfRequired(.Token)
+                }, failuar: { (error) in
+                    Logger.log(message: "syncToken error:", parameterToPrint: error)
+                })
+            }catch let error {
+                Logger.log(message: "syncToken error:", parameterToPrint: error)
+            }
         }
     }
     
+    func canSyncToken() -> Bool {
+        if (self.forceSync) {
+            return true
+        }
+        do {
+            let token: OstToken? = try OstTokenRepository.sharedToken.getById(user!.tokenId!) as? OstToken
+            if (token?.totalSupply != nil) {
+                return false
+            }
+        }catch {  }
+        return true
+    }
+    
+    //MAKR: - Sync Device
+    func syncDevice() {
+        if (canSyncDevice()) {
+            do {
+                try OstAPIDevice(userId: self.userId).getDevice(success: { (ostDevice) in
+                    self.processIfRequired(.Devices)
+                }, failuar: { (error) in
+                    Logger.log(message: "syncToken error:", parameterToPrint: error)
+                })
+            }catch let error {
+                Logger.log(message: "syncToken error:", parameterToPrint: error)
+            }
+        }
+    }
+    
+    func canSyncDevice() -> Bool {
+        if (self.forceSync) {
+            return true
+        }
+        
+        let currentDevice = user!.getCurrentDevice()
+        if (currentDevice != nil && !currentDevice!.isDeviceRevoked() &&
+            currentDevice!.isDeviceRegistered()) {
+            return false
+        }
+        
+        return true
+    }
 }

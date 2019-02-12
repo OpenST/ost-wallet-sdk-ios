@@ -75,8 +75,4 @@ class OstDeployTokenHolder: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegi
     public func deviceRegistered(_ apiResponse: [String : Any]) {
         
     }
-    
-    public func cancelFlow(_ cancelReason: String) {
-        
-    }
 }

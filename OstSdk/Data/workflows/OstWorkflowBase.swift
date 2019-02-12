@@ -29,4 +29,8 @@ class OstWorkflowBase {
         }
         return nil
     }
+    
+    public func cancelFlow(_ cancelReason: String) {
+        
+    }
 }

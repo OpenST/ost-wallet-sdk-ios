@@ -64,8 +64,8 @@ open class OstAPIBase {
         if (!userId.isEmpty) {
             do {
                 if let user: OstUser = try OstUserModelRepository.sharedUser.getById(userId) as? OstUser {
-                    if (params["token_id"] == nil && user.token_id != nil) {
-                        params["token_id"] = user.token_id
+                    if (params["token_id"] == nil && user.tokenId != nil) {
+                        params["token_id"] = user.tokenId
                     }
                     if (params["user_id"] == nil) {
                         params["user_id"] = userId
@@ -108,6 +108,9 @@ open class OstAPIBase {
         
         let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
+            
+            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
+            
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 success((httpResponse.result.value as? [String : Any])?["data"] as? [String: Any])
@@ -125,6 +128,9 @@ open class OstAPIBase {
         
         let dataRequest = Alamofire.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
         dataRequest.responseJSON { (httpResponse) in
+            
+            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
+            
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 success(httpResponse.result.value as? [String : Any])
