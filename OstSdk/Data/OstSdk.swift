@@ -12,13 +12,27 @@ public class OstSdk {
     
     init() {}
     
-    public class func parse(_ apiResponse: [String: Any]) throws {
-        if let device: [String: Any] = apiResponse["device"] as? [String : Any] {
-             _ = try OstDevice.parse(device)
-        }
+    public class func parse(_ apiResponse: [String: Any?]) throws {
+        _ = try self.parseApiResponse(apiResponse)
+    }
+    
+    class func parseApiResponse(_ apiResponse: [String: Any?]) throws -> OstBaseEntity? {
         
-        if let user: [String: Any] = apiResponse["user"] as? [String: Any] {
-            _ = try OstUser.parse(user)
+        let resultType = apiResponse["result_type"] as? String ?? ""
+        let entityData =  apiResponse[resultType] as? [String: Any?]
+        
+        if (entityData == nil) {
+            throw OstError.actionFailed("parsing \(resultType) enity failed.")
+        }
+        switch resultType {
+        case "token":
+            return try OstToken.parse(entityData!)
+        case "user":
+            return try OstUser.parse(entityData!)
+        case "device":
+            return try OstDevice.parse(entityData!)
+        default:
+            throw OstError.invalidInput("\(resultType) is not supported.")
         }
     }
     
@@ -35,32 +49,20 @@ public class OstSdk {
         return try OstUser.parse(entityData);
     }
     
-    public class func parseUser(_ jsonString: String) throws -> OstUser? {
-        let entityData = try OstUtils.toJSONObject(jsonString) as! [String: Any?]
-        return try parseUser(entityData)
-    }
-    
     public class func initToken(_ tokenId: String) throws -> OstToken? {
         let entityData: [String: Any] = [OstToken.getEntityIdentiferKey(): tokenId]
         return try OstToken.parse(entityData)
     }
+
     
-    
-    public class func getRule(_ id: String) throws -> OstRule? {
-        return try OstRuleModelRepository.sharedRule.getById(id) as? OstRule
-    }
-    
-    
-    
-    
-    
-    
-    
+    //MARK: - Workflow
     public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) throws {
         _ = try OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
     }
     
-    public class func deployTokenHolder(userId: String, spendingLimit: String, expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
-        try OstWorkFlowFactory.deployTokenHolder(userId: userId, spendingLimit: spendingLimit, expirationHeight:expirationHeight, delegate: delegate)
+    public class func activateUser(userId: String, uPin: String, password: String, spendingLimit: String,
+                                   expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+        try OstWorkFlowFactory.activateUser(userId: userId, uPin: uPin, password: password, spendingLimit: spendingLimit,
+                                            expirationHeight:expirationHeight, delegate: delegate)
     }
 }

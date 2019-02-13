@@ -9,12 +9,12 @@
 import Foundation
 import Alamofire
 
-open class OstAPIBase {
+class OstAPIBase {
     
     var userId: String
     var resourceURL: String = ""
     
-    public init(userId: String = "") {
+    init(userId: String = "") {
         self.userId = userId
     }
     
@@ -24,11 +24,11 @@ open class OstAPIBase {
         return httpHeaders
     }
     
-    open var getBaseURL: String {
+    var getBaseURL: String {
         return OstConstants.OST_API_BASE_URL
     }
     
-    open var getResource: String {
+    var getResource: String {
         return resourceURL
     }
 
@@ -36,7 +36,7 @@ open class OstAPIBase {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
-    open func isResponseSuccess(_ response: Any?) -> Bool {
+    func isResponseSuccess(_ response: Any?) -> Bool {
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
             if successValue is Int {
@@ -93,7 +93,7 @@ open class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    public func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
@@ -120,7 +120,7 @@ open class OstAPIBase {
         }
     }
     
-    public func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
@@ -137,6 +137,23 @@ open class OstAPIBase {
             }else {
                 failuar((httpResponse.result.value as? [String : Any]))
             }
+        }
+    }
+    
+    //MARK: - parse entites
+    func parseEntity(apiResponse: [String: Any?]?) throws -> OstBaseEntity {
+        if (apiResponse != nil) {
+            do {
+                if let entity = try OstSdk.parseApiResponse(apiResponse!) {
+                    return entity
+                }else {
+                    throw OstError.actionFailed("Entity parsing failed.")
+                }
+            }catch {
+                throw OstError.actionFailed("Entity parsing failed.")
+            }
+        }else {
+            throw OstError.actionFailed("Entity Sync failed.")
         }
     }
 }

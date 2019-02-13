@@ -16,9 +16,11 @@ class OstWorkFlowFactory {
         return registerDeviceObj
     }
 
-    class func deployTokenHolder(userId: String, spendingLimit: String, expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
-        let deployTokenHolderObj = OstDeployTokenHolder(userId: userId, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
-        deployTokenHolderObj.perform()
+    class func activateUser(userId: String, uPin: String, password: String, spendingLimit: String,
+                            expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+        
+        let activateUserObj = OstActivateUser(userId: userId, uPin: uPin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
+        activateUserObj.perform()
     }
     
 }

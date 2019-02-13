@@ -11,19 +11,18 @@ import Foundation
 class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
-    var delegate: OstWorkFlowCallbackProtocol
-    var keyManager: OstKeyManager
+    
     var tokenId: String
     var forceSync: Bool
+    var keyManager: OstKeyManager
     
     public init(userId: String, tokenId: String, forceSync: Bool, delegat: OstWorkFlowCallbackProtocol) throws {
         self.tokenId = tokenId
-        self.delegate = delegat
         self.forceSync = forceSync
         
         keyManager = try OstKeyManager(userId: userId)
         
-        super.init(userId: userId)
+        super.init(userId: userId, delegate: delegat)
     }
     
     override func perform() {
@@ -107,16 +106,10 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     }
     
     func postFlowComplete(entity: OstCurrentDevice) {
-        Logger.log(message: "flowComplete", parameterToPrint: nil)
+        Logger.log(message: "OstRegisterDevice flowComplete", parameterToPrint: entity.data)
         DispatchQueue.main.async {
             let contextEntity: OstContextEntity = OstContextEntity(type: .registerDevice , entity: entity)
             self.delegate.flowComplete(contextEntity);
-        }
-    }
-    
-    func postError(_ error: Error) {
-        DispatchQueue.main.async {
-            self.delegate.flowInterrupt(error as! OstError)
         }
     }
     

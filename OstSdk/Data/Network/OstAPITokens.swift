@@ -16,37 +16,23 @@ class OstAPITokens: OstAPIBase {
         super.init(userId: userId)
     }
     
-    public func getToken(success:@escaping ((OstToken) -> Void), failuar:@escaping ((OstError) -> Void)) throws {
+    public func getToken(success:((OstToken) -> Void)?, failuar:((OstError) -> Void)?) throws {
     
         resourceURL = tokenApiResourceBase + "/"
         
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)
-    
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (tokenEntityData) in
+        get(params: params as [String : AnyObject], success: { (apiResponse) in
             do {
-                let resultType = tokenEntityData?["result_type"] as? String ?? ""
-                if (resultType == "token") {
-                    
-                    let tokenEntity = tokenEntityData![resultType] as! [String : Any?]
-                    
-                    if let ostToken: OstToken = try OstToken.parse(tokenEntity ) {
-                        success(ostToken)
-                    }else {
-                        failuar(OstError.actionFailed("Token Sync failed"))
-                    }
-                    
-                }else {
-                    failuar(OstError.actionFailed("Token Sync failed due to unexpected data format."))
-                }
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                success?(entity as! OstToken)
             }catch let error{
-                failuar(error as! OstError)
+                failuar?(error as! OstError)
             }
-            
         }) { (failuarObj) in
-            failuar(OstError.actionFailed("Token Sync failed"))
+            failuar?(OstError.actionFailed("Token Sync failed"))
         }
     }
 }

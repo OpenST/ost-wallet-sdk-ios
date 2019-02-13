@@ -10,9 +10,11 @@ import Foundation
 
 class OstWorkflowBase {
     var userId: String
+    var delegate: OstWorkFlowCallbackProtocol
     
-    init(userId: String) {
+    init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         self.userId = userId
+        self.delegate = delegate
     }
     
     func perform() {
@@ -28,6 +30,12 @@ class OstWorkflowBase {
             return ostUser.getCurrentDevice()
         }
         return nil
+    }
+    
+    func postError(_ error: Error) {
+        DispatchQueue.main.async {
+            self.delegate.flowInterrupt(error as! OstError)
+        }
     }
     
     public func cancelFlow(_ cancelReason: String) {

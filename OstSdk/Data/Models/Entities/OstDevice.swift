@@ -51,7 +51,7 @@ public extension OstDevice {
         return data["multi_sig_id"] as? String
     }
     
-    var user_id: String? {
+    var userId: String? {
         return data["user_id"] as? String
     }
     

@@ -16,9 +16,9 @@ class OstAPIDevice: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getDevice(success:@escaping ((OstDevice) -> Void), failuar:@escaping ((OstError) -> Void)) throws {
+    func getDevice(success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
         
-        let user: OstUser! = try OstUserModelRepository.sharedUser.getById(self.userId) as! OstUser
+        let user: OstUser! = try! OstUserModelRepository.sharedUser.getById(self.userId) as! OstUser
         let currentDevice = user.getCurrentDevice()!
         resourceURL = userApiResourceBase + "/" + currentDevice.address!
         
@@ -26,28 +26,15 @@ class OstAPIDevice: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (deviceEntityData) in
+        get(params: params as [String : AnyObject], success: { (apiResponse) in
             do {
-                let resultType = deviceEntityData?["result_type"] as? String ?? ""
-                if (resultType == "device") {
-                    let deviceEntity = deviceEntityData![resultType] as! [String: Any]
-                    
-                    if let ostDevice: OstDevice = try OstDevice.parse(deviceEntity) {
-                        success(ostDevice)
-                    }else {
-                        failuar(OstError.actionFailed("User Sync failed"))
-                    }
-                }else {
-                    failuar(OstError.actionFailed("User failed due to unexpected data format."))
-                }
-            }catch {
-                failuar(OstError.actionFailed("User Sync failed"))
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                success?(entity as! OstDevice)
+            }catch let error{
+                failuar?(error as! OstError)
             }
-            
         }) { (failuarObj) in
-            failuar(OstError.actionFailed("User Sync failed"))
-        }
-        
+            failuar?(OstError.actionFailed("device Sync failed"))
+        }   
     }
-    
 }

@@ -31,7 +31,7 @@ class OstCurrentDevice: OstDevice {
     func encrypt(privateKey: String) throws -> OstSessionKeyInfo {
         let privateKeyData = privateKey.data(using: .utf8)!
         
-        if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.user_id!).getEthKeyMetaMapping(forAddress: self.address!) {
+        if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
                 let enclaveIdentifier = ethMetaMapping.identifier
                 if #available(iOS 10.3, *) {
                     let enclaveHelper = OstSecureEnclaveHelper(tag: enclaveIdentifier)
@@ -49,7 +49,7 @@ class OstCurrentDevice: OstDevice {
         var decData = sessionKeyInfo.sessionKeyData
         
         if (sessionKeyInfo.isSecureEnclaveEncrypted) {
-            if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.user_id!).getEthKeyMetaMapping(forAddress: self.address!) {
+            if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
                     let enclaveIdentifier = ethMetaMapping.identifier
                     if #available(iOS 10.3, *) {
                         let enclaveHelper = OstSecureEnclaveHelper(tag: enclaveIdentifier)

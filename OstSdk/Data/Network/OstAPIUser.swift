@@ -16,35 +16,22 @@ class OstAPIUser: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getUser(success:@escaping ((OstUser) -> Void), failuar:@escaping ((OstError) -> Void)) throws {
+    func getUser(success: ((OstUser) -> Void)?, failuar: ((OstError) -> Void)?) throws {
         resourceURL = userApiResourceBase + "/" + userId
         
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
 
-        get(params: params as [String : AnyObject], success: { (userEntityData) in
+        get(params: params as [String : AnyObject], success: { (apiResponse) in
             do {
-                let resultType = userEntityData?["result_type"] as? String ?? ""
-                if (resultType == "user") {
-                    let userEntity = userEntityData![resultType] as! [String: Any]
-                    
-                    if let ostUser: OstUser = try OstUser.parse(userEntity) {
-                        success(ostUser)
-                    }else {
-                        failuar(OstError.actionFailed("User Sync failed"))
-                    }
-                }else {
-                    failuar(OstError.actionFailed("User failed due to unexpected data format."))
-                }
-            }catch {
-                failuar(OstError.actionFailed("User Sync failed"))
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                success?(entity as! OstUser)
+            }catch let error{
+                failuar?(error as! OstError)
             }
-            
         }) { (failuarObj) in
-            failuar(OstError.actionFailed("User Sync failed"))
+            failuar?(OstError.actionFailed("User Sync failed."))
         }
-        
     }
-    
 }
