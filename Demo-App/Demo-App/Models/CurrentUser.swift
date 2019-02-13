@@ -61,7 +61,7 @@ class CurrentUser: BaseModel {
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
       
       onComplete(true);
-    }) { ([String : Any]?) in
+    }) { (failuarResponse) in
       onComplete(false);
     }
   }

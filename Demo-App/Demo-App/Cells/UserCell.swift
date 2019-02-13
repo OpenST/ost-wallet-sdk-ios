@@ -20,7 +20,8 @@ import MaterialComponents
 
 class UserCell:   MDCCardCollectionCell {
   
-  @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
   
@@ -37,10 +38,18 @@ class UserCell:   MDCCardCollectionCell {
     self.setBorderWidth(0.0, for:.normal)
     self.setBorderColor(.lightGray, for: .normal)
   }
+    
+    func addShadow() {
+        self.shadowView.layer.shadowColor = UIColor.lightGray.cgColor
+        self.shadowView.layer.shadowOpacity = 0.4
+        self.shadowView.layer.shadowRadius = 5
+        self.shadowView.layer.shadowOffset = CGSize.zero
+    }
   
   override func awakeFromNib() {
     super.awakeFromNib()
     configureCell()
+    addShadow()
   }
   
   override func prepareForReuse() {
