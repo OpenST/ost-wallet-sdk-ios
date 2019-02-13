@@ -10,5 +10,5 @@ Pods/
 *.xcuserstate
 *.xcconfig
 *.xcbkptlist
-*.xcodeproj
+*.xcodeproj/xcuserdata/*
 OstSdk.xcodeproj/xcuserdata/*

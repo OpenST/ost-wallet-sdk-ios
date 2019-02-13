@@ -118,7 +118,6 @@
 		4B5EF34E220C6B180049AD8A /* TokenHolder.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */; };
 		4B5EF34F220C6B180049AD8A /* TokenRules.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */; };
 		4B5EF351220C6E9C0049AD8A /* OstBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF350220C6E9C0049AD8A /* OstBundle.swift */; };
-		4B5EF356220D66DA0049AD8A /* ActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF355220D66DA0049AD8A /* ActivateUser.swift */; };
 		4B5EF358220D67110049AD8A /* WorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF357220D67110049AD8A /* WorkflowBase.swift */; };
 		4B5EF35A220D831E0049AD8A /* OstSecureKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */; };
 		4B5EF4D9220DD45A0049AD8A /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */; };
@@ -192,6 +191,8 @@
 		4B8CCDB3221167AB00124586 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB2221167AB00124586 /* OstSdkSync.swift */; };
 		4B8CCDB52211754A00124586 /* OstAPIUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB42211754A00124586 /* OstAPIUser.swift */; };
 		4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */; };
+		4BAE56DD2214514600327A19 /* OstBasePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56DC2214514600327A19 /* OstBasePollingService.swift */; };
+		4BAE56DF2214516200327A19 /* OstUserPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56DE2214516200327A19 /* OstUserPollingService.swift */; };
 		4BE9E3032201E6F300427A80 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3022201E6F300427A80 /* OstAPIBase.swift */; };
 		4BE9E3062202CBF100427A80 /* OstBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */; };
 		4BE9E3082202CDBC00427A80 /* OstPinAcceptProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */; };
@@ -370,7 +371,6 @@
 		4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenHolder.abi.json; sourceTree = "<group>"; };
 		4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenRules.abi.json; sourceTree = "<group>"; };
 		4B5EF350220C6E9C0049AD8A /* OstBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBundle.swift; sourceTree = "<group>"; };
-		4B5EF355220D66DA0049AD8A /* ActivateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateUser.swift; sourceTree = "<group>"; };
 		4B5EF357220D67110049AD8A /* WorkflowBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowBase.swift; sourceTree = "<group>"; };
 		4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecureKeyTests.swift; sourceTree = "<group>"; };
 		4B5EF4D8220DD45A0049AD8A /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
@@ -447,6 +447,8 @@
 		4B8CCDB2221167AB00124586 /* OstSdkSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
 		4B8CCDB42211754A00124586 /* OstAPIUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIUser.swift; sourceTree = "<group>"; };
 		4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDevice.swift; sourceTree = "<group>"; };
+		4BAE56DC2214514600327A19 /* OstBasePollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBasePollingService.swift; sourceTree = "<group>"; };
+		4BAE56DE2214516200327A19 /* OstUserPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUserPollingService.swift; sourceTree = "<group>"; };
 		4BE9E3022201E6F300427A80 /* OstAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
 		4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseProtocol.swift; sourceTree = "<group>"; };
 		4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinAcceptProtocol.swift; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 		4B00CCDB21E481D3005A5696 /* workflows */ = {
 			isa = PBXGroup;
 			children = (
+				4BAE56DB2214512800327A19 /* Services */,
 				4BE9E3042202C98400427A80 /* Interfaces */,
 				4B8CCDB2221167AB00124586 /* OstSdkSync.swift */,
 				4BE9E3282203306C00427A80 /* OstWorkFlowFactory.swift */,
@@ -1053,6 +1056,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4BAE56DB2214512800327A19 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4BAE56DC2214514600327A19 /* OstBasePollingService.swift */,
+				4BAE56DE2214516200327A19 /* OstUserPollingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		4BE9E3012201E63A00427A80 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1093,7 +1105,6 @@
 				4BE9E3322203387800427A80 /* OstWorkFlowCallbackImplementation.swift */,
 				4B5EF357220D67110049AD8A /* WorkflowBase.swift */,
 				4BE9E3DF22085A3800427A80 /* SetupDevice.swift */,
-				4B5EF355220D66DA0049AD8A /* ActivateUser.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -1394,7 +1405,6 @@
 				4B5EF348220C3BD20049AD8A /* MappyUser.swift in Sources */,
 				4B5EF346220C3AE70049AD8A /* MappyRegisterDevice.swift in Sources */,
 				4BE9E3332203387800427A80 /* OstWorkFlowCallbackImplementation.swift in Sources */,
-				4B5EF356220D66DA0049AD8A /* ActivateUser.swift in Sources */,
 				4B00CCB621E363EA005A5696 /* AppDelegate.swift in Sources */,
 				4B5EF344220C17A30049AD8A /* MappyAPIBase.swift in Sources */,
 				4B5EF4DD220DD6390049AD8A /* SignupViewController.swift in Sources */,
@@ -1454,6 +1464,7 @@
 				4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */,
 				4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */,
 				4B49890721F6F2AF00ED0E94 /* EthereumTransactionReceiptObject.swift in Sources */,
+				4BAE56DF2214516200327A19 /* OstUserPollingService.swift in Sources */,
 				4BE9E30E2202D33300427A80 /* OstDeviceRegisteredProtocol.swift in Sources */,
 				4B49892621F6F2AF00ED0E94 /* Eth+Contract.swift in Sources */,
 				4B49893421F6F2AF00ED0E94 /* SolidityType+Codable.swift in Sources */,
@@ -1535,6 +1546,7 @@
 				4B49890C21F6F2AF00ED0E94 /* EthereumQuantity.swift in Sources */,
 				4B49890621F6F2AF00ED0E94 /* EthereumBlockObject.swift in Sources */,
 				4B00CCF221E4C414005A5696 /* OstSecureKeyDbQueries.swift in Sources */,
+				4BAE56DD2214514600327A19 /* OstBasePollingService.swift in Sources */,
 				4B49891321F6F2AF00ED0E94 /* EthereumLogObject.swift in Sources */,
 				4B75F23421BE759800898960 /* OstRule.swift in Sources */,
 				4B49892421F6F2AF00ED0E94 /* Secp256k1+CTXCreator.swift in Sources */,

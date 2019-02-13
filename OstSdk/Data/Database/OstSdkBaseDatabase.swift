@@ -12,6 +12,7 @@ import FMDB
 class OstSdkBaseDatabase {
     private(set) var database: FMDatabase
     private(set) var databaseQueue: FMDatabaseQueue?
+    
     init(_ dbName: String) {
         database = FMDatabase(path: OstSdkBaseDatabase.dbPath(dbName))
         databaseQueue = FMDatabaseQueue(path: OstSdkBaseDatabase.dbPath(dbName))
