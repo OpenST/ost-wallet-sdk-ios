@@ -68,8 +68,18 @@ class HomeViewController: UICollectionViewController {
     // TODO: Theme our interface with our typography
     MDCAppBarTypographyThemer.applyTypographyScheme(ApplicationScheme.shared.typographyScheme, to: self.appBar)
     
-    // TODO: Set layout to our custom layout
-    self.collectionView?.collectionViewLayout = HomeCustomLayout()
+    
+    // Do any additional setup after loading the view, typically from a nib.
+    let screenSize = UIScreen.main.bounds
+    let screenWidth = screenSize.width;
+    let screenHeight = screenSize.height;
+    
+    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+    layout.itemSize = CGSize(width: screenWidth, height: screenWidth + 200)
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
+    collectionView!.collectionViewLayout = layout
   }
   
   let activityView = UIActivityIndicatorView(style: .whiteLarge)
@@ -109,8 +119,8 @@ class HomeViewController: UICollectionViewController {
         self.users = users;
         print("self.users.count", self.users.count);
         DispatchQueue.main.async {
-          let layout = self.collectionView?.collectionViewLayout as! HomeCustomLayout;
-          layout.prepareToDisplayUsers();
+//          let layout = self.collectionView?.collectionViewLayout as! HomeCustomLayout;
+//          layout.prepareToDisplayUsers();
           
           UIView.animate(withDuration: 1, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.collectionView?.reloadData()
@@ -149,6 +159,12 @@ class HomeViewController: UICollectionViewController {
     cell.nameLabel.text = user.username;
     cell.descriptionLabel.text = user.description;
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: self.view.frame.width, height: self.view.frame.width)
   }
   
 }

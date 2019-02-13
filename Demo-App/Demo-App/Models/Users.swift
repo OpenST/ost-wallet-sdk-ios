@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import CryptoSwift
+import OstSdk;
 
 class Users:BaseModel {
   var users: Array<User>;
@@ -51,9 +53,10 @@ class Users:BaseModel {
   func addUserData(userData:[String: Any]) {
     let id = userData["_id"] as! String;
     let username = userData["username"] as! String;
+    let mobileNumber = userData["mobile_number"] as! String;
     var user = getUserById(id:id);
     if ( user == nil ) {
-      user = User(id:id, username:username,imageSizes: Users.imageSizes);
+      user = User(id:id, mobileNumber:mobileNumber, username:username, imageSizes: Users.imageSizes);
       self.idToUserMap[ id ] = user!;
       self.users.append(user!);
     }
@@ -104,14 +107,16 @@ class User {
   
   let id:String;
   var ostUserId:String?;
-  var username:String;
+  let username:String;
+  let mobileNumber:String;
   var description:String?;
   var tokenHolderAddress:String?;
   var userImages: [CGFloat:UIImage];
   
-  init(id:String, username:String, imageSizes:[CGFloat] ){
+  init(id:String, mobileNumber:String, username:String, imageSizes:[CGFloat] ){
     self.id = id;
     self.username = username;
+    self.mobileNumber = mobileNumber;
     self.userImages = [:];
     
     var _imageSize = imageSizes;
@@ -121,7 +126,7 @@ class User {
     
     for sizeCnt in 0..<_imageSize.count {
       let imgSize = _imageSize[sizeCnt];
-        self.userImages[imgSize] = User.generateImage(imageSeed:(id + "_" + username), size:imgSize);
+        self.userImages[imgSize] = User.generateImage(imageSeed:(mobileNumber+username), size:imgSize);
     }
     
     
@@ -129,8 +134,14 @@ class User {
   
   
   static func generateImage(imageSeed:String, size:CGFloat) -> UIImage {
-    let imagHash = imageSeed.data(using: .utf8);
-    let generator = IconGenerator(size: size, hash: imagHash!);
+    
+    var imagHash = Data(imageSeed.sha1().utf8);
+    print("imageSeed", imageSeed);
+    
+    
+    
+    
+    let generator = IconGenerator(size: size, hash: imagHash);
     return UIImage(cgImage: generator.render()!);
   }
   

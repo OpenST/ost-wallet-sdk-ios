@@ -95,16 +95,14 @@ class HomeCustomLayout: UICollectionViewLayout {
   override var collectionViewContentSize: CGSize {
     get {
       var contentSize: CGSize = .zero
-      contentSize.height = self.tripleSize.height
-      if ( self.frameCache.count > 0 ) {
-        let lastItemFrameValue: NSValue = self.frameCache.last!
-        let lastItemFrame = lastItemFrameValue.cgRectValue
-        contentSize.width = lastItemFrame.maxX + HORIZONTAL_PADDING * self.collectionView!.frame.width
-        return contentSize
+      contentSize.width = self.collectionView!.frame.width
+      let itemCount = CGFloat(self.collectionView!.numberOfItems(inSection:0));
+      if ( itemCount > 1 ) {
+        contentSize.height = (itemCount * 0.75 * self.collectionView!.frame.height);
       } else {
-        contentSize.width = self.collectionView!.frame.width
-        return contentSize
+        contentSize.height = self.collectionView!.frame.height;
       }
+      return contentSize;
     }
   }
 

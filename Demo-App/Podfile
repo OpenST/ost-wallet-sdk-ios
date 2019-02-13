@@ -19,8 +19,9 @@ target 'Demo-App' do
     pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios', :branch => 'google-io-codelabs-2018'
   end
  
-  pod 'Alamofire', '~>4.8.1'
-
+  pod 'Alamofire', '4.8.1'
+  pod 'CryptoSwift', '0.14.0'
+  
   target 'Demo-AppTests' do
     inherit! :search_paths
     # Pods for testing

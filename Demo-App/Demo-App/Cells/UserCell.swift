@@ -18,7 +18,7 @@ import UIKit
 
 import MaterialComponents
 
-class UserCell: MDCCardCollectionCell {
+class UserCell:   MDCCardCollectionCell {
   
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var nameLabel: UILabel!
@@ -29,8 +29,6 @@ class UserCell: MDCCardCollectionCell {
     
     self.nameLabel.font = ApplicationScheme.shared.typographyScheme.subtitle1
     self.descriptionLabel.font = ApplicationScheme.shared.typographyScheme.subtitle1
-    self.nameLabel.textAlignment = .center
-    self.descriptionLabel.textAlignment = .center
 
     //Set to 0 to disable the curved corners
     self.cornerRadius = 0.0;
