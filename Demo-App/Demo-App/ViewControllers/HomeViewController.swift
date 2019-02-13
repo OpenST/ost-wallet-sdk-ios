@@ -75,7 +75,7 @@ class HomeViewController: UICollectionViewController {
     let screenHeight = screenSize.height;
     
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+    layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     layout.itemSize = CGSize(width: screenWidth, height: screenWidth + 150)
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
@@ -108,11 +108,11 @@ class HomeViewController: UICollectionViewController {
       flowLayout.itemSize = itemSize
     }
     
-    if (self.shouldDisplayLogin) {
-      let loginViewController = LoginViewController(nibName: nil, bundle: nil)
-      self.present(loginViewController, animated: false, completion: nil)
-      self.shouldDisplayLogin = false
-    }
+//    if (self.shouldDisplayLogin) {
+//      let loginViewController = LoginViewController(nibName: nil, bundle: nil)
+//      self.present(loginViewController, animated: false, completion: nil)
+//      self.shouldDisplayLogin = false
+//    }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       Users.getInstance().getUsers(onComplete: { (users: Array<User>) in
@@ -160,13 +160,6 @@ class HomeViewController: UICollectionViewController {
     cell.descriptionLabel.text = user.description;
     return cell
   }
-  
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: self.view.frame.width, height: self.view.frame.width)
-  }
-  
 }
 
 //MARK: - UIScrollViewDelegate

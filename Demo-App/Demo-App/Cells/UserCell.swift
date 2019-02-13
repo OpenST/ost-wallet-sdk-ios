@@ -40,6 +40,7 @@ class UserCell:   MDCCardCollectionCell {
   }
     
     func addShadow() {
+        self.shadowView.layer.cornerRadius = 10
         self.shadowView.layer.shadowColor = UIColor.lightGray.cgColor
         self.shadowView.layer.shadowOpacity = 0.4
         self.shadowView.layer.shadowRadius = 5
