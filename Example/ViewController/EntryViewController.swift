@@ -19,12 +19,17 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var mobileNumberTextField: UITextField!
     @IBOutlet weak var userNameErrorLabel: UILabel!
     @IBOutlet weak var mobileNumberErrorLabel: UILabel!
+    @IBOutlet weak var signupButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         userNameTextField.text = "aniket\(Int(Date().timeIntervalSince1970))"
         mobileNumberTextField.text = "\(Int(Date().timeIntervalSince1970))"
+        
+        signupButton.layer.borderWidth = 1
+        signupButton.layer.borderColor = UIColor.gray.cgColor
+        signupButton.layer.cornerRadius = 10
     }
     
     func canProceed() -> Bool {

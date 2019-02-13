@@ -38,19 +38,19 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func createUser() {
         MappyUser().createUser(params: userParam(), success: { (userObj) in
-            self.mappyUser = userObj
-            SharedDatabase.sharedInstance.insertUser(userObj)
-            self.userDetailsTabelArray.append(userObj)
+            self.mappyUser = userObj!
+            SharedDatabase.sharedInstance.insertUser(userObj!)
+            self.userDetailsTabelArray.append(userObj!)
             self.relaodTable()
-            self.createOstUser(for: (userObj["_id"] as! String))
-        }) { (failaurObj) in
-            print(failaurObj as Any)
+            self.createOstUser(for: (userObj!["_id"] as! String))
+        }) { (failureObj) in
+            print(failureObj as Any)
         }
     }
     
     func createOstUser(for userId: String) {
         MappyUser().createOstUser(for: userId, success: { (ostUserObj) in
-           self.parseUser(ostUserObj)
+           self.parseUser(ostUserObj!)
         }) { (failuarObj) in
             print(failuarObj as Any)
         }
@@ -59,7 +59,7 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func parseUser(_ ostUserObj: [String: Any]) {
         do {
             if let user: OstUser = try OstSdk.parseUser(ostUserObj) {
-                try SetupDevice(userId: user.id, tokenId: user.token_id!, mappyUserId: (mappyUser!["_id"] as! String)).perform()
+                try SetupDevice(userId: user.id, tokenId: user.tokenId!, mappyUserId: (mappyUser!["_id"] as! String)).perform()
             }
             
         }catch let error{

@@ -121,9 +121,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWZ-GK-7tj">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWZ-GK-7tj">
                                 <rect key="frame" x="20" y="278" width="315" height="44"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bad-fp-olq"/>
                                 </constraints>
@@ -183,6 +183,7 @@
                     <connections>
                         <outlet property="mobileNumberErrorLabel" destination="Wnc-cs-2i2" id="Uxt-Qd-fXq"/>
                         <outlet property="mobileNumberTextField" destination="DT5-HX-4bf" id="ibB-CE-AKt"/>
+                        <outlet property="signupButton" destination="cWZ-GK-7tj" id="XYR-4U-MLF"/>
                         <outlet property="userNameErrorLabel" destination="WIm-cM-KzU" id="cYq-59-msy"/>
                         <outlet property="userNameTextField" destination="hbC-4D-aqe" id="EJg-sc-7QF"/>
                         <segue destination="FuW-Ph-0A4" kind="show" identifier="entryToSignupVC" id="51I-dt-hhE"/>

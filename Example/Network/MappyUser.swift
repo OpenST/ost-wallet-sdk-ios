@@ -14,33 +14,33 @@ class MappyUser: MappyAPIBase {
     
     override init() { super.init() }
     
-    func createUser(params:[String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func createUser(params:[String: Any], success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL
         post(params: params as [String : AnyObject], success: success, failuar: failuar)
     }
     
-    func getUser(userId: String, success: @escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func getUser(userId: String, success: @escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL + "/"+userId
         get(success: success, failuar: failuar)
     }
     
-    func validateUser(params:[String: Any], success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func validateUser(params:[String: Any], success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL + "/validate"
-        post(params: params as [String : AnyObject], success: success, failuar: failuar)
+        post(params: params as [String : AnyObject], success: success , failuar: failuar)
     }
     
-    func getAllUsers(success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func getAllUsers(success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL
-        get(success: success, failuar: failuar)
+        get(success: success , failuar: failuar)
     }
     
-    func createOstUser(for userId: String, success:@escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func createOstUser(for userId: String, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL + "/" + userId + "/ost-users"
-        post(success: success, failuar: failuar)
+        post(success: success , failuar: failuar)
     }
     
-    func getOstUser(userId: String, success: @escaping (([String: Any]) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    func getOstUser(userId: String, success: @escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         resourceURL = usersURL + "/" + userId + "/ost-users"
-        get(success: success, failuar: failuar)
+        get(success: success , failuar: failuar)
     }
 }

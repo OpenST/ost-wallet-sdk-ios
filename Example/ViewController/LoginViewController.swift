@@ -30,8 +30,8 @@ class LoginViewController: SignupViewController {
     
     func getUsersList() {
         MappyUser().getAllUsers(success: { (succesObj) in
-            let resultType = succesObj["result_type"] as! String
-            SharedDatabase.sharedInstance.insertUsers(succesObj[resultType] as! Array)
+            let resultType = succesObj!["result_type"] as! String
+            SharedDatabase.sharedInstance.insertUsers(succesObj![resultType] as! Array)
             self.relaodTable(withData: SharedDatabase.sharedInstance.getUserList())
         }) { (failuarObj) in
             self.navigationController?.popViewController(animated: true)
