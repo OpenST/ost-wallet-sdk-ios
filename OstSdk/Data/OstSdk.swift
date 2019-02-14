@@ -10,7 +10,7 @@ import Foundation
 
 public class OstSdk {
 
-    class func initialize() {
+    public class func initialize() {
         _ = OstSdkDatabase.sharedInstance
     }
     
@@ -43,7 +43,7 @@ public class OstSdk {
     }
     
     public class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser? {
-        let entityData: [String: Any] = [OstUser.getEntityIdentiferKey(): id, "token_id": tokenId]
+        let entityData: [String: Any] = [OstUser.getEntityIdentiferKey(): id, "token_id": tokenId, "status": OstUser.USER_STATUS_CREATED]
         return try parseUser(entityData)
     }
     
