@@ -17,6 +17,7 @@ public class OstSession: OstBaseEntity {
     }
     
     static let SESSION_STATUS_INITITIALIZING = "INITITIALIZING"
+    static let SESSION_STATUS_CREATED = "CREATED"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
@@ -30,14 +31,12 @@ public class OstSession: OstBaseEntity {
         return OstUtils.toString(self.data[OstSession.OSTSESSION_PARENTID] as Any?)
     }
     
-    func incrementNonce() throws {
+    func incrementAndStoreNonce() throws {
         var params: [String: Any?] = self.data
         params["nonce"] = self.nonce + 1
         params["updated_timestamp"] = Date.timestamp()
-        self.data = params
         _ = try OstSession.parse(params)
     }
-
 }
 
 public extension OstSession {

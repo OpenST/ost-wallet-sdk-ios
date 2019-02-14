@@ -66,7 +66,7 @@ public class OstSdk {
     }
     
     public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                                   expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+                                   expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
         try OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
                                             expirationHeight:expirationHeight, delegate: delegate)
     }
