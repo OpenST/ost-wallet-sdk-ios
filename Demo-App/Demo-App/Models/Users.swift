@@ -74,12 +74,12 @@ class Users:BaseModel {
     }
     
     var userDescription:String? = userData["description"] as! String?;
-    if ( userDescription == nil ) {
-      userDescription = username + " have not provided their bio.";
+    if ( (userDescription == nil || userDescription!.isEmpty)) {
+        userDescription = username + " have not provided their bio.";
     }
     
     if ( ostUserId == nil ) {
-      userDescription = userDescription! + "\n" + username + " have not setup their wallet.";
+        userDescription = userDescription! + "\n" + username + " have not setup their wallet.";
     }
     user!.description = userDescription;
     

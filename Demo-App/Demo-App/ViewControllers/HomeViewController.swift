@@ -108,11 +108,11 @@ class HomeViewController: UICollectionViewController {
       flowLayout.itemSize = itemSize
     }
     
-//    if (self.shouldDisplayLogin) {
-//      let loginViewController = LoginViewController(nibName: nil, bundle: nil)
-//      self.present(loginViewController, animated: false, completion: nil)
-//      self.shouldDisplayLogin = false
-//    }
+    if (self.shouldDisplayLogin) {
+      let loginViewController = LoginViewController(nibName: nil, bundle: nil)
+      self.present(loginViewController, animated: false, completion: nil)
+      self.shouldDisplayLogin = false
+    }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       Users.getInstance().getUsers(onComplete: { (users: Array<User>) in
