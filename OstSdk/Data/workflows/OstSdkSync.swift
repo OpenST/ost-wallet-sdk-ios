@@ -91,7 +91,7 @@ class OstSdkSync {
         return true
     }
     
-    //MAKR: - Sync Token
+    //MARK: - Sync Token
     func syncToken() {
         if (canSyncToken()) {
             do {
@@ -119,7 +119,7 @@ class OstSdkSync {
         return true
     }
     
-    //MAKR: - Sync Device
+    //MARK: - Sync Device
     func syncDevice() {
         if (canSyncDevice()) {
             do {
@@ -138,7 +138,7 @@ class OstSdkSync {
         if (self.forceSync) {
             return true
         }
-        
+       
         let currentDevice = user!.getCurrentDevice()
         if (currentDevice != nil && !currentDevice!.isDeviceRevoked() &&
             currentDevice!.isDeviceRegistered()) {

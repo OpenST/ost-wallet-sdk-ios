@@ -12,13 +12,17 @@ public class OstSession: OstBaseEntity {
     
     static let OSTSESSION_PARENTID = "user_id"
     
+    static func getEntityIdentiferKey() -> String {
+        return "address"
+    }
+    
+    static let SESSION_STATUS_INITITIALIZING = "INITITIALIZING"
+    
     static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
     }
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
-    }
+   
     
     override func getId(_ params: [String: Any]) -> String {
         return OstUtils.toString(params[OstSession.getEntityIdentiferKey()])!

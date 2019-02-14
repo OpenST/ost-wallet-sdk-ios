@@ -79,4 +79,13 @@ class OstCurrentDevice: OstDevice {
         
         return ["REVOKING", "REVOKED"].contains(status!)
     }
+    
+    func isCreated() -> Bool {
+        let status = self.status
+        if (status != nil &&
+            status! == "CREATED") {
+            return true
+        }
+        return false
+    }
 }

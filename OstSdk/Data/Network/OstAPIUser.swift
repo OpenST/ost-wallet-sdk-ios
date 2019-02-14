@@ -36,7 +36,7 @@ class OstAPIUser: OstAPIBase {
     }
     
     func activateUser(params: [String: Any], success:((OstUser) -> Void)?, failuar:((OstError) -> Void)?) throws {
-        resourceURL = userApiResourceBase + "/\(userId)/activate-use/"
+        resourceURL = userApiResourceBase + "/" + userId + "/activate-use/"
         
         var loParams = params
         insetAdditionalParamsIfRequired(&loParams)

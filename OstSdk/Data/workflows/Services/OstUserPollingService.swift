@@ -36,7 +36,7 @@ class OstUserPollingService: OstBasePollingService {
     
     func setupCallbacks() {
         self.onSuccess = { ostUser in
-            if ((ostUser.status?.uppercased() == "ACTIVATING") ||
+            if (ostUser.isActivating() ||
                 (ostUser.tokenHolderAddress == nil) || (ostUser.deviceManagerAddress == nil)) {
                 self.getUserEntity()
             }else {

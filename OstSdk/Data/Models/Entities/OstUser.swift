@@ -18,6 +18,10 @@ public class OstUser: OstBaseEntity {
         return "id"
     }
     
+    static let USER_STATUS_CREATED = "CREATED"
+    static let USER_STATUS_ACTIVATED = "ACTIVATED"
+    static let USER_STATUS_ACTIVATING = "ACTIVATING"
+    
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
@@ -58,6 +62,31 @@ public class OstUser: OstBaseEntity {
         self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
         return self.currentDevice
     }
+    
+    func isActivated() -> Bool {
+        if (self.status != nil &&
+            OstUser.USER_STATUS_ACTIVATED == self.status) {
+            return true
+        }
+        return false
+    }
+    
+    func isCreated() -> Bool {
+        if (self.status != nil &&
+            OstUser.USER_STATUS_CREATED == self.status) {
+            return true
+        }
+        return false
+    }
+    
+    func isActivating() -> Bool {
+        if (self.status != nil &&
+            OstUser.USER_STATUS_ACTIVATING == self.status) {
+            return true
+        }
+        return false
+    }
+    
 }
 
 public extension OstUser {

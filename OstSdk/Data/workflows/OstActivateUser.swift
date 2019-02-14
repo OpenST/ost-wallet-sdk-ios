@@ -36,8 +36,41 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             do {
                 try self.validateParams()
                 
-                user = try! getUser()!
+                user = try getUser()
+                if (user == nil) {
+                    self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
+                }
+                
+                if (user!.status == nil || user!.isCreated()) {
+                    self.postError(OstError.actionFailed("User is created \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    return
+                }
+                
+                if (user!.isActivated()) {
+                    self.postFlowComplete(entity: user!)
+                    return
+                }
+                
+                if (user!.isActivating()) {
+                    self.pollingForActivatingUser(user!)
+                    return
+                }
+                
                 currentDevice = user!.getCurrentDevice()
+                if (currentDevice == nil) {
+                    self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    return
+                }
+                
+                if (currentDevice!.isDeviceRevoked()) {
+                    self.postError(OstError.actionFailed("Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    return
+                }
+                
+                if (currentDevice!.isDeviceRegistered()) {
+                    self.pollingForActivatingUser(user!)
+                    return
+                }
                 
                 let onCompletion: (() -> Void) = {
                     self.recoveryAddreass = self.getRecoveryKey()
@@ -48,6 +81,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     }
                     
                     self.generateSessionKeys()
+                    self.generateAndSaveSessionEntity()
                     self.activateUser()
                 }
                 
@@ -108,6 +142,28 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         }
     }
     
+    func generateAndSaveSessionEntity() {
+        do {
+            let params = self.getSessionEnityParams()
+            _ = try OstSession.parse(params)
+        }catch let error {
+            self.postError(error)
+        }
+        
+    }
+    
+    func getSessionEnityParams() -> [String: Any] {
+        var params: [String: Any] = [:]
+        params["user_id"] = self.userId
+        params["address"] = self.walletKeys!.address!
+        params["expiration_height"] = self.expirationHeight
+        params["spending_limit"] = self.spendingLimit
+        params["nonce"] = 0
+        params["status"] = OstSession.SESSION_STATUS_INITITIALIZING
+        
+        return params
+    }
+    
     func activateUser() {
         do {
             let params = self.getActivateUserParams()
@@ -144,6 +200,16 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         }
         
         _ = OstUserPollingService(userId: ostUser.id, successCallback: successCallback, failuarCallback: failuarCallback).perform()
+    }
+    
+    
+    func syncRespctiveEntity() {
+        do {
+            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, success: nil, failuar: nil)
+            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(success: nil, failuar: nil)
+        }catch {
+            
+        }
     }
     
     func postFlowComplete(entity: OstUser) {

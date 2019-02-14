@@ -193,6 +193,8 @@
 		4BAE56DF2214516200327A19 /* OstUserPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56DE2214516200327A19 /* OstUserPollingService.swift */; };
 		4BAE56E72215488000327A19 /* ActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56E62215488000327A19 /* ActivateUser.swift */; };
 		4BAE56E922154A5C00327A19 /* OstAPISalt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56E822154A5C00327A19 /* OstAPISalt.swift */; };
+		4BAE56EB2215855200327A19 /* OstAPISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EA2215855200327A19 /* OstAPISession.swift */; };
+		4BAE56ED2215989900327A19 /* OstAPIDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */; };
 		4BE9E3032201E6F300427A80 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3022201E6F300427A80 /* OstAPIBase.swift */; };
 		4BE9E3062202CBF100427A80 /* OstBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */; };
 		4BE9E3082202CDBC00427A80 /* OstPinAcceptProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */; };
@@ -449,6 +451,8 @@
 		4BAE56DE2214516200327A19 /* OstUserPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUserPollingService.swift; sourceTree = "<group>"; };
 		4BAE56E62215488000327A19 /* ActivateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateUser.swift; sourceTree = "<group>"; };
 		4BAE56E822154A5C00327A19 /* OstAPISalt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISalt.swift; sourceTree = "<group>"; };
+		4BAE56EA2215855200327A19 /* OstAPISession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISession.swift; sourceTree = "<group>"; };
+		4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDeviceManager.swift; sourceTree = "<group>"; };
 		4BE9E3022201E6F300427A80 /* OstAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
 		4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseProtocol.swift; sourceTree = "<group>"; };
 		4BE9E3072202CDBC00427A80 /* OstPinAcceptProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinAcceptProtocol.swift; sourceTree = "<group>"; };
@@ -1072,6 +1076,8 @@
 				4B8CCDB42211754A00124586 /* OstAPIUser.swift */,
 				4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */,
 				4BAE56E822154A5C00327A19 /* OstAPISalt.swift */,
+				4BAE56EA2215855200327A19 /* OstAPISession.swift */,
+				4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1449,6 +1455,7 @@
 				4B49890821F6F2AF00ED0E94 /* EthereumData.swift in Sources */,
 				4B00CBB821DDE1CD005A5696 /* OstTransactionDbQueries.swift in Sources */,
 				4B7EAA2D22007FD200852DE2 /* OstCreditDbQueries.swift in Sources */,
+				4BAE56EB2215855200327A19 /* OstAPISession.swift in Sources */,
 				4B49891E21F6F2AF00ED0E94 /* BigUInt+BytesConvertible.swift in Sources */,
 				4B00CBAC21DCDA62005A5696 /* OstDeviceRepository.swift in Sources */,
 				4B49890F21F6F2AF00ED0E94 /* RPCResponse.swift in Sources */,
@@ -1485,6 +1492,7 @@
 				4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */,
 				4B75F23221BE758500898960 /* OstTransaction.swift in Sources */,
 				4B49893521F6F2AF00ED0E94 /* SolidityWrappedValue.swift in Sources */,
+				4BAE56ED2215989900327A19 /* OstAPIDeviceManager.swift in Sources */,
 				4B49893721F6F2AF00ED0E94 /* SolidityTuple.swift in Sources */,
 				4B49892E21F6F2AF00ED0E94 /* EthereumContract.swift in Sources */,
 				4B49891D21F6F2AF00ED0E94 /* CharacterSet+Hex.swift in Sources */,

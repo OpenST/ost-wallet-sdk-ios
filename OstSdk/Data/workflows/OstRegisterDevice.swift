@@ -80,7 +80,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 apiParam["device_uuid"] = self.getDeviceUUID() ?? ""
                 apiParam["device_name"] = self.getDeviceName()
                 apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
-                apiParam["status"] = "CREATED"
+                apiParam["status"] = OstUser.USER_STATUS_CREATED
                 
                 _ = try OstCurrentDevice.parse(apiParam)
                 
