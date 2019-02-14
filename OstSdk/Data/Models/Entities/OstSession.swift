@@ -41,32 +41,20 @@ public class OstSession: OstBaseEntity {
 }
 
 public extension OstSession {
-    var local_entity_id : String? {
-        return data["local_entity_id"] as? String ?? nil
-    }
-    
     var address : String? {
         return data["address"] as? String
     }
     
-    var token_holder_id : String? {
-        return data["token_holder_id"] as? String
+    var userId : String? {
+        return data["user_id"] as? String
     }
     
-    var blockHeight : String? {
-        return data["blockHeight"] as? String
+    var spendingLimit : Int? {
+        return OstUtils.toInt(self.data["spending_limit"] as Any?)
     }
     
-    var expiry_time : String? {
-        return data["expiry_time"] as? String
-    }
-    
-    var spending_limit : String? {
-        return data["spending_limit"] as? String
-    }
-    
-    var redemption_limit : String? {
-        return data["redemption_limit"] as? String
+    var expirationHeight :  Int? {
+        return OstUtils.toInt(self.data["expiration_height"] as Any?)
     }
     
     var nonce: Int {
@@ -110,17 +98,19 @@ extension OstSession{
     }
     
     public func signTransaction(_ transaction: OstSession.Transaction) throws -> String {
+        guard let currentDevice: OstCurrentDevice = try (OstUserModelRepository.sharedUser.getById(self.userId!) as! OstUser).getCurrentDevice() else {
+            throw OstError.actionFailed("device is not present.")
+        }
+        
         let txnDict: [String: String] = transaction.toDictionary()
         let eip1077Obj: EIP1077 = EIP1077(transaction: txnDict)
         let eip1077TxnHash = try eip1077Obj.toEIP1077transactionHash()
         
         let secureKey: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.getById(self.id) as! OstSecureKey
+        let ostSessionKeyInfo: OstSessionKeyInfo = OstSessionKeyInfo(sessionKeyData: secureKey.privateKeyData, isSecureEnclaveEncrypted: secureKey.isSecureEnclaveEnrypted)
         
-//        guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
-//            return ""
-//        }
-        
-//        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: secureKey.privateKey!)
-        return ""
+        let privateKey: String = try currentDevice.decrypt(sessionKeyInfo: ostSessionKeyInfo)
+
+        return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: privateKey)
     }
 }
