@@ -10,7 +10,14 @@ import Foundation
 
 class OstBasePollingService {
     
-    init () { }
+    var maxRetryCount = 10
+    let firstDelayTime = OstConstants.OST_BLOCK_FORMATION_TIME + 6
+    
+    let userId: String
+    
+    init (userId: String) {
+        self.userId = userId
+    }
     
     func perform() {
         fatalError("perform did not override.")

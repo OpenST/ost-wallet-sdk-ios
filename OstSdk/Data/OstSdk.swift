@@ -9,8 +9,10 @@
 import Foundation
 
 public class OstSdk {
-    
-    init() {}
+
+    class func initialize() {
+        _ = OstSdkDatabase.sharedInstance
+    }
     
     public class func parse(_ apiResponse: [String: Any?]) throws {
         _ = try self.parseApiResponse(apiResponse)
@@ -53,16 +55,15 @@ public class OstSdk {
         let entityData: [String: Any] = [OstToken.getEntityIdentiferKey(): tokenId]
         return try OstToken.parse(entityData)
     }
-
     
     //MARK: - Workflow
     public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) throws {
         _ = try OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
     }
     
-    public class func activateUser(userId: String, uPin: String, password: String, spendingLimit: String,
+    public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
                                    expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
-        try OstWorkFlowFactory.activateUser(userId: userId, uPin: uPin, password: password, spendingLimit: spendingLimit,
+        try OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
                                             expirationHeight:expirationHeight, delegate: delegate)
     }
 }

@@ -34,4 +34,23 @@ class OstAPIUser: OstAPIBase {
             failuar?(OstError.actionFailed("User Sync failed."))
         }
     }
+    
+    func activateUser(params: [String: Any], success:((OstUser) -> Void)?, failuar:((OstError) -> Void)?) throws {
+        resourceURL = userApiResourceBase + "/\(userId)/activate-use/"
+        
+        var loParams = params
+        insetAdditionalParamsIfRequired(&loParams)
+        try sign(&loParams)
+        
+        post(params: params as [String: AnyObject], success: { (apiResponse) in
+            do {
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                success?(entity as! OstUser)
+            }catch let error{
+                failuar?(error as! OstError)
+            }
+        }) { (failuarObj) in
+            failuar?(OstError.actionFailed("activate user failed."))
+        }
+    }
 }

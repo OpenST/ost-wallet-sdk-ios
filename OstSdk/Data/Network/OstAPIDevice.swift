@@ -10,7 +10,8 @@ import Foundation
 
 class OstAPIDevice: OstAPIBase {
     
-    var userApiResourceBase: String
+    let userApiResourceBase: String
+
     override public init(userId: String) {
         userApiResourceBase = "/users/\(userId)/devices"
         super.init(userId: userId)

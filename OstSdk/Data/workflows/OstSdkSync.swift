@@ -81,7 +81,7 @@ class OstSdkSync {
     func canSyncUser() -> Bool {
         if (self.forceSync) {
             return true
-        }
+        }
         
         if (user != nil &&
             user!.tokenHolderAddress != nil &&

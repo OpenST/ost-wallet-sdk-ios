@@ -9,13 +9,20 @@
 import Foundation
 import Alamofire
 
-class OstAPIBase {
+open class OstAPIBase {
     
     var userId: String
     var resourceURL: String = ""
     
-    init(userId: String = "") {
+    var requestTimeout: Int  = 6
+    var dataRequest: DataRequest? = nil
+    let manager: SessionManager
+    
+    public init(userId: String = "") {
         self.userId = userId
+        
+        self.manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
     }
     
     func getHeader() -> [String: String] {
@@ -24,11 +31,11 @@ class OstAPIBase {
         return httpHeaders
     }
     
-    var getBaseURL: String {
+    open var getBaseURL: String {
         return OstConstants.OST_API_BASE_URL
     }
     
-    var getResource: String {
+    open var getResource: String {
         return resourceURL
     }
 
@@ -36,7 +43,7 @@ class OstAPIBase {
         return OstConstants.OST_SIGNATURE_KIND
     }
     
-    func isResponseSuccess(_ response: Any?) -> Bool {
+    open func isResponseSuccess(_ response: Any?) -> Bool {
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
             if successValue is Int {
@@ -93,7 +100,7 @@ class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    open func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
@@ -106,8 +113,8 @@ class OstAPIBase {
         Logger.log(message: "url", parameterToPrint: url)
         Logger.log(message: "params", parameterToPrint: params as Any)
         
-        let dataRequest = Alamofire.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
-        dataRequest.responseJSON { (httpResponse) in
+        dataRequest = manager.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
+        dataRequest!.responseJSON { (httpResponse) in
             
             Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
             
@@ -120,14 +127,14 @@ class OstAPIBase {
         }
     }
     
-    func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    open func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
         Logger.log(message: "params", parameterToPrint: params)
         
-        let dataRequest = Alamofire.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
-        dataRequest.responseJSON { (httpResponse) in
+        dataRequest = manager.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
+        dataRequest!.responseJSON { (httpResponse) in
             
             Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
             

@@ -28,12 +28,8 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     override func perform() {
         ostRegisterDeviceThread.async {
             do {
-                let (isValidParams, errorMessage) = self.isValidParams()
-                if (!isValidParams) {
-                    self.postError(OstError.invalidInput(errorMessage))
-                    return
-                }
-                
+                try self.validateParams()
+
                 try self.initToken()
                 try self.initUser()
                 
@@ -54,16 +50,14 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         }
     }
     
-    func isValidParams() -> (Bool, String?) {
+    func validateParams() throws {
         if (self.userId.isEmpty) {
-            return (false, "userId should not be empty string.")
+            throw OstError.invalidInput("userId should not be empty string.")
         }
         
         if (self.tokenId.isEmpty) {
-            return (false, "tokenId should not be empty string.")
+            throw OstError.invalidInput("tokenId should not be empty string.")
         }
-        
-        return (true, nil)
     }
     
     func initUser() throws {

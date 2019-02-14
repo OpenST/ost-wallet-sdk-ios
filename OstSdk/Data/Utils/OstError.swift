@@ -9,7 +9,7 @@
 import Foundation
 
 public enum OstError: Error {
-     case invalidInput(String?), actionFailed(String?)
+     case invalidInput(String?), actionFailed(String?), unauthorized(String?)
 }
 
 public enum OstEntityError: Error {

@@ -16,10 +16,10 @@ class OstWorkFlowFactory {
         return registerDeviceObj
     }
 
-    class func activateUser(userId: String, uPin: String, password: String, spendingLimit: String,
+    class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
                             expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
         
-        let activateUserObj = OstActivateUser(userId: userId, uPin: uPin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
+        let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()
     }
     

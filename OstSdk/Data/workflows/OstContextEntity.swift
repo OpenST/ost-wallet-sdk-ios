@@ -9,7 +9,7 @@
 import Foundation
 
 public enum OstWorkflowType {
-    case registerDevice
+    case registerDevice, activateUser
 }
 
 public class OstContextEntity {

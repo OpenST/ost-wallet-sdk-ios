@@ -11,8 +11,8 @@ import Foundation
 class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegisteredProtocol {
     let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
-    var uPin: String
-    var password: String
+    var pin: String
+    var pinPrefix: String
     var spendingLimit: String
     var expirationHeight: String
     
@@ -22,9 +22,9 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     var walletKeys: OstWalletKeys? = nil
     var recoveryAddreass: String? = nil
     
-    init(userId: String, uPin: String, password: String, spendingLimit: String, expirationHeight: String, delegate: OstWorkFlowCallbackProtocol) {
-        self.uPin = uPin
-        self.password = password
+    init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: String, delegate: OstWorkFlowCallbackProtocol) {
+        self.pin = pin
+        self.pinPrefix = password
         self.spendingLimit = spendingLimit
         self.expirationHeight = expirationHeight
         
@@ -34,35 +34,92 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     override func perform() {
         ostRegisterDeviceThread.sync {
             do {
-                user = try! getUser()!
+                try self.validateParams()
                 
+                user = try! getUser()!
                 currentDevice = user!.getCurrentDevice()
                 
-                recoveryAddreass = getRecoveryKey()
-                
-                if (recoveryAddreass == nil) {
-                    self.postError(OstError.actionFailed("recovery address formation failed."))
-                    return
+                let onCompletion: (() -> Void) = {
+                    self.recoveryAddreass = self.getRecoveryKey()
+                    
+                    if (self.recoveryAddreass == nil) {
+                        self.postError(OstError.actionFailed("recovery address formation failed."))
+                        return
+                    }
+                    
+                    self.generateSessionKeys()
+                    self.activateUser()
                 }
                 
-                walletKeys = try OstCryptoImpls().generateCryptoKeys()
-                let sessionKeyInfo: OstSessionKeyInfo = try currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
+                try getSalt(onCompletion: onCompletion)
                 
-                var ostSecureKey = OstSecureKey(address: walletKeys!.address!, privateKeyData: sessionKeyInfo.sessionKeyData, isSecureEnclaveEnrypted: sessionKeyInfo.isSecureEnclaveEncrypted)
-                ostSecureKey = OstSecureKeyRepository.sharedSecureKey.insertOrUpdateEntity(ostSecureKey) as! OstSecureKey
-            
             }catch let error{
-                    self.postError(error)
+                self.postError(error)
             }
         }
     }
     
+    func validateParams() throws {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.pinPrefix.count {
+            throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > self.userId.count {
+            throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
+            throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+        }
+    }
+    
+    func getSalt(onCompletion: @escaping (() -> Void)) throws {
+        try OstAPISalt(userId: self.userId).getRecoverykeySalt(success: { (saltResponse) in
+            self.salt = saltResponse["scrypt_salt"] as! String
+            onCompletion()
+        }, failuar: { (error) in
+            onCompletion()
+            //            self.postError(error)
+        })
+    }
+    
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.password, pin: self.uPin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_SCRYPT_N, r: OstConstants.OST_SCRYPT_R, p: OstConstants.OST_SCRYPT_P, size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES)
+            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.pinPrefix, pin: self.pin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_SCRYPT_N, r: OstConstants.OST_SCRYPT_R, p: OstConstants.OST_SCRYPT_P, size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES)
+        }catch {
+            return nil
+        }
+    }
+    
+    func generateSessionKeys() {
+        do {
+            self.walletKeys = try OstCryptoImpls().generateCryptoKeys()
+            
+            if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
+                self.postError(OstError.actionFailed("activation of user failed."))
+            }
+            
+            let sessionKeyInfo: OstSessionKeyInfo = try currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
+            
+            var ostSecureKey = OstSecureKey(address: walletKeys!.address!, privateKeyData: sessionKeyInfo.sessionKeyData, isSecureEnclaveEnrypted: sessionKeyInfo.isSecureEnclaveEncrypted)
+            ostSecureKey = OstSecureKeyRepository.sharedSecureKey.insertOrUpdateEntity(ostSecureKey) as! OstSecureKey
         }catch let error {
             self.postError(error)
-            return nil
+        }
+    }
+    
+    func activateUser() {
+        do {
+            let params = self.getActivateUserParams()
+            
+            try OstAPIUser(userId: self.userId).activateUser(params: params, success: { (ostUser) in
+                self.pollingForActivatingUser(ostUser)
+            }) { (error) in
+//                self.postError(error)
+                self.pollingForActivatingUser(self.user!)
+            }
+        }catch let error {
+            self.postError(error)
         }
     }
     
@@ -71,7 +128,31 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         params["spending_limit"] = self.spendingLimit
         params["recovery_address"] = self.recoveryAddreass!
         params["expiration_height"] = self.expirationHeight
+        params["session_addresses"] = [self.walletKeys!.address!]
+        
         return params
+    }
+    
+    func pollingForActivatingUser(_ ostUser: OstUser) {
+        
+        let successCallback: ((OstUser) -> Void) = { ostUser in
+            self.postFlowComplete(entity: ostUser)
+        }
+        
+        let failuarCallback:  ((OstError) -> Void) = { error in
+            self.postError(error)
+        }
+        
+        _ = OstUserPollingService(userId: ostUser.id, successCallback: successCallback, failuarCallback: failuarCallback).perform()
+    }
+    
+    func postFlowComplete(entity: OstUser) {
+        Logger.log(message: "OstActivateUser flowComplete", parameterToPrint: entity.data)
+        
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .activateUser , entity: entity)
+            self.delegate.flowComplete(contextEntity);
+        }
     }
     
     //MARK: - OstPinAcceptProtocol

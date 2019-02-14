@@ -99,17 +99,18 @@ class OstCryptoImpls: OstCrypto {
     
     func generateRecoveryKey(pinPrefix: String, pin: String, pinPostFix: String, salt: String, n:Int, r:Int, p: Int, size: Int) throws -> String {
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH >= pinPrefix.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > pinPrefix.count {
             throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH >= pinPostFix.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > pinPostFix.count {
             throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH >= pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
             throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
+        
         let stringToCalculate: String = pinPrefix+pin+pinPostFix
         let seed: Data = try! genSCryptKey(salt: salt.data(using: .utf8)!, n: n, r: r, p: p, size: size, stringToCalculate: stringToCalculate)
         
