@@ -20,12 +20,12 @@ public class OstDeviceManager: OstBaseEntity {
         return "address"
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstDeviceManager.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstDeviceManager.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstDeviceManager.OSTDEVICE_MANAGER_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstDeviceManager.OSTDEVICE_MANAGER_PARENTID] as Any?)
     }
     
     public func getDeviceMultiSigWallet() throws -> OstDevice? {

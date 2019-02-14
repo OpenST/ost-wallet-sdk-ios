@@ -31,7 +31,7 @@ class OstSecureKey: OstBaseEntity {
                 "isSecureEnclaveEnrypted": isSecureEnclaveEnrypted]
     }
     
-    override func getId(_ params: [String: Any]) -> String {
+    override func getId() -> String {
         return address
     }
 }

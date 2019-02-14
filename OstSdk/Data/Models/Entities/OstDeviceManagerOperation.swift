@@ -10,7 +10,7 @@ import Foundation
 
 public class OstDeviceManagerOperation: OstBaseEntity {
     
-    static let OstDeviceManager_OPERATION_PARENTID = "user_id"
+    static let OSTDEVICE_MANAGER_OPERATION_PARENTID = "user_id"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstDeviceManagerOperation? {
         return try OstDeviceManagerOperationRepository.sharedDeviceManagerOperation.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstDeviceManagerOperation
@@ -20,12 +20,12 @@ public class OstDeviceManagerOperation: OstBaseEntity {
         return "id"
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstDeviceManagerOperation.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstDeviceManagerOperation.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstDeviceManagerOperation.OstDeviceManager_OPERATION_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstDeviceManagerOperation.OSTDEVICE_MANAGER_OPERATION_PARENTID] as Any?)
     }
 }
 

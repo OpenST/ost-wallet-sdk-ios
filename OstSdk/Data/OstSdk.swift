@@ -33,6 +33,10 @@ public class OstSdk {
             return try OstUser.parse(entityData!)
         case "device":
             return try OstDevice.parse(entityData!)
+        case "device_manager":
+            return try OstDeviceManager.parse(entityData!)
+        case "session":
+            return try OstSession.parse(entityData!)
         default:
             throw OstError.invalidInput("\(resultType) is not supported.")
         }

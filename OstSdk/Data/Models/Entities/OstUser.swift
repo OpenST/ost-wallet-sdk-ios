@@ -26,12 +26,12 @@ public class OstUser: OstBaseEntity {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
 
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstUser.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstUser.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstUser.OSTUSER_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstUser.OSTUSER_PARENTID] as Any?)
     }
     
     override func processJson(_ entityData: [String : Any?]) {

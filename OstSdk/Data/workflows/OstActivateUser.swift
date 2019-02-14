@@ -192,6 +192,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
+            self.syncRespctiveEntity()
             self.postFlowComplete(entity: ostUser)
         }
         

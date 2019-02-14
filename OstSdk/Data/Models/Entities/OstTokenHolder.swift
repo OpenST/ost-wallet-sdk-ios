@@ -20,12 +20,12 @@ public class OstTokenHolder: OstBaseEntity {
         return "address"
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstTokenHolder.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstTokenHolder.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstTokenHolder.OSTTOKEN_HOLDER_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstTokenHolder.OSTTOKEN_HOLDER_PARENTID] as Any?)
     }
 }
 

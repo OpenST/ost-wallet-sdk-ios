@@ -22,21 +22,20 @@ public class OstSession: OstBaseEntity {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
     }
     
-   
-    
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstSession.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstSession.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstSession.OSTSESSION_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstSession.OSTSESSION_PARENTID] as Any?)
     }
     
-    
-    static func create() throws {
-        let walletKey: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
-        
-        
+    func incrementNonce() throws {
+        var params: [String: Any?] = self.data
+        params["nonce"] = self.nonce + 1
+        params["updated_timestamp"] = Date.timestamp()
+        self.data = params
+        _ = try OstSession.parse(params)
     }
 
 }
@@ -114,6 +113,8 @@ extension OstSession{
         let txnDict: [String: String] = transaction.toDictionary()
         let eip1077Obj: EIP1077 = EIP1077(transaction: txnDict)
         let eip1077TxnHash = try eip1077Obj.toEIP1077transactionHash()
+        
+        let secureKey: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.getById(self.id) as! OstSecureKey
         
 //        guard let secureKey: OstSecureKey = try OstSecureKey.getSecKey(for: self.address!) else {
 //            return ""

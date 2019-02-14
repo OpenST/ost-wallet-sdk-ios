@@ -18,8 +18,8 @@ public class OstToken: OstBaseEntity {
         return "id"
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstToken.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstToken.getEntityIdentiferKey()] as Any?)!
     }
 }
 

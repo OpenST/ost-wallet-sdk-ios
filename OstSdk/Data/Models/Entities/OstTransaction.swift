@@ -18,8 +18,8 @@ public class OstTransaction: OstBaseEntity {
         return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstTransaction
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstTransaction.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstTransaction.getEntityIdentiferKey()] as Any?)!
     }
 }
 

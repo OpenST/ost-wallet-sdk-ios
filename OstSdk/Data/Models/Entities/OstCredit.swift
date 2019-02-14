@@ -18,8 +18,8 @@ class OstCredit: OstBaseEntity {
         return try OstCreditRepository.sharedCredit.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstCredit
     }
     
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstCredit.getEntityIdentiferKey()])!
+    override func getId() -> String {
+        return OstUtils.toString(self.data[OstCredit.getEntityIdentiferKey()] as Any?)!
     }
 }
 
