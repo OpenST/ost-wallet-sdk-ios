@@ -40,6 +40,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                 user = try getUser()
                 if (user == nil) {
                     self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
+                    return
                 }
                 
                 if (user!.status == nil || user!.isCreated()) {

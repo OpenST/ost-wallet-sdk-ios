@@ -21,8 +21,9 @@ public class OstRule: OstBaseEntity {
     }
     
   
-    override func getId() -> String {
-        return OstUtils.toString(self.data[OstRule.getEntityIdentiferKey()] as Any?)!
+    override func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstRule.getEntityIdentiferKey()] as Any?)!
     }
     
     override func getParentId() -> String? {

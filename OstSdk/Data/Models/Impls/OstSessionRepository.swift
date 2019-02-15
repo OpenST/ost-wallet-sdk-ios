@@ -16,6 +16,20 @@ class OstSessionRepository: OstBaseModelCacheRepository {
     }
     
    
+    func getActiveSessionsFor(parentId: String) throws -> [OstSession]? {
+        let dbQueryObj = getDBQueriesObj() as! OstSessionDbQueries
+        
+        if let dbEntityDataArray: [[String: Any?]] = try dbQueryObj.getActiveSessionsFor(parentId) {
+            var entities: Array<OstSession> = []
+            for dbEntityData in dbEntityDataArray {
+                let entityData = try getEntity(dbEntityData as [String : Any])
+                entities.append(entityData)
+            }
+            return entities
+        }
+        return nil
+    }
+    
     //MARK: - overrider
     override func getDBQueriesObj() -> OstBaseDbQueries {
         return OstSessionDbQueries()

@@ -64,9 +64,9 @@ class OstBaseModelRepository {
         return nil
     }
     
-    func getByParentId(_ parent_id: String) throws -> [OstBaseEntity]? {
+    func getByParentId(_ parentId: String) throws -> [OstBaseEntity]? {
         let dbQueryObj = getDBQueriesObj()
-        if let dbEntityDataArray: [[String: Any?]] = try dbQueryObj.getByParentId(parent_id) {
+        if let dbEntityDataArray: [[String: Any?]] = try dbQueryObj.getByParentId(parentId) {
             var entities: Array<OstBaseEntity> = []
             for dbEntityData in dbEntityDataArray {
                 let entityData = try getEntity(dbEntityData as [String : Any])

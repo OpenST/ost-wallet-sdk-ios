@@ -20,8 +20,9 @@ public class OstDeviceManager: OstBaseEntity {
         return "address"
     }
     
-    override func getId() -> String {
-        return OstUtils.toString(self.data[OstDeviceManager.getEntityIdentiferKey()] as Any?)!
+    override func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstDeviceManager.getEntityIdentiferKey()] as Any?)!
     }
     
     override func getParentId() -> String? {

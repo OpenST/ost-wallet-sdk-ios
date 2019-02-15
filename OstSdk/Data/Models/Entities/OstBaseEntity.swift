@@ -37,7 +37,7 @@ public class OstBaseEntity: NSObject {
     func validate(_ params: [String: Any]) throws -> Bool {
         var isValid: Bool = false
        
-        isValid = try isValidId(self.getId())
+        isValid = try isValidId(self.getId(params))
     
         return isValid
     }
@@ -58,8 +58,9 @@ public class OstBaseEntity: NSObject {
         data = params
     }
     
-    func getId() -> String {
-        return OstUtils.toString(self.data[OstBaseEntity.ID] as Any?)!
+    func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstBaseEntity.ID] as Any?)!
     }
     
     func getParentId() -> String? {

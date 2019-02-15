@@ -13,6 +13,8 @@ struct OstConstants {
     
     static let TOKEN_CHAIN_ID: String = "123"
     
+    static let TOKEN_ID: String = "58"
+    
     static let OST_ALGORITHM_CRYPTO_SUITE: String = "1.0"
     static let OST_KEYCHAIN_VERSION: String = "1.0"
     static let PIN_WALLET_ALGORITH_ID: String = ""

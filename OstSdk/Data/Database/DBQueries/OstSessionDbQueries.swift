@@ -13,4 +13,13 @@ class OstSessionDbQueries: OstBaseDbQueries {
     override func activityName() -> String{
         return "sessions"
     }
+    
+    func getActiveSessionsFor(_ parentId: String) throws -> [[String: Any?]]? {
+        let selectByParentIdQuery = getSelectActiveSessionQueryForParentId(parentId)
+        return try executeQuery(selectByParentIdQuery)
+    }
+    
+    func getSelectActiveSessionQueryForParentId(_ parentId: String) -> String {
+        return "select * from \(activityName) where parent_id=\"\(parentId)\" and status=AUTHORISED"
+    }
 }

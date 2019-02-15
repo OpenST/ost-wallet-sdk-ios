@@ -11,7 +11,7 @@ import CryptoSwift
 
 class OstUserPollingService: OstBasePollingService {
     
-    let UserPollingServiceDispatchQueue = DispatchQueue(label: "OstUserPollingService", qos: .background)
+    let UserPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstUserPollingService", qos: .background)
     
     var successCallback: ((OstUser) -> Void)? = nil
     var failuarCallback: ((OstError) -> Void)? = nil
@@ -21,6 +21,7 @@ class OstUserPollingService: OstBasePollingService {
     var dispatchQueue: DispatchQueue? = nil
     
     init(userId: String, successCallback: ((OstUser) -> Void)?, failuarCallback: ((OstError) -> Void)?) {
+        
         self.successCallback = successCallback
         self.failuarCallback = failuarCallback
         

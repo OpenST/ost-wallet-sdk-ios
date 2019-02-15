@@ -43,7 +43,7 @@ public class OstSdk {
     }
     
     public class func getUser(_ id: String) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.getById(id) as? OstUser
+        return try OstUser.getById(id)
     }
     
     public class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser? {

@@ -23,8 +23,9 @@ public class OstSession: OstBaseEntity {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
     }
     
-    override func getId() -> String {
-        return OstUtils.toString(self.data[OstSession.getEntityIdentiferKey()] as Any?)!
+    override func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstSession.getEntityIdentiferKey()] as Any?)!
     }
     
     override func getParentId() -> String? {
@@ -97,7 +98,7 @@ extension OstSession{
     }
     
     public func signTransaction(_ transaction: OstSession.Transaction) throws -> String {
-        guard let currentDevice: OstCurrentDevice = try (OstUserModelRepository.sharedUser.getById(self.userId!) as! OstUser).getCurrentDevice() else {
+        guard let currentDevice: OstCurrentDevice = try OstUser.getById(self.userId!)!.getCurrentDevice() else {
             throw OstError.actionFailed("device is not present.")
         }
         

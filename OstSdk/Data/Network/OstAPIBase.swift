@@ -70,7 +70,7 @@ open class OstAPIBase {
         
         if (!userId.isEmpty) {
             do {
-                if let user: OstUser = try OstUserModelRepository.sharedUser.getById(userId) as? OstUser {
+                if let user: OstUser = try OstUser.getById(userId) {
                     if (params["token_id"] == nil && user.tokenId != nil) {
                         params["token_id"] = user.tokenId
                     }

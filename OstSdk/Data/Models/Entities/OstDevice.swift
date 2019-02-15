@@ -25,8 +25,9 @@ public class OstDevice: OstBaseEntity {
         return try OstDeviceRepository.sharedDevice.getByParentId(parentId) as? [OstDevice]
     }
     
-    override func getId() -> String {
-        return OstUtils.toString(self.data[OstDevice.getEntityIdentiferKey()] as Any?)!
+    override func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstDevice.getEntityIdentiferKey()] as Any?)!
     }
     
     override func getParentId() -> String? {
