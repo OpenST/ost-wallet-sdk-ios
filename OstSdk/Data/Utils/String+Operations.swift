@@ -101,7 +101,7 @@ extension String {
     }
     
     var encodedString: String {
-        let allowedCharacterSet = (CharacterSet(charactersIn: "~`!@#$%^&*()_+-={}[]:;\"'<>,.?/|\\").inverted)
+        let allowedCharacterSet = (CharacterSet(charactersIn: "`@#$%^&+={}[]:;\"<>,?/|\\").inverted)
         if let escapedString = self.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) {
             return escapedString.replaceCharacter("%20", with: "+")
         }
