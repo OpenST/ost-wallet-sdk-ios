@@ -46,7 +46,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         Logger.log(message: "flowComplete", parameterToPrint: ostContextEntity.message)
         
         switch ostContextEntity.type {
-        case .registerDevice:
+        case .registerDevOstSdk.swiftice:
             return
         default:
             return

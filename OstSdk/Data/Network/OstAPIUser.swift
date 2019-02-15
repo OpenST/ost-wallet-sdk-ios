@@ -36,15 +36,15 @@ class OstAPIUser: OstAPIBase {
     }
     
     func activateUser(params: [String: Any], success:((OstUser) -> Void)?, failuar:((OstError) -> Void)?) throws {
-        resourceURL = userApiResourceBase + "/" + userId + "/activate-use/"
+        resourceURL = userApiResourceBase + "/" + userId + "/activate-user/"
         
         var loParams = params
         insetAdditionalParamsIfRequired(&loParams)
         try sign(&loParams)
         
-        post(params: params as [String: AnyObject], success: { (apiResponse) in
+        post(params: loParams as [String: AnyObject], success: { (apiResponse) in
             do {
-                let entity = try self.parseEntity(apiResponse: apiResponse)
+                let entity = try self.parseEntity(apiResponse: (apiResponse!["data"] as! [String: Any?]) )
                 success?(entity as! OstUser)
             }catch let error{
                 failuar?(error as! OstError)

@@ -102,7 +102,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     func postFlowComplete(entity: OstCurrentDevice) {
         Logger.log(message: "OstRegisterDevice flowComplete", parameterToPrint: entity.data)
         DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .registerDevice , entity: entity)
+            let contextEntity: OstContextEntity = OstContextEntity(type: .setupDevice , entity: entity)
             self.delegate.flowComplete(contextEntity);
         }
     }
@@ -117,12 +117,12 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         let onCompletion: ((Bool) -> Void) = {isComplete in
             if (isComplete) {
                 let user = try! OstUser.getById(self.userId)!
-                self.postFlowComplete(entity: user.currentDevice!)
+                self.postFlowComplete(entity: user.getCurrentDevice()!)
             }else {
                 self.delegate.flowInterrupt(OstError.actionFailed("Sync up failed."))
             }
         }
-        OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites:.User, .Token, .Devices, onCompletion: onCompletion).perform()
+        OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()
     }
     
     //MARK: - OstDeviceRegisteredProtocol

@@ -11,17 +11,25 @@ import Foundation
 class OstAPIChain: OstAPIBase {
     
     let chainApiResourceBase: String
-    let chainId: String
     
-    init(chainId: String, userId: String) {
-        self.chainApiResourceBase = "/chains/"
-        self.chainId = chainId
+    override init(userId: String) {
+        self.chainApiResourceBase = "/chains"
         super.init(userId: userId)
     }
     
     func getChain(success: (([String: Any]) -> Void)?, failuar: ((OstError) -> Void)?) throws {
         
-        resourceURL = chainApiResourceBase + "/" + self.chainId
+        let user: OstUser? = try OstUser.getById(self.userId)
+        if (user == nil) {
+            throw OstError.actionFailed("User is not persent for \(userId). Please crate user first. User OstSdk.setup")
+        }
+        let token: OstToken = try OstToken.getById(user!.tokenId!)!
+        let chainId: String? = token.auxiliaryChainId
+        if (chainId == nil || chainId!.isEmpty) {
+            throw OstError.actionFailed("Chain id is not persent for \(userId). Please contact OST support.")
+        }
+        
+        resourceURL = chainApiResourceBase + "/" + chainId!
         
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)

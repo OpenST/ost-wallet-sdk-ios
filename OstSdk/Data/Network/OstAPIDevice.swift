@@ -17,7 +17,7 @@ class OstAPIDevice: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getDevice(success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getCurrentDevice(success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
         
         let user: OstUser! = try OstUser.getById(self.userId)
         let currentDevice = user.getCurrentDevice()!

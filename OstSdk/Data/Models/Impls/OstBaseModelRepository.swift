@@ -17,7 +17,7 @@ class OstBaseModelRepository {
         guard let identifer = entityData[key] else {
             throw OstError.invalidInput("JsonOject doesn't have desired identifier")
         }
-        return identifer as! String
+        return OstUtils.toString(identifer as Any?)!
     }
     
     class func getUpdatedTimestamp(_ entityData: [String: Any?]) -> Int {
@@ -100,7 +100,7 @@ class OstBaseModelRepository {
     
     //MARK: - In memory
     fileprivate func getEntityFromInMemory(ForId id: String) -> OstBaseEntity? {
-        if let inMemoryData = inMemoryCache[id] {
+        if let inMemoryData = inMemoryCache[id.lowercased()] {
             return inMemoryData
         }
         return nil
@@ -108,7 +108,7 @@ class OstBaseModelRepository {
     
     fileprivate func saveEntityInMemory(key: String, val: OstBaseEntity) {
         if (inMemoryCache[key] == nil) {
-            inMemoryCache[key] = val
+            inMemoryCache[key.lowercased()] = val
         }else {
             let inMemoryVal: OstBaseEntity = (inMemoryCache[key])!
             inMemoryVal.data = val.data

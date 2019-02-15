@@ -37,10 +37,11 @@ class OstUserPollingService: OstBasePollingService {
     
     func setupCallbacks() {
         self.onSuccess = { ostUser in
-            if (ostUser.isActivating() ||
-                (ostUser.tokenHolderAddress == nil) || (ostUser.deviceManagerAddress == nil)) {
+            if (ostUser.isActivating() || ostUser.isCreated()) {
+                Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.getUserEntity()
             }else {
+                Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.successCallback?(ostUser)
             }
         }
@@ -52,6 +53,7 @@ class OstUserPollingService: OstBasePollingService {
     }
     
     func getUserEntity() {
+        Logger.log(message: "test getUserEntity for userId: \(userId) and is started at \(Date.timestamp())", parameterToPrint: "")
         self.maxRetryCount -= 1
         if (self.maxRetryCount >= 0) {
             
@@ -60,6 +62,7 @@ class OstUserPollingService: OstBasePollingService {
             let loDispatchQueue = dispatchQueue ?? DispatchQueue.main
             loDispatchQueue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
+                    Logger.log(message: "test loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
                     try OstAPIUser.init(userId: self.userId).getUser(success: self.onSuccess, failuar: self.onFailure)
                 }catch let error {
                     self.failuarCallback?(error as! OstError)

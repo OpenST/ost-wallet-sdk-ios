@@ -18,6 +18,10 @@ public class OstToken: OstBaseEntity {
         return "id"
     }
     
+    class func getById(_ tokenId: String) throws -> OstToken? {
+        return try OstTokenRepository.sharedToken.getById(tokenId) as? OstToken
+    }
+    
     override func getId(_ params: [String: Any?]? = nil) -> String {
         let paramData = params ?? self.data
         return OstUtils.toString(paramData[OstToken.getEntityIdentiferKey()] as Any?)!
@@ -35,5 +39,15 @@ extension OstToken {
     
     var totalSupply: Int? {
         return OstUtils.toInt(data["total_supply"] as Any?)
+    }
+    
+    var auxiliaryChainId: String? {
+        let auxiliaryChains: [[String: Any?]]? = self.data["auxiliary_chains"] as? [[String : Any?]]
+        if (auxiliaryChains == nil || auxiliaryChains!.count == 0) {
+            return nil
+        }
+        
+        let auxiliaryChain = (auxiliaryChains?.first)!
+        return OstUtils.toString(auxiliaryChain["chain_id"] as Any?)
     }
 }

@@ -61,7 +61,7 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
    
     fileprivate func getEntityFromCache(forKey key: String) -> OstBaseEntity? {
         
-        if let cacheData = entityCache!.object(forKey: key as NSString) {
+        if let cacheData = entityCache!.object(forKey: key.lowercased() as NSString) {
             return cacheData
         }
         return nil
@@ -72,7 +72,7 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
         if let cacheData = getEntityFromCache(forKey: key) {
             cacheData.data = entity.data
         }else {
-            entityCache!.setObject(entity, forKey: key as NSString)
+            entityCache!.setObject(entity, forKey: key.lowercased() as NSString)
         }
         
     }

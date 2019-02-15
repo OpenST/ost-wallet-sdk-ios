@@ -11,7 +11,7 @@ import Foundation
 class OstSdkSync {
     
     enum SyncEntity: String {
-        case User, Devices, Token, DeviceManager, Sessions
+        case User, CurrentDevice, Token, DeviceManager, Sessions
     }
     
     var userId: String
@@ -38,7 +38,7 @@ class OstSdkSync {
                 syncUser()
             case .Token?:
                 syncToken()
-            case .Devices?:
+            case .CurrentDevice?:
                 syncDevice()
             case .DeviceManager?:
                 continue
@@ -68,13 +68,15 @@ class OstSdkSync {
                 try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
                     self.processIfRequired(.User)
                 }, failuar: { (error) in
+                    self.processIfRequired(.User)
                     Logger.log(message: "syncUser error:", parameterToPrint: error)
                 })
             }catch let error {
+                self.processIfRequired(.User)
                 Logger.log(message: "syncUser error:", parameterToPrint: error)
             }
         }else {
-            
+            self.processIfRequired(.User)
         }
     }
     
@@ -98,11 +100,15 @@ class OstSdkSync {
                 try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
                     self.processIfRequired(.Token)
                 }, failuar: { (error) in
+                    self.processIfRequired(.Token)
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
                 })
             }catch let error {
+                self.processIfRequired(.Token)
                 Logger.log(message: "syncToken error:", parameterToPrint: error)
             }
+        }else {
+            self.processIfRequired(.Token)
         }
     }
     
@@ -123,14 +129,18 @@ class OstSdkSync {
     func syncDevice() {
         if (canSyncDevice()) {
             do {
-                try OstAPIDevice(userId: self.userId).getDevice(success: { (ostDevice) in
-                    self.processIfRequired(.Devices)
+                try OstAPIDevice(userId: self.userId).getCurrentDevice(success: { (ostDevice) in
+                    self.processIfRequired(.CurrentDevice)
                 }, failuar: { (error) in
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
+                    self.processIfRequired(.CurrentDevice)
                 })
             }catch let error {
                 Logger.log(message: "syncToken error:", parameterToPrint: error)
+                self.processIfRequired(.CurrentDevice)
             }
+        }else {
+            self.processIfRequired(.CurrentDevice)
         }
     }
     

@@ -61,10 +61,27 @@ public class OstSdk {
     }
     
     //MARK: - Workflow
+
+    /// setup device for user.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier.
+    ///   - tokenId: Token identifier for user.
+    ///   - forceSync: Force sync data from Kit.
+    ///   - delegate: Callback for action complete or to perform respective action.
     public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) {
         _ = OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
     }
     
+    /// Once device setup is completed, call active user to deploy token holder.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier.
+    ///   - pin: user secret pin.
+    ///   - password: App-server secret for user.
+    ///   - spendingLimit: Max amount that user can spend per transaction.
+    ///   - expirationHeight:
+    ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
                                    expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
         try OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,

@@ -26,7 +26,7 @@ public class OstUser: OstBaseEntity {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
     }
     
-    class func getById(_ userId: String) throws -> OstUser? {
+    public class func getById(_ userId: String) throws -> OstUser? {
         return try OstUserModelRepository.sharedUser.getById(userId) as? OstUser
     }
 
@@ -51,7 +51,7 @@ public class OstUser: OstBaseEntity {
     }
     
     func getCurrentDevice() -> OstCurrentDevice? {
-        if (self.currentDevice != nil) {
+        if (self.currentDevice != nil && !self.currentDevice!.isCreated()) {
             return self.currentDevice
         }
         
@@ -70,7 +70,7 @@ public class OstUser: OstBaseEntity {
     
     func isActivated() -> Bool {
         if (self.status != nil &&
-            OstUser.USER_STATUS_ACTIVATED == self.status) {
+            OstUser.USER_STATUS_ACTIVATED == self.status!.uppercased()) {
             return true
         }
         return false
@@ -78,7 +78,7 @@ public class OstUser: OstBaseEntity {
     
     func isCreated() -> Bool {
         if (self.status != nil &&
-            OstUser.USER_STATUS_CREATED == self.status) {
+            OstUser.USER_STATUS_CREATED == self.status!.uppercased()) {
             return true
         }
         return false
@@ -86,7 +86,7 @@ public class OstUser: OstBaseEntity {
     
     func isActivating() -> Bool {
         if (self.status != nil &&
-            OstUser.USER_STATUS_ACTIVATING == self.status) {
+            OstUser.USER_STATUS_ACTIVATING == self.status!.uppercased()) {
             return true
         }
         return false

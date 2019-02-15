@@ -42,12 +42,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
                     return
                 }
-                
-                if (user!.status == nil || user!.isCreated()) {
-                    self.postError(OstError.actionFailed("User is created \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
-                }
-                
+            
                 if (user!.isActivated()) {
                     self.postFlowComplete(entity: user!)
                     return
@@ -69,8 +64,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     return
                 }
                 
-                if (currentDevice!.isDeviceRegistered()) {
-                    self.pollingForActivatingUser(user!)
+                if (!currentDevice!.isDeviceRegistered()) {
+                    self.postError(OstError.actionFailed("Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
                 
@@ -83,7 +78,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     }
                     
                     self.generateSessionKeys()
-                    
+                    self.getCurrentBlockHeight()
                 }
                 
                 try getSalt(onCompletion: onCompletion)
@@ -105,6 +100,10 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
             throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_MIN_EXPIRATION_BLOCK_HEIGHT > self.expirationHeight {
+            throw OstError.invalidInput("Expiration height should be greater than \(OstConstants.OST_MIN_EXPIRATION_BLOCK_HEIGHT)")
         }
     }
     
@@ -155,7 +154,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                 self.postError(error)
             }
             
-            _ = try OstAPIChain(chainId: OstConstants.TOKEN_CHAIN_ID, userId: self.userId).getChain(success: onSuccess, failuar: onFailuar)
+            _ = try OstAPIChain(userId: self.userId).getChain(success: onSuccess, failuar: onFailuar)
         }catch let error {
             self.postError(error)
         }
@@ -200,9 +199,10 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     func getActivateUserParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["spending_limit"] = self.spendingLimit
-        params["recovery_address"] = self.recoveryAddreass!
+        params["recovery_owner_address"] = self.recoveryAddreass!
         params["expiration_height"] = self.expirationHeight + self.currentBlockHeight
         params["session_addresses"] = [self.walletKeys!.address!]
+        params["device_address"] = user!.getCurrentDevice()!.address!
         
         return params
     }
@@ -217,6 +217,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         let failuarCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
+        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         _ = OstUserPollingService(userId: ostUser.id, successCallback: successCallback, failuarCallback: failuarCallback).perform()
     }

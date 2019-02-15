@@ -23,7 +23,7 @@ class OstSessionKeyInfo {
     }
 }
 
-class OstCurrentDevice: OstDevice {
+public class OstCurrentDevice: OstDevice {
     override init(_ params: [String : Any]) throws {
         try super.init(params)
     }
