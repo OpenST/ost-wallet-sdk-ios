@@ -57,8 +57,8 @@ public class OstSdk {
     }
     
     //MARK: - Workflow
-    public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) throws {
-        _ = try OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
+    public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) {
+        _ = OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
     }
     
     public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,

@@ -21,6 +21,7 @@
 		0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE222213141E00AD9643 /* CurrentUser.swift */; };
 		0044DE292213153000AD9643 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE282213153000AD9643 /* Users.swift */; };
 		004C058F22143C0E00A1B74B /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004C058E22143C0E00A1B74B /* UsersViewController.swift */; };
+		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
 		00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942189716441E093BEA6715C /* Pods_Demo_App.framework */; };
 		00E182EA22131630007C9B1D /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E182E922131630007C9B1D /* BaseModel.swift */; };
 		4BD841242212084A00808901 /* Demo_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841232212084A00808901 /* Demo_AppTests.swift */; };
@@ -84,6 +85,7 @@
 		0044DE222213141E00AD9643 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		0044DE282213153000AD9643 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		004C058E22143C0E00A1B74B /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		00891B402216D3FA007D3226 /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		00E182E922131630007C9B1D /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0FC6D8B30975B81ED3B918 /* Pods-Demo-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Demo-AppTests/Pods-Demo-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +193,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		00891B3F2216D3DF007D3226 /* OstSdkInteract */ = {
+			isa = PBXGroup;
+			children = (
+				00891B402216D3FA007D3226 /* OstSdkInteract.swift */,
+			);
+			path = OstSdkInteract;
+			sourceTree = "<group>";
+		};
 		4BD841022212084900808901 = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +227,7 @@
 		4BD8410D2212084900808901 /* Demo-App */ = {
 			isa = PBXGroup;
 			children = (
+				00891B3F2216D3DF007D3226 /* OstSdkInteract */,
 				0044DE272213146D00AD9643 /* ViewControllers */,
 				0044DE21221313FC00AD9643 /* Models */,
 				0044DE1F22130B0300AD9643 /* Main.storyboard */,
@@ -530,6 +541,7 @@
 				0044DE132213053800AD9643 /* ColorTheme.swift in Sources */,
 				4BD841492212093200808901 /* LoginViewController.swift in Sources */,
 				4BD841472212093200808901 /* AppDelegate.swift in Sources */,
+				00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */,
 				0044DE112213053800AD9643 /* Shapes.swift in Sources */,
 				004C058F22143C0E00A1B74B /* UsersViewController.swift in Sources */,
 				4BD841462212093200808901 /* ViewController.swift in Sources */,

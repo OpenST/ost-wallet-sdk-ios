@@ -16,11 +16,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     var forceSync: Bool
     var keyManager: OstKeyManager
     
-    public init(userId: String, tokenId: String, forceSync: Bool, delegat: OstWorkFlowCallbackProtocol) throws {
+    public init(userId: String, tokenId: String, forceSync: Bool, delegat: OstWorkFlowCallbackProtocol) {
         self.tokenId = tokenId
         self.forceSync = forceSync
         
-        keyManager = try OstKeyManager(userId: userId)
+        keyManager = OstKeyManager(userId: userId)
         
         super.init(userId: userId, delegate: delegat)
     }

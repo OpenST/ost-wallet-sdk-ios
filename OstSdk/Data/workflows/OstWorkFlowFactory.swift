@@ -10,8 +10,8 @@ import Foundation
 
 class OstWorkFlowFactory {
     
-    class func registerDevice(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) throws -> OstRegisterDevice {
-        let registerDeviceObj = try OstRegisterDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegat: delegate)
+    class func registerDevice(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) -> OstRegisterDevice {
+        let registerDeviceObj = OstRegisterDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegat: delegate)
         registerDeviceObj.perform()
         return registerDeviceObj
     }

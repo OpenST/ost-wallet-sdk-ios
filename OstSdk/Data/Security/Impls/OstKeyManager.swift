@@ -37,7 +37,7 @@ public class OstKeyManager {
     
     var mUserDeviceInfo: [String: Any]? = nil
     
-    public init (userId: String) throws {
+    public init (userId: String) {
         self.userId = userId
         keychainHelper = OstKeychainHelper(service: "com.ost")
     }

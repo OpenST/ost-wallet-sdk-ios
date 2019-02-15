@@ -6,9 +6,10 @@
 //  Copyright © 2019 Google. All rights reserved.
 //
 
-import Foundation
-
+import Foundation;
+import OstSdk
 class CurrentUser: BaseModel {
+  
   static var sharedInstance:CurrentUser?;
   
   class func getInstance() -> CurrentUser {
@@ -25,9 +26,8 @@ class CurrentUser: BaseModel {
   var ostUserId:String?;
   var skdUser:String?;
   var userPinSalt: String?;
-    
+  
   override init() {
-    super.init();
     self.tokenId = nil;
     self.appUserId = nil;
     self.ostUserId = nil;
@@ -60,7 +60,7 @@ class CurrentUser: BaseModel {
       self.tokenId = appApiResponse!["token_id"] as? String;
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
       
-      onComplete(true);
+      self.setupDevice(onComplete: onComplete);
     }) { (failuarResponse) in
       onComplete(false);
     }
@@ -79,7 +79,6 @@ class CurrentUser: BaseModel {
     self.post(resource: "/users/validate", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
       let appUserId = appApiResponse!["_id"] as? String;
       self.getOstUser(appUserId:appUserId!, onComplete: onComplete);
-      onComplete(true);
     }) { ([String : Any]?) in
       onComplete(false);
     }
@@ -97,9 +96,33 @@ class CurrentUser: BaseModel {
       self.tokenId = appApiResponse!["token_id"] as? String;
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
 
-      onComplete(true);
+      self.setupDevice(onComplete: onComplete);
     }, onFailuar: { ([String : Any]?) in
       onComplete(false);
     })
   }
+  
+  
+  
+  func setupDevice(onComplete:@escaping ((Bool)->Void)) {
+    let ostSdkInteract = OstSdkInteract();
+    ostSdkInteract.addEventListner { (eventData:[String : Any]) in
+      //self.onComplete = onComplete
+      let eventType:String = eventData["eventType"] as! String;
+      if ( eventType == "flowComplete" ) {
+        let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
+        if ( ostContextEntity.type == OstWorkflowType.registerDevice ) {
+          onComplete(true);
+          print("onComplete triggered for ", eventType);
+        }
+      } else {
+        print("Received", eventType);
+      }
+    }
+    OstSdk.setupDevice(userId: self.ostUserId!, tokenId: self.tokenId!, delegate: ostSdkInteract);
+  }
+//
+//  func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
+//
+//  }
 }
