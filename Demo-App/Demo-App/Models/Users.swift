@@ -78,7 +78,7 @@ class Users:BaseModel {
         userDescription = username + " have not provided their bio.";
     }
     
-    if ( ostUserId == nil ) {
+    if ( tokenHolderAddress == nil ) {
         userDescription = userDescription! + "\n" + username + " have not setup their wallet.";
     }
     user!.description = userDescription;
@@ -103,7 +103,7 @@ class Users:BaseModel {
 }
 
 class User {
-  
+  static var imageSize = CGFloat(128);
   
   let id:String;
   var ostUserId:String?;
@@ -111,38 +111,29 @@ class User {
   let mobileNumber:String;
   var description:String?;
   var tokenHolderAddress:String?;
-  var userImages: [CGFloat:UIImage];
+  var userImage: CGImage;
   
   init(id:String, mobileNumber:String, username:String, imageSizes:[CGFloat] ){
     self.id = id;
     self.username = username;
     self.mobileNumber = mobileNumber;
-    self.userImages = [:];
     
     var _imageSize = imageSizes;
     if (_imageSize.count < 1) {
       _imageSize.append(600);
     }
-    
-    for sizeCnt in 0..<_imageSize.count {
-      let imgSize = _imageSize[sizeCnt];
-        self.userImages[imgSize] = User.generateImage(imageSeed:(mobileNumber+username), size:imgSize);
-    }
-    
+    self.userImage = User.generateImage(imageSeed:(mobileNumber+username), size: User.imageSize);
     
   }
   
   
-  static func generateImage(imageSeed:String, size:CGFloat) -> UIImage {
+  static func generateImage(imageSeed:String, size:CGFloat) -> CGImage {
     
-    var imagHash = Data(imageSeed.sha1().utf8);
-    print("imageSeed", imageSeed);
-    
-    
-    
+    let imagHash = Data(imageSeed.sha1().utf8);
+    print("imageSeed", imageSeed, "size", size);
     
     let generator = IconGenerator(size: size, hash: imagHash);
-    return UIImage(cgImage: generator.render()!);
+    return generator.render()!;
   }
   
 }

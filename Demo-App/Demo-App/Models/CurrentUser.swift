@@ -111,7 +111,7 @@ class CurrentUser: BaseModel {
       let eventType:String = eventData["eventType"] as! String;
       if ( eventType == "flowComplete" ) {
         let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
-        if ( ostContextEntity.type == OstWorkflowType.registerDevice ) {
+        if ( ostContextEntity.type == OstWorkflowType.setupDevice ) {
           onComplete(true);
           print("onComplete triggered for ", eventType);
         }

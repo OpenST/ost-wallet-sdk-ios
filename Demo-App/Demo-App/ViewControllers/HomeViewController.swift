@@ -72,7 +72,7 @@ class HomeViewController: UICollectionViewController {
     // Do any additional setup after loading the view, typically from a nib.
     let screenSize = UIScreen.main.bounds
     let screenWidth = screenSize.width;
-    let screenHeight = screenSize.height;
+//    let screenHeight = screenSize.height;
     
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
@@ -80,6 +80,9 @@ class HomeViewController: UICollectionViewController {
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     collectionView!.collectionViewLayout = layout
+    
+    //Set size of userImages.
+    User.imageSize = CGFloat(screenWidth);
   }
   
   let activityView = UIActivityIndicatorView(style: .whiteLarge)
@@ -155,7 +158,7 @@ class HomeViewController: UICollectionViewController {
     let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: "UserCell",
                                                         for: indexPath) as! UserCell
     let user:User = self.users[indexPath.row];
-    cell.imageView.image = user.userImages[600];
+    cell.imageView.image = UIImage(cgImage: user.userImage);
     cell.nameLabel.text = user.username;
     cell.descriptionLabel.text = user.description;
     return cell
