@@ -22,7 +22,7 @@ class OstWorkflowBase {
     }
     
     func getUser() throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.getById(self.userId) as? OstUser
+        return try OstUser.getById(self.userId)
     }
     
     func getCurrentDevice() throws -> OstCurrentDevice? {

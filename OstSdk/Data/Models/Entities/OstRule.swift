@@ -21,12 +21,13 @@ public class OstRule: OstBaseEntity {
     }
     
   
-    override func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstRule.getEntityIdentiferKey()])!
+    override func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstRule.getEntityIdentiferKey()] as Any?)!
     }
     
-    override func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstRule.OSTRULE_PARENTID])
+    override func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstRule.OSTRULE_PARENTID] as Any?)
     }
 }
 

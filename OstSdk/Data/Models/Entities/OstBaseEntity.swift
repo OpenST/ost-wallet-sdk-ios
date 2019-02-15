@@ -58,16 +58,13 @@ public class OstBaseEntity: NSObject {
         data = params
     }
     
-    func getId(_ params: [String: Any]) -> String {
-        return OstUtils.toString(params[OstBaseEntity.ID])!
+    func getId(_ params: [String: Any?]? = nil) -> String {
+        let paramData = params ?? self.data
+        return OstUtils.toString(paramData[OstBaseEntity.ID] as Any?)!
     }
     
-    func getParentId(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstBaseEntity.PARENT_ID])
-    }
-    
-    func getStatus(_ params: [String: Any]) -> String? {
-        return OstUtils.toString(params[OstBaseEntity.STATUS])
+    func getParentId() -> String? {
+        return OstUtils.toString(self.data[OstBaseEntity.PARENT_ID] as Any?)
     }
     
     func processJson(_ entityData: [String: Any?]){
@@ -77,11 +74,11 @@ public class OstBaseEntity: NSObject {
 
 
 extension OstBaseEntity {
-    public var id: String { return getId(data as [String : Any]) }
+    public var id: String { return getId() }
     
-    var parnetId: String? { return getParentId(data as [String : Any]) }
+    var parnetId: String? { return getParentId() }
     
-    public var status: String? { return getStatus(data as [String : Any]) }
+    public var status: String? { return OstUtils.toString(self.data[OstBaseEntity.STATUS] as Any?) }
     
     public var updated_timestamp: Int { return OstUtils.toInt(data[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0}
 }

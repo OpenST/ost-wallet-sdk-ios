@@ -30,7 +30,7 @@ class OstSdkSync {
     
     func perform() {
         
-        user = try! OstUserModelRepository.sharedUser.getById(self.userId) as! OstUser
+        user = try! OstUser.getById(self.userId)!
         
         for syncEntity in syncEntites {
             switch syncEntity {

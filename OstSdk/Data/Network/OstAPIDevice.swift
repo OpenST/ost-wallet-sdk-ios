@@ -19,7 +19,7 @@ class OstAPIDevice: OstAPIBase {
     
     func getDevice(success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
         
-        let user: OstUser! = try OstUserModelRepository.sharedUser.getById(self.userId) as? OstUser
+        let user: OstUser! = try OstUser.getById(self.userId)
         let currentDevice = user.getCurrentDevice()!
         resourceURL = userApiResourceBase + "/" + currentDevice.address!
         

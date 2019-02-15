@@ -14,15 +14,16 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     var pin: String
     var pinPrefix: String
     var spendingLimit: String
-    var expirationHeight: String
+    var expirationHeight: Int
     
     var salt: String = "salt"
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
     var walletKeys: OstWalletKeys? = nil
     var recoveryAddreass: String? = nil
+    var currentBlockHeight: Int = 0
     
-    init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: String, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
         self.pin = pin
         self.pinPrefix = password
         self.spendingLimit = spendingLimit
@@ -39,6 +40,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                 user = try getUser()
                 if (user == nil) {
                     self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
+                    return
                 }
                 
                 if (user!.status == nil || user!.isCreated()) {
@@ -81,8 +83,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     }
                     
                     self.generateSessionKeys()
-                    self.generateAndSaveSessionEntity()
-                    self.activateUser()
+                    
                 }
                 
                 try getSalt(onCompletion: onCompletion)
@@ -112,8 +113,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             self.salt = saltResponse["scrypt_salt"] as! String
             onCompletion()
         }, failuar: { (error) in
-            onCompletion()
-            //            self.postError(error)
+            //***********************************            onCompletion()
+            self.postError(error)
         })
     }
     
@@ -142,6 +143,24 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         }
     }
     
+    func getCurrentBlockHeight() {
+        do {
+            let onSuccess: (([String: Any]) -> Void) = { chainInfo in
+                self.currentBlockHeight = OstUtils.toInt(chainInfo["block_height"])!
+                self.generateAndSaveSessionEntity()
+                self.activateUser()
+            }
+            
+            let onFailuar: ((OstError) -> Void) = { error in
+                self.postError(error)
+            }
+            
+            _ = try OstAPIChain(chainId: OstConstants.TOKEN_CHAIN_ID, userId: self.userId).getChain(success: onSuccess, failuar: onFailuar)
+        }catch let error {
+            self.postError(error)
+        }
+    }
+    
     func generateAndSaveSessionEntity() {
         do {
             let params = self.getSessionEnityParams()
@@ -149,17 +168,16 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         }catch let error {
             self.postError(error)
         }
-        
     }
     
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
         params["address"] = self.walletKeys!.address!
-        params["expiration_height"] = self.expirationHeight
+        params["expiration_height"] = self.currentBlockHeight + self.expirationHeight
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
-        params["status"] = OstSession.SESSION_STATUS_INITITIALIZING
+        params["status"] = OstSession.SESSION_STATUS_CREATED
         
         return params
     }
@@ -171,8 +189,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             try OstAPIUser(userId: self.userId).activateUser(params: params, success: { (ostUser) in
                 self.pollingForActivatingUser(ostUser)
             }) { (error) in
-//                self.postError(error)
-                self.pollingForActivatingUser(self.user!)
+                self.postError(error)
+                //******************************************                self.pollingForActivatingUser(self.user!)
             }
         }catch let error {
             self.postError(error)
@@ -183,7 +201,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         var params: [String: Any] = [:]
         params["spending_limit"] = self.spendingLimit
         params["recovery_address"] = self.recoveryAddreass!
-        params["expiration_height"] = self.expirationHeight
+        params["expiration_height"] = self.expirationHeight + self.currentBlockHeight
         params["session_addresses"] = [self.walletKeys!.address!]
         
         return params
@@ -192,6 +210,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
+            self.syncRespctiveEntity()
             self.postFlowComplete(entity: ostUser)
         }
         

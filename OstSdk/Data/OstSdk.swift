@@ -33,13 +33,17 @@ public class OstSdk {
             return try OstUser.parse(entityData!)
         case "device":
             return try OstDevice.parse(entityData!)
+        case "device_manager":
+            return try OstDeviceManager.parse(entityData!)
+        case "session":
+            return try OstSession.parse(entityData!)
         default:
             throw OstError.invalidInput("\(resultType) is not supported.")
         }
     }
     
     public class func getUser(_ id: String) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.getById(id) as? OstUser
+        return try OstUser.getById(id)
     }
     
     public class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser? {
@@ -62,7 +66,7 @@ public class OstSdk {
     }
     
     public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                                   expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+                                   expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
         try OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
                                             expirationHeight:expirationHeight, delegate: delegate)
     }

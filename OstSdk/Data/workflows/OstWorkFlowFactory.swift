@@ -17,7 +17,7 @@ class OstWorkFlowFactory {
     }
 
     class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                            expirationHeight:String, delegate: OstWorkFlowCallbackProtocol) throws {
+                            expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
         
         let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()

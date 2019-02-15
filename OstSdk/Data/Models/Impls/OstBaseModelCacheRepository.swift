@@ -36,12 +36,12 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
         return nil
     }
     
-    override func getByParentId(_ parent_id: String) throws -> [OstBaseEntity]? {
-        if let entity = getEntityFromCache(forKey: parent_id) {
+    override func getByParentId(_ parentId: String) throws -> [OstBaseEntity]? {
+        if let entity = getEntityFromCache(forKey: parentId) {
             return [entity]
         }
         
-        if let entityArray = try super.getByParentId(parent_id) {
+        if let entityArray = try super.getByParentId(parentId) {
             return entityArray
         }
         return nil

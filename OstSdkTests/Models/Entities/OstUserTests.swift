@@ -32,7 +32,6 @@ class OstUserTests: XCTestCase {
         print(user ?? "")
         XCTAssertNotNil(user, "user should not be nil")
         XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
-        XCTAssertEqual(user?.multisig_id, userDict["multisig_id"] as? String, "id is not equal")
     }
     
     func testBulkInitUser() throws {
@@ -48,15 +47,14 @@ class OstUserTests: XCTestCase {
             print(user ?? "")
             XCTAssertNotNil(user, "user should not be nil")
             XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
-            XCTAssertEqual(user?.multisig_id, userDict["multisig_id"] as? String, "id is not equal")
         }
     }
     
     func testGetEntity() {
         do {
-            let user: OstUser? = try OstUserModelRepository.sharedUser.getById("1a") as? OstUser
+            let user: OstUser? = try OstUser.getById("1a")
             XCTAssertNil(user)
-            let user1: OstUser? = try OstUserModelRepository.sharedUser.getById("4a") as? OstUser
+            let user1: OstUser? = try OstUser.getById("4a")
             XCTAssertNotNil(user1)
         }catch let error{
             print(error)

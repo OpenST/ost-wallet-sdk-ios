@@ -116,7 +116,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     func sync() {
         let onCompletion: ((Bool) -> Void) = {isComplete in
             if (isComplete) {
-                let user = try! OstUserModelRepository.sharedUser.getById(self.userId) as! OstUser
+                let user = try! OstUser.getById(self.userId)!
                 self.postFlowComplete(entity: user.currentDevice!)
             }else {
                 self.delegate.flowInterrupt(OstError.actionFailed("Sync up failed."))
