@@ -147,6 +147,4 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
         self.setCurrentState(.WORDS)
         perform()
     }
-    
-    
 }
