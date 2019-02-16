@@ -81,8 +81,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 apiParam["device_name"] = self.getDeviceName()
                 apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
                 apiParam["status"] = OstUser.USER_STATUS_CREATED
-                
+               
+                apiParam["user_id"] = self.userId
                 _ = try OstCurrentDevice.parse(apiParam)
+                
+                apiParam["user_id"] = nil
                 
                 self.registerDevice(apiParam)
             }catch let error {
@@ -99,10 +102,10 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         return UIDevice.current.name
     }
     
-    func postFlowComplete(entity: OstCurrentDevice) {
+    func postFlowComplete(message: String = "", entity: OstCurrentDevice) {
         Logger.log(message: "OstRegisterDevice flowComplete", parameterToPrint: entity.data)
         DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .setupDevice , entity: entity)
+            let contextEntity: OstContextEntity = OstContextEntity(message: message, type: .setupDevice, entity: entity, entityType: .currentDevice)
             self.delegate.flowComplete(contextEntity);
         }
     }
@@ -115,11 +118,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     func sync() {
         let onCompletion: ((Bool) -> Void) = {isComplete in
+            let user = try! OstUser.getById(self.userId)!
             if (isComplete) {
-                let user = try! OstUser.getById(self.userId)!
                 self.postFlowComplete(entity: user.getCurrentDevice()!)
             }else {
-                self.delegate.flowInterrupt(OstError.actionFailed("Sync up failed."))
+                self.postFlowComplete(message: "Syncing failed for some entities.", entity: user.getCurrentDevice()!)
             }
         }
         OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()

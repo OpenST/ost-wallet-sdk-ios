@@ -15,13 +15,15 @@ class OstSdkSync {
     }
     
     var userId: String
-    var syncEntites: [SyncEntity?]
+    var syncEntites: [SyncEntity]
     var forceSync: Bool
     var onCompletion: ((Bool) -> Void)? = nil
     
+    var allResponseSuccessed = true
+    
     var user: OstUser? = nil
     
-    init(userId: String, forceSync: Bool, syncEntites: SyncEntity?... , onCompletion:((Bool) -> Void)?) {
+    init(userId: String, forceSync: Bool, syncEntites: SyncEntity... , onCompletion:((Bool) -> Void)?) {
         self.userId = userId
         self.syncEntites = syncEntites
         self.forceSync = forceSync
@@ -34,13 +36,13 @@ class OstSdkSync {
         
         for syncEntity in syncEntites {
             switch syncEntity {
-            case .User?:
+            case .User:
                 syncUser()
-            case .Token?:
+            case .Token:
                 syncToken()
-            case .CurrentDevice?:
+            case .CurrentDevice:
                 syncDevice()
-            case .DeviceManager?:
+            case .DeviceManager:
                 continue
             default:
                 continue
@@ -48,14 +50,15 @@ class OstSdkSync {
         }
     }
     
-    func processIfRequired(_ syncEntity: SyncEntity) {
+    func processIfRequired(_ syncEntity: SyncEntity, isSuccess: Bool) {
+        
         NSLock().lock()
         let index = self.syncEntites.lastIndex(of: syncEntity)
         if (index != nil) {
+            allResponseSuccessed = (allResponseSuccessed && isSuccess)
             self.syncEntites.remove(at: index!)
-            
             if (self.syncEntites.isEmpty) {
-                onCompletion?(true)
+                onCompletion?(allResponseSuccessed)
             }
         }
         NSLock().unlock()
@@ -66,17 +69,17 @@ class OstSdkSync {
         if (canSyncUser()) {
             do {
                 try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
-                    self.processIfRequired(.User)
+                    self.processIfRequired(.User, isSuccess: true)
                 }, failuar: { (error) in
-                    self.processIfRequired(.User)
+                    self.processIfRequired(.User, isSuccess: false)
                     Logger.log(message: "syncUser error:", parameterToPrint: error)
                 })
             }catch let error {
-                self.processIfRequired(.User)
+                self.processIfRequired(.User, isSuccess: false)
                 Logger.log(message: "syncUser error:", parameterToPrint: error)
             }
         }else {
-            self.processIfRequired(.User)
+            self.processIfRequired(.User, isSuccess: false)
         }
     }
     
@@ -98,17 +101,17 @@ class OstSdkSync {
         if (canSyncToken()) {
             do {
                 try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
-                    self.processIfRequired(.Token)
+                    self.processIfRequired(.Token, isSuccess: true)
                 }, failuar: { (error) in
-                    self.processIfRequired(.Token)
+                    self.processIfRequired(.Token, isSuccess: false)
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
                 })
             }catch let error {
-                self.processIfRequired(.Token)
+                self.processIfRequired(.Token, isSuccess: false)
                 Logger.log(message: "syncToken error:", parameterToPrint: error)
             }
         }else {
-            self.processIfRequired(.Token)
+            self.processIfRequired(.Token, isSuccess: false)
         }
     }
     
@@ -130,17 +133,17 @@ class OstSdkSync {
         if (canSyncDevice()) {
             do {
                 try OstAPIDevice(userId: self.userId).getCurrentDevice(success: { (ostDevice) in
-                    self.processIfRequired(.CurrentDevice)
+                    self.processIfRequired(.CurrentDevice, isSuccess: true)
                 }, failuar: { (error) in
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
-                    self.processIfRequired(.CurrentDevice)
+                    self.processIfRequired(.CurrentDevice, isSuccess: false)
                 })
             }catch let error {
                 Logger.log(message: "syncToken error:", parameterToPrint: error)
-                self.processIfRequired(.CurrentDevice)
+                self.processIfRequired(.CurrentDevice, isSuccess: false)
             }
         }else {
-            self.processIfRequired(.CurrentDevice)
+            self.processIfRequired(.CurrentDevice, isSuccess: false)
         }
     }
     
