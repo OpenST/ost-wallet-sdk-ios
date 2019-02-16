@@ -10,17 +10,21 @@ import Foundation
 
 class OstWorkFlowFactory {
     
-    class func registerDevice(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) -> OstRegisterDevice {
+    class func registerDevice(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) {
         let registerDeviceObj = OstRegisterDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegat: delegate)
         registerDeviceObj.perform()
-        return registerDeviceObj
     }
 
     class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                            expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
+                            expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
         
         let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()
+    }
+    
+    class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+        let addDeviceObject = OstAddDevice(userId: userId, delegate: delegate)
+        addDeviceObject.perform()
     }
     
 }

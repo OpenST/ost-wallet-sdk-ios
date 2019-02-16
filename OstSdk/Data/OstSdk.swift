@@ -70,7 +70,7 @@ public class OstSdk {
     ///   - forceSync: Force sync data from Kit.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) {
-        _ = OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
+        OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
     }
     
     /// Once device setup is completed, call active user to deploy token holder.
@@ -83,8 +83,12 @@ public class OstSdk {
     ///   - expirationHeight:
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                                   expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) throws {
-        try OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
+                                   expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
+        OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
                                             expirationHeight:expirationHeight, delegate: delegate)
+    }
+    
+    public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+        
     }
 }
