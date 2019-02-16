@@ -43,11 +43,13 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func flowComplete(_ ostContextEntity: OstContextEntity) {
-        Logger.log(message: "flowComplete", parameterToPrint: ostContextEntity.message)
+        Logger.log(message: "flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
         
         switch ostContextEntity.type {
         case .setupDevice:
-            return
+            let currentDevice: OstCurrentDevice  = ostContextEntity.entity as! OstCurrentDevice
+            let user: OstUser = try! OstUser.getById(currentDevice.userId!)!
+            _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
         default:
             return
         }
