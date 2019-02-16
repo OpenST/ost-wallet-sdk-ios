@@ -27,8 +27,8 @@ class OstRegisterDeviceTests: XCTestCase {
         init(callback: @escaping (() -> Void)) {
             self.callback = callback
         }
-        override init() {
-            
+        override init(mappyUserId: String) {
+            self.mappyUserId = mappyUserId
         }
         
         override func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
@@ -42,7 +42,7 @@ class OstRegisterDeviceTests: XCTestCase {
         registerDevice = RegisterDevice(callback: {
             expectation1.fulfill()
         })
-        try OstSdk.registerDevice(userId: "123", delegate: registerDevice!)
+        try OstSdk.setupDevice(userId: "12", tokenId: "58", delegate: registerDevice!)
         
         waitForExpectations(timeout: 10) { error in
             if let error = error {

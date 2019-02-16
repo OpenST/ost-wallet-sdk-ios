@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OstSdk
 
 class EntryViewController: UIViewController {
     
@@ -30,6 +31,40 @@ class EntryViewController: UIViewController {
         signupButton.layer.borderWidth = 1
         signupButton.layer.borderColor = UIColor.gray.cgColor
         signupButton.layer.cornerRadius = 10
+        
+//        sync()
+//        activateUser()
+//        sessions()
+    }
+    
+    func activateUser() {
+        _ = try! ActivateUser(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a", pin: "123456", password: "dsaifnwaeuifnuwaleinfiweanfofaffwae").perform()
+        
+         _ = try! ActivateUser(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a", pin: "123456", password: "dsaifnwaeuifnuwaleinfiweanfofaffwae").perform()
+    }
+    
+    func sync() {
+        try! SetupDevice(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a").perform()
+    }
+    
+    
+    func sessions() {
+        for i in 0..<4 {
+            var params = ["user_id": "f295c39f-522e-4805-a528-00c7cc99f1ae", //UUID V4
+            "address": "0xf295c39f-522e-4805-a528-00c7cc99f1ae\(i)", //Address
+            "expiration_height": "12344", //Block Number
+            "spending_limit": "1234", //Bignumber Wei
+            "nonce":"0", //Integer
+            "status": "AUTHORISED", //String
+            "updated_timestamp": "12344"]
+            do {
+                try OstSdk.parse(["session": params, "result_type":"session"])
+            }catch let error{
+                print(error)
+            }
+        }
+        
+        
     }
     
     func canProceed() -> Bool {

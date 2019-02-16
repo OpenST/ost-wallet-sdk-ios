@@ -9,7 +9,18 @@
 import Foundation
 
 public enum OstError: Error {
-     case invalidInput(String?), actionFailed(String?), unauthorized(String?)
+    case invalidInput(String?), actionFailed(String?), unauthorized(String?)
+    
+    var description: String? {
+        switch self {
+        case .invalidInput(let str):
+            return str
+        case .actionFailed(let str):
+            return str
+        case .unauthorized(let str):
+            return str
+        }
+    }
 }
 
 public enum OstEntityError: Error {
