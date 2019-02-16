@@ -33,38 +33,38 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     }
     
     override func perform() {
-        ostRegisterDeviceThread.sync {
+        ostRegisterDeviceThread.async {
             do {
                 try self.validateParams()
                 
-                user = try getUser()
-                if (user == nil) {
+                self.user = try self.getUser()
+                if (self.user == nil) {
                     self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
                     return
                 }
             
-                if (user!.isActivated()) {
-                    self.postFlowComplete(entity: user!)
+                if (self.user!.isActivated()) {
+                    self.postFlowComplete(entity: self.user!)
                     return
                 }
                 
-                if (user!.isActivating()) {
-                    self.pollingForActivatingUser(user!)
+                if (self.user!.isActivating()) {
+                    self.pollingForActivatingUser(self.user!)
                     return
                 }
                 
-                currentDevice = user!.getCurrentDevice()
-                if (currentDevice == nil) {
+                self.currentDevice = self.user!.getCurrentDevice()
+                if (self.currentDevice == nil) {
                     self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
                 
-                if (currentDevice!.isDeviceRevoked()) {
+                if (self.currentDevice!.isDeviceRevoked()) {
                     self.postError(OstError.actionFailed("Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
                 
-                if (!currentDevice!.isDeviceRegistered()) {
+                if (!self.currentDevice!.isDeviceRegistered()) {
                     self.postError(OstError.actionFailed("Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
@@ -81,7 +81,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     self.getCurrentBlockHeight()
                 }
                 
-                try getSalt(onCompletion: onCompletion)
+                try self.getSalt(onCompletion: onCompletion)
                 
             }catch let error{
                 self.postError(error)
