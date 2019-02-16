@@ -155,10 +155,10 @@ class EIP712 {
             let fieldType = field["type"]!
             if (fieldType == "string" || fieldType == "bytes") {
                 solidityType = SolidityType.bytes(length: 32)
-                
-                let keccakValue = (value as! String).sha3(.keccak256)
-                print("value1 :", keccakValue)
-                
+                print("value before keccak :", value as! String)
+                let valueData = Data(hex: value as! String)
+                let keccakValue = SHA3(variant: .keccak256).calculate(for: Array(valueData)).toHexString()
+            
                 solidityValue = try OstSolidityValue.getSolidtyValue(keccakValue, for: solidityType)
                 
                 encTypes.append(solidityType);

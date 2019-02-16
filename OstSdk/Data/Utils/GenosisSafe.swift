@@ -10,6 +10,8 @@ import Foundation
 
 class GenosisSafe {
     
+    let NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
+    
     init() {
         
     }
@@ -22,18 +24,16 @@ class GenosisSafe {
             throw OstError.actionFailed("ABI for \(abiName) is not available.")
         }
         
-        let spenderAddress = try EthereumAddress(hex:ownerAddress, eip55: false)
+        let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
         let solidityHander = OstSolidityHandler()
         let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
-        let _invocation = function!.invoke(spenderAddress, BigInt("1") )
+        let _invocation = function!.invoke(addressTobeAdded, BigInt("1") )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
             throw OstError.actionFailed("encode abi failed.")
         }
         
         return ethereumData!.hex()
-        //to: //contract addresss from user contract address
-        try getSafeTxData(to: "0x98443ba43e5a55ff9c0ebeddfd1db32d7b1a949a", value: "0", data: ethereumData!.hex(), operation: "0", safeTxGas: "0", dataGas: "0", gasPrice: "0", gasToken: "0x0000000000000000000000000000000000000000", refundReceiver: "0x0000000000000000000000000000000000000000", nonce: "0")
     }
     
     func getABIFor(methodName: String) throws -> ABIObject? {
