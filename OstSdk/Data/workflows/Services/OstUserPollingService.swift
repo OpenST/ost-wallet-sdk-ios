@@ -37,18 +37,17 @@ class OstUserPollingService: OstBasePollingService {
     
     func setupCallbacks() {
         self.onSuccess = { ostUser in
-            if (ostUser.isActivating() || ostUser.isCreated()) {
+            if (ostUser.isActivating()) {
                 Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.getUserEntity()
-            }else {
+            }else{
                 Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.successCallback?(ostUser)
             }
         }
         
         self.onFailure = { error in
-            self.getUserEntity()
-            //            self.failuarCallback?(error)
+            self.failuarCallback?(error)
         }
     }
     
