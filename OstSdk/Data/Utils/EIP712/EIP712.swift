@@ -206,7 +206,7 @@ class EIP712 {
     
     func getEIP712SignHash() throws -> String {
         
-        let domainSeparator = try hashData("EIP712Domain", data: domain);
+        let domainSeparator = try hashData("EIP712Domain", data: self.domain);
         print("Domain Seperator", domainSeparator);
         let message = try hashData(primaryType, data: self.message);
         print("message", message);

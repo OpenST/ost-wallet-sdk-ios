@@ -35,7 +35,26 @@ class OstAPIDevice: OstAPIBase {
                 failuar?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("device Sync failed"))
+            failuar?(OstError.actionFailed("device Sync failed."))
         }   
+    }
+    
+    func authorizeDevice(params: [String: Any], success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+        resourceURL = userApiResourceBase + "/authorize"
+        
+        var loParams: [String: Any] = params
+        insetAdditionalParamsIfRequired(&loParams)
+        try sign(&loParams)
+        
+        post(params: loParams as [String: AnyObject], success: { (apiResponse) in
+            do {
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                success?(entity as! OstDevice)
+            }catch let error{
+                failuar?(error as! OstError)
+            }
+        }) { (failuarObj) in
+             failuar?(OstError.actionFailed("device authorize failed."))
+        }
     }
 }
