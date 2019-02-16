@@ -73,7 +73,7 @@ class OstUtilsTests: XCTestCase {
         
         //Sign with API-KEY = 0x6edc3804eb9f70b26731447b4e43955c5532f2195a6fe77cbed287dbd3c762ce
         
-        let (signature, _) = try OstMockAPISigner(userId: OstMockAPISigner.userId).sign(resource: resource, params: params)
+        let (signature, _) = try OstAPISigner(userId: "6c6ea645-d86d-4449-8efa-3b54743f83de").sign(resource: resource, params: params)
         Logger.log(message: "signature", parameterToPrint: signature)
         XCTAssertEqual(signature, expectedSignature)
     }

@@ -85,7 +85,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
                         return
                     }
                 case .QR_CODE:
-                    try self.validateParams()
+                    
                     return
                 case .PIN:
                     try self.validateParams()
@@ -106,10 +106,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
         case .INITIALIZE:
             return
         case .QR_CODE:
-            let qrCodeData = self.QRCodeImage!.readQRCode
-            if (qrCodeData == nil || qrCodeData!.isEmpty) {
-                throw OstError.invalidInput("QR-Code image send is not valid.")
-            }
+            return
         case .PIN:
             if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin!.count) {
                 throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
@@ -128,14 +125,12 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
     }
     
     //MARK: - Protocol
-    func QRCodeFlow(_ image: UIImage) {
-        self.QRCodeImage = image
-        
+    public func QRCodeFlow() {
         self.setCurrentState(.QR_CODE)
         perform()
     }
     
-    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+    public  func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.uPin = uPin
         self.password = appUserPassword
         
@@ -143,7 +138,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
         perform()
     }
     
-    func walletWordsEntered(_ wordList: Array<String>) {
+    public  func walletWordsEntered(_ wordList: Array<String>) {
         self.setCurrentState(.WORDS)
         perform()
     }

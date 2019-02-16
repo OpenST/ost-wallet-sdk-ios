@@ -35,7 +35,7 @@ class ABIEncoderTests: XCTestCase {
             
             let spenderAddress = try EthereumAddress(hex:"0x7e68ae93145b393c59e0422978d41f858d88da90", eip55: false)
             
-            let abiObj: ABIObject = abi[1]
+            let abiObj: ABIObject = abi[0]
             print("a")
             let solidityHander = OstSolidityHandler()
             let function = SolidityNonPayableFunction(abiObject: abiObj, handler: solidityHander)

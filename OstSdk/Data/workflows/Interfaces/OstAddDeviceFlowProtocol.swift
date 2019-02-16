@@ -14,5 +14,5 @@ public protocol OstAddDeviceFlowProtocol: OstPinAcceptProtocol, OstWalletWordsAc
     /// SDK user will use it to start QRCode flow.
     ///
     /// - Parameter image: image of QR-Code
-    func QRCodeFlow(_ image: UIImage)
+    func QRCodeFlow()
 }
