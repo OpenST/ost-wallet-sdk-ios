@@ -60,12 +60,12 @@ open class OstAPIBase {
     
     func insetAdditionalParamsIfRequired(_ params: inout [String: Any]) {
     
-        if (params["signature_kind"] == nil) {
-            params["signature_kind"] = getSignatureKind
+        if (params["api_signature_kind"] == nil) {
+            params["api_signature_kind"] = getSignatureKind
         }
         
-        if (params["request_timestamp"] == nil) {
-            params["request_timestamp"] = OstUtils.toString(Date.timestamp())
+        if (params["api_request_timestamp"] == nil) {
+            params["api_request_timestamp"] = OstUtils.toString(Date.timestamp())
         }
         
         if (!userId.isEmpty) {
@@ -79,12 +79,8 @@ open class OstAPIBase {
                     }
                     if let currentDevice = user.getCurrentDevice() {
                         
-                        if (params["api_signer_address"] == nil) {
-                            params["api_signer_address"] = currentDevice.api_signer_address!
-                        }
-                        
-                        if (params["wallet_address"] == nil) {
-                            params["wallet_address"] = currentDevice.address!
+                        if (params["api_key"] == nil) {
+                            params["api_key"] = currentDevice.address! + "." + currentDevice.api_signer_address!
                         }
                     }
                 }
@@ -96,7 +92,7 @@ open class OstAPIBase {
     
     func sign(_ params: inout [String: Any]) throws {
         let (signature, _) =  try OstAPISigner(userId: userId).sign(resource: getResource, params: params)
-        params["signature"] = signature
+        params["api_signature"] = signature
     }
     
     //MARK: - HttpRequest

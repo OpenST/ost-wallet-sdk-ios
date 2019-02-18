@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GenosisSafe {
+class GnosisSafe {
     
     let NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
     
@@ -16,6 +16,13 @@ class GenosisSafe {
         
     }
     
+    /// Get encodedABI data for `addOwnerWithThreshold`
+    ///
+    /// - Parameters:
+    ///   - ownerAddress: Address of owner
+    ///   - threshold: Threshold value. Default is 1
+    /// - Returns: Hex string of encodedABI
+    /// - Throws: 
     func getAddOwnerWithThresholdExecutableData(ownerAddress: String, threshold: String = "1") throws -> String {
         let abiName: String = "addOwnerWithThreshold"
         
@@ -27,7 +34,7 @@ class GenosisSafe {
         let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
         let solidityHander = OstSolidityHandler()
         let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
-        let _invocation = function!.invoke(addressTobeAdded, BigInt("1") )
+        let _invocation = function!.invoke(addressTobeAdded, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
             throw OstError.actionFailed("encode abi failed.")
@@ -53,9 +60,9 @@ class GenosisSafe {
         return nil
     }
     
-    func getSafeTxData(to: String, value: String, data: String, operation: String, safeTxGas: String, dataGas: String, gasPrice: String, gasToken:        String, refundReceiver: String, nonce: String) throws -> String {
+    func getSafeTxData(to: String, value: String, data: String, operation: String, safeTxGas: String, dataGas: String, gasPrice: String, gasToken:        String, refundReceiver: String, nonce: String) throws -> [String: Any] {
         
-        let typedDataInput:[String: Any] = ["types": [ "EIP712Domain": [[ "name": "verifyingContract", "type": "address" ]],
+        let typedDataInput: [String: Any] = ["types": [ "EIP712Domain": [[ "name": "verifyingContract", "type": "address" ]],
                                                        "SafeTx": [[ "name": "to", "type": "address" ],
                                                                   [ "name": "value", "type": "uint256" ],
                                                                   [ "name": "data", "type": "bytes" ],
@@ -80,10 +87,6 @@ class GenosisSafe {
                                                         "refundReceiver": refundReceiver,
                                                         "nonce": nonce]]
         
-        
-        let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any], primaryType: typedDataInput["primaryType"] as! String, domain: typedDataInput["domain"] as! [String: String], message: typedDataInput["message"] as! [String: Any])
-        let sign = try! eip712.getEIP712SignHash()
-        print(sign)
-        return sign
+        return typedDataInput
     }
 }

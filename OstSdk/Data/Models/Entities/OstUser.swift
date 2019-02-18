@@ -117,6 +117,6 @@ public extension OstUser {
     }
     
     var tokenId: String? {
-        return data["token_id"] as? String ?? nil
+        return  OstUtils.toString(data["token_id"] as Any?)
     }
 }

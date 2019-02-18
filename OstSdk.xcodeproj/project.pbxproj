@@ -197,8 +197,8 @@
 		4BAE56ED2215989900327A19 /* OstAPIDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */; };
 		4BAE56EF2215BD3100327A19 /* OstAPIChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EE2215BD3100327A19 /* OstAPIChain.swift */; };
 		4BAE56F12218076700327A19 /* OstAddDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F02218076700327A19 /* OstAddDevice.swift */; };
-		4BAE56F922182B8900327A19 /* GenosisSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F822182B8900327A19 /* GenosisSafe.swift */; };
-		4BAE570122183A7200327A19 /* GenosisSafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE570022183A7200327A19 /* GenosisSafeTests.swift */; };
+		4BAE56F922182B8900327A19 /* GnosisSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F822182B8900327A19 /* GnosisSafe.swift */; };
+		4BAE570122183A7200327A19 /* GnosisSafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE570022183A7200327A19 /* GnosisSafeTests.swift */; };
 		4BAE57032218413800327A19 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE57022218413800327A19 /* OstPerform.swift */; };
 		4BE9E3032201E6F300427A80 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3022201E6F300427A80 /* OstAPIBase.swift */; };
 		4BE9E3062202CBF100427A80 /* OstBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */; };
@@ -460,8 +460,8 @@
 		4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDeviceManager.swift; sourceTree = "<group>"; };
 		4BAE56EE2215BD3100327A19 /* OstAPIChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIChain.swift; sourceTree = "<group>"; };
 		4BAE56F02218076700327A19 /* OstAddDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDevice.swift; sourceTree = "<group>"; };
-		4BAE56F822182B8900327A19 /* GenosisSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenosisSafe.swift; sourceTree = "<group>"; };
-		4BAE570022183A7200327A19 /* GenosisSafeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenosisSafeTests.swift; sourceTree = "<group>"; };
+		4BAE56F822182B8900327A19 /* GnosisSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnosisSafe.swift; sourceTree = "<group>"; };
+		4BAE570022183A7200327A19 /* GnosisSafeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnosisSafeTests.swift; sourceTree = "<group>"; };
 		4BAE57022218413800327A19 /* OstPerform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
 		4BE9E3022201E6F300427A80 /* OstAPIBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
 		4BE9E3052202CBF100427A80 /* OstBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseProtocol.swift; sourceTree = "<group>"; };
@@ -846,7 +846,7 @@
 				4B5EF317220AE8F70049AD8A /* Logger.swift */,
 				4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */,
 				4B5EF350220C6E9C0049AD8A /* OstBundle.swift */,
-				4BAE56F822182B8900327A19 /* GenosisSafe.swift */,
+				4BAE56F822182B8900327A19 /* GnosisSafe.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -943,7 +943,7 @@
 				4B49893921F6F43900ED0E94 /* ABIEncoderTests.swift */,
 				4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */,
 				4B5EF30E220AC5C80049AD8A /* OstUtilsTests.swift */,
-				4BAE570022183A7200327A19 /* GenosisSafeTests.swift */,
+				4BAE570022183A7200327A19 /* GnosisSafeTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1534,7 +1534,7 @@
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,
 				4B8CCDA82211508E00124586 /* OstSolidityValue.swift in Sources */,
 				4B8CCDB52211754A00124586 /* OstAPIUser.swift in Sources */,
-				4BAE56F922182B8900327A19 /* GenosisSafe.swift in Sources */,
+				4BAE56F922182B8900327A19 /* GnosisSafe.swift in Sources */,
 				4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */,
 				4B49891C21F6F2AF00ED0E94 /* Data+BytesConvertible.swift in Sources */,
 				4B75F24821BF8FA200898960 /* OstToken.swift in Sources */,
@@ -1596,7 +1596,7 @@
 			files = (
 				4B5EF322220B0A9D0049AD8A /* OstAPIBaseTests.swift in Sources */,
 				4B75F23021BE725E00898960 /* OstUserTests.swift in Sources */,
-				4BAE570122183A7200327A19 /* GenosisSafeTests.swift in Sources */,
+				4BAE570122183A7200327A19 /* GnosisSafeTests.swift in Sources */,
 				4B7EAA2F2200CDEC00852DE2 /* OstRuleTests.swift in Sources */,
 				4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */,
 				4B00CCE821E4B3AD005A5696 /* OstKeyDatabaseTests.swift in Sources */,

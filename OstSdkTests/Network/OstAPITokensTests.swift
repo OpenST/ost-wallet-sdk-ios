@@ -55,7 +55,7 @@ class OstAPITokensTests: XCTestCase {
                                      "signature_kind":"OST1-PS",
                                      "wallet_address": "0x60A20Cdf6a21a73Fb89475221D252865C695e302"]
         
-        params["signature"] = try! MockApiSigner(userId: userId).sign(resource: tokensAPIObj.getResource, params: params)
+        params["api_signature"] = try! MockApiSigner(userId: userId).sign(resource: tokensAPIObj.getResource, params: params)
         
         tokensAPIObj.get(params: params as [String: AnyObject], success: { (httpSuccessResponse) in
             Logger.log(message: "successResponse", parameterToPrint: httpSuccessResponse)

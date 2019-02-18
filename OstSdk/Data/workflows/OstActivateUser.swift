@@ -112,7 +112,6 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             self.salt = saltResponse["scrypt_salt"] as! String
             onCompletion()
         }, failuar: { (error) in
-            //***********************************            onCompletion()
             self.postError(error)
         })
     }

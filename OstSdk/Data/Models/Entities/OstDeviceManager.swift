@@ -50,6 +50,13 @@ public class OstDeviceManager: OstBaseEntity {
         
         return nil
     }
+    
+    func updateNonce(_ nonce: Int) throws {
+        var updatedData: [String: Any?] = self.data
+        updatedData["nonce"] = OstUtils.toString(nonce as? Any)
+        updatedData["updated_timestamp"] = OstUtils.toString(Date.timestamp())
+        _ = try OstDeviceManager.parse(updatedData)
+    }
 }
 
 public extension OstDeviceManager {
