@@ -16,7 +16,7 @@ class OstAPITokens: OstAPIBase {
         super.init(userId: userId)
     }
     
-    public func getToken(success:((OstToken) -> Void)?, failuar:((OstError) -> Void)?) throws {
+    public func getToken(success:((OstToken) -> Void)?, onFailure:((OstError) -> Void)?) throws {
     
         resourceURL = tokenApiResourceBase + "/"
         
@@ -29,10 +29,10 @@ class OstAPITokens: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstToken)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("Token Sync failed"))
+            onFailure?(OstError.actionFailed("Token Sync failed"))
         }
     }
 }

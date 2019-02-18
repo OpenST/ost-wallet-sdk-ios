@@ -111,7 +111,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         try OstAPISalt(userId: self.userId).getRecoverykeySalt(success: { (saltResponse) in
             self.salt = saltResponse["scrypt_salt"] as! String
             onCompletion()
-        }, failuar: { (error) in
+        }, onFailure: { (error) in
             self.postError(error)
         })
     }
@@ -153,7 +153,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                 self.postError(error)
             }
             
-            _ = try OstAPIChain(userId: self.userId).getChain(success: onSuccess, failuar: onFailuar)
+            _ = try OstAPIChain(userId: self.userId).getChain(success: onSuccess, onFailure: onFailuar)
         }catch let error {
             self.postError(error)
         }
@@ -224,8 +224,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func syncRespctiveEntity() {
         do {
-            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, success: nil, failuar: nil)
-            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(success: nil, failuar: nil)
+            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, success: nil, onFailure: nil)
+            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(success: nil, onFailure: nil)
         }catch {
             
         }

@@ -16,7 +16,7 @@ class OstAPISession: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getSession(sessionAddress: String, success: ((OstSession) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getSession(sessionAddress: String, success: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
     
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
         
@@ -29,10 +29,10 @@ class OstAPISession: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstSession)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("Session Sync failed"))
+            onFailure?(OstError.actionFailed("Session Sync failed"))
         }
     }
 }

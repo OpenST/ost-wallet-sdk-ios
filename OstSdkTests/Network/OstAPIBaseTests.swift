@@ -42,7 +42,7 @@ class OstAPIBaseTests: XCTestCase {
         }) { (failuarResponse) in
             print(failuarResponse)
             exceptionObj.fulfill()
-            XCTAssertNil(failuarResponse, "received failuar response.")
+            XCTAssertNil(failuarResponse, "received onFailure response.")
         }
         
         waitForExpectations(timeout: 10) { error in
@@ -77,7 +77,7 @@ class OstAPIBaseTests: XCTestCase {
         }) { (failuarResponse) in
             print(failuarResponse)
             exceptionObj.fulfill()
-            XCTAssertNil(failuarResponse, "received failuar response.")
+            XCTAssertNil(failuarResponse, "received onFailure response.")
         }
         
         waitForExpectations(timeout: 10) { error in

@@ -41,8 +41,9 @@ class OstUserPollingService: OstBasePollingService {
                 Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.getUserEntity()
             }else{
+                self.getUserEntity()
                 Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-                self.successCallback?(ostUser)
+//                self.successCallback?(ostUser)
             }
         }
         
@@ -62,7 +63,7 @@ class OstUserPollingService: OstBasePollingService {
             loDispatchQueue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
                     Logger.log(message: "test loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
-                    try OstAPIUser.init(userId: self.userId).getUser(success: self.onSuccess, failuar: self.onFailure)
+                    try OstAPIUser.init(userId: self.userId).getUser(success: self.onSuccess, onFailure: self.onFailure)
                 }catch let error {
                     self.failuarCallback?(error as! OstError)
                 }

@@ -11,8 +11,6 @@ import EthereumKit
 
 struct OstConstants {
     
-    static let TOKEN_CHAIN_ID: String = "123"
-    
     static let TOKEN_ID: String = "58"
     
     static let OST_ALGORITHM_CRYPTO_SUITE: String = "1.0"

@@ -70,7 +70,7 @@ class OstSdkSync {
             do {
                 try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
                     self.processIfRequired(.User, isSuccess: true)
-                }, failuar: { (error) in
+                }, onFailure: { (error) in
                     self.processIfRequired(.User, isSuccess: false)
                     Logger.log(message: "syncUser error:", parameterToPrint: error)
                 })
@@ -102,7 +102,7 @@ class OstSdkSync {
             do {
                 try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
                     self.processIfRequired(.Token, isSuccess: true)
-                }, failuar: { (error) in
+                }, onFailure: { (error) in
                     self.processIfRequired(.Token, isSuccess: false)
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
                 })
@@ -134,7 +134,7 @@ class OstSdkSync {
             do {
                 try OstAPIDevice(userId: self.userId).getCurrentDevice(success: { (ostDevice) in
                     self.processIfRequired(.CurrentDevice, isSuccess: true)
-                }, failuar: { (error) in
+                }, onFailure: { (error) in
                     Logger.log(message: "syncToken error:", parameterToPrint: error)
                     self.processIfRequired(.CurrentDevice, isSuccess: false)
                 })

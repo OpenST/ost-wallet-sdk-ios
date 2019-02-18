@@ -17,7 +17,7 @@ class OstAPIDevice: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getCurrentDevice(success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getCurrentDevice(success: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         let user: OstUser! = try OstUser.getById(self.userId)
         let currentDevice = user.getCurrentDevice()!
@@ -32,14 +32,14 @@ class OstAPIDevice: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstDevice)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("device Sync failed."))
+            onFailure?(OstError.actionFailed("device Sync failed."))
         }   
     }
     
-    func authorizeDevice(params: [String: Any], success: ((OstDevice) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func authorizeDevice(params: [String: Any], success: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = userApiResourceBase + "/authorize"
         
         var loParams: [String: Any] = params
@@ -51,10 +51,10 @@ class OstAPIDevice: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstDevice)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-             failuar?(OstError.actionFailed("device authorize failed."))
+             onFailure?(OstError.actionFailed("device authorize failed."))
         }
     }
 }

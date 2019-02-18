@@ -17,7 +17,7 @@ class OstAPISalt: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getRecoverykeySalt(success: (([String: Any]) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getRecoverykeySalt(success: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         resourceURL = apiSaltResourceBase + "/"
         
@@ -31,11 +31,11 @@ class OstAPISalt: OstAPIBase {
             if (resultType == "salt") {
                 success?(apiResponse![resultType] as! [String: Any])
             }else {
-                failuar?(OstError.actionFailed("getting salt failed"))
+                onFailure?(OstError.actionFailed("getting salt failed"))
             }
             
         }) { (failuareResponse) in
-            failuar?(OstError.actionFailed("getting salt failed"))
+            onFailure?(OstError.actionFailed("getting salt failed"))
         }
     }
 }

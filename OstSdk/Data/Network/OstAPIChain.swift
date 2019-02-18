@@ -17,7 +17,7 @@ class OstAPIChain: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getChain(success: (([String: Any]) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getChain(success: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         let user: OstUser? = try OstUser.getById(self.userId)
         if (user == nil) {
@@ -40,10 +40,10 @@ class OstAPIChain: OstAPIBase {
             if (resultType == "chain") {
                 success?(apiResponse![resultType] as! [String: Any])
             }else {
-                failuar?(OstError.actionFailed("getting salt failed"))
+                onFailure?(OstError.actionFailed("getting salt failed"))
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("device-manager Sync failed"))
+            onFailure?(OstError.actionFailed("device-manager Sync failed"))
         }
     }
 }

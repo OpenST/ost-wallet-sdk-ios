@@ -16,7 +16,7 @@ class OstAPIUser: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getUser(success: ((OstUser) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getUser(success: ((OstUser) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = userApiResourceBase + "/" + userId
         
         var params: [String: Any] = [:]
@@ -25,17 +25,18 @@ class OstAPIUser: OstAPIBase {
 
         get(params: params as [String : AnyObject], success: { (apiResponse) in
             do {
+                Logger.log(message: "getUser: params", parameterToPrint: apiResponse)
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstUser)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("User Sync failed."))
+            onFailure?(OstError.actionFailed("User Sync failed."))
         }
     }
     
-    func activateUser(params: [String: Any], success:((OstUser) -> Void)?, failuar:((OstError) -> Void)?) throws {
+    func activateUser(params: [String: Any], success:((OstUser) -> Void)?, onFailure:((OstError) -> Void)?) throws {
         resourceURL = userApiResourceBase + "/" + userId + "/activate-user/"
         
         var loParams = params
@@ -47,10 +48,10 @@ class OstAPIUser: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: (apiResponse!["data"] as! [String: Any?]) )
                 success?(entity as! OstUser)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("activate user failed."))
+            onFailure?(OstError.actionFailed("activate user failed."))
         }
     }
 }

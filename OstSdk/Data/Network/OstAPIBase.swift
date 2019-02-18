@@ -96,7 +96,7 @@ open class OstAPIBase {
     }
     
     //MARK: - HttpRequest
-    open func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    open func get(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
@@ -118,12 +118,12 @@ open class OstAPIBase {
             if (httpResponse.result.isSuccess && isSuccess) {
                 success((httpResponse.result.value as? [String : Any])?["data"] as? [String: Any])
             }else {
-                failuar(httpResponse.result.value as? [String : Any])
+                onFailure(httpResponse.result.value as? [String : Any])
             }
         }
     }
     
-    open func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), failuar:@escaping (([String: Any]?) -> Void)) {
+    open func post(params: [String: AnyObject]? = nil, success:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
@@ -138,7 +138,7 @@ open class OstAPIBase {
             if (httpResponse.result.isSuccess && isSuccess) {
                 success(httpResponse.result.value as? [String : Any])
             }else {
-                failuar((httpResponse.result.value as? [String : Any]))
+                onFailure((httpResponse.result.value as? [String : Any]))
             }
         }
     }

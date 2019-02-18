@@ -16,7 +16,7 @@ class OstAPIDeviceManager: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getDeviceManager(success: ((OstDeviceManager) -> Void)?, failuar: ((OstError) -> Void)?) throws {
+    func getDeviceManager(success: ((OstDeviceManager) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
      
         resourceURL = deviceManagerApiResourceBase + "/" + "device-manager"
         
@@ -29,10 +29,10 @@ class OstAPIDeviceManager: OstAPIBase {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstDeviceManager)
             }catch let error{
-                failuar?(error as! OstError)
+                onFailure?(error as! OstError)
             }
         }) { (failuarObj) in
-            failuar?(OstError.actionFailed("device-manager Sync failed"))
+            onFailure?(OstError.actionFailed("device-manager Sync failed"))
         }
     }
 }

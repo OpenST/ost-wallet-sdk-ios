@@ -33,14 +33,14 @@ class EntryViewController: UIViewController {
         signupButton.layer.cornerRadius = 10
         
 //        sync()
-//        activateUser()
+        activateUser()
 //        sessions()
     }
     
     func activateUser() {
-        _ = try! ActivateUser(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a", pin: "123456", password: "dsaifnwaeuifnuwaleinfiweanfofaffwae").perform()
+//        _ = try! ActivateUser(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a", pin: "123456", password: "dsaifnwaeuifnuwaleinfiweanfofaffwae").perform()
         
-         _ = try! ActivateUser(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a", pin: "123456", password: "dsaifnwaeuifnuwaleinfiweanfofaffwae").perform()
+        _ = try! ActivateUser(userId: "dbb85a81-bd6e-4412-a783-7e4b40c50063", tokenId: "1001", mappyUserId: "5c6a903fae36955a9f140461", pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
     }
     
     func sync() {
