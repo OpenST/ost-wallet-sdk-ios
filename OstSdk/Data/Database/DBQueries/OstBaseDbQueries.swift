@@ -106,11 +106,11 @@ class OstBaseDbQueries {
     
     //MARK: - Query string
     func getSelectByIdQuery(_ id: String) -> String {
-        return "SELECT * FROM \(activityName()) WHERE id=\"\(id)\""
+        return "SELECT * FROM \(activityName()) WHERE id=\"\(id.lowercased())\""
     }
     
     fileprivate func getSelectByParentIdQuery(_ parentId: String) -> String {
-        let query: String = "SELECT * FROM \(activityName()) WHERE parent_id=\"\(parentId)\""
+        let query: String = "SELECT * FROM \(activityName()) WHERE parent_id=\"\(parentId.lowercased())\""
         return query
     }
     
@@ -119,6 +119,6 @@ class OstBaseDbQueries {
     }
     
     func getDeleteQueryForId(_ id: String) -> String{
-        return "DELETE FROM \(activityName()) WHERE id=\"\(id)\""
+        return "DELETE FROM \(activityName()) WHERE id=\"\(id.lowercased())\""
     }
 }
