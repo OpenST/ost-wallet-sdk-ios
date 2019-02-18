@@ -16,7 +16,7 @@ class OstAPISession: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getSession(sessionAddress: String, success: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
     
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
         
@@ -24,10 +24,10 @@ class OstAPISession: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (apiResponse) in
+        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
             do {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
-                success?(entity as! OstSession)
+                onSuccess?(entity as! OstSession)
             }catch let error{
                 onFailure?(error as! OstError)
             }

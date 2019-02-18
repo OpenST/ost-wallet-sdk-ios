@@ -17,7 +17,7 @@ class OstAPIChain: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getChain(success: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getChain(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         let user: OstUser? = try OstUser.getById(self.userId)
         if (user == nil) {
@@ -35,10 +35,10 @@ class OstAPIChain: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (apiResponse) in
+        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
             let resultType = apiResponse!["result_type"] as! String
             if (resultType == "chain") {
-                success?(apiResponse![resultType] as! [String: Any])
+                onSuccess?(apiResponse![resultType] as! [String: Any])
             }else {
                 onFailure?(OstError.actionFailed("getting salt failed"))
             }

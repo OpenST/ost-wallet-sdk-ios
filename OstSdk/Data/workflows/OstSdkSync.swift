@@ -68,7 +68,7 @@ class OstSdkSync {
     func syncUser() {
         if (canSyncUser()) {
             do {
-                try OstAPIUser(userId: self.userId).getUser(success: { (ostUser) in
+                try OstAPIUser(userId: self.userId).getUser(onSuccess: { (ostUser) in
                     self.processIfRequired(.User, isSuccess: true)
                 }, onFailure: { (error) in
                     self.processIfRequired(.User, isSuccess: false)
@@ -100,7 +100,7 @@ class OstSdkSync {
     func syncToken() {
         if (canSyncToken()) {
             do {
-                try OstAPITokens(userId: self.userId).getToken(success: { (ostToken) in
+                try OstAPITokens(userId: self.userId).getToken(onSuccess: { (ostToken) in
                     self.processIfRequired(.Token, isSuccess: true)
                 }, onFailure: { (error) in
                     self.processIfRequired(.Token, isSuccess: false)
@@ -132,7 +132,7 @@ class OstSdkSync {
     func syncDevice() {
         if (canSyncDevice()) {
             do {
-                try OstAPIDevice(userId: self.userId).getCurrentDevice(success: { (ostDevice) in
+                try OstAPIDevice(userId: self.userId).getCurrentDevice(onSuccess: { (ostDevice) in
                     self.processIfRequired(.CurrentDevice, isSuccess: true)
                 }, onFailure: { (error) in
                     Logger.log(message: "syncToken error:", parameterToPrint: error)

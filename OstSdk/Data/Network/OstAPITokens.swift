@@ -16,7 +16,7 @@ class OstAPITokens: OstAPIBase {
         super.init(userId: userId)
     }
     
-    public func getToken(success:((OstToken) -> Void)?, onFailure:((OstError) -> Void)?) throws {
+    public func getToken(onSuccess:((OstToken) -> Void)?, onFailure:((OstError) -> Void)?) throws {
     
         resourceURL = tokenApiResourceBase + "/"
         
@@ -24,10 +24,10 @@ class OstAPITokens: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (apiResponse) in
+        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
             do {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
-                success?(entity as! OstToken)
+                onSuccess?(entity as! OstToken)
             }catch let error{
                 onFailure?(error as! OstError)
             }

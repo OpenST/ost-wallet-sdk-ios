@@ -57,7 +57,7 @@ class OstAPITokensTests: XCTestCase {
         
         params["api_signature"] = try! MockApiSigner(userId: userId).sign(resource: tokensAPIObj.getResource, params: params)
         
-        tokensAPIObj.get(params: params as [String: AnyObject], success: { (httpSuccessResponse) in
+        tokensAPIObj.get(params: params as [String: AnyObject], onSuccess: { (httpSuccessResponse) in
             Logger.log(message: "successResponse", parameterToPrint: httpSuccessResponse)
         }) { (httpFailuarResponse) in
             Logger.log(message: "failuarResponse", parameterToPrint: httpFailuarResponse)

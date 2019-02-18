@@ -11,7 +11,8 @@ import Foundation
 public class OstSdk {
 
     public class func initialize() {
-        _ = OstSdkDatabase.sharedInstance
+        let sdkRef = OstSdkDatabase.sharedInstance
+        sdkRef.runMigration()
     }
     
     public class func parse(_ apiResponse: [String: Any?]) throws {
@@ -58,37 +59,5 @@ public class OstSdk {
     public class func initToken(_ tokenId: String) throws -> OstToken? {
         let entityData: [String: Any] = [OstToken.getEntityIdentiferKey(): tokenId]
         return try OstToken.parse(entityData)
-    }
-    
-    //MARK: - Workflow
-
-    /// setup device for user.
-    ///
-    /// - Parameters:
-    ///   - userId: Ost user identifier.
-    ///   - tokenId: Token identifier for user.
-    ///   - forceSync: Force sync data from Kit.
-    ///   - delegate: Callback for action complete or to perform respective action.
-    public class func setupDevice(userId: String, tokenId: String, forceSync: Bool = false, delegate: OstWorkFlowCallbackProtocol) {
-        OstWorkFlowFactory.registerDevice(userId: userId, tokenId: tokenId, forceSync: forceSync, delegate: delegate)
-    }
-    
-    /// Once device setup is completed, call active user to deploy token holder.
-    ///
-    /// - Parameters:
-    ///   - userId: Ost user identifier.
-    ///   - pin: user secret pin.
-    ///   - password: App-server secret for user.
-    ///   - spendingLimit: Max amount that user can spend per transaction.
-    ///   - expirationHeight:
-    ///   - delegate: Callback for action complete or to perform respective action.
-    public class func activateUser(userId: String, pin: String, password: String, spendingLimit: String,
-                                   expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
-        OstWorkFlowFactory.activateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit,
-                                            expirationHeight:expirationHeight, delegate: delegate)
-    }
-    
-    public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
-        
     }
 }

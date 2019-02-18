@@ -16,7 +16,7 @@ class OstAPIDeviceManager: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getDeviceManager(success: ((OstDeviceManager) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getDeviceManager(onSuccess: ((OstDeviceManager) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
      
         resourceURL = deviceManagerApiResourceBase + "/" + "device-manager"
         
@@ -24,10 +24,10 @@ class OstAPIDeviceManager: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (apiResponse) in
+        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
             do {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
-                success?(entity as! OstDeviceManager)
+                onSuccess?(entity as! OstDeviceManager)
             }catch let error{
                 onFailure?(error as! OstError)
             }

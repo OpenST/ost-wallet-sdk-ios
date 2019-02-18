@@ -19,9 +19,6 @@ class OstSdkBaseDatabase {
         if !database.isOpen {
            database.open()
         }
-        
-        runMigration()
-        print("Init called")
     }
     
     func runMigration() {

@@ -84,7 +84,7 @@ class OstPerform: OstWorkflowBase {
     }
 
     func fetchDeviceManager(onCompletion: @escaping ((Bool) -> Void)) throws {
-        try OstAPIDeviceManager(userId: self.userId).getDeviceManager(success: { (ostDeviceManager) in
+        try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: { (ostDeviceManager) in
             self.deviceManager = ostDeviceManager
             onCompletion(true)
         }) { (ostError) in
@@ -117,7 +117,7 @@ class OstPerform: OstWorkflowBase {
         self.multiSigDict!["signer"] =  user.currentDevice!.address!
         self.multiSigDict!["signature"] = signingHash
         
-        try OstAPIDevice(userId: self.userId).authorizeDevice(params: self.multiSigDict!, success: { (ostDevice) in
+        try OstAPIDevice(userId: self.userId).authorizeDevice(params: self.multiSigDict!, onSuccess: { (ostDevice) in
             self.postFlowComplete(entity: ostDevice)
         }) { (error) in
             self.postError(error)

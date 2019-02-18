@@ -37,7 +37,7 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func createUser() {
-        MappyUser().createUser(params: userParam(), success: { (userObj) in
+        MappyUser().createUser(params: userParam(), onSuccess: { (userObj) in
             self.mappyUser = userObj!
             SharedDatabase.sharedInstance.insertUser(userObj!)
             self.userDetailsTabelArray.append(userObj!)
@@ -49,7 +49,7 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func createOstUser(for userId: String) {
-        MappyUser().createOstUser(for: userId, success: { (ostUserObj) in
+        MappyUser().createOstUser(for: userId, onSuccess: { (ostUserObj) in
            self.parseUser(ostUserObj!)
         }) { (failuarObj) in
             print(failuarObj as Any)

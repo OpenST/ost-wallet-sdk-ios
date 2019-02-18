@@ -85,11 +85,10 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
                         return
                     }
                 case .QR_CODE:
-                    
-                    return
+                    try self.validateParams()
+                    self.generateQRCodePayload()
                 case .PIN:
                     try self.validateParams()
-                    return
                 case .WORDS:
                     return
                 case .ERROR:
@@ -106,7 +105,22 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
         case .INITIALIZE:
             return
         case .QR_CODE:
-            return
+            let user = try self.getUser()
+            if (user == nil) {
+                throw OstError.invalidInput("User is not created for \(self.userId). Please create user first. Call OstSdk.setupDevice")
+            }
+            if (!user!.isActivated()) {
+                throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
+            }
+            
+            let currentDevice = try getCurrentDevice()
+            if (currentDevice == nil) {
+                throw OstError.invalidInput("Device is not present for \(self.userId). Please create device first.")
+            }
+            if (!currentDevice!.isDeviceRegistered()) {
+                throw OstError.invalidInput("Device is not Registered. Please register device first.")
+            }
+            
         case .PIN:
             if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin!.count) {
                 throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
@@ -121,6 +135,39 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
             }
         case .ERROR:
             return
+        }
+    }
+    
+    func generateQRCodePayload() {
+        do {
+            let user = try getUser()
+            let deviceManagerAddress = user!.deviceManagerAddress!
+            let threshold = "1"
+            let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(ownerAddress: deviceManagerAddress, threshold: threshold)
+            
+            let nullAddress = "0x0000000000000000000000000000000000000000"
+            let qrCodePayload: [String: Any] = ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
+                                                "to": deviceManagerAddress,
+                                                "value": "0",
+                                                "calldata": encodedABIHex,
+                                                "raw_calldata": ["method": "addOwnerWithThreshold",
+                                                                 "parameters": [deviceManagerAddress, threshold]],
+                                                "operation": "0",
+                                                "safe_tx_gas": "0",
+                                                "data_gas": "0",
+                                                "gas_price": "0",
+                                                "gas_token": nullAddress,
+                                                "refund_receiver": nullAddress
+                                                ]
+            
+            let qrCodePayloadString = try OstUtils.toJSONString(qrCodePayload)
+            let qrCodeImage: CIImage? = qrCodePayloadString!.qrCode
+            if (qrCodeImage == nil) {
+                self.postError(OstError.actionFailed("QRCode formation failed."))
+                return
+            }
+        }catch let error {
+            self.postError(error)
         }
     }
     

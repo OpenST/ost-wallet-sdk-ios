@@ -20,7 +20,7 @@ class LoginViewController: SignupViewController {
     override func createUser() { }
     
     func validateUser() {
-        MappyUser().validateUser(params: userParam(), success: { (userObj) in
+        MappyUser().validateUser(params: userParam(), onSuccess: { (userObj) in
             self.user = userObj
             self.getUsersList()
         }) { (failuarObj) in
@@ -29,7 +29,7 @@ class LoginViewController: SignupViewController {
     }
     
     func getUsersList() {
-        MappyUser().getAllUsers(success: { (succesObj) in
+        MappyUser().getAllUsers(onSuccess: { (succesObj) in
             let resultType = succesObj!["result_type"] as! String
             SharedDatabase.sharedInstance.insertUsers(succesObj![resultType] as! Array)
             self.relaodTable(withData: SharedDatabase.sharedInstance.getUserList())

@@ -20,7 +20,7 @@
 //    }
 //
 //    func testKeyDatabase() {
-//        OstSecureKeyRepository.sharedSecureKey.save(["key":"0x123","data":"A".data(using: .utf8)!], success: { (secureKey) in
+//        OstSecureKeyRepository.sharedSecureKey.save(["key":"0x123","data":"A".data(using: .utf8)!], onSuccess: { (secureKey) in
 //            print(secureKey!)
 //        }, failure: { (error) in
 //            print(error)

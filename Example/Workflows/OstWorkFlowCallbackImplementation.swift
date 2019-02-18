@@ -17,7 +17,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     
     func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
         
-        MappyRegisterDevice().registerDevice(apiParams as [String : AnyObject], forUserId: mappyUserId,  success: { (deviceObj) in
+        MappyRegisterDevice().registerDevice(apiParams as [String : AnyObject], forUserId: mappyUserId,  onSuccess: { (deviceObj) in
             do {
                 try ostDeviceRegisteredProtocol.deviceRegistered(["device":apiParams])
             }catch let error{

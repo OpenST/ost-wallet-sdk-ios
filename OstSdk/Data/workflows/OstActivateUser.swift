@@ -108,7 +108,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     }
     
     func getSalt(onCompletion: @escaping (() -> Void)) throws {
-        try OstAPISalt(userId: self.userId).getRecoverykeySalt(success: { (saltResponse) in
+        try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
             self.salt = saltResponse["scrypt_salt"] as! String
             onCompletion()
         }, onFailure: { (error) in
@@ -153,7 +153,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                 self.postError(error)
             }
             
-            _ = try OstAPIChain(userId: self.userId).getChain(success: onSuccess, onFailure: onFailuar)
+            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailuar)
         }catch let error {
             self.postError(error)
         }
@@ -184,7 +184,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         do {
             let params = self.getActivateUserParams()
             
-            try OstAPIUser(userId: self.userId).activateUser(params: params, success: { (ostUser) in
+            try OstAPIUser(userId: self.userId).activateUser(params: params, onSuccess: { (ostUser) in
                 self.pollingForActivatingUser(ostUser)
             }) { (error) in
                 self.postError(error)
@@ -224,8 +224,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func syncRespctiveEntity() {
         do {
-            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, success: nil, onFailure: nil)
-            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(success: nil, onFailure: nil)
+            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
+            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
         }catch {
             
         }

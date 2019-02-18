@@ -36,6 +36,7 @@
 		4B00CCF621E603B7005A5696 /* OstWorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CCF521E603B7005A5696 /* OstWorkflowBase.swift */; };
 		4B00CD2B21E87B62005A5696 /* Extension+OstQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CD2A21E87B62005A5696 /* Extension+OstQRCode.swift */; };
 		4B00CD3821EE2068005A5696 /* OstUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CD3721EE2068005A5696 /* OstUtils.swift */; };
+		4B0A2E86221B000100102090 /* AddDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0A2E85221B000100102090 /* AddDevice.swift */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -298,6 +299,7 @@
 		4B00CCF521E603B7005A5696 /* OstWorkflowBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowBase.swift; sourceTree = "<group>"; };
 		4B00CD2A21E87B62005A5696 /* Extension+OstQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+OstQRCode.swift"; sourceTree = "<group>"; };
 		4B00CD3721EE2068005A5696 /* OstUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUtils.swift; sourceTree = "<group>"; };
+		4B0A2E85221B000100102090 /* AddDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDevice.swift; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -1126,6 +1128,7 @@
 				4B5EF357220D67110049AD8A /* WorkflowBase.swift */,
 				4BE9E3DF22085A3800427A80 /* SetupDevice.swift */,
 				4BAE56E62215488000327A19 /* ActivateUser.swift */,
+				4B0A2E85221B000100102090 /* AddDevice.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -1400,6 +1403,7 @@
 				4B5EF4DB220DD6270049AD8A /* LoginViewController.swift in Sources */,
 				4B00CCB821E363EA005A5696 /* ViewController.swift in Sources */,
 				4B00CCBE21E363EA005A5696 /* Example.xcdatamodeld in Sources */,
+				4B0A2E86221B000100102090 /* AddDevice.swift in Sources */,
 				4B5EF348220C3BD20049AD8A /* MappyUser.swift in Sources */,
 				4B5EF346220C3AE70049AD8A /* MappyRegisterDevice.swift in Sources */,
 				4BE9E3332203387800427A80 /* OstWorkFlowCallbackImplementation.swift in Sources */,

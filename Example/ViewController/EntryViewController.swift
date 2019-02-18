@@ -33,7 +33,7 @@ class EntryViewController: UIViewController {
         signupButton.layer.cornerRadius = 10
         
 //        sync()
-        activateUser()
+//        activateUser()
 //        sessions()
     }
     

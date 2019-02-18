@@ -13,8 +13,8 @@ class MappyRegisterDevice: MappyAPIBase {
     
     let registerDeviceURL = "/api/users"
     
-    func registerDevice(_ params: [String: AnyObject], forUserId userId: String, success:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
+    func registerDevice(_ params: [String: AnyObject], forUserId userId: String, onSuccess:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
         resourceURL = registerDeviceURL + "/" + userId + "/devices"
-        post(params: params, success: success, onFailure: onFailure)
+        post(params: params, onSuccess: success, onFailure: onFailure)
     }
 }

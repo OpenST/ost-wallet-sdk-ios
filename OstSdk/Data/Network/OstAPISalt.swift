@@ -17,7 +17,7 @@ class OstAPISalt: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getRecoverykeySalt(success: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getRecoverykeySalt(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         resourceURL = apiSaltResourceBase + "/"
         
@@ -25,11 +25,11 @@ class OstAPISalt: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String: AnyObject], success: { (apiResponse) in
+        get(params: params as [String: AnyObject], onSuccess: { (apiResponse) in
             
             let resultType = apiResponse!["result_type"] as! String
             if (resultType == "salt") {
-                success?(apiResponse![resultType] as! [String: Any])
+                onSuccess?(apiResponse![resultType] as! [String: Any])
             }else {
                 onFailure?(OstError.actionFailed("getting salt failed"))
             }

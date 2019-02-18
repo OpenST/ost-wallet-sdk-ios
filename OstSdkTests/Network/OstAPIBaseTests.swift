@@ -35,12 +35,10 @@ class OstAPIBaseTests: XCTestCase {
     func testGetAPI() {
         let exceptionObj = expectation(description: "Get user from local with callback")
         
-        OstGetAPIMockBase(userId: "123").get(params: nil, success: { (successObj) in
-            print(successObj)
+        OstGetAPIMockBase(userId: "123").get(params: nil, onSuccess: { (successObj) in
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)
         }) { (failuarResponse) in
-            print(failuarResponse)
             exceptionObj.fulfill()
             XCTAssertNil(failuarResponse, "received onFailure response.")
         }
@@ -70,7 +68,7 @@ class OstAPIBaseTests: XCTestCase {
         let exceptionObj = expectation(description: "Get user from local with callback")
         let params = ["username": "aaaaa",
                       "mobile_number": OstUtils.toString(Date.timestamp())]
-        OstPostAPIMockBase(userId: "123").post(params: params as [String : AnyObject], success: { (successObj) in
+        OstPostAPIMockBase(userId: "123").post(params: params as [String : AnyObject], onSuccess: { (successObj) in
             Logger.log(message: nil, parameterToPrint: successObj)
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)

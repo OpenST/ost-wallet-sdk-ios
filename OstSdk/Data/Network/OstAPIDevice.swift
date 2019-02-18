@@ -17,7 +17,7 @@ class OstAPIDevice: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getCurrentDevice(success: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getCurrentDevice(onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         
         let user: OstUser! = try OstUser.getById(self.userId)
         let currentDevice = user.getCurrentDevice()!
@@ -27,10 +27,10 @@ class OstAPIDevice: OstAPIBase {
         insetAdditionalParamsIfRequired(&params)
         try sign(&params)
         
-        get(params: params as [String : AnyObject], success: { (apiResponse) in
+        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
             do {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
-                success?(entity as! OstDevice)
+                onSuccess?(entity as! OstDevice)
             }catch let error{
                 onFailure?(error as! OstError)
             }
@@ -39,17 +39,17 @@ class OstAPIDevice: OstAPIBase {
         }   
     }
     
-    func authorizeDevice(params: [String: Any], success: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func authorizeDevice(params: [String: Any], onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = userApiResourceBase + "/authorize"
         
         var loParams: [String: Any] = params
         insetAdditionalParamsIfRequired(&loParams)
         try sign(&loParams)
         
-        post(params: loParams as [String: AnyObject], success: { (apiResponse) in
+        post(params: loParams as [String: AnyObject], onSuccess: { (apiResponse) in
             do {
                 let entity = try self.parseEntity(apiResponse: apiResponse)
-                success?(entity as! OstDevice)
+                onSuccess?(entity as! OstDevice)
             }catch let error{
                 onFailure?(error as! OstError)
             }
