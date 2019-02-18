@@ -25,7 +25,6 @@ class OstAPIUser: OstAPIBase {
 
         get(params: params as [String : AnyObject], success: { (apiResponse) in
             do {
-                Logger.log(message: "getUser: params", parameterToPrint: apiResponse)
                 let entity = try self.parseEntity(apiResponse: apiResponse)
                 success?(entity as! OstUser)
             }catch let error{

@@ -41,9 +41,8 @@ class OstUserPollingService: OstBasePollingService {
                 Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
                 self.getUserEntity()
             }else{
-                self.getUserEntity()
                 Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-//                self.successCallback?(ostUser)
+                self.successCallback?(ostUser)
             }
         }
         
