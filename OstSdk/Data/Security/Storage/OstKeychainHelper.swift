@@ -34,7 +34,7 @@ public class OstKeychainHelper: OstBaseStorage {
         }
         
         guard status == errSecSuccess else {
-            throw OstError1(message: "storing data failed", type: .actionFailed)
+            throw OstError.actionFailed("storing data failed")
         }
     }
     
@@ -76,7 +76,7 @@ public class OstKeychainHelper: OstBaseStorage {
                                     kSecAttrAccessControl as String: getAccessControl() as Any]
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess else {
-            throw OstError1(message: "Delete failed", type: .actionFailed)
+            throw OstError.actionFailed("Delete failed")
         }
     }
 }

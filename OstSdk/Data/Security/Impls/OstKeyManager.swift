@@ -194,7 +194,7 @@ private extension OstKeyManager {
             try setEthKeyMnenonicsMetaMapping(ethMetaMapping)
             return
         }
-        throw OstError1(message: "Mnemonics can not stored", type: .actionFailed)
+        throw OstError.actionFailed("Mnemonics can not stored")
     }
     
     func setEthereumKey(_ key: String, forAddress address: String) throws {

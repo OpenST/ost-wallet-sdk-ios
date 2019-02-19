@@ -34,7 +34,7 @@ class OstWorkflowBase {
     
     func postError(_ error: Error) {
         DispatchQueue.main.async {
-            self.delegate.flowInterrupt(error as! OstError)
+            self.delegate.flowInterrupt(error as? OstError ?? OstError.actionFailed("Unexpected error.") )
         }
     }
     

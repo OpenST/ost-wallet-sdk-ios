@@ -83,13 +83,25 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                         self.delegate.determineAddDeviceWorkFlow(self)
                         return
                     }
+                    
                 case .QR_CODE:
                     try self.validateParams()
-                    self.generateQRCodePayload()
+                    let payload = try self.generateQRCodePayloadForAddDevce()
+                    guard let payloadString = try OstUtils.toJSONString(payload) else {
+                        throw OstError.actionFailed("Generating QR-Code failed.")
+                    }
+                    
+                    guard let qrCodeCIImage = payloadString.qrCode else {
+                        throw OstError.actionFailed("Generating QR-Code image failed.")
+                    }
+                    self.postFlowComplete(ciImage: qrCodeCIImage)
+                    
                 case .PIN:
                     try self.validateParams()
+                    
                 case .WORDS:
                     return
+                    
                 case .ERROR:
                     self.postError(OstError.actionFailed("Add device flow cancelled."))
                 }
@@ -137,39 +149,11 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         }
     }
     
-    func generateQRCodePayload() {
-        do {
-            let user = try getUser()
-            let deviceManagerAddress = user!.deviceManagerAddress!
-            let threshold = "1"
-            let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(ownerAddress: deviceManagerAddress, threshold: threshold)
-            
-            let nullAddress = "0x0000000000000000000000000000000000000000"
-            let qrCodePayload: [String: Any] = ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
-                                                "to": deviceManagerAddress,
-                                                "value": "0",
-                                                "calldata": encodedABIHex,
-                                                "raw_calldata": ["method": "addOwnerWithThreshold",
-                                                                 "parameters": [deviceManagerAddress, threshold]],
-                                                "operation": "0",
-                                                "safe_tx_gas": "0",
-                                                "data_gas": "0",
-                                                "gas_price": "0",
-                                                "gas_token": nullAddress,
-                                                "refund_receiver": nullAddress
-                                                ]
-            
-            let qrCodePayloadString = try OstUtils.toJSONString(qrCodePayload)
-            let qrCodeCIImage: CIImage? = qrCodePayloadString!.qrCode
-            if (qrCodeCIImage == nil) {
-                self.postError(OstError.actionFailed("QRCode formation failed."))
-                return
-            }
-            self.postFlowComplete(ciImage: qrCodeCIImage!)
-            
-        }catch let error {
-            self.postError(error)
-        }
+    func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
+            let currentDevice = try getCurrentDevice()
+            return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
+                    "user_id": self.userId,
+                    "device_to_add": currentDevice!.address!]
     }
     
     func postFlowComplete(message: String = "", ciImage: CIImage) {
