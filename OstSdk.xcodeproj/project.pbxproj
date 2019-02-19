@@ -569,7 +569,7 @@
 			path = ExampleTests;
 			sourceTree = "<group>";
 		};
-		4B00CCDB21E481D3005A5696 /* workflows */ = {
+		4B00CCDB21E481D3005A5696 /* Workflows */ = {
 			isa = PBXGroup;
 			children = (
 				4BAE56DB2214512800327A19 /* Services */,
@@ -585,7 +585,7 @@
 				4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */,
 				4BAE57022218413800327A19 /* OstPerform.swift */,
 			);
-			path = workflows;
+			path = Workflows;
 			sourceTree = "<group>";
 		};
 		4B00CCEB21E4B787005A5696 /* DBMigration */ = {
@@ -768,14 +768,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		4B5EF349220C6AEF0049AD8A /* abis */ = {
+		4B5EF349220C6AEF0049AD8A /* Abis */ = {
 			isa = PBXGroup;
 			children = (
 				4B5EF34A220C6B180049AD8A /* GnosisSafe.abi.json */,
 				4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */,
 				4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */,
 			);
-			path = abis;
+			path = Abis;
 			sourceTree = "<group>";
 		};
 		4B5EF4D7220DD4420049AD8A /* ViewController */ = {
@@ -978,7 +978,15 @@
 		4B7C930721B006E900EC0A9F /* OstSdk */ = {
 			isa = PBXGroup;
 			children = (
-				4B7C932C21B1141200EC0A9F /* Data */,
+				4B7C932D21B1148E00EC0A9F /* Database */,
+				4B75F21E21BE3F9900898960 /* Models */,
+				4B75F22221BE439B00898960 /* Utils */,
+				4B75F29321C3D73A00898960 /* Security */,
+				4B00CCDB21E481D3005A5696 /* Workflows */,
+				4BE9E3012201E63A00427A80 /* Network */,
+				4B5EF349220C6AEF0049AD8A /* Abis */,
+				4B75F27A21C391DB00898960 /* OstSdk.swift */,
+				4B49894D21F99CE300ED0E94 /* OstConstants.swift */,
 				4B7C930821B006E900EC0A9F /* OstSdk.h */,
 				4B7C930921B006E900EC0A9F /* Info.plist */,
 			);
@@ -1007,22 +1015,6 @@
 				4B00CCE721E4B3AD005A5696 /* OstKeyDatabaseTests.swift */,
 			);
 			path = Database;
-			sourceTree = "<group>";
-		};
-		4B7C932C21B1141200EC0A9F /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				4B5EF349220C6AEF0049AD8A /* abis */,
-				4BE9E3012201E63A00427A80 /* Network */,
-				4B00CCDB21E481D3005A5696 /* workflows */,
-				4B75F29321C3D73A00898960 /* Security */,
-				4B75F22221BE439B00898960 /* Utils */,
-				4B75F21E21BE3F9900898960 /* Models */,
-				4B7C932D21B1148E00EC0A9F /* Database */,
-				4B75F27A21C391DB00898960 /* OstSdk.swift */,
-				4B49894D21F99CE300ED0E94 /* OstConstants.swift */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		4B7C932D21B1148E00EC0A9F /* Database */ = {
