@@ -18,22 +18,25 @@ class OstPerform: OstWorkflowBase {
         case REVOKE_SESSION = "REVOKE_SESSION"
     }
     
-    let multiSigDataString: String
+    let payloadString: String
     
     var dataDefination: String? = nil
-    var multiSigDict: [String: Any]? = nil
+    var payload: [String: Any]? = nil
     var deviceManager: OstDeviceManager? = nil
     
-    init(userId: String, multiSigDataString: String, delegate: OstWorkFlowCallbackProtocol) {
-        self.multiSigDataString = multiSigDataString
+    init(userId: String, payload: String, delegate: OstWorkFlowCallbackProtocol) {
+        self.payloadString = payload
         super.init(userId: userId, delegate: delegate)
     }
     
     override func perform() {
         ostPerformThread.async {
             do {
-                self.multiSigDict = try OstUtils.toJSONObject(self.multiSigDataString) as? [String : Any]
-                self.dataDefination = (self.multiSigDict!["data_defination"]) as? String
+                self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : Any]
+                if (self.payload == nil) {
+                    self.postError(OstError.invalidInput("Invalid QR-Code."))
+                }
+                self.dataDefination = (self.payload!["data_defination"]) as? String
                 
                 try self.validateParams()
                 
@@ -93,19 +96,19 @@ class OstPerform: OstWorkflowBase {
     }
     
     func authorizeDevice() throws {
-        let parameters: [Any] = self.multiSigDict!["parameters"] as! [Any]
-        let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(ownerAddress: parameters[0] as! String, threshold: OstUtils.toString(parameters[1])!)
+
+        let callData: String = (self.payload!["calldata"] as! String)
         
         let deviceManagerNonce: Int = self.deviceManager!.nonce+1
-        let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(to: OstUtils.toString(self.multiSigDict!["to"])!,
-                                                          value: OstUtils.toString(self.multiSigDict!["value"])!,
-                                                          data: encodedABIHex,
-                                                          operation: OstUtils.toString(self.multiSigDict!["operation"])!,
-                                                          safeTxGas: OstUtils.toString(self.multiSigDict!["safe_tx_gas"])!,
-                                                          dataGas: OstUtils.toString(self.multiSigDict!["data_gas"])!,
-                                                          gasPrice: OstUtils.toString(self.multiSigDict!["gas_price"])!,
-                                                          gasToken: OstUtils.toString(self.multiSigDict!["gas_token"])!,
-                                                          refundReceiver: OstUtils.toString(self.multiSigDict!["refund_receiver"])!,
+        let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(to: OstUtils.toString(self.payload!["to"])!,
+                                                          value: OstUtils.toString(self.payload!["value"])!,
+                                                          data: callData,
+                                                          operation: OstUtils.toString(self.payload!["operation"])!,
+                                                          safeTxGas: OstUtils.toString(self.payload!["safe_tx_gas"])!,
+                                                          dataGas: OstUtils.toString(self.payload!["data_gas"])!,
+                                                          gasPrice: OstUtils.toString(self.payload!["gas_price"])!,
+                                                          gasToken: OstUtils.toString(self.payload!["gas_token"])!,
+                                                          refundReceiver: OstUtils.toString(self.payload!["refund_receiver"])!,
                                                           nonce: OstUtils.toString(deviceManagerNonce)! )
         
         let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any], primaryType: typedDataInput["primaryType"] as! String, domain: typedDataInput["domain"] as! [String: String], message: typedDataInput["message"] as! [String: Any])
@@ -114,10 +117,10 @@ class OstPerform: OstWorkflowBase {
         try self.deviceManager!.updateNonce(deviceManagerNonce)
      
         let user: OstUser = try self.getUser()!
-        self.multiSigDict!["signer"] =  user.currentDevice!.address!
-        self.multiSigDict!["signature"] = signingHash
+        self.payload!["signer"] =  user.currentDevice!.address!
+        self.payload!["signature"] = signingHash
         
-        try OstAPIDevice(userId: self.userId).authorizeDevice(params: self.multiSigDict!, onSuccess: { (ostDevice) in
+        try OstAPIDevice(userId: self.userId).authorizeDevice(params: self.payload!, onSuccess: { (ostDevice) in
             self.postFlowComplete(entity: ostDevice)
         }) { (error) in
             self.postError(error)

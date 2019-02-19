@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
+class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     
     enum State: Int {
@@ -62,24 +62,23 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
                         self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
                         return
                     }
-                    
+
                     if (!self.user!.isActivated()) {
                         self.postError(OstError.actionFailed("User is not activated for \(self.userId)."))
                         return
                     }
-                    
+
                     self.currentDevice = try self.getCurrentDevice()
                     if (self.currentDevice == nil) {
                         self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                         return
                     }
-                    
+
                     if (!self.currentDevice!.isDeviceRegistered()) {
                         self.postError(OstError.actionFailed("Device is not registered for \(self.userId). Plese register device first by calling OstSdk.setupDevice"))
                         return
                     }
-                    
-                    
+
                     DispatchQueue.main.async {
                         self.delegate.determineAddDeviceWorkFlow(self)
                         return
@@ -104,6 +103,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
         switch self.mCurrentState {
         case .INITIALIZE:
             return
+            
         case .QR_CODE:
             let user = try self.getUser()
             if (user == nil) {
@@ -112,7 +112,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
             if (!user!.isActivated()) {
                 throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
             }
-            
+
             let currentDevice = try getCurrentDevice()
             if (currentDevice == nil) {
                 throw OstError.invalidInput("Device is not present for \(self.userId). Please create device first.")
@@ -120,7 +120,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
             if (!currentDevice!.isDeviceRegistered()) {
                 throw OstError.invalidInput("Device is not Registered. Please register device first.")
             }
-            
         case .PIN:
             if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin!.count) {
                 throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
@@ -161,13 +160,22 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
                                                 ]
             
             let qrCodePayloadString = try OstUtils.toJSONString(qrCodePayload)
-            let qrCodeImage: CIImage? = qrCodePayloadString!.qrCode
-            if (qrCodeImage == nil) {
+            let qrCodeCIImage: CIImage? = qrCodePayloadString!.qrCode
+            if (qrCodeCIImage == nil) {
                 self.postError(OstError.actionFailed("QRCode formation failed."))
                 return
             }
+            self.postFlowComplete(ciImage: qrCodeCIImage!)
+            
         }catch let error {
             self.postError(error)
+        }
+    }
+    
+    func postFlowComplete(message: String = "", ciImage: CIImage) {
+        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: nil)
+        DispatchQueue.main.async {
+            self.delegate.showQR(self, image: ciImage)
         }
     }
     
@@ -188,5 +196,9 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol {
     public  func walletWordsEntered(_ wordList: Array<String>) {
         self.setCurrentState(.WORDS)
         perform()
+    }
+    
+    func startPolling() {
+        
     }
 }

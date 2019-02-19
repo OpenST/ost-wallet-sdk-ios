@@ -15,6 +15,6 @@ class MappyRegisterDevice: MappyAPIBase {
     
     func registerDevice(_ params: [String: AnyObject], forUserId userId: String, onSuccess:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
         resourceURL = registerDeviceURL + "/" + userId + "/devices"
-        post(params: params, onSuccess: success, onFailure: onFailure)
+        post(params: params, onSuccess: onSuccess, onFailure: onFailure)
     }
 }

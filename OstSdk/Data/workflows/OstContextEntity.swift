@@ -13,7 +13,7 @@ public enum OstWorkflowType {
 }
 
 public enum OstEntityType {
-    case currentDevice, user
+    case currentDevice, user, ciImage
 }
 
 public class OstContextEntity {

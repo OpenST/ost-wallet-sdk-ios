@@ -48,8 +48,12 @@ extension OstSdk {
         addDeviceObject.perform()
     }
     
-    public class func perform(userId: String, ciImage qrCodeImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
-        
+    public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
+        let payload: [String]? = qrCodeCoreImage.readQRCode
+        if (payload == nil || payload!.count == 0) {
+            delegate.flowInterrupt(OstError.invalidInput("Can not read data from given image"))
+        }
+        self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
     }
     
     public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
@@ -57,6 +61,7 @@ extension OstSdk {
     }
     
     public class func perfrom(userId: String, payload: String, delegate: OstWorkFlowCallbackProtocol) {
-        
+        let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
+        performObj.perform()
     }
 }

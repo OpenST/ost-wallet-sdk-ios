@@ -18,7 +18,7 @@ class OstAPIDeviceManager: OstAPIBase {
     
     func getDeviceManager(onSuccess: ((OstDeviceManager) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
      
-        resourceURL = deviceManagerApiResourceBase + "/" + "device-manager"
+        resourceURL = deviceManagerApiResourceBase + "/" + "device-managers"
         
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)

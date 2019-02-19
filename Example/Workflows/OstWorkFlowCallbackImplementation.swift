@@ -50,6 +50,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             let currentDevice: OstCurrentDevice  = ostContextEntity.entity as! OstCurrentDevice
             let user: OstUser = try! OstUser.getById(currentDevice.userId!)!
             _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
+//            AddDevice(mappyUserId: mappyUserId, userId: user.id).perform()
         default:
             return
         }

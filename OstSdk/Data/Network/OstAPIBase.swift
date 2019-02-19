@@ -71,16 +71,10 @@ open class OstAPIBase {
         if (!userId.isEmpty) {
             do {
                 if let user: OstUser = try OstUser.getById(userId) {
-                    if (params["token_id"] == nil && user.tokenId != nil) {
-                        params["token_id"] = user.tokenId
-                    }
-                    if (params["user_id"] == nil) {
-                        params["user_id"] = userId
-                    }
                     if let currentDevice = user.getCurrentDevice() {
                         
                         if (params["api_key"] == nil) {
-                            params["api_key"] = currentDevice.address! + "." + currentDevice.api_signer_address!
+                            params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.api_signer_address!)"
                         }
                     }
                 }
@@ -100,9 +94,9 @@ open class OstAPIBase {
         
         guard OstConnectivity.isConnectedToInternet else {
             Logger.log(message: "not reachable")
+            onFailure(["networkError": "network is not reachable."])
             return
         }
-        Logger.log(message: "reachable")
         
         let url: String = getBaseURL+getResource
         
@@ -124,6 +118,12 @@ open class OstAPIBase {
     }
     
     open func post(params: [String: AnyObject]? = nil, onSuccess:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
+        
+        guard OstConnectivity.isConnectedToInternet else {
+            Logger.log(message: "not reachable")
+            onFailure(["networkError": "network is not reachable."])
+            return
+        }
         let url: String = getBaseURL+getResource
         
         Logger.log(message: "url", parameterToPrint: url)
