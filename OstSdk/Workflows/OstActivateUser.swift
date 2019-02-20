@@ -9,7 +9,7 @@
 import Foundation
 
 class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegisteredProtocol {
-    let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
     var pin: String
     var pinPrefix: String
@@ -23,6 +23,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     var recoveryAddreass: String? = nil
     var currentBlockHeight: Int = 0
     
+    let workflowTransactionCountForPolling = 2
+    
     init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
         self.pin = pin
         self.pinPrefix = password
@@ -33,7 +35,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     }
     
     override func perform() {
-        ostRegisterDeviceThread.async {
+        ostActivateUserThread.async {
             do {
                 try self.validateParams()
                 
@@ -210,7 +212,8 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
             self.syncRespctiveEntity()
-            self.postFlowComplete(entity: ostUser)
+//            self.postFlowComplete(entity: ostUser)
+           _ = OstAddSession(userId: self.userId, spendingLimit: self.spendingLimit, expirationHeight: self.expirationHeight, delegate: self.delegate).perform()
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -218,17 +221,15 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
-        _ = OstUserPollingService(userId: ostUser.id, successCallback: successCallback, failuarCallback: failuarCallback).perform()
+        _ = OstUserPollingService(userId: ostUser.id, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failuarCallback: failuarCallback).perform()
     }
     
     
     func syncRespctiveEntity() {
-        do {
-            _ = try OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
-            _ = try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
-        }catch {
-            
-        }
+     
+            _ = try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
+            _ = try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
+            _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
     }
     
     func postFlowComplete(entity: OstUser) {

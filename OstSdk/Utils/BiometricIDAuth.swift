@@ -58,18 +58,15 @@ class BiometricIDAuth {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
     
-    func authenticateUser(completion: @escaping (String?) -> Void) {
+    func authenticateUser(completion: @escaping (Bool, String?) -> Void) {
         guard canEvaluatePolicy() else {
-            completion("Touch ID not available")
+            completion(false, "Touch ID not available")
             return
         }
         context.touchIDAuthenticationAllowableReuseDuration = 10
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: loginReason) { (success, evaluateError) in
             if success {
-                DispatchQueue.main.async {
-                    // User authenticated successfully, take appropriate action
-                    completion(nil)
-                }
+                completion(true, nil)
             } else {
                 var message: String = ""
                 
@@ -106,7 +103,7 @@ class BiometricIDAuth {
                         message = "Touch ID may not be configured"
                     }
                 }
-                completion(message)
+                completion(false ,message)
             }
         }
     }

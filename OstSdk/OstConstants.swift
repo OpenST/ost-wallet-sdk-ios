@@ -23,7 +23,7 @@ struct OstConstants {
     static let OST_SCRYPT_R: Int = 2
     static let OST_SCRYPT_DESIRED_SIZE_BYTES: Int = 32
     
-//    static let OST_API_BASE_URL = "http://172.16.0.231:7001/testnet/v2"
+//    static let OST_API_BASE_URL = "http://172.16.0.194:7001/testnet/v2"
     static let OST_API_BASE_URL = "https://s5-api.stagingost.com/testnet/v2"
     static let OST_SIGNATURE_KIND = "OST1-PS"
     static let OST_USER_AGENT = "ost-sdk-js " + OstConstants.OST_API_VERSION
@@ -37,7 +37,7 @@ struct OstConstants {
     static let OST_WALLET_NETWORK: Network = .mainnet
     static let OST_WALLET_SEED_PASSPHRASE: String = ""
     
-    static let OST_BLOCK_FORMATION_TIME: Int = 3
+    static let OST_BLOCK_FORMATION_TIME: Int = 4
     
     static let OST_MIN_EXPIRATION_BLOCK_HEIGHT: Int = 3*60*60
 }

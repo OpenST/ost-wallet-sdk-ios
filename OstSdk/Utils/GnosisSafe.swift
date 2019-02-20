@@ -23,12 +23,10 @@ class GnosisSafe {
     ///   - threshold: Threshold value. Default is 1
     /// - Returns: Hex string of encodedABI
     /// - Throws: 
-    func getAddOwnerWithThresholdExecutableData(ownerAddress: String, threshold: String = "1") throws -> String {
-        let abiName: String = "addOwnerWithThreshold"
-        
-        let abiObject: ABIObject? = try getABIFor(methodName: abiName)
+    func getAddOwnerWithThresholdExecutableData(abiMethodName: String, ownerAddress: String, threshold: String = "1") throws -> String {
+        let abiObject: ABIObject? = try getABI("GnosisSafe.abi", forMethod: abiMethodName)
         if (abiObject == nil) {
-            throw OstError.actionFailed("ABI for \(abiName) is not available.")
+            throw OstError.actionFailed("ABI for \(abiMethodName) is not available.")
         }
         
         let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
@@ -43,8 +41,27 @@ class GnosisSafe {
         return ethereumData!.hex()
     }
     
-    func getABIFor(methodName: String) throws -> ABIObject? {
-        let content = try OstBundle.getContentOf(file: "GnosisSafe.abi", fileExtension: "json")
+    func getAddSessionExecutableData(abiMethodName: String, sessionAddress: String, expirationHeight: String, spendingLimit: String) throws -> String {
+        
+        let abiObject: ABIObject? = try getABI("TokenHolder.abi", forMethod: abiMethodName)
+        if (abiObject == nil) {
+            throw OstError.actionFailed("ABI for \(abiMethodName) is not available.")
+        }
+        
+        let sessionAddressTobeAdded = try EthereumAddress(hex:sessionAddress, eip55: false)
+        let solidityHander = OstSolidityHandler()
+        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let _invocation = function!.invoke(sessionAddressTobeAdded, BigInt(spendingLimit)!, BigInt(expirationHeight)!)
+        let ethereumData = _invocation.encodeABI();
+        if (ethereumData == nil) {
+            throw OstError.actionFailed("encode abi failed.")
+        }
+        
+        return ethereumData!.hex()
+    }
+    
+    func getABI(_ abiName: String, forMethod methodName: String) throws -> ABIObject? {
+        let content = try OstBundle.getContentOf(file: abiName, fileExtension: "json")
         
         let contractJsonABI = content.data(using: .utf8)!
         let decoder = JSONDecoder()
@@ -72,7 +89,7 @@ class GnosisSafe {
                                                                   [ "name": "gasPrice", "type": "uint256" ],
                                                                   [ "name": "gasToken", "type": "address" ],
                                                                   [ "name": "refundReceiver", "type": "address" ],
-                                                                  [ "name": "nonce", "type": "uint256" ]]
+                                                                  ]
             ],
                                             "primaryType": "SafeTx",
                                             "domain": ["verifyingContract": to],
@@ -84,8 +101,8 @@ class GnosisSafe {
                                                         "dataGas": dataGas,
                                                         "gasPrice": gasPrice,
                                                         "gasToken": gasToken,
-                                                        "refundReceiver": refundReceiver,
-                                                        "nonce": nonce]]
+                                                        "refundReceiver": refundReceiver
+                                                        ]]
         
         return typedDataInput
     }

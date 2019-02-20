@@ -15,21 +15,24 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     let userDetailsReuseIdentifier = "userDetailsReuseIdentifier"
     
+    let QRCodeFlow = "signupToShowQR"
+    
     var username: String = ""
     var mobileNumber: String = ""
     var mappyUser: [String: Any]? = nil
     
+    var userId: String = ""
+    var tokenId: String = ""
+    var mappyUserId: String = ""
+    
+    @IBAction func flowButtonTapped(_ sender: Any) {
+        
+        
+    }
     var userDetailsTabelArray: [[String: Any]] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerTableViewCells()
         createUser()
-    }
-    
-    func registerTableViewCells() {
-//        let userCell = UINib(nibName: "UserDetailsTableViewCell", bundle: nil)
-//        userDetailsTableView.register(userCell, forCellReuseIdentifier: userDetailsReuseIdentifier)
-        //userDetailsTableView.register(UserDetailsTableViewCell.self, forCellReuseIdentifier: userDetailsReuseIdentifier)
     }
     
     func userParam() -> [String: Any]{
@@ -58,10 +61,13 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func parseUser(_ ostUserObj: [String: Any]) {
         do {
-//            if let user: OstUser = try OstSdk.parseUser(ostUserObj) {
-                try SetupDevice(userId: ostUserObj["user_id"] as! String, tokenId: ostUserObj["token_id"] as! String, mappyUserId: (ostUserObj["app_user_id"] as! String)).perform()
-//            }
+            self.userId = ostUserObj["user_id"] as! String
+            self.tokenId = ostUserObj["token_id"] as! String
+            self.mappyUserId = ostUserObj["app_user_id"] as! String
             
+            try SetupDevice(userId: ostUserObj["user_id"] as! String, tokenId: ostUserObj["token_id"] as! String, mappyUserId: (ostUserObj["app_user_id"] as! String)).perform()
+            
+
         }catch let error{
             Logger.log(message: "parseUser", parameterToPrint: error)
         }

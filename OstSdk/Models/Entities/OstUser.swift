@@ -55,7 +55,7 @@ public class OstUser: OstBaseEntity {
             return self.currentDevice
         }
         
-        let deviceAddress = try! OstKeyManager(userId: id).getDeviceAddress()
+        let deviceAddress = OstKeyManager(userId: id).getDeviceAddress()
         if deviceAddress == nil {
             return nil
         }

@@ -21,6 +21,6 @@ class ActivateUser: WorkflowBase {
     }
     
     override func perform() throws {
-        try OstSdk.activateUser(userId: userId, pin: pin, password: password, spendingLimit: "100000000", expirationHeight: 123343, delegate: delegate)
+        OstSdk.activateUser(userId: userId, pin: pin, password: password, spendingLimit: "100000000", expirationHeight: 123343, delegate: delegate)
     }
 }

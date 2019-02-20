@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
@@ -25,7 +26,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     var uPin: String? = nil
     var password: String? = nil
     var wordsArray: [String]? = nil
-    var QRCodeImage: UIImage? = nil
     
     override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         super.init(userId: userId, delegate: delegate)
@@ -183,6 +183,15 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     }
     
     func startPolling() {
-        
+        switch self.mCurrentState {
+        case .PIN:
+            return
+        case .QR_CODE:
+            return
+        case .WORDS:
+            return
+        default:
+            return
+        }
     }
 }

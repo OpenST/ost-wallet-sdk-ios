@@ -25,8 +25,7 @@ class EntryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        userNameTextField.text = "aniket\(Int(Date().timeIntervalSince1970))"
-        mobileNumberTextField.text = "\(Int(Date().timeIntervalSince1970))"
+      
         
         signupButton.layer.borderWidth = 1
         signupButton.layer.borderColor = UIColor.gray.cgColor
@@ -35,6 +34,12 @@ class EntryViewController: UIViewController {
 //        sync()
 //        activateUser()
 //        sessions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        userNameTextField.text = "aniket\(Int(Date().timeIntervalSince1970))"
+        mobileNumberTextField.text = "\(Int(Date().timeIntervalSince1970))"
     }
     
     func activateUser() {

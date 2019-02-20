@@ -16,10 +16,6 @@ class SetupDevice: WorkflowBase {
     }
     
     override func perform() throws {
-        do {
-            try OstSdk.setupDevice(userId: userId, tokenId: tokenId, delegate: delegate)
-        }catch let error {
-            print(error)
-        }
+        OstSdk.setupDevice(userId: userId, tokenId: tokenId, delegate: delegate)
     }
 }

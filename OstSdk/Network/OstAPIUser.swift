@@ -44,7 +44,7 @@ class OstAPIUser: OstAPIBase {
         
         post(params: loParams as [String: AnyObject], onSuccess: { (apiResponse) in
             do {
-                let entity = try self.parseEntity(apiResponse: (apiResponse!["data"] as! [String: Any?]) )
+                let entity = try self.parseEntity(apiResponse: (apiResponse) )
                 onSuccess?(entity as! OstUser)
             }catch let error{
                 onFailure?(error as! OstError)

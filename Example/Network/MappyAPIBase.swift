@@ -12,9 +12,14 @@ import OstSdk
 class MappyAPIBase: OstAPIBase {
     init() { super.init() }
     
+//    override var getBaseURL: String {
+//        return "http://172.16.0.108:4040"
+//    }
+    
     override var getBaseURL: String {
         return "http://localhost:4040"
     }
+    
     var resourceURL: String = ""
     
     override var getResource: String {

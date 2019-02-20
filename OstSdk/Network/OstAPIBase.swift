@@ -110,7 +110,8 @@ open class OstAPIBase {
             
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
-                onSuccess((httpResponse.result.value as? [String : Any])?["data"] as? [String: Any])
+                let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
+                onSuccess(responseEntity)
             }else {
                 onFailure(httpResponse.result.value as? [String : Any])
             }
@@ -136,7 +137,8 @@ open class OstAPIBase {
             
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
-                onSuccess(httpResponse.result.value as? [String : Any])
+                let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
+                onSuccess(responseEntity)
             }else {
                 onFailure((httpResponse.result.value as? [String : Any]))
             }

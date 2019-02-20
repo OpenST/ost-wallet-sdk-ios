@@ -33,6 +33,33 @@ public class OstDevice: OstBaseEntity {
     override func getParentId() -> String? {
         return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
     }
+    
+    func isDeviceRegistered() -> Bool {
+        let status = self.status
+        if (status == nil) {
+            return false
+        }
+        
+        return ["REGISTERED", "AUTHORIZED", "AUTHORIZING"].contains(status!)
+    }
+    
+    func isDeviceRevoked() -> Bool {
+        let status = self.status
+        if (status == nil) {
+            return true
+        }
+        
+        return ["REVOKING", "REVOKED"].contains(status!)
+    }
+    
+    func isCreated() -> Bool {
+        let status = self.status
+        if (status != nil &&
+            status! == "CREATED") {
+            return true
+        }
+        return false
+    }
 }
 
 public extension OstDevice {

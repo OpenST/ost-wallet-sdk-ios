@@ -21,7 +21,12 @@ class OstAPIDevice: OstAPIBase {
         
         let user: OstUser! = try OstUser.getById(self.userId)
         let currentDevice = user.getCurrentDevice()!
-        resourceURL = userApiResourceBase + "/" + currentDevice.address!
+       
+        try self.getDevice(deviceAddress: currentDevice.address!, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    func getDevice(deviceAddress: String, onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+        resourceURL = userApiResourceBase + "/" + deviceAddress
         
         var params: [String: Any] = [:]
         insetAdditionalParamsIfRequired(&params)
@@ -36,7 +41,7 @@ class OstAPIDevice: OstAPIBase {
             }
         }) { (failuarObj) in
             onFailure?(OstError.actionFailed("device Sync failed."))
-        }   
+        }
     }
     
     func authorizeDevice(params: [String: Any], onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {

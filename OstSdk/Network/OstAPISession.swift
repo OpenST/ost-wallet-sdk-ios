@@ -35,4 +35,23 @@ class OstAPISession: OstAPIBase {
             onFailure?(OstError.actionFailed("Session Sync failed"))
         }
     }
+    
+    func authorizeSession(params: [String: Any], onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+        resourceURL = sessionApiResourceBase + "/authorize"
+        
+        var loParams: [String: Any] = params
+        insetAdditionalParamsIfRequired(&loParams)
+        try sign(&loParams)
+        
+        post(params: loParams as [String : AnyObject], onSuccess: { (apiResponse) in
+            do {
+                let entity = try self.parseEntity(apiResponse: apiResponse)
+                onSuccess?(entity as! OstSession)
+            }catch let error{
+                onFailure?(error as! OstError)
+            }
+        }) { (failuarObj) in
+            onFailure?(OstError.actionFailed("Session Sync failed"))
+        }
+    }
 }

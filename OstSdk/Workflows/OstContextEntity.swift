@@ -9,7 +9,7 @@
 import Foundation
 
 public enum OstWorkflowType {
-    case setupDevice, activateUser
+    case setupDevice, activateUser, addDevice, addSession
 }
 
 public enum OstEntityType {

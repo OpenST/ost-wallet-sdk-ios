@@ -31,7 +31,7 @@ public class OstCurrentDevice: OstDevice {
     func encrypt(privateKey: String) throws -> OstSessionKeyInfo {
         let privateKeyData = privateKey.data(using: .utf8)!
         
-        if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
+        if let ethMetaMapping: EthMetaMapping = OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
                 let enclaveIdentifier = ethMetaMapping.identifier
                 if #available(iOS 10.3, *) {
                     let enclaveHelper = OstSecureEnclaveHelper(tag: enclaveIdentifier)
@@ -49,7 +49,7 @@ public class OstCurrentDevice: OstDevice {
         var decData = sessionKeyInfo.sessionKeyData
         
         if (sessionKeyInfo.isSecureEnclaveEncrypted) {
-            if let ethMetaMapping: EthMetaMapping = try OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
+            if let ethMetaMapping: EthMetaMapping = OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
                     let enclaveIdentifier = ethMetaMapping.identifier
                     if #available(iOS 10.3, *) {
                         let enclaveHelper = OstSecureEnclaveHelper(tag: enclaveIdentifier)
@@ -60,32 +60,5 @@ public class OstCurrentDevice: OstDevice {
             }
         }
         return String(data: decData, encoding: .utf8)!
-    }
-    
-    func isDeviceRegistered() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return false
-        }
-        
-        return ["REGISTERED", "AUTHORIZED", "AUTHORIZING"].contains(status!)
-    }
-    
-    func isDeviceRevoked() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return true
-        }
-        
-        return ["REVOKING", "REVOKED"].contains(status!)
-    }
-    
-    func isCreated() -> Bool {
-        let status = self.status
-        if (status != nil &&
-            status! == "CREATED") {
-            return true
-        }
-        return false
     }
 }
