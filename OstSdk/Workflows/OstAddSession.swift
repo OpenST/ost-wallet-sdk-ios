@@ -67,7 +67,7 @@ class OstAddSession: OstWorkflowBase {
                                         do {
                                             let keychainManager = OstKeyManager(userId: self.userId)
                                             if let deviceAddress = keychainManager.getDeviceAddress() {
-                                                let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                                                let privatekey = try keychainManager.getDeviceKey()
                                                 return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                                             }
                                             throw OstError.actionFailed("issue while generating signature.")
