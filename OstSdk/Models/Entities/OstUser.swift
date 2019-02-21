@@ -68,7 +68,7 @@ public class OstUser: OstBaseEntity {
         return self.currentDevice
     }
     
-    func isActivated() -> Bool {
+    public func isActivated() -> Bool {
         if (self.status != nil &&
             OstUser.USER_STATUS_ACTIVATED == self.status!.uppercased()) {
             return true
@@ -76,7 +76,7 @@ public class OstUser: OstBaseEntity {
         return false
     }
     
-    func isCreated() -> Bool {
+    public  func isCreated() -> Bool {
         if (self.status != nil &&
             OstUser.USER_STATUS_CREATED == self.status!.uppercased()) {
             return true
@@ -84,7 +84,7 @@ public class OstUser: OstBaseEntity {
         return false
     }
     
-    func isActivating() -> Bool {
+    public  func isActivating() -> Bool {
         if (self.status != nil &&
             OstUser.USER_STATUS_ACTIVATING == self.status!.uppercased()) {
             return true
@@ -112,6 +112,13 @@ public extension OstUser {
     var deviceManagerAddress: String? {
         if let dmAddress = data["device_manager_address"] as? String {
             return dmAddress.isEmpty ? nil : dmAddress
+        }
+        return nil
+    }
+    
+    var recoveryAddress: String? {
+        if let rAddress = data["recovery_address"] as? String {
+            return rAddress.isEmpty ? nil : rAddress
         }
         return nil
     }

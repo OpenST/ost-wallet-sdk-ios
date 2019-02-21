@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/aniketayachit/STFoundation/ios-sdk/ost-client-ios-sdk/OstSdk/Workflows/OstAuthorizeDevice.swift">
+   </FileRef>
+   <FileRef
       location = "group:Demo-App/Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef

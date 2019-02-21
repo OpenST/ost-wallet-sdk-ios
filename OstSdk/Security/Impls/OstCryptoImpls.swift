@@ -27,10 +27,10 @@ class OstCryptoImpls: OstCrypto {
         }catch let error {
             throw error
         }
-       
+        
     }
     
-     func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8] {
+    func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8] {
         do {
             let hkdfOutput = try HKDF(password: dataBytes, salt: saltBytes, variant: .sha256).calculate()
             return hkdfOutput
@@ -42,7 +42,7 @@ class OstCryptoImpls: OstCrypto {
     func genDigest(bytes: [UInt8]) -> [UInt8] {
         let sha3Obj = SHA3.init(variant: .keccak256)
         let keccakOutput = sha3Obj.calculate(for: bytes)
-       
+        
         return keccakOutput
     }
     
@@ -61,7 +61,7 @@ class OstCryptoImpls: OstCrypto {
         do {
             let gcm = GCM(iv: iv, mode: .combined)
             gcm.authenticationTag = ahead
-        
+            
             let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
             let decrypted =  try aes.decrypt(dataToDecrypt)
             return decrypted
@@ -73,15 +73,18 @@ class OstCryptoImpls: OstCrypto {
     func generateCryptoKeys() throws  -> OstWalletKeys {
         let mnemonics : [String] = Mnemonic.create()
         Logger.log(message: "mnemonics", parameterToPrint: mnemonics)
-        
-        let seed = try! Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
+        return try generateEthereumKeys(withMnemonics: mnemonics)
+    }
+    
+    func generateEthereumKeys(withMnemonics mnemonics: [String]) throws -> OstWalletKeys {
+        let seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
         let wallet: Wallet
         do {
             wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: true)
         } catch let error {
             fatalError("Error: \(error.localizedDescription)")
         }
-    
+        
         let privateKey = wallet.privateKey()
         let publicKey = wallet.publicKey()
         let address = wallet.address()

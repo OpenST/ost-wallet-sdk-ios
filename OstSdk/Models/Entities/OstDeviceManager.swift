@@ -20,6 +20,10 @@ public class OstDeviceManager: OstBaseEntity {
         return "address"
     }
     
+    class func getById(_ address: String) throws -> OstDeviceManager? {
+        return try OstDeviceManagerRepository.sharedDeviceManager.getById(address) as? OstDeviceManager
+    }
+    
     override func getId(_ params: [String: Any?]? = nil) -> String {
         let paramData = params ?? self.data
         return OstUtils.toString(paramData[OstDeviceManager.getEntityIdentiferKey()] as Any?)!

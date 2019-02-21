@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstAPISession: OstAPIBase {
+public class OstAPISession: OstAPIBase {
     
     let sessionApiResourceBase: String
     override public init(userId: String) {
@@ -16,7 +16,7 @@ class OstAPISession: OstAPIBase {
         super.init(userId: userId)
     }
     
-    func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    public func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
     
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
         

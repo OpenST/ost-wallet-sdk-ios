@@ -9,11 +9,11 @@
 import Foundation
 
 public enum OstWorkflowType {
-    case setupDevice, activateUser, addDevice, addSession
+    case setupDevice, activateUser, addDevice, addSession, papaerWallet
 }
 
 public enum OstEntityType {
-    case currentDevice, user, ciImage
+    case currentDevice, user, ciImage, string
 }
 
 public class OstContextEntity {

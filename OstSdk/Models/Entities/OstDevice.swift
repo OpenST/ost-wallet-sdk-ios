@@ -34,7 +34,7 @@ public class OstDevice: OstBaseEntity {
         return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
     }
     
-    func isDeviceRegistered() -> Bool {
+    public func isDeviceRegistered() -> Bool {
         let status = self.status
         if (status == nil) {
             return false
@@ -43,7 +43,7 @@ public class OstDevice: OstBaseEntity {
         return ["REGISTERED", "AUTHORIZED", "AUTHORIZING"].contains(status!)
     }
     
-    func isDeviceRevoked() -> Bool {
+    public  func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {
             return true
@@ -52,7 +52,7 @@ public class OstDevice: OstBaseEntity {
         return ["REVOKING", "REVOKED"].contains(status!)
     }
     
-    func isCreated() -> Bool {
+    public  func isCreated() -> Bool {
         let status = self.status
         if (status != nil &&
             status! == "CREATED") {

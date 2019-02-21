@@ -82,21 +82,26 @@ class OstCryptoTests: XCTestCase {
     }
     
     func testGenerateRecoveryKey() throws {
-        let expectedRecoveryAddress = "0x4D02Ad9F67ed64d128D429b52C37af40f8b17e36"
+        let expectedRecoveryAddress = "0x6bb02bba5beda4cfb33aa3a3e39f861bb12a0fd7"
         
-        XCTAssertThrowsError(try OstCryptoImpls().generateRecoveryKey(pinPrefix: "password", pin: "123456", pinPostFix: "123", salt: "salt", n: 2, r: 2, p: 2, size: 32))
+        let pinPrefix = "steel polar replace claw crew fever winter dragon excess sick possible cry"
+        let pin = "123456"
+        let pinPostFix = "d54ef261-a1e3-409a-85bd-6b856e8a2098"
+        let salt = "8902a8e658b6-db58-a904-3e1a-162fe45d"
         
-        let pinPrefix = "qazwsxcderfvbgtyhnmjuiknklqazwsxcderfvbgtyhnmjuiknkl"
-        let pin = "1234567"
-        let pinPostFix = "12345"
+        let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix,
+                                                                       pin: pin,
+                                                                       pinPostFix: pinPostFix,
+                                                                       salt: salt, n: 2, r: 2, p: 2, size: 32)
         
-        let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix, pin: pin, pinPostFix: pinPostFix, salt: "salt", n: 2, r: 2, p: 2, size: 32)
-        
-        let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix, pin: pin, pinPostFix: pinPostFix, salt: "salt", n: 2, r: 2, p: 2, size: 32)
+        let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(pinPrefix: pinPrefix,
+                                                                             pin: pin,
+                                                                             pinPostFix: pinPostFix,
+                                                                             salt: salt, n: 2, r: 2, p: 2, size: 32)
         
         XCTAssertEqual(recoveryAddressRepeat, recoveryAddress)
-        XCTAssertEqual(expectedRecoveryAddress, recoveryAddressRepeat)
-        XCTAssertEqual(expectedRecoveryAddress, recoveryAddress)
+        XCTAssertEqual(expectedRecoveryAddress, recoveryAddressRepeat.lowercased())
+        XCTAssertEqual(expectedRecoveryAddress, recoveryAddress.lowercased())
     }
     
     func getEIP1077TxHash() -> String {

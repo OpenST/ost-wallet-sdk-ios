@@ -59,11 +59,23 @@ class OstAddSession: OstWorkflowBase {
             let onSuccess: (([String: Any]) -> Void) = { chainInfo in
                 self.currentBlockHeight = OstUtils.toInt(chainInfo["block_height"])!
                 self.generateAndSaveSessionEntity()
-                if let authorizeSessionParamString = self.getAuthorizeSessionParamString() {
-                    OstPerform(userId: self.userId, payload: authorizeSessionParamString, delegate: self.delegate).perform()
-                }else {
-                    self.postError(OstError.actionFailed("Getting Session failed."))
-                }
+                OstAuthorizeSession(userId: self.userId,
+                                    sessionAddress: self.walletKeys!.address!,
+                                    spendingLimit: self.spendingLimit,
+                                    expirationHeight: OstUtils.toString(self.currentBlockHeight + self.expirationHeight)!,
+                                    generateSignatureCallback: { (signingHash) -> String? in
+                                        do {
+                                            let keychainManager = OstKeyManager(userId: self.userId)
+                                            if let deviceAddress = keychainManager.getDeviceAddress() {
+                                                let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                                                return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
+                                            }
+                                            throw OstError.actionFailed("issue while generating signature.")
+                                        }catch let error {
+                                            self.postError(error)
+                                            return nil
+                                        }
+                }, delegate: self.delegate).perform()
             }
             
             let onFailuar: ((OstError) -> Void) = { error in
@@ -95,20 +107,5 @@ class OstAddSession: OstWorkflowBase {
         params["status"] = OstSession.SESSION_STATUS_CREATED
         
         return params
-    }
-    
-    func getAuthorizeSessionParamString() -> String? {
-        do {
-            
-            let params = ["data_defination": OstPerform.DataDefination.AUTHORIZE_SESSION.rawValue,
-                          "session_address": self.walletKeys!.address!,
-                          "spending_limit": self.spendingLimit,
-                          "expiration_height": OstUtils.toString(self.currentBlockHeight + self.expirationHeight)!]
-            
-            return try OstUtils.toJSONString(params)
-        }catch let error {
-            self.postError(error)
-            return nil
-        }
     }
 }

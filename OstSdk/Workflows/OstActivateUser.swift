@@ -60,29 +60,29 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
-                
+
                 if (self.currentDevice!.isDeviceRevoked()) {
                     self.postError(OstError.actionFailed("Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
-                
+
                 if (!self.currentDevice!.isDeviceRegistered()) {
                     self.postError(OstError.actionFailed("Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
-                
+
                 let onCompletion: (() -> Void) = {
                     self.recoveryAddreass = self.getRecoveryKey()
-                    
+
                     if (self.recoveryAddreass == nil) {
                         self.postError(OstError.actionFailed("recovery address formation failed."))
                         return
                     }
-                    
+
                     self.generateSessionKeys()
                     self.getCurrentBlockHeight()
                 }
-                
+
                 try self.getSalt(onCompletion: onCompletion)
                 
             }catch let error{
@@ -120,7 +120,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.pinPrefix, pin: self.pin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_SCRYPT_N, r: OstConstants.OST_SCRYPT_R, p: OstConstants.OST_SCRYPT_P, size: OstConstants.OST_SCRYPT_DESIRED_SIZE_BYTES)
+            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.pinPrefix, pin: self.pin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N, r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R, p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P, size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         }catch {
             return nil
         }
@@ -212,8 +212,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
             self.syncRespctiveEntity()
-//            self.postFlowComplete(entity: ostUser)
-           _ = OstAddSession(userId: self.userId, spendingLimit: self.spendingLimit, expirationHeight: self.expirationHeight, delegate: self.delegate).perform()
+            self.postFlowComplete(entity: ostUser)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
