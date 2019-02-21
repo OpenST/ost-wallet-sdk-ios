@@ -22,7 +22,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
                 guard let walletKey: String = keychainManager.getDeviceAddress() else {
                     throw OstError.actionFailed("Paper wallet not found.")
                 }
-                guard let mnemonics: [String] = try keychainManager.getMnemonics(forAddresss: walletKey) else {
+                guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
                     throw OstError.actionFailed("Paper wallet not found.")
                 }
                 

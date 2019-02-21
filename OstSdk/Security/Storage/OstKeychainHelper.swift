@@ -8,46 +8,63 @@
 
 import Foundation
 
-public class OstKeychainHelper: OstBaseStorage {
-    
+/// Class that interacts with keychain
+class OstKeychainHelper: OstBaseStorage {
+    /// Keychain service string
     var service: String
     
+    /// Initializer
+    ///
+    /// - Parameter service: Keychain service string
     public init(service: String) {
         self.service = service
         super.init()
     }
     
-    //MARK: - Keychain Data
-    public func hardSet(data: Data, forKey key: String) throws {
-        
+    //MARK: - Store in keychain
+    
+    /// Store data in keychain
+    ///
+    /// - Parameters:
+    ///   - data: Data that needs to be stored in keychain
+    ///   - key: Key against which the data will be stored
+    /// - Throws: OSTError
+    func setDataInKeychain(data: Data, forKey key: String) throws {
+        let accessControl = try getAccessControl();
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
-                                    kSecAttrService as String: service,
-                                    kSecAttrAccessControl as String: getAccessControl() as Any,
+                                    kSecAttrService as String: self.service,
+                                    kSecAttrAccessControl as String: accessControl,
                                     kSecValueData as String: data]
         
-        var status = SecItemAdd(query as CFDictionary, nil)
-        
-        if status == errSecDuplicateItem {
-            status = SecItemDelete(query as CFDictionary)
-            status = SecItemAdd(query as CFDictionary, nil)
-        }
-        
-        guard status == errSecSuccess else {
-            throw OstError.actionFailed("storing data failed")
-        }
+        try super.setInKeychain(query);
     }
     
-    public func get(forKey key: String) -> Data? {
+    /// Store string in keychain
+    ///
+    /// - Parameters:
+    ///   - string: String that needs to be stored in keychain
+    ///   - key: Key against which the data will be stored
+    /// - Throws: OSTError
+    func setStringInKeychain(string: String, forKey key: String) throws {
+        let data: Data = string.data(using: .utf8)!
+        try setDataInKeychain(data: data, forKey: key)
+    }
+    
+    //MARK: - Get from keychain
+    
+    /// Get data from keychain
+    ///
+    /// - Parameter key: Key to lookup in keychain
+    /// - Returns: Data if exists otherwise nil
+    func getDataFromKeychain(forKey key: String) -> Data? {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
-                                    kSecAttrService as String: service,
+                                    kSecAttrService as String: self.service,
                                     kSecReturnAttributes as String: true,
                                     kSecReturnData as String: true]
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        
-        guard status == errSecSuccess else { return nil }
+
+        let item: CFTypeRef? = super.getFromKeychain(query);
         
         if let existingItem =  item as? [String: Any],
             let data = existingItem[kSecValueData as String] as? Data {
@@ -56,27 +73,29 @@ public class OstKeychainHelper: OstBaseStorage {
         return nil
     }
     
-    //MARK: - Keychain String
-    public func set(string: String, forKey key: String) throws {
-        let data: Data = string.data(using: .utf8)!
-        try hardSet(data: data, forKey: key)
-    }
-    
-    public func get(forKey key: String) -> String? {
-        if let data: Data = get(forKey: key) {
+    /// Get string from keychain
+    ///
+    /// - Parameter key: Key to lookup in keychain
+    /// - Returns: String if exists otherwise nil
+    func getStringFromKeychain(forKey key: String) -> String? {
+        if let data: Data = getDataFromKeychain(forKey: key) {
             return String(data: data, encoding: .utf8)
         }
         return nil
     }
     
-    public func delete(forKey key: String) throws {
+    //MARK: - Delete from keychain
+    
+    /// Delete item from keychain
+    ///
+    /// - Parameter key: Key to lookup in keychain
+    /// - Throws: OSTError
+    func deleteFromKeychain(forKey key: String) throws {
+        let accessControl = try getAccessControl();
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
-                                    kSecAttrService as String: service,
-                                    kSecAttrAccessControl as String: getAccessControl() as Any]
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess else {
-            throw OstError.actionFailed("Delete failed")
-        }
+                                    kSecAttrService as String: self.service,
+                                    kSecAttrAccessControl as String: accessControl]
+        try super.deleteFromKeyChain(query)
     }
 }
