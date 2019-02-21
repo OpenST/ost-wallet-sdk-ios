@@ -26,7 +26,7 @@ public struct EthMetaMapping {
     /// Entity id to look up the private key of the ethereum address in keychain
     var entityId: String
     
-    /// Secure enclave refernce key
+    /// Secure enclave reference key
     var identifier: String
     
     /// Boolean to indicate if secure enclave is used to encrypt the data
@@ -36,11 +36,12 @@ public struct EthMetaMapping {
     ///
     /// - Parameters:
     ///   - address: Ethereum key
+    ///   - entityId: Keychain item identifier
     ///   - identifier: Secure enclave key identifier
     ///   - isSecureEnclaveEncrypted: A boolean to indicate if secure enclave encrption is used for storing data
-    public init(address: String, identifier: String = "", isSecureEnclaveEncrypted: Bool = false) {
+    public init(address: String, entityId: String, identifier: String = "", isSecureEnclaveEncrypted: Bool = false) {
         self.address = address
-        self.entityId = OstKeyManager.getAddressStorageKey(address: address)
+        self.entityId = entityId
         self.identifier = identifier
         self.isSecureEnclaveEncrypted = isSecureEnclaveEncrypted
     }
@@ -54,6 +55,20 @@ public struct EthMetaMapping {
                                     "identifier": self.identifier,
                                     "isSecureEnclaveEncrypted": self.isSecureEnclaveEncrypted]
         return dict
+    }
+    
+    /// Get EthMetaMapping object from Dictionary
+    ///
+    /// - Parameter dictionary: Dictionary containing eth meta mapping values
+    /// - Returns: EthMetaMapping object
+    static func getEthMetaMapping(from dictionary:[String: Any]) -> EthMetaMapping {
+        let ethMetaMappingObj = EthMetaMapping(
+            address: dictionary["address"] as! String,
+            entityId: dictionary["entityId"] as! String,
+            identifier: dictionary["identifier"] as! String,
+            isSecureEnclaveEncrypted: dictionary["isSecureEnclaveEncrypted"] as! Bool
+        );
+        return ethMetaMappingObj
     }
 }
 
@@ -180,8 +195,7 @@ public class OstKeyManager {
     public func getDeviceMnemonics() throws -> [String]? {
         if let deviceAddress = getDeviceAddress() {
             if let ethMetaMapping: EthMetaMapping =  getMnemonicsMetaMapping(forAddress: deviceAddress) {
-                let storageKey = OstKeyManager.getMnemonicsStorageKey(forAddress: deviceAddress)
-                if let jsonString: String = try getString(forKey: storageKey, ethMetaMapping: ethMetaMapping) {
+                if let jsonString: String = try getString(from: ethMetaMapping) {
                     return try OstUtils.toJSONObject(jsonString) as? [String]
                 }
             }
@@ -239,7 +253,7 @@ fileprivate extension OstKeyManager {
     ///
     /// - Parameter address: Ethereum address for key formation
     /// - Returns: Storage key for ethereum address lookup
-    static func getAddressStorageKey(address: String) -> String {
+    static func getAddressStorageKey(forAddress address: String) -> String {
         return "\(ETHEREUM_KEY_PREFIX)\(address.lowercased())"
     }
     
@@ -318,11 +332,7 @@ private extension OstKeyManager {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         let ethKeyMappingData: [String: [String: Any]]? = userDeviceInfo[key] as? [String: [String: Any]]
         if let keyMappingValues =  ethKeyMappingData?[address.lowercased()] {
-            return EthMetaMapping(
-                address: address,
-                identifier: keyMappingValues["identifier"] as! String,
-                isSecureEnclaveEncrypted: keyMappingValues["isSecureEnclaveEncrypted"] as! Bool
-            )
+            return EthMetaMapping.getEthMetaMapping(from: keyMappingValues)
         }
         return nil
     }
@@ -334,11 +344,11 @@ private extension OstKeyManager {
     ///   - address: Ethereum address
     /// - Throws: OSTError
     func storeMnemonics(_ mnemonics: [String], forAddress address: String) throws {
-        var ethMetaMapping = EthMetaMapping(address: address, identifier: self.secureEnclaveIdentifier)
+        let entityId = OstKeyManager.getMnemonicsStorageKey(forAddress: address)
+        var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
         
         if let jsonString = try OstUtils.toJSONString(mnemonics) {
-            let storageKey = OstKeyManager.getMnemonicsStorageKey(forAddress: ethMetaMapping.address)
-            try storeString(jsonString, forKey: storageKey, ethMetaMapping: &ethMetaMapping)
+            try storeString(jsonString, ethMetaMapping: &ethMetaMapping)
             try setMnemonicsMetaMapping(ethMetaMapping)
             return
         }
@@ -352,9 +362,9 @@ private extension OstKeyManager {
     ///   - address: Ethereum address
     /// - Throws: OSTError
     func storeEthereumKey(_ key: String, forAddress address: String) throws {
-        var ethMetaMapping = EthMetaMapping(address: address, identifier: self.secureEnclaveIdentifier)
-        let storageKey = OstKeyManager.getAddressStorageKey(address: ethMetaMapping.address)
-        try storeString(key, forKey: storageKey, ethMetaMapping: &ethMetaMapping)
+        let entityId = OstKeyManager.getAddressStorageKey(forAddress: address)
+        var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
+        try storeString(key, ethMetaMapping: &ethMetaMapping)
         try setEthKeyMetaMapping(ethMetaMapping)
     }
     
@@ -365,8 +375,7 @@ private extension OstKeyManager {
     /// - Throws: OSTError
     func getEthereumKey(forAddresss address: String) throws -> String? {
         if let ethMetaMapping: EthMetaMapping =  getEthKeyMetaMapping(forAddress: address) {
-            let storageKey = OstKeyManager.getAddressStorageKey(address: address)
-            return try getString(forKey: storageKey, ethMetaMapping: ethMetaMapping)
+            return try getString(from: ethMetaMapping)
         }
         return nil
     }
@@ -378,7 +387,7 @@ private extension OstKeyManager {
     ///   - storageKey: Storage key
     ///   - ethMetaMapping: EthMetaMapping object
     /// - Throws: OSTError
-    func storeString(_ string: String, forKey storageKey: String, ethMetaMapping: inout EthMetaMapping) throws {
+    func storeString(_ string: String, ethMetaMapping: inout EthMetaMapping) throws {
         var eData: Data? = nil
         if #available(iOS 10.3, *) {
             if Device.hasSecureEnclave {
@@ -394,18 +403,17 @@ private extension OstKeyManager {
             ethMetaMapping.identifier = ""
         }
         
-        try keychainHelper.setDataInKeychain(data: eData!, forKey: storageKey)
+        try keychainHelper.setDataInKeychain(data: eData!, forKey: ethMetaMapping.entityId)
     }
     
     /// Get the string for keychain. If the string was encrypted with secure enclave it will decrypt it
     ///
     /// - Parameters:
-    ///   - storageKey: Storage key
     ///   - ethMetaMapping: EthMetaMapping object
     /// - Returns: String
     /// - Throws: OSTError
-    func getString(forKey storageKey: String, ethMetaMapping: EthMetaMapping) throws -> String? {
-        if let eData: Data = keychainHelper.getDataFromKeychain(forKey: storageKey) {
+    func getString(from ethMetaMapping: EthMetaMapping) throws -> String? {
+        if let eData: Data = keychainHelper.getDataFromKeychain(forKey: ethMetaMapping.entityId) {
             if ethMetaMapping.isSecureEnclaveEncrypted {
                 if #available(iOS 10.3, *) {
                     let enclaveHelperObj = OstSecureEnclaveHelper(tag: ethMetaMapping.identifier)
