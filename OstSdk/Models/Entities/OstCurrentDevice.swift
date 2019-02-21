@@ -32,6 +32,7 @@ public class OstCurrentDevice: OstDevice {
         let privateKeyData = privateKey.data(using: .utf8)!
         
         if let ethMetaMapping: EthMetaMapping = OstKeyManager(userId: self.userId!).getEthKeyMetaMapping(forAddress: self.address!) {
+            if (ethMetaMapping.isSecureEnclaveEncrypted) {
                 let enclaveIdentifier = ethMetaMapping.identifier
                 if #available(iOS 10.3, *) {
                     let enclaveHelper = OstSecureEnclaveHelper(tag: enclaveIdentifier)
@@ -41,6 +42,7 @@ public class OstCurrentDevice: OstDevice {
                         return OstSessionKeyInfo(sessionKeyData: encData, isSecureEnclaveEncrypted: true)
                     }
                 }
+            }
         }
         return OstSessionKeyInfo(sessionKeyData: privateKeyData, isSecureEnclaveEncrypted: false)
     }

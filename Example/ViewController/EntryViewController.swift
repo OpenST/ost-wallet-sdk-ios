@@ -34,12 +34,26 @@ class EntryViewController: UIViewController {
 //        sync()
 //        activateUser()
 //        sessions()
+//        biomatricAuth()
+//        fetchSession()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         userNameTextField.text = "aniket\(Int(Date().timeIntervalSince1970))"
         mobileNumberTextField.text = "\(Int(Date().timeIntervalSince1970))"
+        
+        userNameTextField.text = "aniket_test_14"
+        mobileNumberTextField.text = "1112223314"
+        
+    }
+    
+    func fetchSession() {
+        try! OstAPISession(userId: "7d2c5546-1b19-4d7d-bc4c-a1ab2a4c8d65").getSession(sessionAddress: "0x55e667eb8dc8da83a3e4f47585bf7493aab93a4c", onSuccess: { (sesion) in
+            print(sesion.data)
+        }) { (error) in
+            print(error)
+        }
     }
     
     func activateUser() {
@@ -51,6 +65,13 @@ class EntryViewController: UIViewController {
     func sync() {
         try! SetupDevice(userId: "f295c39f-522e-4805-a528-00c7cc99f1ae", tokenId: "58", mappyUserId: "5c62a6d35d3f2e6286e95b2a").perform()
     }
+    
+    
+    func biomatricAuth() {
+        let callbackObj = OstWorkFlowCallbackImplementation(mappyUserId: "5c6a903fae36955a9f140461")
+        OstSdk.perfrom(userId: "dbb85a81-bd6e-4412-a783-7e4b40c50063", payload: "", delegate: callbackObj)
+    }
+    
 
     
     func canProceed() -> Bool {

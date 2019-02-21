@@ -81,7 +81,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
 
                     DispatchQueue.main.async {
                         self.delegate.determineAddDeviceWorkFlow(self)
-                        return
                     }
                     
                 case .QR_CODE:
@@ -94,13 +93,13 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     guard let qrCodeCIImage = payloadString.qrCode else {
                         throw OstError.actionFailed("Generating QR-Code image failed.")
                     }
-                    self.postFlowComplete(ciImage: qrCodeCIImage)
+                    self.postFlowCompleteForQRCode(ciImage: qrCodeCIImage)
                     
                 case .PIN:
                     try self.validateParams()
-                    
+     
                 case .WORDS:
-                    return
+                   self.authorizeDeviceWothMnemonics()
                     
                 case .ERROR:
                     self.postError(OstError.actionFailed("Add device flow cancelled."))
@@ -149,6 +148,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         }
     }
     
+    //MARK: - QR-Code
     func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
             let currentDevice = try getCurrentDevice()
             return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
@@ -156,10 +156,48 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     "device_to_add": currentDevice!.address!]
     }
     
-    func postFlowComplete(message: String = "", ciImage: CIImage) {
+    func postFlowCompleteForQRCode(message: String = "", ciImage: CIImage) {
         Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: nil)
         DispatchQueue.main.async {
             self.delegate.showQR(self, image: ciImage)
+        }
+    }
+   
+    //MARK: - authorize device
+    func authorizeDeviceWothMnemonics() {
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let cryptoImpl = OstCryptoImpls()
+                let ostWalletKeys: OstWalletKeys = try cryptoImpl.generateEthereumKeys(withMnemonics: self.wordsArray!)
+                let signature = try cryptoImpl.signTx(signingHash, withPrivatekey: ostWalletKeys.privateKey!)
+                return (signature, ostWalletKeys.address!)
+            }catch let error{
+                self.postError(error)
+                return (nil, nil)
+            }
+        }
+        
+        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postFlowCompleteForAddDevice(entity: ostDevice)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        OstAuthorizeDevice(userId: self.userId,
+                           deviceAddressToAdd: self.currentDevice!.address!,
+                           generateSignatureCallback: generateSignatureCallback,
+                           onSuccess: onSuccess,
+                           onFailure: onFailure).perform()
+    }
+    
+    func postFlowCompleteForAddDevice(entity: OstDevice) {
+        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
+        
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
+            self.delegate.flowComplete(contextEntity);
         }
     }
     
@@ -177,7 +215,17 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         perform()
     }
     
-    public  func walletWordsEntered(_ wordList: Array<String>) {
+    public  func walletWordsEntered(_ wordList: String) {
+        //TODO: Remove Testcode - 221-222
+        self.wordsArray = []
+        for word in OstConstants.testMnemonics.split(separator: " ") {
+            self.wordsArray!.append("\(word)")
+        }
+//
+//        for word in OstConstants.wordList.split(separator: " ") {
+//            self.wordsArray!.append("\(word)")
+//        }
+        
         self.setCurrentState(.WORDS)
         perform()
     }

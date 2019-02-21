@@ -41,8 +41,10 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 
                 if(!currentDevice!.isDeviceRegistered()) {
                     self.registerDevice(currentDevice!.data as [String : Any])
+                    return
                 }
             
+                self.forceSync = true
                 self.sync()
             }catch let error {
                 self.postError(error)

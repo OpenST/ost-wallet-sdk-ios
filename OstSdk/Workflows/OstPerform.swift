@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstPerform: OstWorkflowBase {
+class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
     let ostPerformThread = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     
     enum DataDefination: String {
@@ -23,6 +23,10 @@ class OstPerform: OstWorkflowBase {
     var dataDefination: String? = nil
     var payload: [String: String]? = nil
     var deviceManager: OstDeviceManager? = nil
+    
+    var saltResponse: [String: Any]? = nil
+    var uPin: String? = nil
+    var password: String? = nil
     
     let threshold = "1"
     let nullAddress = "0x0000000000000000000000000000000000000000"
@@ -42,23 +46,13 @@ class OstPerform: OstWorkflowBase {
                     throw OstError.invalidInput("Device is not registered")
                 }
                 
-                try self.fetchDeviceManager()
-                
+                self.processOperation()
             }catch let error {
                 self.postError(error)
             }
         }
     }
-    
-    func fetchDeviceManager() throws {
-        try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: { (ostDeviceManager) in
-            self.deviceManager = ostDeviceManager
-            self.processOperation()
-        }) { (ostError) in
-            self.postError(ostError)
-        }
-    }
-    
+
     func processOperation() {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
@@ -72,13 +66,13 @@ class OstPerform: OstWorkflowBase {
             switch self.dataDefination {
                 
             case DataDefination.AUTHORIZE_DEVICE.rawValue:
-                try self.getDevice() //Written in extention - OstPerform+AddDevice
+                self.authorizeDeviceWithPrivateKey()
                 
             case DataDefination.REVOKE_DEVICE.rawValue:
                 return
                 
             case DataDefination.AUTHORIZE_SESSION.rawValue:
-                try self.authorizeSession() //Written in extension - OstProfrom+AddSession
+               return
                 
             case DataDefination.REVOKE_SESSION.rawValue:
                 return
@@ -115,5 +109,118 @@ class OstPerform: OstWorkflowBase {
             throw OstError.invalidInput("Invalid data defination.")
         }
     }
+    
+    public func authenticateUser() {
+        let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
+        biomatricAuth.authenticateUser { (isSuccess, message) in
+            if (isSuccess) {
+                do {
+                 self.processOperation()
+                }catch let error{
+                    self.postError(error)
+                }
+            }else {
+                DispatchQueue.main.async {
+                    self.delegate.getPin(self.userId, delegate: self)
+                }
+            }
+        }
+    }
+    
+    //MARK - OstPinAcceptProtocol
+    
+    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+        ostPerformThread.async {
+            do {
+                self.uPin = uPin
+                self.password = appUserPassword
+                if (self.saltResponse != nil) {
+                    try self.validatePin()
+                }else {
+                    try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
+                        do {
+                            self.saltResponse = saltResponse
+                            try self.validatePin()
+                        }catch let error {
+                            self.postError(error)
+                        }
+                        
+                    }, onFailure: { (error) in
+                        self.postError(error)
+                    })
+                }
 
+            }catch let error {
+                self.postError(error)
+            }
+        }
+    }
+    func validatePin() throws {
+        let salt = self.saltResponse!["scrypt_salt"] as! String
+        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.password!, pin: self.uPin!, pinPostFix: self.userId,
+                                                                   salt: salt,  n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
+                                                                   r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
+                                                                   p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
+                                                                   size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
+        
+        guard let user: OstUser = try getUser() else {
+            throw OstError.actionFailed("User is not persent")
+        }
+        
+        if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
+            throw OstError.actionFailed("Recovery address for user is not set.")
+        }
+        
+        if(user.recoveryAddress! == recoveryKey) {
+            self.processOperation()
+        }else {
+            DispatchQueue.main.async {
+                self.delegate.invalidPin(self.userId, delegate: self)
+            }
+        }
+        
+    }
+    
+    func authorizeDeviceWithPrivateKey() {
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                if let deviceAddress = keychainManager.getDeviceAddress() {
+                    //TODO: Remove Testcode - 192
+                    let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                    //                                            return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
+                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: OstConstants.testPrivateKey)
+                    return (signature, deviceAddress)
+                }
+                throw OstError.actionFailed("issue while generating signature.")
+            }catch let error {
+                self.postError(error)
+                return (nil, nil)
+            }
+        }
+        
+        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postFlowCompleteForAddDevice(entity: ostDevice)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        OstAuthorizeDevice(userId: self.userId,
+                           deviceAddressToAdd: self.payload!["device_to_add"]!,
+                           generateSignatureCallback: generateSignatureCallback,
+                           onSuccess: onSuccess,
+                           onFailure: onFailure).perform()
+    }
+    
+    func postFlowCompleteForAddDevice(entity: OstDevice) {
+        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
+        
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
+            self.delegate.flowComplete(contextEntity);
+        }
+    }
+    
 }

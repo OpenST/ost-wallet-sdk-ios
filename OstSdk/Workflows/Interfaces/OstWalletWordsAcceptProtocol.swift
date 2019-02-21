@@ -14,5 +14,5 @@ public protocol OstWalletWordsAcceptProtocol: OstBaseProtocol {
     /// SDK user will use it to pass wallet 12 words to SDK.
     ///
     /// - Parameter wordList: List of wallet 12 words
-    func walletWordsEntered(_ wordList: Array<String>)
+    func walletWordsEntered(_ wordList: String)
 }

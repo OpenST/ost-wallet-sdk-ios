@@ -10,10 +10,11 @@ import Foundation
 
 class OstBasePollingService {
     
-    var maxRetryCount = 10
+    var maxRetryCount = 20
+    let firstCallNo = 19
     let firstDelayTime = OstConstants.OST_BLOCK_FORMATION_TIME * 6
     
-    var onSuccess: ((OstUser) -> Void)? = nil
+    var onSuccess: ((OstBaseEntity) -> Void)? = nil
     var onFailure: ((OstError) -> Void)? = nil
     
     let userId: String
@@ -54,7 +55,7 @@ class OstBasePollingService {
         self.maxRetryCount -= 1
         if (self.maxRetryCount >= 0) {
             
-            let delayTime: Int = (self.maxRetryCount == 9) ? (self.firstDelayTime * workflowTransactionCount) : OstConstants.OST_BLOCK_FORMATION_TIME
+            let delayTime: Int = (self.maxRetryCount == self.firstCallNo) ? (self.firstDelayTime * workflowTransactionCount) : OstConstants.OST_BLOCK_FORMATION_TIME
             
             self.dispatchQueue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {

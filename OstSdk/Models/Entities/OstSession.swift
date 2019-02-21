@@ -16,8 +16,11 @@ public class OstSession: OstBaseEntity {
         return "address"
     }
     
-    static let SESSION_STATUS_INITITIALIZING = "INITITIALIZING"
+    static let SESSION_STATUS_INITIALIZING = "INITIALIZING"
     static let SESSION_STATUS_CREATED = "CREATED"
+    static let SESSION_STATUS_AUTHORISED = "AUTHORISED"
+    static let SESSION_STATUS_REVOKING = "REVOKING"
+    static let SESSION_STATUS_REVOKED = "REVOKED"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
@@ -37,6 +40,14 @@ public class OstSession: OstBaseEntity {
         params["nonce"] = self.nonce + 1
         params["updated_timestamp"] = Date.timestamp()
         _ = try OstSession.parse(params)
+    }
+    
+    func isInitializing() -> Bool {
+        if (self.status != nil &&
+            OstSession.SESSION_STATUS_INITIALIZING == self.status!.uppercased()) {
+            return true
+        }
+        return false
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OstSdk
 
 class LoginViewController: SignupViewController {
     
@@ -23,6 +24,9 @@ class LoginViewController: SignupViewController {
         MappyUser().validateUser(params: userParam(), onSuccess: { (userObj) in
             self.user = userObj
             self.getUsersList()
+            
+            OstSdk.setupDevice(userId: self.user!["ost_user_id"]! as! String, tokenId: "1003", delegate: OstWorkFlowCallbackImplementation(mappyUserId: self.user!["_id"] as! String))
+            
         }) { (failuarObj) in
             self.navigationController?.popViewController(animated: true)
         }

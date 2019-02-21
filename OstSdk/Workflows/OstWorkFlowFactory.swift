@@ -48,6 +48,24 @@ extension OstSdk {
         addDeviceObject.perform()
     }
     
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - userId: <#userId description#>
+    ///   - spendingLimit: <#spendingLimit description#>
+    ///   - expirationHeight: <#expirationHeight description#>
+    ///   - delegate: <#delegate description#>
+    public class func addSession(userId: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
+         let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
+        ostAddSession.perform()
+    }
+    
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - userId: <#userId description#>
+    ///   - qrCodeCoreImage: <#qrCodeCoreImage description#>
+    ///   - delegate: <#delegate description#>
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
         if (payload == nil || payload!.count == 0) {
@@ -56,12 +74,34 @@ extension OstSdk {
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
     }
     
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - userId: <#userId description#>
+    ///   - qrCodeImage: <#qrCodeImage description#>
+    ///   - delegate: <#delegate description#>
     public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
         
     }
     
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - userId: <#userId description#>
+    ///   - payload: <#payload description#>
+    ///   - delegate: <#delegate description#>
     public class func perfrom(userId: String, payload: String, delegate: OstWorkFlowCallbackProtocol) {
         let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
         performObj.perform()
+    }
+    
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - userId: <#userId description#>
+    ///   - delegate: <#delegate description#>
+    public class func getPaperWallet(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+        let paperWalletObj = OstGetPapaerWallet(userId: userId, delegate: delegate)
+        paperWalletObj.perform()
     }
 }

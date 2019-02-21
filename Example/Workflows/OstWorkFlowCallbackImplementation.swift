@@ -31,7 +31,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
-        
+        ostPinAcceptProtocol.pinEntered("123456", applicationPassword: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq")
     }
     
     func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
@@ -43,14 +43,27 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func flowComplete(_ ostContextEntity: OstContextEntity) {
-        Logger.log(message: "flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
-        
         switch ostContextEntity.type {
         case .setupDevice:
+            Logger.log(message: "setupDevice flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
+            
             let currentDevice: OstCurrentDevice  = ostContextEntity.entity as! OstCurrentDevice
             let user: OstUser = try! OstUser.getById(currentDevice.userId!)!
-            _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
-//            AddDevice(mappyUserId: mappyUserId, userId: user.id).perform()
+            
+            if (user.isActivated() && currentDevice.status!.uppercased() == "REGISTERED") {
+                AddDevice(mappyUserId: mappyUserId, userId: user.id).perform()
+            }else {
+                _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
+            }
+    
+        case .activateUser:
+            Logger.log(message: "activateUser flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
+            
+            let user: OstUser  = ostContextEntity.entity as! OstUser
+            OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expirationHeight: 12345612, delegate: self)
+         
+        case .papaerWallet:
+            print("paperWallet : ", ostContextEntity.entity as! String)
         default:
             return
         }
@@ -65,7 +78,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func showQR(_ startPollingProtocol: OstStartPollingProtocol, image qrImage: CIImage) {
-        
+//        OstSdk.perform(userId: , ciImage: <#T##CIImage#>, delegate: <#T##OstWorkFlowCallbackProtocol#>)
     }
     
     func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
