@@ -28,7 +28,7 @@ class HomeViewController: UICollectionViewController {
     self.view.tintColor = .black
     self.view.backgroundColor = .white
     
-    self.title = "Shrine"
+    self.title = "Token Economy"
     
     self.collectionView?.backgroundColor = .white
     
@@ -141,8 +141,8 @@ class HomeViewController: UICollectionViewController {
   
   //MARK - Methods
   @objc func menuItemTapped(sender: Any) {
-    let loginViewController = LoginViewController(nibName: nil, bundle: nil)
-    self.present(loginViewController, animated: true, completion: nil)
+    let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
+    self.present(setupWalletController, animated: true, completion: nil)
   }
   
   //MARK - UICollectionViewDataSource

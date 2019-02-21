@@ -29,14 +29,7 @@ class LoginViewController: UIViewController {
     return scrollView
   }()
 
-  let logoImageView: UIImageView = {
-    let baseImage = UIImage.init(named: "ShrineLogo")
-    let templatedImage = baseImage?.withRenderingMode(.alwaysTemplate)
-    let logoImageView = UIImageView(image: templatedImage)
-    logoImageView.translatesAutoresizingMaskIntoConstraints = false
-    return logoImageView
-  }()
-
+  
   let titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +45,7 @@ class LoginViewController: UIViewController {
     usernameTextField.clearButtonMode = .unlessEditing
     return usernameTextField
   }()
+  
   let mobileNumberTextField: MDCTextField = {
     let mobileNumberTextField = MDCTextField()
     mobileNumberTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -59,9 +53,19 @@ class LoginViewController: UIViewController {
     return mobileNumberTextField
   }()
 
+  let bioTextField: MDCTextField = {
+    let bioTextField = MDCTextField()
+    bioTextField.translatesAutoresizingMaskIntoConstraints = false
+    bioTextField.isSecureTextEntry = false
+    bioTextField.isHidden = true;
+    return bioTextField
+  }()
+
+  
   // Add text field controllers
   let usernameTextFieldController: MDCTextInputControllerOutlined
   let mobileNumberTextFieldController: MDCTextInputControllerOutlined
+  let bioTextFieldController: MDCTextInputControllerOutlined
 
   // Add buttons
   let toggleModeButton: MDCFlatButton = {
@@ -88,11 +92,36 @@ class LoginViewController: UIViewController {
     return errorLabel
   }()
 
+  let activityIndicator: MDCActivityIndicator = {
+    let activityIndicator = MDCActivityIndicator()
+    activityIndicator.indicatorMode = .indeterminate
+    activityIndicator.sizeToFit()
+    //#e4b030
+    let color1 = UIColor.init(red: 228.0/255.0, green: 176.0/255.0, blue: 48.0/255.0, alpha: 1.0);
+    //#438bad
+    let color2 = UIColor.init(red: 67.0/255.0, green: 139.0/255.0, blue: 173.0/255.0, alpha: 1.0);
+    //#34445b
+    let color3 = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0);
+    //#27b8d2
+    let color4 = UIColor.init(red: 39.0/255.0, green: 184.0/255.0, blue: 210.0/255.0, alpha: 1.0);
+    activityIndicator.cycleColors = [color1, color2, color3, color4]
+//    activityIndicator.isHidden = true
+    return activityIndicator;
+  }()
+  
+  let logoImageView: UIImageView = {
+    let baseImage = UIImage.init(named: "Logo")
+    let logoImageView = UIImageView(image: baseImage);
+    logoImageView.translatesAutoresizingMaskIntoConstraints = false
+    return logoImageView
+  }()
+
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     //Setup text field controllers
     usernameTextFieldController = MDCTextInputControllerOutlined(textInput: usernameTextField)
     mobileNumberTextFieldController = MDCTextInputControllerOutlined(textInput: mobileNumberTextField)
+    bioTextFieldController = MDCTextInputControllerOutlined(textInput: bioTextField);
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -124,50 +153,48 @@ class LoginViewController: UIViewController {
     scrollView.addGestureRecognizer(tapGestureRecognizer)
 
     scrollView.addSubview(titleLabel)
-    scrollView.addSubview(logoImageView)
+    
 
     // TextFields
     // Add text fields to scroll view and setup initial state
     scrollView.addSubview(usernameTextField)
     scrollView.addSubview(mobileNumberTextField)
+    scrollView.addSubview(bioTextField)
+    
     usernameTextFieldController.placeholderText = "Username"
     usernameTextField.delegate = self
+    
     mobileNumberTextFieldController.placeholderText = "Mobile Number"
     mobileNumberTextField.delegate = self
     mobileNumberTextField.keyboardType = .phonePad
+    
+    bioTextFieldController.placeholderText = "Description"
+    bioTextField.delegate = self;
+    
     registerKeyboardNotifications()
 
     // Buttons
     // Add buttons to the scroll view
     scrollView.addSubview(nextButton)
     scrollView.addSubview(toggleModeButton)
+    scrollView.addSubview(activityIndicator)
     
     // Error Label
     scrollView.addSubview(errorLabel);
+    
+    // Logo
+    scrollView.addSubview(logoImageView)
 
     // Constraints
     var constraints = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: logoImageView,
+    constraints.append(NSLayoutConstraint(item: titleLabel,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: scrollView.contentLayoutGuide,
                                           attribute: .top,
                                           multiplier: 1,
                                           constant: 49))
-    constraints.append(NSLayoutConstraint(item: logoImageView,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    constraints.append(NSLayoutConstraint(item: titleLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: logoImageView,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
+
     constraints.append(NSLayoutConstraint(item: titleLabel,
                                           attribute: .centerX,
                                           relatedBy: .equal,
@@ -215,13 +242,34 @@ class LoginViewController: UIViewController {
                                      options: [],
                                      metrics: nil,
                                      views: [ "mobileNumber" : mobileNumberTextField]))
-
-    // Buttons
-    // Setup button constraints
-    constraints.append(NSLayoutConstraint(item: toggleModeButton,
+    
+    constraints.append(NSLayoutConstraint(item: bioTextField,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: mobileNumberTextField,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 8))
+    constraints.append(NSLayoutConstraint(item: bioTextField,
+                                          attribute: .centerX,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .centerX,
+                                          multiplier: 1,
+                                          constant: 0))
+    constraints.append(contentsOf:
+      NSLayoutConstraint.constraints(withVisualFormat: "H:|-[bioTextField]-|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: [ "bioTextField" : bioTextField]))
+
+    // Buttons
+    // Setup button constraints
+    
+    constraints.append(NSLayoutConstraint(item: toggleModeButton,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: bioTextField,
                                           attribute: .bottom,
                                           multiplier: 1,
                                           constant: 8))
@@ -244,6 +292,8 @@ class LoginViewController: UIViewController {
                                           attribute: .bottomMargin,
                                           multiplier: 1,
                                           constant: -20))
+    
+
 
     // Error Label
     constraints.append(NSLayoutConstraint(item: errorLabel,
@@ -261,7 +311,25 @@ class LoginViewController: UIViewController {
                                           multiplier: 1,
                                           constant: 0))
     
+    constraints.append(NSLayoutConstraint(item: logoImageView,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: errorLabel,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 22))
+    
+    constraints.append(NSLayoutConstraint(item: logoImageView,
+                                          attribute: .centerX,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .centerX,
+                                          multiplier: 1,
+                                          constant: 0))
+    
     NSLayoutConstraint.activate(constraints)
+    
+    
   }
 
   // MARK: - Gesture Handling
@@ -276,36 +344,78 @@ class LoginViewController: UIViewController {
     self.errorLabel.text = "";
     if ( validateUsername() && validatePhoneNumber() ) {
       let currentUser = CurrentUser.getInstance();
+      var gotSuccessCallback = false;
+      
+      //Define onSuccessCallback
+      let onSuccessCallback: ((OstUser, OstDevice) -> Void) = { ostUser, userDevice in
+        gotSuccessCallback = true
+        if ( ostUser.isCreated() ) {
+          //Need to activate user.
+          let rootViewController =  self.presentingViewController;
+          self.dismiss(animated: true, completion: {
+            let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
+            rootViewController?.present(setupWalletController, animated: true, completion: nil);
+          });
+          
+        } else if ( ostUser.isActivating() ) {
+          //User is still activating.
+          self.dismiss(animated: true, completion: nil);
+        } else if ( ostUser.isActivated() ) {
+          //User is already activated. Lets check if we need to authorize the device.
+          self.dismiss(animated: true, completion: nil);
+        }
+      }
+      
+      //Define onCompleteCallback.
+      let onCompleteCallback: ((Bool) -> Void) = { isLoggedIn in
+        if ( !isLoggedIn ) {
+          self.errorLabel.text = "Invalid Credentials";
+        } else if ( !gotSuccessCallback ) {
+          self.errorLabel.text = "Failed to register device. Please retry.";
+        }
+        self.activityIndicator.stopAnimating();
+        self.toggleModeButton.isHidden = false;
+        self.nextButton.isHidden = false;
+      }
+      
+      self.activityIndicator.center = toggleModeButton.center;
+      self.toggleModeButton.isHidden = true;
+      self.nextButton.isHidden = true;
+      self.activityIndicator.startAnimating();
+      
       if ( isLoginMode ) {
-        currentUser.login(username: usernameTextField.text!, phonenumber: mobileNumberTextField.text!) { (isLoggedIn:Bool) in
-          if ( isLoggedIn ) {
-            self.dismiss(animated: true, completion: nil);
-            return;
-          }
-          self.errorLabel.text = "Invalid Credentials";
-        }
+        currentUser.login(username: usernameTextField.text!,
+                          phonenumber:  mobileNumberTextField.text!,
+                          onSuccess: onSuccessCallback,
+                          onComplete: onCompleteCallback)
       } else {
-        currentUser.signUp(username: usernameTextField.text!, phonenumber: mobileNumberTextField.text!) { (isLoggedIn:Bool) in
-          if ( isLoggedIn ) {
-            self.dismiss(animated: true, completion: nil);
-            return;
-          }
-          self.errorLabel.text = "Invalid Credentials";
-
+        var userDescription = bioTextField.text
+        if ( nil == userDescription || userDescription!.count < 1 ) {
+          userDescription = "Hey there! I am using Ost powered token economy."
         }
+        
+        currentUser.signUp(username: usernameTextField.text!,
+                           phonenumber: mobileNumberTextField.text!,
+                           userDescription: userDescription!,
+                           onSuccess: onSuccessCallback,
+                           onComplete: onCompleteCallback);
       }
     }
     return;
   }
 
   @objc func didToggleMode(sender: Any) {
+    
     self.isLoginMode = !self.isLoginMode;
     if ( self.isLoginMode) {
+      
       titleLabel.text = "Sign in to continue";
       toggleModeButton.setTitle("Create Account", for: .normal);
+      bioTextField.isHidden = true;
     } else {
       titleLabel.text = "Create your Account";
       toggleModeButton.setTitle("Sign in instead", for: .normal)
+      bioTextField.isHidden = false;
     }
     mobileNumberTextField.text = "";
     usernameTextField.text = "";
