@@ -26,8 +26,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = try! OstKeyManager(userId: "123").createKeyWithMnemonics()
-        _ = try! OstKeyManager(userId: "123").createAPIKey()
+//        _ = try! OstKeyManager(userId: "123").createKeyWithMnemonics()
+//        _ = try! OstKeyManager(userId: "123").createAPIKey()
 //        let a = try! OstKeyManager(userId: "123").getEthereumKey(forAddresss: "0x72A1ade35F9dB59e150f01c62F0ae17cBd0133D9")
 //        let b = try! OstKeyManager(userId: "123").getAPIKey()
 //        let c = try! OstKeyManager(userId: "123").getDeviceAddress()

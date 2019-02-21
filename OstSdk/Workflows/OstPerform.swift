@@ -115,8 +115,5 @@ class OstPerform: OstWorkflowBase {
             throw OstError.invalidInput("Invalid data defination.")
         }
     }
-    
-    func authorizeUser() {
-        let biomatricAuth: 
-    }
+
 }

@@ -71,7 +71,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     func createAndRegisterDevice() {
         DispatchQueue.main.async {
             do {
-                let deviceAddress = try self.keyManager.createKeyWithMnemonics()
+                let deviceAddress = try self.keyManager.createDeviceKey()
                 let apiAddress = try self.keyManager.createAPIKey()
                 
                 var apiParam: [String: Any] = [:]
