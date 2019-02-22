@@ -35,14 +35,17 @@ public enum OstErrorType {
 internal class OstError1: Error {
     
     public let internalCode:String
+    public let errorMessage:String
     public var message: String {
-        return errorCode.rawValue
+        return errorMessage
     }
-    public let errorCode: OstErrorText
-    
     init(_ code: String, _ messageTextCode: OstErrorText) {
         self.internalCode = code
-        self.errorCode = messageTextCode
+        errorMessage = messageTextCode.rawValue
+    }
+    init(_ code: String, _ errorMessage: String) {
+        self.internalCode = code
+        self.errorMessage = errorMessage
     }
 }
 
@@ -58,5 +61,8 @@ public enum OstErrorText: String {
     case generatePrivateKeyFail = "Error while generating private key."
     case noPrivateKeyFound = "Private key not found."
     case mnemonicsNotStored = "Failed to store mnemonics."
-    
+    case scryptKeyGenerationFailed = "Failed to generate SCrypt key."
+    case seedCreationFailed = "Failed to create seed from mnemonics."
+    case walletGenerationFailed = "Failed to create wallet from seed."
+    case signTxFailed = "Failed to sign transaction with private key."
 }

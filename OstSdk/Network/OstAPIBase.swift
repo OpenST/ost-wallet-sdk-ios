@@ -85,7 +85,7 @@ open class OstAPIBase {
     }
     
     func sign(_ params: inout [String: Any]) throws {
-        let (signature, _) =  try OstAPISigner(userId: userId).sign(resource: getResource, params: params)
+        let signature =  try OstAPISigner(userId: userId).sign(resource: getResource, params: params)
         params["api_signature"] = signature
     }
     

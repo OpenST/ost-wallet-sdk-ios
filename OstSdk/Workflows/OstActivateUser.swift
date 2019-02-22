@@ -134,7 +134,7 @@ class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     func generateSessionKeys() {
         do {
-            self.walletKeys = try OstCryptoImpls().generateCryptoKeys()
+            self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
             
             if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
                 self.postError(OstError.actionFailed("activation of user failed."))

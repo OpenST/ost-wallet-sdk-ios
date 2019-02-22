@@ -11,7 +11,18 @@ import CryptoSwift
 import EthereumKit
 
 class OstCryptoImpls: OstCrypto {
-    
+
+    /// Get the data that will be used for private key generation
+    ///
+    /// - Parameters:
+    ///   - salt: Salt data
+    ///   - n: The `N` parameter of Scrypt encryption algorithm
+    ///   - r: The `R` parameter of Scrypt encryption algorithm
+    ///   - p: The `P` parameter of Scrypt encryption algorithm
+    ///   - size: Desired key length in bytes.
+    ///   - stringToCalculate: String to calculate the data
+    /// - Returns: Data that can be used for OSTWalletKeys generation
+    /// - Throws: OSTError
     func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data {
         var params = ScryptParams()
         params.n = n
@@ -22,105 +33,130 @@ class OstCryptoImpls: OstCrypto {
         
         let scrypt = Scrypt(params: params)
         do {
-            let actual = try scrypt.calculate(password: stringToCalculate)
-            return actual;
-        }catch let error {
-            throw error
+            let scryptKey = try scrypt.calculate(password: stringToCalculate)
+            return scryptKey;
+        } catch {
+            throw OstError1.init("s_i_ci_gsck_1", .scryptKeyGenerationFailed)
         }
-        
-    }
+    }    
     
-    func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8] {
-        do {
-            let hkdfOutput = try HKDF(password: dataBytes, salt: saltBytes, variant: .sha256).calculate()
-            return hkdfOutput
-        }catch let error{
-            throw error
-        }
-    }
-    
-    func genDigest(bytes: [UInt8]) -> [UInt8] {
-        let sha3Obj = SHA3.init(variant: .keccak256)
-        let keccakOutput = sha3Obj.calculate(for: bytes)
-        
-        return keccakOutput
-    }
-    
-    func aesGCMEncrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8] {
-        do {
-            let gcm = GCM(iv: iv, authenticationTag: ahead, mode: .combined)
-            let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
-            let encrypted = try aes.encrypt(dataToEncrypt)
-            return encrypted
-        }catch let error{
-            throw error
-        }
-    }
-    
-    func aesGCMDecrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8]?, dataToDecrypt : [UInt8]) throws -> [UInt8] {
-        do {
-            let gcm = GCM(iv: iv, mode: .combined)
-            gcm.authenticationTag = ahead
-            
-            let aes = try AES(key: aesKey, blockMode: gcm, padding: .noPadding)
-            let decrypted =  try aes.decrypt(dataToDecrypt)
-            return decrypted
-        }catch let error{
-            throw error
-        }
-    }
-    
-    func generateCryptoKeys() throws  -> OstWalletKeys {
+    /// Generate OST wallet keys
+    ///
+    /// - Returns: OstWalletKeys object
+    /// - Throws: OSTError
+    func generateOstWalletKeys() throws  -> OstWalletKeys {
         let mnemonics : [String] = Mnemonic.create()
-        Logger.log(message: "mnemonics", parameterToPrint: mnemonics)
         return try generateEthereumKeys(withMnemonics: mnemonics)
     }
     
+    /// Generate OST wallet keys with 12 words mnemonics
+    ///
+    /// - Parameter mnemonics: 12 words menemonics
+    /// - Returns: OstWalletKeys object
+    /// - Throws: OSTError
     func generateEthereumKeys(withMnemonics mnemonics: [String]) throws -> OstWalletKeys {
-        let seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
+        let seed: Data
+        do {
+            // TODO: Discuss this with wider audience to decide if passphrase really needs to be in Constants. Looks incorrect to me.
+            // The passphrase must always be equal to empty string. This is in consistent with the Metamask.
+            seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
+        } catch {
+            throw OstError1.init("s_i_ci_gek_1", .seedCreationFailed)
+        }
         let wallet: Wallet
         do {
-            wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: true)
-        } catch let error {
-            fatalError("Error: \(error.localizedDescription)")
+            // Wallet needs mandatory parameter network. We always pass .mainnet
+            wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: OstConstants.PRINT_DEBUG)
+        } catch {
+            throw OstError1.init("s_i_ci_gek_2", .walletGenerationFailed)
         }
         
         let privateKey = wallet.privateKey()
         let publicKey = wallet.publicKey()
         let address = wallet.address()
-        return OstWalletKeys(privateKey: privateKey.toHexString(), publicKey: publicKey.toHexString(), address: address, mnemonics: mnemonics)
+
+        return OstWalletKeys(privateKey: privateKey.toHexString(),
+                             publicKey: publicKey.toHexString(),
+                             address: address,
+                             mnemonics: mnemonics)
     }
     
+    /// Sign the transaction with private key
+    ///
+    /// - Parameters:
+    ///   - tx: Raw transaction string
+    ///   - privateKey: private key string
+    /// - Returns: Signed transaction string
+    /// - Throws: OSTError
     func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
         let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
         
-        var singedData = try priKey.sign(hash: Data(hex: tx))
+        var singedData: Data
+        do {
+            singedData = try priKey.sign(hash: Data(hex: tx))
+        } catch {
+            throw OstError1.init("s_i_ci_stx_1", .signTxFailed)
+        }
         singedData[64] += 27
         let singedTx = singedData.toHexString().addHexPrefix();
         return singedTx
     }
     
-    func generateRecoveryKey(pinPrefix: String, pin: String, pinPostFix: String, salt: String, n:Int, r:Int, p: Int, size: Int) throws -> String {
+    /// Generate recovery password
+    ///
+    /// - Parameters:
+    ///   - password: Password for recovery password generation
+    ///   - pin: Pin for recovery password generation
+    ///   - userId: User id for which the recovery password is needed
+    ///   - salt: Salt data
+    ///   - n: The `N` parameter of Scrypt encryption algorithm
+    ///   - r: The `R` parameter of Scrypt encryption algorithm
+    ///   - p: The `P` parameter of Scrypt encryption algorithm
+    ///   - size: Desired key length in bytes.
+    /// - Returns: Recovery address
+    /// - Throws: OSTError
+    func generateRecoveryKey(password: String,
+                             pin: String,
+                             userId: String,
+                             salt: String,
+                             n:Int,
+                             r:Int,
+                             p: Int,
+                             size: Int) throws -> String {
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > pinPrefix.count {
-            throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > password.count {
+            throw OstError1.init("s_i_ci_grk_1",
+                                 "Password must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > pinPostFix.count {
-            throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > userId.count {
+            throw OstError1.init("s_i_ci_grk_2",
+                                 "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
-            throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+            throw OstError1.init("s_i_ci_grk_3",
+                                 "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
-        let stringToCalculate: String = pinPrefix+pin+pinPostFix
-        let seed: Data = try! genSCryptKey(salt: salt.data(using: .utf8)!, n: n, r: r, p: p, size: size, stringToCalculate: stringToCalculate)
+        let stringToCalculate: String = "\(password)\(pin)\(userId)"
+        let seed: Data
+        do {
+            seed = try genSCryptKey(salt: salt.data(using: .utf8)!,
+                                    n: n,
+                                    r: r,
+                                    p: p,
+                                    size: size,
+                                    stringToCalculate: stringToCalculate)
+        } catch {
+            throw OstError1.init("s_i_ci_grk_4", .scryptKeyGenerationFailed)
+        }
         
-        let privateKey = HDPrivateKey(seed: seed, network: .mainnet)
-        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK, privateKey: privateKey.privateKey().raw.toHexString(), debugPrints: true)
-        Logger.log(message: "address", parameterToPrint: wallet.address())
-        
+        let privateKey = HDPrivateKey(seed: seed, network: OstConstants.OST_WALLET_NETWORK)
+
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
+                                     privateKey: privateKey.privateKey().raw.toHexString(),
+                                     debugPrints: OstConstants.PRINT_DEBUG)
         return wallet.address()
     }
 }

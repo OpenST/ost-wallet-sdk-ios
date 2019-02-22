@@ -109,7 +109,7 @@ public class OstKeyManager {
     /// - Returns: API address
     /// - Throws: Exceptions that occurs while creating and storing the keys
     func createAPIKey() throws -> String {
-        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
+        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys()
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeAPIAddress(ethKeys.address!)
         return ethKeys.address!
@@ -152,7 +152,7 @@ public class OstKeyManager {
     /// - Returns: Device address
     /// - Throws: Exceptions that occurs while storing the address or key in the keychain
     public func createDeviceKey() throws -> String {
-        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateCryptoKeys()
+        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys()
         try storeMnemonics(ethKeys.mnemonics!, forAddress: ethKeys.address!)
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeDeviceAddress(ethKeys.address!)
