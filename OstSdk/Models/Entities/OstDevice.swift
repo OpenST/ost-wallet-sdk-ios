@@ -40,7 +40,16 @@ public class OstDevice: OstBaseEntity {
             return false
         }
         
-        return ["REGISTERED", "AUTHORIZED", "AUTHORIZING"].contains(status!)
+        return ["REGISTERED", "AUTHORIZED"].contains(status!)
+    }
+    
+    public func isAuthorizing() -> Bool {
+        let status = self.status
+        if (status != nil &&
+            status! == "AUTHORIZING") {
+            return true
+        }
+        return false
     }
     
     public  func isDeviceRevoked() -> Bool {
