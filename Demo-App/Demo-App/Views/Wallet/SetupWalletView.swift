@@ -45,10 +45,6 @@ class SetupWalletView: BaseWalletWorkflowView {
     super.didTapNext(sender: sender);
   }
   
-  override func receivedSdkEvent(eventData: [String : Any]) {
-    super.receivedSdkEvent(eventData: eventData);
-    //Inspect the eventData here.
-  }
 
   
   // Mark - Sub Views
@@ -177,6 +173,20 @@ class SetupWalletView: BaseWalletWorkflowView {
     }
     pinNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
     return true;
+  }
+  
+  override func receivedSdkEvent(eventData: [String : Any]) {
+    super.receivedSdkEvent(eventData: eventData);
+    let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+    if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+      //Time and close.
+      DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+        self.dismissViewController();
+      }
+      self.addToLog(log: "This window will close in 5 seconds");
+    } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
+      self.nextButton.setTitle("Try Again", for: .normal);
+    }
   }
 
 }

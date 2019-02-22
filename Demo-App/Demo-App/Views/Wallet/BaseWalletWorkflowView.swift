@@ -36,6 +36,9 @@ class BaseWalletWorkflowView: BaseWalletView {
     return toggleModeButton
   }()
 
+
+
+  
   let activityIndicator: MDCActivityIndicator = {
     let activityIndicator = MDCActivityIndicator()
     activityIndicator.indicatorMode = .indeterminate
@@ -66,7 +69,7 @@ class BaseWalletWorkflowView: BaseWalletView {
     let successLabel = UILabel()
     successLabel.translatesAutoresizingMaskIntoConstraints = false
     successLabel.text = ""
-    successLabel.textColor = UIColor.green;
+    successLabel.textColor = UIColor.init(red: 67.0/255.0, green: 139.0/255.0, blue: 173.0/255.0, alpha: 1.0);
     successLabel.sizeToFit()
     return successLabel
   }()
@@ -116,7 +119,10 @@ class BaseWalletWorkflowView: BaseWalletView {
       addToLog(log: "☑️ Workflow Request Acknowledged.");
     } else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
       addToLog(log: "✅ Workflow Completed Successfully.");
-      
+      self.nextButton.isHidden = false;
+      self.cancelButton.isHidden = false;
+      self.activityIndicator.stopAnimating();
+      self.successLabel.text = "Great! Your wallet has been setup."
     } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
       addToLog(log: "⚠️ Workflow Failed.");
       let error = eventData["ostError"] as! OstError;
@@ -139,7 +145,7 @@ class BaseWalletWorkflowView: BaseWalletView {
  
   func addToLog( log:String ) {
     var allLogs = (self.logsLabel.text != nil) ? self.logsLabel.text! : "";
-    allLogs += "\n" + log;
+    allLogs += "\n\n" + log;
     self.logsLabel.text = allLogs;
     
   }
@@ -185,12 +191,12 @@ class BaseWalletWorkflowView: BaseWalletView {
                                      metrics: nil,
                                      views: [ "cancel" : cancelButton, "next" : nextButton]))
     constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .bottom,
+                                          attribute: .height,
                                           relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
+                                          toItem: nil,
+                                          attribute: .notAnAttribute,
                                           multiplier: 1,
-                                          constant: -20))
+                                          constant: 50))
     
     // Error Label
     constraints.append(NSLayoutConstraint(item: errorLabel,
@@ -212,7 +218,7 @@ class BaseWalletWorkflowView: BaseWalletView {
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: errorLabel,
-                                          attribute: .top,
+                                          attribute: .bottom,
                                           multiplier: 1,
                                           constant: 0))
     
@@ -223,6 +229,30 @@ class BaseWalletWorkflowView: BaseWalletView {
                                           attribute: .centerX,
                                           multiplier: 1,
                                           constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: logsLabel,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: successLabel,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: logsLabel,
+                                          attribute: .centerX,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .centerX,
+                                          multiplier: 1,
+                                          constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: logsLabel,
+                                          attribute: .bottom,
+                                          relatedBy: .equal,
+                                          toItem: scrollView.contentLayoutGuide,
+                                          attribute: .bottomMargin,
+                                          multiplier: 1,
+                                          constant: -20))
     NSLayoutConstraint.activate(constraints)
   }
   
