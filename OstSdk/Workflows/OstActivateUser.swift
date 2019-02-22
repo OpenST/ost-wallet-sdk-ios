@@ -120,7 +120,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.pinPrefix, pin: self.pin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N, r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R, p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P, size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
+            return try OstCryptoImpls().generateRecoveryKey(password: self.pinPrefix, pin: self.pin, userId: self.userId, salt: salt, n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N, r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R, p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P, size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         }catch {
             return nil
         }
@@ -128,7 +128,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func generateSessionKeys() {
         do {
-            self.walletKeys = try OstCryptoImpls().generateCryptoKeys()
+            self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
             
             if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
                 self.postError(OstError.actionFailed("activation of user failed."))

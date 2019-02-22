@@ -8,12 +8,27 @@
 
 import Foundation
 
+/// Structure to store wallet keys.
 struct OstWalletKeys {
+    /// Private key that is used for signing
     var privateKey: String?
+    
+    /// Public key
     var publicKey: String?
+    
+    /// Ethererum address
     var address: String?
+    
+    /// 12 works mnemonics that can be used to recreate the wallet.
     var mnemonics: [String]?
     
+    /// Initializer
+    ///
+    /// - Parameters:
+    ///   - privateKey: Private key that is used for signing
+    ///   - publicKey: Public key
+    ///   - address: Ethererum address
+    ///   - mnemonics: 12 works mnemonics that can be used to recreate the wallet.
     init(privateKey: String? = nil, publicKey: String? = nil, address: String? = nil, mnemonics: [String]? = nil) {
         self.privateKey = privateKey
         self.publicKey = publicKey
@@ -22,20 +37,33 @@ struct OstWalletKeys {
     }
 }
 
-
 protocol OstCrypto {
     
+    /// Get the data that will be used for private key generation
+    ///
+    /// - Parameters:
+    ///   - salt: Salt data
+    ///   - n: The `N` parameter of Scrypt encryption algorithm
+    ///   - r: The `R` parameter of Scrypt encryption algorithm
+    ///   - p: The `P` parameter of Scrypt encryption algorithm
+    ///   - size: Desired key length in bytes.
+    ///   - stringToCalculate: String to calculate the data
+    /// - Returns: Data that can be used for OSTWalletKeys generation
+    /// - Throws: OSTError
     func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data
     
-    func genHKDFKey(salt saltBytes: [UInt8], data dataBytes: [UInt8]) throws -> [UInt8]
+    /// Generate OST wallet keys
+    ///
+    /// - Returns: OstWalletKeys object
+    /// - Throws: OSTError
+    func generateOstWalletKeys() throws -> OstWalletKeys
     
-    func aesGCMEncrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8], dataToEncrypt: [UInt8]) throws -> [UInt8]
-    
-    func aesGCMDecrypt(aesKey: [UInt8], iv: [UInt8], ahead: [UInt8]?, dataToDecrypt : [UInt8]) throws -> [UInt8] 
-    
-    func genDigest(bytes: [UInt8]) -> [UInt8]
-    
-    func generateCryptoKeys() throws -> OstWalletKeys
-    
+    /// Sign the transaction with private key
+    ///
+    /// - Parameters:
+    ///   - tx: Raw transaction string
+    ///   - privateKey: private key string
+    /// - Returns: Signed transaction string
+    /// - Throws: OSTError
     func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String
 }
