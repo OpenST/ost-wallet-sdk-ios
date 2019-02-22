@@ -17,21 +17,25 @@ class OstGetPapaerWallet: OstWorkflowBase {
     
     override func perform() {
         ostGetPapaerWalletThread.async {
-            do {
-                let keychainManager = OstKeyManager(userId: self.userId)
-                guard let walletKey: String = keychainManager.getDeviceAddress() else {
-                    throw OstError.actionFailed("Paper wallet not found.")
-                }
-                guard let mnemonics: [String] = try keychainManager.getMnemonics(forAddresss: walletKey) else {
-                    throw OstError.actionFailed("Paper wallet not found.")
-                }
-                
-                let paperWalletString: String = mnemonics.joined(separator: " ")
-                self.postFlowCompleteForGetPaperWallet(entity: paperWalletString)
-                
-            }catch let error {
-                self.postError(error)
+            self.authenticateUser()
+        }
+    }
+    
+    override func processOperation() {
+        do {
+            let keychainManager = OstKeyManager(userId: self.userId)
+            guard let walletKey: String = keychainManager.getDeviceAddress() else {
+                throw OstError.actionFailed("Paper wallet not found.")
             }
+            guard let mnemonics: [String] = try keychainManager.getMnemonics(forAddresss: walletKey) else {
+                throw OstError.actionFailed("Paper wallet not found.")
+            }
+            
+            let paperWalletString: String = mnemonics.joined(separator: " ")
+            self.postFlowCompleteForGetPaperWallet(entity: paperWalletString)
+            
+        }catch let error {
+            self.postError(error)
         }
     }
     
