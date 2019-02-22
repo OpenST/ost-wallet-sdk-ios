@@ -68,11 +68,9 @@ class EntryViewController: UIViewController {
     
     
     func biomatricAuth() {
-        let callbackObj = OstWorkFlowCallbackImplementation(mappyUserId: "5c6a903fae36955a9f140461")
-        OstSdk.perfrom(userId: "dbb85a81-bd6e-4412-a783-7e4b40c50063", payload: "", delegate: callbackObj)
+        let callbackObj = OstWorkFlowCallbackImplementation(mappyUserId: "5c6ec4eabd55c229fd62877f")
+        OstSdk.perfrom(userId: "20daf895-436e-496f-ad18-5031f2fff8e7", payload: "", delegate: callbackObj)
     }
-    
-
     
     func canProceed() -> Bool {
         var isCorrectData = true
