@@ -129,6 +129,10 @@ extension OstSdkInteract {
   func walletWordsValidated() {
     
   }
+    
+    func showPaperWallet(mnemonics: [String]) {
+        
+    }
 }
 
 
