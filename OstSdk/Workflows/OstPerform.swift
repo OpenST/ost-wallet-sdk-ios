@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
+class OstPerform: OstWorkflowBase {
     let ostPerformThread = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     
     enum DataDefination: String {
@@ -23,10 +23,6 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
     var dataDefination: String? = nil
     var payload: [String: String]? = nil
     var deviceManager: OstDeviceManager? = nil
-    
-    var saltResponse: [String: Any]? = nil
-    var uPin: String? = nil
-    var password: String? = nil
     
     let threshold = "1"
     let nullAddress = "0x0000000000000000000000000000000000000000"
@@ -46,14 +42,14 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                     throw OstError.invalidInput("Device is not registered")
                 }
                 
-                self.processOperation()
+                self.authenticateUser()
             }catch let error {
                 self.postError(error)
             }
         }
     }
 
-    func processOperation() {
+    override func processOperation() {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
             if (self.payload == nil) {
@@ -110,77 +106,6 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
         }
     }
     
-    public func authenticateUser() {
-        let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
-        biomatricAuth.authenticateUser { (isSuccess, message) in
-            if (isSuccess) {
-                do {
-                 self.processOperation()
-                }catch let error{
-                    self.postError(error)
-                }
-            }else {
-                DispatchQueue.main.async {
-                    self.delegate.getPin(self.userId, delegate: self)
-                }
-            }
-        }
-    }
-    
-    //MARK - OstPinAcceptProtocol
-    
-    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        ostPerformThread.async {
-            do {
-                self.uPin = uPin
-                self.password = appUserPassword
-                if (self.saltResponse != nil) {
-                    try self.validatePin()
-                }else {
-                    try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                        do {
-                            self.saltResponse = saltResponse
-                            try self.validatePin()
-                        }catch let error {
-                            self.postError(error)
-                        }
-                        
-                    }, onFailure: { (error) in
-                        self.postError(error)
-                    })
-                }
-
-            }catch let error {
-                self.postError(error)
-            }
-        }
-    }
-    func validatePin() throws {
-        let salt = self.saltResponse!["scrypt_salt"] as! String
-        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.password!, pin: self.uPin!, pinPostFix: self.userId,
-                                                                   salt: salt,  n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                                   r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                                   p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                                   size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
-        
-        guard let user: OstUser = try getUser() else {
-            throw OstError.actionFailed("User is not persent")
-        }
-        
-        if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
-            throw OstError.actionFailed("Recovery address for user is not set.")
-        }
-        
-        if(user.recoveryAddress! == recoveryKey) {
-            self.processOperation()
-        }else {
-            DispatchQueue.main.async {
-                self.delegate.invalidPin(self.userId, delegate: self)
-            }
-        }
-        
-    }
-    
     func authorizeDeviceWithPrivateKey() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
@@ -193,8 +118,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                     return (signature, deviceAddress)
                 }
                 throw OstError.actionFailed("issue while generating signature.")
-            }catch let error {
-                self.postError(error)
+            }catch {
                 return (nil, nil)
             }
         }
