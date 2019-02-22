@@ -42,7 +42,13 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         
     }
     
+    func biomatricAuth() {
+        let callbackObj = OstWorkFlowCallbackImplementation(mappyUserId: "5c6ec4eabd55c229fd62877f")
+        OstSdk.perfrom(userId: "20daf895-436e-496f-ad18-5031f2fff8e7", payload: "", delegate: callbackObj)
+    }
+    
     func flowComplete(_ ostContextEntity: OstContextEntity) {
+
         switch ostContextEntity.type {
         case .setupDevice:
             Logger.log(message: "setupDevice flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
@@ -52,8 +58,10 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             
             if (user.isActivated() && currentDevice.status!.uppercased() == "REGISTERED") {
                 AddDevice(mappyUserId: mappyUserId, userId: user.id).perform()
-            }else {
+            }else if (!user.isActivated()){
                 _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
+            }else {
+                OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expirationHeight: 12345612, delegate: self)
             }
     
         case .activateUser:
@@ -62,15 +70,13 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             let user: OstUser  = ostContextEntity.entity as! OstUser
             OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expirationHeight: 12345612, delegate: self)
          
-        case .papaerWallet:
-            print("paperWallet : ", ostContextEntity.entity as! String)
         default:
             return
         }
     }
     
     func flowInterrupt(_ ostError: OstError) {
-       
+       Logger.log(message: "IMP flowInterrupt", parameterToPrint: ostError.description)
     }
     
     func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {
@@ -91,5 +97,9 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     
     func walletWordsValidated() {
         
+    }
+    
+    func showPaperWallet(mnemonics: [String]) {
+        print(mnemonics)
     }
 }
