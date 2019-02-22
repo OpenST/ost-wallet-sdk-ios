@@ -117,7 +117,7 @@ public extension OstUser {
     }
     
     var recoveryAddress: String? {
-        if let rAddress = data["recovery_address"] as? String {
+        if let rAddress = data["recovery_owner_address"] as? String {
             return rAddress.isEmpty ? nil : rAddress
         }
         return nil
