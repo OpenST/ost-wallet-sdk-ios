@@ -10,6 +10,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     let ostAddSessionThread = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    let workflowTransactionCountForPolling = 2
     
     var spendingLimit: String
     var expirationHeight: Int
@@ -18,6 +19,7 @@ class OstAddSession: OstWorkflowBase {
     var currentDevice: OstCurrentDevice? = nil
     var walletKeys: OstWalletKeys? = nil
     var currentBlockHeight: Int = 0
+    var chainInfo: [String: Any]? = nil
     
     init(userId: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
@@ -57,25 +59,8 @@ class OstAddSession: OstWorkflowBase {
     func getCurrentBlockHeight() {
         do {
             let onSuccess: (([String: Any]) -> Void) = { chainInfo in
-                self.currentBlockHeight = OstUtils.toInt(chainInfo["block_height"])!
-                self.generateAndSaveSessionEntity()
-                OstAuthorizeSession(userId: self.userId,
-                                    sessionAddress: self.walletKeys!.address!,
-                                    spendingLimit: self.spendingLimit,
-                                    expirationHeight: OstUtils.toString(self.currentBlockHeight + self.expirationHeight)!,
-                                    generateSignatureCallback: { (signingHash) -> String? in
-                                        do {
-                                            let keychainManager = OstKeyManager(userId: self.userId)
-                                            if let deviceAddress = keychainManager.getDeviceAddress() {
-                                                let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
-                                                return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
-                                            }
-                                            throw OstError.actionFailed("issue while generating signature.")
-                                        }catch let error {
-                                            self.postError(error)
-                                            return nil
-                                        }
-                }, delegate: self.delegate).perform()
+                self.chainInfo = chainInfo
+                self.authorizeSession()
             }
             
             let onFailuar: ((OstError) -> Void) = { error in
@@ -86,6 +71,43 @@ class OstAddSession: OstWorkflowBase {
         }catch let error {
             self.postError(error)
         }
+    }
+    
+    func authorizeSession() {
+        
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                if let deviceAddress = keychainManager.getDeviceAddress() {
+                    let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
+                    return (signature, deviceAddress)
+                }
+                throw OstError.actionFailed("issue while generating signature.")
+            }catch {
+                return (nil, nil)
+            }
+        }
+        
+        let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+            self.pollingForAuthorizeSession(ostSession)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        
+        self.currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!
+        self.generateAndSaveSessionEntity()
+     
+        OstAuthorizeSession(userId: self.userId,
+                            sessionAddress: self.walletKeys!.address!,
+                            spendingLimit: self.spendingLimit,
+                            expirationHeight: OstUtils.toString(self.currentBlockHeight + self.expirationHeight)!,
+                            generateSignatureCallback: generateSignatureCallback,
+                            onSuccess: onSuccess,
+                            onFailure: onFailure).perform()
     }
     
     func generateAndSaveSessionEntity() {
@@ -107,5 +129,31 @@ class OstAddSession: OstWorkflowBase {
         params["status"] = OstSession.SESSION_STATUS_CREATED
         
         return params
+    }
+    
+    func pollingForAuthorizeSession(_ ostSession: OstSession) {
+        
+        let successCallback: ((OstSession) -> Void) = { ostSession in
+            self.postFlowComplete(entity: ostSession)
+        }
+        
+        let failuarCallback:  ((OstError) -> Void) = { error in
+            self.postError(error)
+        }
+        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        
+        OstSessionPollingService(userId: ostSession.userId!,
+                                 sessionAddress: ostSession.address!,
+                                 workflowTransactionCount: workflowTransactionCountForPolling,
+                                 successCallback: successCallback, failuarCallback: failuarCallback).perform()
+    }
+    
+    func postFlowComplete(entity: OstSession) {
+        Logger.log(message: "OstAddSession flowComplete", parameterToPrint: entity.data)
+        
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .addSession , entity: entity)
+            self.delegate.flowComplete(contextEntity);
+        }
     }
 }
