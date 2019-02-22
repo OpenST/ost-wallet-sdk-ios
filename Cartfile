@@ -1,0 +1,6 @@
+github "OpenSTFoundation/EthereumKit" "aniket/ios8"
+github "evgenyneu/keychain-swift" ~> 13.0
+github "attaswift/BigInt"
+github "ccgus/fmdb"
+github "kishikawakatsumi/KeychainAccess"
+github "Alamofire/Alamofire" "4.8.1"

@@ -1,0 +1,35 @@
+//
+//  OstSessionPollingService.swift
+//  OstSdk
+//
+//  Created by aniket ayachit on 20/02/19.
+//  Copyright © 2019 aniket ayachit. All rights reserved.
+//
+
+import Foundation
+
+class OstSessionPollingService: OstBasePollingService {
+
+    let successCallback: ((OstSession) -> Void)?
+    let sessionAddress: String
+    init(userId: String, sessionAddress: String, workflowTransactionCount: Int, successCallback: ((OstSession) -> Void)?, failuarCallback: ((OstError) -> Void)?) {
+        self.sessionAddress = sessionAddress
+        self.successCallback = successCallback
+        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failuarCallback: failuarCallback)
+    }
+    
+    override func onSuccessProcess(entity: OstBaseEntity) {
+        let ostSession: OstSession = entity as! OstSession
+        if (ostSession.isInitializing()) {
+            Logger.log(message: "test User status is activating for userId: \(ostSession.id) and is activated at \(Date.timestamp())", parameterToPrint: ostSession.data)
+            self.getEntityAfterDelay()
+        }else{
+            Logger.log(message: "test User with userId: \(ostSession.id) and is activated at \(Date.timestamp())", parameterToPrint: ostSession.data)
+            self.successCallback?(ostSession)
+        }
+    }
+    
+    override func fetchEntity() throws {
+        try OstAPISession(userId: self.userId).getSession(sessionAddress: sessionAddress, onSuccess: self.onSuccess, onFailure: onFailure)
+    }
+}

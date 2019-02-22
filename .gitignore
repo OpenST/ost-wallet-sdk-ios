@@ -1,0 +1,13 @@
+Carthage/
+Cartfile.resolved
+
+.DS_Store
+*.DS_Store
+
+# Pod
+Pods/
+*.xcworkspace
+*.xcuserstate
+*.xcconfig
+*.xcbkptlist
+xcuserdata/
