@@ -157,7 +157,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
     }
     func validatePin() throws {
         let salt = self.saltResponse!["scrypt_salt"] as! String
-        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.password!, pin: self.uPin!, pinPostFix: self.userId,
+        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(password: self.password!, pin: self.uPin!, userId: self.userId,
                                                                    salt: salt,  n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
                                                                    r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
                                                                    p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,

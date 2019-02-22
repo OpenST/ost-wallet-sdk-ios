@@ -9,64 +9,90 @@
 import Foundation
 import EthereumKit
 
-
-struct ApiSigner {
-    var userId: String
-    var APIKey: String
-    
-    init(userId: String, APIKey: String) {
-        self.userId = userId
-        self.APIKey = APIKey
-    }
-}
-
 class OstAPISigner {
-    private static var apiSigner: ApiSigner? = nil
     
+    /// User id associated with the API keys
     var userId: String
+    
+    /// API private key
+    private var apiKey: String?
+    
+    /// Get OstAPISigner object for the given user id
+    ///
+    /// - Parameter userId: User Id for which the API keys will be used for signing
+    /// - Returns: OstAPISigner object
+    /// - Throws: OSTError
+    class func getApiSigner(forUserId userId: String) throws -> OstAPISigner{
+        let apiSigner = OstAPISigner(userId: userId)
+        do {
+            _ = try apiSigner.getApiKey();
+        } catch {
+            throw OstError1.init("s_i_as_gas_1", .noPrivateKeyFound)
+        }
+        return apiSigner;
+    }
+    
+    /// Initializer
+    ///
+    /// - Parameter userId: User Id for which the API keys will be used for signing
     init(userId: String) {
         self.userId = userId
     }
     
-    func getAPISigner() -> ApiSigner? {
-        return OstAPISigner.apiSigner
+    /// Sign the api url with the private key
+    ///
+    /// - Parameters:
+    ///   - resource: API url string
+    ///   - params: API url associated paramters
+    /// - Returns: Signed string
+    /// - Throws: OSTError
+    func sign(resource: String, params: [String: Any?]) throws -> String {
+        let queryString: String = getQueryString(for: params)
+        let message = "\(resource)?\(queryString)"
+        return try personalSign(message)
     }
     
-    private func setAPIKey(_ apiKey: String, forUserId userId: String) {
-        OstAPISigner.apiSigner = ApiSigner(userId: userId, APIKey: apiKey)
+    /// Get API private key for signing
+    ///
+    /// - Returns: API private key
+    /// - Throws: OSTError
+    private func getApiKey() throws -> String {
+        if (self.apiKey == nil) {
+            do {
+                self.apiKey = try OstKeyManager(userId: userId).getAPIKey()
+            } catch {
+                throw OstError1.init("s_i_as_gak_1", .noPrivateKeyFound)
+            }
+        }
+        return self.apiKey!
     }
     
-    func personalSign(_ message: String) throws -> String {
-        var apiPrivateKey: String? = nil
-        
-        if let apiSigner = getAPISigner() {
-            if (apiSigner.userId == self.userId) {
-                apiPrivateKey = apiSigner.APIKey
-            }
+    /// Do personal sign of the message
+    ///
+    /// - Parameter message: Message string that needs to be signed
+    /// - Returns: Signed message string
+    /// - Throws: OSTError
+    private func personalSign(_ message: String) throws -> String {
+        let apiPrivateKey = try getApiKey()
+
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
+                                     privateKey: apiPrivateKey,
+                                     debugPrints: OstConstants.PRINT_DEBUG)
+
+        let singedData: String
+        do {
+            singedData = try wallet.personalSign(message: message)
+        } catch {
+            throw OstError1.init("s_i_as_ps_1", .signTxFailed)
         }
-        if (apiPrivateKey == nil) {
-            if let apiKey = try OstKeyManager(userId: userId).getAPIKey() {
-                setAPIKey(apiKey, forUserId: userId)
-                apiPrivateKey = apiKey
-            }
-        }
-        if (apiPrivateKey == nil) {
-            throw OstError.actionFailed("Signing message action failed.")
-        }
-        
-        let wallet : Wallet = Wallet(network: .mainnet, privateKey: apiPrivateKey!, debugPrints: false)
-        let singedData = try wallet.personalSign(message: message)
         return singedData.addHexPrefix()
     }
     
-    func sign(resource: String, params: [String: Any?]) throws -> (String, String) {
-        let queryString: String = getQueryString(for: params)
-        let message = resource + "?" + queryString
-        Logger.log(message: "queryString", parameterToPrint: message)
-        return (try personalSign(message), message)
-    }
-    
-    func getQueryString(for paramValObj:[String: Any?]) -> String {
+    /// Build the query string from dictionary
+    ///
+    /// - Parameter paramValObj: Params dictionary
+    /// - Returns: Formated query string
+    private func getQueryString(for paramValObj:[String: Any?]) -> String {
         var nestedQueryParams: [HttpParam] = []
         _ = OstUtils.buildNestedQuery(params: &nestedQueryParams, paramKeyPrefix: "", paramValObj: paramValObj)
         return nestedQueryParams.map {
