@@ -11,7 +11,8 @@ import UIKit
 
 class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
-    
+    let workflowTransactionCountForPolling = 1
+
     enum State: Int {
         case INITIALIZE, QR_CODE, ERROR, PIN, WORDS
     }
@@ -23,8 +24,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
     
-    var uPin: String? = nil
-    var password: String? = nil
     var wordsArray: [String]? = nil
     
     override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
@@ -132,10 +131,10 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                 throw OstError.invalidInput("Device is not Registered. Please register device first.")
             }
         case .PIN:
-            if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin!.count) {
+            if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count) {
                 throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
             }
-            if (OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.password!.count) {
+            if (OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count) {
                 throw OstError.invalidInput("password should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
             }
         case .WORDS:
@@ -178,7 +177,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         }
         
         let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-            self.postFlowCompleteForAddDevice(entity: ostDevice)
+            self.startPolling()
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
@@ -192,25 +191,16 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                            onFailure: onFailure).perform()
     }
     
-    func postFlowCompleteForAddDevice(entity: OstDevice) {
-        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
-    }
-    
     //MARK: - Protocol
     public func QRCodeFlow() {
         self.setCurrentState(.QR_CODE)
         perform()
     }
     
-    public  func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+    public override func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.uPin = uPin
-        self.password = appUserPassword
-        
+        self.appUserPassword = appUserPassword
+
         self.setCurrentState(.PIN)
         perform()
     }
@@ -237,9 +227,34 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         case .QR_CODE:
             return
         case .WORDS:
+            self.pollingForAddDeviceWithWords()
             return
         default:
             return
         }
     }
+    
+    func pollingForAddDeviceWithWords() {
+        
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
+            self.postFlowCompleteForAddDevice(entity: ostDevice)
+        }
+        
+        let failuarCallback:  ((OstError) -> Void) = { error in
+            self.postError(error)
+        }
+        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        
+        OstDevicePollingService(userId: self.userId, deviceAddress: self.currentDevice!.address!, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failuarCallback: failuarCallback).perform()
+    }
+    
+    func postFlowCompleteForAddDevice(entity: OstDevice) {
+        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
+        
+        DispatchQueue.main.async {
+            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
+            self.delegate.flowComplete(contextEntity);
+        }
+    }
+    
 }
