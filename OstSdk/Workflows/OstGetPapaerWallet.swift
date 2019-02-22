@@ -40,7 +40,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
     }
     
     func postFlowCompleteForGetPaperWallet(entity: String?) {
-        Logger.log(message: "OstAddSession flowComplete", parameterToPrint: entity)
+        Logger.log(message: "OstGetPapaerWallet flowComplete", parameterToPrint: entity)
         
         DispatchQueue.main.async {
             let contextEntity: OstContextEntity = OstContextEntity(type: .papaerWallet , entity: entity)
