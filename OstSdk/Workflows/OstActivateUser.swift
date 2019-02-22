@@ -8,11 +8,9 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegisteredProtocol {
+class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
     let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
-    var pin: String
-    var pinPrefix: String
     var spendingLimit: String
     var expirationHeight: Int
     
@@ -26,12 +24,13 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     let workflowTransactionCountForPolling = 2
     
     init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
-        self.pin = pin
-        self.pinPrefix = password
         self.spendingLimit = spendingLimit
         self.expirationHeight = expirationHeight
         
         super.init(userId: userId, delegate: delegate)
+        
+        self.uPin = pin
+        self.appUserPassword = password
     }
     
     override func perform() {
@@ -92,7 +91,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     }
     
     func validateParams() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.pinPrefix.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count {
             throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
@@ -100,7 +99,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count {
             throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
@@ -120,7 +119,14 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.pinPrefix, pin: self.pin, pinPostFix: self.userId, salt: salt, n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N, r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R, p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P, size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
+            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.appUserPassword,
+                                                            pin: self.uPin,
+                                                            pinPostFix: self.userId,
+                                                            salt: salt,
+                                                            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
+                                                            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
+                                                            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
+                                                            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         }catch {
             return nil
         }
@@ -238,11 +244,6 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             let contextEntity: OstContextEntity = OstContextEntity(type: .activateUser , entity: entity)
             self.delegate.flowComplete(contextEntity);
         }
-    }
-    
-    //MARK: - OstPinAcceptProtocol
-    public func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        
     }
     
     //MARK: - OstDeviceRegisteredProtocol
