@@ -97,7 +97,6 @@ class OstAddSession: OstWorkflowBase {
             self.postError(error)
         }
         
-        
         self.currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!
         self.generateAndSaveSessionEntity()
      
