@@ -15,20 +15,14 @@ class OstAPISigner {
     var userId: String
     
     /// API private key
-    private var apiKey: String?
+    private var apiKey: String? = nil
     
     /// Get OstAPISigner object for the given user id
     ///
     /// - Parameter userId: User Id for which the API keys will be used for signing
     /// - Returns: OstAPISigner object
-    /// - Throws: OSTError
-    class func getApiSigner(forUserId userId: String) throws -> OstAPISigner{
+    class func getApiSigner(forUserId userId: String) -> OstAPISigner{
         let apiSigner = OstAPISigner(userId: userId)
-        do {
-            _ = try apiSigner.getApiKey();
-        } catch {
-            throw OstError1.init("s_i_as_gas_1", .noPrivateKeyFound)
-        }
         return apiSigner;
     }
     
@@ -56,7 +50,7 @@ class OstAPISigner {
     ///
     /// - Returns: API private key
     /// - Throws: OSTError
-    private func getApiKey() throws -> String {
+    private func getApiKey() throws -> String? {
         if (self.apiKey == nil) {
             do {
                 self.apiKey = try OstKeyManager(userId: userId).getAPIKey()
@@ -64,7 +58,7 @@ class OstAPISigner {
                 throw OstError1.init("s_i_as_gak_1", .noPrivateKeyFound)
             }
         }
-        return self.apiKey!
+        return self.apiKey
     }
     
     /// Do personal sign of the message
@@ -73,8 +67,9 @@ class OstAPISigner {
     /// - Returns: Signed message string
     /// - Throws: OSTError
     private func personalSign(_ message: String) throws -> String {
-        let apiPrivateKey = try getApiKey()
-
+        guard let apiPrivateKey = try getApiKey() else{
+            throw OstError1.init("s_i_as_ps_1", .noPrivateKeyFound)
+        }
         let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
                                      privateKey: apiPrivateKey,
                                      debugPrints: OstConstants.PRINT_DEBUG)
@@ -83,7 +78,7 @@ class OstAPISigner {
         do {
             singedData = try wallet.personalSign(message: message)
         } catch {
-            throw OstError1.init("s_i_as_ps_1", .signTxFailed)
+            throw OstError1.init("s_i_as_ps_2", .signTxFailed)
         }
         return singedData.addHexPrefix()
     }
