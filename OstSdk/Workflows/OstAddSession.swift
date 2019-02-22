@@ -79,7 +79,7 @@ class OstAddSession: OstWorkflowBase {
             do {
                 let keychainManager = OstKeyManager(userId: self.userId)
                 if let deviceAddress = keychainManager.getDeviceAddress() {
-                    let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                    let privatekey = try keychainManager.getDeviceKey()
                     let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     return (signature, deviceAddress)
                 }
