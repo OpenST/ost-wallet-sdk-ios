@@ -20,14 +20,9 @@
 		0044DE2022130B0300AD9643 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0044DE1F22130B0300AD9643 /* Main.storyboard */; };
 		0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE222213141E00AD9643 /* CurrentUser.swift */; };
 		0044DE292213153000AD9643 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE282213153000AD9643 /* Users.swift */; };
-		006AD55B221ECEB400096D48 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AD55A221ECEB400096D48 /* WalletViewController.swift */; };
-		006AD561221F3FBB00096D48 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AD560221F3FBB00096D48 /* SetupWalletView.swift */; };
-		007772A222200FBD00EE049E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 007772A122200FBD00EE049E /* Podfile */; };
 		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
 		00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942189716441E093BEA6715C /* Pods_Demo_App.framework */; };
 		00E182EA22131630007C9B1D /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E182E922131630007C9B1D /* BaseModel.swift */; };
-		00EC12FB221F4BDD00895016 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC12FA221F4BDD00895016 /* BaseWalletView.swift */; };
-		00EC12FD221F559700895016 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC12FC221F559700895016 /* BaseWalletWorkflowView.swift */; };
 		4BD841242212084A00808901 /* Demo_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841232212084A00808901 /* Demo_AppTests.swift */; };
 		4BD8412F2212084A00808901 /* Demo_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD8412E2212084A00808901 /* Demo_AppUITests.swift */; };
 		4BD8413D2212086500808901 /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD8413C2212086500808901 /* OstSdk.framework */; };
@@ -38,6 +33,10 @@
 		4BD841492212093200808901 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841432212093200808901 /* LoginViewController.swift */; };
 		4BD841502212093E00808901 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BD8414C2212093D00808901 /* Assets.xcassets */; };
 		4BD841512212093E00808901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BD8414E2212093E00808901 /* LaunchScreen.storyboard */; };
+		4BE8957322207B16009C6A44 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8957222207B14009C6A44 /* WalletViewController.swift */; };
+		4BE8957922207B2D009C6A44 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */; };
+		4BE8957A22207B2D009C6A44 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8957722207B2C009C6A44 /* SetupWalletView.swift */; };
+		4BE8957B22207B2D009C6A44 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8957822207B2C009C6A44 /* BaseWalletView.swift */; };
 		60E381A7602E11FB90142625 /* Pods_Demo_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB63963E6BCB21D9A0F370DF /* Pods_Demo_AppUITests.framework */; };
 		B1EA24F7E240CCE4A09738CE /* Pods_Demo_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */; };
 /* End PBXBuildFile section */
@@ -88,13 +87,8 @@
 		0044DE1F22130B0300AD9643 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0044DE222213141E00AD9643 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		0044DE282213153000AD9643 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
-		006AD55A221ECEB400096D48 /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
-		006AD560221F3FBB00096D48 /* SetupWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWalletView.swift; sourceTree = "<group>"; };
-		007772A122200FBD00EE049E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		00891B402216D3FA007D3226 /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		00E182E922131630007C9B1D /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
-		00EC12FA221F4BDD00895016 /* BaseWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWalletView.swift; sourceTree = "<group>"; };
-		00EC12FC221F559700895016 /* BaseWalletWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWalletWorkflowView.swift; sourceTree = "<group>"; };
 		24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0FC6D8B30975B81ED3B918 /* Pods-Demo-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Demo-AppTests/Pods-Demo-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4BD8410B2212084900808901 /* Demo-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +106,10 @@
 		4BD841432212093200808901 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4BD8414C2212093D00808901 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BD8414F2212093E00808901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4BE8957222207B14009C6A44 /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletWorkflowView.swift; sourceTree = "<group>"; };
+		4BE8957722207B2C009C6A44 /* SetupWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupWalletView.swift; sourceTree = "<group>"; };
+		4BE8957822207B2C009C6A44 /* BaseWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletView.swift; sourceTree = "<group>"; };
 		60C7F485ED0C5B791CCEA630 /* Pods-Demo-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Demo-AppTests/Pods-Demo-AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		6935DA6DAE477424D17E1474 /* Pods-Demo-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-App.release.xcconfig"; path = "Target Support Files/Pods-Demo-App/Pods-Demo-App.release.xcconfig"; sourceTree = "<group>"; };
 		8087507ACF15D68A5123856B /* Pods-Demo-AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppUITests.release.xcconfig"; path = "Target Support Files/Pods-Demo-AppUITests/Pods-Demo-AppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -194,29 +192,11 @@
 		0044DE272213146D00AD9643 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				006AD55A221ECEB400096D48 /* WalletViewController.swift */,
+				4BE8957222207B14009C6A44 /* WalletViewController.swift */,
 				4BD841422212093200808901 /* HomeViewController.swift */,
 				4BD841432212093200808901 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		006AD55E221F3F7B00096D48 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				006AD55F221F3F8500096D48 /* Wallet */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		006AD55F221F3F8500096D48 /* Wallet */ = {
-			isa = PBXGroup;
-			children = (
-				006AD560221F3FBB00096D48 /* SetupWalletView.swift */,
-				00EC12FA221F4BDD00895016 /* BaseWalletView.swift */,
-				00EC12FC221F559700895016 /* BaseWalletWorkflowView.swift */,
-			);
-			path = Wallet;
 			sourceTree = "<group>";
 		};
 		00891B3F2216D3DF007D3226 /* OstSdkInteract */ = {
@@ -230,7 +210,6 @@
 		4BD841022212084900808901 = {
 			isa = PBXGroup;
 			children = (
-				007772A122200FBD00EE049E /* Podfile */,
 				4BD8413C2212086500808901 /* OstSdk.framework */,
 				4BD8410D2212084900808901 /* Demo-App */,
 				4BD841222212084A00808901 /* Demo-AppTests */,
@@ -254,7 +233,7 @@
 		4BD8410D2212084900808901 /* Demo-App */ = {
 			isa = PBXGroup;
 			children = (
-				006AD55E221F3F7B00096D48 /* Views */,
+				4BE8957422207B2C009C6A44 /* Views */,
 				00891B3F2216D3DF007D3226 /* OstSdkInteract */,
 				0044DE272213146D00AD9643 /* ViewControllers */,
 				0044DE21221313FC00AD9643 /* Models */,
@@ -296,6 +275,24 @@
 				4BD8414E2212093E00808901 /* LaunchScreen.storyboard */,
 			);
 			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		4BE8957422207B2C009C6A44 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4BE8957522207B2C009C6A44 /* Wallet */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4BE8957522207B2C009C6A44 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */,
+				4BE8957722207B2C009C6A44 /* SetupWalletView.swift */,
+				4BE8957822207B2C009C6A44 /* BaseWalletView.swift */,
+			);
+			path = Wallet;
 			sourceTree = "<group>";
 		};
 		D69E260234DB9F4C7666D4B2 /* Frameworks */ = {
@@ -431,7 +428,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				007772A222200FBD00EE049E /* Podfile in Resources */,
 				4BD841512212093E00808901 /* LaunchScreen.storyboard in Resources */,
 				0044DE2022130B0300AD9643 /* Main.storyboard in Resources */,
 				4BD841502212093E00808901 /* Assets.xcassets in Resources */,
@@ -567,7 +563,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0044DE1E2213069700AD9643 /* HomeCustomLayout.swift in Sources */,
-				006AD561221F3FBB00096D48 /* SetupWalletView.swift in Sources */,
 				0044DE132213053800AD9643 /* ColorTheme.swift in Sources */,
 				4BD841492212093200808901 /* LoginViewController.swift in Sources */,
 				4BD841472212093200808901 /* AppDelegate.swift in Sources */,
@@ -576,14 +571,15 @@
 				4BD841462212093200808901 /* ViewController.swift in Sources */,
 				0044DE292213153000AD9643 /* Users.swift in Sources */,
 				4BD841482212093200808901 /* HomeViewController.swift in Sources */,
+				4BE8957A22207B2D009C6A44 /* SetupWalletView.swift in Sources */,
+				4BE8957B22207B2D009C6A44 /* BaseWalletView.swift in Sources */,
+				4BE8957922207B2D009C6A44 /* BaseWalletWorkflowView.swift in Sources */,
 				0044DE1B2213062800AD9643 /* ApplicationScheme.swift in Sources */,
-				00EC12FB221F4BDD00895016 /* BaseWalletView.swift in Sources */,
 				00E182EA22131630007C9B1D /* BaseModel.swift in Sources */,
 				0044DE102213053800AD9643 /* IconGenerator.swift in Sources */,
 				0044DE152213053800AD9643 /* UIColorExtension.swift in Sources */,
+				4BE8957322207B16009C6A44 /* WalletViewController.swift in Sources */,
 				0044DE192213057100AD9643 /* UserCell.swift in Sources */,
-				006AD55B221ECEB400096D48 /* WalletViewController.swift in Sources */,
-				00EC12FD221F559700895016 /* BaseWalletWorkflowView.swift in Sources */,
 				0044DE142213053800AD9643 /* CGContextExtension.swift in Sources */,
 				0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */,
 			);

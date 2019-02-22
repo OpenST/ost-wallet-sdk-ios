@@ -119,9 +119,9 @@ class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
     //TODO: integrate it with AddSessionFlow. Code duplicate.
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(pinPrefix: self.appUserPassword,
+            return try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
                                                             pin: self.uPin,
-                                                            pinPostFix: self.userId,
+                                                            userId: self.userId,
                                                             salt: salt,
                                                             n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
                                                             r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
