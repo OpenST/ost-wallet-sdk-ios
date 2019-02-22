@@ -31,6 +31,7 @@ class OstAuthorizeDevice {
         self.userId = userId
         self.deviceAddressToAdd = deviceAddressToAdd
         self.generateSignatureCallback = generateSignatureCallback
+        
         self.onSuccess = onSuccess
         self.onFailure = onFailure
     }
@@ -76,8 +77,9 @@ class OstAuthorizeDevice {
                                                                                         ownerAddress: self.deviceAddressToAdd,
                                                                                         threshold: OstUtils.toString(self.threshold)!)
             
-            let deviceManagerNonce: Int = self.deviceManager!.nonce+1
-            let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(to: self.deviceManager!.address!,
+            let deviceManagerNonce: Int = self.deviceManager!.nonce
+            let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(verifyingContract: self.deviceManager!.address!,
+                                                                               to: self.deviceManager!.address!,
                                                                                value: "0",
                                                                                data: encodedABIHex,
                                                                                operation: "0",
@@ -93,7 +95,15 @@ class OstAuthorizeDevice {
             
             let (signature, signerAddress) = self.generateSignatureCallback(signingHash)
             
-            try self.deviceManager!.updateNonce(deviceManagerNonce)
+            if (nil == signature || signature!.isEmpty) {
+                throw OstError.actionFailed("signature is not generated")
+            }
+            
+            if (nil == signerAddress || signerAddress!.isEmpty) {
+                throw OstError.actionFailed("signer address is not generated")
+            }
+            
+            try self.deviceManager!.updateNonce(deviceManagerNonce+1)
             
             let params: [String: Any] = ["data_defination":self.dataDefination,
                                          "to": self.deviceManager!.address!,
