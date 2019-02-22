@@ -21,7 +21,6 @@ target 'Demo-App' do
  
   pod 'Alamofire', '4.8.1'
   pod 'CryptoSwift', '0.14.0'
-  pod 'BigInt', '~> 3.1'
   
   target 'Demo-AppTests' do
     inherit! :search_paths

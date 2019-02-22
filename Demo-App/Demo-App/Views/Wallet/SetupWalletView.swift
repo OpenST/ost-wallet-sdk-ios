@@ -30,7 +30,7 @@ class SetupWalletView: BaseWalletWorkflowView {
     let currentUser = CurrentUser.getInstance();
     
     // Always convert the token into Wei Untis.
-    let spendingLimitInWei = String( BigUInt("100")!.eth )
+    let spendingLimitInWei = String( "1000000000000000000000000" )
     Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
     
     // expirationHeight is temp, we shall change it.
