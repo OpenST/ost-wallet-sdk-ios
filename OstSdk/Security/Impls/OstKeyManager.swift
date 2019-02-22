@@ -331,9 +331,7 @@ private extension OstKeyManager {
     func getMetaMapping(forAddress address: String, andKey key: String) -> EthMetaMapping? {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         let ethKeyMappingData: [String: [String: Any]]? = userDeviceInfo[key] as? [String: [String: Any]]
-        if var keyMappingValues =  ethKeyMappingData?[address.lowercased()] {
-            keyMappingValues["address"] = address.lowercased()
-            keyMappingValues["entityId"] = keyMappingValues["entity_id"]
+        if let keyMappingValues =  ethKeyMappingData?[address.lowercased()] {
             return EthMetaMapping.getEthMetaMapping(from: keyMappingValues)
         }
         return nil
