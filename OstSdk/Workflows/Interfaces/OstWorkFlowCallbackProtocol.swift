@@ -75,4 +75,10 @@ public protocol OstWorkFlowCallbackProtocol {
 
     /// Inform SDK user that entered 12 wallet words is validated
     func walletWordsValidated()
+    
+    /// Show paper wallet
+    ///
+    /// - Parameter mnemonics: array of Words.
+    func showPaperWallet(mnemonics: [String])
+    
 }
