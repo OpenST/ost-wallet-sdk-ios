@@ -111,8 +111,8 @@ class CurrentUser: BaseModel {
     let ostSdkInteract = OstSdkInteract();
     ostSdkInteract.addEventListner { (eventData:[String : Any]) in
       //self.onComplete = onComplete
-      let eventType:String = eventData["eventType"] as! String;
-      if ( "flowComplete" == eventType ) {
+      let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+      if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
         let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
         if ( ostContextEntity.type == OstWorkflowType.setupDevice ) {
           let userDevice = ostContextEntity.entity as! OstDevice;

@@ -13,6 +13,12 @@ import OstSdk
 class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
   typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
   
+  public enum WorkflowEventType {
+    case flowComplete
+    case flowInterrupt
+    case requestAcknowledged
+  }
+  
   let appUserId: String;
   let tokenId: String;
   var eventHandlers:[OstSdkInteractEventHandler?];
@@ -83,8 +89,12 @@ extension OstSdkInteract {
   }
   
   func flowComplete(_ ostContextEntity: OstContextEntity) {
+    if ( !isCurrentUser() ) {
+      //Ignore it.
+      return;
+    }
     var eventData:[String : Any] = [:];
-    eventData["eventType"] = "flowComplete";
+    eventData["eventType"] = WorkflowEventType.flowComplete;
     eventData["workflow"] = ostContextEntity.type;
     eventData["ostContextEntity"] = ostContextEntity;
     self.fireEvent(eventData: eventData);
@@ -95,6 +105,11 @@ extension OstSdkInteract {
       //Ignore it.
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.flowInterrupt;
+    eventData["ostError"] = ostError;
+    self.fireEvent(eventData: eventData);
   }
   
   func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {

@@ -19,9 +19,20 @@ import OstSdk
 import MaterialComponents
 
 class WalletViewController: UIViewController {
+  
+  public enum ViewMode {
+    case SETUP_WALLET
+    case ADD_DEVICE
+    case NEW_SESSION
+    case QR_CODE
+    case MENU
+  }
+  
   var isLoginMode:Bool = true;
-    
-  let scrollView: SetupWalletView = {
+  //Default View Mode.
+  public var viewMode = ViewMode.SETUP_WALLET;
+  
+  let setupWalletView: SetupWalletView = {
     let scrollView = SetupWalletView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false;
     scrollView.backgroundColor = .white
@@ -43,26 +54,26 @@ class WalletViewController: UIViewController {
     super.viewDidLoad()
 
     view.tintColor = .black
-    scrollView.backgroundColor = .white
+    setupWalletView.backgroundColor = .white
 
-    view.addSubview(scrollView)
+    view.addSubview(setupWalletView)
 
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
                                      options: [],
                                      metrics: nil,
-                                     views: ["scrollView" : scrollView])
+                                     views: ["scrollView" : setupWalletView])
     )
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                      options: [],
                                      metrics: nil,
-                                     views: ["scrollView" : scrollView])
+                                     views: ["scrollView" : setupWalletView])
     )
     
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTouch))
-    scrollView.addGestureRecognizer(tapGestureRecognizer)
-
+    setupWalletView.addGestureRecognizer(tapGestureRecognizer)
+    setupWalletView.walletViewController = self;
   }
 
   // MARK: - Gesture Handling
