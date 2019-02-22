@@ -112,7 +112,7 @@ class OstPerform: OstWorkflowBase {
                 let keychainManager = OstKeyManager(userId: self.userId)
                 if let deviceAddress = keychainManager.getDeviceAddress() {
                     //TODO: Remove Testcode - 192
-                    let privatekey = try keychainManager.getEthereumKey(forAddresss: deviceAddress.lowercased())
+                    let privatekey = try keychainManager.getDeviceKey()
                     //                                            return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: OstConstants.testPrivateKey)
                     return (signature, deviceAddress)
