@@ -76,7 +76,10 @@ class BaseWalletWorkflowView: BaseWalletView {
     let alert = UIAlertController(title: "Enter your pin", message: "", preferredStyle: UIAlertController.Style.alert);
     //Add a text field.
     alert.addTextField { (textField) in
-      textField.placeholder = "6 digit pin"
+        textField.placeholder = "6 digit pin"
+        textField.keyboardType = .numberPad
+        textField.isSecureTextEntry = true
+        textField.textAlignment = .center;
     }
     //Add action
     let action = UIAlertAction(title: "Validate", style: .default) { (alertAction) in

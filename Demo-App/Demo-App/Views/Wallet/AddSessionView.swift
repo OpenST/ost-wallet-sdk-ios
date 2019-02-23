@@ -10,19 +10,51 @@ import UIKit
 import OstSdk
 import MaterialComponents
 
-class AddSessionView: BaseWalletWorkflowView {
+class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
 
     @objc override func didTapNext(sender: Any) {
         let currentUser = CurrentUser.getInstance();
         //TODO: add session
-        if (validateSpendingLimit() && validateExpirationHeight()) {
+        if (validateSpendingLimit()) {
             super.didTapNext(sender: sender);
+            let expiresAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
             OstSdk.addSession(userId: currentUser.ostUserId!,
                               spendingLimit: self.spendingLimitTestField.text!,
-                              expiresAfter: Double(self.expirationHeightTextField.text!)!,
+                              expiresAfter: Double(expiresAfter),
                               delegate: self.sdkInteract)
         }
     }
+  
+    // Mark - Expires After Data
+    static let DEFAULT_EXPIRES = 13;
+    let expiresOptions:[String] = {
+        var expiresOptions:[String] = [];
+        for cnt in 1...30 {
+            switch(cnt) {
+            case 1:
+                expiresOptions.append("1 Day");
+                break;
+            case 7:
+                expiresOptions.append("1 Week");
+                break;
+            case 14:
+                expiresOptions.append("2 Weeks");
+                break;
+            case 21:
+                expiresOptions.append("3 Weeks");
+                break;
+            case 28:
+                expiresOptions.append("4 Weeks");
+                break;
+            default:
+                expiresOptions.append("\(cnt) Days");
+            }
+            
+            
+            
+        }
+        return expiresOptions;
+    }();
     
     // Mark - Sub Views
     let logoImageView: UIImageView = {
@@ -41,12 +73,13 @@ class AddSessionView: BaseWalletWorkflowView {
         return spendingLimitTestFiled
     }()
     var spendingLimitTestFieldController: MDCTextInputControllerOutlined? = nil
-    
-    let expirationHeightTextField: MDCTextField = {
-        let expirationHeightTextField = MDCTextField()
-        expirationHeightTextField.translatesAutoresizingMaskIntoConstraints = false
-        expirationHeightTextField.clearButtonMode = .unlessEditing
-        return expirationHeightTextField
+  
+    var expiresAfterSelectedIndex:Int = DEFAULT_EXPIRES;
+    let expiresAfterTextField: MDCTextField = {
+        let expiresAfterTextField = MDCTextField()
+        expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
+        expiresAfterTextField.clearButtonMode = .unlessEditing
+        return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil
     
@@ -54,25 +87,27 @@ class AddSessionView: BaseWalletWorkflowView {
         let scrollView = self;
         
         self.spendingLimitTestFieldController = MDCTextInputControllerOutlined(textInput: spendingLimitTestField)
-        self.expirationHeightTextFieldController = MDCTextInputControllerOutlined(textInput: expirationHeightTextField)
+        self.expirationHeightTextFieldController = MDCTextInputControllerOutlined(textInput: expiresAfterTextField)
         
         self.spendingLimitTestFieldController!.placeholderText = "Spending Limit"
-//        self.spendingLimitTestField.delegate = walletViewController! as? UITextFieldDelegate
-        self.spendingLimitTestField.keyboardType = .phonePad
-        
+        self.spendingLimitTestField.keyboardType = .numberPad
+      
         self.expirationHeightTextFieldController!.placeholderText = "Expiration Height"
-//        self.expirationHeightTextField.delegate = walletViewController! as? UITextFieldDelegate
-        self.expirationHeightTextField.keyboardType = .phonePad
+        self.expiresAfterTextField.keyboardType = .numberPad
         
         registerKeyboardNotifications()
-        
         scrollView.addSubview(logoImageView)
         scrollView.addSubview(spendingLimitTestField)
-        scrollView.addSubview(expirationHeightTextField)
+        scrollView.addSubview(expiresAfterTextField)
         
         super.addSubViews();
         self.nextButton.setTitle("Create Session", for: .normal);
+      
+        self.expiresAfterTextField.delegate = self;
+        self.expiresAfterTextField.text = expiresOptions[AddSessionView.DEFAULT_EXPIRES];
+      
     }
+    
     
     override func addSubviewConstraints() {
         let scrollView = self;
@@ -112,14 +147,14 @@ class AddSessionView: BaseWalletWorkflowView {
                                            options: [],
                                            metrics: nil,
                                            views: [ "spendingLimit" : spendingLimitTestField]))
-        constraints.append(NSLayoutConstraint(item: expirationHeightTextField,
+        constraints.append(NSLayoutConstraint(item: expiresAfterTextField,
                                               attribute: .top,
                                               relatedBy: .equal,
                                               toItem: spendingLimitTestField,
                                               attribute: .bottom,
                                               multiplier: 1,
                                               constant: 8))
-        constraints.append(NSLayoutConstraint(item: expirationHeightTextField,
+        constraints.append(NSLayoutConstraint(item: expiresAfterTextField,
                                               attribute: .centerX,
                                               relatedBy: .equal,
                                               toItem: scrollView,
@@ -130,10 +165,10 @@ class AddSessionView: BaseWalletWorkflowView {
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-[expirationHeight]-|",
                                            options: [],
                                            metrics: nil,
-                                           views: [ "expirationHeight" : expirationHeightTextField]))
+                                           views: [ "expirationHeight" : expiresAfterTextField]))
         
         NSLayoutConstraint.activate(constraints)
-        super.addBottomSubviewConstraints(afterView:expirationHeightTextField);
+        super.addBottomSubviewConstraints(afterView:expiresAfterTextField);
     }
     
     //MARK - Keyboard Notfications
@@ -157,13 +192,33 @@ class AddSessionView: BaseWalletWorkflowView {
         return true;
     }
     
-    func validateExpirationHeight() -> Bool {
-        if (expirationHeightTextField.text!.count < 4) {
-            expirationHeightTextFieldController!.setErrorText("expiration height should be greater than 999",
-                                                         errorAccessibilityValue: nil);
-            return false;
+    var isShowingActionSheet = false;
+    func showExpiresAfterActionSheet() {
+        if ( isShowingActionSheet ) {
+            //return;
         }
-        expirationHeightTextFieldController!.setErrorText(nil,errorAccessibilityValue: nil);
-        return true;
+        isShowingActionSheet = true;
+        let actionSheet = UIAlertController(title: "Session Validity", message: "How long should your sesstion be valid for?", preferredStyle: UIAlertController.Style.actionSheet);
+        for cnt in 0..<expiresOptions.count {
+            let currAction = getActionForIndex(indx: cnt);
+            actionSheet.addAction(currAction);
+        }
+        self.walletViewController?.present(actionSheet, animated: true, completion: {
+            self.isShowingActionSheet = false;
+        });
     }
+    
+    func getActionForIndex(indx:Int) -> UIAlertAction {
+        let displayText = expiresOptions[indx];
+        return UIAlertAction(title: displayText, style: .default, handler: { (UIAlertAction) in
+            self.expiresAfterSelectedIndex = indx;
+            self.expiresAfterTextField.text = displayText;
+        })
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        showExpiresAfterActionSheet();
+        return false;
+    }
+
 }
