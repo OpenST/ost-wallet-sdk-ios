@@ -133,7 +133,7 @@ class OstAddSession: OstWorkflowBase {
     func pollingForAuthorizeSession(_ ostSession: OstSession) {
         
         let successCallback: ((OstSession) -> Void) = { ostSession in
-            self.postFlowComplete(entity: ostSession)
+            self.postWorkflowComplete(entity: ostSession)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -146,13 +146,18 @@ class OstAddSession: OstWorkflowBase {
                                  workflowTransactionCount: workflowTransactionCountForPolling,
                                  successCallback: successCallback, failuarCallback: failuarCallback).perform()
     }
+
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .addSession)
+    }
     
-    func postFlowComplete(entity: OstSession) {
-        Logger.log(message: "OstAddSession flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .addSession , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .session)
     }
 }

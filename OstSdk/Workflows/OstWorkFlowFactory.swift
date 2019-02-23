@@ -42,64 +42,64 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
-    ///   - delegate: Ost user identifier.
+    ///   - delegate: Callback for action complete or to perform respective action.
     public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         let addDeviceObject = OstAddDevice(userId: userId, delegate: delegate)
         addDeviceObject.perform()
     }
     
-    /// <#Description#>
+    /// Add session for user.
     ///
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - spendingLimit: <#spendingLimit description#>
-    ///   - expirationHeight: <#expirationHeight description#>
-    ///   - delegate: <#delegate description#>
+    ///   - userId: Kit user id
+    ///   - spendingLimit: Amount user can spend in a transaction.
+    ///   - expirationHeight: expiration height
+    ///   - delegate: Callback for action complete or to perform respective action
     public class func addSession(userId: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
          let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         ostAddSession.perform()
     }
     
-    /// <#Description#>
+    /// Perform operations for given QR-Code image of core image type.
     ///
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - qrCodeCoreImage: <#qrCodeCoreImage description#>
-    ///   - delegate: <#delegate description#>
+    ///   - userId: Kit user id.
+    ///   - qrCodeCoreImage: QR-Code image of Core Image type
+    ///   - delegate: Callback for action complete or to perform respective action
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
         if (payload == nil || payload!.count == 0) {
-            delegate.flowInterrupt(OstError.invalidInput("Can not read data from given image"))
+            delegate.flowInterrupted(OstError.invalidInput("Can not read data from given image"))
         }
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
     }
     
-    /// <#Description#>
+    /// Perform operations for given QR-Code image.
     ///
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - qrCodeImage: <#qrCodeImage description#>
-    ///   - delegate: <#delegate description#>
+    ///   - userId: Kit user id.
+    ///   - qrCodeImage: QR-Code image.
+    ///   - delegate: Callback for action complete or to perform respective action
     public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
         
     }
     
-    /// <#Description#>
+    ///  Perform operations for given paylaod
     ///
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - payload: <#payload description#>
-    ///   - delegate: <#delegate description#>
+    ///   - userId: Kit user id.
+    ///   - payload: Json string of payload is expected.
+    ///   - delegate: Callback for action complete or to perform respective action
     public class func perfrom(userId: String, payload: String, delegate: OstWorkFlowCallbackProtocol) {
         let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
         performObj.perform()
     }
     
-    /// <#Description#>
+    /// Get paper wallet of given user id.
     ///
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - delegate: <#delegate description#>
+    ///   - userId: Kit user id
+    ///   - delegate: Callback for action complete or to perform respective action.
     public class func getPaperWallet(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         let paperWalletObj = OstGetPapaerWallet(userId: userId, delegate: delegate)
         paperWalletObj.perform()

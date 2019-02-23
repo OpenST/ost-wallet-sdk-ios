@@ -27,10 +27,18 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         fatalError("************* perform didnot override ******************")
     }
     
+    /// Get user for given userid
+    ///
+    /// - Returns: OstUser entity
+    /// - Throws: OstError
     func getUser() throws -> OstUser? {
         return try OstUser.getById(self.userId)
     }
     
+    /// get current device for user
+    ///
+    /// - Returns: OstCurrentDevice object
+    /// - Throws: OstError
     func getCurrentDevice() throws -> OstCurrentDevice? {
         if let ostUser: OstUser = try getUser() {
             return ostUser.getCurrentDevice()
@@ -39,35 +47,56 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     }
     
     func postError(_ error: Error) {
+//        DispatchQueue.main.async {
+//            self.delegate.flowInterrupted(error as? OstError ?? OstError.actionFailed("Unexpected error.") )
+//        }
+        
+        let workflowContext: OstWorkflowContext = getWorkflowContext()
+        let ostError: OstError = error as? OstError ?? OstError.actionFailed("Unexpected error.")
         DispatchQueue.main.async {
-            self.delegate.flowInterrupt(error as? OstError ?? OstError.actionFailed("Unexpected error.") )
+            self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError)
         }
     }
     
-    func postFlowCompleteForGetPaperWallet(entity: Any) {
-        Logger.log(message: "OstAddSession flowComplete", parameterToPrint: entity)
+    func postWorkflowComplete(entity: Any) {
+        let workflowContext: OstWorkflowContext = getWorkflowContext()
+        let contextEntity: OstContextEntity = getContextEntity(for: entity)
         
         DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .papaerWallet , entity: entity)
-            self.delegate.flowComplete(contextEntity);
+            self.delegate.flowComplete1(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
+    }
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    func getWorkflowContext() -> OstWorkflowContext {
+        fatalError("getWorkflowContext not override.")
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    func getContextEntity(for entity: Any) -> OstContextEntity {
+        fatalError("getContextEntity not override.")
     }
     
     public func cancelFlow(_ cancelReason: String) {
         
     }
     
-    func processOperation() {
+    func proceedWorkflowAfterAuthenticateUser() {
         fatalError("processOperation is not override")
     }
     
-    //MARK: - authenticate User
+    //MARK: - Authenticate User
+    /// authenticate user with biomatrics or user pin if biomatrics failed.
     public func authenticateUser() {
         
         let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
         biomatricAuth.authenticateUser { (isSuccess, message) in
             if (isSuccess) {
-                self.processOperation()
+                self.proceedWorkflowAfterAuthenticateUser()
             }else {
                 DispatchQueue.main.async {
                     self.delegate.getPin(self.userId, delegate: self)
@@ -76,6 +105,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
     }
     
+    /// Accept pin from user and valdiate.
+    ///
+    /// - Parameters:
+    ///   - uPin: user pin.
+    ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         workflowThread.async {
             do {
@@ -123,11 +157,14 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
         
         if(user.recoveryAddress!.lowercased() == recoveryKey.lowercased()) {
-            self.processOperation()
+            DispatchQueue.main.async {
+                self.delegate.pinValidated(self.userId)
+            }
+            self.proceedWorkflowAfterAuthenticateUser()
         }else {
             DispatchQueue.main.async {
                 self.delegate.invalidPin(self.userId, delegate: self)
             }
-        }   
+        }
     }
 }

@@ -92,8 +92,10 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     guard let qrCodeCIImage = payloadString.qrCode else {
                         throw OstError.actionFailed("Generating QR-Code image failed.")
                     }
-                    self.postFlowCompleteForQRCode(ciImage: qrCodeCIImage)
-                    
+                    DispatchQueue.main.async {
+                        self.delegate.showQR(self, image: qrCodeCIImage)
+                    }
+
                 case .PIN:
                     try self.validateParams()
      
@@ -155,13 +157,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     "device_to_add": currentDevice!.address!]
     }
     
-    func postFlowCompleteForQRCode(message: String = "", ciImage: CIImage) {
-        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: nil)
-        DispatchQueue.main.async {
-            self.delegate.showQR(self, image: ciImage)
-        }
-    }
-   
+
     //MARK: - authorize device
     func authorizeDeviceWothMnemonics() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
@@ -237,7 +233,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     func pollingForAddDeviceWithWords() {
         
         let successCallback: ((OstDevice) -> Void) = { ostDevice in
-            self.postFlowCompleteForAddDevice(entity: ostDevice)
+            self.postWorkflowComplete(entity: ostDevice)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -248,13 +244,17 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         OstDevicePollingService(userId: self.userId, deviceAddress: self.currentDevice!.address!, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failuarCallback: failuarCallback).perform()
     }
     
-    func postFlowCompleteForAddDevice(entity: OstDevice) {
-        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .addDevice)
     }
     
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .device)
+    }
 }

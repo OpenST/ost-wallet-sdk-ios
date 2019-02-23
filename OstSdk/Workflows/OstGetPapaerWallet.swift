@@ -21,7 +21,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
         }
     }
     
-    override func processOperation() {
+    override func proceedWorkflowAfterAuthenticateUser() {
         do {
             let keychainManager = OstKeyManager(userId: self.userId)
             
@@ -29,20 +29,26 @@ class OstGetPapaerWallet: OstWorkflowBase {
                 throw OstError.actionFailed("Paper wallet not found.")
             }
             
-            let paperWalletString: String = mnemonics.joined(separator: " ")
-            self.postFlowCompleteForGetPaperWallet(entity: paperWalletString)
+            DispatchQueue.main.async {
+                self.delegate.showPaperWallet(mnemonics: mnemonics)
+            }
             
         }catch let error {
             self.postError(error)
         }
     }
     
-    func postFlowCompleteForGetPaperWallet(entity: String?) {
-        Logger.log(message: "OstGetPapaerWallet flowComplete", parameterToPrint: entity)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .papaerWallet , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .getPapaerWallet)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .array)
     }
 }

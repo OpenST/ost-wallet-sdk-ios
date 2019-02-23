@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
+class OstActivateUser: OstWorkflowBase {
     let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
     var spendingLimit: String
@@ -45,7 +45,7 @@ class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 }
             
                 if (self.user!.isActivated()) {
-                    self.postFlowComplete(entity: self.user!)
+                self.postError(OstError1("w_au_p_1", .userAlreadyActivated) )
                     return
                 }
                 
@@ -218,7 +218,7 @@ class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
             self.syncRespctiveEntity()
-            self.postFlowComplete(entity: ostUser)
+            self.postWorkflowComplete(entity: ostUser)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -237,17 +237,17 @@ class OstActivateUser: OstWorkflowBase, OstDeviceRegisteredProtocol {
             _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
     }
     
-    func postFlowComplete(entity: OstUser) {
-        Logger.log(message: "OstActivateUser flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .activateUser , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .activateUser)
     }
     
-    //MARK: - OstDeviceRegisteredProtocol
-    public func deviceRegistered(_ apiResponse: [String : Any]) {
-        
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .user)
     }
 }

@@ -104,14 +104,6 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         return UIDevice.current.name
     }
     
-    func postFlowComplete(message: String = "", entity: OstCurrentDevice) {
-        Logger.log(message: "OstRegisterDevice flowComplete", parameterToPrint: entity.data)
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(message: message, type: .setupDevice, entity: entity, entityType: .currentDevice)
-            self.delegate.flowComplete(contextEntity);
-        }
-    }
-    
     func registerDevice(_ deviceParams: [String: Any]) {
         DispatchQueue.main.async {
             self.delegate.registerDevice(deviceParams, delegate: self)
@@ -120,14 +112,27 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     func sync() {
         let onCompletion: ((Bool) -> Void) = {isComplete in
-            let user = try! OstUser.getById(self.userId)!
-            if (isComplete) {
-                self.postFlowComplete(entity: user.getCurrentDevice()!)
-            }else {
-                self.postFlowComplete(message: "Syncing failed for some entities.", entity: user.getCurrentDevice()!)
+            guard let user = try! OstUser.getById(self.userId) else {
+                self.postError(OstError1("w_rd_s_1", .userNotFound))
+                return
             }
+            self.postWorkflowComplete(entity: user.getCurrentDevice()!)
         }
         OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()
+    }
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+         return OstWorkflowContext(workflowType: .setupDevice)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .device)
     }
     
     //MARK: - OstDeviceRegisteredProtocol

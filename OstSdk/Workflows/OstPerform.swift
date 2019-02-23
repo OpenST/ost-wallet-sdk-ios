@@ -49,7 +49,7 @@ class OstPerform: OstWorkflowBase {
         }
     }
 
-    override func processOperation() {
+    override func proceedWorkflowAfterAuthenticateUser() {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
             if (self.payload == nil) {
@@ -124,7 +124,7 @@ class OstPerform: OstWorkflowBase {
         }
         
         let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-            self.postFlowCompleteForAddDevice(entity: ostDevice)
+            self.postWorkflowComplete(entity: ostDevice)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
@@ -138,13 +138,18 @@ class OstPerform: OstWorkflowBase {
                            onFailure: onFailure).perform()
     }
     
-    func postFlowCompleteForAddDevice(entity: OstDevice) {
-        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .perform)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .device)
     }
     
 }
