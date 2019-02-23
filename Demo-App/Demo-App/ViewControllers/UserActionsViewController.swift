@@ -21,6 +21,8 @@ class UserActionsViewController: UICollectionViewController {
   enum ACTIONS: String {
   case activateUser = "activateUser"
   case paperWallet = "paperWallet"
+    case addSession = "addSession"
+    case addDeviceByQRCode = "addDeviceByQRCode"
   }
   
   var dataItems:[[String:String]]?
@@ -29,9 +31,10 @@ class UserActionsViewController: UICollectionViewController {
     let ostUser = currentUser.ostUser!;
     let userDevice = currentUser.userDevice!;
     
-    
-    var setupWallet:[String:String] = [:];
-    var paperWallet:[String:String] = [:];
+    var addSession: [String:String] = [:];
+    var setupWallet: [String:String] = [:];
+    var paperWallet: [String:String] = [:];
+    var addDeviceFromQRCode: [String:String] = [:];
     
     setupWallet[ACTION_TYPE] = ACTIONS.activateUser.rawValue;
     setupWallet[ACTION_TEXT] = "Setup your wallet";
@@ -42,6 +45,15 @@ class UserActionsViewController: UICollectionViewController {
     if ( ostUser.isActivated() ) {
       setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
       paperWallet[ACTION_DETAILS] = "See your paper wallet";
+        
+        addSession[ACTION_TYPE] = ACTIONS.addSession.rawValue
+        addSession[ACTION_TEXT] = "Create Session"
+        addSession[ACTION_DETAILS] = "Create session to do transactions."
+        
+        addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addSession.rawValue
+        addDeviceFromQRCode[ACTION_TEXT] = "Add Device from QR-Code"
+        addDeviceFromQRCode[ACTION_DETAILS] = "Add Device from QR-Code."
+        
     } else if ( ostUser.isActivating()) {
       setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
       paperWallet[ACTION_DETAILS] = "You need to setup your wallet before seeing 12 words";
@@ -62,7 +74,7 @@ class UserActionsViewController: UICollectionViewController {
     
     
     //Final Ordering.
-    dataItems = [setupWallet, paperWallet];
+    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -195,7 +207,18 @@ class UserActionsViewController: UICollectionViewController {
         walletController.viewMode = WalletViewController.ViewMode.PAPER_WALLET;
         self.present(walletController, animated: true, completion: nil);
       }
+        
+      else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
+        let walletController = WalletViewController(nibName: nil, bundle: nil);
+        walletController.viewMode = WalletViewController.ViewMode.NEW_SESSION;
+        self.present(walletController, animated: true, completion: nil);
+        }
       
+      else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
+        let walletController = WalletViewController(nibName: nil, bundle: nil);
+        walletController.viewMode = WalletViewController.ViewMode.NEW_SESSION;
+        self.present(walletController, animated: true, completion: nil);
+        }
     }
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

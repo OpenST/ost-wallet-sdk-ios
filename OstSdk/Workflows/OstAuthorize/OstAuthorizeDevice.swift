@@ -63,9 +63,10 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         return self.deviceManager?.address
     }
     
-    override func getRawCallData() -> [String: Any] {
-        return ["method": self.abiMethodNameForAuthorizeDevice,
-                "parameters": [addressToAdd, "1"]]
+    override func getRawCallData() -> String {
+        let callData = ["method": self.abiMethodNameForAuthorizeDevice,
+                        "parameters": [addressToAdd, "1"]]
+        return try! OstUtils.toJSONString(callData)!
     }
     
     override func apiRequestForAuthorize(params: [String: Any]) throws {

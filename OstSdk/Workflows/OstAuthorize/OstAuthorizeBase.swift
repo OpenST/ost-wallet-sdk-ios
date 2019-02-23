@@ -51,7 +51,7 @@ class OstAuthorizeBase {
         fatalError("getEncodedABI is not override.")
     }
     
-    func getRawCallData() -> [String: Any] {
+    func getRawCallData() -> String {
         fatalError("getRawCallData is not override.")
     }
     
@@ -104,7 +104,7 @@ class OstAuthorizeBase {
             
             try self.deviceManager!.updateNonce(deviceManagerNonce+1)
             
-            let rawCallData: [String: Any] = getRawCallData()
+            let rawCallData: String = getRawCallData()
             
             let params: [String: Any] = ["data_defination":self.dataDefination,
                                          "to": toForTypedData,

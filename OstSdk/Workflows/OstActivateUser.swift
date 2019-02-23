@@ -175,7 +175,7 @@ class OstActivateUser: OstWorkflowBase {
             self.postError(error)
         }
     }
-    
+    //TODO: Get expirationHeight from timestamp and block_formation time
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId

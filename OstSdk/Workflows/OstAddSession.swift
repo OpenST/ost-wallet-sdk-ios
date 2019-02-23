@@ -100,6 +100,7 @@ class OstAddSession: OstWorkflowBase {
         self.currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!
         self.generateAndSaveSessionEntity()
      
+        //TODO: Get expirationHeight from timestamp and block_formation time
         OstAuthorizeSession(userId: self.userId,
                             sessionAddress: self.walletKeys!.address!,
                             spendingLimit: self.spendingLimit,

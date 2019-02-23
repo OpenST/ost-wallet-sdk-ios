@@ -116,16 +116,13 @@ class PaperWalletView: BaseWalletWorkflowView {
   override func receivedSdkEvent(eventData: [String : Any]) {
     super.receivedSdkEvent(eventData: eventData);
     let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-    if ( OstSdkInteract.WorkflowEventType.flowComplete != eventType ) {
-      return;
-    }
-    let ostContextEntity:OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
-    if (ostContextEntity.type != OstWorkflowType.papaerWallet ) {
+    if ( OstSdkInteract.WorkflowEventType.showPaperWallet != eventType ) {
       return;
     }
     
-    let allWords:String = ostContextEntity.entity as! String;
-    var mnemonics:[String] = allWords.components(separatedBy: " ");
+    guard var mnemonics:[String] = eventData["mnemonics"] as? [String] else {
+        return;
+    }
     var wordsToShow = "\n\n";
     for cnt in 0..<mnemonics.count {
       if ( cnt % 3 == 0 ) {
@@ -137,5 +134,6 @@ class PaperWalletView: BaseWalletWorkflowView {
     self.wordsLabel.text = wordsToShow;
     self.nextButton.isHidden = true;
     self.cancelButton.isHidden = true;
+    self.activityIndicator.stopAnimating();
   }
 }

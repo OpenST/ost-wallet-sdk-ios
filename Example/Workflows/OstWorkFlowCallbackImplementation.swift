@@ -10,6 +10,7 @@ import Foundation
 import OstSdk
 
 class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
+   
     var mappyUserId: String
     init(mappyUserId: String) {
         self.mappyUserId = mappyUserId
@@ -48,8 +49,10 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
     }
     
     func flowComplete(_ ostContextEntity: OstContextEntity) {
-
-        switch ostContextEntity.type {
+        
+    }
+    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        switch workflowContext.workflowType {
         case .setupDevice:
             Logger.log(message: "setupDevice flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
             
@@ -63,20 +66,27 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             }else {
                 OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expirationHeight: 12345612, delegate: self)
             }
-    
+            
         case .activateUser:
             Logger.log(message: "activateUser flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
             
             let user: OstUser  = ostContextEntity.entity as! OstUser
             OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expirationHeight: 12345612, delegate: self)
-         
+            
+        case .addSession:
+            Logger.log(message: "addSession flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
         default:
             return
         }
     }
     
-    func flowInterrupt(_ ostError: OstError) {
-       Logger.log(message: "IMP flowInterrupt", parameterToPrint: ostError.description)
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
+        Logger.log(message: "flowInterrupted for ", parameterToPrint: workflowContext.workflowType)
+        Logger.log(message: "error ", parameterToPrint: error)
+    }
+    
+    func flowInterrupted(_ ostError: OstError) {
+       Logger.log(message: "IMP flowInterrupted", parameterToPrint: ostError.description)
     }
     
     func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {

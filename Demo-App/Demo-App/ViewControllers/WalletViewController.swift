@@ -109,6 +109,9 @@ class WalletViewController: UIViewController {
     case ViewMode.SETUP_WALLET:
       self.title = "Setup Your Wallet";
       return SetupWalletView()
+    case ViewMode.NEW_SESSION:
+        self.title = "Create Sesssion";
+        return AddSessionView()
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()
@@ -124,5 +127,5 @@ class WalletViewController: UIViewController {
   @objc func backItemTapped(sender: Any) {
     self.dismiss(animated: true, completion: nil)
   }
-
+    
 }

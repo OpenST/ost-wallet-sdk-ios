@@ -113,8 +113,9 @@ class CurrentUser: BaseModel {
       //self.onComplete = onComplete
       let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
       if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
-        let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
-        if ( ostContextEntity.type == OstWorkflowType.setupDevice ) {
+        let ostContextEntity: OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity
+        let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
+        if ( workflowContext.workflowType == OstWorkflowType1.setupDevice ) {
           let userDevice = ostContextEntity.entity as! OstDevice;
           
           self.userDevice = userDevice;

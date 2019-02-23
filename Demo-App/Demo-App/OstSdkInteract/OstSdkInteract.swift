@@ -19,6 +19,7 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     case requestAcknowledged
     case getPinFromUser
     case showPinToUser
+    case showPaperWallet
   }
   
   let currentUser: CurrentUser;
@@ -115,22 +116,47 @@ extension OstSdkInteract {
     }
     var eventData:[String : Any] = [:];
     eventData["eventType"] = WorkflowEventType.flowComplete;
-    eventData["workflow"] = ostContextEntity.type;
+//    eventData["workflow"] = ostContextEntity.type;
     eventData["ostContextEntity"] = ostContextEntity;
     self.fireEvent(eventData: eventData);
   }
-  
-  func flowInterrupt(_ ostError: OstError) {
-    if ( !isCurrentUser() ) {
-      //Ignore it.
-      return;
+    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowComplete;
+        eventData["workflow"] = workflowContext.workflowType;
+        eventData["ostContextEntity"] = ostContextEntity;
+        eventData["workflowContext"] = workflowContext
+        self.fireEvent(eventData: eventData);
     }
     
-    var eventData:[String : Any] = [:];
-    eventData["eventType"] = WorkflowEventType.flowInterrupt;
-    eventData["ostError"] = ostError;
-    self.fireEvent(eventData: eventData);
-  }
+    func flowInterrupted(_ ostError: OstError) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowInterrupt;
+        eventData["ostError"] = ostError;
+        self.fireEvent(eventData: eventData);
+    }
+    
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowInterrupt;
+        eventData["ostError"] = error;
+        self.fireEvent(eventData: eventData);
+    }
+    
   
   func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {
     if ( !isCurrentUser() ) {
@@ -167,7 +193,7 @@ extension OstSdkInteract {
     
   func showPaperWallet(mnemonics: [String]) {
     var eventData:[String : Any] = [:];
-    eventData["eventType"] = WorkflowEventType.showPinToUser;
+    eventData["eventType"] = WorkflowEventType.showPaperWallet;
     eventData["mnemonics"] = mnemonics;
     self.fireEvent(eventData: eventData);
   }
