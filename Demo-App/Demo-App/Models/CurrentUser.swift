@@ -105,9 +105,10 @@ class CurrentUser: BaseModel {
     })
   }
   
-  
+  //
   
   func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
+    
     let ostSdkInteract = OstSdkInteract();
     ostSdkInteract.addEventListner { (eventData:[String : Any]) in
       //self.onComplete = onComplete
@@ -115,7 +116,7 @@ class CurrentUser: BaseModel {
       if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
         let ostContextEntity: OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity
         let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
-        if ( workflowContext.workflowType == OstWorkflowType1.setupDevice ) {
+        if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
           let userDevice = ostContextEntity.entity as! OstDevice;
           
           self.userDevice = userDevice;

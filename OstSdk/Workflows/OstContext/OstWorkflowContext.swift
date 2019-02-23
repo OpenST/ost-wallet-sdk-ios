@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum OstWorkflowType1 {
+public enum OstWorkflowType {
     case setupDevice, activateUser, addDevice, addSession, getPapaerWallet, perform
 }
 
 public class OstWorkflowContext {
     
-    public let workflowType: OstWorkflowType1
-    init(workflowType: OstWorkflowType1) {
+    public let workflowType: OstWorkflowType
+    init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType
     }
 }
