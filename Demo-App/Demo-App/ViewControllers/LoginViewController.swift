@@ -68,15 +68,15 @@ class LoginViewController: UIViewController {
   let bioTextFieldController: MDCTextInputControllerOutlined
 
   // Add buttons
-  let toggleModeButton: MDCFlatButton = {
-    let toggleModeButton = MDCFlatButton()
+  let toggleModeButton: MDCButton = {
+    let toggleModeButton = MDCButton()
     toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
     toggleModeButton.setTitle("Create Account", for: .normal)
     toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
     return toggleModeButton
   }()
-  let nextButton: MDCRaisedButton = {
-    let nextButton = MDCRaisedButton()
+  let nextButton: MDCButton = {
+    let nextButton = MDCButton()
     nextButton.translatesAutoresizingMaskIntoConstraints = false
     nextButton.setTitle("NEXT", for: .normal)
     nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
@@ -105,7 +105,6 @@ class LoginViewController: UIViewController {
     //#27b8d2
     let color4 = UIColor.init(red: 39.0/255.0, green: 184.0/255.0, blue: 210.0/255.0, alpha: 1.0);
     activityIndicator.cycleColors = [color1, color2, color3, color4]
-//    activityIndicator.isHidden = true
     return activityIndicator;
   }()
   
@@ -286,15 +285,21 @@ class LoginViewController: UIViewController {
                                      metrics: nil,
                                      views: [ "cancel" : toggleModeButton, "next" : nextButton]))
     constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .bottom,
+                                          attribute: .height,
                                           relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
+                                          toItem: nil,
+                                          attribute: .notAnAttribute,
                                           multiplier: 1,
-                                          constant: -20))
+                                          constant: 50))
+    constraints.append(NSLayoutConstraint(item: nextButton,
+                                          attribute: .width,
+                                          relatedBy: .greaterThanOrEqual,
+                                          toItem: nil,
+                                          attribute: .notAnAttribute,
+                                          multiplier: 1,
+                                          constant: 90))
     
-
-
+    
     // Error Label
     constraints.append(NSLayoutConstraint(item: errorLabel,
                                           attribute: .top,
@@ -327,8 +332,20 @@ class LoginViewController: UIViewController {
                                           multiplier: 1,
                                           constant: 0))
     
+    constraints.append(NSLayoutConstraint(item: logoImageView,
+                                          attribute: .bottom,
+                                          relatedBy: .equal,
+                                          toItem: scrollView.contentLayoutGuide,
+                                          attribute: .bottomMargin,
+                                          multiplier: 1,
+                                          constant: -20))
+
+    
     NSLayoutConstraint.activate(constraints)
     
+    let appScheme = ApplicationScheme.shared;
+    MDCContainedButtonThemer.applyScheme(appScheme.buttonScheme, to: nextButton);
+    MDCTextButtonThemer.applyScheme(appScheme.buttonScheme, to: toggleModeButton);
     
   }
 
@@ -354,6 +371,7 @@ class LoginViewController: UIViewController {
           let rootViewController =  self.presentingViewController;
           self.dismiss(animated: true, completion: {
             let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
+            setupWalletController.showHeaderBackItem = false;
             rootViewController?.present(setupWalletController, animated: true, completion: nil);
           });
           
@@ -378,7 +396,7 @@ class LoginViewController: UIViewController {
         self.nextButton.isHidden = false;
       }
       
-      self.activityIndicator.center = toggleModeButton.center;
+      self.activityIndicator.center = nextButton.center;
       self.toggleModeButton.isHidden = true;
       self.nextButton.isHidden = true;
       self.activityIndicator.startAnimating();

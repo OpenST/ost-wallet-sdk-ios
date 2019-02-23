@@ -21,8 +21,10 @@
 		0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE222213141E00AD9643 /* CurrentUser.swift */; };
 		0044DE292213153000AD9643 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE282213153000AD9643 /* Users.swift */; };
 		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
+		00C046582220F20300CAAFC0 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C046572220F20300CAAFC0 /* PaperWalletView.swift */; };
 		00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942189716441E093BEA6715C /* Pods_Demo_App.framework */; };
 		00E182EA22131630007C9B1D /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E182E922131630007C9B1D /* BaseModel.swift */; };
+		00F00D502220D3520013F478 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F00D4F2220D3520013F478 /* UserActionsViewController.swift */; };
 		4BD841242212084A00808901 /* Demo_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841232212084A00808901 /* Demo_AppTests.swift */; };
 		4BD8412F2212084A00808901 /* Demo_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD8412E2212084A00808901 /* Demo_AppUITests.swift */; };
 		4BD8413D2212086500808901 /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD8413C2212086500808901 /* OstSdk.framework */; };
@@ -88,7 +90,9 @@
 		0044DE222213141E00AD9643 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		0044DE282213153000AD9643 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		00891B402216D3FA007D3226 /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
+		00C046572220F20300CAAFC0 /* PaperWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperWalletView.swift; sourceTree = "<group>"; };
 		00E182E922131630007C9B1D /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		00F00D4F2220D3520013F478 /* UserActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActionsViewController.swift; sourceTree = "<group>"; };
 		24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0FC6D8B30975B81ED3B918 /* Pods-Demo-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Demo-AppTests/Pods-Demo-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4BD8410B2212084900808901 /* Demo-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +199,7 @@
 				4BE8957222207B14009C6A44 /* WalletViewController.swift */,
 				4BD841422212093200808901 /* HomeViewController.swift */,
 				4BD841432212093200808901 /* LoginViewController.swift */,
+				00F00D4F2220D3520013F478 /* UserActionsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */,
 				4BE8957722207B2C009C6A44 /* SetupWalletView.swift */,
 				4BE8957822207B2C009C6A44 /* BaseWalletView.swift */,
+				00C046572220F20300CAAFC0 /* PaperWalletView.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -574,9 +580,11 @@
 				4BE8957A22207B2D009C6A44 /* SetupWalletView.swift in Sources */,
 				4BE8957B22207B2D009C6A44 /* BaseWalletView.swift in Sources */,
 				4BE8957922207B2D009C6A44 /* BaseWalletWorkflowView.swift in Sources */,
+				00F00D502220D3520013F478 /* UserActionsViewController.swift in Sources */,
 				0044DE1B2213062800AD9643 /* ApplicationScheme.swift in Sources */,
 				00E182EA22131630007C9B1D /* BaseModel.swift in Sources */,
 				0044DE102213053800AD9643 /* IconGenerator.swift in Sources */,
+				00C046582220F20300CAAFC0 /* PaperWalletView.swift in Sources */,
 				0044DE152213053800AD9643 /* UIColorExtension.swift in Sources */,
 				4BE8957322207B16009C6A44 /* WalletViewController.swift in Sources */,
 				0044DE192213057100AD9643 /* UserCell.swift in Sources */,

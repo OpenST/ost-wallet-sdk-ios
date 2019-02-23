@@ -40,7 +40,7 @@ public class OstDevice: OstBaseEntity {
             return false
         }
         
-        return ["REGISTERED", "AUTHORIZED"].contains(status!)
+        return ["REGISTERED", "AUTHORIZING", "AUTHORIZED"].contains(status!)
     }
     
     public func isAuthorizing() -> Bool {
@@ -51,7 +51,17 @@ public class OstDevice: OstBaseEntity {
         }
         return false
     }
-    
+
+  public func isAuthorized() -> Bool {
+    let status = self.status
+    if (nil != status &&
+      "AUTHORIZED" == status!) {
+      return true
+    }
+    return false
+  }
+
+  
     public  func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {

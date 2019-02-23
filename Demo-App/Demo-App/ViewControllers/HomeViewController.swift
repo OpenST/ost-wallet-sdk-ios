@@ -38,34 +38,22 @@ class HomeViewController: UICollectionViewController {
     appBar.addSubviewsToParent()
     
     // Setup Navigation Items
-    let menuItemImage = UIImage(named: "MenuItem")
-    let templatedMenuItemImage = menuItemImage?.withRenderingMode(.alwaysTemplate)
-    let menuItem = UIBarButtonItem(image: templatedMenuItemImage,
-                                   style: .plain,
-                                   target: self,
-                                   action: #selector(menuItemTapped(sender:)))
-    self.navigationItem.leftBarButtonItem = menuItem
-    
-    let searchItemImage = UIImage(named: "SearchItem")
-    let templatedSearchItemImage = searchItemImage?.withRenderingMode(.alwaysTemplate)
-    let searchItem = UIBarButtonItem(image: templatedSearchItemImage,
-                                     style: .plain,
-                                     target: nil,
-                                     action: nil)
-    let tuneItemImage = UIImage(named: "TuneItem")
-    let templatedTuneItemImage = tuneItemImage?.withRenderingMode(.alwaysTemplate)
-    let tuneItem = UIBarButtonItem(image: templatedTuneItemImage,
+    let menuImage = UIImage(named: "TuneItem")
+    let templatedMenuImage = menuImage?.withRenderingMode(.alwaysTemplate)
+    let menuItem = UIBarButtonItem(image: templatedMenuImage,
                                    style: .plain,
                                    target: nil,
-                                   action: nil)
-    self.navigationItem.rightBarButtonItems = [ tuneItem, searchItem ]
+                                   action: #selector(menuItemTapped(sender:)))
+    self.navigationItem.rightBarButtonItems = [menuItem]
     
     // TODO: Theme our interface with our colors
     self.view.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor
     self.collectionView?.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor
-    MDCAppBarColorThemer.applySemanticColorScheme(ApplicationScheme.shared.colorScheme, to:self.appBar)
+    
     
     // TODO: Theme our interface with our typography
+    self.view.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor
+    MDCAppBarColorThemer.applySemanticColorScheme(ApplicationScheme.shared.colorScheme, to:self.appBar)
     MDCAppBarTypographyThemer.applyTypographyScheme(ApplicationScheme.shared.typographyScheme, to: self.appBar)
     
     
@@ -120,7 +108,6 @@ class HomeViewController: UICollectionViewController {
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       Users.getInstance().getUsers(onComplete: { (users: Array<User>) in
         self.users = users;
-        print("self.users.count", self.users.count);
         DispatchQueue.main.async {
 //          let layout = self.collectionView?.collectionViewLayout as! HomeCustomLayout;
 //          layout.prepareToDisplayUsers();
@@ -141,14 +128,14 @@ class HomeViewController: UICollectionViewController {
   
   //MARK - Methods
   @objc func menuItemTapped(sender: Any) {
-    let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
-    self.present(setupWalletController, animated: true, completion: nil)
+    let layout = UICollectionViewFlowLayout();
+    let userActionsViewController = UserActionsViewController(collectionViewLayout: layout);
+    self.present(userActionsViewController, animated: true, completion: nil);
   }
   
   //MARK - UICollectionViewDataSource
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
-    print("numberOfItemsInSection called!");
     let count = self.users.count
     return count
   }

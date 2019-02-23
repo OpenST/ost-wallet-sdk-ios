@@ -118,7 +118,7 @@ class SetupWalletView: BaseWalletWorkflowView {
                                           toItem: scrollView.contentLayoutGuide,
                                           attribute: .top,
                                           multiplier: 1,
-                                          constant: 49))
+                                          constant: 60))
     constraints.append(NSLayoutConstraint(item: logoImageView,
                                           attribute: .centerX,
                                           relatedBy: .equal,

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MaterialComponents
 import OstSdk
 class BaseWalletWorkflowView: BaseWalletView {
 
@@ -19,92 +18,7 @@ class BaseWalletWorkflowView: BaseWalletView {
     }
     */
   
-  // Add buttons
-  let nextButton: MDCRaisedButton = {
-    let nextButton = MDCRaisedButton()
-    nextButton.translatesAutoresizingMaskIntoConstraints = false
-    nextButton.setTitle("NEXT", for: .normal)
-    nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
-    return nextButton
-  }()
 
-  let cancelButton: MDCFlatButton = {
-    let toggleModeButton = MDCFlatButton()
-    toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
-    toggleModeButton.setTitle("Do it later", for: .normal)
-    toggleModeButton.addTarget(self, action: #selector(didCancelAction(sender:)), for: .touchUpInside)
-    return toggleModeButton
-  }()
-
-
-
-  
-  let activityIndicator: MDCActivityIndicator = {
-    let activityIndicator = MDCActivityIndicator()
-    activityIndicator.indicatorMode = .indeterminate
-    activityIndicator.sizeToFit()
-    //#e4b030
-    let color1 = UIColor.init(red: 228.0/255.0, green: 176.0/255.0, blue: 48.0/255.0, alpha: 1.0);
-    //#438bad
-    let color2 = UIColor.init(red: 67.0/255.0, green: 139.0/255.0, blue: 173.0/255.0, alpha: 1.0);
-    //#34445b
-    let color3 = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0);
-    //#27b8d2
-    let color4 = UIColor.init(red: 39.0/255.0, green: 184.0/255.0, blue: 210.0/255.0, alpha: 1.0);
-    activityIndicator.cycleColors = [color1, color2, color3, color4]
-    return activityIndicator;
-  }()
-  
-  // Add Labels.
-  let errorLabel: UILabel = {
-    let errorLabel = UILabel()
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    errorLabel.text = ""
-    errorLabel.textColor = UIColor.red;
-    errorLabel.sizeToFit()
-    return errorLabel
-  }()
-
-  let successLabel: UILabel = {
-    let successLabel = UILabel()
-    successLabel.translatesAutoresizingMaskIntoConstraints = false
-    successLabel.text = ""
-    successLabel.textColor = UIColor.init(red: 67.0/255.0, green: 139.0/255.0, blue: 173.0/255.0, alpha: 1.0);
-    successLabel.sizeToFit()
-    return successLabel
-  }()
-  
-  let logsLabel: UILabel = {
-    let logsLabel = UILabel()
-    logsLabel.translatesAutoresizingMaskIntoConstraints = false
-    logsLabel.text = ""
-    logsLabel.textColor = UIColor.lightGray;
-    logsLabel.sizeToFit()
-    logsLabel.numberOfLines = 0;
-    return logsLabel
-  }()
-  
-  // MARK: - Action Handling
-  
-  @objc func didCancelAction(sender: Any) {
-    //Canceled the action.
-    self.dismissViewController();
-  }
-  
-  @objc func didTapNext(sender: Any) {
-    // Lets Reset UI.
-    self.errorLabel.text = "";
-    self.successLabel.text = "";
-    
-    // Hide Action Buttons and start indicator.
-    self.nextButton.isHidden = true;
-    self.cancelButton.isHidden = true;
-    self.activityIndicator.center = self.cancelButton.center;
-    self.activityIndicator.startAnimating();
-    
-    
-    self.addToLog(log: "➡️ Starting Workflow");
-  }
 
   
   // Mark - OstSdkInteract
@@ -127,6 +41,9 @@ class BaseWalletWorkflowView: BaseWalletView {
       addToLog(log: "⚠️ Workflow Failed.");
       let error = eventData["ostError"] as! OstError;
       addToLog(log: "Error Description:" + error.description!);
+    } else if (OstSdkInteract.WorkflowEventType.getPinFromUser == eventType ) {
+      let ostPinAcceptProtocol:OstPinAcceptProtocol = eventData["ostPinAcceptProtocol"] as! OstPinAcceptProtocol;
+      getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol);
     }
   }
   
@@ -135,8 +52,6 @@ class BaseWalletWorkflowView: BaseWalletView {
     sdkInteract.addEventListner { (eventData: [String : Any]) in
       self.receivedSdkEvent(eventData: eventData);
     };
-    self.addSubViews();
-    self.addSubviewConstraints();
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -145,118 +60,36 @@ class BaseWalletWorkflowView: BaseWalletView {
  
   func addToLog( log:String ) {
     var allLogs = (self.logsLabel.text != nil) ? self.logsLabel.text! : "";
-    allLogs += "\n\n" + log;
+    allLogs += "\n" + log;
     self.logsLabel.text = allLogs;
     
   }
   
-  override func addSubViews() {
-    super.addSubViews();
-    let scrollView = self;
-    // Buttons
-    // Add buttons to the scroll view
-    scrollView.addSubview(nextButton)
-    scrollView.addSubview(cancelButton)
-    scrollView.addSubview(activityIndicator)
-    
-    // Labels
-    scrollView.addSubview(errorLabel);
-    scrollView.addSubview(successLabel);
-    scrollView.addSubview(logsLabel);
-    
+  @objc override func didTapNext(sender: Any) {
+    super.didTapNext(sender: sender);
+    self.logsLabel.text = "";
+    self.addToLog(log: "➡️ Starting Workflow");
   }
-
-  func addBottomSubviewConstraints(afterView:UIView) {
-    let scrollView = self;
-    // Buttons
-    // Setup button constraints
-    var constraints = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: cancelButton,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: afterView,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 8))
-    constraints.append(NSLayoutConstraint(item: cancelButton,
-                                          attribute: .centerY,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .centerY,
-                                          multiplier: 1,
-                                          constant: 0))
-    constraints.append(contentsOf:
-      NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
-                                     options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-                                     metrics: nil,
-                                     views: [ "cancel" : cancelButton, "next" : nextButton]))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .height,
-                                          relatedBy: .equal,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: 50))
-    
-    // Error Label
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: successLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: errorLabel,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: successLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: logsLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: successLabel,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: logsLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: logsLabel,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
-                                          multiplier: 1,
-                                          constant: -20))
-    NSLayoutConstraint.activate(constraints)
-  }
-  
-  func addSubviewConstraints() {
-    //To-Be Overridden.
+ 
+  func getPinFromUser(ostPinAcceptProtocol: OstPinAcceptProtocol) {
+    let currentUser = CurrentUser.getInstance();
+    let alert = UIAlertController(title: "Enter your pin", message: "", preferredStyle: UIAlertController.Style.alert);
+    //Add a text field.
+    alert.addTextField { (textField) in
+      textField.placeholder = "6 digit pin"
+    }
+    //Add action
+    let action = UIAlertAction(title: "Validate", style: .default) { (alertAction) in
+      let pinTextField = alert.textFields![0] as UITextField
+      if ((pinTextField.text?.count)! < 6 ) {
+        alert.message = "Invalid Pin";
+        pinTextField.text = "";
+        return;
+      }
+      ostPinAcceptProtocol.pinEntered(pinTextField.text!, applicationPassword: currentUser.userPinSalt!);
+      alert.dismiss(animated: true, completion: nil);
+    }
+    alert.addAction(action);
+    self.walletViewController?.present(alert, animated: true, completion: nil);
   }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 import OstSdk
-
+import MaterialComponents
 
 class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
   typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
@@ -17,15 +17,18 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     case flowComplete
     case flowInterrupt
     case requestAcknowledged
+    case getPinFromUser
+    case showPinToUser
   }
   
+  let currentUser: CurrentUser;
   let appUserId: String;
   let tokenId: String;
   var eventHandlers:[OstSdkInteractEventHandler?];
   override init() {
-    let currentUser =  CurrentUser.getInstance();
-    self.appUserId = currentUser.appUserId!;
-    self.tokenId = currentUser.tokenId!;
+    self.currentUser =  CurrentUser.getInstance();
+    self.appUserId = self.currentUser.appUserId!;
+    self.tokenId = self.currentUser.tokenId!;
     self.eventHandlers = [OstSdkInteractEventHandler]();
     super.init();
   }
@@ -51,10 +54,14 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     }
   }
   
+  
+  
 }
 
 // MARK: - Sdk Callbacks Implimentation.
 extension OstSdkInteract {
+  
+  
   func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
     if ( !isCurrentUser() ) {
       ostDeviceRegisteredProtocol.cancelFlow("User logged-out");
@@ -75,6 +82,13 @@ extension OstSdkInteract {
       ostPinAcceptProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.getPinFromUser;
+    eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+    self.fireEvent(eventData: eventData);
+    
+    
   }
   
   func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
@@ -82,6 +96,12 @@ extension OstSdkInteract {
       ostPinAcceptProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.getPinFromUser;
+    eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+    self.fireEvent(eventData: eventData);
+
   }
   
   func pinValidated(_ userId: String) {
@@ -145,9 +165,15 @@ extension OstSdkInteract {
     
   }
     
-    func showPaperWallet(mnemonics: [String]) {
-        
-    }
+  func showPaperWallet(mnemonics: [String]) {
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.showPinToUser;
+    eventData["mnemonics"] = mnemonics;
+    self.fireEvent(eventData: eventData);
+  }
+
+  
+
 }
 
 

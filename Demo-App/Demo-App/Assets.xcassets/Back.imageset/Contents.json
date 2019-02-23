@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ShrineLogo@1x.png",
+      "filename" : "ic_keyboard_arrow_left_white_1x_ios_36dp.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ShrineLogo@2x.png",
+      "filename" : "ic_keyboard_arrow_left_white_2x_ios_36dp.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ShrineLogo@3x.png",
+      "filename" : "ic_keyboard_arrow_left_white_3x_ios_36dp.png",
       "scale" : "3x"
     }
   ],

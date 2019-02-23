@@ -1920,7 +1920,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
@@ -1954,7 +1953,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
