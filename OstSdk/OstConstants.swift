@@ -43,7 +43,7 @@ struct OstConstants {
     static let OST_WALLET_NETWORK: Network = .mainnet
     static let OST_WALLET_SEED_PASSPHRASE: String = ""
     
-    static let OST_BLOCK_FORMATION_TIME: Int = 4
+    static let OST_BLOCK_GENERATION_TIME: Int = 4
     
     static let OST_MIN_EXPIRATION_BLOCK_HEIGHT: Int = 3*60*60
     

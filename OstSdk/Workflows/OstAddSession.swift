@@ -9,24 +9,28 @@
 import Foundation
 
 class OstAddSession: OstWorkflowBase {
+    static let SESSION_BUFFER_TIME = Double.init(1 * 60 * 60); //1 Hour.
+  
     let ostAddSessionThread = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
-    let workflowTransactionCountForPolling = 2
+    let workflowTransactionCountForPolling = 1
     
     var spendingLimit: String
-    var expirationHeight: Int
+    var expirationHeight: Int?
+    var expiresAfterInSecs: Double;
     
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
     var walletKeys: OstWalletKeys? = nil
-    var currentBlockHeight: Int = 0
     var chainInfo: [String: Any]? = nil
-    
-    init(userId: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
+  
+
+    //Note - If renaming expiresAfterInSecs, please inform Android team as well.
+    init(userId: String, spendingLimit: String, expiresAfterInSecs: Double, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
-        self.expirationHeight = expirationHeight
+        self.expiresAfterInSecs = expiresAfterInSecs;
         super.init(userId: userId, delegate: delegate)
     }
-    
+  
     override func perform() {
         ostAddSessionThread.async {
             self.generateSessionKeys()
@@ -96,15 +100,20 @@ class OstAddSession: OstWorkflowBase {
         let onFailure: ((OstError) -> Void) = { (error) in
             self.postError(error)
         }
-        
-        self.currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!
+      
+        // Calculate expiration height
+        let currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!;
+        let blockGenerationTime = OstUtils.toInt(self.chainInfo!["block_time"])!;
+        let bufferedSessionTime = OstAddSession.SESSION_BUFFER_TIME + self.expiresAfterInSecs;
+        let validForBlocks = Int.init( bufferedSessionTime/Double(blockGenerationTime) );
+        self.expirationHeight = validForBlocks + currentBlockHeight;
+      
         self.generateAndSaveSessionEntity()
      
-        //TODO: Get expirationHeight from timestamp and block_formation time
         OstAuthorizeSession(userId: self.userId,
                             sessionAddress: self.walletKeys!.address!,
                             spendingLimit: self.spendingLimit,
-                            expirationHeight: OstUtils.toString(self.currentBlockHeight + self.expirationHeight)!,
+                            expirationHeight: OstUtils.toString(self.expirationHeight!)!,
                             generateSignatureCallback: generateSignatureCallback,
                             onSuccess: onSuccess,
                             onFailure: onFailure).perform()
@@ -123,7 +132,7 @@ class OstAddSession: OstWorkflowBase {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
         params["address"] = self.walletKeys!.address!
-        params["expiration_height"] = self.currentBlockHeight + self.expirationHeight
+        params["expiration_height"] = self.expirationHeight!
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
         params["status"] = OstSession.SESSION_STATUS_CREATED

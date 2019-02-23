@@ -17,9 +17,9 @@ class AddSessionView: BaseWalletWorkflowView {
         //TODO: add session
         if (validateSpendingLimit() && validateExpirationHeight()) {
             super.didTapNext(sender: sender);
-            OstSdk.addSession(userId:  currentUser.ostUserId!,
+            OstSdk.addSession(userId: currentUser.ostUserId!,
                               spendingLimit: self.spendingLimitTestField.text!,
-                              expirationHeight: Int(self.expirationHeightTextField.text!)!,
+                              expiresAfterInSecs: Double(self.expirationHeightTextField.text!)!,
                               delegate: self.sdkInteract)
         }
     }

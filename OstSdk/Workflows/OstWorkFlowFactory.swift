@@ -47,18 +47,18 @@ extension OstSdk {
         let addDeviceObject = OstAddDevice(userId: userId, delegate: delegate)
         addDeviceObject.perform()
     }
-    
-    /// Add session for user.
-    ///
-    /// - Parameters:
-    ///   - userId: Kit user id
-    ///   - spendingLimit: Amount user can spend in a transaction.
-    ///   - expirationHeight: expiration height
-    ///   - delegate: Callback for action complete or to perform respective action
-    public class func addSession(userId: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
-         let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
-        ostAddSession.perform()
-    }
+  
+  /// Add session for user.
+  ///
+  /// - Parameters:
+  ///   - userId: Kit user id
+  ///   - spendingLimit: Amount user can spend in a transaction.
+  ///   - expiresAfterInSecs: Seconds after which the session key should expire.
+  ///   - delegate: Callback for action complete or to perform respective action
+  public class func addSession(userId: String, spendingLimit: String, expiresAfterInSecs: Double, delegate: OstWorkFlowCallbackProtocol) {
+    let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expiresAfterInSecs: expiresAfterInSecs, delegate: delegate)
+    ostAddSession.perform()
+  }
     
     /// Perform operations for given QR-Code image of core image type.
     ///
