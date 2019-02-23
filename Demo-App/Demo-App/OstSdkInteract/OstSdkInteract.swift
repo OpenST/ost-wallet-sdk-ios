@@ -20,6 +20,8 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     case getPinFromUser
     case showPinToUser
     case showPaperWallet
+    case determineAddDeviceType
+    case showQRCode
   }
   
   let currentUser: CurrentUser;
@@ -162,7 +164,11 @@ extension OstSdkInteract {
       ostAddDeviceFlowProtocol.cancelFlow("User logged-out");
       return;
     }
-
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.determineAddDeviceType;
+    eventData["ostAddDeviceFlowProtocol"] = ostAddDeviceFlowProtocol;
+    self.fireEvent(eventData: eventData);
   }
   
   func showQR(_ startPollingProtocol: OstStartPollingProtocol, image qrImage: CIImage) {
@@ -170,6 +176,13 @@ extension OstSdkInteract {
       startPollingProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.showQRCode;
+    eventData["startPollingProtocol"] = startPollingProtocol
+    eventData["qrImage"] = qrImage;
+    self.fireEvent(eventData: eventData);
+    
   }
   
   func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {

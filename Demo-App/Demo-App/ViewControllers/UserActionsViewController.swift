@@ -23,6 +23,7 @@ class UserActionsViewController: UICollectionViewController {
   case paperWallet = "paperWallet"
     case addSession = "addSession"
     case addDeviceByQRCode = "addDeviceByQRCode"
+    case showQRCode = "showQRCode"
   }
   
   var dataItems:[[String:String]]?
@@ -34,6 +35,7 @@ class UserActionsViewController: UICollectionViewController {
     var addSession: [String:String] = [:];
     var setupWallet: [String:String] = [:];
     var paperWallet: [String:String] = [:];
+    var showQRCode: [String:String] = [:];
     var addDeviceFromQRCode: [String:String] = [:];
     
     setupWallet[ACTION_TYPE] = ACTIONS.activateUser.rawValue;
@@ -53,6 +55,12 @@ class UserActionsViewController: UICollectionViewController {
         addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addDeviceByQRCode.rawValue
         addDeviceFromQRCode[ACTION_TEXT] = "Add Device from QR-Code"
         addDeviceFromQRCode[ACTION_DETAILS] = "Add Device from QR-Code."
+        
+        if (userDevice.isDeviceRegistered()) {
+            showQRCode[ACTION_TYPE] = ACTIONS.showQRCode.rawValue
+            showQRCode[ACTION_TEXT] = "Show QR-Code"
+            showQRCode[ACTION_DETAILS] = "SHow QR-Code"
+        }
         
     } else if ( ostUser.isActivating()) {
       setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
@@ -74,7 +82,7 @@ class UserActionsViewController: UICollectionViewController {
     
     
     //Final Ordering.
-    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode];
+    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode, showQRCode];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -217,6 +225,12 @@ class UserActionsViewController: UICollectionViewController {
       else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceByQRCode.rawValue) == .orderedSame ) {
         let walletController = WalletViewController(nibName: nil, bundle: nil);
         walletController.viewMode = WalletViewController.ViewMode.QR_CODE;
+        self.present(walletController, animated: true, completion: nil);
+        }
+        
+      else if ( actionType.caseInsensitiveCompare(ACTIONS.showQRCode.rawValue) == .orderedSame ) {
+        let walletController = WalletViewController(nibName: nil, bundle: nil);
+        walletController.viewMode = WalletViewController.ViewMode.SHOW_QR_CODE;
         self.present(walletController, animated: true, completion: nil);
         }
     }

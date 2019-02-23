@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		0044DE102213053800AD9643 /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE082213053800AD9643 /* IconGenerator.swift */; };
 		0044DE112213053800AD9643 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE092213053800AD9643 /* Shapes.swift */; };
-		0044DE122213053800AD9643 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0044DE0A2213053800AD9643 /* README.md */; };
 		0044DE132213053800AD9643 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE0B2213053800AD9643 /* ColorTheme.swift */; };
 		0044DE142213053800AD9643 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE0C2213053800AD9643 /* CGContextExtension.swift */; };
 		0044DE152213053800AD9643 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE0D2213053800AD9643 /* UIColorExtension.swift */; };
-		0044DE162213053800AD9643 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0044DE0E2213053800AD9643 /* LICENSE */; };
 		0044DE192213057100AD9643 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE182213057100AD9643 /* UserCell.swift */; };
 		0044DE1B2213062800AD9643 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE1A2213062800AD9643 /* ApplicationScheme.swift */; };
 		0044DE1E2213069700AD9643 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE1D2213069700AD9643 /* HomeCustomLayout.swift */; };
@@ -41,6 +39,7 @@
 		4BE8958122212393009C6A44 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958022212392009C6A44 /* UserActionsViewController.swift */; };
 		4BE89586222151DD009C6A44 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE89585222151DD009C6A44 /* AddSessionView.swift */; };
 		4BE8958822216FCD009C6A44 /* AddDeviceFromQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */; };
+		4BE895CF2221B74C009C6A44 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE895CE2221B74C009C6A44 /* ShowQRView.swift */; };
 		60E381A7602E11FB90142625 /* Pods_Demo_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB63963E6BCB21D9A0F370DF /* Pods_Demo_AppUITests.framework */; };
 		B1EA24F7E240CCE4A09738CE /* Pods_Demo_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */; };
 /* End PBXBuildFile section */
@@ -118,6 +117,8 @@
 		4BE8958022212392009C6A44 /* UserActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActionsViewController.swift; sourceTree = "<group>"; };
 		4BE89585222151DD009C6A44 /* AddSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSessionView.swift; sourceTree = "<group>"; };
 		4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceFromQRCode.swift; sourceTree = "<group>"; };
+		4BE895CB2221ADFB009C6A44 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		4BE895CE2221B74C009C6A44 /* ShowQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRView.swift; sourceTree = "<group>"; };
 		60C7F485ED0C5B791CCEA630 /* Pods-Demo-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Demo-AppTests/Pods-Demo-AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		6935DA6DAE477424D17E1474 /* Pods-Demo-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-App.release.xcconfig"; path = "Target Support Files/Pods-Demo-App/Pods-Demo-App.release.xcconfig"; sourceTree = "<group>"; };
 		8087507ACF15D68A5123856B /* Pods-Demo-AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-AppUITests.release.xcconfig"; path = "Target Support Files/Pods-Demo-AppUITests/Pods-Demo-AppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 		4BD841022212084900808901 = {
 			isa = PBXGroup;
 			children = (
+				4BE895CB2221ADFB009C6A44 /* Podfile */,
 				4BD8413C2212086500808901 /* OstSdk.framework */,
 				4BD8410D2212084900808901 /* Demo-App */,
 				4BD841222212084A00808901 /* Demo-AppTests */,
@@ -303,6 +305,7 @@
 				4BE8957822207B2C009C6A44 /* BaseWalletView.swift */,
 				4BE89585222151DD009C6A44 /* AddSessionView.swift */,
 				4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */,
+				4BE895CE2221B74C009C6A44 /* ShowQRView.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -443,8 +446,6 @@
 				4BD841512212093E00808901 /* LaunchScreen.storyboard in Resources */,
 				0044DE2022130B0300AD9643 /* Main.storyboard in Resources */,
 				4BD841502212093E00808901 /* Assets.xcassets in Resources */,
-				0044DE122213053800AD9643 /* README.md in Resources */,
-				0044DE162213053800AD9643 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +595,7 @@
 				0044DE102213053800AD9643 /* IconGenerator.swift in Sources */,
 				0044DE152213053800AD9643 /* UIColorExtension.swift in Sources */,
 				4BE8957322207B16009C6A44 /* WalletViewController.swift in Sources */,
+				4BE895CF2221B74C009C6A44 /* ShowQRView.swift in Sources */,
 				0044DE192213057100AD9643 /* UserCell.swift in Sources */,
 				0044DE142213053800AD9643 /* CGContextExtension.swift in Sources */,
 				0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */,

@@ -21,6 +21,18 @@ class OstKeychainHelper: OstBaseStorage {
         super.init()
     }
     
+    override func getAccessControl() throws -> SecAccessControl {
+        var error: Unmanaged<CFError>?
+        let access = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+                                                     kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                     .userPresence,
+                                                     &error)!
+        if (error != nil) {
+            throw OstError1("s_s_bs_gac_1", .accessControlFailed);
+        }
+        return access
+    }
+    
     //MARK: - Store in keychain
     
     /// Store data in keychain

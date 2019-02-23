@@ -61,46 +61,35 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                         self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
                         return
                     }
-
+                    
                     if (!self.user!.isActivated()) {
                         self.postError(OstError.actionFailed("User is not activated for \(self.userId)."))
                         return
                     }
-
+                    
                     self.currentDevice = try self.getCurrentDevice()
                     if (self.currentDevice == nil) {
                         self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                         return
                     }
-
+                    
                     if (!self.currentDevice!.isDeviceRegistered()) {
                         self.postError(OstError.actionFailed("Device is not registered for \(self.userId). Plese register device first by calling OstSdk.setupDevice"))
                         return
                     }
-
+                    
                     DispatchQueue.main.async {
                         self.delegate.determineAddDeviceWorkFlow(self)
                     }
                     
                 case .QR_CODE:
                     try self.validateParams()
-                    let payload = try self.generateQRCodePayloadForAddDevce()
-                    guard let payloadString = try OstUtils.toJSONString(payload) else {
-                        throw OstError.actionFailed("Generating QR-Code failed.")
-                    }
-                    
-                    guard let qrCodeCIImage = payloadString.qrCode else {
-                        throw OstError.actionFailed("Generating QR-Code image failed.")
-                    }
-                    DispatchQueue.main.async {
-                        self.delegate.showQR(self, image: qrCodeCIImage)
-                    }
-
+                    self.authenticateUser()
                 case .PIN:
                     try self.validateParams()
-     
+                    
                 case .WORDS:
-                   self.authorizeDeviceWothMnemonics()
+                    self.authorizeDeviceWothMnemonics()
                     
                 case .ERROR:
                     self.postError(OstError.actionFailed("Add device flow cancelled."))
@@ -124,7 +113,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
             if (!user!.isActivated()) {
                 throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
             }
-
+            
             let currentDevice = try getCurrentDevice()
             if (currentDevice == nil) {
                 throw OstError.invalidInput("Device is not present for \(self.userId). Please create device first.")
@@ -149,15 +138,40 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         }
     }
     
-    //MARK: - QR-Code
-    func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
-            let currentDevice = try getCurrentDevice()
-            return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
-                    "user_id": self.userId,
-                    "device_address": currentDevice!.address!]
+    
+    override func proceedWorkflowAfterAuthenticateUser() {
+        switch mCurrentState {
+        case .QR_CODE:
+            do {
+                let payload = try self.generateQRCodePayloadForAddDevce()
+                guard let payloadString = try OstUtils.toJSONString(payload) else {
+                    throw OstError.actionFailed("Generating QR-Code failed.")
+                }
+                
+                guard let qrCodeCIImage = payloadString.qrCode else {
+                    throw OstError.actionFailed("Generating QR-Code image failed.")
+                }
+                DispatchQueue.main.async {
+                    self.delegate.showQR(self, image: qrCodeCIImage)
+                    self.postWorkflowComplete(entity: qrCodeCIImage)
+                }
+            }catch let error{
+                self.postError(error)
+            }
+        default:
+            self.postError(OstError.invalidInput("unexpected state"))
+        }
     }
     
-
+    //MARK: - QR-Code
+    func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
+        let currentDevice = try getCurrentDevice()
+        return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
+                "user_id": self.userId,
+                "device_address": currentDevice!.address!]
+    }
+    
+    
     //MARK: - authorize device
     func authorizeDeviceWothMnemonics() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
@@ -194,11 +208,16 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     }
     
     public override func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        self.uPin = uPin
-        self.appUserPassword = appUserPassword
-
-        self.setCurrentState(.PIN)
-        perform()
+        switch mCurrentState {
+        case .QR_CODE:
+            super.pinEntered(uPin, applicationPassword: appUserPassword)
+        default:
+            self.uPin = uPin
+            self.appUserPassword = appUserPassword
+            
+            self.setCurrentState(.PIN)
+            perform()
+        }
     }
     
     public  func walletWordsEntered(_ wordList: String) {
@@ -243,13 +262,25 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .addDevice)
+        
+        switch mCurrentState {
+        case .QR_CODE:
+            return OstWorkflowContext(workflowType: .showQRCode)
+        default:
+            return OstWorkflowContext(workflowType: .addDevice)
+        }
+       
     }
     
     /// Get context entity
     ///
     /// - Returns: OstContextEntity
     override func getContextEntity(for entity: Any) -> OstContextEntity {
-        return OstContextEntity(entity: entity, entityType: .device)
+        switch mCurrentState {
+        case .QR_CODE:
+            return OstContextEntity(entity: entity, entityType: .ciimage)
+        default:
+            return OstContextEntity(entity: entity, entityType: .device)
+        }
     }
 }

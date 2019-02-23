@@ -29,6 +29,7 @@ class WalletViewController: UIViewController {
     case NEW_SESSION
     case QR_CODE
     case PAPER_WALLET
+    case SHOW_QR_CODE
   }
   
   var isLoginMode:Bool = true;
@@ -115,6 +116,10 @@ class WalletViewController: UIViewController {
     case ViewMode.QR_CODE:
         self.title = "Scan QR-Code";
         return AddDeviceFromQRCode()
+    case ViewMode.SHOW_QR_CODE:
+        self.title = "Show QR-Code"
+        return ShowQRView()
+    
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()
