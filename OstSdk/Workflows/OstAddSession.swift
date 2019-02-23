@@ -16,7 +16,7 @@ class OstAddSession: OstWorkflowBase {
     
     var spendingLimit: String
     var expirationHeight: Int?
-    var expiresAfterInSecs: Double;
+    var expiresAfter: TimeInterval;
     
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
@@ -24,10 +24,9 @@ class OstAddSession: OstWorkflowBase {
     var chainInfo: [String: Any]? = nil
   
 
-    //Note - If renaming expiresAfterInSecs, please inform Android team as well.
-    init(userId: String, spendingLimit: String, expiresAfterInSecs: Double, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
-        self.expiresAfterInSecs = expiresAfterInSecs;
+        self.expiresAfter = expiresAfter;
         super.init(userId: userId, delegate: delegate)
     }
   
@@ -104,7 +103,7 @@ class OstAddSession: OstWorkflowBase {
         // Calculate expiration height
         let currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!;
         let blockGenerationTime = OstUtils.toInt(self.chainInfo!["block_time"])!;
-        let bufferedSessionTime = OstAddSession.SESSION_BUFFER_TIME + self.expiresAfterInSecs;
+        let bufferedSessionTime = OstAddSession.SESSION_BUFFER_TIME + self.expiresAfter;
         let validForBlocks = Int.init( bufferedSessionTime/Double(blockGenerationTime) );
         self.expirationHeight = validForBlocks + currentBlockHeight;
       

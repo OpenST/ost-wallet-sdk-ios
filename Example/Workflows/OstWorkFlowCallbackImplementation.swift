@@ -64,14 +64,14 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             }else if (!user.isActivated()){
                 _ = try! ActivateUser(userId: user.id, tokenId: user.tokenId!, mappyUserId: mappyUserId, pin: "123456", password: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq").perform()
             }else {
-                OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expiresAfterInSecs: 3600, delegate: self)
+                OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expiresAfter: Double(3600), delegate: self)
             }
             
         case .activateUser:
             Logger.log(message: "activateUser flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)
             
             let user: OstUser  = ostContextEntity.entity as! OstUser
-            OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expiresAfterInSecs:  3600, delegate: self)
+            OstSdk.addSession(userId: user.id, spendingLimit: "10000000", expiresAfter: Double(3600 * 24), delegate: self)
             
         case .addSession:
             Logger.log(message: "addSession flowComplete", parameterToPrint: (ostContextEntity.entity as! OstBaseEntity).data)

@@ -19,7 +19,7 @@ class AddSessionView: BaseWalletWorkflowView {
             super.didTapNext(sender: sender);
             OstSdk.addSession(userId: currentUser.ostUserId!,
                               spendingLimit: self.spendingLimitTestField.text!,
-                              expiresAfterInSecs: Double(self.expirationHeightTextField.text!)!,
+                              expiresAfter: Double(self.expirationHeightTextField.text!)!,
                               delegate: self.sdkInteract)
         }
     }

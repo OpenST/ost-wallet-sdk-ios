@@ -53,10 +53,10 @@ extension OstSdk {
   /// - Parameters:
   ///   - userId: Kit user id
   ///   - spendingLimit: Amount user can spend in a transaction.
-  ///   - expiresAfterInSecs: Seconds after which the session key should expire.
+  ///   - expiresAfter: Seconds after which the session key should expire.
   ///   - delegate: Callback for action complete or to perform respective action
-  public class func addSession(userId: String, spendingLimit: String, expiresAfterInSecs: Double, delegate: OstWorkFlowCallbackProtocol) {
-    let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expiresAfterInSecs: expiresAfterInSecs, delegate: delegate)
+  public class func addSession(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
+    let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expiresAfter: expiresAfter, delegate: delegate)
     ostAddSession.perform()
   }
     
