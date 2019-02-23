@@ -61,7 +61,7 @@ class OstAuthorizeSession: OstAuthorizeBase {
     
     override func getRawCallData() -> String {
         let callData: [String: Any] = ["method": self.abiMethodNameForAuthorizeSession,
-                        "parameters": [self.addressToAdd, self.spendingLimit, self.expirationHeight]]
+                                       "parameters": [self.addressToAdd, self.spendingLimit, self.expirationHeight]]
         return try! OstUtils.toJSONString(callData)!
     }
     

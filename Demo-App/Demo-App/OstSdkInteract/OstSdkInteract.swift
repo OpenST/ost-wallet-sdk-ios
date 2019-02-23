@@ -89,7 +89,6 @@ extension OstSdkInteract {
     eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
     self.fireEvent(eventData: eventData);
     
-    
   }
   
   func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {

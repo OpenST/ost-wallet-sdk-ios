@@ -55,12 +55,11 @@ class OstPerform: OstWorkflowBase {
             if (self.payload == nil) {
                 self.postError(OstError.invalidInput("Invalid paylaod to process."))
             }
-            self.dataDefination = (self.payload!["data_defination"]) ?? ""
+            self.dataDefination = (self.payload!["data_defination"])?.uppercased() ?? ""
             
             try self.validateParams()
             
             switch self.dataDefination {
-                
             case DataDefination.AUTHORIZE_DEVICE.rawValue:
                 self.authorizeDeviceWithPrivateKey()
                 
@@ -88,7 +87,7 @@ class OstPerform: OstWorkflowBase {
             guard let _ = self.payload!["user_id"] else {
                 throw OstError.invalidInput("User id is not present.")
             }
-            guard let _ = self.payload!["device_to_add"] else {
+            guard let _ = self.payload!["device_address"] else {
                 throw OstError.invalidInput("Device to add is not persent")
             }
             
@@ -113,8 +112,7 @@ class OstPerform: OstWorkflowBase {
                 if let deviceAddress = keychainManager.getDeviceAddress() {
                     //TODO: Remove Testcode - 192
                     let privatekey = try keychainManager.getDeviceKey()
-                    //                                            return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
-                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: OstConstants.testPrivateKey)
+                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     return (signature, deviceAddress)
                 }
                 throw OstError.actionFailed("issue while generating signature.")
@@ -132,7 +130,7 @@ class OstPerform: OstWorkflowBase {
         }
         
         OstAuthorizeDevice(userId: self.userId,
-                           deviceAddressToAdd: self.payload!["device_to_add"]!,
+                           deviceAddressToAdd: self.payload!["device_address"]!,
                            generateSignatureCallback: generateSignatureCallback,
                            onSuccess: onSuccess,
                            onFailure: onFailure).perform()

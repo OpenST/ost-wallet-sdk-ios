@@ -112,6 +112,9 @@ class WalletViewController: UIViewController {
     case ViewMode.NEW_SESSION:
         self.title = "Create Sesssion";
         return AddSessionView()
+    case ViewMode.QR_CODE:
+        self.title = "Scan QR-Code";
+        return AddDeviceFromQRCode()
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()

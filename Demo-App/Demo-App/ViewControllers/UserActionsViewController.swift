@@ -50,7 +50,7 @@ class UserActionsViewController: UICollectionViewController {
         addSession[ACTION_TEXT] = "Create Session"
         addSession[ACTION_DETAILS] = "Create session to do transactions."
         
-        addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addSession.rawValue
+        addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addDeviceByQRCode.rawValue
         addDeviceFromQRCode[ACTION_TEXT] = "Add Device from QR-Code"
         addDeviceFromQRCode[ACTION_DETAILS] = "Add Device from QR-Code."
         
@@ -214,9 +214,9 @@ class UserActionsViewController: UICollectionViewController {
         self.present(walletController, animated: true, completion: nil);
         }
       
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
+      else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceByQRCode.rawValue) == .orderedSame ) {
         let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.NEW_SESSION;
+        walletController.viewMode = WalletViewController.ViewMode.QR_CODE;
         self.present(walletController, animated: true, completion: nil);
         }
     }

@@ -154,7 +154,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
             let currentDevice = try getCurrentDevice()
             return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
                     "user_id": self.userId,
-                    "device_to_add": currentDevice!.address!]
+                    "device_address": currentDevice!.address!]
     }
     
 
@@ -202,15 +202,10 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     }
     
     public  func walletWordsEntered(_ wordList: String) {
-        //TODO: Remove Testcode - 221-222
         self.wordsArray = []
-        for word in OstConstants.testMnemonics.split(separator: " ") {
+        for word in wordList.split(separator: " ") {
             self.wordsArray!.append("\(word)")
         }
-//
-//        for word in OstConstants.wordList.split(separator: " ") {
-//            self.wordsArray!.append("\(word)")
-//        }
         
         self.setCurrentState(.WORDS)
         perform()
