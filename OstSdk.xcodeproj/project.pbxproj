@@ -10,6 +10,13 @@
 		001C71C0222223DE00905BF1 /* OstSdkExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 001C71BE222223DE00905BF1 /* OstSdkExample.xcdatamodeld */; };
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
+		00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282C822224188000ABAB2 /* Alamofire.framework */; };
+		00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CA22224188000ABAB2 /* BigInt.framework */; };
+		00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */; };
+		00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CE22224188000ABAB2 /* CryptoSwift.framework */; };
+		00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D022224188000ABAB2 /* EthereumKit.framework */; };
+		00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D222224188000ABAB2 /* FMDB.framework */; };
+		00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D422224188000ABAB2 /* SipHash.framework */; };
 		00E63B0522221E5B00C61363 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B0422221E5B00C61363 /* AppDelegate.swift */; };
 		00E63B0722221E5B00C61363 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B0622221E5B00C61363 /* ViewController.swift */; };
 		00E63B0A22221E5B00C61363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B0822221E5B00C61363 /* Main.storyboard */; };
@@ -234,6 +241,9 @@
 		4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */; };
 		4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */; };
 		4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */; };
+		5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */; };
+		61F0232BC72692B3D7A74E44 /* Pods_OstSdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */; };
+		B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,6 +281,13 @@
 		001C71BF222223DE00905BF1 /* Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example.xcdatamodel; sourceTree = "<group>"; };
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		00C282C822224188000ABAB2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282CA22224188000ABAB2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoEthereumSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282CE22224188000ABAB2 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282D022224188000ABAB2 /* EthereumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EthereumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282D222224188000ABAB2 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C282D422224188000ABAB2 /* SipHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SipHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E63B0222221E5B00C61363 /* OstSdkExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OstSdkExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E63B0422221E5B00C61363 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00E63B0622221E5B00C61363 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -297,6 +314,7 @@
 		00E63B4922221ED200C61363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		00E63B4A22221ED200C61363 /* SharedDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedDatabase.swift; sourceTree = "<group>"; };
 		00E63B4B22221ED200C61363 /* MockToken.abi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MockToken.abi; sourceTree = "<group>"; };
+		456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
 		4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
@@ -499,6 +517,14 @@
 		4BE9E3EC220989E600427A80 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokens.swift; sourceTree = "<group>"; };
 		4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCurrentDevice.swift; sourceTree = "<group>"; };
+		5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
+		81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.release.xcconfig"; path = "Target Support Files/Pods-OstSdk/Pods-OstSdk.release.xcconfig"; sourceTree = "<group>"; };
+		87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.release.xcconfig"; path = "Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkExample.release.xcconfig"; path = "Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample.release.xcconfig"; sourceTree = "<group>"; };
+		D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.debug.xcconfig"; path = "Target Support Files/Pods-OstSdk/Pods-OstSdk.debug.xcconfig"; sourceTree = "<group>"; };
+		E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E63B6022221FEB00C61363 /* OstSdk.framework in Frameworks */,
+				61F0232BC72692B3D7A74E44 /* Pods_OstSdkExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +541,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */,
+				00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */,
+				00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */,
+				00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */,
+				00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */,
+				00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */,
+				00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */,
 				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
+				B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +559,7 @@
 			files = (
 				4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */,
 				4B7C930F21B006E900EC0A9F /* OstSdk.framework in Frameworks */,
+				5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +637,19 @@
 				00E63B4822221ED200C61363 /* Main.storyboard */,
 			);
 			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		3786C4EE2FD59024C6B7673C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */,
+				81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */,
+				5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */,
+				C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */,
+				E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */,
+				C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4B00CC1121DF89C7005A5696 /* Storage */ = {
@@ -979,6 +1028,7 @@
 				00E63B0322221E5B00C61363 /* OstSdkExample */,
 				4B7C930621B006E900EC0A9F /* Products */,
 				4B7C933821B150AF00EC0A9F /* Frameworks */,
+				3786C4EE2FD59024C6B7673C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1077,9 +1127,19 @@
 		4B7C933821B150AF00EC0A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00C282C822224188000ABAB2 /* Alamofire.framework */,
+				00C282CA22224188000ABAB2 /* BigInt.framework */,
+				00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */,
+				00C282CE22224188000ABAB2 /* CryptoSwift.framework */,
+				00C282D022224188000ABAB2 /* EthereumKit.framework */,
+				00C282D222224188000ABAB2 /* FMDB.framework */,
+				00C282D422224188000ABAB2 /* SipHash.framework */,
 				4BE9E3EC220989E600427A80 /* Alamofire.framework */,
 				4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */,
 				4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */,
+				87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */,
+				456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */,
+				91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1169,10 +1229,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E63B2722221E5C00C61363 /* Build configuration list for PBXNativeTarget "OstSdkExample" */;
 			buildPhases = (
+				8A8EC24BC789BE3E124757B4 /* [CP] Check Pods Manifest.lock */,
 				00E63AFE22221E5B00C61363 /* Sources */,
 				00E63AFF22221E5B00C61363 /* Frameworks */,
 				00E63B0022221E5B00C61363 /* Resources */,
 				00E63B6422221FEC00C61363 /* Embed Frameworks */,
+				E7AC21673F4446818AB625D8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1188,11 +1250,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B7C931921B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdk" */;
 			buildPhases = (
+				0A69A602A4D9CBF180022562 /* [CP] Check Pods Manifest.lock */,
 				4B7C930021B006E900EC0A9F /* Headers */,
 				4B7C930121B006E900EC0A9F /* Sources */,
 				4B7C930221B006E900EC0A9F /* Frameworks */,
 				4B7C930321B006E900EC0A9F /* Resources */,
-				4B00CCAB21E360B4005A5696 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1207,10 +1269,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B7C931C21B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdkTests" */;
 			buildPhases = (
+				3DA84799508CB520CF28B36D /* [CP] Check Pods Manifest.lock */,
 				4B7C930A21B006E900EC0A9F /* Sources */,
 				4B7C930B21B006E900EC0A9F /* Frameworks */,
 				4B7C930C21B006E900EC0A9F /* Resources */,
-				4B00CCAC21E3628E005A5696 /* ShellScript */,
+				30C85F0D8E213D6B57A691AB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1302,7 +1365,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4B00CCAB21E360B4005A5696 /* ShellScript */ = {
+		0A69A602A4D9CBF180022562 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1310,23 +1373,21 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OstSdk-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		4B00CCAC21E3628E005A5696 /* ShellScript */ = {
+		30C85F0D8E213D6B57A691AB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1334,21 +1395,101 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KeychainSwift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 			);
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3DA84799508CB520CF28B36D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OstSdkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A8EC24BC789BE3E124757B4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OstSdkExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7AC21673F4446818AB625D8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1635,8 +1776,9 @@
 /* Begin XCBuildConfiguration section */
 		00E63B2822221E5C00C61363 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N83K86W6P4;
@@ -1654,8 +1796,9 @@
 		};
 		00E63B2922221E5C00C61363 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N83K86W6P4;
@@ -1795,6 +1938,7 @@
 		};
 		4B7C931A21B006E900EC0A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -1806,7 +1950,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
@@ -1829,6 +1972,7 @@
 		};
 		4B7C931B21B006E900EC0A9F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -1840,7 +1984,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/OstSdk/Frameworks",
 				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
@@ -1862,8 +2005,9 @@
 		};
 		4B7C931D21B006E900EC0A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G2TZMLB5LP;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1885,8 +2029,9 @@
 		};
 		4B7C931E21B006E900EC0A9F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G2TZMLB5LP;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -1,6 +1,11 @@
 PODS:
   - Alamofire (4.8.1)
+  - BigInt (3.1.0):
+    - SipHash (~> 1.2)
   - CryptoSwift (0.14.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - MaterialComponents (55.0.0):
     - MaterialComponents/ActivityIndicator (= 55.0.0)
     - "MaterialComponents/ActivityIndicator+ColorThemer (= 55.0.0)"
@@ -437,21 +442,27 @@ PODS:
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
   - MotionTransitioning (5.0.0)
+  - SipHash (1.2.2)
 
 DEPENDENCIES:
   - Alamofire (= 4.8.1)
+  - BigInt (= 3.1.0)
   - CryptoSwift (= 0.14.0)
+  - FMDB (= 2.7.5)
   - MaterialComponents (from `https://github.com/material-components/material-components-ios`, branch `google-io-codelabs-2018`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - BigInt
     - CryptoSwift
+    - FMDB
     - MDFInternationalization
     - MDFTextAccessibility
     - MotionAnimator
     - MotionInterchange
     - MotionTransitioning
+    - SipHash
 
 EXTERNAL SOURCES:
   MaterialComponents:
@@ -465,14 +476,17 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   MaterialComponents: 71034ff1989c7d0b8ada2d4be7df2f488e41bfa5
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   MotionTransitioning: 23d25edc2f4606efb922403cbac6d81af37aa33a
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
 
-PODFILE CHECKSUM: 9734814b83ea8e62b0643d9d8ddba03edced4d08
+PODFILE CHECKSUM: 05620a40b0997514bfafc6c17f4080a224c721c3
 
 COCOAPODS: 1.6.0
