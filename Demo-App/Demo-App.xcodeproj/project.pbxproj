@@ -22,7 +22,6 @@
 		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
 		00C282FE2222458A000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FD2222458A000ABAB2 /* Alamofire.framework */; };
 		00C283002222458A000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FF2222458A000ABAB2 /* BigInt.framework */; };
-		00C28306222245D3000ABAB2 /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C28305222245D3000ABAB2 /* OstSdk.framework */; };
 		00C2831022224722000ABAB2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2830F22224722000ABAB2 /* FMDB.framework */; };
 		00C2831222224729000ABAB2 /* MaterialComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2831122224729000ABAB2 /* MaterialComponents.framework */; };
 		00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942189716441E093BEA6715C /* Pods_Demo_App.framework */; };
@@ -42,7 +41,28 @@
 		4BE89586222151DD009C6A44 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE89585222151DD009C6A44 /* AddSessionView.swift */; };
 		4BE8958822216FCD009C6A44 /* AddDeviceFromQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */; };
 		4BE895CF2221B74C009C6A44 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE895CE2221B74C009C6A44 /* ShowQRView.swift */; };
+		4BE895D122224E13009C6A44 /* OstSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 00C28305222245D3000ABAB2 /* OstSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BE895D322224E4C009C6A44 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; };
+		4BE895D422224E4C009C6A44 /* CryptoEthereumSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BE895D522224E68009C6A44 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; };
+		4BE895D622224E68009C6A44 /* EthereumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4BE895D222224E14009C6A44 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BE895D422224E4C009C6A44 /* CryptoEthereumSwift.framework in Embed Frameworks */,
+				4BE895D122224E13009C6A44 /* OstSdk.framework in Embed Frameworks */,
+				4BE895D622224E68009C6A44 /* EthereumKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0044DE082213053800AD9643 /* IconGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconGenerator.swift; sourceTree = "<group>"; };
@@ -103,9 +123,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				00613BEA22224D94006A26D0 /* IQKeyboardManagerSwift.framework in Frameworks */,
+				4BE895D322224E4C009C6A44 /* CryptoEthereumSwift.framework in Frameworks */,
 				00C2831222224729000ABAB2 /* MaterialComponents.framework in Frameworks */,
 				00C2831022224722000ABAB2 /* FMDB.framework in Frameworks */,
-				00C28306222245D3000ABAB2 /* OstSdk.framework in Frameworks */,
+				4BE895D522224E68009C6A44 /* EthereumKit.framework in Frameworks */,
 				00C282FE2222458A000ABAB2 /* Alamofire.framework in Frameworks */,
 				00C283002222458A000ABAB2 /* BigInt.framework in Frameworks */,
 				00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */,
@@ -288,6 +309,7 @@
 				4BD841082212084900808901 /* Frameworks */,
 				4BD841092212084900808901 /* Resources */,
 				05E6D3B1889F249CC1607862 /* [CP] Embed Pods Frameworks */,
+				4BE895D222224E14009C6A44 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

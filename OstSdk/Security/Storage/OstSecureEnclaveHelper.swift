@@ -22,6 +22,10 @@ class OstSecureEnclaveHelper: OstBaseStorage {
         super.init()
     }
     
+    override func getSecAccessControlCreateFlags() -> SecAccessControlCreateFlags {
+        return SecAccessControlCreateFlags.privateKeyUsage
+    }
+    
     // MARK: - internal methods
     
     /// Encrypt data with secure enclave
