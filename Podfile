@@ -95,7 +95,7 @@ target 'Demo-App' do
   pod 'CryptoSwift', '0.14.0'
   pod 'BigInt', '3.1.0'
   pod 'FMDB', '2.7.5'
-  
+  pod 'IQKeyboardManagerSwift'
 end
 
 
