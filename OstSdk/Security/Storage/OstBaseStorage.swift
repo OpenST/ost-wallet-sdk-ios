@@ -33,7 +33,7 @@ class OstBaseStorage {
     }
     
     func getSecAccessControlCreateFlags() -> SecAccessControlCreateFlags {
-        return SecAccessControlCreateFlags.userPresence
+        fatalError("getSecAccessControlCreateFlags not override.")
     }
     
     /// Function to set item in the keychain
