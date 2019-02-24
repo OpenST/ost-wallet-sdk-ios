@@ -186,6 +186,24 @@ class BaseWalletView: UIScrollView {
                                           attribute: .bottomMargin,
                                           multiplier: 1,
                                           constant: -20))
+    
+    constraints.append(NSLayoutConstraint(item: logsLabel,
+                                          attribute: .leading,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .leading,
+                                          multiplier: 1,
+                                          constant: 10))
+    
+    constraints.append(NSLayoutConstraint(item: logsLabel,
+                                          attribute: .trailing,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .trailing,
+                                          multiplier: 1,
+                                          constant: -10))
+
+    
     NSLayoutConstraint.activate(constraints)
     
     let appScheme = ApplicationScheme.shared;
@@ -253,9 +271,12 @@ class BaseWalletView: UIScrollView {
     let logsLabel = UILabel()
     logsLabel.translatesAutoresizingMaskIntoConstraints = false
     logsLabel.text = ""
-    logsLabel.textColor = UIColor.lightGray;
+    logsLabel.textColor = UIColor.init(red: 89.0/255.0, green: 122.0/255.0, blue: 132.0/255.0, alpha: 1.0);
+    logsLabel.backgroundColor = UIColor.init(red: 244.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 1.0);
     logsLabel.sizeToFit()
     logsLabel.numberOfLines = 0;
+    logsLabel.textAlignment = .left
+    logsLabel.font = UIFont.systemFont(ofSize: 10);
     return logsLabel
   }()
   

@@ -27,25 +27,48 @@ class BaseWalletWorkflowView: BaseWalletView {
     return interact;
   }()
   
-  func receivedSdkEvent(eventData: [String : Any]) {
-    let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-    if ( OstSdkInteract.WorkflowEventType.requestAcknowledged == eventType ) {
-      addToLog(log: "☑️ Workflow Request Acknowledged.");
-    } else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
-      addToLog(log: "✅ Workflow Completed Successfully.");
-      self.nextButton.isHidden = false;
-      self.cancelButton.isHidden = false;
-      self.activityIndicator.stopAnimating();
-      self.successLabel.text = "Great! Your wallet has been setup."
-    } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
-      addToLog(log: "⚠️ Workflow Failed.");
-      let error = eventData["ostError"] as! OstError;
-      addToLog(log: "Error Description:" + error.description!);
-    } else if (OstSdkInteract.WorkflowEventType.getPinFromUser == eventType ) {
-      let ostPinAcceptProtocol:OstPinAcceptProtocol = eventData["ostPinAcceptProtocol"] as! OstPinAcceptProtocol;
-      getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol);
+    func receivedSdkEvent(eventData: [String : Any]) {
+        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+        if ( OstSdkInteract.WorkflowEventType.requestAcknowledged == eventType ) {
+            let timeStamp = String(Date().timeIntervalSince1970);
+            addToLog(log: "☑️ Workflow request acknowledged at " + timeStamp);
+        } else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+            let timeStamp = String(Date().timeIntervalSince1970);
+            addToLog(log: "✅ Workflow completed at " + timeStamp);
+            self.nextButton.isHidden = false;
+            self.cancelButton.isHidden = false;
+            self.activityIndicator.stopAnimating();
+            
+            let workflowContext:OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
+            let workFlowType = workflowContext.workflowType;
+            
+            if ( workFlowType == .activateUser ) {
+                self.successLabel.text = "Great! Your wallet has been setup."
+            } else if ( workFlowType == .addDevice ) {
+                self.successLabel.text = "This device has been authorized."
+            } else if ( workFlowType == .addSession ) {
+                self.successLabel.text = "The session on this device has been authorized."
+            } else if ( workFlowType == .getPapaerWallet ) {
+                self.successLabel.text = "Please note down these words."
+            } else if ( workFlowType == .setupDevice ) {
+                self.successLabel.text = "This device has been registered."
+            }
+            
+        } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
+            let timeStamp = String(Date().timeIntervalSince1970);
+            addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
+            
+            let error = eventData["ostError"] as! OstError;
+            addToLog(log: "Error Description:" + error.description!);
+            self.nextButton.isHidden = false;
+            self.cancelButton.isHidden = false;
+            self.activityIndicator.stopAnimating();
+
+        } else if (OstSdkInteract.WorkflowEventType.getPinFromUser == eventType ) {
+            let ostPinAcceptProtocol:OstPinAcceptProtocol = eventData["ostPinAcceptProtocol"] as! OstPinAcceptProtocol;
+            getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol);
+        }
     }
-  }
   
   override init(frame: CGRect) {
     super.init(frame: frame);
@@ -60,15 +83,16 @@ class BaseWalletWorkflowView: BaseWalletView {
  
   func addToLog( log:String ) {
     var allLogs = (self.logsLabel.text != nil) ? self.logsLabel.text! : "";
-    allLogs += "\n" + log;
+    allLogs = "  " + log + "  \n" + allLogs;
     self.logsLabel.text = allLogs;
     
   }
   
   @objc override func didTapNext(sender: Any) {
     super.didTapNext(sender: sender);
-    self.logsLabel.text = "";
-    self.addToLog(log: "➡️ Starting Workflow");
+    let timeStamp = String(Date().timeIntervalSince1970);
+    self.addToLog(log: "------------------------------");
+    self.addToLog(log: "➡️ Starting Workflow at " + timeStamp + "");
   }
  
   func getPinFromUser(ostPinAcceptProtocol: OstPinAcceptProtocol) {
