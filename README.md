@@ -13,7 +13,7 @@ OST Client SDK for iOS
 
 3. Install dependencies:
 
-        carthage update --platform ios
+        pod install
         
 4. open ost-client-ios-sdk
     
