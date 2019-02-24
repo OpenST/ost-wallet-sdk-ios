@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 class BaseModel {
-  static let MAPPY_APP_SERVER_URL = "http://172.16.0.108:4040/api";
+  static let MAPPY_APP_SERVER_URL = "http://127.0.0.1:4040/api";
   static let TOKEN_ID = "58";
   func post(resource:String, params: [String: AnyObject]?,
             onSuccess: (([String: Any]?) -> Void)?,
