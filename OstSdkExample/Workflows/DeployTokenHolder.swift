@@ -13,7 +13,7 @@ class DeployTokenHolder: WorkflowBase {
 
     override func perform() throws {
         do {
-            try OstSdk.deployTokenHolder(userId: userId, spendingLimit: "10000", expirationHeight: "12345", delegate: delegate)
+//            try OstSdk.deployTokenHolder(userId: userId, spendingLimit: "10000", expirationHeight: "12345", delegate: delegate)
         }catch let error {
             print(error)
         }
