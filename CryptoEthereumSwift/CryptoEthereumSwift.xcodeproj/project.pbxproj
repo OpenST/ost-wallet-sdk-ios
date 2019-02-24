@@ -657,7 +657,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherit)",
+					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -675,13 +675,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherit)",
 					"$(SRCROOT)/Libraries/secp256k1/include",
 					"$(SRCROOT)/Libraries/openssl/include",
+					"$(inherited)",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherit)",
+					"$(inherited)",
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/secp256k1/lib",
 				);
@@ -736,7 +736,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherit)",
+					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -748,13 +748,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherit)",
 					"$(SRCROOT)/Libraries/secp256k1/include",
 					"$(SRCROOT)/Libraries/openssl/include",
+					"$(inherited)",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherit)",
+					"$(inherited)",
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/secp256k1/lib",
 				);

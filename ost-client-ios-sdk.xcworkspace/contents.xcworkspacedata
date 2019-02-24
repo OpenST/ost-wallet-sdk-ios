@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:EthereumKit/EthereumKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:CryptoEthereumSwift/CryptoEthereumSwift.xcodeproj">
    </FileRef>
    <FileRef
