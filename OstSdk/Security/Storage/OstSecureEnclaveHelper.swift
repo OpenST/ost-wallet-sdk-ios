@@ -93,7 +93,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
     /// - Returns: SecKey, secure enclave private key reference
     /// - Throws: OSTError
     fileprivate func generatePrivateKey() throws -> SecKey {
-        let accessControl = try getAccessControl()
+        let accessControl = try getAccessControl(controlFlag: getSecAccessControlCreateFlags())
         let attributes: [String: Any] = [
             kSecAttrKeyType as String: kSecAttrKeyTypeECSECPrimeRandom as String,
             kSecAttrKeySizeInBits as String: 256,

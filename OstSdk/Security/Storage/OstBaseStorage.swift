@@ -17,12 +17,11 @@ class OstBaseStorage {
     ///
     /// - Returns: SecAccessControl
     /// - Throws: OSTError
-    func getAccessControl() throws -> SecAccessControl {
-        let accessControlCreateFlag: SecAccessControlCreateFlags = getSecAccessControlCreateFlags()
+    func getAccessControl(controlFlag: SecAccessControlCreateFlags) throws -> SecAccessControl {
         var error: Unmanaged<CFError>?
         let access = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                                                     .privateKeyUsage,
+                                                     controlFlag,
                                                      &error)!
         
         
