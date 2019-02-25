@@ -83,7 +83,7 @@ class OstFunctionEncoder {
     
     func generateABIEncodableValues() throws {
         guard let function = methods[functionName] else {
-            throw OstError.actionFailed("Generating ABI encodable values failed.")
+            throw OstError.init("u_fe_gaev_1", .functionNotFoundInABI)
         }
         let paramsStringArray: [[String]] = function.signature.groups(for: "\\([^<]*\\)")
         for paramsString in paramsStringArray {
@@ -117,12 +117,12 @@ class OstFunctionEncoder {
     
     func encodeABI() throws -> String {
         guard let function = methods[functionName] else {
-            throw OstError.actionFailed("Getting ABI function failed.")
+            throw OstError.init("u_fe_ea_1", .functionNotFoundInABI)
         }
         
         let _invocation = function.invokeWith(formattedArgs)
         guard let ethereumData = _invocation.encodeABI() else {
-            throw OstError.actionFailed("encoded ABI failed.")
+            throw OstError.init("u_fe_ea_2", .abiEncodeFailed)            
         }
         
         return ethereumData.hex()

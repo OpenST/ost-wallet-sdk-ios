@@ -40,10 +40,10 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
         ostPerformThread.async {
             do {
                 guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
-                    throw OstError.invalidInput("Device is not setup. Please Setup device first. call OstSdk.setupDevice")
+                    throw OstError.init("w_p_p_1", .deviceNotset)
                 }
                 if (!currentDevice.isDeviceRegistered()) {
-                    throw OstError.invalidInput("Device is not registered")
+                    throw OstError.init("w_p_p_2", .deviceNotRegistered)
                 }
                 
                 self.processOperation()
@@ -57,7 +57,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
             if (self.payload == nil) {
-                self.postError(OstError.invalidInput("Invalid paylaod to process."))
+                self.postError(OstError.init("w_p_po_1", .invalidPayload))
             }
             self.dataDefination = (self.payload!["data_defination"]) ?? ""
             
@@ -78,7 +78,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                 return
                 
             default:
-                throw OstError.invalidInput("Invalid data defination")
+                throw OstError.init("w_o_po_1", .invalidDataDefination)
             }
         }catch let error {
             self.postError(error)
@@ -90,10 +90,10 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
             
         case DataDefination.AUTHORIZE_DEVICE.rawValue:
             guard let _ = self.payload!["user_id"] else {
-                throw OstError.invalidInput("User id is not present.")
+                throw OstError.init("w_p_vp_1", .userEntityNotFound)
             }
             guard let _ = self.payload!["device_to_add"] else {
-                throw OstError.invalidInput("Device to add is not persent")
+                throw OstError.init("w_p_vp_2", .deviceNotFound)
             }
             
         case DataDefination.REVOKE_DEVICE.rawValue:
@@ -106,7 +106,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
             return
             
         default:
-            throw OstError.invalidInput("Invalid data defination.")
+            throw OstError.init("w_p_vp_3", .invalidDataDefination)
         }
     }
     
@@ -164,11 +164,11 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                                                                    size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         
         guard let user: OstUser = try getUser() else {
-            throw OstError.actionFailed("User is not persent")
+            throw OstError.init("w_p_vp_1", .userEntityNotFound)
         }
         
         if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
-            throw OstError.actionFailed("Recovery address for user is not set.")
+            throw OstError.init("w_p_vp_2", .recoveryAddressNotFound)        
         }
         
         if(user.recoveryAddress! == recoveryKey) {
@@ -192,7 +192,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                     let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: OstConstants.testPrivateKey)
                     return (signature, deviceAddress)
                 }
-                throw OstError.actionFailed("issue while generating signature.")
+                throw OstError.init("w_p_adwp_1", .signatureGenerationFailed)
             }catch let error {
                 self.postError(error)
                 return (nil, nil)

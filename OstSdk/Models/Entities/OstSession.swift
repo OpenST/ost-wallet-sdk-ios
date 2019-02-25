@@ -110,7 +110,7 @@ extension OstSession{
     
     public func signTransaction(_ transaction: OstSession.Transaction) throws -> String {
         guard let currentDevice: OstCurrentDevice = try OstUser.getById(self.userId!)!.getCurrentDevice() else {
-            throw OstError.actionFailed("device is not present.")
+            throw OstError.init("m_e_s_st_1", .deviceNotFound)            
         }
         
         let txnDict: [String: String] = transaction.toDictionary()

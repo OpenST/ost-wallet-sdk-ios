@@ -66,7 +66,7 @@ class OstBasePollingService {
                 }
             }
         }else {
-            self.failuarCallback?(OstError.actionFailed(""))
+            self.failuarCallback?(OstError.init("w_s_bps_gead_1", .failedWithMaxRetryCount))
         }
     }
     

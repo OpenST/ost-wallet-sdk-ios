@@ -19,13 +19,14 @@ public class OstSdk {
         _ = try self.parseApiResponse(apiResponse)
     }
     
+    // TODO: remove this from OstSdk
     class func parseApiResponse(_ apiResponse: [String: Any?]) throws -> OstBaseEntity? {
         
         let resultType = apiResponse["result_type"] as? String ?? ""
         let entityData =  apiResponse[resultType] as? [String: Any?]
         
         if (entityData == nil) {
-            throw OstError.actionFailed("parsing \(resultType) enity failed.")
+            throw OstError.init("s_par_1", "Parsing \(resultType) enity failed.")
         }
         switch resultType {
         case "token":
@@ -39,7 +40,7 @@ public class OstSdk {
         case "session":
             return try OstSession.parse(entityData!)
         default:
-            throw OstError.invalidInput("\(resultType) is not supported.")
+            throw OstError.init("s_par_2", "\(resultType) is not supported.")            
         }
     }
     

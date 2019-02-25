@@ -9,41 +9,57 @@
 import Foundation
 
 class OstAPIChain: OstAPIBase {
-    
     let chainApiResourceBase: String
     
+    /// Initializer
+    ///
+    /// - Parameter userId: User Id
     override init(userId: String) {
         self.chainApiResourceBase = "/chains"
         super.init(userId: userId)
     }
     
+    /// Get chain. Make an API call and return data
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
     func getChain(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-        
-        let user: OstUser? = try OstUser.getById(self.userId)
-        if (user == nil) {
-            throw OstError.actionFailed("User is not persent for \(userId). Please crate user first. User OstSdk.setup")
+        // Get current user
+        guard let user: OstUser = try OstUser.getById(self.userId) else {
+            throw OstError.init("n_ac_gc_1", "User entity not found for id \(userId). Please create user first. User OstSdk.setup")
         }
-        let token: OstToken = try OstToken.getById(user!.tokenId!)!
+        
+        // Get token associated with the user
+        guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
+            throw OstError.init("n_ac_gc_2", "Token entity not found for id \(userId)")
+        }
+        
         let chainId: String? = token.auxiliaryChainId
         if (chainId == nil || chainId!.isEmpty) {
-            throw OstError.actionFailed("Chain id is not persent for \(userId). Please contact OST support.")
+            throw OstError.init("n_ac_gc_3", "Chain id not found for id \(userId). Please contact OST support.")
         }
         
         resourceURL = chainApiResourceBase + "/" + chainId!
-        
         var params: [String: Any] = [:]
-        insetAdditionalParamsIfRequired(&params)
-        try sign(&params)
         
-        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
-            let resultType = apiResponse!["result_type"] as! String
-            if (resultType == "chain") {
-                onSuccess?(apiResponse![resultType] as! [String: Any])
-            }else {
-                onFailure?(OstError.actionFailed("getting salt failed"))
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
+        
+        // Make an API call and store the data in database.
+        get(params: params as [String : AnyObject],
+            onSuccess: { (apiResponse) in
+                let resultType = apiResponse!["result_type"] as! String
+                if (resultType == "chain") {
+                    onSuccess?(apiResponse![resultType] as! [String: Any])
+                }else {
+                    onFailure?(OstError.init("n_ac_gc_4", .unableToChainInformation))
+                }
+            },
+            onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
             }
-        }) { (failuarObj) in
-            onFailure?(OstError.actionFailed("device-manager Sync failed"))
-        }
+        )
     }
 }

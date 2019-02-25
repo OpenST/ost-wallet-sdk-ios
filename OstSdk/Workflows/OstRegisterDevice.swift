@@ -54,11 +54,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     func validateParams() throws {
         if (self.userId.isEmpty) {
-            throw OstError.invalidInput("userId should not be empty string.")
+            throw OstError.init("w_rd_1", .invalidUserId)
         }
         
         if (self.tokenId.isEmpty) {
-            throw OstError.invalidInput("tokenId should not be empty string.")
+            throw OstError.init("w_rd_2", .invalidTokenId)            
         }
     }
     

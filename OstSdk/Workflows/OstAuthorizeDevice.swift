@@ -52,7 +52,7 @@ class OstAuthorizeDevice {
                     self.onFailure(error as! OstError)
                 }
             }else {
-                self.onFailure(OstError.actionFailed("Device is not registered."))
+                self.onFailure(OstError.init("w_ad_1", .deviceNotRegistered))
             }
         }
         

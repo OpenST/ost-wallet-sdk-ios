@@ -59,23 +59,23 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     
                     self.user = try self.getUser()
                     if (self.user == nil) {
-                        self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
+                        self.postError(OstError.init("w_ad_p_1", "User is not present for \(self.userId)."))
                         return
                     }
 
                     if (!self.user!.isActivated()) {
-                        self.postError(OstError.actionFailed("User is not activated for \(self.userId)."))
+                        self.postError(OstError.init("w_ad_p_2", "User is not activated for \(self.userId)."))
                         return
                     }
 
                     self.currentDevice = try self.getCurrentDevice()
                     if (self.currentDevice == nil) {
-                        self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                        self.postError(OstError.init("w_ad_p_3", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice."))
                         return
                     }
 
                     if (!self.currentDevice!.isDeviceRegistered()) {
-                        self.postError(OstError.actionFailed("Device is not registered for \(self.userId). Plese register device first by calling OstSdk.setupDevice"))
+                        self.postError(OstError.init("w_ad_p_4", "Device is not registered for \(self.userId). Plese register device first by calling OstSdk.setupDevice."))
                         return
                     }
 
@@ -87,11 +87,11 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     try self.validateParams()
                     let payload = try self.generateQRCodePayloadForAddDevce()
                     guard let payloadString = try OstUtils.toJSONString(payload) else {
-                        throw OstError.actionFailed("Generating QR-Code failed.")
+                        throw OstError.init("w_ad_p_1", .qrCodeGenerationFailed)
                     }
                     
                     guard let qrCodeCIImage = payloadString.qrCode else {
-                        throw OstError.actionFailed("Generating QR-Code image failed.")
+                        throw OstError.init("w_ad_p_2", .qrCodeImageGenerationFailed)
                     }
                     self.postFlowCompleteForQRCode(ciImage: qrCodeCIImage)
                     
@@ -102,7 +102,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                    self.authorizeDeviceWothMnemonics()
                     
                 case .ERROR:
-                    self.postError(OstError.actionFailed("Add device flow cancelled."))
+                    self.postError(OstError.init("w_ad_p_3", .addDeviceFlowCancelled))
                 }
             }catch let error {
                 self.postError(error)
@@ -118,30 +118,30 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         case .QR_CODE:
             let user = try self.getUser()
             if (user == nil) {
-                throw OstError.invalidInput("User is not created for \(self.userId). Please create user first. Call OstSdk.setupDevice")
+                throw OstError.init("w_ad_vp_1", "User is not created for \(self.userId). Please create user first. Call OstSdk.setupDevice")
             }
             if (!user!.isActivated()) {
-                throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
+                throw OstError.init("w_ad_vp_2", "User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
             }
 
             let currentDevice = try getCurrentDevice()
             if (currentDevice == nil) {
-                throw OstError.invalidInput("Device is not present for \(self.userId). Please create device first.")
+                throw OstError.init("w_ad_vp_3", "Device is not present for \(self.userId). Please create device first.")
             }
             if (!currentDevice!.isDeviceRegistered()) {
-                throw OstError.invalidInput("Device is not Registered. Please register device first.")
+                throw OstError.init("w_ad_vp_4", "Device is not Registered. Please register device first.")
             }
         case .PIN:
             if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin!.count) {
-                throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+                throw OstError.init("w_ad_vp_5", "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
             }
             if (OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.password!.count) {
-                throw OstError.invalidInput("password should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+                throw OstError.init("w_ad_vp_6", "Password should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
             }
         case .WORDS:
             let filteredWordsArray = self.wordsArray.flatMap { $0 }
             if (filteredWordsArray!.isEmpty) {
-                throw OstError.invalidInput("word list is not appropriate.")
+                throw OstError.init("w_ad_vp_7", "Word list is not appropriate.")
             }
         case .ERROR:
             return

@@ -24,7 +24,7 @@ class OstBaseStorage {
                                                      .privateKeyUsage,
                                                      &error)!
         if (error != nil) {
-            throw OstError1("s_s_bs_gac_1", .accessControlFailed);
+            throw OstError("s_s_bs_gac_1", .accessControlFailed);
         }
         return access
     }
@@ -39,13 +39,13 @@ class OstBaseStorage {
             status = SecItemDelete(query as CFDictionary)
             guard status == errSecSuccess else {
                 Logger.log(message: "Error while deleting from keychain.")
-                throw OstError1.init("s_s_bs_hs_1", .keychainDeleteItemFail)
+                throw OstError.init("s_s_bs_hs_1", .keychainDeleteItemFail)
             }
             status = SecItemAdd(query as CFDictionary, nil)
         }
         guard status == errSecSuccess else {
             Logger.log(message: "Error while adding item in keychain.")
-            throw OstError1.init("s_s_bs_hs_2", .keychainAddItemFail)
+            throw OstError.init("s_s_bs_hs_2", .keychainAddItemFail)
         }
     }
     
@@ -71,7 +71,7 @@ class OstBaseStorage {
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess else {
             Logger.log(message: "Error while deleting item from keychain.")
-            throw OstError1.init("s_s_bs_dfkc_1", .keychainDeleteItemFail)
+            throw OstError.init("s_s_bs_dfkc_1", .keychainDeleteItemFail)
         }
     }
 }

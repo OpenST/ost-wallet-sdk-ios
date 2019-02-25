@@ -11,28 +11,42 @@ import Foundation
 class OstAPIDeviceManager: OstAPIBase {
     
     let deviceManagerApiResourceBase: String
+    
+    
+    /// Initializer
+    ///
+    /// - Parameter userId: User Id
     override public init(userId: String) {
         deviceManagerApiResourceBase = "/users/\(userId)"
         super.init(userId: userId)
     }
     
+    /// Get device manager. Make an API call and store the result in the database
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
     func getDeviceManager(onSuccess: ((OstDeviceManager) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-     
         resourceURL = deviceManagerApiResourceBase + "/" + "device-managers"
-        
         var params: [String: Any] = [:]
-        insetAdditionalParamsIfRequired(&params)
-        try sign(&params)
+
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
         
-        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
-            do {
-                let entity = try self.parseEntity(apiResponse: apiResponse)
-                onSuccess?(entity as! OstDeviceManager)
-            }catch let error{
-                onFailure?(error as! OstError)
+        // Make an API call and store the data in database.
+        get(params: params as [String : AnyObject],
+            onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstDeviceManager)
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+            },
+            onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
             }
-        }) { (failuarObj) in
-            onFailure?(OstError.actionFailed("device-manager Sync failed"))
-        }
+        )
     }
 }

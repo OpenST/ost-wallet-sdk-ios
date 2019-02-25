@@ -352,7 +352,7 @@ private extension OstKeyManager {
             try setMnemonicsMetaMapping(ethMetaMapping)
             return
         }
-        throw OstError1.init("s_i_km_sm_1", .mnemonicsNotStored)
+        throw OstError.init("s_i_km_sm_1", .mnemonicsNotStored)
     }
     
     /// Store etheruem key in the keychain
@@ -423,7 +423,7 @@ private extension OstKeyManager {
                         return jsonString
                     } else {
                         Logger.log(message: "Private key not found.")
-                        throw OstError1.init("s_i_km_gs_1", .noPrivateKeyFound)
+                        throw OstError.init("s_i_km_gs_1", .noPrivateKeyFound)
                     }
                 }
             }else {

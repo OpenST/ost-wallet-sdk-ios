@@ -54,12 +54,12 @@ class OstAuthorizeSession: OstWorkflowBase {
             
             let user = try self.getUser()
             if (nil == user) {
-                throw OstError.invalidInput("User is not present.")
+                throw OstError.init("w_as_1", .userEntityNotFound)
             }
             
             self.deviceManager = try OstDeviceManager.getById(user!.deviceManagerAddress!)
             if (nil == self.deviceManager) {
-                throw OstError.actionFailed("Device manager is not persent.")
+                throw OstError.init("w_as_2", .deviceManagerNotFound)
             }
             
             let deviceManagerNonce = self.deviceManager!.nonce+1

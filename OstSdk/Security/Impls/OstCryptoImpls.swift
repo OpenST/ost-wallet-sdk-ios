@@ -36,7 +36,7 @@ class OstCryptoImpls: OstCrypto {
             let scryptKey = try scrypt.calculate(password: stringToCalculate)
             return scryptKey;
         } catch {
-            throw OstError1.init("s_i_ci_gsck_1", .scryptKeyGenerationFailed)
+            throw OstError.init("s_i_ci_gsck_1", .scryptKeyGenerationFailed)
         }
     }    
     
@@ -61,14 +61,14 @@ class OstCryptoImpls: OstCrypto {
             // The passphrase must always be equal to empty string. This is in consistent with the Metamask.
             seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
         } catch {
-            throw OstError1.init("s_i_ci_gek_1", .seedCreationFailed)
+            throw OstError.init("s_i_ci_gek_1", .seedCreationFailed)
         }
         let wallet: Wallet
         do {
             // Wallet needs mandatory parameter network. We always pass .mainnet
             wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: OstConstants.PRINT_DEBUG)
         } catch {
-            throw OstError1.init("s_i_ci_gek_2", .walletGenerationFailed)
+            throw OstError.init("s_i_ci_gek_2", .walletGenerationFailed)
         }
         
         let privateKey = wallet.privateKey()
@@ -95,7 +95,7 @@ class OstCryptoImpls: OstCrypto {
         do {
             singedData = try priKey.sign(hash: Data(hex: tx))
         } catch {
-            throw OstError1.init("s_i_ci_stx_1", .signTxFailed)
+            throw OstError.init("s_i_ci_stx_1", .signTxFailed)
         }
         singedData[64] += 27
         let singedTx = singedData.toHexString().addHexPrefix();
@@ -125,17 +125,17 @@ class OstCryptoImpls: OstCrypto {
                              size: Int) throws -> String {
         
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > password.count {
-            throw OstError1.init("s_i_ci_grk_1",
+            throw OstError.init("s_i_ci_grk_1",
                                  "Password must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > userId.count {
-            throw OstError1.init("s_i_ci_grk_2",
+            throw OstError.init("s_i_ci_grk_2",
                                  "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
-            throw OstError1.init("s_i_ci_grk_3",
+            throw OstError.init("s_i_ci_grk_3",
                                  "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
@@ -149,7 +149,7 @@ class OstCryptoImpls: OstCrypto {
                                     size: size,
                                     stringToCalculate: stringToCalculate)
         } catch {
-            throw OstError1.init("s_i_ci_grk_4", .scryptKeyGenerationFailed)
+            throw OstError.init("s_i_ci_grk_4", .scryptKeyGenerationFailed)
         }
         
         let privateKey = HDPrivateKey(seed: seed, network: OstConstants.OST_WALLET_NETWORK)
