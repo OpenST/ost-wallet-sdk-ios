@@ -140,12 +140,12 @@ class AddDeviceFromQRCode: BaseWalletWorkflowView, AVCaptureMetadataOutputObject
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        captureSession?.stopRunning()
         let qrCode = (videoPreviewLayer?.transformedMetadataObject(for: metadataObjects[0]) as? AVMetadataMachineReadableCodeObject)?.stringValue
         if (qrCode == nil) {
             self.nextButton.isHidden = false
         }else {
             self.addDevice(qrCodeString: qrCode!)
         }
-        captureSession?.stopRunning()
     }
 }
