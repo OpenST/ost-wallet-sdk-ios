@@ -62,7 +62,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                         return
                     }
                     
-                    if (!self.user!.isActivated()) {
+                    if (!self.user!.isStatusActivated) {
                         self.postError(OstError.actionFailed("User is not activated for \(self.userId)."))
                         return
                     }
@@ -90,7 +90,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     
                 case .WORDS:
                     self.authorizeDeviceWothMnemonics()
-                    
                 case .ERROR:
                     self.postError(OstError.actionFailed("Add device flow cancelled."))
                 }
@@ -110,7 +109,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
             if (user == nil) {
                 throw OstError.invalidInput("User is not created for \(self.userId). Please create user first. Call OstSdk.setupDevice")
             }
-            if (!user!.isActivated()) {
+            if (!user!.isStatusActivated) {
                 throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
             }
             

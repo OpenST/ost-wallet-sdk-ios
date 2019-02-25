@@ -22,7 +22,7 @@ class OstBaseStorage {
         var error: Unmanaged<CFError>?
         let access = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                                                     accessControlCreateFlag,
+                                                     .privateKeyUsage,
                                                      &error)!
         
         
@@ -33,7 +33,7 @@ class OstBaseStorage {
     }
     
     func getSecAccessControlCreateFlags() -> SecAccessControlCreateFlags {
-        fatalError("getSecAccessControlCreateFlags not override.")
+        fatalError("getSecAccessControlCreateFlags")
     }
     
     /// Function to set item in the keychain

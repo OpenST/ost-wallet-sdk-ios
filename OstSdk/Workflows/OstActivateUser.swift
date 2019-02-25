@@ -44,12 +44,12 @@ class OstActivateUser: OstWorkflowBase {
                     return
                 }
             
-                if (self.user!.isActivated()) {
+                if (self.user!.isStatusActivated) {
                 self.postError(OstError1("w_au_p_1", .userAlreadyActivated) )
                     return
                 }
                 
-                if (self.user!.isActivating()) {
+                if (self.user!.isStatusActivating) {
                     self.pollingForActivatingUser(self.user!)
                     return
                 }

@@ -366,7 +366,7 @@ class LoginViewController: UIViewController {
       //Define onSuccessCallback
       let onSuccessCallback: ((OstUser, OstDevice) -> Void) = { ostUser, userDevice in
         gotSuccessCallback = true
-        if ( ostUser.isCreated() ) {
+        if ( ostUser.isStatusCreated ) {
           //Need to activate user.
           let rootViewController =  self.presentingViewController;
           self.dismiss(animated: true, completion: {
@@ -375,10 +375,10 @@ class LoginViewController: UIViewController {
             rootViewController?.present(setupWalletController, animated: true, completion: nil);
           });
           
-        } else if ( ostUser.isActivating() ) {
+        } else if ( ostUser.isStatusActivating ) {
           //User is still activating.
           self.dismiss(animated: true, completion: nil);
-        } else if ( ostUser.isActivated() ) {
+        } else if ( ostUser.isStatusActivated ) {
           //User is already activated. Lets check if we need to authorize the device.
           self.dismiss(animated: true, completion: nil);
         }

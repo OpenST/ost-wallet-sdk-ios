@@ -30,6 +30,7 @@ class WalletViewController: UIViewController {
     case QR_CODE
     case PAPER_WALLET
     case SHOW_QR_CODE
+    case SEND_TRANSACTION
   }
   
   var isLoginMode:Bool = true;

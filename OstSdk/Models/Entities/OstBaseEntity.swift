@@ -78,7 +78,14 @@ extension OstBaseEntity {
     
     var parnetId: String? { return getParentId() }
     
-    public var status: String? { return OstUtils.toString(self.data[OstBaseEntity.STATUS] as Any?) }
+    public var status: String? {
+        if let status = self.data[OstBaseEntity.STATUS] {
+            if let statusStringVal = OstUtils.toString(status as Any) {
+                return statusStringVal.uppercased()
+            }
+        }
+        return nil
+    }
     
     public var updated_timestamp: Int { return OstUtils.toInt(data[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0}
 }

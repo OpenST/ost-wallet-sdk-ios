@@ -24,6 +24,7 @@ class UserActionsViewController: UICollectionViewController {
     case addSession = "addSession"
     case addDeviceByQRCode = "addDeviceByQRCode"
     case showQRCode = "showQRCode"
+    case sendTransaction = "sendTransaction"
   }
   
   var dataItems:[[String:String]]?
@@ -32,11 +33,12 @@ class UserActionsViewController: UICollectionViewController {
     let ostUser = currentUser.ostUser!;
     let userDevice = currentUser.userDevice!;
     
-    var addSession: [String:String] = [:];
-    var setupWallet: [String:String] = [:];
-    var paperWallet: [String:String] = [:];
-    var showQRCode: [String:String] = [:];
-    var addDeviceFromQRCode: [String:String] = [:];
+    var addSession: [String: String] = [:];
+    var showQRCode: [String: String] = [:];
+    var setupWallet: [String: String] = [:];
+    var paperWallet: [String: String] = [:];
+    var sendTransaction: [String: String] = [:]
+    var addDeviceFromQRCode: [String: String] = [:];
     
     setupWallet[ACTION_TYPE] = ACTIONS.activateUser.rawValue;
     setupWallet[ACTION_TEXT] = "Setup your wallet";
@@ -44,13 +46,17 @@ class UserActionsViewController: UICollectionViewController {
     paperWallet[ACTION_TYPE] = ACTIONS.paperWallet.rawValue;
     paperWallet[ACTION_TEXT] = "See your paper wallet";
     
-    if ( ostUser.isActivated() ) {
+    if ( ostUser.isStatusActivated ) {
       setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
       paperWallet[ACTION_DETAILS] = "See your paper wallet";
         
         addSession[ACTION_TYPE] = ACTIONS.addSession.rawValue
         addSession[ACTION_TEXT] = "Create Session"
         addSession[ACTION_DETAILS] = "Create session to do transactions."
+        
+        sendTransaction[ACTION_TYPE] = ACTIONS.sendTransaction.rawValue
+        sendTransaction[ACTION_TEXT] = "Send Transaction"
+        sendTransaction[ACTION_DETAILS] = "Send Transaction."
         
         addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addDeviceByQRCode.rawValue
         addDeviceFromQRCode[ACTION_TEXT] = "Add Device from QR-Code"
@@ -62,7 +68,7 @@ class UserActionsViewController: UICollectionViewController {
             showQRCode[ACTION_DETAILS] = "SHow QR-Code"
         }
         
-    } else if ( ostUser.isActivating()) {
+    } else if ( ostUser.isStatusActivating) {
       setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
       paperWallet[ACTION_DETAILS] = "You need to setup your wallet before seeing 12 words";
     } else {
@@ -82,7 +88,7 @@ class UserActionsViewController: UICollectionViewController {
     
     
     //Final Ordering.
-    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode, showQRCode];
+    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode, showQRCode, sendTransaction];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -231,6 +237,12 @@ class UserActionsViewController: UICollectionViewController {
       else if ( actionType.caseInsensitiveCompare(ACTIONS.showQRCode.rawValue) == .orderedSame ) {
         let walletController = WalletViewController(nibName: nil, bundle: nil);
         walletController.viewMode = WalletViewController.ViewMode.SHOW_QR_CODE;
+        self.present(walletController, animated: true, completion: nil);
+        }
+        
+      else if ( actionType.caseInsensitiveCompare(ACTIONS.sendTransaction.rawValue) == .orderedSame ) {
+        let walletController = WalletViewController(nibName: nil, bundle: nil);
+        walletController.viewMode = WalletViewController.ViewMode.SEND_TRANSACTION;
         self.present(walletController, animated: true, completion: nil);
         }
     }

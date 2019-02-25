@@ -22,6 +22,7 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     case showPaperWallet
     case determineAddDeviceType
     case showQRCode
+    case sendTransaction
   }
   
   let currentUser: CurrentUser;
