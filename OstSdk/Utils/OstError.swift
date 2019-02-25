@@ -12,7 +12,7 @@ public class OstError: Error {
     
     public let internalCode:String
     public let errorMessage:String
-    public var message: String {
+    public var description: String {
         return errorMessage
     }
     public var errorInfo: [String: Any]? = nil
@@ -34,8 +34,10 @@ public class OstError: Error {
 }
 
 public enum OstErrorText: String {
+    case userNotFound = "user not found."
     case invalidUser = "user is invalid."
     case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
+    case userAlreadyActivated = "user is activated."
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."
     case encryptFail = "Error while encrypting data with public key."
@@ -82,4 +84,7 @@ public enum OstErrorText: String {
     case addDeviceFlowCancelled = "Add device flow cancelled."
     case objectCreationFailed = "Object creation failed."
     case invalidId = "Invalid id."
+    case unexpectedState = "Unexpected state."
+    case toAddressNotFound = "To address not found."
+    case signerAddressNotFound = "Signer address not found."
 }

@@ -77,7 +77,9 @@ class GnosisSafe {
         return nil
     }
     
-    func getSafeTxData(to: String, value: String, data: String, operation: String, safeTxGas: String, dataGas: String, gasPrice: String, gasToken:        String, refundReceiver: String, nonce: String) throws -> [String: Any] {
+    func getSafeTxData(verifyingContract: String, to: String, value: String, data: String,
+                       operation: String, safeTxGas: String, dataGas: String, gasPrice: String,
+                       gasToken: String, refundReceiver: String, nonce: String) throws -> [String: Any] {
         
         let typedDataInput: [String: Any] = ["types": [ "EIP712Domain": [[ "name": "verifyingContract", "type": "address" ]],
                                                        "SafeTx": [[ "name": "to", "type": "address" ],
@@ -89,10 +91,10 @@ class GnosisSafe {
                                                                   [ "name": "gasPrice", "type": "uint256" ],
                                                                   [ "name": "gasToken", "type": "address" ],
                                                                   [ "name": "refundReceiver", "type": "address" ],
-                                                                  ]
+                                                                  [ "name": "nonce", "type": "uint256" ]]
             ],
                                             "primaryType": "SafeTx",
-                                            "domain": ["verifyingContract": to],
+                                            "domain": ["verifyingContract": verifyingContract],
                                             "message": ["to": to,
                                                         "value": value,
                                                         "data": data,
@@ -101,7 +103,8 @@ class GnosisSafe {
                                                         "dataGas": dataGas,
                                                         "gasPrice": gasPrice,
                                                         "gasToken": gasToken,
-                                                        "refundReceiver": refundReceiver
+                                                        "refundReceiver": refundReceiver,
+                                                        "nonce": nonce
                                                         ]]
         
         return typedDataInput

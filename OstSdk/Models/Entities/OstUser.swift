@@ -18,9 +18,11 @@ public class OstUser: OstBaseEntity {
         return "id"
     }
     
-    static let USER_STATUS_CREATED = "CREATED"
-    static let USER_STATUS_ACTIVATED = "ACTIVATED"
-    static let USER_STATUS_ACTIVATING = "ACTIVATING"
+    enum Status: String {
+        case CREATED = "CREATED"
+        case ACTIVATED = "ACTIVATED"
+        case ACTIVATING = "ACTIVATING"
+    }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
         return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
@@ -67,34 +69,10 @@ public class OstUser: OstBaseEntity {
         self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
         return self.currentDevice
     }
-    
-    public func isActivated() -> Bool {
-        if (self.status != nil &&
-            OstUser.USER_STATUS_ACTIVATED == self.status!.uppercased()) {
-            return true
-        }
-        return false
-    }
-    
-    public  func isCreated() -> Bool {
-        if (self.status != nil &&
-            OstUser.USER_STATUS_CREATED == self.status!.uppercased()) {
-            return true
-        }
-        return false
-    }
-    
-    public  func isActivating() -> Bool {
-        if (self.status != nil &&
-            OstUser.USER_STATUS_ACTIVATING == self.status!.uppercased()) {
-            return true
-        }
-        return false
-    }
-    
 }
 
 public extension OstUser {
+    /// Get name.
     var name: String? {
         if let loName = data["name"] as? String {
             return loName.isEmpty ? nil : loName
@@ -102,6 +80,7 @@ public extension OstUser {
         return nil
     }
     
+    /// Get token holder address.
     var tokenHolderAddress: String? {
         if let thAddress = data["token_holder_address"] as? String {
             return thAddress.isEmpty ? nil : thAddress
@@ -109,6 +88,7 @@ public extension OstUser {
         return nil
     }
     
+    /// Get device manager address.
     var deviceManagerAddress: String? {
         if let dmAddress = data["device_manager_address"] as? String {
             return dmAddress.isEmpty ? nil : dmAddress
@@ -116,14 +96,44 @@ public extension OstUser {
         return nil
     }
     
+    /// Get recovery address.
     var recoveryAddress: String? {
-        if let rAddress = data["recovery_address"] as? String {
+        if let rAddress = data["recovery_owner_address"] as? String {
             return rAddress.isEmpty ? nil : rAddress
         }
         return nil
     }
     
+    /// Get token id.
     var tokenId: String? {
         return  OstUtils.toString(data["token_id"] as Any?)
+    }
+}
+
+//MARK: - Status Checks
+public extension OstUser {
+    
+    /// Check whether user status is CREATED or not. returns true if status is CREATED.
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstUser.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check whether user status is ACTIVATED or not. returns true if status is ACTIVATED.
+    var isStatusActivated: Bool {
+        if let status: String = self.status {
+            return (OstUser.Status.ACTIVATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check whether user status is ACTIVATING or not. returns true if status is ACTIVATING.
+    var isStatusActivating: Bool {
+        if let status: String = self.status {
+            return (OstUser.Status.ACTIVATING.rawValue == status)
+        }
+        return false
     }
 }

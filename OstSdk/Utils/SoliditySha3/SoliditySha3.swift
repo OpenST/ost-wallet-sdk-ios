@@ -9,16 +9,12 @@
 import Foundation
 import BigInt
 
-public enum Sha3Error: Error {
-    case invalidType(String?), invalidInput(String)
-}
-
-public class Utils {
+class SoliditySha3 {
     
     private static let TYPE_START_WITH_UINT = "uint"
     private static let TYPE_START_WITH_INT = "int"
     
-    public static func SoliditySha3(_ args: Any...) throws -> String {
+    public static func getHash(_ args: Any...) throws -> String {
         var messageHex: String = ""
         for arg: Any in args {
             do {
@@ -36,6 +32,9 @@ public class Utils {
                 }else if arg is [String: Any] {
                     let r = try processArg(arg)
                     messageHex += r
+                }else if arg is String {
+                    let r = try processArg(arg )
+                    messageHex += r
                 }
             }catch let error {
                 throw error
@@ -51,15 +50,15 @@ public class Utils {
         var arraySize: Int = 0
         
         for ele in arg {
-            if ele is Array<Any> {
+            if (ele is Array<Any>) {
                 let list: Array<Any> = ele as! Array<Any>;
                 if (list.count >= 2) {
                     type = list.first as! String
                     value = list[1]
                 }else {
-                    throw Sha3Error.invalidType("")
+                    throw OstError("u_s_ss_pa_1", "invalid argument passed")
                 }
-            } else if ele is [String: Any] {
+            } else if (ele is [String: Any]) {
                 let dict: [String: Any] = ele as! [String: Any]
                 
                 if ((dict["t"] != nil || dict["type"] != nil) && (dict["v"] != nil || dict["value"] != nil)) {
@@ -67,13 +66,21 @@ public class Utils {
                     value = dict["v"] ?? dict["value"] as Any
                     
                 }else {
-                    throw Sha3Error.invalidType("")
+                    throw OstError("u_s_ss_pa_2", "invalid type or value passed")
                 }
-            } else {
-               throw Sha3Error.invalidType("")
+            } else if (ele is String) {
+                let eleString = ele as! String
+                if (eleString).hasPrefix("0x") {
+                    return eleString
+                }else {
+                    let data: Data = eleString.data(using: .utf8)!
+                    return data.toHexString()
+                }
+            }else {
+                throw OstError("u_s_ss_pa_3", "invalid argument passed")
             }
             
-            if (type.starts(with: Utils.TYPE_START_WITH_INT) || type.starts(with: Utils.TYPE_START_WITH_UINT)) &&
+            if (type.starts(with: SoliditySha3.TYPE_START_WITH_INT) || type.starts(with: SoliditySha3.TYPE_START_WITH_UINT)) &&
                 (value is String) && !(value as! String).isMatch("^(-)?0x"){
                 value = BigInt(stringLiteral: value as! String)
             }
@@ -107,7 +114,7 @@ public class Utils {
         
         if ("bytes" == _type) {
             if (value as! String).count%2 != 0 {
-                throw Sha3Error.invalidInput("Invalid bytes character length \((value as! String).count)")
+                throw OstError("u_s_ss_sp_1", "Invalid bytes character length \((value as! String).count)")
             }
             return (value as! String).stripHexPrefix()
         }else if ("string" == _type) {
@@ -121,7 +128,7 @@ public class Utils {
                 size = 40
             }
             if (!(value as! String).isAddress) {
-                throw Sha3Error.invalidInput("\(value) is not a valid address, or the checksum is invalid.");
+                throw OstError("u_s_ss_sp_2", "\(value) is not a valid address, or the checksum is invalid.")
             }
             return (value as! String).lowercased().stripHexPrefix().padLeft(totalWidth: size, with: "0")
         }
@@ -131,7 +138,7 @@ public class Utils {
         if (type.starts(with: "bytes")) {
             
             if (size == -1) {
-                throw Sha3Error.invalidInput("bytes[] not yet supported in solidity")
+                throw OstError("u_s_ss_sp_3", "bytes[] not yet supported in solidity")
             }
             
             // must be 32 byte slices when in an array
@@ -140,24 +147,24 @@ public class Utils {
             }
             
             if (size < 1 || size > 32 || size < ((value as! String).stripHexPrefix().count/2)) {
-                throw Sha3Error.invalidInput("Invalid bytes \(size) for \(value)")
+                throw OstError("u_s_ss_sp_4", "Invalid bytes \(size) for \(value)")
             }
             return (value as! String).stripHexPrefix().rightPad(totalWidth: size*2, with: "0")
             
         }else if (type.starts(with: "uint")) {
             if ((size % 8 != 0) || (size < 8) || (size > 256)) {
-                throw Sha3Error.invalidInput("Invalid uint \(size) size");
+                throw OstError("u_s_ss_sp_5", "Invalid uint \(size) size")
             }
             
             do {
                 let num: BigInt = try parseNumber(value)
                 
                 if (num.bitWidth > size) {
-                    throw Sha3Error.invalidInput("Supplied uint exceeds width: \(size) vs \(num.bitWidth)")
+                    throw OstError("u_s_ss_sp_6", "Supplied uint exceeds width: \(size) vs \(num.bitWidth)")
                 }
                 
                 if (num<BigInt("0")) {
-                    throw Sha3Error.invalidInput("Supplied uint \(num) is negative")
+                    throw OstError("u_s_ss_sp_7", "Supplied uint \(num) is negative")
                 }
                 return size != -1 ?
                     String(format: "%x", Int(num.description)!).padLeft(totalWidth: size / 8 * 2, with: "0") : String(format: "%x", Int(num.description)!)
@@ -166,13 +173,13 @@ public class Utils {
             }
         }else if (type.starts(with: "int")) {
             if ((size % 8 != 0) || (size < 8) || (size > 256)) {
-                throw  Sha3Error.invalidInput("Invalid int \(size) size");
+                throw OstError("u_s_ss_sp_8", "Invalid int \(size) size")
             }
             
             do {
                 let num: BigInt = try parseNumber(value)
                 if (num.bitWidth > size) {
-                    throw Sha3Error.invalidInput("Supplied int exceeds width: \(size) vs \(num.bitWidth)")
+                    throw OstError("u_s_ss_sp_9", "Supplied int exceeds width: \(size) vs \(num.bitWidth)")
                 }
                 
                 if (num<BigInt("0")) {
@@ -187,7 +194,7 @@ public class Utils {
             }
         }else {
             // FIXME: support all other types
-            throw Sha3Error.invalidType("Unsupported or invalid type: \(type)");
+            throw OstError("u_s_ss_sp_10", "Unsupported or invalid type: \(type)")
         }
     }
     
@@ -213,7 +220,7 @@ public class Utils {
         }else if (value is BigInt) {
             return (value as! BigInt)
         }else {
-            throw Sha3Error.invalidInput("\(value) is not a number")
+            throw OstError("u_s_ss_pn_1", "\(value) is not a number")
         }
     }
     

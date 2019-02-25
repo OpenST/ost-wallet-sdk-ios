@@ -17,16 +17,22 @@ class OstBaseStorage {
     ///
     /// - Returns: SecAccessControl
     /// - Throws: OSTError
-    func getAccessControl() throws -> SecAccessControl {
+    func getAccessControl(controlFlag: SecAccessControlCreateFlags) throws -> SecAccessControl {
         var error: Unmanaged<CFError>?
         let access = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                                                     .privateKeyUsage,
+                                                     controlFlag,
                                                      &error)!
+        
+        
         if (error != nil) {
             throw OstError("s_s_bs_gac_1", .accessControlFailed);
         }
         return access
+    }
+    
+    func getSecAccessControlCreateFlags() -> SecAccessControlCreateFlags {
+        fatalError("getSecAccessControlCreateFlags")
     }
     
     /// Function to set item in the keychain

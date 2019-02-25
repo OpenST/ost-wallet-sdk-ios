@@ -8,8 +8,9 @@
 
 import UIKit
 import MaterialComponents
+import OstSdk
 
-class SetupWalletView: UIScrollView {
+class SetupWalletView: BaseWalletWorkflowView {
   
   /*
    // Only override draw() if you perform custom drawing.
@@ -18,6 +19,33 @@ class SetupWalletView: UIScrollView {
    // Drawing code
    }
    */
+  
+  // MARK: - Action Handling
+  // Add the button handlers
+  @objc override func didTapNext(sender: Any) {
+    if ( !validatePinNumber() ) {
+      return;
+    }
+    
+    let currentUser = CurrentUser.getInstance();
+    
+    // Always convert the token into Wei Untis.
+    let spendingLimitInWei = String( "1000000000000000000000000" )
+    Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
+    
+    // expirationHeight is temp, we shall change it.
+    let expirationHeight = 10000000;
+    
+    OstSdk.activateUser(userId: currentUser.ostUserId!,
+                        pin: pinNumberTextField.text!,
+                        password: currentUser.userPinSalt!,
+                        spendingLimit: spendingLimitInWei, expirationHeight: expirationHeight, delegate: self.sdkInteract);
+    
+    //Call super to update UI and log stuff.
+    super.didTapNext(sender: sender);
+  }
+  
+
   
   // Mark - Sub Views
   let logoImageView: UIImageView = {
@@ -40,21 +68,7 @@ class SetupWalletView: UIScrollView {
     return titleLabel
   }()
   
-  let activityIndicator: MDCActivityIndicator = {
-    let activityIndicator = MDCActivityIndicator()
-    activityIndicator.indicatorMode = .indeterminate
-    activityIndicator.sizeToFit()
-    //#e4b030
-    let color1 = UIColor.init(red: 228.0/255.0, green: 176.0/255.0, blue: 48.0/255.0, alpha: 1.0);
-    //#438bad
-    let color2 = UIColor.init(red: 67.0/255.0, green: 139.0/255.0, blue: 173.0/255.0, alpha: 1.0);
-    //#34445b
-    let color3 = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0);
-    //#27b8d2
-    let color4 = UIColor.init(red: 39.0/255.0, green: 184.0/255.0, blue: 210.0/255.0, alpha: 1.0);
-    activityIndicator.cycleColors = [color1, color2, color3, color4]
-    return activityIndicator;
-  }()
+
   
   //Add text fields
   let pinNumberTextField: MDCTextField = {
@@ -66,45 +80,19 @@ class SetupWalletView: UIScrollView {
   
   // Add text field controllers
   let pinNumberTextFieldController: MDCTextInputControllerOutlined
-  
-  // Add buttons
-  let doItLaterButton: MDCFlatButton = {
-    let toggleModeButton = MDCFlatButton()
-    toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
-    toggleModeButton.setTitle("Do it later", for: .normal)
-    toggleModeButton.addTarget(self, action: #selector(didCancelAction(sender:)), for: .touchUpInside)
-    return toggleModeButton
-  }()
-  let nextButton: MDCRaisedButton = {
-    let nextButton = MDCRaisedButton()
-    nextButton.translatesAutoresizingMaskIntoConstraints = false
-    nextButton.setTitle("NEXT", for: .normal)
-    nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
-    return nextButton
-  }()
-  
-  let errorLabel: UILabel = {
-    let errorLabel = UILabel()
-    errorLabel.translatesAutoresizingMaskIntoConstraints = false
-    errorLabel.text = ""
-    errorLabel.textColor = UIColor.red;
-    errorLabel.sizeToFit()
-    return errorLabel
-  }()
-  
+      
   override init(frame: CGRect) {
     //Setup text field controllers
     pinNumberTextFieldController = MDCTextInputControllerOutlined(textInput: pinNumberTextField)
     super.init(frame: frame);
-    self.addSubViews();
-    self.addSubviewConstraints();
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func addSubViews() {
+  override func addSubViews() {
+    super.addSubViews();
     let scrollView = self;
     
     scrollView.addSubview(titleLabel)
@@ -117,22 +105,9 @@ class SetupWalletView: UIScrollView {
     pinNumberTextFieldController.placeholderText = "6 Digit Pin"
     pinNumberTextField.delegate = self
     pinNumberTextField.keyboardType = .numberPad
-    
-    
-    registerKeyboardNotifications()
-    
-    // Buttons
-    // Add buttons to the scroll view
-    scrollView.addSubview(nextButton)
-    scrollView.addSubview(doItLaterButton)
-    scrollView.addSubview(activityIndicator)
-    
-    // Error Label
-    scrollView.addSubview(errorLabel);
-    
   }
   
-  func addSubviewConstraints() {
+  override func addSubviewConstraints() {
     let scrollView = self;
     
     // Constraints
@@ -143,7 +118,7 @@ class SetupWalletView: UIScrollView {
                                           toItem: scrollView.contentLayoutGuide,
                                           attribute: .top,
                                           multiplier: 1,
-                                          constant: 49))
+                                          constant: 60))
     constraints.append(NSLayoutConstraint(item: logoImageView,
                                           attribute: .centerX,
                                           relatedBy: .equal,
@@ -186,101 +161,10 @@ class SetupWalletView: UIScrollView {
                                      options: [],
                                      metrics: nil,
                                      views: [ "mobileNumber" : pinNumberTextField]))
-    
-    // Buttons
-    // Setup button constraints
-    constraints.append(NSLayoutConstraint(item: doItLaterButton,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: pinNumberTextField,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 8))
-    constraints.append(NSLayoutConstraint(item: doItLaterButton,
-                                          attribute: .centerY,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .centerY,
-                                          multiplier: 1,
-                                          constant: 0))
-    constraints.append(contentsOf:
-      NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
-                                     options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-                                     metrics: nil,
-                                     views: [ "cancel" : doItLaterButton, "next" : nextButton]))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
-                                          multiplier: 1,
-                                          constant: -20))
-    
-    // Error Label
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
     NSLayoutConstraint.activate(constraints)
+    super.addBottomSubviewConstraints(afterView:pinNumberTextField);
   }
-
-  
-  
-  // MARK: - Action Handling
-  // Add the button handlers
-  @objc func didTapNext(sender: Any) {
-    if ( !validatePinNumber() ) {
-      return;
-    }
-  }
-  
-  @objc func didCancelAction(sender: Any) {
-    //Canceled the action.
     
-  }
-  
-  // MARK: - Keyboard Handling
-  
-  func registerKeyboardNotifications() {
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.keyboardWillShow),
-      name: NSNotification.Name(rawValue: "UIKeyboardWillShowNotification"),
-      object: nil)
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.keyboardWillShow),
-      name: NSNotification.Name(rawValue: "UIKeyboardWillChangeFrameNotification"),
-      object: nil)
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.keyboardWillHide),
-      name: NSNotification.Name(rawValue: "UIKeyboardWillHideNotification"),
-      object: nil)
-  }
-  
-  @objc func keyboardWillShow(notification: NSNotification) {
-    let keyboardFrame =
-      (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-    self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0);
-  }
-  
-  @objc func keyboardWillHide(notification: NSNotification) {
-    self.contentInset = UIEdgeInsets.zero;
-  }
-  
-  
   func validatePinNumber() -> Bool {
     if (pinNumberTextField.text!.count < 6) {
       pinNumberTextFieldController.setErrorText("Pin should be atleast 6 digit",
@@ -289,6 +173,20 @@ class SetupWalletView: UIScrollView {
     }
     pinNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
     return true;
+  }
+  
+  override func receivedSdkEvent(eventData: [String : Any]) {
+    super.receivedSdkEvent(eventData: eventData);
+    let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+    if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+      //Time and close.
+      DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+        self.dismissViewController();
+      }
+      self.addToLog(log: "This window will close in 5 seconds");
+    } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
+      self.nextButton.setTitle("Try Again", for: .normal);
+    }
   }
 
 }

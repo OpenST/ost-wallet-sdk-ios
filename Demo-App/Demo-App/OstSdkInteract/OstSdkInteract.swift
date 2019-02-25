@@ -8,18 +8,31 @@
 
 import Foundation
 import OstSdk
-
+import MaterialComponents
 
 class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
   typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
   
+  public enum WorkflowEventType {
+    case flowComplete
+    case flowInterrupt
+    case requestAcknowledged
+    case getPinFromUser
+    case showPinToUser
+    case showPaperWallet
+    case determineAddDeviceType
+    case showQRCode
+    case sendTransaction
+  }
+  
+  let currentUser: CurrentUser;
   let appUserId: String;
   let tokenId: String;
   var eventHandlers:[OstSdkInteractEventHandler?];
   override init() {
-    let currentUser =  CurrentUser.getInstance();
-    self.appUserId = currentUser.appUserId!;
-    self.tokenId = currentUser.tokenId!;
+    self.currentUser =  CurrentUser.getInstance();
+    self.appUserId = self.currentUser.appUserId!;
+    self.tokenId = self.currentUser.tokenId!;
     self.eventHandlers = [OstSdkInteractEventHandler]();
     super.init();
   }
@@ -45,10 +58,14 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     }
   }
   
+  
+  
 }
 
 // MARK: - Sdk Callbacks Implimentation.
 extension OstSdkInteract {
+  
+  
   func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
     if ( !isCurrentUser() ) {
       ostDeviceRegisteredProtocol.cancelFlow("User logged-out");
@@ -69,6 +86,12 @@ extension OstSdkInteract {
       ostPinAcceptProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.getPinFromUser;
+    eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+    self.fireEvent(eventData: eventData);
+    
   }
   
   func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
@@ -76,6 +99,12 @@ extension OstSdkInteract {
       ostPinAcceptProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.getPinFromUser;
+    eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+    self.fireEvent(eventData: eventData);
+
   }
   
   func pinValidated(_ userId: String) {
@@ -83,26 +112,64 @@ extension OstSdkInteract {
   }
   
   func flowComplete(_ ostContextEntity: OstContextEntity) {
-    var eventData:[String : Any] = [:];
-    eventData["eventType"] = "flowComplete";
-    eventData["workflow"] = ostContextEntity.type;
-    eventData["ostContextEntity"] = ostContextEntity;
-    self.fireEvent(eventData: eventData);
-  }
-  
-  func flowInterrupt(_ ostError: OstError) {
     if ( !isCurrentUser() ) {
       //Ignore it.
       return;
     }
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.flowComplete;
+//    eventData["workflow"] = ostContextEntity.type;
+    eventData["ostContextEntity"] = ostContextEntity;
+    self.fireEvent(eventData: eventData);
   }
+    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowComplete;
+        eventData["workflow"] = workflowContext.workflowType;
+        eventData["ostContextEntity"] = ostContextEntity;
+        eventData["workflowContext"] = workflowContext
+        self.fireEvent(eventData: eventData);
+    }
+    
+    func flowInterrupted(_ ostError: OstError) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowInterrupt;
+        eventData["ostError"] = ostError;
+        self.fireEvent(eventData: eventData);
+    }
+    
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
+        if ( !isCurrentUser() ) {
+            //Ignore it.
+            return;
+        }
+        
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.flowInterrupt;
+        eventData["ostError"] = error;
+        self.fireEvent(eventData: eventData);
+    }
+    
   
   func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {
     if ( !isCurrentUser() ) {
       ostAddDeviceFlowProtocol.cancelFlow("User logged-out");
       return;
     }
-
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.determineAddDeviceType;
+    eventData["ostAddDeviceFlowProtocol"] = ostAddDeviceFlowProtocol;
+    self.fireEvent(eventData: eventData);
   }
   
   func showQR(_ startPollingProtocol: OstStartPollingProtocol, image qrImage: CIImage) {
@@ -110,6 +177,13 @@ extension OstSdkInteract {
       startPollingProtocol.cancelFlow("User logged-out");
       return;
     }
+    
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.showQRCode;
+    eventData["startPollingProtocol"] = startPollingProtocol
+    eventData["qrImage"] = qrImage;
+    self.fireEvent(eventData: eventData);
+    
   }
   
   func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
@@ -129,6 +203,16 @@ extension OstSdkInteract {
   func walletWordsValidated() {
     
   }
+    
+  func showPaperWallet(mnemonics: [String]) {
+    var eventData:[String : Any] = [:];
+    eventData["eventType"] = WorkflowEventType.showPaperWallet;
+    eventData["mnemonics"] = mnemonics;
+    self.fireEvent(eventData: eventData);
+  }
+
+  
+
 }
 
 

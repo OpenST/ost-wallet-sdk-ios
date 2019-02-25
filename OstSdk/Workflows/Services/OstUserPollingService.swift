@@ -22,7 +22,7 @@ class OstUserPollingService: OstBasePollingService {
     
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostUser: OstUser = entity as! OstUser
-        if (ostUser.isActivating()) {
+        if (ostUser.isStatusActivating) {
             Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
             self.getEntityAfterDelay()
         }else{

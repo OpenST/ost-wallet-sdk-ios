@@ -19,15 +19,23 @@ import OstSdk
 import MaterialComponents
 
 class WalletViewController: UIViewController {
+  var appBar = MDCAppBar()
+  public var showHeaderBackItem = true;
+  
+  
+  public enum ViewMode {
+    case SETUP_WALLET
+    case ADD_DEVICE
+    case NEW_SESSION
+    case QR_CODE
+    case PAPER_WALLET
+    case SHOW_QR_CODE
+    case SEND_TRANSACTION
+  }
+  
   var isLoginMode:Bool = true;
-    
-  let scrollView: SetupWalletView = {
-    let scrollView = SetupWalletView()
-    scrollView.translatesAutoresizingMaskIntoConstraints = false;
-    scrollView.backgroundColor = .white
-    scrollView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    return scrollView
-  }()
+  //Default View Mode.
+  public var viewMode = ViewMode.SETUP_WALLET;
 
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -41,38 +49,92 @@ class WalletViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    // choose view based on mode.
+    let choosenView = chooseSubView();
+    view.addSubview(choosenView)
+    
+    // AppBar Init
+    self.addChild(appBar.headerViewController)
+    appBar.addSubviewsToParent()
+    self.view.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor
+    MDCAppBarColorThemer.applySemanticColorScheme(ApplicationScheme.shared.colorScheme, to:self.appBar)
+    MDCAppBarTypographyThemer.applyTypographyScheme(ApplicationScheme.shared.typographyScheme, to: self.appBar)
+    choosenView.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor;
+
+    // Setup Navigation Items
+    if ( showHeaderBackItem ) {
+      let backItemImage = UIImage(named: "Back")
+      let templatedBackItemImage = backItemImage?.withRenderingMode(.alwaysTemplate)
+      let backItem = UIBarButtonItem(image: templatedBackItemImage,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(backItemTapped(sender:)))
+      
+      self.navigationItem.leftBarButtonItem = backItem;
+    }
+
+    
+    
+    choosenView.translatesAutoresizingMaskIntoConstraints = false;
+    choosenView.backgroundColor = .white
+    choosenView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    
 
     view.tintColor = .black
-    scrollView.backgroundColor = .white
+    choosenView.backgroundColor = .white
 
-    view.addSubview(scrollView)
+    
 
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
                                      options: [],
                                      metrics: nil,
-                                     views: ["scrollView" : scrollView])
+                                     views: ["scrollView" : choosenView])
     )
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                      options: [],
                                      metrics: nil,
-                                     views: ["scrollView" : scrollView])
+                                     views: ["scrollView" : choosenView])
     )
     
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTouch))
-    scrollView.addGestureRecognizer(tapGestureRecognizer)
-
+    choosenView.addGestureRecognizer(tapGestureRecognizer)
+    choosenView.walletViewController = self;
   }
-
+  
+  func chooseSubView() -> BaseWalletView {
+    switch viewMode {
+    case ViewMode.PAPER_WALLET:
+      self.title = "Paper Wallet";
+      return PaperWalletView();
+    case ViewMode.SETUP_WALLET:
+      self.title = "Setup Your Wallet";
+      return SetupWalletView()
+    case ViewMode.NEW_SESSION:
+        self.title = "Create Sesssion";
+        return AddSessionView()
+    case ViewMode.QR_CODE:
+        self.title = "Scan QR-Code";
+        return AddDeviceFromQRCode()
+    case ViewMode.SHOW_QR_CODE:
+        self.title = "Show QR-Code"
+        return ShowQRView()
+    
+    default:
+      self.title = "Setup Your Wallet";
+      return SetupWalletView()
+    }
+  }
+  
   // MARK: - Gesture Handling
   
   @objc func didTapTouch(sender: UIGestureRecognizer) {
     view.endEditing(true)
   }
 
-
+  @objc func backItemTapped(sender: Any) {
+    self.dismiss(animated: true, completion: nil)
+  }
+    
 }
-
-
-

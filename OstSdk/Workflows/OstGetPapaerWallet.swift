@@ -17,30 +17,38 @@ class OstGetPapaerWallet: OstWorkflowBase {
     
     override func perform() {
         ostGetPapaerWalletThread.async {
-            do {
-                let keychainManager = OstKeyManager(userId: self.userId)
-                guard let walletKey: String = keychainManager.getDeviceAddress() else {
-                    throw OstError.init("w_gpw_1", .paperWalletNotFound)
-                }
-                guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
-                    throw OstError.init("w_gpw_2", .mnemonicsNotFound)
-                }
-                
-                let paperWalletString: String = mnemonics.joined(separator: " ")
-                self.postFlowCompleteForGetPaperWallet(entity: paperWalletString)
-                
-            }catch let error {
-                self.postError(error)
-            }
+            self.authenticateUser()
         }
     }
     
-    func postFlowCompleteForGetPaperWallet(entity: String?) {
-        Logger.log(message: "OstAddSession flowComplete", parameterToPrint: entity)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .papaerWallet , entity: entity)
-            self.delegate.flowComplete(contextEntity);
+    override func proceedWorkflowAfterAuthenticateUser() {
+        do {
+            let keychainManager = OstKeyManager(userId: self.userId)
+            
+            guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
+                throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)                
+            }
+            
+            DispatchQueue.main.async {
+                self.delegate.showPaperWallet(mnemonics: mnemonics)
+            }
+            
+        }catch let error {
+            self.postError(error)
         }
+    }
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .getPapaerWallet)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .array)
     }
 }

@@ -43,13 +43,19 @@ public protocol OstWorkFlowCallbackProtocol {
     /// Inform SDK user the the flow is complete.
     ///
     /// - Parameter ostContextEntity: Status of the flow.
+    //TODO: replace flowComplete with flowComplete1
     func flowComplete(_ ostContextEntity: OstContextEntity)
+    
+    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+
 
     /// Inform SDK user that flow is interrupted with errorCode.
     /// Developers should dismiss pin dialog (if open) on this callback.
     ///
     /// - Parameter ostError: Reason of interruption.
-    func flowInterrupt(_ ostError: OstError)
+    //TODO: replace flowInterrupted with flowInterrupted1
+    func flowInterrupted(_ ostError: OstError)
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
     
     /// Ask SDK user to determine workflow how to add device.
     ///
@@ -75,4 +81,10 @@ public protocol OstWorkFlowCallbackProtocol {
 
     /// Inform SDK user that entered 12 wallet words is validated
     func walletWordsValidated()
+    
+    /// Show paper wallet
+    ///
+    /// - Parameter mnemonics: array of Words.
+    func showPaperWallet(mnemonics: [String])
+    
 }

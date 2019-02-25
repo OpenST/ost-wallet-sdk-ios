@@ -217,7 +217,7 @@ class EIP712 {
         let message = try hashData(primaryType, data: self.message);
         print("message", message);
         
-        return try Utils.SoliditySha3(["t": "bytes", "v": EIP712.INITIAL_BYTE ],
+        return try SoliditySha3.getHash(["t": "bytes", "v": EIP712.INITIAL_BYTE ],
                                       ["t": "bytes", "v": EIP712.VERSION ],
                                       ["t": "bytes32", "v": domainSeparator ],
                                       ["t": "bytes32", "v": message])
