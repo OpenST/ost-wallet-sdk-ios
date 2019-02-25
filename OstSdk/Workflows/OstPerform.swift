@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
+class OstPerform: OstWorkflowBase {
     let ostPerformThread = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     
     enum DataDefination: String {
@@ -23,10 +23,6 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
     var dataDefination: String? = nil
     var payload: [String: String]? = nil
     var deviceManager: OstDeviceManager? = nil
-    
-    var saltResponse: [String: Any]? = nil
-    var uPin: String? = nil
-    var password: String? = nil
     
     let threshold = "1"
     let nullAddress = "0x0000000000000000000000000000000000000000"
@@ -46,25 +42,24 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                     throw OstError.invalidInput("Device is not registered")
                 }
                 
-                self.processOperation()
+                self.authenticateUser()
             }catch let error {
                 self.postError(error)
             }
         }
     }
 
-    func processOperation() {
+    override func proceedWorkflowAfterAuthenticateUser() {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
             if (self.payload == nil) {
                 self.postError(OstError.invalidInput("Invalid paylaod to process."))
             }
-            self.dataDefination = (self.payload!["data_defination"]) ?? ""
+            self.dataDefination = (self.payload!["data_defination"])?.uppercased() ?? ""
             
             try self.validateParams()
             
             switch self.dataDefination {
-                
             case DataDefination.AUTHORIZE_DEVICE.rawValue:
                 self.authorizeDeviceWithPrivateKey()
                 
@@ -92,7 +87,7 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
             guard let _ = self.payload!["user_id"] else {
                 throw OstError.invalidInput("User id is not present.")
             }
-            guard let _ = self.payload!["device_to_add"] else {
+            guard let _ = self.payload!["device_address"] else {
                 throw OstError.invalidInput("Device to add is not persent")
             }
             
@@ -110,77 +105,6 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
         }
     }
     
-    public func authenticateUser() {
-        let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
-        biomatricAuth.authenticateUser { (isSuccess, message) in
-            if (isSuccess) {
-                do {
-                 self.processOperation()
-                }catch let error{
-                    self.postError(error)
-                }
-            }else {
-                DispatchQueue.main.async {
-                    self.delegate.getPin(self.userId, delegate: self)
-                }
-            }
-        }
-    }
-    
-    //MARK - OstPinAcceptProtocol
-    
-    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        ostPerformThread.async {
-            do {
-                self.uPin = uPin
-                self.password = appUserPassword
-                if (self.saltResponse != nil) {
-                    try self.validatePin()
-                }else {
-                    try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                        do {
-                            self.saltResponse = saltResponse
-                            try self.validatePin()
-                        }catch let error {
-                            self.postError(error)
-                        }
-                        
-                    }, onFailure: { (error) in
-                        self.postError(error)
-                    })
-                }
-
-            }catch let error {
-                self.postError(error)
-            }
-        }
-    }
-    func validatePin() throws {
-        let salt = self.saltResponse!["scrypt_salt"] as! String
-        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(password: self.password!, pin: self.uPin!, userId: self.userId,
-                                                                   salt: salt,  n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                                   r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                                   p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                                   size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
-        
-        guard let user: OstUser = try getUser() else {
-            throw OstError.actionFailed("User is not persent")
-        }
-        
-        if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
-            throw OstError.actionFailed("Recovery address for user is not set.")
-        }
-        
-        if(user.recoveryAddress! == recoveryKey) {
-            self.processOperation()
-        }else {
-            DispatchQueue.main.async {
-                self.delegate.invalidPin(self.userId, delegate: self)
-            }
-        }
-        
-    }
-    
     func authorizeDeviceWithPrivateKey() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
@@ -188,19 +112,17 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
                 if let deviceAddress = keychainManager.getDeviceAddress() {
                     //TODO: Remove Testcode - 192
                     let privatekey = try keychainManager.getDeviceKey()
-                    //                                            return try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
-                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: OstConstants.testPrivateKey)
+                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     return (signature, deviceAddress)
                 }
                 throw OstError.actionFailed("issue while generating signature.")
-            }catch let error {
-                self.postError(error)
+            }catch {
                 return (nil, nil)
             }
         }
         
         let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-            self.postFlowCompleteForAddDevice(entity: ostDevice)
+            self.postWorkflowComplete(entity: ostDevice)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
@@ -208,19 +130,24 @@ class OstPerform: OstWorkflowBase, OstPinAcceptProtocol {
         }
         
         OstAuthorizeDevice(userId: self.userId,
-                           deviceAddressToAdd: self.payload!["device_to_add"]!,
+                           deviceAddressToAdd: self.payload!["device_address"]!,
                            generateSignatureCallback: generateSignatureCallback,
                            onSuccess: onSuccess,
                            onFailure: onFailure).perform()
     }
     
-    func postFlowCompleteForAddDevice(entity: OstDevice) {
-        Logger.log(message: "OstAddDevice flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .addDevice , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .perform)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .device)
     }
     
 }

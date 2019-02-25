@@ -40,7 +40,7 @@ class EIP1077 {
         filterTransaction()
         let sha3Args = generateSHA3Args()
         
-        return try Utils.SoliditySha3(sha3Args)
+        return try SoliditySha3.getHash(sha3Args)
     }
     
     fileprivate func filterTransaction() {

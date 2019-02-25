@@ -8,19 +8,9 @@
 
 import Foundation
 
-public class OstDeviceLogin: OstPinAcceptProtocol, OstDeviceRegisteredProtocol, OstStartPollingProtocol {
+public class OstDeviceLogin: OstStartPollingProtocol {
    
     init() { }
-    
-    //MARK: - OstPinAcceptProtocol
-    public func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        
-    }
-    
-    //MARK: - OstDeviceRegisteredProtocol
-    public func deviceRegistered(_ apiResponse: [String : Any]) {
-        
-    }
     
     //MARK: - OstStartPollingProtocol
     public func startPolling() {

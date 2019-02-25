@@ -36,7 +36,7 @@ class EIP1077Tests: XCTestCase {
     
     func testSoliditySha3() {
         
-        if let x = try? Utils.SoliditySha3([["t":"bytes32","v":"0x00"]]) {
+        if let x = try? SoliditySha3.getHash([["t":"bytes32","v":"0x00"]]) {
             print(x)
             XCTAssertEqual(x, "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563")
         }
@@ -52,9 +52,16 @@ class EIP1077Tests: XCTestCase {
         tx["gas"] = "0"
         tx["data"] = "0xF281e85a0B992efA5fda4f52b35685dC5Ee67BEa"
         tx["nonce"] = "1"
-        tx["callPrefix"] = "0x"
+        tx["callPrefix"] = "0x0"
         
         XCTAssertEqual(try EIP1077(transaction: tx).toEIP1077transactionHash(), "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
+    }
+    
+    func testCallPrefix() throws {
+
+        let string = "executeRule(address,bytes,uint256,uint8,bytes32,bytes32)"
+        let soliditySha3 = try SoliditySha3.getHash(string)
+        XCTAssertEqual(soliditySha3.substr(0, 10), "0x59793b00")
     }
 
     func testPerformanceExample() {

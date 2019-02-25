@@ -48,7 +48,7 @@ public class OstSdk {
     }
     
     public class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser? {
-        let entityData: [String: Any] = [OstUser.getEntityIdentiferKey(): id, "token_id": tokenId, "status": OstUser.USER_STATUS_CREATED]
+        let entityData: [String: Any] = [OstUser.getEntityIdentiferKey(): id, "token_id": tokenId, "status": OstUser.Status.CREATED.rawValue]
         return try parseUser(entityData)
     }
     

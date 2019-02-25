@@ -10,9 +10,10 @@ import Foundation
 
 class OstBasePollingService {
     
-    var maxRetryCount = 20
-    let firstCallNo = 19
-    let firstDelayTime = OstConstants.OST_BLOCK_FORMATION_TIME * 6
+    static let MAX_RETRY_COUNT = 20
+    static let NO_OF_CONFIRMATION_BLOCKS = 6;
+  
+    var requestCount = 0;
     
     var onSuccess: ((OstBaseEntity) -> Void)? = nil
     var onFailure: ((OstError) -> Void)? = nil
@@ -51,18 +52,34 @@ class OstBasePollingService {
     }
     
     func getEntityAfterDelay() {
-        Logger.log(message: "test getUserEntity for userId: \(userId) and is started at \(Date.timestamp())", parameterToPrint: "")
-        self.maxRetryCount -= 1
-        if (self.maxRetryCount >= 0) {
-            
-            let delayTime: Int = (self.maxRetryCount == self.firstCallNo) ? (self.firstDelayTime * workflowTransactionCount) : OstConstants.OST_BLOCK_FORMATION_TIME
-            
+      Logger.log(message: "[\(Date.timestamp())]: getEntityAfterDelay: for userId: \(userId)", parameterToPrint: "")
+        if (self.requestCount < OstBasePollingService.MAX_RETRY_COUNT ) {
+            let delayTime: Int;
+            if (self.requestCount > 0 ) {
+              delayTime = OstConstants.OST_BLOCK_GENERATION_TIME;
+            } else {
+              delayTime = OstConstants.OST_BLOCK_GENERATION_TIME * (OstBasePollingService.NO_OF_CONFIRMATION_BLOCKS + 1 ) * workflowTransactionCount;
+            }
+          
             self.dispatchQueue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
-                    Logger.log(message: "test loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
+                    self.requestCount += 1
+                    Logger.log(message: "[\(Date.timestamp())]: loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
                     try self.fetchEntity()
                 }catch let error {
-                    self.failuarCallback?(error as! OstError)
+                    let ostError = error as! OstError;
+                    /// TODO: Check response error code.
+                    /// If it was a network error (The following status code should not be treated as network-errors: 200/404/401)
+                    /// We need to retry instead of calling failuarCallback.
+                    /// For now, we shall check on requestCount
+                    if ( self.requestCount == OstBasePollingService.MAX_RETRY_COUNT ) {
+                      //Sufficient retires have been made.
+                      self.failuarCallback?(ostError)
+                      return;
+                    }
+                  
+                    // Lets Retry.
+                    self.getEntityAfterDelay()
                 }
             }
         }else {

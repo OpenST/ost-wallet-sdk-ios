@@ -8,11 +8,9 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegisteredProtocol {
+class OstActivateUser: OstWorkflowBase {
     let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
-    var pin: String
-    var pinPrefix: String
     var spendingLimit: String
     var expirationHeight: Int
     
@@ -26,12 +24,13 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     let workflowTransactionCountForPolling = 2
     
     init(userId: String, pin: String, password: String, spendingLimit: String, expirationHeight: Int, delegate: OstWorkFlowCallbackProtocol) {
-        self.pin = pin
-        self.pinPrefix = password
         self.spendingLimit = spendingLimit
         self.expirationHeight = expirationHeight
         
         super.init(userId: userId, delegate: delegate)
+        
+        self.uPin = pin
+        self.appUserPassword = password
     }
     
     override func perform() {
@@ -45,12 +44,12 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
                     return
                 }
             
-                if (self.user!.isActivated()) {
-                    self.postFlowComplete(entity: self.user!)
+                if (self.user!.isStatusActivated) {
+                self.postError(OstError1("w_au_p_1", .userAlreadyActivated) )
                     return
                 }
                 
-                if (self.user!.isActivating()) {
+                if (self.user!.isStatusActivating) {
                     self.pollingForActivatingUser(self.user!)
                     return
                 }
@@ -92,7 +91,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
     }
     
     func validateParams() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.pinPrefix.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count {
             throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
@@ -100,7 +99,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count {
             throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
@@ -117,10 +116,17 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             self.postError(error)
         })
     }
-    
+    //TODO: integrate it with AddSessionFlow. Code duplicate.
     func getRecoveryKey() -> String? {
         do {
-            return try OstCryptoImpls().generateRecoveryKey(password: self.pinPrefix, pin: self.pin, userId: self.userId, salt: salt, n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N, r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R, p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P, size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
+            return try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
+                                                            pin: self.uPin,
+                                                            userId: self.userId,
+                                                            salt: salt,
+                                                            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
+                                                            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
+                                                            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
+                                                            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         }catch {
             return nil
         }
@@ -169,7 +175,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             self.postError(error)
         }
     }
-    
+    //TODO: Get expirationHeight from timestamp and block_formation time
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
@@ -212,7 +218,7 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
             self.syncRespctiveEntity()
-            self.postFlowComplete(entity: ostUser)
+            self.postWorkflowComplete(entity: ostUser)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -231,22 +237,17 @@ class OstActivateUser: OstWorkflowBase, OstPinAcceptProtocol, OstDeviceRegistere
             _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
     }
     
-    func postFlowComplete(entity: OstUser) {
-        Logger.log(message: "OstActivateUser flowComplete", parameterToPrint: entity.data)
-        
-        DispatchQueue.main.async {
-            let contextEntity: OstContextEntity = OstContextEntity(type: .activateUser , entity: entity)
-            self.delegate.flowComplete(contextEntity);
-        }
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .activateUser)
     }
     
-    //MARK: - OstPinAcceptProtocol
-    public func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        
-    }
-    
-    //MARK: - OstDeviceRegisteredProtocol
-    public func deviceRegistered(_ apiResponse: [String : Any]) {
-        
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .user)
     }
 }

@@ -50,7 +50,10 @@ internal class OstError1: Error {
 }
 
 public enum OstErrorText: String {
+    case userNotFound = "user not found."
     case invalidUser = "user is invalid."
+    case userAlreadyActivated = "user is activated."
+    
     case deviceNotset = "device is not setup."
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."

@@ -14,6 +14,7 @@ open class OstAPIBase {
     var userId: String
     var resourceURL: String = ""
     
+    /// requestTimeout in seconds
     var requestTimeout: Int  = 6
     var dataRequest: DataRequest? = nil
     let manager: SessionManager

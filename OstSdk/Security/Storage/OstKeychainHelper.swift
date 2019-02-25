@@ -21,6 +21,10 @@ class OstKeychainHelper: OstBaseStorage {
         super.init()
     }
     
+    override func getSecAccessControlCreateFlags() -> SecAccessControlCreateFlags {
+        return SecAccessControlCreateFlags.or
+    }
+    
     //MARK: - Store in keychain
     
     /// Store data in keychain
@@ -30,7 +34,7 @@ class OstKeychainHelper: OstBaseStorage {
     ///   - key: Key against which the data will be stored
     /// - Throws: OSTError
     func setDataInKeychain(data: Data, forKey key: String) throws {
-        let accessControl = try getAccessControl();
+        let accessControl = try getAccessControl(controlFlag: getSecAccessControlCreateFlags());
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
                                     kSecAttrService as String: self.service,
@@ -91,7 +95,7 @@ class OstKeychainHelper: OstBaseStorage {
     /// - Parameter key: Key to lookup in keychain
     /// - Throws: OSTError
     func deleteFromKeychain(forKey key: String) throws {
-        let accessControl = try getAccessControl();
+        let accessControl = try getAccessControl(controlFlag: getSecAccessControlCreateFlags());
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecAttrAccount as String: key,
                                     kSecAttrService as String: self.service,
