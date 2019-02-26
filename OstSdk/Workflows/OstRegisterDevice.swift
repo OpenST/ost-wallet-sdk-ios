@@ -116,7 +116,13 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 self.postError(OstError("w_rd_s_1", .userNotFound))
                 return
             }
-            self.postWorkflowComplete(entity: user.getCurrentDevice()!)
+            let currentDevice = user.getCurrentDevice()!;
+            do {
+                let device:OstDevice = try OstDevice.getById(currentDevice.address!);
+                self.postWorkflowComplete(entity: device);
+            } catch let err {
+                self.postError(err as! OstError);
+            }
         }
         OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()
     }
