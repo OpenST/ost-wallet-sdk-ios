@@ -173,6 +173,7 @@ extension OstSdkInteract {
       ostWalletWordsAcceptProtocol.cancelFlow("User logged-out");
       return;
     }
+    
   }
   
   func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
@@ -204,7 +205,6 @@ extension OstSdkInteract {
         eventData["delegate"] = delegate;
         self.fireEvent(eventData: eventData);
         
-//        delegate.dataVerified();
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {

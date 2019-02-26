@@ -20,6 +20,7 @@
 		0044DE292213153000AD9643 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE282213153000AD9643 /* Users.swift */; };
 		00613BEA22224D94006A26D0 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00613BE922224D94006A26D0 /* IQKeyboardManagerSwift.framework */; };
 		0078D620222494CB00F9AED6 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078D61F222494CB00F9AED6 /* QRInfoLabel.swift */; };
+		0078D6222224DFD100F9AED6 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */; };
 		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
 		00C282FE2222458A000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FD2222458A000ABAB2 /* Alamofire.framework */; };
 		00C283002222458A000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FF2222458A000ABAB2 /* BigInt.framework */; };
@@ -85,6 +86,7 @@
 		0064C84722223B8B0052B71E /* EthereumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EthereumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0064C84922223B8F0052B71E /* OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0078D61F222494CB00F9AED6 /* QRInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRInfoLabel.swift; sourceTree = "<group>"; };
+		0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
 		00891B402216D3FA007D3226 /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		00C282FD2222458A000ABAB2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C282FF2222458A000ABAB2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				0078D61C22248B0400F9AED6 /* subViews */,
+				0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */,
 				4BE8957E22212368009C6A44 /* PaperWalletView.swift */,
 				4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */,
 				4BE8957722207B2C009C6A44 /* SetupWalletView.swift */,
@@ -463,6 +466,7 @@
 				0044DE112213053800AD9643 /* Shapes.swift in Sources */,
 				4BD841462212093200808901 /* ViewController.swift in Sources */,
 				0044DE292213153000AD9643 /* Users.swift in Sources */,
+				0078D6222224DFD100F9AED6 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BD841482212093200808901 /* HomeViewController.swift in Sources */,
 				4BE8957A22207B2D009C6A44 /* SetupWalletView.swift in Sources */,
 				4BE8957B22207B2D009C6A44 /* BaseWalletView.swift in Sources */,

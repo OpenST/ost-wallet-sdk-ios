@@ -9,7 +9,7 @@
 import UIKit
 import OstSdk
 import MaterialComponents
-class PaperWalletView: BaseWalletWorkflowView {
+class AddDeviceWithMnemonics: BaseWalletWorkflowView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -21,7 +21,7 @@ class PaperWalletView: BaseWalletWorkflowView {
   @objc override func didTapNext(sender: Any) {
     super.didTapNext(sender: sender);
     let currentUser = CurrentUser.getInstance();
-    OstSdk.getPaperWallet(userId: currentUser.ostUserId!, delegate: self.sdkInteract);
+    OstSdk.addDevice(userId: currentUser.ostUserId!, delegate: self.sdkInteract);
   }
   // Mark - Sub Views
   let logoImageView: UIImageView = {
@@ -34,7 +34,7 @@ class PaperWalletView: BaseWalletWorkflowView {
   let wordsTextView: MDCMultilineTextField = {
     let wordsTextView = MDCMultilineTextField()
     wordsTextView.translatesAutoresizingMaskIntoConstraints = false
-    wordsTextView.isEnabled = false;
+    wordsTextView.isEnabled = true;
     wordsTextView.minimumLines = 3;
     return wordsTextView
   }()
@@ -45,12 +45,10 @@ class PaperWalletView: BaseWalletWorkflowView {
     self.wordsTextController = MDCTextInputControllerOutlinedTextArea(textInput: wordsTextView);
     self.wordsTextController?.placeholderText = "Paper Wallet Words"
     
-    
     scrollView.addSubview(self.logoImageView)
     scrollView.addSubview(self.wordsTextView)
     super.addSubViews();
-//    MDCTextFieldColorThemer.apply(ApplicationScheme.shared.colorScheme, to: self.wordsTextController);
-    self.nextButton.setTitle("Show me the words", for: .normal);
+    self.nextButton.setTitle("Authorize", for: .normal);
   }
   
   override func addSubviewConstraints() {

@@ -25,7 +25,7 @@ class WalletViewController: UIViewController {
   
   public enum ViewMode {
     case SETUP_WALLET
-    case ADD_DEVICE
+    case ADD_DEVICE_WITH_MNEMONICS
     case NEW_SESSION
     case QR_CODE
     case PAPER_WALLET
@@ -125,6 +125,8 @@ class WalletViewController: UIViewController {
     case ViewMode.SHOW_QR_CODE:
         self.title = "Show QR-Code"
         return ShowQRView()
+    case ViewMode.ADD_DEVICE_WITH_MNEMONICS:
+        return AddDeviceWithMnemonics()
     
     default:
       self.title = "Setup Your Wallet";
