@@ -81,9 +81,15 @@ class Users:BaseModel {
     if ( tokenHolderAddress == nil ) {
         userDescription = userDescription! + "\n" + username + " have not setup their wallet.";
     }
+    
+    let userDisplayName:String? = userData["user_display_name"] as! String?;
+    if ( userDisplayName == nil ) {
+        user?.displayName = user!.username;
+    } else {
+        user?.displayName = userDisplayName!;
+    }
+    
     user!.description = userDescription;
-    
-    
   }
   
   
@@ -105,13 +111,14 @@ class Users:BaseModel {
 class User {
   static var imageSize = CGFloat(128);
   
-  let id:String;
-  var ostUserId:String?;
-  let username:String;
-  let mobileNumber:String;
-  var description:String?;
-  var tokenHolderAddress:String?;
-  var userImage: CGImage;
+      let id:String;
+      var ostUserId:String?;
+      let username:String;
+      var displayName:String?
+      let mobileNumber:String;
+      var description:String?;
+      var tokenHolderAddress:String?;
+      var userImage: CGImage;
   
   init(id:String, mobileNumber:String, username:String, imageSizes:[CGFloat] ){
     self.id = id;
