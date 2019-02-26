@@ -21,7 +21,10 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
   @objc override func didTapNext(sender: Any) {
     super.didTapNext(sender: sender);
     let currentUser = CurrentUser.getInstance();
-    OstSdk.addDevice(userId: currentUser.ostUserId!, delegate: self.sdkInteract);
+    let mnemonics = wordsTextView.text!.components(separatedBy: " ")
+    OstSdk.addDeviceWithMnemonics(userId: currentUser.ostUserId!,
+                                  mnemonics: mnemonics,
+                                  delegate: self.sdkInteract)
   }
   // Mark - Sub Views
   let logoImageView: UIImageView = {

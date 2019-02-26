@@ -257,7 +257,7 @@ class UserActionsViewController: UICollectionViewController {
         }
         else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceUsingMnemonics.rawValue) == .orderedSame ) {
             let walletController = WalletViewController(nibName: nil, bundle: nil);
-            walletController.viewMode = WalletViewController.ViewMode.SEND_TRANSACTION;
+            walletController.viewMode = WalletViewController.ViewMode.ADD_DEVICE_WITH_MNEMONICS;
             self.present(walletController, animated: true, completion: nil);
         }
     }
