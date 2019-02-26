@@ -135,14 +135,7 @@ extension OstSdkInteract {
         eventData["ostError"] = error;
         self.fireEvent(eventData: eventData);
     }
-    
-    func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
-        if ( !isCurrentUser() ) {
-            ostWalletWordsAcceptProtocol.cancelFlow("User logged-out");
-            return;
-        }
-    }
-    
+
     func showPaperWallet(mnemonics: [String]) {
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.showPaperWallet;

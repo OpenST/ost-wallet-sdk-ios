@@ -84,11 +84,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         Logger.log(message: "flowInterrupted for ", parameterToPrint: workflowContext.workflowType)
         Logger.log(message: "error ", parameterToPrint: error)
     }
-    
-    func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
-        
-    }
-    
+ 
     func showPaperWallet(mnemonics: [String]) {
         print(mnemonics)
     }

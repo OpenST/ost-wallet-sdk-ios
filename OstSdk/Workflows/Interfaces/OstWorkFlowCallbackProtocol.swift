@@ -53,11 +53,6 @@ public protocol OstWorkFlowCallbackProtocol {
     /// - Parameter ostError: Reason of interruption.
     func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1)
     
-    /// Inform SDK user about invalid pin.
-    ///
-    /// - Parameter ostWalletWordsAcceptProtocol: To pass 12 wallet words.
-    func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol);
-
     /// Show paper wallet
     ///
     /// - Parameter mnemonics: array of Words.
