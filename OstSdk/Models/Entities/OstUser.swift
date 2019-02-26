@@ -53,6 +53,7 @@ public class OstUser: OstBaseEntity {
     }
     
     public func getCurrentDevice() -> OstCurrentDevice? {
+        //TODO: - remvoe this code and get Deepesh code.
 //        if (self.currentDevice != nil && !self.currentDevice!.isStatusCreated) {
 //            return self.currentDevice
 //        }
@@ -66,7 +67,7 @@ public class OstUser: OstBaseEntity {
         if (device == nil) {
             return nil
         }
-        
+        //TODO: - remvoe this code and get Deepesh code.
         if (self.currentDevice != nil) {
             self.currentDevice?.data = device!.data as [String : Any]
         } else {
