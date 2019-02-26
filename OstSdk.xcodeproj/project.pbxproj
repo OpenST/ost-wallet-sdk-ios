@@ -680,12 +680,12 @@
 				4BE9E3262203306B00427A80 /* OstRegisterDevice.swift */,
 				4BE9E3272203306C00427A80 /* OstActivateUser.swift */,
 				4BAE56F02218076700327A19 /* OstAddDeviceWithMnemonics.swift */,
+				003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */,
 				4BE9E3292203306C00427A80 /* OstDeviceLogin.swift */,
 				4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */,
 				4BAE57022218413800327A19 /* OstPerform.swift */,
 				4BE8951C221C509B009C6A44 /* OstAddSession.swift */,
 				4BE89566221ED29A009C6A44 /* OstGetPapaerWallet.swift */,
-				003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";

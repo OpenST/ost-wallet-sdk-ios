@@ -193,10 +193,10 @@ class OstActivateUser: OstWorkflowBase {
             let params = self.getActivateUserParams()
             
             try OstAPIUser(userId: self.userId).activateUser(params: params, onSuccess: { (ostUser) in
+                self.postRequestAcknowledged(entity: ostUser)
                 self.pollingForActivatingUser(ostUser)
             }) { (error) in
                 self.postError(error)
-                //******************************************                self.pollingForActivatingUser(self.user!)
             }
         }catch let error {
             self.postError(error)

@@ -110,6 +110,7 @@ class OstAddSession: OstWorkflowBase {
         }
         
         let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+            self.postRequestAcknowledged(entity: ostSession)
             self.pollingForAuthorizeSession(ostSession)
         }
         
