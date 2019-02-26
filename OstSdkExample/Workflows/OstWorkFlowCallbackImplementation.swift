@@ -85,23 +85,7 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         Logger.log(message: "error ", parameterToPrint: error)
     }
     
-    func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {
-        
-    }
-    
-    func showQR(_ startPollingProtocol: OstStartPollingProtocol, image qrImage: CIImage) {
-//        OstSdk.perform(userId: , ciImage: <#T##CIImage#>, delegate: <#T##OstWorkFlowCallbackProtocol#>)
-    }
-    
-    func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
-        
-    }
-    
     func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol) {
-        
-    }
-    
-    func walletWordsValidated() {
         
     }
     

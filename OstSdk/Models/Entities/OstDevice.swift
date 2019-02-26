@@ -11,6 +11,8 @@ import EthereumKit
 
 public class OstDevice: OstBaseEntity {
     
+    
+    
     static let OSTDEVICE_PARENTID = "user_id"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstDevice? {
@@ -86,13 +88,6 @@ public class OstDevice: OstBaseEntity {
 }
 
 public extension OstDevice {
-//    apiParam["address"] = deviceAddress
-//    apiParam["api_signer_address"] = apiAddress
-//    apiParam["device_uuid"] = self.getDeviceUUID() ?? ""
-//    apiParam["device_name"] = self.getDeviceName()
-//    apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
-//    apiParam["status"] = OstUser.Status.CREATED.rawValue
-    
     public var address: String? {
         return getId();
     }
@@ -112,5 +107,9 @@ public extension OstDevice {
     public var deviceUUID: String? {
         return data["device_uuid"] as? String
     }
+}
 
+//check for status
+public extension OstDevice {
+    
 }

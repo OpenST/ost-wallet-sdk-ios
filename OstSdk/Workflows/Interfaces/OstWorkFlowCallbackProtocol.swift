@@ -46,7 +46,6 @@ public protocol OstWorkFlowCallbackProtocol {
     /// - Parameter ostContextEntity: Status of the flow.
     func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
 
-
     /// Inform SDK user that flow is interrupted with errorCode.
     /// Developers should dismiss pin dialog (if open) on this callback.
     ///
@@ -54,36 +53,15 @@ public protocol OstWorkFlowCallbackProtocol {
     /// - Parameter ostError: Reason of interruption.
     func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1)
     
-    /// Ask SDK user to determine workflow how to add device.
-    ///
-    /// - Parameter addDeviceFlowInterface: To device type add device flow.
-    func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol)
-    
-    /// Ask SDK user to show the provided QR code.
-    ///
-    /// - Parameters:
-    ///   - startPollingProtocol: To start polling.
-    ///   - qrImage: QR code image.
-    func showQR(_ startPollingProtocol: OstStartPollingProtocol , image qrImage: CIImage)
-
-    /// Wallet words needed to recover user wallet.
-    ///
-    /// - Parameter ostWalletWordsAcceptProtocol: To pass 12 wallet words.
-    func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol)
-    
     /// Inform SDK user about invalid pin.
     ///
     /// - Parameter ostWalletWordsAcceptProtocol: To pass 12 wallet words.
     func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol);
 
-    /// Inform SDK user that entered 12 wallet words is validated
-    func walletWordsValidated()
-    
     /// Show paper wallet
     ///
     /// - Parameter mnemonics: array of Words.
     func showPaperWallet(mnemonics: [String])
-    
     
     /// Verify data which is scan from QR-Code
     ///

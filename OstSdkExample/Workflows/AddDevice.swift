@@ -20,14 +20,4 @@ class AddDevice: OstWorkFlowCallbackImplementation {
     func perform() {
 //        OstSdk.addDevice(userId: self.userId, delegate: self)
     }
-    
-    override func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {
-//        ostAddDeviceFlowProtocol.QRCodeFlow()
-        ostAddDeviceFlowProtocol.walletWordsEntered("")
-//        ostAddDeviceFlowProtocol.pinEntered("123456", applicationPassword: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq")
-    }
-    
-    override func showQR(_ startPollingProtocol: OstStartPollingProtocol, image qrImage: CIImage) {
-        OstSdk.perform(userId: self.userId,  ciImage: qrImage, delegate: self)
-    }
 }
