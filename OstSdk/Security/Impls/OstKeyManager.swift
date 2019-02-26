@@ -226,8 +226,12 @@ public class OstKeyManager {
     /// - Returns: true if data stored in keychain successfully.
     public func verifyRecoveryPinString(_ pinString: String) -> Bool {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as! Data
-        let hashData = OstUtils.toDecodedValue(hashEncodedData) as! Data
+        guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
+            return false
+        }
+        guard let hashData = OstUtils.toDecodedValue(hashEncodedData) as? Data else {
+            return false
+        }
         let storedStringHash = String(bytes: hashData, encoding: .utf8)!
         
         let pinHash = pinString.sha3(.keccak256)

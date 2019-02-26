@@ -55,15 +55,17 @@ public class OstError1: Error {
 }
 
 public enum OstErrorText: String {
-    case userNotFound = "user not found."
-    case invalidUser = "user is invalid."
-    case userAlreadyActivated = "user is activated."
-    case userNotActivated = "user is not activated."
+    //User
+    case userNotFound = "User not found."
+    case invalidUser = "User is invalid."
+    case userAlreadyActivated = "User is activated."
+    case userNotActivated = "User is not activated."
     
-    case deviceNotset = "device is not setup."
-    case deviceNotAuthorized = "device is not authorized."
-    case wrongDeviceAddress = "wrong device address."
-    case deviceNotRegistered = "device is not registered."
+    //Device
+    case deviceNotset = "Device is not setup."
+    case deviceNotAuthorized = "Device is not authorized."
+    case wrongDeviceAddress = "Wrong device address."
+    case deviceNotRegistered = "Device is not registered."
     case registerSameDevice = "Trying to register same device."
     
     case accessControlFailed = "Unable to create access control object."
@@ -81,6 +83,7 @@ public enum OstErrorText: String {
     case signTxFailed = "Failed to sign transaction with private key."
     
     case invalidQRCode = "Invalid QR Code"
+    case maxUserValidatedCountReached = "User validation max count reached."
     
     //API-Errors
     case sessionApiFailed = "Failed to fetch session information."

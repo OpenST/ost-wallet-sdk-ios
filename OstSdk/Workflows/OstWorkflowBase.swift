@@ -17,6 +17,9 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     var appUserPassword : String = ""
     var saltResponse: [String: Any]? = nil
     
+    var retryCount = 0
+    let maxRetryCount = 3
+    
     init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         self.userId = userId
         self.delegate = delegate
@@ -47,7 +50,6 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     }
     
     func postError(_ error: Error) {
-        
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         let ostError: OstError = error as? OstError ?? OstError.actionFailed("Unexpected error.")
 
@@ -113,6 +115,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///   - uPin: user pin.
     ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+        self.retryCount += 1
         workflowThread.async {
             self.uPin = uPin
             self.appUserPassword = appUserPassword
@@ -127,12 +130,18 @@ class OstWorkflowBase: OstPinAcceptProtocol {
                 self.proceedWorkflowAfterAuthenticateUser()
             }else {
                 DispatchQueue.main.async {
-                    self.delegate.invalidPin(self.userId, delegate: self)
+                    if (self.maxRetryCount <= self.retryCount) {
+                        self.postError(OstError1("w_wb_pe_1", .maxUserValidatedCountReached))
+                    }else{
+                        self.delegate.invalidPin(self.userId, delegate: self)
+                    }
                 }
             }
         }
     }
     
+    
+    //MARK: - Methods to override
     /// Proceed with workflow after user is authenticated.
     func proceedWorkflowAfterAuthenticateUser() {
         fatalError("processOperation is not override")

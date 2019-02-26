@@ -31,6 +31,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
             
             DispatchQueue.main.async {
                 self.delegate.showPaperWallet(mnemonics: mnemonics)
+                self.postWorkflowComplete(entity: mnemonics)
             }
             
         }catch let error {
