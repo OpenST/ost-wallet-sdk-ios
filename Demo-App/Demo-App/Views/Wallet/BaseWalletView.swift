@@ -86,35 +86,38 @@ class BaseWalletView: UIScrollView {
     // Labels
     scrollView.addSubview(errorLabel);
     scrollView.addSubview(successLabel);
-    scrollView.addSubview(logsLabel);
+    scrollView.addSubview(logsTextView);
     
   }
-  
-  func addBottomSubviewConstraints(afterView:UIView) {
+//    func addBottomSubviewConstraints(afterView:UIView) {
+//        addBottomSubviewConstraints(afterView: afterView, constraints: );
+//    }
+    
+    func addBottomSubviewConstraints(afterView:UIView, constraints:[NSLayoutConstraint] = [NSLayoutConstraint]() ) {
     let scrollView = self;
     // Buttons
     // Setup button constraints
-    var constraints = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: nextButton,
+    var _constraints = constraints
+    _constraints.append(NSLayoutConstraint(item: nextButton,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: afterView,
                                           attribute: .bottom,
                                           multiplier: 1,
                                           constant: 8))
-    constraints.append(NSLayoutConstraint(item: cancelButton,
+    _constraints.append(NSLayoutConstraint(item: cancelButton,
                                           attribute: .centerY,
                                           relatedBy: .equal,
                                           toItem: nextButton,
                                           attribute: .centerY,
                                           multiplier: 1,
                                           constant: 0))
-    constraints.append(contentsOf:
+    _constraints.append(contentsOf:
       NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
                                      options: NSLayoutConstraint.FormatOptions(rawValue: 0),
                                      metrics: nil,
                                      views: [ "cancel" : cancelButton, "next" : nextButton]))
-    constraints.append(NSLayoutConstraint(item: nextButton,
+    _constraints.append(NSLayoutConstraint(item: nextButton,
                                           attribute: .height,
                                           relatedBy: .equal,
                                           toItem: nil,
@@ -122,7 +125,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 50))
     
-    constraints.append(NSLayoutConstraint(item: nextButton,
+    _constraints.append(NSLayoutConstraint(item: nextButton,
                                           attribute: .width,
                                           relatedBy: .greaterThanOrEqual,
                                           toItem: nil,
@@ -132,14 +135,14 @@ class BaseWalletView: UIScrollView {
     
     
     // Error Label
-    constraints.append(NSLayoutConstraint(item: errorLabel,
+    _constraints.append(NSLayoutConstraint(item: errorLabel,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: nextButton,
                                           attribute: .bottom,
                                           multiplier: 1,
                                           constant: 22))
-    constraints.append(NSLayoutConstraint(item: errorLabel,
+    _constraints.append(NSLayoutConstraint(item: errorLabel,
                                           attribute: .centerX,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -147,7 +150,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: successLabel,
+    _constraints.append(NSLayoutConstraint(item: successLabel,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: errorLabel,
@@ -155,7 +158,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: successLabel,
+    _constraints.append(NSLayoutConstraint(item: successLabel,
                                           attribute: .centerX,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -163,7 +166,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: logsLabel,
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: successLabel,
@@ -171,7 +174,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: logsLabel,
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
                                           attribute: .centerX,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -179,15 +182,24 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: logsLabel,
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
                                           attribute: .bottom,
                                           relatedBy: .equal,
                                           toItem: scrollView.contentLayoutGuide,
                                           attribute: .bottomMargin,
                                           multiplier: 1,
                                           constant: -20))
-    
-    constraints.append(NSLayoutConstraint(item: logsLabel,
+
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
+                                           attribute: .height,
+                                           relatedBy: .equal,
+                                           toItem: nil,
+                                           attribute: .notAnAttribute,
+                                           multiplier: 1,
+                                           constant: 100))
+
+        
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
                                           attribute: .leading,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -195,7 +207,7 @@ class BaseWalletView: UIScrollView {
                                           multiplier: 1,
                                           constant: 10))
     
-    constraints.append(NSLayoutConstraint(item: logsLabel,
+    _constraints.append(NSLayoutConstraint(item: logsTextView,
                                           attribute: .trailing,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -204,7 +216,7 @@ class BaseWalletView: UIScrollView {
                                           constant: -10))
 
     
-    NSLayoutConstraint.activate(constraints)
+    NSLayoutConstraint.activate(_constraints)
     
     let appScheme = ApplicationScheme.shared;
     MDCContainedButtonThemer.applyScheme(appScheme.buttonScheme, to: nextButton);
@@ -267,17 +279,17 @@ class BaseWalletView: UIScrollView {
     return successLabel
   }()
   
-  let logsLabel: UILabel = {
-    let logsLabel = UILabel()
-    logsLabel.translatesAutoresizingMaskIntoConstraints = false
-    logsLabel.text = ""
-    logsLabel.textColor = UIColor.init(red: 89.0/255.0, green: 122.0/255.0, blue: 132.0/255.0, alpha: 1.0);
-    logsLabel.backgroundColor = UIColor.init(red: 244.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 1.0);
-    logsLabel.sizeToFit()
-    logsLabel.numberOfLines = 0;
-    logsLabel.textAlignment = .left
-    logsLabel.font = UIFont.systemFont(ofSize: 10);
-    return logsLabel
+  let logsTextView: UITextView = {
+    let logsTextView = UITextView()
+    logsTextView.translatesAutoresizingMaskIntoConstraints = false
+    logsTextView.isEditable = false;
+    logsTextView.text = ""
+    logsTextView.textColor = UIColor.init(red: 89.0/255.0, green: 122.0/255.0, blue: 132.0/255.0, alpha: 1.0);
+    logsTextView.backgroundColor = UIColor.init(red: 244.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 1.0);
+    logsTextView.sizeToFit()
+    logsTextView.textAlignment = .left
+//    logsTextView.font = UIFont.systemFont(ofSize: 10);
+    return logsTextView;
   }()
   
   // MARK: - Action Handling
@@ -298,5 +310,13 @@ class BaseWalletView: UIScrollView {
     self.activityIndicator.center = self.nextButton.center;
     self.activityIndicator.startAnimating();
   }
-  
+ 
+    
+    public func viewDidAppearCallback() {
+        
+    }
+    
+    public func viewDidDisappearCallback() {
+        
+    }
 }

@@ -19,9 +19,9 @@ import OstSdk
 import MaterialComponents
 
 class WalletViewController: UIViewController {
-  var appBar = MDCAppBar()
-  public var showHeaderBackItem = true;
-  
+    var appBar = MDCAppBar()
+    public var showHeaderBackItem = true;
+    var choosenView: BaseWalletView?;
   
   public enum ViewMode {
     case SETUP_WALLET
@@ -47,6 +47,7 @@ class WalletViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     // choose view based on mode.
@@ -101,6 +102,10 @@ class WalletViewController: UIViewController {
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTouch))
     choosenView.addGestureRecognizer(tapGestureRecognizer)
     choosenView.walletViewController = self;
+    //To-Do: Check the ref address of both self.choosenView and choosenView
+    self.choosenView = choosenView;
+    
+    Logger.log(message: "------------- Breaking Constraints before this point can be ignored.");
   }
   
   func chooseSubView() -> BaseWalletView {
@@ -116,7 +121,7 @@ class WalletViewController: UIViewController {
         return AddSessionView()
     case ViewMode.QR_CODE:
         self.title = "Scan QR-Code";
-        return AddDeviceFromQRCode()
+        return ScanQRCodeView()
     case ViewMode.SHOW_QR_CODE:
         self.title = "Show QR-Code"
         return ShowQRView()
@@ -136,5 +141,15 @@ class WalletViewController: UIViewController {
   @objc func backItemTapped(sender: Any) {
     self.dismiss(animated: true, completion: nil)
   }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        self.choosenView?.viewDidAppearCallback();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated);
+        self.choosenView?.viewDidDisappearCallback();
+    }
     
 }

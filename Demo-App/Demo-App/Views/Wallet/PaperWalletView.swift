@@ -30,23 +30,28 @@ class PaperWalletView: BaseWalletWorkflowView {
     return logoImageView
   }()
   
-  let wordsLabel: UILabel = {
-    let wordsLabel = UILabel()
-    wordsLabel.translatesAutoresizingMaskIntoConstraints = false
-    wordsLabel.text = "\n\n\n\n" + "****** ****** ******" + "\n\n" + "****** ****** ******" + "\n\n" + "****** ****** ******" + "\n\n" + "****** ****** ******" + "\n\n\n\n";
-    wordsLabel.textAlignment = NSTextAlignment.center
-    wordsLabel.numberOfLines = 0;
-    wordsLabel.backgroundColor = UIColor.init(red: 231.0/255.0, green: 246.0/255.0, blue: 247.0/255.0, alpha: 1.0);
-    wordsLabel.layer.cornerRadius = 8;
-    wordsLabel.layer.borderColor = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0).cgColor;
-    
-    return wordsLabel
+  let wordsTextView: UITextView = {
+    let wordsTextView = UITextView()
+    wordsTextView.translatesAutoresizingMaskIntoConstraints = false
+    wordsTextView.text = "****** ****** ****** "
+        + "****** ****** ****** "
+        + "****** ****** ****** "
+        + "****** ****** ******"
+    ;
+    wordsTextView.textAlignment = NSTextAlignment.center
+    wordsTextView.backgroundColor = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0);
+    wordsTextView.textColor = UIColor.white;
+    wordsTextView.layer.cornerRadius = 8;
+    wordsTextView.layer.borderColor = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0).cgColor;
+    wordsTextView.isEditable = false;
+    wordsTextView.font = UIFont.systemFont(ofSize: 20);
+    return wordsTextView
   }()
   
   override func addSubViews() {
     let scrollView = self;
-    scrollView.addSubview(logoImageView)
-    scrollView.addSubview(wordsLabel)
+    scrollView.addSubview(self.logoImageView)
+    scrollView.addSubview(self.wordsTextView)
     super.addSubViews();
     self.nextButton.setTitle("Show me the words", for: .normal);
   }
@@ -70,30 +75,23 @@ class PaperWalletView: BaseWalletWorkflowView {
                                           attribute: .centerX,
                                           multiplier: 1,
                                           constant: 0))
-    constraints.append(NSLayoutConstraint(item: wordsLabel,
+    constraints.append(NSLayoutConstraint(item: wordsTextView,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: logoImageView,
                                           attribute: .bottom,
                                           multiplier: 1,
-                                          constant: 22))
-    constraints.append(NSLayoutConstraint(item: wordsLabel,
-                                          attribute: .centerX,
+                                          constant: 20))
+
+    constraints.append(NSLayoutConstraint(item: wordsTextView,
+                                          attribute: .height,
                                           relatedBy: .equal,
                                           toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-
-    constraints.append(NSLayoutConstraint(item: wordsLabel,
                                           attribute: .height,
-                                          relatedBy: .greaterThanOrEqual,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 0.35,
-                                          constant: scrollView.frame.height))
+                                          multiplier: 0.25,
+                                          constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: wordsLabel,
+    constraints.append(NSLayoutConstraint(item: wordsTextView,
                                           attribute: .leading,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -101,7 +99,7 @@ class PaperWalletView: BaseWalletWorkflowView {
                                           multiplier: 1,
                                           constant: 10))
 
-    constraints.append(NSLayoutConstraint(item: wordsLabel,
+    constraints.append(NSLayoutConstraint(item: wordsTextView,
                                           attribute: .trailing,
                                           relatedBy: .equal,
                                           toItem: scrollView,
@@ -109,8 +107,7 @@ class PaperWalletView: BaseWalletWorkflowView {
                                           multiplier: 1,
                                           constant: -10))
     
-    NSLayoutConstraint.activate(constraints)
-    super.addBottomSubviewConstraints(afterView:wordsLabel);
+    super.addBottomSubviewConstraints(afterView:wordsTextView, constraints: constraints);
   }
   
   override func receivedSdkEvent(eventData: [String : Any]) {
@@ -120,18 +117,11 @@ class PaperWalletView: BaseWalletWorkflowView {
       return;
     }
     
-    guard var mnemonics:[String] = eventData["mnemonics"] as? [String] else {
+    guard let mnemonics:[String] = eventData["mnemonics"] as? [String] else {
         return;
     }
-    var wordsToShow = "\n\n";
-    for cnt in 0..<mnemonics.count {
-      if ( cnt % 3 == 0 ) {
-        wordsToShow = wordsToShow + "\n\n";
-      }
-      wordsToShow = wordsToShow + "    " + mnemonics[cnt];
-    }
-    wordsToShow = wordsToShow + "\n\n\n\n";
-    self.wordsLabel.text = wordsToShow;
+    let wordsToShow:String = mnemonics.joined(separator: " ");
+    self.wordsTextView.text = wordsToShow;
     self.nextButton.isHidden = true;
     self.cancelButton.isHidden = true;
     self.activityIndicator.stopAnimating();

@@ -11,6 +11,9 @@ import OstSdk
 import MaterialComponents
 
 class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
+    
+    
+    
   typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
   
   public enum WorkflowEventType {
@@ -21,6 +24,7 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
     case showPinToUser
     case showPaperWallet
     case determineAddDeviceType
+    case verifyQRCodeData
     case showQRCode
     case sendTransaction
   }
@@ -110,18 +114,7 @@ extension OstSdkInteract {
   func pinValidated(_ userId: String) {
     
   }
-  
-  func flowComplete(_ ostContextEntity: OstContextEntity) {
-    if ( !isCurrentUser() ) {
-      //Ignore it.
-      return;
-    }
-    var eventData:[String : Any] = [:];
-    eventData["eventType"] = WorkflowEventType.flowComplete;
-//    eventData["workflow"] = ostContextEntity.type;
-    eventData["ostContextEntity"] = ostContextEntity;
-    self.fireEvent(eventData: eventData);
-  }
+    
     func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         if ( !isCurrentUser() ) {
             //Ignore it.
@@ -129,32 +122,21 @@ extension OstSdkInteract {
         }
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.flowComplete;
-        eventData["workflow"] = workflowContext.workflowType;
+        eventData["workflowContext"] = workflowContext;
         eventData["ostContextEntity"] = ostContextEntity;
-        eventData["workflowContext"] = workflowContext
         self.fireEvent(eventData: eventData);
     }
+
     
-    func flowInterrupted(_ ostError: OstError) {
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1) {
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
         }
-        
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.flowInterrupt;
-        eventData["ostError"] = ostError;
-        self.fireEvent(eventData: eventData);
-    }
-    
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
-        if ( !isCurrentUser() ) {
-            //Ignore it.
-            return;
-        }
-        
-        var eventData:[String : Any] = [:];
-        eventData["eventType"] = WorkflowEventType.flowInterrupt;
+        eventData["workflow"] = workflowContext.workflowType;
+        eventData["workflowContext"] = workflowContext;
         eventData["ostError"] = error;
         self.fireEvent(eventData: eventData);
     }
@@ -210,9 +192,28 @@ extension OstSdkInteract {
     eventData["mnemonics"] = mnemonics;
     self.fireEvent(eventData: eventData);
   }
-
-  
-
+    
+    func verifyData(workflowContext: OstWorkflowContext,
+                    ostContextEntity: OstContextEntity,
+                    delegate: OstValidateDataProtocol) {
+        
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.verifyQRCodeData;
+        eventData["workflowContext"] = workflowContext;
+        eventData["ostContextEntity"] = ostContextEntity;
+        eventData["delegate"] = delegate;
+        self.fireEvent(eventData: eventData);
+        
+//        delegate.dataVerified();
+    }
+    
+    func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        var eventData:[String : Any] = [:];
+        eventData["eventType"] = WorkflowEventType.requestAcknowledged;
+        eventData["workflowContext"] = workflowContext;
+        eventData["ostContextEntity"] = ostContextEntity;
+        self.fireEvent(eventData: eventData);
+    }
 }
 
 

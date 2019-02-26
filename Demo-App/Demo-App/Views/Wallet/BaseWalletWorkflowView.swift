@@ -32,7 +32,8 @@ class BaseWalletWorkflowView: BaseWalletView {
         if ( OstSdkInteract.WorkflowEventType.requestAcknowledged == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "☑️ Workflow request acknowledged at " + timeStamp);
-        } else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+        }
+        else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "✅ Workflow completed at " + timeStamp);
             self.nextButton.isHidden = false;
@@ -58,8 +59,8 @@ class BaseWalletWorkflowView: BaseWalletView {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
-            let error = eventData["ostError"] as! OstError;
-            addToLog(log: "Error Description:" + error.description!);
+            let error = eventData["ostError"] as! OstError1;
+            addToLog(log: "Error Description:" + error.localizedDescription);
             self.nextButton.isHidden = false;
             self.cancelButton.isHidden = false;
             self.activityIndicator.stopAnimating();
@@ -82,9 +83,9 @@ class BaseWalletWorkflowView: BaseWalletView {
   }
  
   func addToLog( log:String ) {
-    var allLogs = (self.logsLabel.text != nil) ? self.logsLabel.text! : "";
+    var allLogs = (self.logsTextView.text != nil) ? self.logsTextView.text! : "";
     allLogs = "  " + log + "  \n" + allLogs;
-    self.logsLabel.text = allLogs;
+    self.logsTextView.text = allLogs;
     
   }
   

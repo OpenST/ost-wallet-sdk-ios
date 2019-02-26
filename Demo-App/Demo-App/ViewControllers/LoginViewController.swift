@@ -186,13 +186,30 @@ class LoginViewController: UIViewController {
 
     // Constraints
     var constraints = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: titleLabel,
+    
+    constraints.append(NSLayoutConstraint(item: logoImageView,
+                                          attribute: .centerX,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .centerX,
+                                          multiplier: 1,
+                                          constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: logoImageView,
                                           attribute: .top,
                                           relatedBy: .equal,
                                           toItem: scrollView.contentLayoutGuide,
                                           attribute: .top,
                                           multiplier: 1,
                                           constant: 49))
+    
+    constraints.append(NSLayoutConstraint(item: titleLabel,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: logoImageView,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 22))
 
     constraints.append(NSLayoutConstraint(item: titleLabel,
                                           attribute: .centerX,
@@ -316,23 +333,7 @@ class LoginViewController: UIViewController {
                                           multiplier: 1,
                                           constant: 0))
     
-    constraints.append(NSLayoutConstraint(item: logoImageView,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: errorLabel,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
-    
-    constraints.append(NSLayoutConstraint(item: logoImageView,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: logoImageView,
+    constraints.append(NSLayoutConstraint(item: errorLabel,
                                           attribute: .bottom,
                                           relatedBy: .equal,
                                           toItem: scrollView.contentLayoutGuide,
