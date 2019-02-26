@@ -114,6 +114,11 @@ extension OstSdk {
         paperWalletObj.perform()
     }
     
+    /// Get QR-Code to add device.
+    ///
+    /// - Parameter userId: Kit user id
+    /// - Returns: Core image of QR-Code
+    /// - Throws: OstError1
     public class func getAddDeviceQRCode(userId: String) throws -> CIImage? {
         
         guard let user = try OstUser.getById(userId) else {
