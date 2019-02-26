@@ -19,9 +19,10 @@ class UserActionsViewController: UICollectionViewController {
   let ACTION_DETAILS = "detailTextLabel";
   
   enum ACTIONS: String {
-  case activateUser = "activateUser"
-  case paperWallet = "paperWallet"
+    case activateUser = "activateUser"
+    case paperWallet = "paperWallet"
     case addSession = "addSession"
+    case addDeviceUsingMnemonics = "addDeviceUsingMnemonics"
     case addDeviceByQRCode = "addDeviceByQRCode"
     case showQRCode = "showQRCode"
     case sendTransaction = "sendTransaction"
@@ -34,11 +35,12 @@ class UserActionsViewController: UICollectionViewController {
     let userDevice = currentUser.userDevice!;
     
     var addSession: [String: String] = [:];
-    var showQRCode: [String: String] = [:];
+    var showAddDeviceCode: [String: String] = [:];
+    var showAddDeviceWithMnemonics: [String: String] = [:];
     var setupWallet: [String: String] = [:];
     var paperWallet: [String: String] = [:];
     var sendTransaction: [String: String] = [:]
-    var addDeviceFromQRCode: [String: String] = [:];
+    var scanQRCode: [String: String] = [:];
     
     setupWallet[ACTION_TYPE] = ACTIONS.activateUser.rawValue;
     setupWallet[ACTION_TEXT] = "Setup your wallet";
@@ -46,49 +48,57 @@ class UserActionsViewController: UICollectionViewController {
     paperWallet[ACTION_TYPE] = ACTIONS.paperWallet.rawValue;
     paperWallet[ACTION_TEXT] = "See your paper wallet";
     
+    showAddDeviceCode[ACTION_TYPE] = ACTIONS.showQRCode.rawValue
+    showAddDeviceCode[ACTION_TEXT] = "Show QR-Code to Authorize Device"
+
+    showAddDeviceWithMnemonics[ACTION_TYPE] = ACTIONS.addDeviceUsingMnemonics.rawValue
+    showAddDeviceWithMnemonics[ACTION_TEXT] = "Authorize device using mnemonics."
+    
+    addSession[ACTION_TYPE] = ACTIONS.addSession.rawValue
+    addSession[ACTION_TEXT] = "Create Session"
+
+    scanQRCode[ACTION_TYPE] = ACTIONS.addDeviceByQRCode.rawValue
+    scanQRCode[ACTION_TEXT] = "Scan QR Code"
+
+    sendTransaction[ACTION_TYPE] = ACTIONS.sendTransaction.rawValue
+    sendTransaction[ACTION_TEXT] = "Send Transaction"
+    
     if ( ostUser.isStatusActivated ) {
-      setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
-      paperWallet[ACTION_DETAILS] = "See your paper wallet";
-        
-        addSession[ACTION_TYPE] = ACTIONS.addSession.rawValue
-        addSession[ACTION_TEXT] = "Create Session"
-        addSession[ACTION_DETAILS] = "Create session to do transactions."
-        
-        sendTransaction[ACTION_TYPE] = ACTIONS.sendTransaction.rawValue
-        sendTransaction[ACTION_TEXT] = "Send Transaction"
-        sendTransaction[ACTION_DETAILS] = "Send Transaction."
-        
-        addDeviceFromQRCode[ACTION_TYPE] = ACTIONS.addDeviceByQRCode.rawValue
-        addDeviceFromQRCode[ACTION_TEXT] = "Add Device from QR-Code"
-        addDeviceFromQRCode[ACTION_DETAILS] = "Add Device from QR-Code."
-        
-        if (userDevice.isDeviceRegistered()) {
-            showQRCode[ACTION_TYPE] = ACTIONS.showQRCode.rawValue
-            showQRCode[ACTION_TEXT] = "Show QR-Code"
-            showQRCode[ACTION_DETAILS] = "SHow QR-Code"
-        }
-        
+        setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
+        paperWallet[ACTION_DETAILS] = "See your paper wallet.";
+        addSession[ACTION_DETAILS] = "Create session a new session.";
+        scanQRCode[ACTION_DETAILS] = "Perform transactions and Authorize devices by scanning QR code.";
+        sendTransaction[ACTION_DETAILS] = "Send tokens to other users.";
+        showAddDeviceCode[ACTION_DETAILS] = "Authorize this device by scanning the QR code.";
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
     } else if ( ostUser.isStatusActivating) {
-      setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
-      paperWallet[ACTION_DETAILS] = "You need to setup your wallet before seeing 12 words";
+        setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
+        paperWallet[ACTION_DETAILS] = "You need to setup your wallet before seeing 12 words";
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        addSession[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        scanQRCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        sendTransaction[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        showAddDeviceCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
     } else {
-      setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
-      
-      if ( userDevice.isAuthorizing() ) {
-        paperWallet[ACTION_DETAILS] = "Your device is authorizing.";
-      } else if ( userDevice.isAuthorized() ) {
-        paperWallet[ACTION_DETAILS] = "Your device is authorized.";
-      } else if ( userDevice.isDeviceRegistered() ) {
-        paperWallet[ACTION_DETAILS] = "Your device needs to be authorized.";
-      } else if ( userDevice.isDeviceRevoked() ) {
-        paperWallet[ACTION_DETAILS] = "Your device is revoked.";
-      }
+        setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
+        if ( userDevice.isStatusAuthorizing ) {
+            paperWallet[ACTION_DETAILS] = "Your device is authorizing.";
+        } else if ( userDevice.isStatusAuthorized ) {
+            paperWallet[ACTION_DETAILS] = "Your device is authorized.";
+        } else if ( userDevice.isDeviceRegistered() ) {
+            paperWallet[ACTION_DETAILS] = "Your device needs to be authorized.";
+        } else if ( userDevice.isDeviceRevoked() ) {
+            paperWallet[ACTION_DETAILS] = "Your device is revoked.";
+        }
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        addSession[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        scanQRCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        sendTransaction[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
+        showAddDeviceCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
     }
     
-    
-    
     //Final Ordering.
-    dataItems = [setupWallet, paperWallet, addSession, addDeviceFromQRCode, showQRCode, sendTransaction];
+    dataItems = [setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -206,44 +216,49 @@ class UserActionsViewController: UICollectionViewController {
     }
   
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      let actionItem = dataItems![indexPath.item];
-      let actionType:String = actionItem[ACTION_TYPE]! as String;
+        let actionItem = dataItems![indexPath.item];
+        let actionType:String = actionItem[ACTION_TYPE]! as String;
       
-      //Initialize User
-      if ( actionType.caseInsensitiveCompare(ACTIONS.activateUser.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil)
-        walletController.viewMode = WalletViewController.ViewMode.SETUP_WALLET;
-        self.present(walletController, animated: true, completion: nil);
-      }
-      //Paper Wallet.
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.paperWallet.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.PAPER_WALLET;
-        self.present(walletController, animated: true, completion: nil);
-      }
+        //Initialize User
+        if ( actionType.caseInsensitiveCompare(ACTIONS.activateUser.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil)
+            walletController.viewMode = WalletViewController.ViewMode.SETUP_WALLET;
+            self.present(walletController, animated: true, completion: nil);
+        }
+        //Paper Wallet.
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.paperWallet.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.PAPER_WALLET;
+            self.present(walletController, animated: true, completion: nil);
+        }
         
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.NEW_SESSION;
-        self.present(walletController, animated: true, completion: nil);
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.NEW_SESSION;
+            self.present(walletController, animated: true, completion: nil);
         }
       
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceByQRCode.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.QR_CODE;
-        self.present(walletController, animated: true, completion: nil);
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceByQRCode.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.QR_CODE;
+            self.present(walletController, animated: true, completion: nil);
         }
         
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.showQRCode.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.SHOW_QR_CODE;
-        self.present(walletController, animated: true, completion: nil);
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.showQRCode.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.SHOW_QR_CODE;
+            self.present(walletController, animated: true, completion: nil);
         }
         
-      else if ( actionType.caseInsensitiveCompare(ACTIONS.sendTransaction.rawValue) == .orderedSame ) {
-        let walletController = WalletViewController(nibName: nil, bundle: nil);
-        walletController.viewMode = WalletViewController.ViewMode.SEND_TRANSACTION;
-        self.present(walletController, animated: true, completion: nil);
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.sendTransaction.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.SEND_TRANSACTION;
+            self.present(walletController, animated: true, completion: nil);
+        }
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceUsingMnemonics.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.ADD_DEVICE_WITH_MNEMONICS;
+            self.present(walletController, animated: true, completion: nil);
         }
     }
     /*

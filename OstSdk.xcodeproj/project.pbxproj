@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		001C71C0222223DE00905BF1 /* OstSdkExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 001C71BE222223DE00905BF1 /* OstSdkExample.xcdatamodeld */; };
+		00383296222443D300AA4F44 /* OstValidateDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00383295222443D300AA4F44 /* OstValidateDataProtocol.swift */; };
+		003832982224482500AA4F44 /* OstAddDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */; };
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
 		00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282C822224188000ABAB2 /* Alamofire.framework */; };
@@ -210,7 +212,7 @@
 		4BAE56EB2215855200327A19 /* OstAPISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EA2215855200327A19 /* OstAPISession.swift */; };
 		4BAE56ED2215989900327A19 /* OstAPIDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */; };
 		4BAE56EF2215BD3100327A19 /* OstAPIChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56EE2215BD3100327A19 /* OstAPIChain.swift */; };
-		4BAE56F12218076700327A19 /* OstAddDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F02218076700327A19 /* OstAddDevice.swift */; };
+		4BAE56F12218076700327A19 /* OstAddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F02218076700327A19 /* OstAddDeviceWithMnemonics.swift */; };
 		4BAE56F922182B8900327A19 /* GnosisSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56F822182B8900327A19 /* GnosisSafe.swift */; };
 		4BAE570122183A7200327A19 /* GnosisSafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE570022183A7200327A19 /* GnosisSafeTests.swift */; };
 		4BAE57032218413800327A19 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE57022218413800327A19 /* OstPerform.swift */; };
@@ -283,6 +285,8 @@
 
 /* Begin PBXFileReference section */
 		001C71BF222223DE00905BF1 /* Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example.xcdatamodel; sourceTree = "<group>"; };
+		00383295222443D300AA4F44 /* OstValidateDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstValidateDataProtocol.swift; sourceTree = "<group>"; };
+		003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithQRData.swift; sourceTree = "<group>"; };
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		00C282C822224188000ABAB2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -489,7 +493,7 @@
 		4BAE56EA2215855200327A19 /* OstAPISession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISession.swift; sourceTree = "<group>"; };
 		4BAE56EC2215989900327A19 /* OstAPIDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDeviceManager.swift; sourceTree = "<group>"; };
 		4BAE56EE2215BD3100327A19 /* OstAPIChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIChain.swift; sourceTree = "<group>"; };
-		4BAE56F02218076700327A19 /* OstAddDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDevice.swift; sourceTree = "<group>"; };
+		4BAE56F02218076700327A19 /* OstAddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
 		4BAE56F822182B8900327A19 /* GnosisSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnosisSafe.swift; sourceTree = "<group>"; };
 		4BAE570022183A7200327A19 /* GnosisSafeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnosisSafeTests.swift; sourceTree = "<group>"; };
 		4BAE57022218413800327A19 /* OstPerform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
@@ -682,7 +686,8 @@
 				4B00CCF521E603B7005A5696 /* OstWorkflowBase.swift */,
 				4BE9E3262203306B00427A80 /* OstRegisterDevice.swift */,
 				4BE9E3272203306C00427A80 /* OstActivateUser.swift */,
-				4BAE56F02218076700327A19 /* OstAddDevice.swift */,
+				4BAE56F02218076700327A19 /* OstAddDeviceWithMnemonics.swift */,
+				003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */,
 				4BE9E3292203306C00427A80 /* OstDeviceLogin.swift */,
 				4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */,
 				4BAE57022218413800327A19 /* OstPerform.swift */,
@@ -1206,6 +1211,7 @@
 				4BE9E30B2202D2A200427A80 /* OstAddDeviceFlowProtocol.swift */,
 				4BE9E30D2202D33300427A80 /* OstDeviceRegisteredProtocol.swift */,
 				4BE9E3102202D4E000427A80 /* OstWalletWordsAcceptProtocol.swift */,
+				00383295222443D300AA4F44 /* OstValidateDataProtocol.swift */,
 				4BE9E3122202D5B900427A80 /* OstWorkFlowCallbackProtocol.swift */,
 			);
 			path = Interfaces;
@@ -1616,14 +1622,16 @@
 				4B49890021F6F2AF00ED0E94 /* Web3.swift in Sources */,
 				4BE89562221D9DA6009C6A44 /* OstSessionPollingService.swift in Sources */,
 				4B00CD2B21E87B62005A5696 /* Extension+OstQRCode.swift in Sources */,
-				4BAE56F12218076700327A19 /* OstAddDevice.swift in Sources */,
+				4BAE56F12218076700327A19 /* OstAddDeviceWithMnemonics.swift in Sources */,
 				4BE8951D221C509B009C6A44 /* OstAddSession.swift in Sources */,
 				4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */,
+				003832982224482500AA4F44 /* OstAddDeviceWithQRData.swift in Sources */,
 				4B75F21121B7E38A00898960 /* OstBaseDbQueries.swift in Sources */,
 				4B75F29821C3E4D600898960 /* OstKeyManager.swift in Sources */,
 				4B49893621F6F2AF00ED0E94 /* ABI.swift in Sources */,
 				4BE8956F222034C9009C6A44 /* OstAuthorizeBase.swift in Sources */,
 				4B4988FD21F6F2AF00ED0E94 /* EthereumPrivateKey.swift in Sources */,
+				00383296222443D300AA4F44 /* OstValidateDataProtocol.swift in Sources */,
 				4BE9E30C2202D2A200427A80 /* OstAddDeviceFlowProtocol.swift in Sources */,
 				4B49891421F6F2AF00ED0E94 /* String+BytesConvertible.swift in Sources */,
 				4BE9E3112202D4E000427A80 /* OstWalletWordsAcceptProtocol.swift in Sources */,

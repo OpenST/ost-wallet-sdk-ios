@@ -15,7 +15,14 @@ class ShowQRView: BaseWalletWorkflowView {
     @objc override func didTapNext(sender: Any) {
         super.didTapNext(sender: sender);
         let currentUser = CurrentUser.getInstance();
-        OstSdk.addDevice(userId: currentUser.ostUserId!, delegate: self.sdkInteract)
+//        OstSdk.addDevice(userId: currentUser.ostUserId!, delegate: self.sdkInteract)
+        let qrCode = try! OstSdk.getAddDeviceQRCode(userId: currentUser.ostUserId!)
+        let multiplyingFactor = (qrCodeImageView.frame.height/100)
+        let transform: CGAffineTransform  = CGAffineTransform(scaleX: multiplyingFactor, y: multiplyingFactor);
+        let output: CIImage = qrCode!.transformed(by: transform)
+        qrCodeImageView.image = UIImage(ciImage: output)
+        
+        self.activityIndicator.stopAnimating()
     }
     
     // Mark - Sub Views
@@ -105,32 +112,5 @@ class ShowQRView: BaseWalletWorkflowView {
         
         NSLayoutConstraint.activate(constraints)
         super.addBottomSubviewConstraints(afterView:qrCodeImageView);
-    }
-    
-    override func receivedSdkEvent(eventData: [String : Any]) {
-        super.receivedSdkEvent(eventData: eventData);
-        
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-        
-        if ( OstSdkInteract.WorkflowEventType.determineAddDeviceType == eventType ) {
-            let delegate:OstAddDeviceFlowProtocol = eventData["ostAddDeviceFlowProtocol"] as! OstAddDeviceFlowProtocol
-            delegate.QRCodeFlow()
-            return
-        }
-        
-        if ( OstSdkInteract.WorkflowEventType.showQRCode != eventType ) {
-            return;
-        }
-        
-        let qrCode: CIImage = eventData["qrImage"] as! CIImage
-        //100x100 is size of CIImage
-        let multiplyingFactor = (qrCodeImageView.frame.height/100)
-        let transform: CGAffineTransform  = CGAffineTransform(scaleX: multiplyingFactor, y: multiplyingFactor);
-        let output: CIImage = qrCode.transformed(by: transform)
-        qrCodeImageView.image = UIImage(ciImage: output)
-        
-        self.nextButton.isHidden = true;
-        self.cancelButton.isHidden = true;
-        self.activityIndicator.stopAnimating();
     }
 }

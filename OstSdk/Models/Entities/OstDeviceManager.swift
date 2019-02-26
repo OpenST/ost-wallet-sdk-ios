@@ -55,9 +55,9 @@ public class OstDeviceManager: OstBaseEntity {
         return nil
     }
     
-    func updateNonce(_ nonce: Int) throws {
+    func incrementAndUpdateNonce(_ nonce: Int) throws {
         var updatedData: [String: Any?] = self.data
-        updatedData["nonce"] = OstUtils.toString(nonce)
+        updatedData["nonce"] = OstUtils.toString(nonce+1)
         updatedData["updated_timestamp"] = OstUtils.toString(Date.timestamp())
         _ = try OstDeviceManager.parse(updatedData)
     }

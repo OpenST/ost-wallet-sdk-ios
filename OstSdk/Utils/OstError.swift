@@ -12,6 +12,8 @@ public class OstError: Error {
     
     public let internalCode:String
     public let errorMessage:String
+    public let messageTextCode:OstErrorText;
+    
     public var description: String {
         return errorMessage
     }
@@ -19,16 +21,22 @@ public class OstError: Error {
 
     init(_ code: String, _ messageTextCode: OstErrorText) {
         self.internalCode = code
-        errorMessage = messageTextCode.rawValue
+        self.errorMessage = messageTextCode.rawValue
+        self.messageTextCode = messageTextCode;
     }
+    
+    @available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
     init(_ code: String, _ errorMessage: String) {
         self.internalCode = code
         self.errorMessage = errorMessage
+        self.messageTextCode = .tempMessageTextCode
     }
+    
     init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
         self.internalCode = err["code"] as! String
         self.errorMessage = err["msg"] as! String
+        self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
     }
 }
@@ -36,8 +44,12 @@ public class OstError: Error {
 public enum OstErrorText: String {
     case userNotFound = "user not found."
     case invalidUser = "user is invalid."
-    case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
     case userAlreadyActivated = "user is activated."
+    case userNotActivated = "User is not activated."
+    case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
+    case deviceNotAuthorized = "Device is not authorized."
+    case wrongDeviceAddress = "Wrong device address."
+    case registerSameDevice = "Trying to register same device."
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."
     case encryptFail = "Error while encrypting data with public key."
@@ -87,4 +99,16 @@ public enum OstErrorText: String {
     case unexpectedState = "Unexpected state."
     case toAddressNotFound = "To address not found."
     case signerAddressNotFound = "Signer address not found."
+    case invalidQRCode = "Invalid QR Code"
+    case maxUserValidatedCountReached = "Exceeded pin retry limit."
+    //API-Errors
+    case apiSignatureGenerationFailed = "Api Signature generation failed."
+    case sessionApiFailed = "Failed to fetch session information."
+    case pinValidationFailed = "Pin validation failed."
+    case invalidMnemonics = "Incorrect mnemonics."
+
+    //Generic errors.
+    case sdkError = "An internal SDK error has occoured."
+    case apiResponseError = "Api responsed with error. Please see error info."
+    case tempMessageTextCode = "Something went wrong."
 }

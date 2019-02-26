@@ -37,17 +37,27 @@ extension OstSdk {
         let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()
     }
+  
+    /// Add device with mnemonicss.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier.
+    ///   - delegate: Callback for action complete or to perform respective action.
+    public class func addDeviceWithMnemonics(userId: String, mnemonics: [String], delegate: OstWorkFlowCallbackProtocol) {
+        let addDeviceObject = OstAddDeviceWithMnemonics(userId: userId, mnemonics: mnemonics, delegate: delegate)
+        addDeviceObject.perform()
+    }
     
     /// Add device
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
-        let addDeviceObject = OstAddDevice(userId: userId, delegate: delegate)
-        addDeviceObject.perform()
+    public class func addDeviceWithMnemonicsString(userId: String, mnemonics: String, delegate: OstWorkFlowCallbackProtocol) {
+        let mnemonicsArray = mnemonics.components(separatedBy: " ")
+        self.addDeviceWithMnemonics(userId: userId, mnemonics: mnemonicsArray, delegate: delegate)
     }
-  
+    
   /// Add session for user.
   ///
   /// - Parameters:
@@ -68,20 +78,10 @@ extension OstSdk {
     ///   - delegate: Callback for action complete or to perform respective action
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
-        if (payload == nil || payload!.count == 0) {
-            delegate.flowInterrupted(OstError.init("w_wff_p_1", .qrReadFailed))
-        }
+
+        //Note: Validations have been moved inside.
+        //This is done to trigger flowInterupt; IMHO; the proper way.
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
-    }
-    
-    /// Perform operations for given QR-Code image.
-    ///
-    /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - qrCodeImage: QR-Code image.
-    ///   - delegate: Callback for action complete or to perform respective action
-    public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
-        
     }
     
     ///  Perform operations for given paylaod
@@ -103,5 +103,26 @@ extension OstSdk {
     public class func getPaperWallet(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         let paperWalletObj = OstGetPapaerWallet(userId: userId, delegate: delegate)
         paperWalletObj.perform()
+    }
+    
+    /// Get QR-Code to add device.
+    ///
+    /// - Parameter userId: Kit user id
+    /// - Returns: Core image of QR-Code
+    /// - Throws: OstError
+    public class func getAddDeviceQRCode(userId: String) throws -> CIImage? {
+        
+        guard let user = try OstUser.getById(userId) else {
+            throw OstError("w_wff_gadqc_1", .userNotFound)
+        }
+        guard let currentDevice = user.getCurrentDevice() else {
+            throw OstError("w_wff_gadqc_2", .deviceNotset)
+        }
+        let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
+                                             "ddv": 1.0,
+                                             "d":["da":currentDevice.address!]]
+        let qrCodePayloadString: String = try OstUtils.toJSONString(QRCodePaylaod)!
+
+        return qrCodePayloadString.qrCode
     }
 }

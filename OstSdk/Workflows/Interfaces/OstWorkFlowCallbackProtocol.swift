@@ -42,49 +42,34 @@ public protocol OstWorkFlowCallbackProtocol {
     
     /// Inform SDK user the the flow is complete.
     ///
+    /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostContextEntity: Status of the flow.
-    //TODO: replace flowComplete with flowComplete1
-    func flowComplete(_ ostContextEntity: OstContextEntity)
-    
     func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
-
 
     /// Inform SDK user that flow is interrupted with errorCode.
     /// Developers should dismiss pin dialog (if open) on this callback.
     ///
+    /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostError: Reason of interruption.
-    //TODO: replace flowInterrupted with flowInterrupted1
-    func flowInterrupted(_ ostError: OstError)
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
-    
-    /// Ask SDK user to determine workflow how to add device.
-    ///
-    /// - Parameter addDeviceFlowInterface: To device type add device flow.
-    func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol)
-    
-    /// Ask SDK user to show the provided QR code.
-    ///
-    /// - Parameters:
-    ///   - startPollingProtocol: To start polling.
-    ///   - qrImage: QR code image.
-    func showQR(_ startPollingProtocol: OstStartPollingProtocol , image qrImage: CIImage)
-
-    /// Wallet words needed to recover user wallet.
-    ///
-    /// - Parameter ostWalletWordsAcceptProtocol: To pass 12 wallet words.
-    func getWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol)
-    
-    /// Inform SDK user about invalid pin.
-    ///
-    /// - Parameter ostWalletWordsAcceptProtocol: To pass 12 wallet words.
-    func invalidWalletWords(_ ostWalletWordsAcceptProtocol: OstWalletWordsAcceptProtocol);
-
-    /// Inform SDK user that entered 12 wallet words is validated
-    func walletWordsValidated()
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1)
     
     /// Show paper wallet
     ///
     /// - Parameter mnemonics: array of Words.
     func showPaperWallet(mnemonics: [String])
     
+    /// Verify data which is scan from QR-Code
+    ///
+    /// - Parameters:
+    ///   - workflowContext: OstWorkflowContext
+    ///   - ostContextEntity: OstContextEntity
+    ///   - delegate: callback
+    func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity, delegate: OstValidateDataProtocol)
+    
+    /// Acknowledge user about the request which is going to make by SDK.
+    ///
+    /// - Parameters:
+    ///   - workflowContext: OstWorkflowContext
+    ///   - ostContextEntity: OstContextEntity
+    func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
 }

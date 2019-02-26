@@ -8,6 +8,7 @@
 
 import Foundation
 import LocalAuthentication
+import CryptoSwift
 
 let SERVICE_NAME = "com.ost"
 let ETHEREUM_KEY_PREFIX = "Ethereum_key_for_"
@@ -18,6 +19,7 @@ let ETH_META_MAPPING_KEY = "EthKeyMetaMapping"
 let MNEMONICS_META_MAPPING_KEY = "EthKeyMnemonicsMetaMapping"
 let API_ADDRESS_KEY = "api_address"
 let DEVICE_ADDRESS_KEY = "device_address"
+let RECOVERY_PIN_HASH = "recovery_pin_hash"
 
 public struct EthMetaMapping {
     /// Ethererum address
@@ -201,6 +203,40 @@ public class OstKeyManager {
             }
         }
         return nil
+    }
+    
+    //TODO: - Store data from keychain.
+    /// Store recovery pin string in key chain
+    ///
+    /// - Parameter pinString: Pin string generated at the time of activate user.
+    /// - Returns:  true if data stored in keychain successfully.
+    public func storeRecoveryPinString(_ pinString: String) throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        let stringHash = pinString.sha3(.keccak256)
+        let hashData = stringHash.data(using: .utf8)!
+
+        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(hashData)
+        
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+    }
+    
+    /// Verify stored pin string with passed one.
+    ///
+    /// - Parameter pinString: Pin string generated at the time of activate user.
+    /// - Returns: true if data stored in keychain successfully.
+    public func verifyRecoveryPinString(_ pinString: String) -> Bool {
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
+            return false
+        }
+        guard let hashData = OstUtils.toDecodedValue(hashEncodedData) as? Data else {
+            return false
+        }
+        let storedStringHash = String(bytes: hashData, encoding: .utf8)!
+        
+        let pinHash = pinString.sha3(.keccak256)
+        
+        return (pinHash == storedStringHash)
     }
 }
 
