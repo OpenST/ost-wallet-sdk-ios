@@ -60,16 +60,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             }
         }
     }
-    
-    func postWorkflowComplete(entity: Any) {
-        let workflowContext: OstWorkflowContext = getWorkflowContext()
-        let contextEntity: OstContextEntity = getContextEntity(for: entity)
-        
-        DispatchQueue.main.async {
-            self.delegate.flowComplete1(workflowContext: workflowContext, ostContextEntity: contextEntity)
-        }
-    }
-    
+
     /// Post request acknowledged.
     func postRequestAcknowledged(entity: Any) {
         let workflowContext: OstWorkflowContext = getWorkflowContext()
@@ -80,26 +71,23 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
     }
     
-    /// Get current workflow context
+    /// Send workflow complete callback to user.
     ///
-    /// - Returns: OstWorkflowContext
-    func getWorkflowContext() -> OstWorkflowContext {
-        fatalError("getWorkflowContext not override.")
+    /// - Parameter entity: OstEntity
+    func postWorkflowComplete(entity: Any) {
+        let workflowContext: OstWorkflowContext = getWorkflowContext()
+        let contextEntity: OstContextEntity = getContextEntity(for: entity)
+        
+        DispatchQueue.main.async {
+            self.delegate.flowComplete1(workflowContext: workflowContext, ostContextEntity: contextEntity)
+        }
     }
     
-    /// Get context entity
+    /// Cancel currently ongoing workflow.
     ///
-    /// - Returns: OstContextEntity
-    func getContextEntity(for entity: Any) -> OstContextEntity {
-        fatalError("getContextEntity not override.")
-    }
-    
+    /// - Parameter cancelReason: reason to cancel.
     public func cancelFlow(_ cancelReason: String) {
         
-    }
-    
-    func proceedWorkflowAfterAuthenticateUser() {
-        fatalError("processOperation is not override")
     }
     
     //MARK: - Authenticate User
@@ -125,60 +113,41 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         workflowThread.async {
-            do {
-                self.uPin = uPin
-                self.appUserPassword = appUserPassword
-                
-                if (self.saltResponse != nil) {
-                    try self.validatePin()
-                }else {
-                    try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                        do {
-                            self.saltResponse = saltResponse
-                            try self.validatePin()
-                        }catch let error {
-                            self.postError(error)
-                        }
-                        
-                    }, onFailure: { (error) in
-                        self.postError(error)
-                    })
+            self.uPin = uPin
+            self.appUserPassword = appUserPassword
+            
+            let recoveryPinString: String = OstCryptoImpls().getRecoveryPinString(password: self.appUserPassword,
+                                                                                  pin: self.uPin,
+                                                                                  userId: self.userId)
+            if OstKeyManager(userId: self.userId).verifyRecoveryPinString(recoveryPinString) {
+                DispatchQueue.main.async {
+                    self.delegate.pinValidated(self.userId)
                 }
-                
-            }catch let error {
-                self.postError(error)
+                self.proceedWorkflowAfterAuthenticateUser()
+            }else {
+                DispatchQueue.main.async {
+                    self.delegate.invalidPin(self.userId, delegate: self)
+                }
             }
         }
     }
-    func validatePin() throws {
-        let salt = self.saltResponse!["scrypt_salt"] as! String
-        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
-                                                                   pin: self.uPin,
-                                                                   userId: self.userId,
-                                                                   salt: salt,
-                                                                   n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                                   r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                                   p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                                   size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
-        
-        guard let user: OstUser = try getUser() else {
-            throw OstError.actionFailed("User is not persent")
-        }
-        
-        if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
-            throw OstError.actionFailed("Recovery address for user is not set.")
-        }
-        
-        if(user.recoveryAddress!.lowercased() == recoveryKey.lowercased()) {
-            DispatchQueue.main.async {
-                self.delegate.pinValidated(self.userId)
-            }
-            self.proceedWorkflowAfterAuthenticateUser()
-        }else {
-            DispatchQueue.main.async {
-                self.delegate.invalidPin(self.userId, delegate: self)
-            }
-        }
+    
+    /// Proceed with workflow after user is authenticated.
+    func proceedWorkflowAfterAuthenticateUser() {
+        fatalError("processOperation is not override")
     }
-
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    func getWorkflowContext() -> OstWorkflowContext {
+        fatalError("getWorkflowContext not override.")
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    func getContextEntity(for entity: Any) -> OstContextEntity {
+        fatalError("getContextEntity not override.")
+    }
 }

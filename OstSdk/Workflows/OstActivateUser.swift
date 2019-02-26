@@ -231,10 +231,11 @@ class OstActivateUser: OstWorkflowBase {
     
     
     func syncRespctiveEntity() {
-     
-            _ = try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
-            _ = try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
-            _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
+        if (walletKeys?.address != nil) {
+            try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
+        }
+        try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
+        _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
     }
     
     /// Get current workflow context

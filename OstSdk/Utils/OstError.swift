@@ -84,6 +84,7 @@ public enum OstErrorText: String {
     
     //API-Errors
     case sessionApiFailed = "Failed to fetch session information."
+    case pinValidationFailed = "Pin validation failed."
     
     //To-Do: Temp code. Remove this.
     case tempMessageTextCode = ""

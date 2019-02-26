@@ -139,7 +139,9 @@ class OstCryptoImpls: OstCrypto {
                                  "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
-        let stringToCalculate: String = "\(password)\(pin)\(userId)"
+        let stringToCalculate: String = getRecoveryPinString(password: password, pin: pin, userId: userId)
+        try OstKeyManager(userId: userId).storeRecoveryPinString(stringToCalculate)
+        
         let seed: Data
         do {
             seed = try genSCryptKey(salt: salt.data(using: .utf8)!,
@@ -158,5 +160,9 @@ class OstCryptoImpls: OstCrypto {
                                      privateKey: privateKey.privateKey().raw.toHexString(),
                                      debugPrints: OstConstants.PRINT_DEBUG)
         return wallet.address()
+    }
+    
+    func getRecoveryPinString(password: String, pin: String, userId: String) -> String {
+        return "\(password)\(pin)\(userId)"
     }
 }
