@@ -15,6 +15,14 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
     // Mark - QR code scan methods.
     func startReading() {
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+        if (captureDevice == nil) {
+            
+            let alert = UIAlertController(title: "Please check camera permission.", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
+            self.walletViewController?.present(alert, animated: true, completion: nil)
+            
+            return
+        }
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice!)
             captureSession = AVCaptureSession()
@@ -75,7 +83,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         super.didTapNext(sender: sender);
         self.ostValidateDataProtocol?.dataVerified();
     }
-
+    
     func executeQRCodeInfo(qrCodeString: String) {
         let currentUser = CurrentUser.getInstance();
         OstSdk.perfrom(userId: currentUser.ostUserId!,
@@ -112,7 +120,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         return qrInfoLabel;
     }();
     
-
+    
     
     override func addSubViews() {
         let scrollView = self;
@@ -230,10 +238,10 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         super.addBottomSubviewConstraints(afterView:viewPreview, constraints:constraints);
     }
     
-   
     
     
-
+    
+    
     
     func showTransactionData(qrData:[String:Any?]) {
         //To-Do: Implement this.
@@ -302,16 +310,16 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
             let completedWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
             if ( completedWorkflowContext.workflowType == .scanQRCode
                 || completedWorkflowContext.workflowType == .addDeviceWithQRCode) {
-
+                
                 // Forward it to base class.
                 super.receivedSdkEvent(eventData: eventData);
-
+                
                 //Update UI
                 showScanAgain();
                 
                 // Done.
                 return;
-
+                
             } else {
                 // Forward it to base class.
                 super.receivedSdkEvent(eventData: eventData);
