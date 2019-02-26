@@ -135,7 +135,7 @@ class CurrentUser: BaseModel {
       }
     }
     
-    OstSdk.setupDevice(userId: self.ostUserId!, tokenId: self.tokenId!, delegate: ostSdkInteract);
+    OstSdk.setupDevice(userId: self.ostUserId!, tokenId: self.tokenId!, forceSync:true, delegate: ostSdkInteract);
   }
 //
 //  func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {

@@ -60,7 +60,10 @@ class BaseWalletWorkflowView: BaseWalletView {
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
             let error = eventData["ostError"] as! OstError1;
-            addToLog(log: "Error Description:" + error.localizedDescription);
+            addToLog(log: "Error.localizedDescription:" + error.localizedDescription);
+            addToLog(log: "Error.message:" + error.message);
+            addToLog(log: "Error.messageTextCode:" + error.messageTextCode.rawValue);
+            addToLog(log: "Error.internalCode:" + error.internalCode);
             self.nextButton.isHidden = false;
             self.cancelButton.isHidden = false;
             self.activityIndicator.stopAnimating();
@@ -84,9 +87,8 @@ class BaseWalletWorkflowView: BaseWalletView {
  
   func addToLog( log:String ) {
     var allLogs = (self.logsTextView.text != nil) ? self.logsTextView.text! : "";
-    allLogs = "  " + log + "  \n" + allLogs;
+    allLogs = allLogs + " \n" + log;
     self.logsTextView.text = allLogs;
-    
   }
   
   @objc override func didTapNext(sender: Any) {
