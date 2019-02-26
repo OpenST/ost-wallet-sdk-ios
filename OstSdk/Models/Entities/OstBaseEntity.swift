@@ -27,7 +27,7 @@ public class OstBaseEntity: NSObject {
         
         let isValidParams = try validate(params)
         if (!isValidParams) {
-            throw OstError.actionFailed("Object creation failed")
+            throw OstError.init("m_e_be_i", .objectCreationFailed)
         }
         
         setParams(params)
@@ -47,9 +47,9 @@ public class OstBaseEntity: NSObject {
             return false
         }
         guard let idVal: String = OstUtils.toString(id) else {
-            throw OstEntityError.validationFailed("id is not valid")
+            throw OstError.init("m_e_be_iv_1", .invalidId);
         }
-        if (idVal.count < 1) { throw OstEntityError.validationFailed("id is not valid") }
+        if (idVal.count < 1) { throw OstError.init("m_e_be_iv_2", .invalidId); }
         return true
     }
     

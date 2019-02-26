@@ -15,7 +15,7 @@ class OstBaseModelRepository {
     
     class func getId(_ entityData: [String: Any?], forKey key: String) throws -> String {
         guard let identifer = entityData[key] else {
-            throw OstError.invalidInput("JsonOject doesn't have desired identifier")
+            throw OstError.init("m_i_bmr_gi_1", .invalidJsonObjectIdentifier)
         }
         return OstUtils.toString(identifer as Any?)!
     }

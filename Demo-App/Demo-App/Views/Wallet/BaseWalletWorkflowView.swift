@@ -59,7 +59,7 @@ class BaseWalletWorkflowView: BaseWalletView {
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
             let error = eventData["ostError"] as! OstError;
-            addToLog(log: "Error Description:" + error.description!);
+            addToLog(log: "Error Description:" + error.description);
             self.nextButton.isHidden = false;
             self.cancelButton.isHidden = false;
             self.activityIndicator.stopAnimating();

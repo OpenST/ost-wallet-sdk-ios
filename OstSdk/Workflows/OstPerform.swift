@@ -36,10 +36,10 @@ class OstPerform: OstWorkflowBase {
         ostPerformThread.async {
             do {
                 guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
-                    throw OstError.invalidInput("Device is not setup. Please Setup device first. call OstSdk.setupDevice")
+                    throw OstError.init("w_p_p_1", .deviceNotset)
                 }
                 if (!currentDevice.isDeviceRegistered()) {
-                    throw OstError.invalidInput("Device is not registered")
+                    throw OstError.init("w_p_p_2", .deviceNotRegistered)
                 }
                 
                 self.authenticateUser()
@@ -53,7 +53,7 @@ class OstPerform: OstWorkflowBase {
         do {
             self.payload = try OstUtils.toJSONObject(self.payloadString) as? [String : String]
             if (self.payload == nil) {
-                self.postError(OstError.invalidInput("Invalid paylaod to process."))
+                self.postError(OstError.init("w_p_po_1", .invalidPayload))
             }
             self.dataDefination = (self.payload!["data_defination"])?.uppercased() ?? ""
             
@@ -73,7 +73,7 @@ class OstPerform: OstWorkflowBase {
                 return
                 
             default:
-                throw OstError.invalidInput("Invalid data defination")
+                throw OstError.init("w_o_po_1", .invalidDataDefination)
             }
         }catch let error {
             self.postError(error)
@@ -85,10 +85,10 @@ class OstPerform: OstWorkflowBase {
             
         case DataDefination.AUTHORIZE_DEVICE.rawValue:
             guard let _ = self.payload!["user_id"] else {
-                throw OstError.invalidInput("User id is not present.")
+                throw OstError.init("w_p_vp_1", .userEntityNotFound)
             }
             guard let _ = self.payload!["device_address"] else {
-                throw OstError.invalidInput("Device to add is not persent")
+                throw OstError.init("w_p_vp_2", .deviceNotFound)
             }
             
         case DataDefination.REVOKE_DEVICE.rawValue:
@@ -101,10 +101,10 @@ class OstPerform: OstWorkflowBase {
             return
             
         default:
-            throw OstError.invalidInput("Invalid data defination.")
+            throw OstError.init("w_p_vp_3", .invalidDataDefination)
         }
     }
-    
+
     func authorizeDeviceWithPrivateKey() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
@@ -115,7 +115,7 @@ class OstPerform: OstWorkflowBase {
                     let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     return (signature, deviceAddress)
                 }
-                throw OstError.actionFailed("issue while generating signature.")
+                throw OstError.init("w_p_adwp_1", .signatureGenerationFailed)
             }catch {
                 return (nil, nil)
             }

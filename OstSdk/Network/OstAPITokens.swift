@@ -12,27 +12,41 @@ import Alamofire
 class OstAPITokens: OstAPIBase {
     let tokenApiResourceBase = "/tokens"
     
+    /// Initializer
+    ///
+    /// - Parameter userId: User id to get token
     override init(userId: String) {
         super.init(userId: userId)
     }
     
-    public func getToken(onSuccess:((OstToken) -> Void)?, onFailure:((OstError) -> Void)?) throws {
-    
+    // TODO: remove public from this function
+    /// Get token. Make an API call and store the result in the database
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
+    public func getToken(onSuccess:((OstToken) -> Void)?,
+                         onFailure:((OstError) -> Void)?) throws {
         resourceURL = tokenApiResourceBase + "/"
-        
         var params: [String: Any] = [:]
-        insetAdditionalParamsIfRequired(&params)
-        try sign(&params)
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
         
-        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
-            do {
-                let entity = try self.parseEntity(apiResponse: apiResponse)
-                onSuccess?(entity as! OstToken)
-            }catch let error{
-                onFailure?(error as! OstError)
+        // Make an API call and store the data in database.
+        get(params: params as [String : AnyObject],
+            onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstToken)
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+            },
+            onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
             }
-        }) { (failuarObj) in
-            onFailure?(OstError.actionFailed("Token Sync failed"))
-        }
+        )
+        
     }
 }

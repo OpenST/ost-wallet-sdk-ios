@@ -42,12 +42,12 @@ class OstAddSession: OstWorkflowBase {
             self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
             
             if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
-                self.postError(OstError.actionFailed("activation of user failed."))
+                self.postError(OstError.init("w_as_gsk_1", .userActivationFailed))
             }
             
             self.currentDevice = try getCurrentDevice()
             if (nil == self.currentDevice) {
-                throw OstError.invalidInput("Device is not present.")
+                throw OstError.init("w_as_gsk_2", .deviceNotFound)
             }
             
             let sessionKeyInfo: OstSessionKeyInfo = try self.currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
@@ -86,7 +86,7 @@ class OstAddSession: OstWorkflowBase {
                     let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                     return (signature, deviceAddress)
                 }
-                throw OstError.actionFailed("issue while generating signature.")
+                throw OstError("w_as_as_1", .signatureGenerationFailed)
             }catch {
                 return (nil, nil)
             }

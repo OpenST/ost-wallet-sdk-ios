@@ -54,11 +54,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     func validateParams() throws {
         if (self.userId.isEmpty) {
-            throw OstError.invalidInput("userId should not be empty string.")
+            throw OstError.init("w_rd_1", .invalidUserId)
         }
         
         if (self.tokenId.isEmpty) {
-            throw OstError.invalidInput("tokenId should not be empty string.")
+            throw OstError.init("w_rd_2", .invalidTokenId)            
         }
     }
     
@@ -113,7 +113,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     func sync() {
         let onCompletion: ((Bool) -> Void) = {isComplete in
             guard let user = try! OstUser.getById(self.userId) else {
-                self.postError(OstError1("w_rd_s_1", .userNotFound))
+                self.postError(OstError("w_rd_s_1", .userNotFound))
                 return
             }
             self.postWorkflowComplete(entity: user.getCurrentDevice()!)

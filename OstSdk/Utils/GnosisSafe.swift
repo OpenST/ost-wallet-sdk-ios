@@ -26,7 +26,7 @@ class GnosisSafe {
     func getAddOwnerWithThresholdExecutableData(abiMethodName: String, ownerAddress: String, threshold: String = "1") throws -> String {
         let abiObject: ABIObject? = try getABI("GnosisSafe.abi", forMethod: abiMethodName)
         if (abiObject == nil) {
-            throw OstError.actionFailed("ABI for \(abiMethodName) is not available.")
+            throw OstError.init("u_gaowted_1", "ABI for \(abiMethodName) is not available.")
         }
         
         let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
@@ -35,7 +35,7 @@ class GnosisSafe {
         let _invocation = function!.invoke(addressTobeAdded, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError.actionFailed("encode abi failed.")
+            throw OstError.init("u_gaowted_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()
@@ -45,7 +45,7 @@ class GnosisSafe {
         
         let abiObject: ABIObject? = try getABI("TokenHolder.abi", forMethod: abiMethodName)
         if (abiObject == nil) {
-            throw OstError.actionFailed("ABI for \(abiMethodName) is not available.")
+            throw OstError.init("u_gased_1", "ABI for \(abiMethodName) is not available.")
         }
         
         let sessionAddressTobeAdded = try EthereumAddress(hex:sessionAddress, eip55: false)
@@ -54,7 +54,7 @@ class GnosisSafe {
         let _invocation = function!.invoke(sessionAddressTobeAdded, BigInt(spendingLimit)!, BigInt(expirationHeight)!)
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError.actionFailed("encode abi failed.")
+            throw OstError.init("u_gased_2", .abiEncodeFailed)            
         }
         
         return ethereumData!.hex()

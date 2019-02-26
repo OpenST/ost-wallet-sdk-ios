@@ -52,7 +52,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
 //        }
         
         let workflowContext: OstWorkflowContext = getWorkflowContext()
-        let ostError: OstError = error as? OstError ?? OstError.actionFailed("Unexpected error.")
+        let ostError: OstError = error as? OstError ?? OstError("w_wb_pe_1", .unexpectedError)
         DispatchQueue.main.async {
             self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError)
         }
@@ -149,11 +149,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
                                                                    size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
         
         guard let user: OstUser = try getUser() else {
-            throw OstError.actionFailed("User is not persent")
+            throw OstError("w_wb_vp_1",.userNotFound)
         }
         
         if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
-            throw OstError.actionFailed("Recovery address for user is not set.")
+            throw OstError("w_wb_vp_2", .recoveryAddressNotFound);            
         }
         
         if(user.recoveryAddress!.lowercased() == recoveryKey.lowercased()) {

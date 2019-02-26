@@ -74,7 +74,7 @@ class OstAuthorizeBase {
             let deviceManagerNonce: Int = self.deviceManager!.nonce
             
             guard let toForTypedData = getToForTypedData() else {
-                throw OstError.invalidInput("to is not persent.")
+                throw OstError("w_a_ab_a_1", .toAddressNotFound)
             }
             
             let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(verifyingContract: self.deviceManager!.address!,
@@ -95,11 +95,11 @@ class OstAuthorizeBase {
             let (signature, signerAddress) = self.generateSignatureCallback(signingHash)
             
             if (nil == signature || signature!.isEmpty) {
-                throw OstError.actionFailed("signature is not generated")
+                throw OstError("q_a_ab_a_2", .signatureGenerationFailed)
             }
             
             if (nil == signerAddress || signerAddress!.isEmpty) {
-                throw OstError.actionFailed("signer address is not generated")
+                throw OstError("q_a_ab_a_2", .signerAddressNotFound)
             }
             
             try self.deviceManager!.updateNonce(deviceManagerNonce+1)

@@ -31,6 +31,7 @@ struct OstConstants {
     
 //    static let OST_API_BASE_URL = "http://172.16.0.194:7001/testnet/v2"
     static let OST_API_BASE_URL = "https://s5-api.stagingost.com/testnet/v2"
+    static let OST_CONTENT_TYPE = "application/x-www-form-urlencoded"
     static let OST_SIGNATURE_KIND = "OST1-PS"
     static let OST_USER_AGENT = "ost-sdk-js " + OstConstants.OST_API_VERSION
     static let OST_API_VERSION = "1.1.0"
@@ -51,4 +52,7 @@ struct OstConstants {
     static let testPrivateKey: String = "538910bb204d05477e5ce64bcde794486115c40cc765a6e5a809479c163be0b8"
     
     static let PRINT_DEBUG = false
+    
+    // Request time out duration in seconds
+    static let OST_REQUEST_TIMEOUT_DURATION: Int = 6
 }

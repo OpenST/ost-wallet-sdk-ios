@@ -40,12 +40,12 @@ class OstActivateUser: OstWorkflowBase {
                 
                 self.user = try self.getUser()
                 if (self.user == nil) {
-                    self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
+                    self.postError(OstError.init("w_p_p_1", .userEntityNotFound))
                     return
                 }
             
                 if (self.user!.isStatusActivated) {
-                self.postError(OstError1("w_au_p_1", .userAlreadyActivated) )
+                self.postError(OstError("w_au_p_1", .userAlreadyActivated) )
                     return
                 }
                 
@@ -56,17 +56,17 @@ class OstActivateUser: OstWorkflowBase {
                 
                 self.currentDevice = self.user!.getCurrentDevice()
                 if (self.currentDevice == nil) {
-                    self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError.init("w_p_p_2", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
                 if (self.currentDevice!.isDeviceRevoked()) {
-                    self.postError(OstError.actionFailed("Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError.init("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
                 if (!self.currentDevice!.isDeviceRegistered()) {
-                    self.postError(OstError.actionFailed("Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError.init("w_p_p_4", "Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
@@ -74,7 +74,7 @@ class OstActivateUser: OstWorkflowBase {
                     self.recoveryAddreass = self.getRecoveryKey()
 
                     if (self.recoveryAddreass == nil) {
-                        self.postError(OstError.actionFailed("recovery address formation failed."))
+                        self.postError(OstError.init("w_p_p_4", .recoveryAddressNotFound))
                         return
                     }
 
@@ -92,19 +92,23 @@ class OstActivateUser: OstWorkflowBase {
     
     func validateParams() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count {
-            throw OstError.invalidInput("pinPrefix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+            throw OstError.init("w_au_vp_1",
+                                "Pin prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > self.userId.count {
-            throw OstError.invalidInput("pinPostfix should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+            throw OstError.init("w_au_vp_2",
+                                "Pin postfix should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count {
-            throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+            throw OstError.init("w_au_vp_3",
+                                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
         if OstConstants.OST_MIN_EXPIRATION_BLOCK_HEIGHT > self.expirationHeight {
-            throw OstError.invalidInput("Expiration height should be greater than \(OstConstants.OST_MIN_EXPIRATION_BLOCK_HEIGHT)")
+            throw OstError.init("w_au_vp_5",
+                                "Expiration height should be greater than \(OstConstants.OST_MIN_EXPIRATION_BLOCK_HEIGHT)")
         }
     }
     
@@ -137,7 +141,7 @@ class OstActivateUser: OstWorkflowBase {
             self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
             
             if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
-                self.postError(OstError.actionFailed("activation of user failed."))
+                self.postError(OstError.init("w_au_gsk_1", .userActivationFailed))
             }
             
             let sessionKeyInfo: OstSessionKeyInfo = try currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)

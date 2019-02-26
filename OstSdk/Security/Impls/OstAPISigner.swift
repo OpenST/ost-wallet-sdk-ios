@@ -55,7 +55,7 @@ class OstAPISigner {
             do {
                 self.apiKey = try OstKeyManager(userId: userId).getAPIKey()
             } catch {
-                throw OstError1.init("s_i_as_gak_1", .noPrivateKeyFound)
+                throw OstError.init("s_i_as_gak_1", .noPrivateKeyFound)
             }
         }
         return self.apiKey
@@ -68,7 +68,7 @@ class OstAPISigner {
     /// - Throws: OSTError
     private func personalSign(_ message: String) throws -> String {
         guard let apiPrivateKey = try getApiKey() else{
-            throw OstError1.init("s_i_as_ps_1", .noPrivateKeyFound)
+            throw OstError.init("s_i_as_ps_1", .noPrivateKeyFound)
         }
         let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
                                      privateKey: apiPrivateKey,
@@ -78,7 +78,7 @@ class OstAPISigner {
         do {
             singedData = try wallet.personalSign(message: message)
         } catch {
-            throw OstError1.init("s_i_as_ps_2", .signTxFailed)
+            throw OstError.init("s_i_as_ps_2", .signTxFailed)
         }
         return singedData.addHexPrefix()
     }

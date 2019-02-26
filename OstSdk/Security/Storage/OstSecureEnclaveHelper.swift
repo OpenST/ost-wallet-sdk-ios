@@ -37,7 +37,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
     /// - Throws: OSTError
     func encrypt(data: Data, withPrivateKey privateKey: SecKey) throws -> Data {
         guard let publicKey = getPublicKeyFor(privateKey) else {
-            throw OstError1.init("s_s_seh_e_1", .unableToGetPublicKey)
+            throw OstError.init("s_s_seh_e_1", .unableToGetPublicKey)
         }
         return try _encrypt(data, publicKey: publicKey)
     }
@@ -108,7 +108,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
         var error: Unmanaged<CFError>?
         guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
             Logger.log(message: "Error while generating private key.")
-            throw OstError1.init("s_s_seh_gpk_1", .generatePrivateKeyFail)
+            throw OstError.init("s_s_seh_gpk_1", .generatePrivateKeyFail)
         }
         return privateKey
     }
@@ -161,7 +161,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
                                                &error)
         if result == nil {
             Logger.log(message: "Error while encrypting data with public key.")
-            throw OstError1.init("s_s_seh_e1_1", .encryptFail)
+            throw OstError.init("s_s_seh_e1_1", .encryptFail)
         }
         return result! as Data
     }
@@ -181,7 +181,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
                                                &error)
         if result == nil {
             Logger.log(message: "Error while decrypting data with private key.")
-            throw OstError1.init("s_s_seh_d1_1", .decryptFail)
+            throw OstError.init("s_s_seh_d1_1", .decryptFail)
         }
         return result! as Data
     }

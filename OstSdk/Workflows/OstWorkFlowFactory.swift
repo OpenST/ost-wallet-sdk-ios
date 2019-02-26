@@ -69,7 +69,7 @@ extension OstSdk {
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
         if (payload == nil || payload!.count == 0) {
-            delegate.flowInterrupted(OstError.invalidInput("Can not read data from given image"))
+            delegate.flowInterrupted(OstError.init("w_wff_p_1", .qrReadFailed))
         }
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
     }

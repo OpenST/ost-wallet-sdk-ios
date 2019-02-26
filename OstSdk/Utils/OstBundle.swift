@@ -28,6 +28,6 @@ class OstBundle {
             let contents = try String(contentsOfFile: filepath)
             return contents
         }
-        throw OstError.actionFailed("\(fileName) file not found")
+        throw OstError.init("", "File not found: \(fileName)")
     }
 }

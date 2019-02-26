@@ -26,7 +26,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
             let keychainManager = OstKeyManager(userId: self.userId)
             
             guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
-                throw OstError.actionFailed("Paper wallet not found.")
+                throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)                
             }
             
             DispatchQueue.main.async {

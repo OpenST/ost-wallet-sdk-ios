@@ -11,47 +11,73 @@ import Foundation
 public class OstAPISession: OstAPIBase {
     
     let sessionApiResourceBase: String
+    
+    /// Initializer
+    ///
+    /// - Parameter userId: User id
     override public init(userId: String) {
         sessionApiResourceBase = "/users/\(userId)/sessions"
         super.init(userId: userId)
     }
     
-    public func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-    
+    // TODO:  remove open from this function
+    /// Get session. Make an API call and store the result in the database
+    ///
+    /// - Parameters:
+    ///   - sessionAddress: Session address
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
+    open func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
-        
         var params: [String: Any] = [:]
-        insetAdditionalParamsIfRequired(&params)
-        try sign(&params)
+
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
         
-        get(params: params as [String : AnyObject], onSuccess: { (apiResponse) in
-            do {
-                let entity = try self.parseEntity(apiResponse: apiResponse)
-                onSuccess?(entity as! OstSession)
-            }catch let error{
-                onFailure?(error as! OstError)
+        // Make an API call and store the data in database.
+        get(params: params as [String : AnyObject],
+            onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstSession)
+                } catch let error{
+                    onFailure?(error as! OstError)
+                }
+            },
+            onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
             }
-        }) { (failuarObj) in
-            onFailure?(OstError.actionFailed("Session Sync failed"))
-        }
+        )
     }
     
+    /// Authorize session. Make an API call and store the result in the database
+    ///
+    /// - Parameters:
+    ///   - params: Authorize session params
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
     func authorizeSession(params: [String: Any], onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = sessionApiResourceBase + "/authorize"
-        
-        var loParams: [String: Any] = params
-        insetAdditionalParamsIfRequired(&loParams)
-        try sign(&loParams)
-        
-        post(params: loParams as [String : AnyObject], onSuccess: { (apiResponse) in
-            do {
-                let entity = try self.parseEntity(apiResponse: apiResponse)
-                onSuccess?(entity as! OstSession)
-            }catch let error{
-                onFailure?(error as! OstError)
+        var authorizeSessionParams: [String: Any] = params
+
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &authorizeSessionParams, withUserId: self.userId)
+
+        // Make an API call and store the data in database.
+        post(params: authorizeSessionParams as [String : AnyObject],
+             onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstSession)
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+            },
+            onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
             }
-        }) { (failuarObj) in
-            onFailure?(OstError.actionFailed("Session Sync failed"))
-        }
+        )
     }
 }

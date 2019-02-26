@@ -9,41 +9,145 @@
 import Foundation
 import Alamofire
 
+// TODO: Remove the Open keyword from this class.
+/// Base class for all API calls
 open class OstAPIBase {
+    /// URL endpoint
+    static var baseURL: String = "";
     
+    /// Class function to set API endpoint
+    class func setAPIEndpoint(_ apiEndpoint: String) {
+        baseURL = apiEndpoint
+    }
+    
+    /// User Id associated with the API requests
     var userId: String
+    
+    /// Relative URL that can be appended with base URL endpoint
     var resourceURL: String = ""
     
-    /// requestTimeout in seconds
-    var requestTimeout: Int  = 6
+    /// Request timeout duration in seconds
+    var requestTimeout: Int  = OstConstants.OST_REQUEST_TIMEOUT_DURATION
+    
+    /// Request data
     var dataRequest: DataRequest? = nil
+    
+    /// Session manager
     let manager: SessionManager
     
-    public init(userId: String = "") {
+    /// Initializer
+    ///
+    /// - Parameter userId: User Id associated with the API requests
+    public init(userId: String) {
         self.userId = userId
-        
         self.manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
     }
     
+    /// Get HTTP request header params
+    ///
+    /// - Returns: HTTP header params
     func getHeader() -> [String: String] {
-        let httpHeaders = ["Content-Type": "application/x-www-form-urlencoded",
+        let httpHeaders = ["Content-Type": OstConstants.OST_CONTENT_TYPE,
                            "User-Agent": OstConstants.OST_USER_AGENT]
         return httpHeaders
     }
     
+    // TODO: Remove this method once we remove open keywords.
+    /// Get the base URL string
     open var getBaseURL: String {
-        return OstConstants.OST_API_BASE_URL
+        return OstAPIBase.baseURL
     }
     
+    // TODO: Remove open keyword
+    /// Get the relative resource URL string
     open var getResource: String {
         return resourceURL
     }
-
-    var getSignatureKind: String {
-        return OstConstants.OST_SIGNATURE_KIND
+    
+    var url: String {
+        return "\(OstAPIBase.baseURL)\(getResource)"
     }
     
+    //MARK: - HttpRequest
+    
+    /// Send request
+    ///
+    /// - Parameters:
+    ///   - method: HTTP method
+    ///   - params: Request params
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    func request(method: HTTPMethod,
+                 params: [String: AnyObject]? = nil,
+                 onSuccess:@escaping (([String: Any]?) -> Void),
+                 onFailure:@escaping (([String: Any]?) -> Void)) {
+        // Check if the internet connectivity is available, if not then dont send request
+        guard OstConnectivity.isConnectedToInternet else {
+            Logger.log(message: "System appears offline. Please check your internet connectivity")
+            let noInternetResponse = OstAPIErrorHandler.getNoInternetConnectivityResponse()
+            onFailure(noInternetResponse)
+            return
+        }
+        
+        Logger.log(message: "url", parameterToPrint: url)
+        Logger.log(message: "params", parameterToPrint: params as Any)
+        
+        // TODO: remove the debug logs
+        dataRequest = manager.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
+        // Status code in 200 range will be considered as correct response
+        dataRequest?.validate(statusCode: 200..<300)
+        dataRequest!.responseJSON { (httpResponse) in
+            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
+            
+            let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
+            if (httpResponse.result.isSuccess && isSuccess) {
+                let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
+                onSuccess(responseEntity)
+            }else {
+                let failureResponse = OstAPIErrorHandler.getErrorResponse(httpResponse);
+                onFailure(failureResponse)
+            }
+        }
+    }
+    
+    // TODO: Remove open keyword
+    /// Performs HTTP Get
+    ///
+    /// - Parameters:
+    ///   - params: Request params
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    open func get(params: [String: AnyObject]? = nil,
+                  onSuccess:@escaping (([String: Any]?) -> Void),
+                  onFailure:@escaping (([String: Any]?) -> Void)) {
+        self.request(method: .get,
+                     params: params,
+                     onSuccess: onSuccess,
+                     onFailure: onFailure)
+    }
+    
+    // TODO: Remove open keyword
+    /// Performs HTTP post
+    ///
+    /// - Parameters:
+    ///   - params: Request params
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    open func post(params: [String: AnyObject]? = nil,
+                   onSuccess:@escaping (([String: Any]?) -> Void),
+                   onFailure:@escaping (([String: Any]?) -> Void)) {
+        self.request(method: .post,
+                     params: params,
+                     onSuccess: onSuccess,
+                     onFailure: onFailure)
+    }
+
+    // TODO: Remove open keyword
+    /// Check if the response is successful
+    ///
+    /// - Parameter response: API response object
+    /// - Returns: `true` if successful otherwise false
     open func isResponseSuccess(_ response: Any?) -> Bool {
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
@@ -51,115 +155,12 @@ open class OstAPIBase {
                 return (successValue as! Int) > 0
             }else if successValue is String {
                 let successStringValue = successValue as! String
-                if (successStringValue  == "true" || successStringValue != "0") {
+                if (successStringValue  == "true" || successStringValue == "1") {
                     return true
                 }
             }
         }
         return false
     }
-    
-    func insetAdditionalParamsIfRequired(_ params: inout [String: Any]) {
-    
-        if (params["api_signature_kind"] == nil) {
-            params["api_signature_kind"] = getSignatureKind
-        }
-        
-        if (params["api_request_timestamp"] == nil) {
-            params["api_request_timestamp"] = OstUtils.toString(Date.timestamp())
-        }
-        
-        if (!userId.isEmpty) {
-            do {
-                if let user: OstUser = try OstUser.getById(userId) {
-                    if let currentDevice = user.getCurrentDevice() {
-                        
-                        if (params["api_key"] == nil) {
-                            params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.api_signer_address!)"
-                        }
-                    }
-                }
-            }catch {
-                
-            }
-        }
-    }
-    
-    func sign(_ params: inout [String: Any]) throws {
-        let signature =  try OstAPISigner(userId: userId).sign(resource: getResource, params: params)
-        params["api_signature"] = signature
-    }
-    
-    //MARK: - HttpRequest
-    open func get(params: [String: AnyObject]? = nil, onSuccess:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
-        
-        guard OstConnectivity.isConnectedToInternet else {
-            Logger.log(message: "not reachable")
-            onFailure(["networkError": "network is not reachable."])
-            return
-        }
-        
-        let url: String = getBaseURL+getResource
-        
-        Logger.log(message: "url", parameterToPrint: url)
-        Logger.log(message: "params", parameterToPrint: params as Any)
-        
-        dataRequest = manager.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
-        dataRequest!.responseJSON { (httpResponse) in
-            
-            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
-            
-            let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
-            if (httpResponse.result.isSuccess && isSuccess) {
-                let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
-                onSuccess(responseEntity)
-            }else {
-                onFailure(httpResponse.result.value as? [String : Any])
-            }
-        }
-    }
-    
-    open func post(params: [String: AnyObject]? = nil, onSuccess:@escaping (([String: Any]?) -> Void), onFailure:@escaping (([String: Any]?) -> Void)) {
-        
-        guard OstConnectivity.isConnectedToInternet else {
-            Logger.log(message: "not reachable")
-            onFailure(["networkError": "network is not reachable."])
-            return
-        }
-        let url: String = getBaseURL+getResource
-        
-        Logger.log(message: "url", parameterToPrint: url)
-        Logger.log(message: "params", parameterToPrint: params)
-        
-        dataRequest = manager.request(url, method: .post, parameters: params, headers: getHeader()).debugLog()
-        dataRequest!.responseJSON { (httpResponse) in
-            
-            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
-            
-            let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
-            if (httpResponse.result.isSuccess && isSuccess) {
-                let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
-                onSuccess(responseEntity)
-            }else {
-                onFailure((httpResponse.result.value as? [String : Any]))
-            }
-        }
-    }
-    
-    //MARK: - parse entites
-    func parseEntity(apiResponse: [String: Any?]?) throws -> OstBaseEntity {
-        if (apiResponse != nil) {
-            do {
-                if let entity = try OstSdk.parseApiResponse(apiResponse!) {
-                    return entity
-                }else {
-                    throw OstError.actionFailed("Entity parsing failed.")
-                }
-            }catch {
-                throw OstError.actionFailed("Entity parsing failed.")
-            }
-        }else {
-            throw OstError.actionFailed("Entity Sync failed.")
-        }
-    }
 }
+
