@@ -26,6 +26,7 @@ class UserActionsViewController: UICollectionViewController {
     case addDeviceByQRCode = "addDeviceByQRCode"
     case showQRCode = "showQRCode"
     case sendTransaction = "sendTransaction"
+    case showUserDetails = "showUserDetails"
   }
   
   var dataItems:[[String:String]]?
@@ -41,6 +42,11 @@ class UserActionsViewController: UICollectionViewController {
     var paperWallet: [String: String] = [:];
     var sendTransaction: [String: String] = [:]
     var scanQRCode: [String: String] = [:];
+    var showUserDetails: [String: String] = [:]
+    
+    showUserDetails[ACTION_TYPE] = ACTIONS.showUserDetails.rawValue;
+    showUserDetails[ACTION_TEXT] = "Show Details"
+    showUserDetails[ACTION_DETAILS] = "View your Details"
     
     setupWallet[ACTION_TYPE] = ACTIONS.activateUser.rawValue;
     setupWallet[ACTION_TEXT] = "Setup your wallet";
@@ -98,7 +104,7 @@ class UserActionsViewController: UICollectionViewController {
     }
     
     //Final Ordering.
-    dataItems = [setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
+    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -258,6 +264,12 @@ class UserActionsViewController: UICollectionViewController {
         else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceUsingMnemonics.rawValue) == .orderedSame ) {
             let walletController = WalletViewController(nibName: nil, bundle: nil);
             walletController.viewMode = WalletViewController.ViewMode.ADD_DEVICE_WITH_MNEMONICS;
+            self.present(walletController, animated: true, completion: nil);
+        }
+        
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.showUserDetails.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.SHOW_USER_DETAILS;
             self.present(walletController, animated: true, completion: nil);
         }
     }
