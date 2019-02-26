@@ -21,6 +21,10 @@ public class OstDevice: OstBaseEntity {
         return "address"
     }
     
+    class func getById(_ address: String) throws -> OstDevice {
+        return try OstDeviceRepository.sharedDevice.getById(address) as! OstDevice
+    }
+    
     static func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
         return try OstDeviceRepository.sharedDevice.getByParentId(parentId) as? [OstDevice]
     }
@@ -82,27 +86,31 @@ public class OstDevice: OstBaseEntity {
 }
 
 public extension OstDevice {
-    var local_entity_id: String? {
-        return data["local_entity_id"] as? String 
-    }
+//    apiParam["address"] = deviceAddress
+//    apiParam["api_signer_address"] = apiAddress
+//    apiParam["device_uuid"] = self.getDeviceUUID() ?? ""
+//    apiParam["device_name"] = self.getDeviceName()
+//    apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
+//    apiParam["status"] = OstUser.Status.CREATED.rawValue
     
-    var address: String? {
-        return data["address"] as? String
+    public var address: String? {
+        return getId();
     }
-    
-    var api_signer_address: String? {
+
+    public var apiSignerAddress: String? {
         return data["api_signer_address"] as? String
     }
     
-    var multi_sig_id: String? {
-        return data["multi_sig_id"] as? String
-    }
-    
-    var userId: String? {
+    public var userId: String? {
         return data["user_id"] as? String
     }
     
-    var device_manager_address: String? {
-        return data["device_manager_address"] as? String
+    public var deviceName: String? {
+        return data["device_name"] as? String
     }
+    
+    public var deviceUUID: String? {
+        return data["device_uuid"] as? String
+    }
+
 }

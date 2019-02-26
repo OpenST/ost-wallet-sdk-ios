@@ -10,48 +10,39 @@ import Foundation
 class OstAuthorizeDevice: OstAuthorizeBase {
     let abiMethodNameForAuthorizeDevice = "addOwnerWithThreshold"
     
+    let onRequestAcknowledged: ((OstDevice)-> Void)
     let onSuccess: ((OstDevice)-> Void)
+    
     init (userId: String,
           deviceAddressToAdd: String,
           generateSignatureCallback: @escaping ((String) -> (String?, String?)),
-          onSuccess: @escaping ((OstDevice)-> Void),
+          onRequestAcknowledged: @escaping ((OstDevice) -> Void),
+          onSuccess: @escaping ((OstDevice) -> Void),
           onFailure: @escaping ((OstError) -> Void)) {
         
         self.onSuccess = onSuccess
-        
+        self.onRequestAcknowledged = onRequestAcknowledged
         super.init(userId: userId,
                    addressToAdd: deviceAddressToAdd,
                    generateSignatureCallback: generateSignatureCallback,
                    onFailure: onFailure)
     }
     
-    
-    override func perform() {
-        do {
-            try self.getDevice()
-        }catch let error {
-            self.onFailure(error as! OstError)
-        }
-    }
-    
-    func getDevice() throws {
+    class func getDevice(userId: String, addressToAdd: String, onSuccess: @escaping ((OstDevice) -> Void), onFailure: @escaping ((OstError) -> Void)) throws {
         let onSuccess: ((OstDevice) -> Void) = { ostDevice in
             if (ostDevice.isDeviceRegistered()) {
-                do {
-                    try self.fetchDeviceManager()
-                }catch let error{
-                    self.onFailure(error as! OstError)
-                }
+                onSuccess(ostDevice)
             }else {
-                self.onFailure(OstError.actionFailed("Device is not registered."))
+                onFailure(OstError.actionFailed("Device is not registered."))
             }
         }
         
-        try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.addressToAdd, onSuccess: onSuccess) { (ostError) in
-            self.onFailure(ostError)
-        }
+        try OstAPIDevice(userId: userId).getDevice(deviceAddress: addressToAdd,
+                                                   onSuccess: onSuccess,
+                                                   onFailure: onFailure)
     }
     
+  
     override func getEncodedABI() throws -> String {
         let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(abiMethodName: self.abiMethodNameForAuthorizeDevice,
                                                                                     ownerAddress: self.addressToAdd,
@@ -71,9 +62,28 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     
     override func apiRequestForAuthorize(params: [String: Any]) throws {
         try OstAPIDevice(userId: self.userId).authorizeDevice(params: params, onSuccess: { (ostDevice) in
-            self.onSuccess(ostDevice)
+            self.onRequestAcknowledged(ostDevice)
+            self.pollingForAddDevice()
         }) { (error) in
             self.onFailure(error)
         }
+    }
+
+    func pollingForAddDevice() {
+        
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
+            self.onSuccess(ostDevice)
+        }
+        
+        let failuarCallback:  ((OstError) -> Void) = { error in
+            self.onFailure(error)
+        }
+        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        
+        OstDevicePollingService(userId: self.userId,
+                                deviceAddress: self.addressToAdd,
+                                workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                successCallback: successCallback,
+                                failuarCallback:failuarCallback).perform()
     }
 }

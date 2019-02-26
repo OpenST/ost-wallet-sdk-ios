@@ -33,15 +33,7 @@ class OstAuthorizeSession: OstAuthorizeBase {
                    generateSignatureCallback: generateSignatureCallback,
                    onFailure: onFailure)
     }
-    
-    override func perform() {
-        do {
-            try self.fetchDeviceManager()
-        }catch let error {
-            self.onFailure(error as! OstError)
-        }
-    }
-    
+ 
     override func getEncodedABI() throws -> String {
         let encodedABIHex = try GnosisSafe().getAddSessionExecutableData(abiMethodName: self.abiMethodNameForAuthorizeSession,
                                                                          sessionAddress: self.addressToAdd,

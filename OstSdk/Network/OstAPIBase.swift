@@ -75,7 +75,7 @@ open class OstAPIBase {
                     if let currentDevice = user.getCurrentDevice() {
                         
                         if (params["api_key"] == nil) {
-                            params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.api_signer_address!)"
+                            params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.apiSignerAddress!)"
                         }
                     }
                 }

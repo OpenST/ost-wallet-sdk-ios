@@ -44,7 +44,7 @@ extension OstSdk {
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
-        let addDeviceObject = OstAddDevice(userId: userId, delegate: delegate)
+        let addDeviceObject = OstAddDeviceWithMnemonics(userId: userId, delegate: delegate)
         addDeviceObject.perform()
     }
   
@@ -68,9 +68,8 @@ extension OstSdk {
     ///   - delegate: Callback for action complete or to perform respective action
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
-        if (payload == nil || payload!.count == 0) {
-            delegate.flowInterrupted(OstError.invalidInput("Can not read data from given image"))
-        }
+        //Note: Validations have been moved inside.
+        //This is done to trigger flowInterupt; IMHO; the proper way.
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
     }
     
@@ -81,7 +80,7 @@ extension OstSdk {
     ///   - qrCodeImage: QR-Code image.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
-        
+            //Is this method really needed?
     }
     
     ///  Perform operations for given paylaod
@@ -103,5 +102,21 @@ extension OstSdk {
     public class func getPaperWallet(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         let paperWalletObj = OstGetPapaerWallet(userId: userId, delegate: delegate)
         paperWalletObj.perform()
+    }
+    
+    public class func getAddDeviceQRCode(userId: String) throws -> CIImage? {
+        
+        guard let user = try OstUser.getById(userId) else {
+            throw OstError1("w_wff_gadqc_1", .userNotFound)
+        }
+        guard let currentDevice = user.getCurrentDevice() else {
+            throw OstError1("w_wff_gadqc_2", .deviceNotset)
+        }
+        let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
+                                             "ddv": 1.0,
+                                             "d":["da":currentDevice.address!]]
+        let qrCodePayloadString: String = try OstUtils.toJSONString(QRCodePaylaod)!
+
+        return qrCodePayloadString.qrCode
     }
 }

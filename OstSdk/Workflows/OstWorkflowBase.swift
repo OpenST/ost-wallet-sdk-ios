@@ -47,14 +47,20 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     }
     
     func postError(_ error: Error) {
-//        DispatchQueue.main.async {
-//            self.delegate.flowInterrupted(error as? OstError ?? OstError.actionFailed("Unexpected error.") )
-//        }
         
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         let ostError: OstError = error as? OstError ?? OstError.actionFailed("Unexpected error.")
+        
+
+        
         DispatchQueue.main.async {
-            self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError)
+            if ( error is OstError1 ) {
+                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: error as! OstError1)
+            }
+            else {
+                //Unknown Error. Post Something went wrong.
+                let ostError:OstError1 = OstError1("wb_pe_1", OstErrorText.sdkError)
+            }
         }
     }
     
@@ -64,6 +70,16 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         
         DispatchQueue.main.async {
             self.delegate.flowComplete1(workflowContext: workflowContext, ostContextEntity: contextEntity)
+        }
+    }
+    
+    /// Post request acknowledged.
+    func postRequestAcknowledged(entity: Any) {
+        let workflowContext: OstWorkflowContext = getWorkflowContext()
+        let contextEntity: OstContextEntity = getContextEntity(for: entity)
+        
+        DispatchQueue.main.async {
+            self.delegate.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
     }
     
@@ -167,4 +183,5 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             }
         }
     }
+
 }

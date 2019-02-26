@@ -80,13 +80,9 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         }
     }
     
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1) {
         Logger.log(message: "flowInterrupted for ", parameterToPrint: workflowContext.workflowType)
         Logger.log(message: "error ", parameterToPrint: error)
-    }
-    
-    func flowInterrupted(_ ostError: OstError) {
-       Logger.log(message: "IMP flowInterrupted", parameterToPrint: ostError.description)
     }
     
     func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {

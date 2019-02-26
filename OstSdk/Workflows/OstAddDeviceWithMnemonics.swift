@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
+class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
 
     enum State: Int {
         case INITIALIZE, QR_CODE, ERROR, PIN, WORDS
     }
-    var mCurrentState: OstAddDevice.State = .INITIALIZE
-    func setCurrentState(_ state: OstAddDevice.State) {
+    var mCurrentState: OstAddDeviceWithMnemonics.State = .INITIALIZE
+    func setCurrentState(_ state: OstAddDeviceWithMnemonics.State) {
         self.mCurrentState = state
     }
     
@@ -81,17 +81,15 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
                     DispatchQueue.main.async {
                         self.delegate.determineAddDeviceWorkFlow(self)
                     }
-                    
-                case .QR_CODE:
-                    try self.validateParams()
-                    self.authenticateUser()
                 case .PIN:
                     try self.validateParams()
                     
                 case .WORDS:
-                    self.authorizeDeviceWothMnemonics()
+                    self.authorizeDeviceWithMnemonics()
                 case .ERROR:
                     self.postError(OstError.actionFailed("Add device flow cancelled."))
+                default:
+                    return
                 }
             }catch let error {
                 self.postError(error)
@@ -104,22 +102,6 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
         case .INITIALIZE:
             return
             
-        case .QR_CODE:
-            let user = try self.getUser()
-            if (user == nil) {
-                throw OstError.invalidInput("User is not created for \(self.userId). Please create user first. Call OstSdk.setupDevice")
-            }
-            if (!user!.isStatusActivated) {
-                throw OstError.invalidInput("User is not activated for \(self.userId). Please activate user first. Call OstSdk.activateUser")
-            }
-            
-            let currentDevice = try getCurrentDevice()
-            if (currentDevice == nil) {
-                throw OstError.invalidInput("Device is not present for \(self.userId). Please create device first.")
-            }
-            if (!currentDevice!.isDeviceRegistered()) {
-                throw OstError.invalidInput("Device is not Registered. Please register device first.")
-            }
         case .PIN:
             if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count) {
                 throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
@@ -132,7 +114,7 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
             if (filteredWordsArray!.isEmpty) {
                 throw OstError.invalidInput("word list is not appropriate.")
             }
-        case .ERROR:
+        default:
             return
         }
     }
@@ -165,20 +147,21 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
     //MARK: - QR-Code
     func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
         let currentDevice = try getCurrentDevice()
-        return ["data_defination": OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue,
+        return ["data_defination": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                 "user_id": self.userId,
                 "device_address": currentDevice!.address!]
     }
     
     
     //MARK: - authorize device
-    func authorizeDeviceWothMnemonics() {
+    func authorizeDeviceWithMnemonics() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
                 let cryptoImpl = OstCryptoImpls()
                 let ostWalletKeys: OstWalletKeys = try cryptoImpl.generateEthereumKeys(withMnemonics: self.wordsArray!)
                 let signature = try cryptoImpl.signTx(signingHash, withPrivatekey: ostWalletKeys.privateKey!)
                 return (signature, ostWalletKeys.address!)
+                //Get device for address generated from mnemonics.
             }catch let error{
                 self.postError(error)
                 return (nil, nil)
@@ -193,9 +176,16 @@ class OstAddDevice: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingPr
             self.postError(error)
         }
         
+        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postRequestAcknowledged(entity: ostDevice)
+        }
+        
+        //Get device for address generated from mnemonics.
+        
         OstAuthorizeDevice(userId: self.userId,
                            deviceAddressToAdd: self.currentDevice!.address!,
                            generateSignatureCallback: generateSignatureCallback,
+                           onRequestAcknowledged: onRequestAcknowledged,
                            onSuccess: onSuccess,
                            onFailure: onFailure).perform()
     }

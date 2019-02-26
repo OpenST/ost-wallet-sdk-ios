@@ -32,20 +32,25 @@ public enum OstErrorType {
 }
 
 // TODO: Remove OSTError and rename OSTError1 to OSTError.
-internal class OstError1: Error {
+public class OstError1: Error {
     
-    public let internalCode:String
-    public let errorMessage:String
+    public let internalCode:String;
+    public let errorMessage:String;
+    public let messageTextCode:OstErrorText;
     public var message: String {
         return errorMessage
     }
     init(_ code: String, _ messageTextCode: OstErrorText) {
         self.internalCode = code
-        errorMessage = messageTextCode.rawValue
+        self.errorMessage = messageTextCode.rawValue
+        self.messageTextCode = messageTextCode;
     }
+    
+    @available(*, deprecated, message: "Please use OstError1(code:String, messageTextCode:OstErrorText)")
     init(_ code: String, _ errorMessage: String) {
         self.internalCode = code
         self.errorMessage = errorMessage
+        self.messageTextCode = .tempMessageTextCode
     }
 }
 
@@ -53,8 +58,12 @@ public enum OstErrorText: String {
     case userNotFound = "user not found."
     case invalidUser = "user is invalid."
     case userAlreadyActivated = "user is activated."
+    case userNotActivated = "user is not activated."
     
     case deviceNotset = "device is not setup."
+    case deviceNotAuthorized = "device is not authorized."
+    case wrongDeviceAddress = "wrong device address."
+    
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."
     case encryptFail = "Error while encrypting data with public key."
@@ -68,4 +77,13 @@ public enum OstErrorText: String {
     case seedCreationFailed = "Failed to create seed from mnemonics."
     case walletGenerationFailed = "Failed to create wallet from seed."
     case signTxFailed = "Failed to sign transaction with private key."
+    
+    case invalidQRCode = "Invalid QR Code"
+    
+    //API-Errors
+    case sessionApiFailed = "Failed to fetch session information."
+    
+    //To-Do: Temp code. Remove this.
+    case tempMessageTextCode = ""
+    case sdkError = "An internal SDK error has occoured."
 }
