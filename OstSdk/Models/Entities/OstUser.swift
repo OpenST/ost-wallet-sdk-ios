@@ -52,10 +52,10 @@ public class OstUser: OstBaseEntity {
         return false
     }
     
-    func getCurrentDevice() -> OstCurrentDevice? {
-        if (self.currentDevice != nil && !self.currentDevice!.isStatusCreated) {
-            return self.currentDevice
-        }
+    public func getCurrentDevice() -> OstCurrentDevice? {
+//        if (self.currentDevice != nil && !self.currentDevice!.isStatusCreated) {
+//            return self.currentDevice
+//        }
         
         let deviceAddress = OstKeyManager(userId: self.id).getDeviceAddress()
         if deviceAddress == nil {
@@ -66,7 +66,12 @@ public class OstUser: OstBaseEntity {
         if (device == nil) {
             return nil
         }
-        self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
+        
+        if (self.currentDevice != nil) {
+            self.currentDevice?.data = device!.data as [String : Any]
+        } else {
+            self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
+        }
         return self.currentDevice
     }
 }
