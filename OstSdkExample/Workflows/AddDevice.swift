@@ -18,7 +18,7 @@ class AddDevice: OstWorkFlowCallbackImplementation {
     }
     
     func perform() {
-        OstSdk.addDevice(userId: self.userId, delegate: self)
+//        OstSdk.addDevice(userId: self.userId, delegate: self)
     }
     
     override func determineAddDeviceWorkFlow(_ ostAddDeviceFlowProtocol: OstAddDeviceFlowProtocol) {

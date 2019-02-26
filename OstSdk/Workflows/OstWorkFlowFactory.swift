@@ -37,17 +37,27 @@ extension OstSdk {
         let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()
     }
+  
+    /// Add device with mnemonicss.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier.
+    ///   - delegate: Callback for action complete or to perform respective action.
+    public class func addDeviceWithMnemonics(userId: String, mnemonics: [String], delegate: OstWorkFlowCallbackProtocol) {
+        let addDeviceObject = OstAddDeviceWithMnemonics(userId: userId, mnemonics: mnemonics, delegate: delegate)
+        addDeviceObject.perform()
+    }
     
     /// Add device
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDevice(userId: String, delegate: OstWorkFlowCallbackProtocol) {
-        let addDeviceObject = OstAddDeviceWithMnemonics(userId: userId, delegate: delegate)
-        addDeviceObject.perform()
+    public class func addDeviceWithMnemonicsString(userId: String, mnemonics: String, delegate: OstWorkFlowCallbackProtocol) {
+        let mnemonicsArray = mnemonics.components(separatedBy: " ")
+        self.addDeviceWithMnemonics(userId: userId, mnemonics: mnemonicsArray, delegate: delegate)
     }
-  
+    
   /// Add session for user.
   ///
   /// - Parameters:
@@ -80,7 +90,7 @@ extension OstSdk {
     ///   - qrCodeImage: QR-Code image.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func pefrom(userId: String, image qrCodeImage: UIImage, delegate: OstWorkFlowCallbackProtocol) {
-            //Is this method really needed?
+        
     }
     
     ///  Perform operations for given paylaod

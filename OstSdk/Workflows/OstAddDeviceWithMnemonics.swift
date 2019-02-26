@@ -9,24 +9,21 @@
 import Foundation
 import UIKit
 
-class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstStartPollingProtocol {
+class OstAddDeviceWithMnemonics: OstWorkflowBase {
+    
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
-
-    enum State: Int {
-        case INITIALIZE, QR_CODE, ERROR, PIN, WORDS
-    }
-    var mCurrentState: OstAddDeviceWithMnemonics.State = .INITIALIZE
-    func setCurrentState(_ state: OstAddDeviceWithMnemonics.State) {
-        self.mCurrentState = state
-    }
+    
+    let mnemonics: [String]
     
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
+    var ostWalletKeys: OstWalletKeys? = nil
     
-    var wordsArray: [String]? = nil
-    
-    override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String,
+         mnemonics: [String],
+         delegate: OstWorkFlowCallbackProtocol) {
+        self.mnemonics = mnemonics
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -52,45 +49,32 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstS
     override func perform() {
         ostAddDeviceThread.async {
             do {
-                switch self.mCurrentState {
-                case .INITIALIZE:
-                    try self.validateParams()
-                    
-                    self.user = try self.getUser()
-                    if (self.user == nil) {
-                        self.postError(OstError.actionFailed("User is not present for \(self.userId)."))
-                        return
-                    }
-                    
-                    if (!self.user!.isStatusActivated) {
-                        self.postError(OstError.actionFailed("User is not activated for \(self.userId)."))
-                        return
-                    }
-                    
-                    self.currentDevice = try self.getCurrentDevice()
-                    if (self.currentDevice == nil) {
-                        self.postError(OstError.actionFailed("Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                        return
-                    }
-                    
-                    if (!self.currentDevice!.isDeviceRegistered()) {
-                        self.postError(OstError.actionFailed("Device is not registered for \(self.userId). Plese register device first by calling OstSdk.setupDevice"))
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.delegate.determineAddDeviceWorkFlow(self)
-                    }
-                case .PIN:
-                    try self.validateParams()
-                    
-                case .WORDS:
-                    self.authorizeDeviceWithMnemonics()
-                case .ERROR:
-                    self.postError(OstError.actionFailed("Add device flow cancelled."))
-                default:
-                    return
+                try self.validateParams()
+                
+                self.user = try self.getUser()
+                if (self.user == nil) {
+                    throw OstError1("w_adwm_p_1", OstErrorText.userNotFound)
                 }
+                
+                if (!self.user!.isStatusActivated) {
+                    throw OstError1("w_adwm_p_2", OstErrorText.userNotActivated)
+                }
+                
+                self.currentDevice = try self.getCurrentDevice()
+                if (self.currentDevice == nil) {
+                    throw OstError1("w_adwm_p_3",  OstErrorText.deviceNotset)
+                }
+                
+                if (!self.currentDevice!.isDeviceRegistered()) {
+                    throw OstError1("w_adwm_p_4", .deviceNotRegistered)
+                }
+                
+                self.ostWalletKeys = try OstCryptoImpls().generateEthereumKeys(withMnemonics: self.mnemonics)
+                
+                if (self.ostWalletKeys!.address == nil || self.ostWalletKeys!.privateKey == nil) {
+                    throw OstError1("w_adwm_p_5", .walletGenerationFailed)
+                }
+                try self.fetchDevice()
             }catch let error {
                 self.postError(error)
             }
@@ -98,69 +82,36 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstS
     }
     
     func validateParams() throws {
-        switch self.mCurrentState {
-        case .INITIALIZE:
-            return
-            
-        case .PIN:
-            if (OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count) {
-                throw OstError.invalidInput("pin should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
-            }
-            if (OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count) {
-                throw OstError.invalidInput("password should be of lenght \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
-            }
-        case .WORDS:
-            let filteredWordsArray = self.wordsArray.flatMap { $0 }
-            if (filteredWordsArray!.isEmpty) {
-                throw OstError.invalidInput("word list is not appropriate.")
-            }
-        default:
-            return
+        let filteredWordsArray = self.mnemonics.filter({ $0 != ""})
+        if (filteredWordsArray.isEmpty) {
+            throw OstError.invalidInput("word list is not appropriate.")
         }
     }
     
-    
-    override func proceedWorkflowAfterAuthenticateUser() {
-        switch mCurrentState {
-        case .QR_CODE:
+    func fetchDevice() throws {
+        try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.ostWalletKeys!.address!, onSuccess: { (ostDevice) in
             do {
-                let payload = try self.generateQRCodePayloadForAddDevce()
-                guard let payloadString = try OstUtils.toJSONString(payload) else {
-                    throw OstError.actionFailed("Generating QR-Code failed.")
+                if (!ostDevice.isAuthorized()) {
+                    throw OstError1("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
                 }
-                
-                guard let qrCodeCIImage = payloadString.qrCode else {
-                    throw OstError.actionFailed("Generating QR-Code image failed.")
+                if (ostDevice.address!.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
+                    throw OstError1("w_adwm_fd_2", OstErrorText.registerSameDevice)
                 }
-                DispatchQueue.main.async {
-                    self.delegate.showQR(self, image: qrCodeCIImage)
-                    self.postWorkflowComplete(entity: qrCodeCIImage)
-                }
-            }catch let error{
+                self.authorizeDeviceWithMnemonics()
+            }catch let error {
                 self.postError(error)
             }
-        default:
-            self.postError(OstError.invalidInput("unexpected state"))
+        }) { (ostError) in
+            self.postError(ostError)
         }
     }
-    
-    //MARK: - QR-Code
-    func generateQRCodePayloadForAddDevce() throws  -> [String: String]{
-        let currentDevice = try getCurrentDevice()
-        return ["data_defination": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
-                "user_id": self.userId,
-                "device_address": currentDevice!.address!]
-    }
-    
     
     //MARK: - authorize device
     func authorizeDeviceWithMnemonics() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
-                let cryptoImpl = OstCryptoImpls()
-                let ostWalletKeys: OstWalletKeys = try cryptoImpl.generateEthereumKeys(withMnemonics: self.wordsArray!)
-                let signature = try cryptoImpl.signTx(signingHash, withPrivatekey: ostWalletKeys.privateKey!)
-                return (signature, ostWalletKeys.address!)
+                let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: self.ostWalletKeys!.privateKey!)
+                return (signature, self.ostWalletKeys!.address!)
                 //Get device for address generated from mnemonics.
             }catch let error{
                 self.postError(error)
@@ -169,7 +120,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstS
         }
         
         let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-            self.startPolling()
+            self.postWorkflowComplete(entity: ostDevice)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
@@ -189,87 +140,18 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstAddDeviceFlowProtocol, OstS
                            onSuccess: onSuccess,
                            onFailure: onFailure).perform()
     }
-    
-    //MARK: - Protocol
-    public func QRCodeFlow() {
-        self.setCurrentState(.QR_CODE)
-        perform()
-    }
-    
-    public override func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        switch mCurrentState {
-        case .QR_CODE:
-            super.pinEntered(uPin, applicationPassword: appUserPassword)
-        default:
-            self.uPin = uPin
-            self.appUserPassword = appUserPassword
-            
-            self.setCurrentState(.PIN)
-            perform()
-        }
-    }
-    
-    public  func walletWordsEntered(_ wordList: String) {
-        self.wordsArray = []
-        for word in wordList.split(separator: " ") {
-            self.wordsArray!.append("\(word)")
-        }
-        
-        self.setCurrentState(.WORDS)
-        perform()
-    }
-    
-    func startPolling() {
-        switch self.mCurrentState {
-        case .PIN:
-            return
-        case .QR_CODE:
-            return
-        case .WORDS:
-            self.pollingForAddDeviceWithWords()
-            return
-        default:
-            return
-        }
-    }
-    
-    func pollingForAddDeviceWithWords() {
-        
-        let successCallback: ((OstDevice) -> Void) = { ostDevice in
-            self.postWorkflowComplete(entity: ostDevice)
-        }
-        
-        let failuarCallback:  ((OstError) -> Void) = { error in
-            self.postError(error)
-        }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
-        
-        OstDevicePollingService(userId: self.userId, deviceAddress: self.currentDevice!.address!, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failuarCallback: failuarCallback).perform()
-    }
-    
+
     /// Get current workflow context
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        
-        switch mCurrentState {
-        case .QR_CODE:
-            return OstWorkflowContext(workflowType: .showQRCode)
-        default:
-            return OstWorkflowContext(workflowType: .addDevice)
-        }
-       
+        return OstWorkflowContext(workflowType: .addDevice)
     }
     
     /// Get context entity
     ///
     /// - Returns: OstContextEntity
     override func getContextEntity(for entity: Any) -> OstContextEntity {
-        switch mCurrentState {
-        case .QR_CODE:
-            return OstContextEntity(entity: entity, entityType: .ciimage)
-        default:
-            return OstContextEntity(entity: entity, entityType: .device)
-        }
+        return OstContextEntity(entity: entity, entityType: .device)
     }
 }

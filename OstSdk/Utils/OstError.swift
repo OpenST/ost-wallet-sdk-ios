@@ -63,6 +63,8 @@ public enum OstErrorText: String {
     case deviceNotset = "device is not setup."
     case deviceNotAuthorized = "device is not authorized."
     case wrongDeviceAddress = "wrong device address."
+    case deviceNotRegistered = "device is not registered."
+    case registerSameDevice = "Trying to register same device."
     
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."
