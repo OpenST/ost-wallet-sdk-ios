@@ -53,26 +53,26 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
                 
                 self.user = try self.getUser()
                 if (self.user == nil) {
-                    throw OstError1("w_adwm_p_1", OstErrorText.userNotFound)
+                    throw OstError("w_adwm_p_1", OstErrorText.userNotFound)
                 }
                 
                 if (!self.user!.isStatusActivated) {
-                    throw OstError1("w_adwm_p_2", OstErrorText.userNotActivated)
+                    throw OstError("w_adwm_p_2", OstErrorText.userNotActivated)
                 }
                 
                 self.currentDevice = try self.getCurrentDevice()
                 if (self.currentDevice == nil) {
-                    throw OstError1("w_adwm_p_3",  OstErrorText.deviceNotset)
+                    throw OstError("w_adwm_p_3",  OstErrorText.deviceNotset)
                 }
                 
                 if (!self.currentDevice!.isDeviceRegistered()) {
-                    throw OstError1("w_adwm_p_4", .deviceNotRegistered)
+                    throw OstError("w_adwm_p_4", .deviceNotRegistered)
                 }
                 
                 self.ostWalletKeys = try OstCryptoImpls().generateEthereumKeys(withMnemonics: self.mnemonics)
                 
                 if (self.ostWalletKeys!.address == nil || self.ostWalletKeys!.privateKey == nil) {
-                    throw OstError1("w_adwm_p_5", .walletGenerationFailed)
+                    throw OstError("w_adwm_p_5", .walletGenerationFailed)
                 }
                 try self.fetchDevice()
             }catch let error {
@@ -84,7 +84,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     func validateParams() throws {
         let filteredWordsArray = self.mnemonics.filter({ $0 != ""})
         if (filteredWordsArray.isEmpty) {
-            throw OstError.invalidInput("word list is not appropriate.")
+            throw OstError.init("w_adwm_vp_1", .invalidMnemonics);
         }
     }
     
@@ -92,10 +92,10 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.ostWalletKeys!.address!, onSuccess: { (ostDevice) in
             do {
                 if (!ostDevice.isStatusAuthorized) {
-                    throw OstError1("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
+                    throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
                 }
                 if (ostDevice.address!.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-                    throw OstError1("w_adwm_fd_2", OstErrorText.registerSameDevice)
+                    throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
                 }
                 self.authorizeDeviceWithMnemonics()
             }catch let error {

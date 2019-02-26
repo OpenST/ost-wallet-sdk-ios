@@ -51,7 +51,7 @@ public protocol OstWorkFlowCallbackProtocol {
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostError: Reason of interruption.
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1)
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
     
     /// Show paper wallet
     ///

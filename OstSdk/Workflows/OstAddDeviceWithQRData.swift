@@ -40,26 +40,26 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
     
     /// valdiate parameters
     ///
-    /// - Throws: OstError1
+    /// - Throws: OstError
     func validateParams() throws {
         let user = try self.getUser()
         if (nil == user) {
-            throw OstError1("w_adwqd_vp_1", .userNotFound)
+            throw OstError("w_adwqd_vp_1", .userNotFound)
         }
         if (!user!.isStatusActivated) {
-            throw OstError1("w_adwqd_vp_2", .userNotActivated)
+            throw OstError("w_adwqd_vp_2", .userNotActivated)
         }
         
         let currentDevice = try getCurrentDevice()
         if (nil == currentDevice) {
-            throw OstError1("w_adwqd_vp_3", .deviceNotset)
+            throw OstError("w_adwqd_vp_3", .deviceNotset)
         }
         if (!currentDevice!.isStatusAuthorized) {
-            throw OstError1("w_adwqd_vp_4", .deviceNotAuthorized)
+            throw OstError("w_adwqd_vp_4", .deviceNotAuthorized)
         }
         
         guard let _ = qrCodeData["da"] as? String else {
-            throw OstError1("w_adwqd_vp_5", .wrongDeviceAddress)
+            throw OstError("w_adwqd_vp_5", .wrongDeviceAddress)
         }
     }
     
@@ -98,7 +98,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
                         let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
                         return (signature, deviceAddress)
                     }
-                    throw OstError.actionFailed("issue while generating signature.")
+                    throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);
                 }catch {
                     return (nil, nil)
                 }

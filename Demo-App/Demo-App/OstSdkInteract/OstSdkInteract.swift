@@ -123,7 +123,7 @@ extension OstSdkInteract {
     }
     
     
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError1) {
+    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
