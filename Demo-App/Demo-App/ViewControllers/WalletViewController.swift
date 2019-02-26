@@ -31,6 +31,7 @@ class WalletViewController: UIViewController {
     case PAPER_WALLET
     case SHOW_QR_CODE
     case SEND_TRANSACTION
+    case SHOW_USER_DETAILS
   }
   
   var isLoginMode:Bool = true;
@@ -127,7 +128,10 @@ class WalletViewController: UIViewController {
         return ShowQRView()
     case ViewMode.ADD_DEVICE_WITH_MNEMONICS:
         return AddDeviceWithMnemonics()
-    
+    case ViewMode.SHOW_USER_DETAILS:
+        self.title = "View Details"
+        return UserDetailsView()
+        
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()
