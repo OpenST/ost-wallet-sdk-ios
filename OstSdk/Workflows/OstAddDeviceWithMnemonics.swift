@@ -91,7 +91,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     func fetchDevice() throws {
         try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.ostWalletKeys!.address!, onSuccess: { (ostDevice) in
             do {
-                if (!ostDevice.isAuthorized()) {
+                if (!ostDevice.isStatusAuthorized) {
                     throw OstError1("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
                 }
                 if (ostDevice.address!.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){

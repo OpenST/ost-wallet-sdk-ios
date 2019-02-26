@@ -11,7 +11,15 @@ import EthereumKit
 
 public class OstDevice: OstBaseEntity {
     
-    
+    enum Status: String {
+        case CREATED = "CREATED"
+        case REGISTERED = "REGISTERED"
+        case RECOVERYING = "RECOVERYING"
+        case AUTHORIZING = "AUTHORIZING"
+        case AUTHORIZED = "AUTHORIZED"
+        case REVOKING = "REVOKING"
+        case REVOKED = "REVOKED"
+    }
     
     static let OSTDEVICE_PARENTID = "user_id"
     
@@ -40,6 +48,7 @@ public class OstDevice: OstBaseEntity {
         return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
     }
     
+    //TODO: - remove this method.
     public func isDeviceRegistered() -> Bool {
         let status = self.status
         if (status == nil) {
@@ -49,25 +58,6 @@ public class OstDevice: OstBaseEntity {
         return ["REGISTERED", "AUTHORIZING", "AUTHORIZED"].contains(status!)
     }
     
-    public func isAuthorizing() -> Bool {
-        let status = self.status
-        if (status != nil &&
-            status! == "AUTHORIZING") {
-            return true
-        }
-        return false
-    }
-
-  public func isAuthorized() -> Bool {
-    let status = self.status
-    if (nil != status &&
-      "AUTHORIZED" == status!) {
-      return true
-    }
-    return false
-  }
-
-  
     public  func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {
@@ -75,15 +65,6 @@ public class OstDevice: OstBaseEntity {
         }
         
         return ["REVOKING", "REVOKED"].contains(status!)
-    }
-    
-    public  func isCreated() -> Bool {
-        let status = self.status
-        if (status != nil &&
-            status! == "CREATED") {
-            return true
-        }
-        return false
     }
 }
 
@@ -112,4 +93,45 @@ public extension OstDevice {
 //check for status
 public extension OstDevice {
     
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRegistered: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REGISTERED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusAuthorized: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusAuthorizing: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKED.rawValue == status)
+        }
+        return false
+    }
 }

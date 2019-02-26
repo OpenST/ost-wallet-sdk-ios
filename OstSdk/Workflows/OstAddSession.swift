@@ -32,8 +32,31 @@ class OstAddSession: OstWorkflowBase {
   
     override func perform() {
         ostAddSessionThread.async {
-            self.generateSessionKeys()
-            self.getCurrentBlockHeight()
+            do {
+                try self.valdiateParams()
+                self.generateSessionKeys()
+                self.getCurrentBlockHeight()
+            }catch let error {
+                self.postError(error)
+            }
+        }
+    }
+    
+    func valdiateParams() throws {
+        self.user = try getUser()
+        if (nil == self.user) {
+            throw OstError1("w_as_vp_1", .userNotFound)
+        }
+        if (!self.user!.isStatusActivated) {
+            throw OstError1("w_as_vp_1", .userNotActivated)
+        }
+        
+        self.currentDevice = try getCurrentDevice()
+        if (nil == self.currentDevice) {
+            throw OstError.invalidInput("Device is not present.")
+        }
+        if (!self.currentDevice!.isStatusAuthorized) {
+            throw OstError1("w_as_vp_2", .deviceNotAuthorized)
         }
     }
     
@@ -43,11 +66,6 @@ class OstAddSession: OstWorkflowBase {
             
             if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
                 self.postError(OstError.actionFailed("activation of user failed."))
-            }
-            
-            self.currentDevice = try getCurrentDevice()
-            if (nil == self.currentDevice) {
-                throw OstError.invalidInput("Device is not present.")
             }
             
             let sessionKeyInfo: OstSessionKeyInfo = try self.currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
@@ -77,7 +95,6 @@ class OstAddSession: OstWorkflowBase {
     }
     
     func authorizeSession() {
-        
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
                 let keychainManager = OstKeyManager(userId: self.userId)

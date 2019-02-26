@@ -54,7 +54,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         if (nil == currentDevice) {
             throw OstError1("w_adwqd_vp_3", .deviceNotset)
         }
-        if (!currentDevice!.isAuthorized()) {
+        if (!currentDevice!.isStatusAuthorized) {
             throw OstError1("w_adwqd_vp_4", .deviceNotAuthorized)
         }
         

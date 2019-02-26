@@ -53,7 +53,7 @@ public class OstUser: OstBaseEntity {
     }
     
     func getCurrentDevice() -> OstCurrentDevice? {
-        if (self.currentDevice != nil && !self.currentDevice!.isCreated()) {
+        if (self.currentDevice != nil && !self.currentDevice!.isStatusCreated) {
             return self.currentDevice
         }
         

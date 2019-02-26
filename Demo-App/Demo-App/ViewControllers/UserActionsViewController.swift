@@ -81,9 +81,9 @@ class UserActionsViewController: UICollectionViewController {
         showAddDeviceCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
     } else {
         setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
-        if ( userDevice.isAuthorizing() ) {
+        if ( userDevice.isStatusAuthorizing ) {
             paperWallet[ACTION_DETAILS] = "Your device is authorizing.";
-        } else if ( userDevice.isAuthorized() ) {
+        } else if ( userDevice.isStatusAuthorized ) {
             paperWallet[ACTION_DETAILS] = "Your device is authorized.";
         } else if ( userDevice.isDeviceRegistered() ) {
             paperWallet[ACTION_DETAILS] = "Your device needs to be authorized.";
