@@ -97,6 +97,7 @@ class OstAddSession: OstWorkflowBase {
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
+            Logger.log(message: "I am here - OstAddSession");
             self.postError(error)
         }
       

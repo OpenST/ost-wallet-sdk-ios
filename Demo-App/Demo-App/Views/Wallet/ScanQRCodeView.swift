@@ -116,7 +116,6 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         let qrInfoLabel = QRInfoLabel()
         qrInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         qrInfoLabel.text = "";
-        qrInfoLabel.backgroundColor = UIColor.red;
         return qrInfoLabel;
     }();
     

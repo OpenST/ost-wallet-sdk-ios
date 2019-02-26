@@ -61,6 +61,7 @@ class OstAuthorizeSession: OstAuthorizeBase {
         try OstAPISession(userId: self.userId).authorizeSession(params: params, onSuccess: { (ostSession) in
             self.onSuccess(ostSession)
         }, onFailure: { (ostError) in
+            Logger.log(message: "I am here - OstAuthSession");
             self.onFailure(ostError)
         })
     }

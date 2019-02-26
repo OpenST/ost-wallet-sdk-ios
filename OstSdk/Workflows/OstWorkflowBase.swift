@@ -49,10 +49,6 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     func postError(_ error: Error) {
         
         let workflowContext: OstWorkflowContext = getWorkflowContext()
-        let ostError: OstError = error as? OstError ?? OstError.actionFailed("Unexpected error.")
-        
-
-        
         DispatchQueue.main.async {
             if ( error is OstError1 ) {
                 self.delegate.flowInterrupted1(workflowContext: workflowContext, error: error as! OstError1)
@@ -60,6 +56,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             else {
                 //Unknown Error. Post Something went wrong.
                 let ostError:OstError1 = OstError1("wb_pe_1", OstErrorText.sdkError)
+                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError )
             }
         }
     }
