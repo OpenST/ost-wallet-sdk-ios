@@ -49,7 +49,7 @@ class UserActionsViewController: UICollectionViewController {
     paperWallet[ACTION_TEXT] = "See your paper wallet";
     
     showAddDeviceCode[ACTION_TYPE] = ACTIONS.showQRCode.rawValue
-    showAddDeviceCode[ACTION_TEXT] = "Show Authorize Device QR-Code"
+    showAddDeviceCode[ACTION_TEXT] = "Show QR-Code to Authorize Device"
 
     showAddDeviceWithMnemonics[ACTION_TYPE] = ACTIONS.addDeviceUsingMnemonics.rawValue
     showAddDeviceWithMnemonics[ACTION_TEXT] = "Authorize device using mnemonics."
