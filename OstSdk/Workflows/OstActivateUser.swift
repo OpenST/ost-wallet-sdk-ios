@@ -61,12 +61,12 @@ class OstActivateUser: OstWorkflowBase {
                 }
 
                 if (self.currentDevice!.isDeviceRevoked()) {
-                    self.postError(OstError.init("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
                 if (!self.currentDevice!.isDeviceRegistered()) {
-                    self.postError(OstError.init("w_p_p_4", "Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError("w_p_p_4", "Device is NOT registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
