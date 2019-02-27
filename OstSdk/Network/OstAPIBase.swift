@@ -94,7 +94,7 @@ open class OstAPIBase {
         Logger.log(message: "params", parameterToPrint: params as Any)
         
         // TODO: remove the debug logs
-        dataRequest = manager.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
+        dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader()).debugLog()
         
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
