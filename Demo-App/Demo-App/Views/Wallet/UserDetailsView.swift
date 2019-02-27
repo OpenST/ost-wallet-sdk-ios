@@ -14,6 +14,13 @@ class UserDetailsView: BaseWalletWorkflowView {
 
 
     //Add text fields
+//    let userNameTF: MDCTextField = {
+//        let textField = MDCTextField();
+//        textField.translatesAutoresizingMaskIntoConstraints = false;
+//        textField.placeholderLabel.text = "User Name";
+//        return textField;
+//    }()
+
     let userIdTF: MDCTextField = {
         let textField = MDCTextField();
         textField.translatesAutoresizingMaskIntoConstraints = false;
@@ -90,29 +97,6 @@ class UserDetailsView: BaseWalletWorkflowView {
             tfControllers.append(controller);
             controller.placeholderText = placeHolderText;
         }
-        
-        do {
-            let currentUser = CurrentUser.getInstance();
-            let ostUser = try OstSdk.getUser(currentUser.ostUserId!)
-            let ostCurrentDevice = ostUser!.getCurrentDevice()
-            
-            userIdTF.text = ostUser?.id;
-            userStatusTF.text = ostUser?.status;
-            tokenIdTF.text = ostUser?.tokenId;
-            tokenHolderTF.text = ostUser?.tokenHolderAddress ?? "NA";
-            deviceManagerTF.text = ostUser?.deviceManagerAddress ?? "NA";
-            recoveryAddressTF.text = ostUser?.recoveryAddress ?? "NA";
-            
-            deviceNameTF.text = ostCurrentDevice?.deviceName;
-            deviceAddressTF.text = ostCurrentDevice?.address;
-            deviceStatusTF.text = ostCurrentDevice?.status;
-            
-            self.nextButton.isHidden = true;
-            self.cancelButton.isHidden = true;
-            self.logsTextView.isHidden = true;
-        } catch let err {
-            Logger.log(message: "Some error has occoured.", parameterToPrint: err);
-        }
     }
     
     override func addSubviewConstraints() {
@@ -167,11 +151,51 @@ class UserDetailsView: BaseWalletWorkflowView {
     
     override func viewDidAppearCallback() {
         super.viewDidAppearCallback();
-//        for textField in textFields {
-////            textField.isEnabled = false;
-//        }
+        fillData();
+        let currentUser = CurrentUser.getInstance();
+        OstSdk.setupDevice(userId: currentUser.ostUserId!, tokenId: currentUser.tokenId!, delegate: self.sdkInteract);
     }
 
+    override func receivedSdkEvent(eventData: [String : Any]) {
+        super.receivedSdkEvent(eventData: eventData);
+        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+        if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType) {
+            let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
+            if ( workflowContext.workflowType != OstWorkflowType.setupDevice ) {
+                return;
+            }
+            fillData();
+            self.nextButton.isHidden = false;
+            self.cancelButton.isHidden = true;
+            self.logsTextView.isHidden = true;
+            self.activityIndicator.stopAnimating();
+        }
+    }
+        
+    func fillData() {
+        do {
+            let currentUser = CurrentUser.getInstance();
+            let ostUser = try OstSdk.getUser(currentUser.ostUserId!)
+            let ostCurrentDevice = ostUser!.getCurrentDevice()
+            
+            userIdTF.text = ostUser?.id;
+            userStatusTF.text = ostUser?.status;
+            tokenIdTF.text = ostUser?.tokenId;
+            tokenHolderTF.text = ostUser?.tokenHolderAddress ?? "NA";
+            deviceManagerTF.text = ostUser?.deviceManagerAddress ?? "NA";
+            recoveryAddressTF.text = ostUser?.recoveryAddress ?? "NA";
+            
+            deviceNameTF.text = ostCurrentDevice?.deviceName;
+            deviceAddressTF.text = ostCurrentDevice?.address;
+            deviceStatusTF.text = ostCurrentDevice?.status;
+            
+            self.nextButton.isHidden = true;
+            self.cancelButton.isHidden = true;
+            self.logsTextView.isHidden = true;
+        } catch let err {
+            Logger.log(message: "Some error has occoured.", parameterToPrint: err);
+        }
+    }
     
     
 }
