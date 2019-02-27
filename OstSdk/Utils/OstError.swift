@@ -102,6 +102,7 @@ public enum OstErrorText: String {
     case invalidQRCode = "Invalid QR Code"
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     //API-Errors
+    case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."
     case sessionApiFailed = "Failed to fetch session information."
     case pinValidationFailed = "Pin validation failed."
@@ -111,4 +112,8 @@ public enum OstErrorText: String {
     case sdkError = "An internal SDK error has occoured."
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
+    
+    
+    
+    
 }

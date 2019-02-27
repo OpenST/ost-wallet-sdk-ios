@@ -13,7 +13,7 @@ import Alamofire
 /// Base class for all API calls
 open class OstAPIBase {
     /// URL endpoint
-    static var baseURL: String = OstConstants.OST_API_BASE_URL;
+    static var baseURL: String = "";
     
     /// Class function to set API endpoint
     class func setAPIEndpoint(_ apiEndpoint: String) {
