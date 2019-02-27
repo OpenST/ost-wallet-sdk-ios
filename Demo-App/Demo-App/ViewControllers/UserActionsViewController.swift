@@ -104,8 +104,10 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
     }
     
+    
+    //Add back sendTransaction later on.
     //Final Ordering.
-    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
+    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -117,8 +119,8 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
       let layout: UICollectionViewFlowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout;
       layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
       layout.estimatedItemSize = CGSize(width: 1, height: 1);
-      layout.minimumInteritemSpacing = 10
-      layout.minimumLineSpacing = 10
+      layout.minimumInteritemSpacing = 0
+      layout.minimumLineSpacing = 0
       self.collectionView!.collectionViewLayout = layout
     }
   
@@ -202,7 +204,6 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     cell.detailTextLabel?.numberOfLines = 0;
     cell.layer.borderWidth = 0.5;
     cell.layer.borderColor = UIColor.lightGray.cgColor
-    cell.layer.cornerRadius = 10.0
     
     return cell
   }
@@ -275,23 +276,27 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemData = dataItems![indexPath.item];
-        
-        let label = UILabel(frame: collectionView.frame)
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.text = itemData[ACTION_TEXT]!
-        label.sizeToFit()
-        
-        let label1 = UILabel(frame: collectionView.frame)
-        label1.numberOfLines = 0
-        label1.font = UIFont.systemFont(ofSize: 20)
-        label1.text = itemData[ACTION_DETAILS]!
-        label1.sizeToFit()
-        
-        let height = (label.frame.height) + (label1.frame.height) + 30
-        return CGSize(width: collectionView.frame.width, height: height);
+
+        let actionDetailsLabel = UILabel(frame: collectionView.frame)
+        actionDetailsLabel.numberOfLines = 0
+        actionDetailsLabel.font = MDCTypography.body1Font();
+        actionDetailsLabel.text = itemData[ACTION_DETAILS]!
+        actionDetailsLabel.sizeToFit()
+        let acLines = actionDetailsLabel.calculateMaxLines();
+        let cellHeight = (acLines == 1) ? MDCCellDefaultTwoLineHeight : MDCCellDefaultThreeLineHeight;
+        return CGSize(width: collectionView.frame.width, height: cellHeight);
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        collectionView.collectionViewLayout.invalidateLayout()
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor(red: 244.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 1.0);
+        UIView.transition(with: cell!, duration: 2, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            cell?.backgroundColor = UIColor.white
+        }, completion: nil);
+    }
+                    
+    
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -344,4 +349,15 @@ extension UserActionsViewController {
                                                targetContentOffset: targetContentOffset)
     }
   }
+}
+
+extension UILabel {
+    func calculateMaxLines() -> Int {
+        let maxSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
+        let charSize = font.lineHeight
+        let text = (self.text ?? "") as NSString
+        let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        let linesRoundedUp = Int(ceil(textSize.height/charSize))
+        return linesRoundedUp
+    }
 }
