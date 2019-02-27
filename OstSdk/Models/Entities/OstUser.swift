@@ -68,12 +68,12 @@ public class OstUser: OstBaseEntity {
             return nil
         }
         //TODO: - remvoe this code and get Deepesh code.
-        if (self.currentDevice != nil) {
-            self.currentDevice?.data = device!.data as [String : Any]
-        } else {
-            self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
-        }
-        return self.currentDevice
+//        if (self.currentDevice != nil) {
+//            self.currentDevice?.data = device!.data as [String : Any]
+//        } else {
+//            self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
+//        }
+        return try! OstCurrentDevice(device!.data as [String : Any])
     }
 }
 
