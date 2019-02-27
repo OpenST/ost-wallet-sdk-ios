@@ -196,6 +196,4 @@ class UserDetailsView: BaseWalletWorkflowView {
             Logger.log(message: "Some error has occoured.", parameterToPrint: err);
         }
     }
-    
-    
 }
