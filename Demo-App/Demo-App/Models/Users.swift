@@ -67,7 +67,7 @@ class Users:BaseModel {
       self.ostUserIdToUserMap[ ostUserId! ] = user!;
     }
     
-    let tokenHolderAddress:String? = userData["token_holder_address"] as! String?;
+    let tokenHolderAddress:String? = userData["token_holder_address"] as? String? ?? nil;
     user!.tokenHolderAddress = tokenHolderAddress;
     if ( tokenHolderAddress != nil ) {
       self.tokenHolderToUserMap[ tokenHolderAddress! ] = user!;

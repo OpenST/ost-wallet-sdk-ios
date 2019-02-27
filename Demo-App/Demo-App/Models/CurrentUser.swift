@@ -21,13 +21,14 @@ class CurrentUser: BaseModel {
     return sharedInstance!;
   }
 
-  var tokenId:String?;
-  var appUserId:String?;
-  var ostUserId:String?;
-  var skdUser:String?;
-  var userPinSalt: String?;
-  var userDevice: OstDevice?;
-  var ostUser: OstUser?;
+    var tokenId:String?;
+    var appUserId:String?;
+    var ostUserId:String?;
+    var skdUser:String?;
+    var userPinSalt: String?;
+    var userDevice: OstDevice?;
+    var ostUser: OstUser?;
+    var currentDeviceAddress: String?
   
   override init() {
     self.tokenId = nil;
@@ -121,7 +122,7 @@ class CurrentUser: BaseModel {
         let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
           let userDevice = ostContextEntity.entity as! OstDevice;
-          
+          self.currentDeviceAddress = userDevice.address;
           self.userDevice = userDevice;
           do {
             try self.ostUser = OstSdk.getUser(self.ostUserId!);

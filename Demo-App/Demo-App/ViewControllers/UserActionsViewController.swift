@@ -69,38 +69,39 @@ class UserActionsViewController: UICollectionViewController {
     sendTransaction[ACTION_TYPE] = ACTIONS.sendTransaction.rawValue
     sendTransaction[ACTION_TEXT] = "Send Transaction"
     
-    if ( ostUser.isStatusActivated ) {
-        setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
-        paperWallet[ACTION_DETAILS] = "See your paper wallet.";
+    if ( userDevice.isStatusAuthorizing ) {
+        addSession[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        scanQRCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        sendTransaction[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
+    } else if ( userDevice.isStatusAuthorized ) {
         addSession[ACTION_DETAILS] = "Create session a new session.";
         scanQRCode[ACTION_DETAILS] = "Perform transactions and Authorize devices by scanning QR code.";
         sendTransaction[ACTION_DETAILS] = "Send tokens to other users.";
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
+        showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
+    } else if ( userDevice.isDeviceRegistered() ) {
+        addSession[ACTION_DETAILS] = "Likely to fail as device is not authorized";
+        scanQRCode[ACTION_DETAILS] = "Likely to fail as device is not authorized";
+        sendTransaction[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         showAddDeviceCode[ACTION_DETAILS] = "Authorize this device by scanning the QR code.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
+    } else if ( userDevice.isDeviceRevoked() ) {
+        addSession[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        scanQRCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        sendTransaction[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+    }
+    
+    paperWallet[ACTION_DETAILS] = "See your paper wallet.";
+    if ( ostUser.isStatusActivated ) {
+        setupWallet[ACTION_DETAILS] = "You have already setup your wallet.";
     } else if ( ostUser.isStatusActivating) {
         setupWallet[ACTION_DETAILS] = "Your wallet is being setup.";
-        paperWallet[ACTION_DETAILS] = "You need to setup your wallet before seeing 12 words";
-        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        addSession[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        scanQRCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        sendTransaction[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        showAddDeviceCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
     } else {
         setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
-        if ( userDevice.isStatusAuthorizing ) {
-            paperWallet[ACTION_DETAILS] = "Your device is authorizing.";
-        } else if ( userDevice.isStatusAuthorized ) {
-            paperWallet[ACTION_DETAILS] = "Your device is authorized.";
-        } else if ( userDevice.isDeviceRegistered() ) {
-            paperWallet[ACTION_DETAILS] = "Your device needs to be authorized.";
-        } else if ( userDevice.isDeviceRevoked() ) {
-            paperWallet[ACTION_DETAILS] = "Your device is revoked.";
-        }
-        showAddDeviceWithMnemonics[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        addSession[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        scanQRCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        sendTransaction[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
-        showAddDeviceCode[ACTION_DETAILS] = "Most likely to fail as user is not activated.";
     }
     
     //Final Ordering.
