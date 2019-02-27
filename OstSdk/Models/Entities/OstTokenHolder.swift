@@ -9,45 +9,63 @@
 import Foundation
 
 public class OstTokenHolder: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "address"
     
-    static let OSTTOKEN_HOLDER_PARENTID = "user_id"
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "user_id"
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstTokenHolder? {
-        return try OstTokenHolderRepository.sharedTokenHolder.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstTokenHolder
+    /// Store OstTokenHolder entity data in the data base and returns the OstTokenHolder model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstTokenHolderRepository
+            .sharedTokenHolder
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstTokenHolder.ENTITY_IDENTIFIER
     }
     
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstTokenHolder.getEntityIdentiferKey()] as Any?)!
-    }
-    
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstTokenHolder.OSTTOKEN_HOLDER_PARENTID] as Any?)
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstTokenHolder.ENTITY_PARENT_IDENTIFIER
     }
 }
 
 public extension OstTokenHolder {
-    var user_id : String? {
-        return data["user_id"] as? String ?? nil
+    /// Get user id from token holder
+    var userId: String? {
+        return data["user_id"] as? String
     }
     
-    var multisig_id : String? {
-        return data["multisig_id"] as? String ?? nil
+    /// Get multisig id from token holder
+    var multisigId: String? {
+        return data["multisig_id"] as? String
     }
     
-    var address : String? {
-        return data["address"] as? String ?? nil
+    /// Get token holder address
+    var address: String? {
+        return data["address"] as? String
     }
     
-    var sessions : Array<String>? {
+    /// Get token holder session
+    var sessions: Array<String>? {
         return data["sessions"] as? Array<String> ?? nil
     }
     
-    var execute_rule_callprefix : String? {
+    /// Get token holder execure rule call prefix
+    var executeRuleCallPrefix: String? {
         return data["execute_rule_callprefix"] as? String ?? nil
     }
 }

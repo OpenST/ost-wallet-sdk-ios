@@ -37,7 +37,7 @@ class OstAPITokens: OstAPIBase {
         get(params: params as [String : AnyObject],
             onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(entity as! OstToken)
                 }catch let error{
                     onFailure?(error as! OstError)

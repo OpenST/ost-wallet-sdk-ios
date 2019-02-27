@@ -9,10 +9,12 @@
 import Foundation
 
 class OstSessionRepository: OstBaseModelCacheRepository {
-    
+    // TODO: change this to sharedInstance.
     static let sharedSession = OstSessionRepository()
+    
+    // TODO: remove this.
     private override init() {
-        print("\n**************\ninit for 'OstSessionRepository' called\n**************\n")
+        Logger.log(message:"\n**************\ninit for 'OstSessionRepository' called\n**************\n")
     }
     
    

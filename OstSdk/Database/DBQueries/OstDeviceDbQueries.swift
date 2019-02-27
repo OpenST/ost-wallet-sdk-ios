@@ -9,7 +9,9 @@
 import Foundation
 
 class OstDeviceDbQueries: OstBaseDbQueries {
-    
+    /// Get activity name for OstDevices
+    ///
+    /// - Returns: Activity name
     override func activityName() -> String{
         return "devices"
     }
