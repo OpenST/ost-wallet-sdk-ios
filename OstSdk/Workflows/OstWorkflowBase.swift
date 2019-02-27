@@ -17,6 +17,9 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     var appUserPassword : String = ""
     var saltResponse: [String: Any]? = nil
     
+    var retryCount = 0
+    let maxRetryCount = 3
+    
     init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         self.userId = userId
         self.delegate = delegate
@@ -47,17 +50,33 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     }
     
     func postError(_ error: Error) {
-//        DispatchQueue.main.async {
-//            self.delegate.flowInterrupted(error as? OstError ?? OstError.actionFailed("Unexpected error.") )
-//        }
-        
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         let ostError: OstError = error as? OstError ?? OstError("w_wb_pe_1", .unexpectedError)
         DispatchQueue.main.async {
-            self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError)
+            if ( error is OstError ) {
+                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: error as! OstError);
+            }
+            else {
+                //Unknown Error. Post Something went wrong.
+                let ostError:OstError = OstError("wb_pe_1", OstErrorText.sdkError)
+                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError )
+            }
+        }
+    }
+
+    /// Post request acknowledged.
+    func postRequestAcknowledged(entity: Any) {
+        let workflowContext: OstWorkflowContext = getWorkflowContext()
+        let contextEntity: OstContextEntity = getContextEntity(for: entity)
+        
+        DispatchQueue.main.async {
+            self.delegate.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
     }
     
+    /// Send workflow complete callback to user.
+    ///
+    /// - Parameter entity: OstEntity
     func postWorkflowComplete(entity: Any) {
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         let contextEntity: OstContextEntity = getContextEntity(for: entity)
@@ -67,26 +86,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
     }
     
-    /// Get current workflow context
+    /// Cancel currently ongoing workflow.
     ///
-    /// - Returns: OstWorkflowContext
-    func getWorkflowContext() -> OstWorkflowContext {
-        fatalError("getWorkflowContext not override.")
-    }
-    
-    /// Get context entity
-    ///
-    /// - Returns: OstContextEntity
-    func getContextEntity(for entity: Any) -> OstContextEntity {
-        fatalError("getContextEntity not override.")
-    }
-    
+    /// - Parameter cancelReason: reason to cancel.
     public func cancelFlow(_ cancelReason: String) {
         
-    }
-    
-    func proceedWorkflowAfterAuthenticateUser() {
-        fatalError("processOperation is not override")
     }
     
     //MARK: - Authenticate User
@@ -111,32 +115,31 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///   - uPin: user pin.
     ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+        self.retryCount += 1
         workflowThread.async {
-            do {
-                self.uPin = uPin
-                self.appUserPassword = appUserPassword
-                
-                if (self.saltResponse != nil) {
-                    try self.validatePin()
-                }else {
-                    try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                        do {
-                            self.saltResponse = saltResponse
-                            try self.validatePin()
-                        }catch let error {
-                            self.postError(error)
-                        }
-                        
-                    }, onFailure: { (error) in
-                        self.postError(error)
-                    })
+            self.uPin = uPin
+            self.appUserPassword = appUserPassword
+            
+            let recoveryPinString: String = OstCryptoImpls().getRecoveryPinString(password: self.appUserPassword,
+                                                                                  pin: self.uPin,
+                                                                                  userId: self.userId)
+            if OstKeyManager(userId: self.userId).verifyRecoveryPinString(recoveryPinString) {
+                DispatchQueue.main.async {
+                    self.delegate.pinValidated(self.userId)
                 }
-                
-            }catch let error {
-                self.postError(error)
+                self.proceedWorkflowAfterAuthenticateUser()
+            }else {
+                DispatchQueue.main.async {
+                    if (self.maxRetryCount <= self.retryCount) {
+                        self.postError(OstError("w_wb_pe_1", .maxUserValidatedCountReached))
+                    }else{
+                        self.delegate.invalidPin(self.userId, delegate: self)
+                    }
+                }
             }
         }
     }
+
     func validatePin() throws {
         let salt = self.saltResponse!["scrypt_salt"] as! String
         let recoveryKey = try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
@@ -166,5 +169,25 @@ class OstWorkflowBase: OstPinAcceptProtocol {
                 self.delegate.invalidPin(self.userId, delegate: self)
             }
         }
+    }
+    
+    //MARK: - Methods to override
+    /// Proceed with workflow after user is authenticated.
+    func proceedWorkflowAfterAuthenticateUser() {
+        fatalError("processOperation is not override")
+    }
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    func getWorkflowContext() -> OstWorkflowContext {
+        fatalError("getWorkflowContext not override.")
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    func getContextEntity(for entity: Any) -> OstContextEntity {
+        fatalError("getContextEntity not override.")
     }
 }

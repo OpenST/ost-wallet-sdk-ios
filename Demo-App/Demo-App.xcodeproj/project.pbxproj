@@ -19,6 +19,8 @@
 		0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE222213141E00AD9643 /* CurrentUser.swift */; };
 		0044DE292213153000AD9643 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0044DE282213153000AD9643 /* Users.swift */; };
 		00613BEA22224D94006A26D0 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00613BE922224D94006A26D0 /* IQKeyboardManagerSwift.framework */; };
+		0078D620222494CB00F9AED6 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078D61F222494CB00F9AED6 /* QRInfoLabel.swift */; };
+		0078D6222224DFD100F9AED6 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */; };
 		00891B412216D3FA007D3226 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00891B402216D3FA007D3226 /* OstSdkInteract.swift */; };
 		00C282FE2222458A000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FD2222458A000ABAB2 /* Alamofire.framework */; };
 		00C283002222458A000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282FF2222458A000ABAB2 /* BigInt.framework */; };
@@ -26,6 +28,7 @@
 		00C2831222224729000ABAB2 /* MaterialComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2831122224729000ABAB2 /* MaterialComponents.framework */; };
 		00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942189716441E093BEA6715C /* Pods_Demo_App.framework */; };
 		00E182EA22131630007C9B1D /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E182E922131630007C9B1D /* BaseModel.swift */; };
+		4B12140D2225D2F100C185D2 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12140C2225D2F100C185D2 /* UserDetailsView.swift */; };
 		4BD841462212093200808901 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841402212093200808901 /* ViewController.swift */; };
 		4BD841472212093200808901 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841412212093200808901 /* AppDelegate.swift */; };
 		4BD841482212093200808901 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841422212093200808901 /* HomeViewController.swift */; };
@@ -39,7 +42,7 @@
 		4BE8957F22212368009C6A44 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8957E22212368009C6A44 /* PaperWalletView.swift */; };
 		4BE8958122212393009C6A44 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958022212392009C6A44 /* UserActionsViewController.swift */; };
 		4BE89586222151DD009C6A44 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE89585222151DD009C6A44 /* AddSessionView.swift */; };
-		4BE8958822216FCD009C6A44 /* AddDeviceFromQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */; };
+		4BE8958822216FCD009C6A44 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958722216FCD009C6A44 /* ScanQRCodeView.swift */; };
 		4BE895CF2221B74C009C6A44 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE895CE2221B74C009C6A44 /* ShowQRView.swift */; };
 		4BE895D122224E13009C6A44 /* OstSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 00C28305222245D3000ABAB2 /* OstSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4BE895D322224E4C009C6A44 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; };
@@ -83,6 +86,8 @@
 		0064C84522223B870052B71E /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoEthereumSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0064C84722223B8B0052B71E /* EthereumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EthereumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0064C84922223B8F0052B71E /* OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0078D61F222494CB00F9AED6 /* QRInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRInfoLabel.swift; sourceTree = "<group>"; };
+		0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
 		00891B402216D3FA007D3226 /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		00C282FD2222458A000ABAB2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C282FF2222458A000ABAB2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +100,7 @@
 		00E182E922131630007C9B1D /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		24E473D39006A59197DC9629 /* Pods_Demo_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CA56AE766BB9A8B0240AA21 /* Pods-Demo-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-App.release.xcconfig"; path = "Target Support Files/Pods-Demo-App/Pods-Demo-App.release.xcconfig"; sourceTree = "<group>"; };
+		4B12140C2225D2F100C185D2 /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
 		4BD8410B2212084900808901 /* Demo-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD8411A2212084A00808901 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BD841402212093200808901 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -110,7 +116,7 @@
 		4BE8957E22212368009C6A44 /* PaperWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperWalletView.swift; sourceTree = "<group>"; };
 		4BE8958022212392009C6A44 /* UserActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActionsViewController.swift; sourceTree = "<group>"; };
 		4BE89585222151DD009C6A44 /* AddSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSessionView.swift; sourceTree = "<group>"; };
-		4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceFromQRCode.swift; sourceTree = "<group>"; };
+		4BE8958722216FCD009C6A44 /* ScanQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRCodeView.swift; sourceTree = "<group>"; };
 		4BE895CE2221B74C009C6A44 /* ShowQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRView.swift; sourceTree = "<group>"; };
 		869B4474A24E12496F6DADBB /* Pods-Demo-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-App.debug.xcconfig"; path = "Target Support Files/Pods-Demo-App/Pods-Demo-App.debug.xcconfig"; sourceTree = "<group>"; };
 		942189716441E093BEA6715C /* Pods_Demo_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +194,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		0078D61C22248B0400F9AED6 /* subViews */ = {
+			isa = PBXGroup;
+			children = (
+				0078D61F222494CB00F9AED6 /* QRInfoLabel.swift */,
+			);
+			path = subViews;
+			sourceTree = "<group>";
+		};
 		00891B3F2216D3DF007D3226 /* OstSdkInteract */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,13 +268,16 @@
 		4BE8957522207B2C009C6A44 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				0078D61C22248B0400F9AED6 /* subViews */,
+				0078D6212224DFD100F9AED6 /* AddDeviceWithMnemonics.swift */,
 				4BE8957E22212368009C6A44 /* PaperWalletView.swift */,
 				4BE8957622207B2C009C6A44 /* BaseWalletWorkflowView.swift */,
 				4BE8957722207B2C009C6A44 /* SetupWalletView.swift */,
 				4BE8957822207B2C009C6A44 /* BaseWalletView.swift */,
 				4BE89585222151DD009C6A44 /* AddSessionView.swift */,
-				4BE8958722216FCD009C6A44 /* AddDeviceFromQRCode.swift */,
+				4BE8958722216FCD009C6A44 /* ScanQRCodeView.swift */,
 				4BE895CE2221B74C009C6A44 /* ShowQRView.swift */,
+				4B12140C2225D2F100C185D2 /* UserDetailsView.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -441,8 +458,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B12140D2225D2F100C185D2 /* UserDetailsView.swift in Sources */,
 				4BE8957F22212368009C6A44 /* PaperWalletView.swift in Sources */,
 				0044DE1E2213069700AD9643 /* HomeCustomLayout.swift in Sources */,
+				0078D620222494CB00F9AED6 /* QRInfoLabel.swift in Sources */,
 				0044DE132213053800AD9643 /* ColorTheme.swift in Sources */,
 				4BD841492212093200808901 /* LoginViewController.swift in Sources */,
 				4BD841472212093200808901 /* AppDelegate.swift in Sources */,
@@ -451,6 +470,7 @@
 				0044DE112213053800AD9643 /* Shapes.swift in Sources */,
 				4BD841462212093200808901 /* ViewController.swift in Sources */,
 				0044DE292213153000AD9643 /* Users.swift in Sources */,
+				0078D6222224DFD100F9AED6 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BD841482212093200808901 /* HomeViewController.swift in Sources */,
 				4BE8957A22207B2D009C6A44 /* SetupWalletView.swift in Sources */,
 				4BE8957B22207B2D009C6A44 /* BaseWalletView.swift in Sources */,
@@ -465,7 +485,7 @@
 				0044DE192213057100AD9643 /* UserCell.swift in Sources */,
 				0044DE142213053800AD9643 /* CGContextExtension.swift in Sources */,
 				0044DE232213141E00AD9643 /* CurrentUser.swift in Sources */,
-				4BE8958822216FCD009C6A44 /* AddDeviceFromQRCode.swift in Sources */,
+				4BE8958822216FCD009C6A44 /* ScanQRCodeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

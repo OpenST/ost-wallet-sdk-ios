@@ -32,7 +32,8 @@ class BaseWalletWorkflowView: BaseWalletView {
         if ( OstSdkInteract.WorkflowEventType.requestAcknowledged == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "☑️ Workflow request acknowledged at " + timeStamp);
-        } else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+        }
+        else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "✅ Workflow completed at " + timeStamp);
             self.nextButton.isHidden = false;
@@ -59,7 +60,11 @@ class BaseWalletWorkflowView: BaseWalletView {
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
             let error = eventData["ostError"] as! OstError;
-            addToLog(log: "Error Description:" + error.description);
+            addToLog(log: "Error.localizedDescription:" + error.localizedDescription);
+            addToLog(log: "Error.message:" + error.errorMessage);
+            addToLog(log: "Error.messageTextCode:" + error.messageTextCode.rawValue);
+            addToLog(log: "Error.internalCode:" + error.internalCode);
+
             self.nextButton.isHidden = false;
             self.cancelButton.isHidden = false;
             self.activityIndicator.stopAnimating();
@@ -82,10 +87,9 @@ class BaseWalletWorkflowView: BaseWalletView {
   }
  
   func addToLog( log:String ) {
-    var allLogs = (self.logsLabel.text != nil) ? self.logsLabel.text! : "";
-    allLogs = "  " + log + "  \n" + allLogs;
-    self.logsLabel.text = allLogs;
-    
+    var allLogs = (self.logsTextView.text != nil) ? self.logsTextView.text! : "";
+    allLogs = allLogs + " \n" + log;
+    self.logsTextView.text = allLogs;
   }
   
   @objc override func didTapNext(sender: Any) {
@@ -95,9 +99,11 @@ class BaseWalletWorkflowView: BaseWalletView {
     self.addToLog(log: "➡️ Starting Workflow at " + timeStamp + "");
   }
  
+    let alertTitle = "Enter your pin"
+    var alertMessage = ""
   func getPinFromUser(ostPinAcceptProtocol: OstPinAcceptProtocol) {
     let currentUser = CurrentUser.getInstance();
-    let alert = UIAlertController(title: "Enter your pin", message: "", preferredStyle: UIAlertController.Style.alert);
+    let alert = UIAlertController(title: self.alertTitle, message: self.alertMessage, preferredStyle: UIAlertController.Style.alert);
     //Add a text field.
     alert.addTextField { (textField) in
         textField.placeholder = "6 digit pin"
@@ -109,8 +115,8 @@ class BaseWalletWorkflowView: BaseWalletView {
     let action = UIAlertAction(title: "Validate", style: .default) { (alertAction) in
       let pinTextField = alert.textFields![0] as UITextField
       if ((pinTextField.text?.count)! < 6 ) {
-        alert.message = "Invalid Pin";
-        pinTextField.text = "";
+        self.alertMessage = "Invalid Pin";
+        self.getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol)
         return;
       }
       ostPinAcceptProtocol.pinEntered(pinTextField.text!, applicationPassword: currentUser.userPinSalt!);
@@ -119,4 +125,5 @@ class BaseWalletWorkflowView: BaseWalletView {
     alert.addAction(action);
     self.walletViewController?.present(alert, animated: true, completion: nil);
   }
+
 }

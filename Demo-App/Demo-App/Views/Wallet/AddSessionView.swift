@@ -88,7 +88,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
         
         self.spendingLimitTestFieldController = MDCTextInputControllerOutlined(textInput: spendingLimitTestField)
         self.expirationHeightTextFieldController = MDCTextInputControllerOutlined(textInput: expiresAfterTextField)
-        
+
         self.spendingLimitTestFieldController!.placeholderText = "Spending Limit"
         self.spendingLimitTestField.keyboardType = .numberPad
       

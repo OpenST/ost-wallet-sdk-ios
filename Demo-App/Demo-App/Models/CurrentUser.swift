@@ -21,13 +21,14 @@ class CurrentUser: BaseModel {
     return sharedInstance!;
   }
 
-  var tokenId:String?;
-  var appUserId:String?;
-  var ostUserId:String?;
-  var skdUser:String?;
-  var userPinSalt: String?;
-  var userDevice: OstDevice?;
-  var ostUser: OstUser?;
+    var tokenId:String?;
+    var appUserId:String?;
+    var ostUserId:String?;
+    var skdUser:String?;
+    var userPinSalt: String?;
+    var userDevice: OstDevice?;
+    var ostUser: OstUser?;
+    var currentDeviceAddress: String?
   
   override init() {
     self.tokenId = nil;
@@ -80,12 +81,15 @@ class CurrentUser: BaseModel {
     params["mobile_number"] = phonenumber;
     
     self.post(resource: "/users/validate", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
-      let appUserId = appApiResponse!["_id"] as? String;
-      self.getOstUser(appUserId:appUserId!, onSuccess: onSuccess, onComplete: onComplete);
-    }) { ([String : Any]?) in
+        self.appUserId = appApiResponse!["app_user_id"] as? String;
+        self.ostUserId = appApiResponse!["user_id"] as? String;
+        self.tokenId = appApiResponse!["token_id"] as? String;
+        self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
+        
+        self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
+    }, onFailuar: { ([String : Any]?) in
       onComplete(false);
-    }
-    
+    })
   }
   
   func getOstUser(appUserId:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
@@ -118,7 +122,7 @@ class CurrentUser: BaseModel {
         let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
           let userDevice = ostContextEntity.entity as! OstDevice;
-          
+          self.currentDeviceAddress = userDevice.address;
           self.userDevice = userDevice;
           do {
             try self.ostUser = OstSdk.getUser(self.ostUserId!);
@@ -135,7 +139,7 @@ class CurrentUser: BaseModel {
       }
     }
     
-    OstSdk.setupDevice(userId: self.ostUserId!, tokenId: self.tokenId!, delegate: ostSdkInteract);
+    OstSdk.setupDevice(userId: self.ostUserId!, tokenId: self.tokenId!, forceSync:true, delegate: ostSdkInteract);
   }
 //
 //  func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {

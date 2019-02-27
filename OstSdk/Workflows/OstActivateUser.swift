@@ -61,12 +61,12 @@ class OstActivateUser: OstWorkflowBase {
                 }
 
                 if (self.currentDevice!.isDeviceRevoked()) {
-                    self.postError(OstError.init("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
                 if (!self.currentDevice!.isDeviceRegistered()) {
-                    self.postError(OstError.init("w_p_p_4", "Device is registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
+                    self.postError(OstError("w_p_p_4", "Device is NOT registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
                     return
                 }
 
@@ -135,7 +135,7 @@ class OstActivateUser: OstWorkflowBase {
             return nil
         }
     }
-    
+    //TODO: - merge code with add session
     func generateSessionKeys() {
         do {
             self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
@@ -152,7 +152,7 @@ class OstActivateUser: OstWorkflowBase {
             self.postError(error)
         }
     }
-    
+    //TODO: - merge code with add session
     func getCurrentBlockHeight() {
         do {
             let onSuccess: (([String: Any]) -> Void) = { chainInfo in
@@ -170,7 +170,7 @@ class OstActivateUser: OstWorkflowBase {
             self.postError(error)
         }
     }
-    
+    //TODO: - merge code with add session
     func generateAndSaveSessionEntity() {
         do {
             let params = self.getSessionEnityParams()
@@ -197,10 +197,10 @@ class OstActivateUser: OstWorkflowBase {
             let params = self.getActivateUserParams()
             
             try OstAPIUser(userId: self.userId).activateUser(params: params, onSuccess: { (ostUser) in
+                self.postRequestAcknowledged(entity: ostUser)
                 self.pollingForActivatingUser(ostUser)
             }) { (error) in
                 self.postError(error)
-                //******************************************                self.pollingForActivatingUser(self.user!)
             }
         }catch let error {
             self.postError(error)
@@ -221,8 +221,8 @@ class OstActivateUser: OstWorkflowBase {
     func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
+            self.user = ostUser
             self.syncRespctiveEntity()
-            self.postWorkflowComplete(entity: ostUser)
         }
         
         let failuarCallback:  ((OstError) -> Void) = { error in
@@ -235,10 +235,14 @@ class OstActivateUser: OstWorkflowBase {
     
     
     func syncRespctiveEntity() {
-     
-            _ = try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
-            _ = try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
-            _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: nil)
+        if (walletKeys?.address != nil) {
+            try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
+        }
+        try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
+        OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: { (_) in
+            self.currentDevice = self.user!.getCurrentDevice()
+            self.postWorkflowComplete(entity: self.user!)
+        }).perform()
     }
     
     /// Get current workflow context

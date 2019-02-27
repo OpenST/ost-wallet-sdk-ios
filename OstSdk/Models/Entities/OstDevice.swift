@@ -11,6 +11,16 @@ import EthereumKit
 
 public class OstDevice: OstBaseEntity {
     
+    enum Status: String {
+        case CREATED = "CREATED"
+        case REGISTERED = "REGISTERED"
+        case RECOVERYING = "RECOVERYING"
+        case AUTHORIZING = "AUTHORIZING"
+        case AUTHORIZED = "AUTHORIZED"
+        case REVOKING = "REVOKING"
+        case REVOKED = "REVOKED"
+    }
+    
     static let OSTDEVICE_PARENTID = "user_id"
     
     static func parse(_ entityData: [String: Any?]) throws -> OstDevice? {
@@ -19,6 +29,10 @@ public class OstDevice: OstBaseEntity {
     
     static func getEntityIdentiferKey() -> String {
         return "address"
+    }
+    
+    class func getById(_ address: String) throws -> OstDevice {
+        return try OstDeviceRepository.sharedDevice.getById(address) as! OstDevice
     }
     
     static func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
@@ -34,6 +48,7 @@ public class OstDevice: OstBaseEntity {
         return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
     }
     
+    //TODO: - remove this method.
     public func isDeviceRegistered() -> Bool {
         let status = self.status
         if (status == nil) {
@@ -43,25 +58,6 @@ public class OstDevice: OstBaseEntity {
         return ["REGISTERED", "AUTHORIZING", "AUTHORIZED"].contains(status!)
     }
     
-    public func isAuthorizing() -> Bool {
-        let status = self.status
-        if (status != nil &&
-            status! == "AUTHORIZING") {
-            return true
-        }
-        return false
-    }
-
-  public func isAuthorized() -> Bool {
-    let status = self.status
-    if (nil != status &&
-      "AUTHORIZED" == status!) {
-      return true
-    }
-    return false
-  }
-
-  
     public  func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {
@@ -70,39 +66,72 @@ public class OstDevice: OstBaseEntity {
         
         return ["REVOKING", "REVOKED"].contains(status!)
     }
-    
-    public  func isCreated() -> Bool {
-        let status = self.status
-        if (status != nil &&
-            status! == "CREATED") {
-            return true
-        }
-        return false
-    }
 }
 
 public extension OstDevice {
-    var local_entity_id: String? {
-        return data["local_entity_id"] as? String 
+    public var address: String? {
+        return getId();
     }
-    
-    var address: String? {
-        return data["address"] as? String
-    }
-    
-    var api_signer_address: String? {
+
+    public var apiSignerAddress: String? {
         return data["api_signer_address"] as? String
     }
     
-    var multi_sig_id: String? {
-        return data["multi_sig_id"] as? String
-    }
-    
-    var userId: String? {
+    public var userId: String? {
         return data["user_id"] as? String
     }
     
-    var device_manager_address: String? {
-        return data["device_manager_address"] as? String
+    public var deviceName: String? {
+        return data["device_name"] as? String
+    }
+    
+    public var deviceUUID: String? {
+        return data["device_uuid"] as? String
+    }
+}
+
+//check for status
+public extension OstDevice {
+    
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRegistered: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REGISTERED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusAuthorized: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZED.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusAuthorizing: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKED.rawValue == status)
+        }
+        return false
     }
 }

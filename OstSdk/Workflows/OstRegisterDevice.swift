@@ -116,7 +116,13 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 self.postError(OstError("w_rd_s_1", .userNotFound))
                 return
             }
-            self.postWorkflowComplete(entity: user.getCurrentDevice()!)
+            let currentDevice = user.getCurrentDevice()!;
+            do {
+                let device:OstDevice = try OstDevice.getById(currentDevice.address!);
+                self.postWorkflowComplete(entity: device);
+            } catch let err {
+                self.postError(err as! OstError);
+            }
         }
         OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()
     }
@@ -137,6 +143,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
     //MARK: - OstDeviceRegisteredProtocol
     public func deviceRegistered(_ apiResponse: [String : Any]) throws {
+        //To-Do: Remove this code after fixing the bug.
+        //Bug Description: The device status never changes to 'Registered' as the local data never changes.
+        //As all API calls (including sync api call) fail because deivce is still in 'Created'.
+        //Workaround: God bless the parse Api :p :p :p
+        _ = try OstDevice.parse(apiResponse);
         self.forceSync = true
         sync()
     }

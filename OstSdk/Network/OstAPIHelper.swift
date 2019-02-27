@@ -31,7 +31,7 @@ class OstAPIHelper {
             if let currentDevice = user.getCurrentDevice() {
                 params["api_signature_kind"] = OstConstants.OST_SIGNATURE_KIND
                 params["api_request_timestamp"] = OstUtils.toString(Date.timestamp())
-                params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.api_signer_address!)"
+                params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.apiSignerAddress!)"
                 return
             }
         }
