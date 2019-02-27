@@ -9,86 +9,94 @@
 import Foundation
 
 public class OstDeviceManager: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "address"
     
-    static let OSTDEVICE_MANAGER_PARENTID = "user_id"
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "user_id"
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstDeviceManager? {
-        return try OstDeviceManagerRepository.sharedDeviceManager.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstDeviceManager
+    /// Store OstDeviceManager entity data in the data base and returns the OstDeviceManager model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstDeviceManagerRepository
+            .sharedDeviceManager
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
-    }
-    
+    /// Get OstDeviceManager object from given device address
+    ///
+    /// - Parameter address: Device address
+    /// - Returns: OstDeviceManager model object
+    /// - Throws: OSTError
     class func getById(_ address: String) throws -> OstDeviceManager? {
         return try OstDeviceManagerRepository.sharedDeviceManager.getById(address) as? OstDeviceManager
     }
     
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstDeviceManager.getEntityIdentiferKey()] as Any?)!
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstDeviceManager.ENTITY_IDENTIFIER
     }
     
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstDeviceManager.OSTDEVICE_MANAGER_PARENTID] as Any?)
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstDeviceManager.ENTITY_PARENT_IDENTIFIER
     }
     
-    public func getDeviceMultiSigWallet() throws -> OstDevice? {
-        do {
-            guard let multiSigWallets: [OstDevice] = try OstDeviceRepository.sharedDevice.getByParentId(self.id) as? [OstDevice] else {
-                return nil
-            }
-            
-            for multiSigWallet in multiSigWallets {
-                guard let multiSigWalletAddress: String = multiSigWallet.address else {
-                    continue
-                }
-                guard let _: OstSecureKey = try OstSecureKeyRepository.sharedSecureKey.getById(multiSigWalletAddress) as? OstSecureKey else {
-                    continue
-                }
-                return multiSigWallet
-            }
-        }catch let error {
-            throw error
-        }
-        
-        return nil
-    }
-    
+    // TODO: this will be renamed to increament nonce.
+    /// Update nonce value
+    ///
+    /// - Parameter nonce: Nonce value
+    /// - Throws: OSTError
     func updateNonce(_ nonce: Int) throws {
         var updatedData: [String: Any?] = self.data
         updatedData["nonce"] = OstUtils.toString(nonce)
         updatedData["updated_timestamp"] = OstUtils.toString(Date.timestamp())
-        _ = try OstDeviceManager.parse(updatedData)
+        _ = try OstDeviceManager.storeEntity(updatedData)
     }
 }
 
 public extension OstDeviceManager {
-    var user_id : String? {
-        return data["user_id"] as? String ?? nil
+    /// Get user id
+    var userId : String? {
+        return data["user_id"] as? String
     }
     
+    /// Ger device address
     var address : String? {
-        return data["address"] as? String ?? nil
+        return data["address"] as? String
     }
     
+    /// Get device nonce
     var nonce: Int {
         return OstUtils.toInt(data["nonce"] as Any?) ?? 0
     }
     
-    var token_holder_id : String? {
-        return data["token_holder_id"] as? String ?? nil
+    /// Get token holder id
+    var tokenHolderId : String? {
+        return data["token_holder_id"] as? String
     }
     
+    /// Get wallets
     var wallets : Array<String>? {
-        return data["wallets"] as? Array<String> ?? nil
+        return data["wallets"] as? Array<String>
     }
     
+    /// Get requirement
     var requirement: String? {
-        return data["requirement"] as? String ?? nil
+        return data["requirement"] as? String
     }
     
-    var authorize_session_callprefix: String? {
-        return data["authorize_session_callprefix"] as? String ?? nil
+    /// Get authorize session call prefix
+    var authorizeSessionCallPrefix: String? {
+        return data["authorize_session_callprefix"] as? String
     }
 }

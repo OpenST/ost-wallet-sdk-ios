@@ -8,8 +8,10 @@
 
 import Foundation
 
-class OstTokenDbQueries: OstBaseDbQueries {
-    
+class OstTokenDbQueries: OstBaseDbQueries {    
+    /// Get activity name for OstToken
+    ///
+    /// - Returns: Activity name
     override func activityName() -> String{
         return "tokens"
     }

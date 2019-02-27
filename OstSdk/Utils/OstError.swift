@@ -87,4 +87,6 @@ public enum OstErrorText: String {
     case unexpectedState = "Unexpected state."
     case toAddressNotFound = "To address not found."
     case signerAddressNotFound = "Signer address not found."
+    case dbExecutionFailed = "DB execution failed."
+    case invalidEntityType = "Invalid entity type."
 }

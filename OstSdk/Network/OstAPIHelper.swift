@@ -31,7 +31,7 @@ class OstAPIHelper {
             if let currentDevice = user.getCurrentDevice() {
                 params["api_signature_kind"] = OstConstants.OST_SIGNATURE_KIND
                 params["api_request_timestamp"] = OstUtils.toString(Date.timestamp())
-                params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.api_signer_address!)"
+                params["api_key"] = "\(user.tokenId!).\(userId).\(currentDevice.address!).\(currentDevice.apiSignerAddress!)"
                 return
             }
         }
@@ -58,53 +58,86 @@ class OstAPIHelper {
     
     
     
-    /// Get entity from API response
+    /// Sync the entity data with API response
     ///
     /// - Parameter apiResponse: API response data
     /// - Returns: Entity object
     /// - Throws: OSTError
-    class func getEntityFromAPIResponse(apiResponse: [String: Any?]?) throws -> OstBaseEntity {
+    class func syncEntityWithAPIResponse(apiResponse: [String: Any?]?) throws -> OstBaseEntity {
         if (apiResponse != nil) {
               do {
-                if let entity = try storeApiResponse(apiResponse!) {
-                    return entity
-                }else {
-                    throw OstError.init("n_ah_gefar_1", .entityNotAvailable)
-                }
+                try storeApiResponse(apiResponse!)
+                return try getSyncedEntity(apiResponse!)
             }catch {
-                throw OstError.init("n_ah_gefar_2", .entityNotAvailable)
+                throw OstError.init("n_ah_gefar_1", .entityNotAvailable)
             }
         }else {
-            throw OstError.init("n_ah_gefar_3", .invalidAPIResponse)
+            throw OstError.init("n_ah_gefar_2", .invalidAPIResponse)
         }
     }
     
     /// Store the entities in the database from the API response
     ///
     /// - Parameter apiResponse: API response data
-    /// - Returns: OST entity
     /// - Throws: OSTError
-    class func storeApiResponse(_ apiResponse: [String: Any?]) throws -> OstBaseEntity? {
+    class func storeApiResponse(_ apiResponse: [String: Any?]) throws {
         let resultType = apiResponse["result_type"] as? String ?? ""
         let entityData =  apiResponse[resultType] as? [String: Any?]
         
         if (entityData == nil) {
-            return nil
+            return
         }
         // TODO: Looks like parse is not correct term for insert and update
         switch resultType {
         case ResultType.token.rawValue:
-            return try OstToken.parse(entityData!)
+            try OstToken.storeEntity(entityData!)
         case ResultType.user.rawValue:
-            return try OstUser.parse(entityData!)
+            try OstUser.storeEntity(entityData!)
         case ResultType.device.rawValue:
-            return try OstDevice.parse(entityData!)
+            try OstDevice.storeEntity(entityData!)
         case ResultType.deviceManager.rawValue:
-            return try OstDeviceManager.parse(entityData!)
+            try OstDeviceManager.storeEntity(entityData!)
         case ResultType.session.rawValue:
-            return try OstSession.parse(entityData!)
+            _ = try OstSession.parse(entityData!)
         default:
-            return nil
+            return
+        }
+    }
+    
+    /// Get entity object for given entity type and primary key
+    ///
+    /// - Parameters:
+    ///   - entityType: Entity type
+    ///   - primaryKey: Primary key
+    /// - Returns: OstBaseEntityObject
+    /// - Throws: OstError
+    private class func getSyncedEntity(_ apiResponse: [String: Any?]) throws -> OstBaseEntity {
+        let resultType = apiResponse["result_type"] as? String ?? ""
+        let entityData =  apiResponse[resultType] as? [String: Any?]
+        
+        if (entityData == nil) {
+            throw OstError.init("n_ah_gse_1", .entityNotAvailable)
+        }
+        var id: String
+        switch resultType {
+        case ResultType.token.rawValue:
+            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstToken.ENTITY_IDENTIFIER) as! String
+            return try OstToken.getById(id)!
+        case ResultType.user.rawValue:
+            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstUser.ENTITY_IDENTIFIER) as! String
+            return try OstUser.getById(id)!
+        case ResultType.device.rawValue:
+            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstDevice.ENTITY_IDENTIFIER) as! String
+            return try OstDevice.getById(id)!
+        case ResultType.deviceManager.rawValue:
+            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstDeviceManager.ENTITY_IDENTIFIER) as! String
+            return try OstDeviceManager.getById(id)!
+        case ResultType.session.rawValue: break
+            // TODO
+            //id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstSession.ENTITY_IDENTIFIER) as! String
+            //return try OstSession.getById(id)!
+        default:
+            throw OstError("n_ah_gse_2", .invalidEntityType)
         }
     }
 }

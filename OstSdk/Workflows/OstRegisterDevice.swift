@@ -85,7 +85,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 apiParam["status"] = OstUser.Status.CREATED.rawValue
                
                 apiParam["user_id"] = self.userId
-                _ = try OstCurrentDevice.parse(apiParam)
+                _ = try OstCurrentDevice.storeEntity(apiParam)
                 
                 apiParam["user_id"] = nil
                 

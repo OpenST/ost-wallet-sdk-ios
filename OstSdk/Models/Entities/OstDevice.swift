@@ -10,99 +10,151 @@ import Foundation
 import EthereumKit
 
 public class OstDevice: OstBaseEntity {
+    private static let DEVICE_STATUS_CREATED = "CREATED"
+    private static let DEVICE_STATUS_REGISTERED = "REGISTERED"
+    private static let DEVICE_STATUS_AUTHORIZING = "AUTHORIZING"
+    private static let DEVICE_STATUS_AUTHORIZED = "AUTHORIZED"
+    private static let DEVICE_STATUS_REVOKING = "REVOKING"
+    private static let DEVICE_STATUS_REVOKED = "REVOKED"
     
-    static let OSTDEVICE_PARENTID = "user_id"
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "address"
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstDevice? {
-        return try OstDeviceRepository.sharedDevice.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstDevice
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "user_id"
+    
+    /// Store OstDevice entity data in the data base and returns the OstDevice model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstDeviceRepository
+            .sharedDevice
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
+    /// Get OstDevice object from given device address
+    ///
+    /// - Parameter deviceAddress: Device address
+    /// - Returns: OstDevice model object
+    /// - Throws: OSTError
+    class func getById(_ deviceAddress: String) throws -> OstDevice? {
+        return try OstDeviceRepository.sharedDevice.getById(deviceAddress) as? OstDevice
     }
-    
-    static func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
+
+    /// Get device from parent id
+    ///
+    /// - Parameter parentId: Parent id
+    /// - Returns: Array<OstDevice>
+    /// - Throws: OSTError
+    class func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
         return try OstDeviceRepository.sharedDevice.getByParentId(parentId) as? [OstDevice]
     }
     
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstDevice.getEntityIdentiferKey()] as Any?)!
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstDevice.ENTITY_IDENTIFIER
     }
     
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstDevice.ENTITY_PARENT_IDENTIFIER
     }
     
-    public func isDeviceRegistered() -> Bool {
+    /// Check if the device is already registered
+    ///
+    /// - Returns: `true` if registered otherwise `false`
+    func isDeviceRegistered() -> Bool {
         let status = self.status
         if (status == nil) {
             return false
         }
-        
-        return ["REGISTERED", "AUTHORIZING", "AUTHORIZED"].contains(status!)
+        return [OstDevice.DEVICE_STATUS_REGISTERED,
+                OstDevice.DEVICE_STATUS_AUTHORIZING,
+                OstDevice.DEVICE_STATUS_AUTHORIZED].contains(status!)
     }
     
-    public func isAuthorizing() -> Bool {
+    /// Check if the device status is AUTHORIZING
+    ///
+    /// - Returns: `true` if status is AUTHORIZING otherwise `false`
+    func isAuthorizing() -> Bool {
         let status = self.status
-        if (status != nil &&
-            status! == "AUTHORIZING") {
-            return true
+        if (status != nil) {
+            return status! == OstDevice.DEVICE_STATUS_AUTHORIZING
         }
         return false
     }
 
-  public func isAuthorized() -> Bool {
-    let status = self.status
-    if (nil != status &&
-      "AUTHORIZED" == status!) {
-      return true
+    /// Check if the device status is AUTHORIZED
+    ///
+    /// - Returns: `true` if status is AUTHORIZED otherwise `false`
+    func isAuthorized() -> Bool {
+        let status = self.status
+        if (status != nil) {
+            return status! == OstDevice.DEVICE_STATUS_AUTHORIZED
+        }
+        return false
     }
-    return false
-  }
 
-  
-    public  func isDeviceRevoked() -> Bool {
+    /// Check if the device status is REVOKING or REVOKED
+    ///
+    /// - Returns: `true` if status is REVOKING or REVOKED otherwise `false`
+    func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {
             return true
         }
-        
-        return ["REVOKING", "REVOKED"].contains(status!)
+        return [OstDevice.DEVICE_STATUS_REVOKING,
+                OstDevice.DEVICE_STATUS_REVOKED].contains(status!)
     }
     
-    public  func isCreated() -> Bool {
+    /// Check if the device status is CREATED
+    ///
+    /// - Returns: `true` if status is CREATED otherwise `false`
+    func isCreated() -> Bool {
         let status = self.status
-        if (status != nil &&
-            status! == "CREATED") {
-            return true
+        if (status != nil) {
+            return status! == OstDevice.DEVICE_STATUS_CREATED
         }
         return false
     }
 }
 
 public extension OstDevice {
-    var local_entity_id: String? {
+    /// Get local entity id
+    var localEntityId: String? {
         return data["local_entity_id"] as? String 
     }
     
+    /// Get address
     var address: String? {
         return data["address"] as? String
     }
     
-    var api_signer_address: String? {
+    /// Get api signer address
+    var apiSignerAddress: String? {
         return data["api_signer_address"] as? String
     }
     
-    var multi_sig_id: String? {
+    /// Get multi sig id
+    var multiSigId: String? {
         return data["multi_sig_id"] as? String
     }
     
+    /// Get user id
     var userId: String? {
         return data["user_id"] as? String
     }
     
-    var device_manager_address: String? {
+    /// Get device manage address
+    var deviceManagerAddress: String? {
         return data["device_manager_address"] as? String
     }
 }

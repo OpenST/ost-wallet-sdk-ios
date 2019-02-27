@@ -9,7 +9,9 @@
 import Foundation
 
 class OstRuleDbQueries: OstBaseDbQueries {
-    
+    /// Get activity name for OstRule
+    ///
+    /// - Returns: Activity name
     override func activityName() -> String{
         return "rules"
     }
