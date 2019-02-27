@@ -79,10 +79,10 @@ class BaseWalletView: UIScrollView {
     let scrollView = self;
     // Buttons
     // Add buttons to the scroll view
+    scrollView.addSubview(activityIndicator)
     scrollView.addSubview(nextButton)
     scrollView.addSubview(cancelButton)
-    scrollView.addSubview(activityIndicator)
-    
+    self.sendSubviewToBack(activityIndicator);
     // Labels
     scrollView.addSubview(errorLabel);
     scrollView.addSubview(successLabel);

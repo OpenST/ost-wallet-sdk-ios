@@ -11,7 +11,7 @@ import MaterialComponents
 
 private let reuseIdentifier = "MDCCollectionViewTextCell"
 
-class UserActionsViewController: UICollectionViewController {
+class UserActionsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   var appBar = MDCAppBar()
   
   let ACTION_TYPE = "action";
@@ -104,8 +104,10 @@ class UserActionsViewController: UICollectionViewController {
         setupWallet[ACTION_DETAILS] = "You need to setup your wallet to perform other actions.";
     }
     
+    
+    //Add back sendTransaction later on.
     //Final Ordering.
-    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
+    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -114,12 +116,9 @@ class UserActionsViewController: UICollectionViewController {
   
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(animated);
-      let screenSize = UIScreen.main.bounds
-      let screenWidth = screenSize.width;
-
       let layout: UICollectionViewFlowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout;
       layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-      layout.estimatedItemSize = CGSize(width: screenWidth, height: 100);
+      layout.estimatedItemSize = CGSize(width: 1, height: 1);
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       self.collectionView!.collectionViewLayout = layout
@@ -202,8 +201,10 @@ class UserActionsViewController: UICollectionViewController {
     let itemData = dataItems![indexPath.item];
     cell.textLabel?.text = itemData[ACTION_TEXT]!;
     cell.detailTextLabel?.text = itemData[ACTION_DETAILS];
-    cell.layer.borderWidth=1.0;
+    cell.detailTextLabel?.numberOfLines = 0;
+    cell.layer.borderWidth = 0.5;
     cell.layer.borderColor = UIColor.lightGray.cgColor
+    
     return cell
   }
   
@@ -214,8 +215,6 @@ class UserActionsViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-  
-
   
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -274,6 +273,30 @@ class UserActionsViewController: UICollectionViewController {
             self.present(walletController, animated: true, completion: nil);
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemData = dataItems![indexPath.item];
+
+        let actionDetailsLabel = UILabel(frame: collectionView.frame)
+        actionDetailsLabel.numberOfLines = 0
+        actionDetailsLabel.font = MDCTypography.body1Font();
+        actionDetailsLabel.text = itemData[ACTION_DETAILS]!
+        actionDetailsLabel.sizeToFit()
+        let acLines = actionDetailsLabel.calculateMaxLines();
+        let cellHeight = (acLines == 1) ? MDCCellDefaultTwoLineHeight : MDCCellDefaultThreeLineHeight;
+        return CGSize(width: collectionView.frame.width, height: cellHeight);
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        collectionView.collectionViewLayout.invalidateLayout()
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor(red: 244.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 1.0);
+        UIView.transition(with: cell!, duration: 2, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            cell?.backgroundColor = UIColor.white
+        }, completion: nil);
+    }
+                    
+    
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -326,5 +349,15 @@ extension UserActionsViewController {
                                                targetContentOffset: targetContentOffset)
     }
   }
-  
+}
+
+extension UILabel {
+    func calculateMaxLines() -> Int {
+        let maxSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
+        let charSize = font.lineHeight
+        let text = (self.text ?? "") as NSString
+        let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        let linesRoundedUp = Int(ceil(textSize.height/charSize))
+        return linesRoundedUp
+    }
 }
