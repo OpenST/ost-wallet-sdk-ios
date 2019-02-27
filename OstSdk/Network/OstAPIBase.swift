@@ -94,11 +94,14 @@ open class OstAPIBase {
         Logger.log(message: "params", parameterToPrint: params as Any)
         
         // TODO: remove the debug logs
-        dataRequest = manager.request(url, method: .get, parameters: params, headers: getHeader()).debugLog()
+        dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader()).debugLog()
+        
         // Status code in 200 range will be considered as correct response
-        dataRequest?.validate(statusCode: 200..<300)
+//        dataRequest?.validate(statusCode: 200..<300)
+        
         dataRequest!.responseJSON { (httpResponse) in
-            Logger.log(message: httpResponse.response?.url?.relativePath ?? "", parameterToPrint: httpResponse.result.value)
+            Logger.log(message: "httpResponse.relativePath", parameterToPrint: httpResponse.response?.url?.relativePath);
+            Logger.log(message: "httpResponse.result.value", parameterToPrint: httpResponse.result.value);
             
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {

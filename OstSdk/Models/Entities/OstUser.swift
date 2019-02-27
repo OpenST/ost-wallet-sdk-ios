@@ -68,7 +68,7 @@ public class OstUser: OstBaseEntity {
         }
         return false
     }
-    
+
     /// Get current device model object
     ///
     /// - Returns: OstCurrentDevice model object
@@ -93,7 +93,7 @@ public class OstUser: OstBaseEntity {
             return currentDevice
         } catch {
             return nil
-        }
+        }        
     }
 }
 

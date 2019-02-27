@@ -10,18 +10,22 @@ import Foundation
 import EthereumKit
 
 public class OstDevice: OstBaseEntity {
-    private static let DEVICE_STATUS_CREATED = "CREATED"
-    private static let DEVICE_STATUS_REGISTERED = "REGISTERED"
-    private static let DEVICE_STATUS_AUTHORIZING = "AUTHORIZING"
-    private static let DEVICE_STATUS_AUTHORIZED = "AUTHORIZED"
-    private static let DEVICE_STATUS_REVOKING = "REVOKING"
-    private static let DEVICE_STATUS_REVOKED = "REVOKED"
-    
     /// Entity identifier for user entity
     static let ENTITY_IDENTIFIER = "address"
     
     /// Parent entity identifier for user entity
     static let ENTITY_PARENT_IDENTIFIER = "user_id"
+    
+    /// Device status
+    private enum Status: String {
+        case CREATED = "CREATED"
+        case REGISTERED = "REGISTERED"
+        case RECOVERYING = "RECOVERYING"
+        case AUTHORIZING = "AUTHORIZING"
+        case AUTHORIZED = "AUTHORIZED"
+        case REVOKING = "REVOKING"
+        case REVOKED = "REVOKED"
+    }
     
     /// Store OstDevice entity data in the data base and returns the OstDevice model object
     ///
@@ -76,31 +80,9 @@ public class OstDevice: OstBaseEntity {
         if (status == nil) {
             return false
         }
-        return [OstDevice.DEVICE_STATUS_REGISTERED,
-                OstDevice.DEVICE_STATUS_AUTHORIZING,
-                OstDevice.DEVICE_STATUS_AUTHORIZED].contains(status!)
-    }
-    
-    /// Check if the device status is AUTHORIZING
-    ///
-    /// - Returns: `true` if status is AUTHORIZING otherwise `false`
-    func isAuthorizing() -> Bool {
-        let status = self.status
-        if (status != nil) {
-            return status! == OstDevice.DEVICE_STATUS_AUTHORIZING
-        }
-        return false
-    }
-
-    /// Check if the device status is AUTHORIZED
-    ///
-    /// - Returns: `true` if status is AUTHORIZED otherwise `false`
-    func isAuthorized() -> Bool {
-        let status = self.status
-        if (status != nil) {
-            return status! == OstDevice.DEVICE_STATUS_AUTHORIZED
-        }
-        return false
+        return [Status.REGISTERED.rawValue,
+                Status.AUTHORIZING.rawValue,
+                Status.AUTHORIZED.rawValue].contains(status!)
     }
 
     /// Check if the device status is REVOKING or REVOKED
@@ -111,50 +93,86 @@ public class OstDevice: OstBaseEntity {
         if (status == nil) {
             return true
         }
-        return [OstDevice.DEVICE_STATUS_REVOKING,
-                OstDevice.DEVICE_STATUS_REVOKED].contains(status!)
-    }
-    
-    /// Check if the device status is CREATED
-    ///
-    /// - Returns: `true` if status is CREATED otherwise `false`
-    func isCreated() -> Bool {
-        let status = self.status
-        if (status != nil) {
-            return status! == OstDevice.DEVICE_STATUS_CREATED
-        }
-        return false
+        return [Status.REVOKING.rawValue,
+                Status.REVOKED.rawValue].contains(status!)
     }
 }
 
 public extension OstDevice {
-    /// Get local entity id
-    var localEntityId: String? {
-        return data["local_entity_id"] as? String 
-    }
-    
     /// Get address
-    var address: String? {
+    public var address: String? {
         return data["address"] as? String
     }
-    
-    /// Get api signer address
-    var apiSignerAddress: String? {
+
+    /// Get API signer address
+    public var apiSignerAddress: String? {
         return data["api_signer_address"] as? String
     }
-    
-    /// Get multi sig id
-    var multiSigId: String? {
-        return data["multi_sig_id"] as? String
-    }
-    
-    /// Get user id
-    var userId: String? {
+
+    /// Get User id
+    public var userId: String? {
         return data["user_id"] as? String
     }
     
-    /// Get device manage address
-    var deviceManagerAddress: String? {
-        return data["device_manager_address"] as? String
+    /// Get decvice name
+    public var deviceName: String? {
+        return data["device_name"] as? String
+    }
+    
+    /// Get device uuid
+    public var deviceUUID: String? {
+        return data["device_uuid"] as? String
+
+    }
+}
+
+// Check for status
+public extension OstDevice {
+    /// Check if the device status is CREATED
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the device status is REGISTERED
+    var isStatusRegistered: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REGISTERED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the device status is AUTHORIZED
+    var isStatusAuthorized: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the device status is AUTHORIZING
+    var isStatusAuthorizing: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.AUTHORIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the device status is REVOKING
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+
+    /// Check if the device status is REVOKED
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.REVOKED.rawValue == status)
+        }
+        return false
     }
 }

@@ -146,7 +146,7 @@ class HomeViewController: UICollectionViewController {
                                                         for: indexPath) as! UserCell
     let user:User = self.users[indexPath.row];
     cell.imageView.image = UIImage(cgImage: user.userImage);
-    cell.nameLabel.text = user.username;
+    cell.nameLabel.text = user.displayName!;
     cell.descriptionLabel.text = user.description;
     return cell
   }

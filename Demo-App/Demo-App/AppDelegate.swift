@@ -26,7 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var loginViewController: LoginViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        OstSdk.initialize();
+        do {
+            try OstSdk.initialize(apiEndPoint: BaseModel.KIT_API_ENDPOINT);
+            Logger.log(message: "OstSdk has been initialized.");
+        } catch let ostError {
+            Logger.log(message: "Failed to initialize OstSdk", parameterToPrint: ostError as! OstError);
+        }
+        
         IQKeyboardManager.shared.enable = true
 
     return true

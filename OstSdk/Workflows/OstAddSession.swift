@@ -32,8 +32,31 @@ class OstAddSession: OstWorkflowBase {
   
     override func perform() {
         ostAddSessionThread.async {
-            self.generateSessionKeys()
-            self.getCurrentBlockHeight()
+            do {
+                try self.valdiateParams()
+                self.generateSessionKeys()
+                self.getCurrentBlockHeight()
+            }catch let error {
+                self.postError(error)
+            }
+        }
+    }
+    
+    func valdiateParams() throws {
+        self.user = try getUser()
+        if (nil == self.user) {
+            throw OstError("w_as_vp_1", .userNotFound)
+        }
+        if (!self.user!.isStatusActivated) {
+            throw OstError("w_as_vp_1", .userNotActivated)
+        }
+        
+        self.currentDevice = try getCurrentDevice()
+        if (nil == self.currentDevice) {
+            throw OstError("w_as_vp_2", .deviceNotFound);
+        }
+        if (!self.currentDevice!.isStatusAuthorized) {
+            throw OstError("w_as_vp_3", .deviceNotAuthorized)
         }
     }
     
@@ -77,7 +100,6 @@ class OstAddSession: OstWorkflowBase {
     }
     
     func authorizeSession() {
-        
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
                 let keychainManager = OstKeyManager(userId: self.userId)
@@ -93,10 +115,12 @@ class OstAddSession: OstWorkflowBase {
         }
         
         let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+            self.postRequestAcknowledged(entity: ostSession)
             self.pollingForAuthorizeSession(ostSession)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
+            Logger.log(message: "I am here - OstAddSession");
             self.postError(error)
         }
       

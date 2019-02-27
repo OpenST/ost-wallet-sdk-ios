@@ -12,7 +12,7 @@ class OstAuthorizeBase {
     let threshold = 1
     let workflowTransactionCountForPolling = 1
     let nullAddress = "0x0000000000000000000000000000000000000000"
-    let dataDefination = OstPerform.DataDefination.AUTHORIZE_DEVICE.rawValue
+    let dataDefination = OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue
     
     var deviceManager: OstDeviceManager? = nil
     
@@ -35,7 +35,11 @@ class OstAuthorizeBase {
     }
     
     func perform() {
-       fatalError("perform is not override.")
+        do {
+            try self.fetchDeviceManager()
+        }catch let error {
+            self.onFailure(error as! OstError)
+        }
     }
     
     func fetchDeviceManager() throws {
@@ -102,7 +106,7 @@ class OstAuthorizeBase {
                 throw OstError("q_a_ab_a_2", .signerAddressNotFound)
             }
             
-            try self.deviceManager!.updateNonce(deviceManagerNonce+1)
+            try self.deviceManager!.incrementNonce()
             
             let rawCallData: String = getRawCallData()
             

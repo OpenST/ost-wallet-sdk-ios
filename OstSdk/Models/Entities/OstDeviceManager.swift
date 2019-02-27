@@ -51,14 +51,13 @@ public class OstDeviceManager: OstBaseEntity {
         return OstDeviceManager.ENTITY_PARENT_IDENTIFIER
     }
     
-    // TODO: this will be renamed to increament nonce.
-    /// Update nonce value
+    /// Increment nonce value and store it in DB
     ///
     /// - Parameter nonce: Nonce value
     /// - Throws: OSTError
-    func updateNonce(_ nonce: Int) throws {
+    func incrementNonce() throws {
         var updatedData: [String: Any?] = self.data
-        updatedData["nonce"] = OstUtils.toString(nonce)
+        updatedData["nonce"] = OstUtils.toString(self.nonce+1)
         updatedData["updated_timestamp"] = OstUtils.toString(Date.timestamp())
         _ = try OstDeviceManager.storeEntity(updatedData)
     }
