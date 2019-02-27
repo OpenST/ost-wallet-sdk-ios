@@ -174,9 +174,11 @@ class LoginViewController: UIViewController {
 
     // Buttons
     // Add buttons to the scroll view
+    scrollView.addSubview(activityIndicator)
     scrollView.addSubview(nextButton)
     scrollView.addSubview(toggleModeButton)
-    scrollView.addSubview(activityIndicator)
+    scrollView.sendSubviewToBack(self.activityIndicator);
+    
     
     // Error Label
     scrollView.addSubview(errorLabel);
