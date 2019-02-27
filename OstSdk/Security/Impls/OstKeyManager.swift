@@ -9,6 +9,7 @@
 import Foundation
 import LocalAuthentication
 import CryptoSwift
+import EthereumKit
 
 let SERVICE_NAME = "com.ost"
 let ETHEREUM_KEY_PREFIX = "Ethereum_key_for_"
@@ -588,8 +589,65 @@ private extension OstKeyManager {
     ///
     /// - Parameter key: Key to be deleted
     /// - Throws: OstError
-    private func deleteString(forKey key: String) throws {
+    func deleteString(forKey key: String) throws {
         try keychainHelper.deleteStringFromKeychain(forKey: key)
+    }
+}
+
+extension OstKeyManager {
+    /// Sign message with API private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithAPIKey(message: String) throws -> String {
+        guard let apiPrivateKey = try self.getAPIKey() else{
+            throw OstError.init("s_i_km_swpk_1", .noPrivateKeyFound)
+        }
+        return try sign(message, withKey: apiPrivateKey)
+    }
+    
+    /// Sign message with device private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithDeviceKey(message: String) throws -> String {
+        guard let devicePrivateKey = try self.getDeviceKey() else{
+            throw OstError.init("s_i_km_swdk_1", .noPrivateKeyFound)
+        }
+        return try sign(message, withKey: devicePrivateKey)
+    }
+    
+    /// Sign message with session's private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithSessionKey(message: String, withAddress address: String) throws -> String {
+        guard let sessionPrivateKey = try self.getSessionKey(forAddress: address) else{
+            throw OstError.init("s_i_km_swsk_1", .noPrivateKeyFound)
+        }
+        return try sign(message, withKey: sessionPrivateKey)
+    }
+    
+    /// Sign message with private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    private func sign(_ message: String, withKey key: String) throws -> String {
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
+                                     privateKey: key,
+                                     debugPrints: OstConstants.PRINT_DEBUG)
+        
+        let singedData: String
+        do {
+            singedData = try wallet.personalSign(message: message)
+        } catch {
+            throw OstError.init("s_i_km_s_1", .signTxFailed)
+        }
+        return singedData.addHexPrefix()
     }
 }
 
