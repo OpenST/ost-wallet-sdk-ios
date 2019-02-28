@@ -10,6 +10,7 @@ import Foundation
 
 public enum OstQRCodeDataDefination: String {
     case AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+    case TRANSACTION = "TRANSACTION"
 }
 
 class OstPerform: OstWorkflowBase {
@@ -77,7 +78,8 @@ class OstPerform: OstWorkflowBase {
             throw OstError("w_p_pqrcs_5", OstErrorText.invalidQRCode);
         }
         
-        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue];
+        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
+                                         OstQRCodeDataDefination.TRANSACTION.rawValue];
         
         if ( validDefinations.contains(dataDefination) ) {
             self.dataDefination = dataDefination;
@@ -101,6 +103,14 @@ class OstPerform: OstWorkflowBase {
                                    qrCodeData: payloadData!,
                                    delegate: self.delegate).perform()
             
+        case OstQRCodeDataDefination.TRANSACTION.rawValue:
+            let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
+            OstExecuteTransaction(userId: self.userId,
+                                  ruleName: executeTxPayloadParams.ruleName,
+                                  tokenHolderAddresses: executeTxPayloadParams.addresses,
+                                  amounts: executeTxPayloadParams.amounts,
+                                  tokenId: executeTxPayloadParams.tokenId,
+                                  delegate: self.delegate).perform()
         default:
             throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
         }

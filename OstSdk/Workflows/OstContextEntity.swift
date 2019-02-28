@@ -9,7 +9,7 @@
 import Foundation
 
 public enum OstEntityType {
-    case device, user, session, array, ciimage
+    case device, user, session, array, ciimage, transaction
 }
 
 public class OstContextEntity {

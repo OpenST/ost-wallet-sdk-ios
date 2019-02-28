@@ -13,14 +13,21 @@ public class OstRule: OstBaseEntity {
     static let OSTRULE_PARENTID = "token_id"
     
     static func getEntityIdentiferKey() -> String {
-        return "rule_id"
+        return "address"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
         return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstRule
     }
     
-  
+    class func getById(_ parentId: String) throws -> OstRule? {
+        return try OstRuleModelRepository.sharedRule.getById(parentId) as? OstRule
+    }
+    
+    class func getByParentId(_ parentId: String) throws -> [OstRule]? {
+        return try OstRuleModelRepository.sharedRule.getByParentId(parentId) as? [OstRule]
+    }
+    
     override func getId(_ params: [String: Any?]? = nil) -> String {
         let paramData = params ?? self.data
         return OstUtils.toString(paramData[OstRule.getEntityIdentiferKey()] as Any?)!
@@ -33,7 +40,7 @@ public class OstRule: OstBaseEntity {
 
 public extension OstRule {
     var token_id : String? {
-        return data["token_id"] as? String ?? nil
+        return OstUtils.toString(data["token_id"] as Any)
     }
     
     var name : String? {

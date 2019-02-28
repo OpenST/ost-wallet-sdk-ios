@@ -10,8 +10,14 @@ import Foundation
 
 public class OstTransaction: OstBaseEntity {
     
+    enum Status: String {
+        case CREATED = "CREATED"
+        case FAILED = "FAILED"
+        case SUCCESS = "SUCCESS"
+    }
+    
     static func getEntityIdentiferKey() -> String {
-        return "transaction_hash"
+        return "id"
     }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstTransaction? {
@@ -59,5 +65,22 @@ public extension OstTransaction {
     
     var gas_price: Int? {
         return OstUtils.toInt(data["gas_price"] as Any?) 
+    }
+}
+
+//Get transaction status
+public extension OstTransaction {
+    var isStatusSuccess: Bool {
+        if let status: String = self.status {
+            return (OstTransaction.Status.SUCCESS.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusFailed: Bool {
+        if let status: String = self.status {
+            return (OstTransaction.Status.FAILED.rawValue == status)
+        }
+        return false
     }
 }

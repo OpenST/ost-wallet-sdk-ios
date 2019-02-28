@@ -14,6 +14,8 @@ enum ResultType: String {
     case device = "device"
     case deviceManager = "device_manager"
     case session = "session"
+    case transaction = "transaction"
+    case rules = "rules"
 }
 
 class OstAPIHelper {
@@ -86,23 +88,35 @@ class OstAPIHelper {
     /// - Throws: OSTError
     class func storeApiResponse(_ apiResponse: [String: Any?]) throws -> OstBaseEntity? {
         let resultType = apiResponse["result_type"] as? String ?? ""
-        let entityData =  apiResponse[resultType] as? [String: Any?]
+        let entityData =  apiResponse[resultType] as Any
         
-        if (entityData == nil) {
-            return nil
-        }
+//        if (entityData == nil) {
+//            return nil
+//        }
         // TODO: Looks like parse is not correct term for insert and update
         switch resultType {
         case ResultType.token.rawValue:
-            return try OstToken.parse(entityData!)
+            return try OstToken.parse(entityData as! [String: Any?])
         case ResultType.user.rawValue:
-            return try OstUser.parse(entityData!)
+            return try OstUser.parse(entityData as! [String: Any?])
         case ResultType.device.rawValue:
-            return try OstDevice.parse(entityData!)
+            return try OstDevice.parse(entityData as! [String: Any?])
         case ResultType.deviceManager.rawValue:
-            return try OstDeviceManager.parse(entityData!)
+            return try OstDeviceManager.parse(entityData as! [String: Any?])
         case ResultType.session.rawValue:
-            return try OstSession.parse(entityData!)
+            return try OstSession.parse(entityData as! [String: Any?])
+        case ResultType.transaction.rawValue:
+            return try OstTransaction.parse(entityData as! [String: Any?])
+        case ResultType.rules.rawValue:
+            let rulesEntityData = entityData as! [[String: Any?]]
+            var ruleObj: OstRule? = nil
+            for ruleEntityData in rulesEntityData {
+                let ruleEntity = try OstRule.parse(ruleEntityData)
+                if (nil == ruleObj) {
+                    ruleObj = ruleEntity
+                }
+            }
+            return ruleObj
         default:
             return nil
         }
