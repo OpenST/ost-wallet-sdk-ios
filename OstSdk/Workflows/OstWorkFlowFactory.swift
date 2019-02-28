@@ -37,7 +37,7 @@ extension OstSdk {
         let activateUserObj = OstActivateUser(userId: userId, pin: pin, password: password, spendingLimit: spendingLimit, expirationHeight: expirationHeight, delegate: delegate)
         activateUserObj.perform()
     }
-  
+
     /// Add device with mnemonicss.
     ///
     /// - Parameters:
@@ -58,17 +58,17 @@ extension OstSdk {
         self.addDeviceWithMnemonics(userId: userId, mnemonics: mnemonicsArray, delegate: delegate)
     }
     
-  /// Add session for user.
-  ///
-  /// - Parameters:
-  ///   - userId: Kit user id
-  ///   - spendingLimit: Amount user can spend in a transaction.
-  ///   - expiresAfter: Seconds after which the session key should expire.
-  ///   - delegate: Callback for action complete or to perform respective action
-  public class func addSession(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
-    let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expiresAfter: expiresAfter, delegate: delegate)
-    ostAddSession.perform()
-  }
+    /// Add session for user.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id
+    ///   - spendingLimit: Amount user can spend in a transaction.
+    ///   - expiresAfter: Seconds after which the session key should expire.
+    ///   - delegate: Callback for action complete or to perform respective action
+    public class func addSession(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
+        let ostAddSession = OstAddSession(userId: userId, spendingLimit: spendingLimit, expiresAfter: expiresAfter, delegate: delegate)
+        ostAddSession.perform()
+    }
     
     /// Perform operations for given QR-Code image of core image type.
     ///
@@ -78,7 +78,7 @@ extension OstSdk {
     ///   - delegate: Callback for action complete or to perform respective action
     public class func perform(userId: String, ciImage qrCodeCoreImage: CIImage, delegate: OstWorkFlowCallbackProtocol) {
         let payload: [String]? = qrCodeCoreImage.readQRCode
-
+        
         //Note: Validations have been moved inside.
         //This is done to trigger flowInterupt; IMHO; the proper way.
         self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
@@ -98,7 +98,7 @@ extension OstSdk {
     /// Get paper wallet of given user id.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id
+    ///   - userId: Kit user id.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func getPaperWallet(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         let paperWalletObj = OstGetPapaerWallet(userId: userId, delegate: delegate)
@@ -107,8 +107,8 @@ extension OstSdk {
     
     /// Get QR-Code to add device.
     ///
-    /// - Parameter userId: Kit user id
-    /// - Returns: Core image of QR-Code
+    /// - Parameter userId: Kit user id.
+    /// - Returns: Core image of QR-Code.
     /// - Throws: OstError
     public class func getAddDeviceQRCode(userId: String) throws -> CIImage? {
         
@@ -122,7 +122,32 @@ extension OstSdk {
                                              "ddv": 1.0,
                                              "d":["da":currentDevice.address!]]
         let qrCodePayloadString: String = try OstUtils.toJSONString(QRCodePaylaod)!
-
+        
         return qrCodePayloadString.qrCode
+    }
+    
+    
+    /// Execute transaction
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - tokenId: Token id.
+    ///   - ruleName: Rule name to execute.
+    ///   - tokenHolderAddresses: Token holder address whome to send amount.
+    ///   - amounts: Amount to send.
+    ///   - delegate: Callback for action complete or to perform respective actions.
+    public class func executeTransaction(userId: String,
+                                         tokenId: String,
+                                         ruleName: String,
+                                         tokenHolderAddresses: [String],
+                                         amounts: [String],
+                                         delegate: OstWorkFlowCallbackProtocol) {
+        let executeTransactionObj = OstExecuteTransaction(userId: userId,
+                                                          ruleName: ruleName,
+                                                          tokenHolderAddresses: tokenHolderAddresses,
+                                                          amounts: amounts,
+                                                          tokenId: tokenId,
+                                                          delegate: delegate)
+        executeTransactionObj.perform()
     }
 }
