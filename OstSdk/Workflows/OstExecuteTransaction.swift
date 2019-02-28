@@ -9,8 +9,11 @@
 import Foundation
 import BigInt
 
+/// Rule name
 let PAYLOAD_RULE_NAME_KEY = "rn"
+/// Token holder addresses
 let PAYLOAD_ADDRESSES_KEY = "ads"
+/// amounts to transfer
 let PAYLOAD_AMOUNTS_KEY = "ams"
 let PAYLOAD_TOKEN_ID_KEY = "tid"
 
@@ -33,16 +36,19 @@ class OstExecuteTransaction: OstWorkflowBase {
     class func getExecuteTransactionParamsFromQRPayload(_ payload: [String: Any?]) throws -> ExecuteTransactionPayloadParams {
         
         guard let ruleName: String = payload[PAYLOAD_RULE_NAME_KEY] as? String else {
-            throw OstError("w_et_getpfqrp_1", .ruleNameNotFound)
+            throw OstError("w_et_getpfqrp_1", .invalidQRCode)
         }
         guard let addresses: [String] = payload[PAYLOAD_ADDRESSES_KEY] as? [String] else {
-            throw OstError("w_et_getpfqrp_2", .addressesNotFound)
+            throw OstError("w_et_getpfqrp_2", .invalidQRCode)
         }
         guard let amounts: [String] = payload[PAYLOAD_AMOUNTS_KEY] as? [String] else {
-            throw OstError("w_et_getpfqrp_3", .amountsNotFound)
+            throw OstError("w_et_getpfqrp_3", .invalidQRCode)
         }
         guard let tokenId: String = OstUtils.toString(payload[PAYLOAD_TOKEN_ID_KEY] as Any?) else {
-            throw OstError("w_et_getpfqrp_4", .tokenIdNotFound)
+            throw OstError("w_et_getpfqrp_4", .invalidQRCode)
+        }
+        if (amounts.count != addresses.count) {
+            throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
         
         return (ruleName, addresses, amounts, tokenId)
@@ -55,8 +61,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     
     var rule: OstRule? = nil
     var activeSession: OstSession? = nil
-    var currentUser: OstUser? = nil
-    var currentDevice: OstCurrentDevice? = nil
+
     var calldata: String? = nil
     var eip1077Hash: String? = nil
     var signature: String? = nil
@@ -160,12 +165,15 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
     }
     
+    //TODO: - get addresses for KeyManager and get session from db.
+    // validate and
     /// Get active session from db.
     func getActiveSession() {
         do {
             if (nil == self.activeSession) {
                 if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
                     for session in activeSessions {
+                        //TODO: check session expiry time.
                         let totalTransactionSpendingLimit = try getTransactionSpendingLimit()
                         let spendingLimit = BigInt(session.spendingLimit ?? "0")
                         if spendingLimit >= totalTransactionSpendingLimit {

@@ -30,7 +30,7 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     
     class func getDevice(userId: String, addressToAdd: String, onSuccess: @escaping ((OstDevice) -> Void), onFailure: @escaping ((OstError) -> Void)) throws {
         let onSuccess: ((OstDevice) -> Void) = { ostDevice in
-            if (ostDevice.isDeviceRegistered()) {
+            if (ostDevice.isStatusRegistered) {
                 onSuccess(ostDevice)
             }else {
                 onFailure(OstError("w_a_ad_gd_1", .deviceNotRegistered))

@@ -39,7 +39,7 @@ class OstPerform: OstWorkflowBase {
                 guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
                     throw OstError.init("w_p_p_1", .deviceNotset)
                 }
-                if (!currentDevice.isDeviceRegistered()) {
+                if (!currentDevice.isStatusRegistered) {
                     throw OstError.init("w_p_p_2", .deviceNotRegistered)
                 }
                 
@@ -99,8 +99,9 @@ class OstPerform: OstWorkflowBase {
     func startSubWorkflow() throws {
         switch self.dataDefination {
         case OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue:
+            let deviceAddress = try OstAddDeviceWithQRData.getAddDeviceParamsFromQRPayload(self.payloadData!)
             OstAddDeviceWithQRData(userId: self.userId,
-                                   qrCodeData: payloadData!,
+                                   deviceAddress: deviceAddress,
                                    delegate: self.delegate).perform()
             
         case OstQRCodeDataDefination.TRANSACTION.rawValue:

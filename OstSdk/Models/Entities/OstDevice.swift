@@ -47,25 +47,6 @@ public class OstDevice: OstBaseEntity {
     override func getParentId() -> String? {
         return OstUtils.toString(self.data[OstDevice.OSTDEVICE_PARENTID] as Any?)
     }
-    
-    //TODO: - remove this method.
-    public func isDeviceRegistered() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return false
-        }
-        
-        return ["REGISTERED", "AUTHORIZING", "AUTHORIZED"].contains(status!)
-    }
-    
-    public  func isDeviceRevoked() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return true
-        }
-        
-        return ["REVOKING", "REVOKED"].contains(status!)
-    }
 }
 
 public extension OstDevice {

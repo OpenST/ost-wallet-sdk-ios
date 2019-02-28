@@ -150,4 +150,8 @@ extension OstSdk {
                                                           delegate: delegate)
         executeTransactionObj.perform()
     }
+    
+    public class func pole() {
+        
+    }
 }

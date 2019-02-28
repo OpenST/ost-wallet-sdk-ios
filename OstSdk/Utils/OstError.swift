@@ -120,10 +120,4 @@ public enum OstErrorText: String {
     case sdkError = "An internal SDK error has occoured."
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
-    
-    //qr-code errors
-    case ruleNameNotFound = "Rule Name not found."
-    case addressesNotFound = "Addresses not found."
-    case amountsNotFound = "Amounts not found."
-    case tokenIdNotFound = "Token Id not found."
 }

@@ -16,8 +16,6 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     
     let mnemonics: [String]
     
-    var user: OstUser? = nil
-    var currentDevice: OstCurrentDevice? = nil
     var ostWalletKeys: OstWalletKeys? = nil
     
     init(userId: String,
@@ -51,12 +49,12 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
             do {
                 try self.validateParams()
                 
-                self.user = try self.getUser()
-                if (self.user == nil) {
+                self.currentUser = try self.getUser()
+                if (self.currentUser == nil) {
                     throw OstError("w_adwm_p_1", OstErrorText.userNotFound)
                 }
                 
-                if (!self.user!.isStatusActivated) {
+                if (!self.currentUser!.isStatusActivated) {
                     throw OstError("w_adwm_p_2", OstErrorText.userNotActivated)
                 }
                 
@@ -65,7 +63,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
                     throw OstError("w_adwm_p_3",  OstErrorText.deviceNotset)
                 }
                 
-                if (!self.currentDevice!.isDeviceRegistered()) {
+                if (!self.currentDevice!.isStatusRegistered) {
                     throw OstError("w_adwm_p_4", .deviceNotRegistered)
                 }
                 
@@ -94,7 +92,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
                 if (!ostDevice.isStatusAuthorized) {
                     throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
                 }
-                if (ostDevice.address!.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
+                if (ostDevice.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) == .orderedSame){
                     throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
                 }
                 self.authorizeDeviceWithMnemonics()
