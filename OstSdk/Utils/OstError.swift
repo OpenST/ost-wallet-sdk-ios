@@ -102,6 +102,13 @@ public enum OstErrorText: String {
     case invalidQRCode = "Invalid QR Code"
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
+    case rulesNotFound = "Rulse not found."
+    case invalidAmount = "Amount to do transaction is invalid."
+    case sessionNotFound = "Session not found."
+    case callDataFormationFailed = "Calldata formation failed."
+    case transactionFailed = "Transaction failed."
+    
+    
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."
@@ -114,7 +121,9 @@ public enum OstErrorText: String {
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
     
-    
-    
-    
+    //qr-code errors
+    case ruleNameNotFound = "Rule Name not found."
+    case addressesNotFound = "Addresses not found."
+    case amountsNotFound = "Amounts not found."
+    case tokenIdNotFound = "Token Id not found."
 }

@@ -16,7 +16,7 @@ class OstSecureKeyDbQueries: OstBaseDbQueries {
     }
     
     override func getSelectByIdQuery(_ key: String) -> String {
-        return "SELECT * FROM \(activityName()) WHERE key=\"\(key)\""
+        return "SELECT * FROM \(activityName()) WHERE key=\"\(key.lowercased())\""
     }
     
     override func getInsertOrUpdateQuery() -> String {
@@ -24,12 +24,12 @@ class OstSecureKeyDbQueries: OstBaseDbQueries {
     }
     
     override func getDeleteQueryForId(_ key: String) -> String{
-        return "DELETE FROM \(activityName()) WHERE key=\"\(key)\""
+        return "DELETE FROM \(activityName()) WHERE key=\"\(key.lowercased())\""
     }
     
     override func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
         let entityData: [String: Any] = (params as! OstSecureKey).toDictionary()
-        let queryParams : [String: Any] = ["key": (params as! OstSecureKey).address,
+        let queryParams : [String: Any] = ["key": (params as! OstSecureKey).address.lowercased(),
                                            "data": OstUtils.toEncodedData(entityData)
                                           ]
         return queryParams
