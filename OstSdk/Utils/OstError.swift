@@ -103,6 +103,7 @@ public enum OstErrorText: String {
     case invalidEntityType = "Invalid entity type."
     case invalidQRCode = "Invalid QR Code"
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
+    case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."

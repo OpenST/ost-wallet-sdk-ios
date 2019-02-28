@@ -265,13 +265,13 @@ public class OstKeyManager {
     ///
     /// - Parameter pinString: Pin string generated at the time of activate user.
     /// - Returns: true if data stored in keychain successfully.
-    public func verifyRecoveryPinString(_ pinString: String) -> Bool {
+    public func verifyRecoveryPinString(_ pinString: String) throws -> Bool {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
-            return false
+            throw OstError("s_i_km_vrps_1", .recoveryPinNotFoundInKeyManager)
         }
         guard let hashData = OstUtils.toDecodedValue(hashEncodedData) as? Data else {
-            return false
+            throw OstError("s_i_km_vrps_2", .recoveryPinNotFoundInKeyManager)
         }
         let storedStringHash = String(bytes: hashData, encoding: .utf8)!
         
