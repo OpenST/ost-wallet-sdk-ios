@@ -34,6 +34,25 @@ public class OstToken: OstBaseEntity {
         return try OstTokenRepository.sharedToken.getById(tokenId) as? OstToken
     }
     
+    /// Initializer
+    ///
+    /// - Parameter tokenId: Token id
+    /// - Throws: OstError
+    class func initToken(_ tokenId: String) throws -> OstToken? {
+        if let tokenObj = try OstToken.getById(tokenId) {
+            return tokenObj
+        }
+        
+        let userEntityData = [
+            "id": tokenId,
+            "status": OstUser.Status.CREATED.rawValue,
+            "updated_timestamp": OstUtils.toString(Date.timestamp())
+        ]
+        
+        try OstToken.storeEntity(userEntityData)
+        return try OstToken.getById(tokenId)!
+    }
+    
     /// Get key identifier for id
     ///
     /// - Returns: Key identifier for id

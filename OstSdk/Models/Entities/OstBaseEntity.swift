@@ -52,8 +52,9 @@ public class OstBaseEntity: NSObject {
     /// - Parameter id: id string
     /// - Returns: `true` if valid, otherwise `false`
     private func isIdValid(_ entityData: [String: Any]) -> Bool {
-        let id = OstBaseEntity.getItem(fromEntity: entityData,
-                              forKey: self.getIdKey()) as? String
+        let id = OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: entityData, forKey: self.getIdKey()) as Any?
+        )
         if (id == nil) {
             return false
         }
@@ -127,19 +128,21 @@ public class OstBaseEntity: NSObject {
     }
 }
 
-extension OstBaseEntity {
+public extension OstBaseEntity {
     /// Get the entity's id
     var id: String? {
         let keyIdentifier = self.getIdKey()
-        return OstBaseEntity.getItem(fromEntity: self.entityData,
-                                     forKey: keyIdentifier) as? String
+        return OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+        )
     }
     
     /// Get the entity's parent id
     var parentId: String? {
         let keyIdentifier = self.getParentIdKey()
-        return OstBaseEntity.getItem(fromEntity: self.entityData,
-                                     forKey: keyIdentifier) as? String
+        return OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+        )
     }
     
     /// Get the entity data
@@ -150,8 +153,9 @@ extension OstBaseEntity {
     /// Get the entity's id
     var status: String? {
         let keyIdentifier = self.getStatusKey()
-        if let statusValue = OstBaseEntity.getItem(fromEntity: self.entityData,
-                                                   forKey: keyIdentifier) as? String {
+        if let statusValue = OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+            ) {
             return statusValue.uppercased()
         }
         return nil
@@ -160,8 +164,7 @@ extension OstBaseEntity {
     /// Get the entity's updated timestamp
     var updatedTimestamp: TimeInterval {
         let keyIdentifier = self.getUpdatedTimestampKey()
-        if let timeStamp = OstBaseEntity.getItem(fromEntity: self.entityData,
-                                                 forKey: keyIdentifier) as? String {
+        if let timeStamp = OstUtils.toString(OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?) {
             return TimeInterval(timeStamp) ?? 0
         }
         return 0

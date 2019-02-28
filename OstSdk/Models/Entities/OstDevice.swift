@@ -75,7 +75,7 @@ public class OstDevice: OstBaseEntity {
     /// Check if the device is already registered
     ///
     /// - Returns: `true` if registered otherwise `false`
-    func isDeviceRegistered() -> Bool {
+    public func isDeviceRegistered() -> Bool {
         let status = self.status
         if (status == nil) {
             return false
@@ -88,7 +88,7 @@ public class OstDevice: OstBaseEntity {
     /// Check if the device status is REVOKING or REVOKED
     ///
     /// - Returns: `true` if status is REVOKING or REVOKED otherwise `false`
-    func isDeviceRevoked() -> Bool {
+    public func isDeviceRevoked() -> Bool {
         let status = self.status
         if (status == nil) {
             return true

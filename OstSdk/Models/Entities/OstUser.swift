@@ -45,6 +45,28 @@ public class OstUser: OstBaseEntity {
         return try OstUserModelRepository.sharedUser.getById(userId) as? OstUser
     }
 
+    /// Initializer for OstUser
+    ///
+    /// - Parameters:
+    ///   - id: User id
+    ///   - tokenId: Token id
+    /// - Throws: OstError
+    class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser {
+        if let userObj = try OstUser.getById(id) {
+            return userObj
+        }
+        
+        let userEntityData = [
+            "id": id,
+            "token_id": tokenId,
+            "status": OstUser.Status.CREATED.rawValue,
+            "updated_timestamp": OstUtils.toString(Date.timestamp())
+        ]
+        
+        try OstUser.storeEntity(userEntityData)
+        return try OstUser.getById(id)!
+    }
+
     /// Get key identifier for id
     ///
     /// - Returns: Key identifier for id
@@ -72,7 +94,7 @@ public class OstUser: OstBaseEntity {
     /// Get current device model object
     ///
     /// - Returns: OstCurrentDevice model object
-    func getCurrentDevice() -> OstCurrentDevice? {
+    public func getCurrentDevice() -> OstCurrentDevice? {
         // if user id is not available return nil
         guard let userId = self.id else {
             return nil
@@ -120,7 +142,7 @@ public extension OstUser {
     
     /// Get token id.
     var tokenId: String? {
-        return self.data["token_id"] as? String
+        return OstUtils.toString(self.data["token_id"] as Any)
     }
 }
 

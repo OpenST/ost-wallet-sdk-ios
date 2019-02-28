@@ -34,7 +34,7 @@ class OstBaseModelRepository {
     /// - Parameter entityData: Entity data
     /// - Returns: TimeInterval
     class func getUpdatedTimestamp(_ entityData: [String: Any?]) -> TimeInterval {
-        guard let timestamp: String = entityData[OstBaseEntity.UPDATED_TIMESTAMP] as? String else {
+        guard let timestamp: String = OstUtils.toString(entityData[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) else {
             return 0
         }
         return TimeInterval(timestamp) ?? 0

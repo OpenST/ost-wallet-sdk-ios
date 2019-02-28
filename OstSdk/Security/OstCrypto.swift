@@ -57,13 +57,4 @@ protocol OstCrypto {
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
     func generateOstWalletKeys() throws -> OstWalletKeys
-    
-    /// Sign the transaction with private key
-    ///
-    /// - Parameters:
-    ///   - tx: Raw transaction string
-    ///   - privateKey: private key string
-    /// - Returns: Signed transaction string
-    /// - Throws: OSTError
-    func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String
 }

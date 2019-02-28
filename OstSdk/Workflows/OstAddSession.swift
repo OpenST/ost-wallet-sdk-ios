@@ -20,7 +20,7 @@ class OstAddSession: OstWorkflowBase {
     
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
-    var walletKeys: OstWalletKeys? = nil
+    var sessionAddress: String? = nil
     var chainInfo: [String: Any]? = nil
   
 
@@ -62,21 +62,8 @@ class OstAddSession: OstWorkflowBase {
     
     func generateSessionKeys() {
         do {
-            self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
-            
-            if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
-                self.postError(OstError.init("w_as_gsk_1", .userActivationFailed))
-            }
-            
-            self.currentDevice = try getCurrentDevice()
-            if (nil == self.currentDevice) {
-                throw OstError.init("w_as_gsk_2", .deviceNotFound)
-            }
-            
-            let sessionKeyInfo: OstSessionKeyInfo = try self.currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
-            
-            var ostSecureKey = OstSecureKey(address: walletKeys!.address!, privateKeyData: sessionKeyInfo.sessionKeyData, isSecureEnclaveEnrypted: sessionKeyInfo.isSecureEnclaveEncrypted)
-            ostSecureKey = OstSecureKeyRepository.sharedSecureKey.insertOrUpdateEntity(ostSecureKey) as! OstSecureKey
+            let keyMananger = OstKeyManager(userId: self.userId)
+            self.sessionAddress = try keyMananger.createSessionKey()
         }catch let error {
             self.postError(error)
         }
@@ -104,8 +91,7 @@ class OstAddSession: OstWorkflowBase {
             do {
                 let keychainManager = OstKeyManager(userId: self.userId)
                 if let deviceAddress = keychainManager.getDeviceAddress() {
-                    let privatekey = try keychainManager.getDeviceKey()
-                    let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
+                    let signature = try keychainManager.signWithDeviceKey(signingHash)
                     return (signature, deviceAddress)
                 }
                 throw OstError("w_as_as_1", .signatureGenerationFailed)
@@ -134,7 +120,7 @@ class OstAddSession: OstWorkflowBase {
         self.generateAndSaveSessionEntity()
      
         OstAuthorizeSession(userId: self.userId,
-                            sessionAddress: self.walletKeys!.address!,
+                            sessionAddress: self.sessionAddress!,
                             spendingLimit: self.spendingLimit,
                             expirationHeight: OstUtils.toString(self.expirationHeight!)!,
                             generateSignatureCallback: generateSignatureCallback,
@@ -145,7 +131,7 @@ class OstAddSession: OstWorkflowBase {
     func generateAndSaveSessionEntity() {
         do {
             let params = self.getSessionEnityParams()
-            _ = try OstSession.parse(params)
+            try OstSession.storeEntity(params)
         }catch let error {
             self.postError(error)
         }
@@ -154,11 +140,11 @@ class OstAddSession: OstWorkflowBase {
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
-        params["address"] = self.walletKeys!.address!
+        params["address"] = self.sessionAddress!
         params["expiration_height"] = self.expirationHeight!
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
-        params["status"] = OstSession.SESSION_STATUS_CREATED
+        params["status"] = OstSession.Status.CREATED.rawValue
         
         return params
     }

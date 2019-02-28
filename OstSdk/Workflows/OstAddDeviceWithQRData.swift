@@ -94,8 +94,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
                 do {
                     let keychainManager = OstKeyManager(userId: self.userId)
                     if let deviceAddress = keychainManager.getDeviceAddress() {
-                        let privatekey = try keychainManager.getDeviceKey()
-                        let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privatekey!)
+                        let signature = try keychainManager.signWithDeviceKey(signingHash)
                         return (signature, deviceAddress)
                     }
                     throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);

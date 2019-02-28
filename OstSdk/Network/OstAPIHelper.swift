@@ -98,7 +98,7 @@ class OstAPIHelper {
         case ResultType.deviceManager.rawValue:
             try OstDeviceManager.storeEntity(entityData!)
         case ResultType.session.rawValue:
-            _ = try OstSession.parse(entityData!)
+            try OstSession.storeEntity(entityData!)
         default:
             return
         }
@@ -118,26 +118,33 @@ class OstAPIHelper {
         if (entityData == nil) {
             throw OstError.init("n_ah_gse_1", .entityNotAvailable)
         }
+        
+        let getItem: ((String) throws -> String) = { (identifier) -> String in
+            guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData!, forKey: identifier) as Any?) else {
+                throw OstError("n_ah_gse_2", .invalidEntityType)
+            }
+            return id
+        }
+        
         var id: String
         switch resultType {
         case ResultType.token.rawValue:
-            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstToken.ENTITY_IDENTIFIER) as! String
+            id = try getItem(OstToken.ENTITY_IDENTIFIER)
             return try OstToken.getById(id)!
         case ResultType.user.rawValue:
-            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstUser.ENTITY_IDENTIFIER) as! String
+            id = try getItem(OstUser.ENTITY_IDENTIFIER)
             return try OstUser.getById(id)!
         case ResultType.device.rawValue:
-            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstDevice.ENTITY_IDENTIFIER) as! String
+            id = try getItem(OstDevice.ENTITY_IDENTIFIER)
             return try OstDevice.getById(id)!
         case ResultType.deviceManager.rawValue:
-            id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstDeviceManager.ENTITY_IDENTIFIER) as! String
+            id = try getItem(OstDeviceManager.ENTITY_IDENTIFIER)
             return try OstDeviceManager.getById(id)!
-        case ResultType.session.rawValue: break
-            // TODO
-            //id = OstBaseEntity.getItem(fromEntity: entityData!, forKey: OstSession.ENTITY_IDENTIFIER) as! String
-            //return try OstSession.getById(id)!
+        case ResultType.session.rawValue:
+            id = try getItem(OstSession.ENTITY_IDENTIFIER)
+            return try OstSession.getById(id)!
         default:
-            throw OstError("n_ah_gse_2", .invalidEntityType)
+            throw OstError("n_ah_gse_3", .invalidEntityType)
         }
     }
 }

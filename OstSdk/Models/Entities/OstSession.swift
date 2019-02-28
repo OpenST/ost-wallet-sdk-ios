@@ -38,6 +38,15 @@ public class OstSession: OstBaseEntity {
             )
     }
     
+    /// Get OstRule object from given address
+    ///
+    /// - Parameter address: Session address
+    /// - Returns: OstSession model object
+    /// - Throws: OSTError
+    class func getById(_ address: String) throws -> OstSession? {
+        return try OstSessionRepository.sharedSession.getById(address) as? OstSession
+    }
+    
     /// Get key identifier for id
     ///
     /// - Returns: Key identifier for id
@@ -133,7 +142,7 @@ public extension OstSession {
     }
 }
 
-
+/*
 extension OstSession{
     public final class Transaction {
         public var from: String
@@ -185,3 +194,4 @@ extension OstSession{
         return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: privateKey)
     }
 }
+*/
