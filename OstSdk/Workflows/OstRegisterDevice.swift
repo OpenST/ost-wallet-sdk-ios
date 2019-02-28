@@ -41,7 +41,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                     return
                 }
                 
-                if(!currentDevice!.isStatusRegistered) {
+                if(currentDevice!.isStatusRegistered) {
                     self.registerDevice(currentDevice!.data as [String : Any])
                     return
                 }

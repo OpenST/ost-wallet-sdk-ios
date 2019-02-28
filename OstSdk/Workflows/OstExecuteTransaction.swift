@@ -244,24 +244,6 @@ class OstExecuteTransaction: OstWorkflowBase {
         return nil
     }
     
-//    func getEIP1077Hash(data: String) throws -> String {
-//
-//        var eip1077Params: [String: String] = [:]
-//
-//        eip1077Params["from"] = self.currentUser!.tokenHolderAddress!
-//        eip1077Params["to"] = self.rule!.address!
-//        eip1077Params["value"] = "0"
-//        eip1077Params["gasPrice"] = "0"
-//        eip1077Params["gas"] = "0"
-//        eip1077Params["data"] = data
-//        eip1077Params["nonce"] = OstUtils.toString(self.activeSession!.nonce)!
-//        eip1077Params["callPrefix"] = TokenRule.EXECUTE_RULE_CALLPREFIX
-//
-//        let eip1077Hash = try EIP1077(transaction: eip1077Params).toEIP1077transactionHash()
-//        return eip1077Hash
-//    }
-//
-    
     /// Execute transaction.
     func executeTransaction() {
         do {

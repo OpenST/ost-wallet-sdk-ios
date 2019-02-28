@@ -151,7 +151,11 @@ extension OstSdk {
         executeTransactionObj.perform()
     }
     
-    public class func pole() {
-        
+    public class func pole(userId: String, entityId: String, entityType: OstPollingEntityType, delegate: OstWorkFlowCallbackProtocol ) {
+        let pollingObj = OstPolling(userId: userId,
+                                    entityId: entityId,
+                                    entityType: entityType,
+                                    delegate: delegate)
+        pollingObj.perform()
     }
 }
