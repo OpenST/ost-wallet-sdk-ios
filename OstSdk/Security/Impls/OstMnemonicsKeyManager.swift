@@ -8,9 +8,10 @@
 
 import Foundation
 
-class OstMnemonicsKeyManager: OstKeyManager{
+class OstMnemonicsKeyManager {
 
     private let mnemonics: [String]
+    private let userId: String
     private(set) var ethereumAddress: String? = nil
 
     // MARK: - Initializers
@@ -22,7 +23,7 @@ class OstMnemonicsKeyManager: OstKeyManager{
     ///   - userId: User id whose keys will be managed.
     init (withMnemonics mnemonics:[String], andUserId userId: String) {
         self.mnemonics = mnemonics
-        super.init(userId: userId)                
+        self.userId = userId
     }
  
     /// Get address
@@ -65,7 +66,8 @@ class OstMnemonicsKeyManager: OstKeyManager{
     /// - Returns: Signed message
     /// - Throws: OstError
     func sign(_ tx: String) throws -> String {
-        return try self.sign(tx, withMnemonics: self.mnemonics)
+        let keyManager = OstKeyManager(userId: self.userId)
+        return try keyManager.sign(tx, withMnemonics: self.mnemonics)
     }
     
     /// Create OstWalletKey object
@@ -74,6 +76,7 @@ class OstMnemonicsKeyManager: OstKeyManager{
     /// - Throws: OstError
     private func createWallet() throws -> OstWalletKeys? {
         do {
+            // TODO: Discuss with team if this need to be moved to OstKeyManager
             let ostWalletKeys: OstWalletKeys = try OstCryptoImpls().generateEthereumKeys(withMnemonics: mnemonics)
             self.ethereumAddress = ostWalletKeys.address
             return ostWalletKeys
