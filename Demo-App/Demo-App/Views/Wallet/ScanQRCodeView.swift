@@ -337,7 +337,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         if ( workflowContext.workflowType == .addDeviceWithQRCode ) {
             let device = ostContextEntity.entity as! OstDevice;
             showAuthorizeDeviceInfo(ostDevice: device);
-        } else if ( workflowContext.workflowType == .sendTransaction ) {
+        } else if ( workflowContext.workflowType == .executeTransaction ) {
             //To-Do: Show transaction info.
         }
     }

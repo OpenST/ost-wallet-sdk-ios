@@ -131,7 +131,9 @@ class WalletViewController: UIViewController {
     case ViewMode.SHOW_USER_DETAILS:
         self.title = "View Details"
         return UserDetailsView()
-        
+    case ViewMode.SEND_TRANSACTION:
+        self.title = "Send Transaction"
+        return SendTransactionView()
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()
