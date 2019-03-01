@@ -33,19 +33,21 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 try self.initToken()
                 try self.initUser()
                 
-                let currentDevice = try self.getCurrentDevice()
-                if (currentDevice == nil ||
-                    currentDevice!.isStatusRevoked ||
-                    currentDevice!.isStatusRevoking) {
+                self.currentDevice = try self.getCurrentDevice()
+                if (self.currentDevice == nil ||
+                    self.currentDevice!.isStatusRevoked ||
+                    self.currentDevice!.isStatusRevoking) {
                     self.createAndRegisterDevice()
                     return
                 }
                 
-                if(currentDevice!.isStatusRegistered) {
-                    self.registerDevice(currentDevice!.data as [String : Any])
+                if (self.currentDevice!.isStatusCreated) {
+                    DispatchQueue.main.async {
+                        self.delegate.registerDevice(self.currentDevice!.data, delegate: self)
+                    }
                     return
                 }
-            
+                
                 self.forceSync = true
                 self.sync()
             }catch let error {

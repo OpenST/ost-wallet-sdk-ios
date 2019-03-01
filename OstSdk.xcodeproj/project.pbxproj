@@ -1685,7 +1685,6 @@
 				4B49890C21F6F2AF00ED0E94 /* EthereumQuantity.swift in Sources */,
 				4B49890621F6F2AF00ED0E94 /* EthereumBlockObject.swift in Sources */,
 				4BE89584222128EA009C6A44 /* OstWorkflowContext.swift in Sources */,
-				4B00CCF221E4C414005A5696 /* OstSecureKeyDbQueries.swift in Sources */,
 				4B12141E2227D3A200C185D2 /* OstAPITransaction.swift in Sources */,
 				4BAE56DD2214514600327A19 /* OstBasePollingService.swift in Sources */,
 				4B49891321F6F2AF00ED0E94 /* EthereumLogObject.swift in Sources */,

@@ -131,9 +131,14 @@ public extension OstUser {
         return self.data["device_manager_address"] as? String
     }
     
-    /// Get recovery address.
-    var recoveryAddress: String? {
+    /// Get recovery owner address.
+    var recoveryOwnerAddress: String? {
         return self.data["recovery_owner_address"] as? String
+    }
+    
+    /// Get recovery owner address.
+    var recoveryAddress: String? {
+        return self.data["recovery_address"] as? String
     }
     
     /// Get token id.

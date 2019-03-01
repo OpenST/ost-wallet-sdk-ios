@@ -665,7 +665,7 @@ extension OstKeyManager {
             size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES
         )
         let privateKey = wallet.privateKey()
-        return try sign(message, withPrivatekey: privateKey.toHexString())
+        return try signTx(message, withPrivatekey: privateKey.toHexString())
     }
 
     /// Sign message with private key
