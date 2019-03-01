@@ -26,7 +26,7 @@ class OstAPITransaction: OstAPIBase {
         post(params: executeTransactionParams as [String: AnyObject],
              onSuccess: { (apiResponse) in
                 do {
-                    let transaction = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let transaction = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(transaction as! OstTransaction)
                 }catch let error{
                     onFailure?(error as! OstError)
@@ -45,7 +45,7 @@ class OstAPITransaction: OstAPIBase {
 
         get(params: params as [String: AnyObject], onSuccess: { (apiResponse) in
             do {
-                let transaction = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                let transaction = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                 onSuccess?(transaction as! OstTransaction)
             }catch let error{
                 onFailure?(error as! OstError)

@@ -17,8 +17,8 @@ class OstActivateUser: OstWorkflowBase {
     var expirationHeight: Int
     
     var salt: String = "salt"
-    var walletKeys: OstWalletKeys? = nil
-    var recoveryAddreass: String? = nil
+    var sessionAddress: String? = nil
+    var recoveryAddress: String? = nil
     var currentBlockHeight: Int = 0
     
     let workflowTransactionCountForPolling = 2
@@ -68,9 +68,9 @@ class OstActivateUser: OstWorkflowBase {
                 }
 
                 let onCompletion: (() -> Void) = {
-                    self.recoveryAddreass = self.getRecoveryKey()
+                    self.recoveryAddress = self.getRecoveryKey()
 
-                    if (self.recoveryAddreass == nil) {
+                    if (self.recoveryAddress == nil) {
                         self.postError(OstError.init("w_p_p_4", .recoveryAddressNotFound))
                         return
                     }
@@ -135,16 +135,8 @@ class OstActivateUser: OstWorkflowBase {
     //TODO: - merge code with add session
     func generateSessionKeys() {
         do {
-            self.walletKeys = try OstCryptoImpls().generateOstWalletKeys()
-            
-            if (self.walletKeys == nil || self.walletKeys!.privateKey == nil || self.walletKeys!.address == nil) {
-                self.postError(OstError.init("w_au_gsk_1", .userActivationFailed))
-            }
-            
-            let sessionKeyInfo: OstSessionKeyInfo = try currentDevice!.encrypt(privateKey: walletKeys!.privateKey!)
-            
-            var ostSecureKey = OstSecureKey(address: walletKeys!.address!, privateKeyData: sessionKeyInfo.sessionKeyData, isSecureEnclaveEnrypted: sessionKeyInfo.isSecureEnclaveEncrypted)
-            ostSecureKey = OstSecureKeyRepository.sharedSecureKey.insertOrUpdateEntity(ostSecureKey) as! OstSecureKey
+            let keyMananger = OstKeyManager(userId: self.userId)
+            self.sessionAddress = try keyMananger.createSessionKey()
         }catch let error {
             self.postError(error)
         }
@@ -171,7 +163,7 @@ class OstActivateUser: OstWorkflowBase {
     func generateAndSaveSessionEntity() {
         do {
             let params = self.getSessionEnityParams()
-            _ = try OstSession.parse(params)
+            try OstSession.storeEntity(params)
         }catch let error {
             self.postError(error)
         }
@@ -180,11 +172,11 @@ class OstActivateUser: OstWorkflowBase {
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
-        params["address"] = self.walletKeys!.address!
+        params["address"] = self.sessionAddress!
         params["expiration_height"] = self.currentBlockHeight + self.expirationHeight
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
-        params["status"] = OstSession.SESSION_STATUS_CREATED
+        params["status"] = OstSession.Status.CREATED.rawValue
         
         return params
     }
@@ -207,9 +199,9 @@ class OstActivateUser: OstWorkflowBase {
     func getActivateUserParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["spending_limit"] = self.spendingLimit
-        params["recovery_owner_address"] = self.recoveryAddreass!
+        params["recovery_owner_address"] = self.recoveryAddress!
         params["expiration_height"] = self.expirationHeight + self.currentBlockHeight
-        params["session_addresses"] = [self.walletKeys!.address!]
+        params["session_addresses"] = [self.sessionAddress!]
         params["device_address"] = self.currentUser!.getCurrentDevice()!.address!
         
         return params
@@ -232,8 +224,8 @@ class OstActivateUser: OstWorkflowBase {
     
     
     func syncRespctiveEntity() {
-        if (walletKeys?.address != nil) {
-            try? OstAPISession(userId: self.userId).getSession(sessionAddress: walletKeys!.address!, onSuccess: nil, onFailure: nil)
+        if (self.sessionAddress != nil) {
+            try? OstAPISession(userId: self.userId).getSession(sessionAddress: self.sessionAddress!, onSuccess: nil, onFailure: nil)
         }
         try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
         OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: { (_) in

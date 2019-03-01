@@ -127,7 +127,7 @@ class OstExecuteTransaction: OstWorkflowBase {
                         break
                     }
                 }
-                if (nil == self.rule || self.rule?.token_id?.caseInsensitiveCompare(self.tokenId) != .orderedSame) {
+                if (nil == self.rule || self.rule?.tokenId?.caseInsensitiveCompare(self.tokenId) != .orderedSame) {
                    self.getToknRules()
                 }else {
                     self.getActiveSession()

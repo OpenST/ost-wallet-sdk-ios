@@ -43,44 +43,8 @@ class OstAPISigner {
     func sign(resource: String, params: [String: Any?]) throws -> String {
         let queryString: String = getQueryString(for: params)
         let message = "\(resource)?\(queryString)"
-        return try personalSign(message)
-    }
-    
-    /// Get API private key for signing
-    ///
-    /// - Returns: API private key
-    /// - Throws: OSTError
-    private func getApiKey() throws -> String? {
-        if (self.apiKey == nil) {
-            do {
-                self.apiKey = try OstKeyManager(userId: userId).getAPIKey()
-            } catch {
-                throw OstError.init("s_i_as_gak_1", .noPrivateKeyFound)
-            }
-        }
-        return self.apiKey
-    }
-    
-    /// Do personal sign of the message
-    ///
-    /// - Parameter message: Message string that needs to be signed
-    /// - Returns: Signed message string
-    /// - Throws: OSTError
-    private func personalSign(_ message: String) throws -> String {
-        guard let apiPrivateKey = try getApiKey() else{
-            throw OstError.init("s_i_as_ps_1", .noPrivateKeyFound)
-        }
-        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
-                                     privateKey: apiPrivateKey,
-                                     debugPrints: OstConstants.PRINT_DEBUG)
-
-        let singedData: String
-        do {
-            singedData = try wallet.personalSign(message: message)
-        } catch {
-            throw OstError.init("s_i_as_ps_2", .signTxFailed)
-        }
-        return singedData.addHexPrefix()
+        let keyManager = OstKeyManager(userId: self.userId);
+        return try keyManager.signWithAPIKey(message: message)
     }
     
     /// Build the query string from dictionary

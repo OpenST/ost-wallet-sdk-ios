@@ -139,12 +139,7 @@ class OstRecoverDevice: OstWorkflowBase {
                                          message: typedData["message"] as! [String: Any])
             
             let signingHash = try eip712.getEIP712SignHash()
-            let keychainManager = OstKeyManager(userId: self.userId)
-            if let deviceAddress = keychainManager.getDeviceAddress() {
-                let privatekey = try keychainManager.getDeviceKey()
-                
-                
-            }
+            
         }catch let error {
             self.postError(error)
         }

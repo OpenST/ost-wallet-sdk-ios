@@ -79,28 +79,7 @@ class OstCryptoImpls: OstCrypto {
                              publicKey: publicKey.toHexString(),
                              address: address,
                              mnemonics: mnemonics)
-    }
-    
-    /// Sign the transaction with private key
-    ///
-    /// - Parameters:
-    ///   - tx: Raw transaction string
-    ///   - privateKey: private key string
-    /// - Returns: Signed transaction string
-    /// - Throws: OSTError
-    func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
-        let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
-        
-        var singedData: Data
-        do {
-            singedData = try priKey.sign(hash: Data(hex: tx))
-        } catch {
-            throw OstError.init("s_i_ci_stx_1", .signTxFailed)
-        }
-        singedData[64] += 27
-        let singedTx = singedData.toHexString().addHexPrefix();
-        return singedTx
-    }
+    }        
     
     /// Generate recovery password
     ///

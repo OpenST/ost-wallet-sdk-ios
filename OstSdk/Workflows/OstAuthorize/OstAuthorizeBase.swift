@@ -123,8 +123,8 @@ class OstAuthorizeBase {
                                          "signers": [signerAddress],
                                          "signatures": signature!
             ]
-            try self.deviceManager!.incrementAndUpdateNonce(deviceManagerNonce)
             
+            try self.deviceManager!.incrementNonce()
             try apiRequestForAuthorize(params: params)
         }catch let error {
             onFailure(error as! OstError)

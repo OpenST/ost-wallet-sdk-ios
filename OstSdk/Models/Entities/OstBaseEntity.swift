@@ -9,83 +9,159 @@
 import Foundation
 
 public class OstBaseEntity: NSObject {
-    
+    // The table column names.
     static let ID = "id"
     static let PARENT_ID = "parent_id"
     static let DATA = "data"
     static let STATUS = "status"
     static let UPDATED_TIMESTAMP = "updated_timestamp"
     
-    public internal(set) var data: [String: Any?] = ["id":String(Date.negativeTimestamp())]
+    /// Enitity data.
+    private var entityData: [String: Any?] = [:]
     
-    override init() {
-        super.init()
-    }
+    //MARK: - Initializer
     
-     init(_ params: [String: Any]) throws {
+     /// Initializer
+     ///
+     /// - Parameter enitityData: Entity data
+     /// - Throws: OSTError
+    init(_ entityData: [String: Any]) throws {
         super.init()
-        
-        let isValidParams = try validate(params)
-        if (!isValidParams) {
-            throw OstError.init("m_e_be_i", .objectCreationFailed)
-        }
-        
-        setParams(params)
+        try self.updateEntityData(entityData);
     }
 
-    //MARK: - validate
-    func validate(_ params: [String: Any]) throws -> Bool {
-        var isValid: Bool = false
-       
-        isValid = try isValidId(self.getId(params))
+    //MARK: - Validate
     
-        return isValid
+    /// Validate entity data
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Returns: `true` if valid, otherwise `false`
+    func validateEntityData(_ entityData: [String: Any]) throws {
+        // Check if the id in entity data is valid.
+        let isValid = isIdValid(entityData)
+        if (!isValid) {
+            throw OstError.init("m_e_be_ved_1", .invalidId)
+        }
+        // Add more validation code here.
     }
     
-    func isValidId(_ id: Any?) throws -> Bool {
+    /// Check if the id is valid
+    ///
+    /// - Parameter id: id string
+    /// - Returns: `true` if valid, otherwise `false`
+    private func isIdValid(_ entityData: [String: Any]) -> Bool {
+        let id = OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: entityData, forKey: self.getIdKey()) as Any?
+        )
         if (id == nil) {
             return false
         }
         guard let idVal: String = OstUtils.toString(id) else {
-            throw OstError.init("m_e_be_iv_1", .invalidId);
+            return false
         }
-        if (idVal.count < 1) { throw OstError.init("m_e_be_iv_2", .invalidId); }
-        return true
+        return idVal.count > 1
     }
     
-    //MARK: - set properties
-    func setParams(_ params: [String: Any]) {
-        data = params
+    //MARK: - Default lookup keys
+    
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    func getIdKey() -> String {
+        return OstBaseEntity.ID
     }
     
-    func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstBaseEntity.ID] as Any?)!
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    func getParentIdKey() -> String {
+        return OstBaseEntity.PARENT_ID
     }
     
-    func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstBaseEntity.PARENT_ID] as Any?)
+    /// Get key identifier for data
+    ///
+    /// - Returns: Key identifier for data
+    func getDataKey() -> String {
+        return OstBaseEntity.DATA
     }
     
-    func processJson(_ entityData: [String: Any?]){
-        self.data = entityData
+    /// Get key identifier for status
+    ///
+    /// - Returns: Key identifier for status
+    func getStatusKey() -> String {
+        return OstBaseEntity.STATUS
+    }
+    
+    /// Get key identifier for updated timestamp
+    ///
+    /// - Returns: Key identifier for updated timestamp
+    func getUpdatedTimestampKey() -> String {
+        return OstBaseEntity.UPDATED_TIMESTAMP
+    }
+    
+    /// Update entity data
+    ///
+    /// - Parameter entityData: Entity data
+    /// - Throws: OSTError
+    func updateEntityData(_ entityData: [String: Any]) throws{
+        // Check if the provided entity data is valid.
+        try self.validateEntityData(entityData)
+        self.entityData = entityData
+    }
+    
+    /// Get item for the given key from the entity data
+    ///
+    /// - Parameters:
+    ///   - entityData: Entity data
+    ///   - key: Key identifier
+    /// - Returns: Object if found otherwise nil
+    class func getItem(fromEntity entityData:[String:Any?], forKey key: String) -> Any? {
+        guard let value: Any = entityData[key] as Any? else {
+            return nil
+        }
+        return value
     }
 }
 
-
-extension OstBaseEntity {
-    public var id: String { return getId() }
+public extension OstBaseEntity {
+    /// Get the entity's id
+    var id: String {
+        let keyIdentifier = self.getIdKey()
+        return OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+        )!
+    }
     
-    var parnetId: String? { return getParentId() }
+    /// Get the entity's parent id
+    var parentId: String? {
+        let keyIdentifier = self.getParentIdKey()
+        return OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+        )
+    }
     
-    public var status: String? {
-        if let status = self.data[OstBaseEntity.STATUS] {
-            if let statusStringVal = OstUtils.toString(status as Any) {
-                return statusStringVal.uppercased()
-            }
+    /// Get the entity data
+    var data: [String: Any] {
+        return self.entityData as [String : Any]
+    }
+    
+    /// Get the entity's id
+    var status: String? {
+        let keyIdentifier = self.getStatusKey()
+        if let statusValue = OstUtils.toString(
+            OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
+            ) {
+            return statusValue.uppercased()
         }
         return nil
     }
     
-    public var updated_timestamp: Int { return OstUtils.toInt(data[OstBaseEntity.UPDATED_TIMESTAMP] as Any?) ?? 0}
+    /// Get the entity's updated timestamp
+    var updatedTimestamp: TimeInterval {
+        let keyIdentifier = self.getUpdatedTimestampKey()
+        if let timeStamp = OstUtils.toString(OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?) {
+            return TimeInterval(timeStamp) ?? 0
+        }
+        return 0
+    }
 }

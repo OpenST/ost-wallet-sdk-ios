@@ -9,14 +9,17 @@
 import Foundation
 import LocalAuthentication
 import CryptoSwift
+import EthereumKit
 
 let SERVICE_NAME = "com.ost"
 let ETHEREUM_KEY_PREFIX = "Ethereum_key_for_"
 let MNEMONICS_KEY_PREFIX = "Mnemonics_for_"
+let SESSION_KEY_PREFIX = "Session_key_for_"
 let SECURE_ENCLAVE_KEY_PREFIX = "secure_enclave_identifier_"
 let USER_DEVICE_KEY_PREFIX = "user_device_info_for_"
 let ETH_META_MAPPING_KEY = "EthKeyMetaMapping"
 let MNEMONICS_META_MAPPING_KEY = "EthKeyMnemonicsMetaMapping"
+let SESSION_META_MAPPING_KEY = "SessionKeyMetaMapping"
 let API_ADDRESS_KEY = "api_address"
 let DEVICE_ADDRESS_KEY = "device_address"
 let RECOVERY_PIN_HASH = "recovery_pin_hash"
@@ -41,7 +44,7 @@ public struct EthMetaMapping {
     ///   - entityId: Keychain item identifier
     ///   - identifier: Secure enclave key identifier
     ///   - isSecureEnclaveEncrypted: A boolean to indicate if secure enclave encrption is used for storing data
-    public init(address: String, entityId: String, identifier: String = "", isSecureEnclaveEncrypted: Bool = false) {
+    init(address: String, entityId: String, identifier: String = "", isSecureEnclaveEncrypted: Bool = false) {
         self.address = address
         self.entityId = entityId
         self.identifier = identifier
@@ -81,23 +84,23 @@ public class OstKeyManager {
     // MARK: - Instance varaibles
     
     /// Helper object to interact with keychain
-    var keychainHelper: OstKeychainHelper
+    private var keychainHelper: OstKeychainHelper
     
     /// Current user id
-    var userId: String
+    private var userId: String
     
     /// Secure enclave identifier key
-    var secureEnclaveIdentifier: String
+    private var secureEnclaveIdentifier: String
     
     /// Current user's device info
-    var currentUserDeviceInfo: [String: Any]? = nil
+    private var currentUserDeviceInfo: [String: Any]? = nil
     
     // MARK: - Initializers
     
     /// Class initializer
     ///
     /// - Parameter userId: User id whose keys will be managed.
-    public init (userId: String) {
+    init (userId: String) {
         self.userId = userId
         self.keychainHelper = OstKeychainHelper(service: SERVICE_NAME)
         self.secureEnclaveIdentifier = OstKeyManager.getSecureEnclaveKey(forUserId: userId)
@@ -112,6 +115,9 @@ public class OstKeyManager {
     /// - Throws: Exceptions that occurs while creating and storing the keys
     func createAPIKey() throws -> String {
         let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys()
+        if (ethKeys.privateKey == nil || ethKeys.address == nil) {
+            throw OstError("s_i_km_cak_1", .generatePrivateKeyFail)
+        }
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeAPIAddress(ethKeys.address!)
         return ethKeys.address!
@@ -121,7 +127,7 @@ public class OstKeyManager {
     ///
     /// - Parameter address: Ethereum address that needs to be stored
     /// - Throws: Exceptions that occurs while storing the address
-    func storeAPIAddress(_ address: String) throws {
+    private func storeAPIAddress(_ address: String) throws {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         userDeviceInfo[API_ADDRESS_KEY] = address
         try setUserDeviceInfo(deviceInfo: userDeviceInfo)
@@ -130,7 +136,7 @@ public class OstKeyManager {
     /// Get the current users API address
     ///
     /// - Returns: API address
-    public func getAPIAddress() -> String? {
+    func getAPIAddress() -> String? {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         return userDeviceInfo[API_ADDRESS_KEY] as? String
     }
@@ -139,7 +145,7 @@ public class OstKeyManager {
     ///
     /// - Returns: Private key for the API address if available otherwise nil
     /// - Throws: Exception that occurs while getting the private key
-    public func getAPIKey() throws -> String? {
+    private func getAPIKey() throws -> String? {
         if let apiAddress = getAPIAddress() {
             return try getEthereumKey(forAddresss: apiAddress)
         }
@@ -153,8 +159,11 @@ public class OstKeyManager {
     ///
     /// - Returns: Device address
     /// - Throws: Exceptions that occurs while storing the address or key in the keychain
-    public func createDeviceKey() throws -> String {
+    func createDeviceKey() throws -> String {
         let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys()
+        if (ethKeys.privateKey == nil || ethKeys.address == nil) {
+            throw OstError("s_i_km_cdk_1", .generatePrivateKeyFail)
+        }
         try storeMnemonics(ethKeys.mnemonics!, forAddress: ethKeys.address!)
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeDeviceAddress(ethKeys.address!)
@@ -165,7 +174,7 @@ public class OstKeyManager {
     ///
     /// - Parameter address: Device address
     /// - Throws: Exception that occurs while storing the device address in keychain
-    func storeDeviceAddress(_ address: String) throws {
+    private func storeDeviceAddress(_ address: String) throws {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         userDeviceInfo[DEVICE_ADDRESS_KEY] = address
         try setUserDeviceInfo(deviceInfo: userDeviceInfo)
@@ -174,7 +183,7 @@ public class OstKeyManager {
     /// Get current user's stored device address from keychain
     ///
     /// - Returns: Device address if available otherwise nil
-    public func getDeviceAddress() -> String? {
+    func getDeviceAddress() -> String? {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         return userDeviceInfo[DEVICE_ADDRESS_KEY] as? String
     }
@@ -183,7 +192,7 @@ public class OstKeyManager {
     ///
     /// - Returns: Private key for device address if available otherwise nil
     /// - Throws: Exception that accurs while getting the private key from keychain
-    public func getDeviceKey() throws -> String? {
+    private func getDeviceKey() throws -> String? {
         if let deviceAddress = getDeviceAddress() {
             return try getEthereumKey(forAddresss: deviceAddress)
         }
@@ -194,7 +203,7 @@ public class OstKeyManager {
     ///
     /// - Returns: JSON serialized 12 words mnemonics key
     /// - Throws: Exception that occurs while getting the keys from keychain
-    public func getDeviceMnemonics() throws -> [String]? {
+    func getDeviceMnemonics() throws -> [String]? {
         if let deviceAddress = getDeviceAddress() {
             if let ethMetaMapping: EthMetaMapping =  getMnemonicsMetaMapping(forAddress: deviceAddress) {
                 if let jsonString: String = try getString(from: ethMetaMapping) {
@@ -205,6 +214,38 @@ public class OstKeyManager {
         return nil
     }
     
+    //MARK: - Session Key
+    
+    /// Create the session private key and address.
+    /// This also stores the private key and address securly in the keychain
+    ///
+    /// - Returns: Device address
+    /// - Throws: Exceptions that occurs while storing the address or key in the keychain
+    func createSessionKey() throws -> String {
+        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys()
+        if (ethKeys.privateKey == nil || ethKeys.address == nil) {
+            throw OstError("s_i_km_csk_1", .generatePrivateKeyFail)
+        }
+        try storeSessionKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
+        return ethKeys.address!
+    }
+    
+    /// Get all the session addresses available in the device
+    ///
+    /// - Returns: Array containing session addresses
+    /// - Throws: OstError
+    func getSessions() throws -> [String] {
+        return getAllAddresses(ForKey: SESSION_META_MAPPING_KEY)
+    }
+
+    /// Delete session address and its key
+    ///
+    /// - Parameter sessionAddress: Session address
+    /// - Throws: OstError
+    func deleteSessionKey(sessionAddress: String) throws {
+        try deleteMetaMapping(forAddress: sessionAddress, forKey: SESSION_META_MAPPING_KEY)
+    }
+
     //TODO: - Store data from keychain.
     /// Store recovery pin string in key chain
     ///
@@ -241,7 +282,7 @@ public class OstKeyManager {
 }
 
 // MARK: - MetaMapping getters and setters
-extension OstKeyManager {
+fileprivate extension OstKeyManager {
     /// Set the eth meta mapping in the keychain
     ///
     /// - Parameter ethMetaMapping: EthMetaMapping object that needs to be stored in keychain
@@ -273,6 +314,22 @@ extension OstKeyManager {
     func getMnemonicsMetaMapping(forAddress address: String) -> EthMetaMapping?  {
         return getMetaMapping(forAddress: address, andKey: MNEMONICS_META_MAPPING_KEY)
     }
+    
+    /// Set the session meta mapping in the keychain
+    ///
+    /// - Parameter ethMetaMapping: EthMetaMapping object that needs to be stored in keychain
+    /// - Throws: Exception that occurs while setting the data in keychain
+    func setSessionKeyMetaMapping(_ ethMetaMapping: EthMetaMapping) throws {
+        try setMetaMapping(ethMetaMapping, forKey: SESSION_META_MAPPING_KEY)
+    }
+    
+    /// Get the session meta mapping object from the keychain
+    ///
+    /// - Parameter address: Ethereum address to lookup the EthMetaMapping object
+    /// - Returns: EthMetaMapping object
+    func getSessionKeyMetaMapping(forAddress address: String) -> EthMetaMapping?  {
+        return getMetaMapping(forAddress: address, andKey: SESSION_META_MAPPING_KEY)
+    }
 }
 
 // MARK: - Lookup storage keys
@@ -299,6 +356,14 @@ fileprivate extension OstKeyManager {
     /// - Returns: Storage key for mnemonics lookup
     static func getMnemonicsStorageKey(forAddress address: String) -> String {
         return "\(MNEMONICS_KEY_PREFIX)\(address.lowercased())"
+    }
+    
+    /// Get the storage key for session lookup
+    ///
+    /// - Parameter address: Ethereum address for key formation
+    /// - Returns: Storage key for mnemonics lookup
+    static func getSessionStorageKey(forAddress address: String) -> String {
+        return "\(SESSION_KEY_PREFIX)\(address.lowercased())"
     }
     
     /// Get the key for secure enclave lookup
@@ -373,6 +438,37 @@ private extension OstKeyManager {
         return nil
     }
     
+    /// Get all address for a meta mapping type
+    ///
+    /// - Parameter key: Meta mapping key
+    /// - Returns: Array of addresses
+    func getAllAddresses(ForKey key:String) -> [String] {
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        guard let ethKeyMappingData: [String: [String: Any]] = userDeviceInfo[key] as? [String: [String: Any]] else {
+            return []
+        }
+        return Array(ethKeyMappingData.keys)
+    }
+
+    /// Delete meta mapping in the keychain
+    ///
+    /// - Parameters:
+    ///   - ethMetaMapping: EthMetaMapping object
+    ///   - key: Storage key
+    /// - Throws: OSTError
+    func deleteMetaMapping(forAddress address: String, forKey key: String) throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        
+        if var ethKeyMappingData:[String: Any] = userDeviceInfo[key] as? [String : Any] {
+            if (ethKeyMappingData[address.lowercased()] != nil) {
+                try deleteString(forKey: ethKeyMappingData["entityId"] as! String)
+                ethKeyMappingData[address.lowercased()] = nil;
+                userDeviceInfo[key] = ethKeyMappingData
+                try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+            }
+        }                
+    }
+    
     /// Store mnemonics in the keychain for given ethereum address
     ///
     /// - Parameters:
@@ -404,6 +500,31 @@ private extension OstKeyManager {
         try setEthKeyMetaMapping(ethMetaMapping)
     }
     
+    /// Store session key in the keychain
+    ///
+    /// - Parameters:
+    ///   - key: Storage key
+    ///   - address: Ethereum address
+    /// - Throws: OSTError
+    func storeSessionKey(_ key: String, forAddress address: String) throws {
+        let entityId = OstKeyManager.getAddressStorageKey(forAddress: address)
+        var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
+        try storeString(key, ethMetaMapping: &ethMetaMapping)
+        try setSessionKeyMetaMapping(ethMetaMapping)
+    }
+    
+    /// Get session key from the keychain
+    ///
+    /// - Parameter address: Session address
+    /// - Returns: Private key for given session address
+    /// - Throws: OstError
+    func getSessionKey(forAddress address: String) throws -> String? {
+        if let ethMetaMapping: EthMetaMapping =  getSessionKeyMetaMapping(forAddress: address) {
+            return try getString(from: ethMetaMapping)
+        }
+        return nil
+    }
+
     /// Get the private key for the given ethereum address
     ///
     /// - Parameter address: Ethereum address
@@ -468,16 +589,118 @@ private extension OstKeyManager {
         }
         return nil
     }
+    
+    /// Delete the string from keychain
+    ///
+    /// - Parameter key: Key to be deleted
+    /// - Throws: OstError
+    func deleteString(forKey key: String) throws {
+        try keychainHelper.deleteStringFromKeychain(forKey: key)
+    }
+}
+
+/// Signing related methods
+extension OstKeyManager {
+    /// Sign message with API private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithAPIKey(message: String) throws -> String {
+        guard let apiPrivateKey = try self.getAPIKey() else{
+            throw OstError.init("s_i_km_swpk_1", .noPrivateKeyFound)
+        }
+        return try sign(message, withPrivatekey: apiPrivateKey)
+    }
+    
+    /// Sign message with device private key
+    ///
+    /// - Parameter tx: Transaction string to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithDeviceKey(_ tx: String) throws -> String {
+        guard let devicePrivateKey = try self.getDeviceKey() else{
+            throw OstError.init("s_i_km_swdk_1", .noPrivateKeyFound)
+        }
+        return try signTx(tx, withPrivatekey: devicePrivateKey)
+    }
+    
+    /// Sign message with session's private key
+    ///
+    /// - Parameter tx: Transaction string to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func signWithSessionKey(_ tx: String, withAddress address: String) throws -> String {
+        guard let sessionPrivateKey = try self.getSessionKey(forAddress: address) else{
+            throw OstError.init("s_i_km_swsk_1", .noPrivateKeyFound)
+        }
+        return try signTx(tx, withPrivatekey: sessionPrivateKey)
+    }
+    
+    /// Sign message with private key that is generated by mnemonics keys
+    ///
+    /// - Parameters:
+    ///   - tx: Transaction to sign
+    ///   - mnemonics: 12 words mnemonics keys
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    func sign(_ tx: String, withMnemonics mnemonics: [String]) throws -> String {
+        let ostWalletKeys = try OstCryptoImpls().generateEthereumKeys(withMnemonics: mnemonics)
+        if (ostWalletKeys.address == nil || ostWalletKeys.privateKey == nil) {
+            throw OstError("s_i_km_swm_1", .walletGenerationFailed)
+        }
+        return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
+    }
+
+    /// Sign message with private key
+    ///
+    /// - Parameter message: Message to sign
+    /// - Returns: Signed message
+    /// - Throws: OstError
+    private func sign(_ message: String, withPrivatekey key: String) throws -> String {
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
+                                     privateKey: key,
+                                     debugPrints: OstConstants.PRINT_DEBUG)
+        
+        var singedData: String
+        do {
+            singedData = try wallet.personalSign(message: message)
+        } catch {
+            throw OstError.init("s_i_km_s_1", .signTxFailed)
+        }
+        return singedData.addHexPrefix()
+    }
+    
+    /// Sign the transaction with private key
+    ///
+    /// - Parameters:
+    ///   - tx: Raw transaction string
+    ///   - privateKey: private key string
+    /// - Returns: Signed transaction string
+    /// - Throws: OSTError
+    private func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
+        let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
+        
+        var singedData: Data
+        do {
+            singedData = try priKey.sign(hash: Data(hex: tx))
+        } catch {
+            throw OstError.init("s_i_km_stx_1", .signTxFailed)
+        }
+        singedData[64] += 27
+        let singedTx = singedData.toHexString().addHexPrefix();
+        return singedTx
+    }
 }
 
 enum Device {
     /// To check that device has secure enclave or not
-    public static var hasSecureEnclave: Bool {
+    static var hasSecureEnclave: Bool {
         return !isSimulator && hasBiometrics
     }
     
     /// To Check that this is this simulator
-    public static var isSimulator: Bool {
+    private static var isSimulator: Bool {
         return TARGET_OS_SIMULATOR == 1
     }
     

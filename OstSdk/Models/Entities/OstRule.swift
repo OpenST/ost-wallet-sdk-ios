@@ -9,49 +9,72 @@
 import Foundation
 
 public class OstRule: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "rule_id"
     
-    static let OSTRULE_PARENTID = "token_id"
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "token_id"
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
+    /// Store OstRule entity data in the data base and returns the OstRule model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstRuleModelRepository
+            .sharedRule
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstRule? {
-        return try OstRuleModelRepository.sharedRule.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstRule
-    }
-    
-    class func getById(_ parentId: String) throws -> OstRule? {
-        return try OstRuleModelRepository.sharedRule.getById(parentId) as? OstRule
+    /// Get OstRule object from given user id
+    ///
+    /// - Parameter userId: User id
+    /// - Returns: OstRule model object
+    /// - Throws: OSTError
+    class func getById(_ userId: String) throws -> OstRule? {
+        return try OstRuleModelRepository.sharedRule.getById(userId) as? OstRule
     }
     
     class func getByParentId(_ parentId: String) throws -> [OstRule]? {
         return try OstRuleModelRepository.sharedRule.getByParentId(parentId) as? [OstRule]
     }
     
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstRule.getEntityIdentiferKey()] as Any?)!
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstRule.ENTITY_IDENTIFIER
     }
     
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstRule.OSTRULE_PARENTID] as Any?)
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstRule.ENTITY_PARENT_IDENTIFIER
     }
 }
 
 public extension OstRule {
-    var token_id : String? {
-        return OstUtils.toString(data["token_id"] as Any)
+    /// Get token id
+    var tokenId : String? {
+        return OstUtils.toString(self.data["token_id"] as Any)
     }
     
+    /// Get rule name
     var name : String? {
-        return data["name"] as? String ?? nil
+        return self.data["name"] as? String
     }
     
+    /// Get rule address
     var address : String? {
-        return data["address"] as? String ?? nil
+        return self.data["address"] as? String
     }
     
+    // TODO: check if the returen type should be Array or string
+    /// Get rule ABI
     var abi : String? {
-        return data["abi"] as? String ?? nil
+        return self.data["abi"] as? String
     }
 }
