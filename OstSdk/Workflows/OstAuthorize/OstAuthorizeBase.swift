@@ -106,8 +106,6 @@ class OstAuthorizeBase {
                 throw OstError("q_a_ab_a_2", .signerAddressNotFound)
             }
             
-            try self.deviceManager!.incrementAndUpdateNonce(deviceManagerNonce)
-            
             let rawCallData: String = getRawCallData()
             
             let params: [String: Any] = ["data_defination":self.dataDefination,
@@ -125,6 +123,7 @@ class OstAuthorizeBase {
                                          "signers": [signerAddress],
                                          "signatures": signature!
             ]
+            try self.deviceManager!.incrementAndUpdateNonce(deviceManagerNonce)
             
             try apiRequestForAuthorize(params: params)
         }catch let error {
