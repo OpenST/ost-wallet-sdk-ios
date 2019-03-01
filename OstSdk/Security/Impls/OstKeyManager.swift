@@ -443,14 +443,11 @@ private extension OstKeyManager {
     /// - Parameter key: Meta mapping key
     /// - Returns: Array of addresses
     func getAllAddresses(ForKey key:String) -> [String] {
-        var allAddresses:[String] = []
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        let ethKeyMappingData: [String: [String: Any]]? = userDeviceInfo[key] as? [String: [String: Any]]
-        
-        ethKeyMappingData?.keys.forEach { address in
-            allAddresses.append(address)
+        guard let ethKeyMappingData: [String: [String: Any]] = userDeviceInfo[key] as? [String: [String: Any]] else {
+            return []
         }
-        return allAddresses
+        return Array(ethKeyMappingData.keys)
     }
 
     /// Delete meta mapping in the keychain
@@ -462,15 +459,14 @@ private extension OstKeyManager {
     func deleteMetaMapping(forAddress address: String, forKey key: String) throws {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         
-        if (userDeviceInfo[key] != nil) {
-            var ethKeyMappingData:[String: Any] = userDeviceInfo[key] as! [String : Any]
+        if var ethKeyMappingData:[String: Any] = userDeviceInfo[key] as? [String : Any] {
             if (ethKeyMappingData[address.lowercased()] != nil) {
                 try deleteString(forKey: ethKeyMappingData["entityId"] as! String)
                 ethKeyMappingData[address.lowercased()] = nil;
                 userDeviceInfo[key] = ethKeyMappingData
                 try setUserDeviceInfo(deviceInfo: userDeviceInfo)
             }
-        }
+        }                
     }
     
     /// Store mnemonics in the keychain for given ethereum address

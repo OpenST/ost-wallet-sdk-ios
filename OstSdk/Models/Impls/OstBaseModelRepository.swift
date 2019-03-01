@@ -113,13 +113,13 @@ class OstBaseModelRepository {
     /// - Returns: Entity object
     func insertOrUpdateEntity(_ entity: OstBaseEntity) {
         // Save the entity object in mememory cache.
-        saveEntityInMemory(key: entity.id!, val: entity)
+        saveEntityInMemory(key: entity.id, val: entity)
         
         OstBaseModelRepository.DBQUEUE.async {
             let dbQueryObj = self.getDBQueriesObj()
             dbQueryObj.insertOrUpdate(entity, onUpdate: {(result:Bool) in
                 if (result == true) {
-                    self.removeInMemoryEntity(key: entity.id!)
+                    self.removeInMemoryEntity(key: entity.id)
                 }
             })
         }        

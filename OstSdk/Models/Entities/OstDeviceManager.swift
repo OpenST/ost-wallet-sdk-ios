@@ -90,8 +90,8 @@ public extension OstDeviceManager {
     }
     
     /// Get requirement
-    var requirement: String? {
-        return data["requirement"] as? String
+    var requirement: String? {        
+        return OstUtils.toString(data["requirement"] as Any)
     }
     
     /// Get authorize session call prefix

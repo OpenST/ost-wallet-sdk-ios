@@ -237,7 +237,6 @@
 		B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */; };
 		EC9185572227CF6A00905C54 /* OstMnemonicsKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */; };
 		ECB29E6622256144001C003E /* OST_MIGRATION_README.md in Resources */ = {isa = PBXBuildFile; fileRef = ECB29E6522256144001C003E /* OST_MIGRATION_README.md */; };
-		ECB29E692226F20D001C003E /* OstSessionSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB29E682226F20D001C003E /* OstSessionSigner.swift */; };
 		ECCB9350222143BB00D7C44F /* OstAPIErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB934F222143BB00D7C44F /* OstAPIErrorHandler.swift */; };
 		ECCB935222215C9500D7C44F /* OstAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB935122215C9500D7C44F /* OstAPIHelper.swift */; };
 /* End PBXBuildFile section */
@@ -514,7 +513,6 @@
 		E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMnemonicsKeyManager.swift; sourceTree = "<group>"; };
 		ECB29E6522256144001C003E /* OST_MIGRATION_README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = OST_MIGRATION_README.md; sourceTree = "<group>"; };
-		ECB29E682226F20D001C003E /* OstSessionSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSessionSigner.swift; sourceTree = "<group>"; };
 		ECCB934F222143BB00D7C44F /* OstAPIErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIErrorHandler.swift; sourceTree = "<group>"; };
 		ECCB935122215C9500D7C44F /* OstAPIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1202,7 +1200,6 @@
 			isa = PBXGroup;
 			children = (
 				4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */,
-				ECB29E682226F20D001C003E /* OstSessionSigner.swift */,
 			);
 			path = Signers;
 			sourceTree = "<group>";
@@ -1542,7 +1539,6 @@
 				4B49890F21F6F2AF00ED0E94 /* RPCResponse.swift in Sources */,
 				4B75F23A21BE75E100898960 /* OstDeviceManager.swift in Sources */,
 				4B75F21321B7E39700898960 /* OstUserDbQueries.swift in Sources */,
-				ECB29E692226F20D001C003E /* OstSessionSigner.swift in Sources */,
 				4BAE57032218413800327A19 /* OstPerform.swift in Sources */,
 				4BE89567221ED29A009C6A44 /* OstGetPapaerWallet.swift in Sources */,
 				4BE9E32B2203306C00427A80 /* OstRegisterDevice.swift in Sources */,

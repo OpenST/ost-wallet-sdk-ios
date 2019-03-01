@@ -54,7 +54,7 @@ public class OstDevice: OstBaseEntity {
     /// - Parameter parentId: Parent id
     /// - Returns: Array<OstDevice>
     /// - Throws: OSTError
-    class func getDeviceByParentId(parentId: String) throws -> [OstDevice]? {
+    class func getByParentId(parentId: String) throws -> [OstDevice]? {
         return try OstDeviceRepository.sharedDevice.getByParentId(parentId) as? [OstDevice]
     }
     
@@ -114,7 +114,7 @@ public extension OstDevice {
         return data["user_id"] as? String
     }
     
-    /// Get decvice name
+    /// Get device name
     public var deviceName: String? {
         return data["device_name"] as? String
     }

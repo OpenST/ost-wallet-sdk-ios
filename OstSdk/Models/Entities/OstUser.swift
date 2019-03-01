@@ -95,12 +95,8 @@ public class OstUser: OstBaseEntity {
     ///
     /// - Returns: OstCurrentDevice model object
     public func getCurrentDevice() -> OstCurrentDevice? {
-        // if user id is not available return nil
-        guard let userId = self.id else {
-            return nil
-        }
         // if current device address is not available return nil
-        guard let deviceAddress = OstKeyManager(userId: userId).getDeviceAddress() else {
+        guard let deviceAddress = OstKeyManager(userId: self.id).getDeviceAddress() else {
             return nil
         }
         

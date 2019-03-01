@@ -43,7 +43,7 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
         // Get entity from db
         if let entity = try super.getById(id) {
             // Save the entity in cache
-            self.saveEntityInCache(key: entity.id!, entity: entity)
+            self.saveEntityInCache(key: entity.id, entity: entity)
             return entity
         }        
         return nil
@@ -54,7 +54,7 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
     /// - Parameter entity: Entity object
     /// - Returns: Entity object
     override func insertOrUpdateEntity(_ entity: OstBaseEntity) {
-        self.saveEntityInCache(key: entity.id!, entity: entity)
+        self.saveEntityInCache(key: entity.id, entity: entity)
         return super.insertOrUpdateEntity(entity)
     }
     

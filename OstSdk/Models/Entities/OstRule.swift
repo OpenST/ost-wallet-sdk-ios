@@ -55,7 +55,7 @@ public class OstRule: OstBaseEntity {
 public extension OstRule {
     /// Get token id
     var tokenId : String? {
-        return self.data["token_id"] as? String
+        return OstUtils.toString(self.data["token_id"] as Any)
     }
     
     /// Get rule name
@@ -68,6 +68,7 @@ public extension OstRule {
         return self.data["address"] as? String
     }
     
+    // TODO: check if the returen type should be Array or string
     /// Get rule ABI
     var abi : String? {
         return self.data["abi"] as? String

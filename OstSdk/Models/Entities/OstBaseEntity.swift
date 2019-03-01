@@ -36,15 +36,13 @@ public class OstBaseEntity: NSObject {
     ///
     /// - Parameter entityData: Entity data dictionary
     /// - Returns: `true` if valid, otherwise `false`
-    func validateEntityData(_ entityData: [String: Any]) -> Bool {
-        var isValid: Bool = false
-       
+    func validateEntityData(_ entityData: [String: Any]) throws {
         // Check if the id in entity data is valid.
-        isValid = isIdValid(entityData)
-        
+        let isValid = isIdValid(entityData)
+        if (!isValid) {
+            throw OstError.init("m_e_be_ved_1", .invalidId)
+        }
         // Add more validation code here.
-    
-        return isValid
     }
     
     /// Check if the id is valid
@@ -107,10 +105,7 @@ public class OstBaseEntity: NSObject {
     /// - Throws: OSTError
     func updateEntityData(_ entityData: [String: Any]) throws{
         // Check if the provided entity data is valid.
-        let isEntityDataValid = self.validateEntityData(entityData)
-        if (!isEntityDataValid) {
-            throw OstError.init("m_e_be_ued_1", .objectCreationFailed)
-        }
+        try self.validateEntityData(entityData)
         self.entityData = entityData
     }
     
@@ -130,11 +125,11 @@ public class OstBaseEntity: NSObject {
 
 public extension OstBaseEntity {
     /// Get the entity's id
-    var id: String? {
+    var id: String {
         let keyIdentifier = self.getIdKey()
         return OstUtils.toString(
             OstBaseEntity.getItem(fromEntity: self.entityData, forKey: keyIdentifier) as Any?
-        )
+        )!
     }
     
     /// Get the entity's parent id

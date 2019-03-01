@@ -136,7 +136,7 @@ class OstBaseDbQueries {
     /// - Parameter params: Entity object
     /// - Returns: Dictionary representing the query object
     func getInsertOrUpdateQueryParam(_ params: OstBaseEntity) -> [String: Any] {
-        let queryParams : [String: Any] = [OstBaseDbQueries.ID: params.id!.lowercased(),
+        let queryParams : [String: Any] = [OstBaseDbQueries.ID: params.id.lowercased(),
                                            OstBaseDbQueries.PARENT_ID: params.parentId?.lowercased() ?? "",
                                            OstBaseDbQueries.DATA: OstUtils.toEncodedData(params.data),
                                            OstBaseDbQueries.UTS: params.updatedTimestamp,

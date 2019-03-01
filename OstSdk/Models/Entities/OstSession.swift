@@ -66,8 +66,8 @@ public class OstSession: OstBaseEntity {
     /// - Throws: OstError
     func incrementNonce() throws {
         var params: [String: Any?] = self.data
-        params["nonce"] = self.nonce + 1
-        params["updated_timestamp"] = Date.timestamp()
+        params["nonce"] = OstUtils.toString(self.nonce+1)
+        params["updated_timestamp"] = OstUtils.toString(Date.timestamp())
         try OstSession.storeEntity(params)
     }
 }
