@@ -10,7 +10,7 @@ import Foundation
 
 public enum OstWorkflowType {
     case setupDevice, activateUser, addDevice, addSession, getPapaerWallet,
-        perform, showQRCode, sendTransaction, scanQRCode, addDeviceWithQRCode
+        perform, showQRCode, executeTransaction, scanQRCode, addDeviceWithQRCode, polling
 }
 
 public class OstWorkflowContext {

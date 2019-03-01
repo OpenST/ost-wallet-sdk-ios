@@ -81,13 +81,13 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         sendTransaction[ACTION_DETAILS] = "Send tokens to other users.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
-    } else if ( userDevice.isDeviceRegistered() ) {
+    } else if ( userDevice.isStatusRegistered ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         sendTransaction[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         showAddDeviceCode[ACTION_DETAILS] = "Authorize this device by scanning the QR code.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
-    } else if ( userDevice.isDeviceRevoked() ) {
+    } else if ( userDevice.isStatusRevoked ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         sendTransaction[ACTION_DETAILS] = "Likely to fail as device is revoked.";
@@ -107,7 +107,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     
     //Add back sendTransaction later on.
     //Final Ordering.
-    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics];
+    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, sendTransaction];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);

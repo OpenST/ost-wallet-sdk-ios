@@ -10,6 +10,7 @@ import Foundation
 
 public enum OstQRCodeDataDefination: String {
     case AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+    case TRANSACTION = "TRANSACTION"
 }
 
 class OstPerform: OstWorkflowBase {
@@ -38,7 +39,7 @@ class OstPerform: OstWorkflowBase {
                 guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
                     throw OstError.init("w_p_p_1", .deviceNotset)
                 }
-                if (!currentDevice.isDeviceRegistered()) {
+                if (!currentDevice.isStatusRegistered) {
                     throw OstError.init("w_p_p_2", .deviceNotRegistered)
                 }
                 
@@ -77,7 +78,8 @@ class OstPerform: OstWorkflowBase {
             throw OstError("w_p_pqrcs_5", OstErrorText.invalidQRCode);
         }
         
-        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue];
+        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
+                                         OstQRCodeDataDefination.TRANSACTION.rawValue];
         
         if ( validDefinations.contains(dataDefination) ) {
             self.dataDefination = dataDefination;
@@ -97,10 +99,19 @@ class OstPerform: OstWorkflowBase {
     func startSubWorkflow() throws {
         switch self.dataDefination {
         case OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue:
+            let deviceAddress = try OstAddDeviceWithQRData.getAddDeviceParamsFromQRPayload(self.payloadData!)
             OstAddDeviceWithQRData(userId: self.userId,
-                                   qrCodeData: payloadData!,
+                                   deviceAddress: deviceAddress,
                                    delegate: self.delegate).perform()
             
+        case OstQRCodeDataDefination.TRANSACTION.rawValue:
+            let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
+            OstExecuteTransaction(userId: self.userId,
+                                  ruleName: executeTxPayloadParams.ruleName,
+                                  tokenHolderAddresses: executeTxPayloadParams.addresses,
+                                  amounts: executeTxPayloadParams.amounts,
+                                  tokenId: executeTxPayloadParams.tokenId,
+                                  delegate: self.delegate).perform()
         default:
             throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
         }

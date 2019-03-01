@@ -10,9 +10,14 @@ import Foundation
 
 public class OstTransaction: OstBaseEntity {
     /// Entity identifier for user entity
-    static let ENTITY_IDENTIFIER = "transaction_hash"
+    static let ENTITY_IDENTIFIER = "id"
     
-    /// Store OstTransaction entity data in the data base and returns the OstTransaction model object
+    enum Status: String {
+        case CREATED = "CREATED"
+        case FAILED = "FAILED"
+        case SUCCESS = "SUCCESS"
+    }
+        /// Store OstTransaction entity data in the data base and returns the OstTransaction model object
     ///
     /// - Parameter entityData: Entity data dictionary
     /// - Returns: OstDeviceManager model object
@@ -80,5 +85,22 @@ public extension OstTransaction {
     /// Get gas price
     var gasPrice: Int? {
         return OstUtils.toInt(data["gas_price"] as Any?) 
+    }
+}
+
+//Get transaction status
+public extension OstTransaction {
+    var isStatusSuccess: Bool {
+        if let status: String = self.status {
+            return (OstTransaction.Status.SUCCESS.rawValue == status)
+        }
+        return false
+    }
+    
+    var isStatusFailed: Bool {
+        if let status: String = self.status {
+            return (OstTransaction.Status.FAILED.rawValue == status)
+        }
+        return false
     }
 }

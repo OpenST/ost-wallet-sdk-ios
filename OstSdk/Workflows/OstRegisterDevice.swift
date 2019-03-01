@@ -34,12 +34,14 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
                 try self.initUser()
                 
                 let currentDevice = try self.getCurrentDevice()
-                if (currentDevice == nil || currentDevice!.isDeviceRevoked()) {
+                if (currentDevice == nil ||
+                    currentDevice!.isStatusRevoked ||
+                    currentDevice!.isStatusRevoking) {
                     self.createAndRegisterDevice()
                     return
                 }
                 
-                if(!currentDevice!.isDeviceRegistered()) {
+                if(currentDevice!.isStatusRegistered) {
                     self.registerDevice(currentDevice!.data as [String : Any])
                     return
                 }

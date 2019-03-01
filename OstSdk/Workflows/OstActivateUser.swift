@@ -8,6 +8,8 @@
 
 import Foundation
 
+let API_SCRYPT_SALT_KEY = "scrypt_salt"
+
 class OstActivateUser: OstWorkflowBase {
     let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
@@ -15,8 +17,6 @@ class OstActivateUser: OstWorkflowBase {
     var expirationHeight: Int
     
     var salt: String = "salt"
-    var user: OstUser? = nil
-    var currentDevice: OstCurrentDevice? = nil
     var sessionAddress: String? = nil
     var recoveryAddress: String? = nil
     var currentBlockHeight: Int = 0
@@ -38,36 +38,35 @@ class OstActivateUser: OstWorkflowBase {
             do {
                 try self.validateParams()
                 
-                self.user = try self.getUser()
-                if (self.user == nil) {
+                self.currentUser = try self.getUser()
+                if (self.currentUser == nil) {
                     self.postError(OstError.init("w_p_p_1", .userEntityNotFound))
                     return
                 }
             
-                if (self.user!.isStatusActivated) {
+                if (self.currentUser!.isStatusActivated) {
                 self.postError(OstError("w_au_p_1", .userAlreadyActivated) )
                     return
                 }
                 
-                if (self.user!.isStatusActivating) {
-                    self.pollingForActivatingUser(self.user!)
+                if (self.currentUser!.isStatusActivating) {
+                    self.pollingForActivatingUser(self.currentUser!)
                     return
                 }
                 
-                self.currentDevice = self.user!.getCurrentDevice()
+                self.currentDevice = self.currentUser!.getCurrentDevice()
                 if (self.currentDevice == nil) {
-                    self.postError(OstError.init("w_p_p_2", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
+                    throw OstError.init("w_p_p_2", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice")
                 }
 
-                if (self.currentDevice!.isDeviceRevoked()) {
-                    self.postError(OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
+                if (!self.currentDevice!.isStatusRegistered &&
+                    (self.currentDevice!.isStatusRevoking ||
+                    self.currentDevice!.isStatusRevoked )) {
+                    throw OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice")
                 }
-
-                if (!self.currentDevice!.isDeviceRegistered()) {
-                    self.postError(OstError("w_p_p_4", "Device is NOT registed for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
+                
+                if (self.currentDevice!.isStatusAuthorized) {
+                    throw OstError("w_p_p_4", OstErrorText.deviceAuthorized)
                 }
 
                 let onCompletion: (() -> Void) = {
@@ -114,7 +113,7 @@ class OstActivateUser: OstWorkflowBase {
     
     func getSalt(onCompletion: @escaping (() -> Void)) throws {
         try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-            self.salt = saltResponse["scrypt_salt"] as! String
+            self.salt = saltResponse[API_SCRYPT_SALT_KEY] as! String
             onCompletion()
         }, onFailure: { (error) in
             self.postError(error)
@@ -171,7 +170,7 @@ class OstActivateUser: OstWorkflowBase {
             self.postError(error)
         }
     }
-    //TODO: Get expirationHeight from timestamp and block_formation time
+    //TODO: - Get expirationHeight from timestamp and block_formation time
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
@@ -205,7 +204,7 @@ class OstActivateUser: OstWorkflowBase {
         params["recovery_owner_address"] = self.recoveryAddress!
         params["expiration_height"] = self.expirationHeight + self.currentBlockHeight
         params["session_addresses"] = [self.sessionAddress!]
-        params["device_address"] = user!.getCurrentDevice()!.address!
+        params["device_address"] = self.currentUser!.getCurrentDevice()!.address!
         
         return params
     }
@@ -213,7 +212,7 @@ class OstActivateUser: OstWorkflowBase {
     func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
-            self.user = ostUser
+            self.currentUser = ostUser
             self.syncRespctiveEntity()
         }
         
@@ -232,8 +231,8 @@ class OstActivateUser: OstWorkflowBase {
         }
         try? OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: nil, onFailure: nil)
         OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .CurrentDevice, onCompletion: { (_) in
-            self.currentDevice = self.user!.getCurrentDevice()
-            self.postWorkflowComplete(entity: self.user!)
+            self.currentDevice = self.currentUser!.getCurrentDevice()
+            self.postWorkflowComplete(entity: self.currentUser!)
         }).perform()
     }
     

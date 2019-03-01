@@ -8,21 +8,27 @@
 
 import Foundation
 
+let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
+
 class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
     let ostAddDeviceWithQRDataThread = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
     
-    let qrCodeData: [String: Any?]
-    
-    var deviceAddress: String? = nil
-    
+    class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
+        guard let deviceAddress: String = payload[PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
+            throw OstError("w_adwqrd_gadpfqrp_1", .invalidQRCode)
+        }
+        return deviceAddress
+    }
+
+    let deviceAddress: String
     /// Initialization of OstAddDeviceWithQRData
     ///
     /// - Parameters:
     ///   - userId: Kit user id
     ///   - qrCodeData: QR-Code data
     ///   - delegate:
-    init(userId: String, qrCodeData: [String: Any?], delegate: OstWorkFlowCallbackProtocol) {
-        self.qrCodeData = qrCodeData
+    init(userId: String, deviceAddress: String, delegate: OstWorkFlowCallbackProtocol) {
+        self.deviceAddress = deviceAddress
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -50,24 +56,29 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
             throw OstError("w_adwqd_vp_2", .userNotActivated)
         }
         
-        let currentDevice = try getCurrentDevice()
-        if (nil == currentDevice) {
+        self.currentDevice = try getCurrentDevice()
+        if (nil == self.currentDevice) {
             throw OstError("w_adwqd_vp_3", .deviceNotset)
         }
-        if (!currentDevice!.isStatusAuthorized) {
+        if (!self.currentDevice!.isStatusAuthorized) {
             throw OstError("w_adwqd_vp_4", .deviceNotAuthorized)
-        }
-        
-        guard let _ = qrCodeData["da"] as? String else {
-            throw OstError("w_adwqd_vp_5", .wrongDeviceAddress)
         }
     }
     
     func authorizeDevice() {
         do {
-            let deviceAddress = qrCodeData["da"] as! String
-            try OstAuthorizeDevice.getDevice(userId: self.userId, addressToAdd: deviceAddress,
+            try OstAuthorizeDevice.getDevice(userId: self.userId, addressToAdd: self.deviceAddress,
                                              onSuccess: { (ostDevice) in
+                                                do {
+                                                    if (!ostDevice.isStatusRegistered) {
+                                                        throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
+                                                    }
+                                                    if (ostDevice.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) == .orderedSame){
+                                                        throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
+                                                    }
+                                                }catch let error {
+                                                    self.postError(error)
+                                                }
                                                 self.verifyData(device: ostDevice)
             }) { (ostError) in
                 self.postError(ostError)
@@ -116,7 +127,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
             }
             
             OstAuthorizeDevice(userId: self.userId,
-                               deviceAddressToAdd: self.qrCodeData["da"] as! String,
+                               deviceAddressToAdd: self.deviceAddress,
                                generateSignatureCallback: generateSignatureCallback,
                                onRequestAcknowledged: onRequestAcknowledged,
                                onSuccess: onSuccess,

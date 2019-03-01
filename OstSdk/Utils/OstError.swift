@@ -48,6 +48,7 @@ public enum OstErrorText: String {
     case userNotActivated = "User is not activated."
     case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
     case deviceNotAuthorized = "Device is not authorized."
+    case deviceAuthorized = "Device is already authorized."
     case wrongDeviceAddress = "Wrong device address."
     case registerSameDevice = "Trying to register same device."
     case accessControlFailed = "Unable to create access control object."
@@ -104,6 +105,13 @@ public enum OstErrorText: String {
     case invalidQRCode = "Invalid QR Code"
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
+    case rulesNotFound = "Rulse not found."
+    case invalidAmount = "Amount to do transaction is invalid."
+    case sessionNotFound = "Session not found."
+    case callDataFormationFailed = "Calldata formation failed."
+    case transactionFailed = "Transaction failed."
+    
+    
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."

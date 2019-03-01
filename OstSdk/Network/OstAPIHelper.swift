@@ -14,6 +14,8 @@ enum ResultType: String {
     case device = "device"
     case deviceManager = "device_manager"
     case session = "session"
+    case transaction = "transaction"
+    case rules = "rules"
 }
 
 class OstAPIHelper {
@@ -82,23 +84,30 @@ class OstAPIHelper {
     /// - Throws: OSTError
     class func storeApiResponse(_ apiResponse: [String: Any?]) throws {
         let resultType = apiResponse["result_type"] as? String ?? ""
-        let entityData =  apiResponse[resultType] as? [String: Any?]
+        let entityData =  apiResponse[resultType] as? Any
         
-        if (entityData == nil) {
+        if (nil == entityData) {
             return
         }
-        // TODO: Looks like parse is not correct term for insert and update
+
         switch resultType {
         case ResultType.token.rawValue:
-            try OstToken.storeEntity(entityData!)
+            try OstToken.storeEntity(entityData as! [String: Any?])
         case ResultType.user.rawValue:
-            try OstUser.storeEntity(entityData!)
+            try OstUser.storeEntity(entityData as! [String: Any?])
         case ResultType.device.rawValue:
-            try OstDevice.storeEntity(entityData!)
+            try OstDevice.storeEntity(entityData as! [String: Any?])
         case ResultType.deviceManager.rawValue:
-            try OstDeviceManager.storeEntity(entityData!)
+            try OstDeviceManager.storeEntity(entityData as! [String: Any?])
         case ResultType.session.rawValue:
-            try OstSession.storeEntity(entityData!)
+            try OstSession.storeEntity(entityData as! [String: Any?])
+        case ResultType.transaction.rawValue:
+            try OstTransaction.storeEntity(entityData as! [String: Any?])
+        case ResultType.rules.rawValue:
+            let rulesEntityData = entityData as! [[String: Any?]]
+            for ruleEntityData in rulesEntityData {
+                try OstRule.storeEntity(ruleEntityData)
+            }
         default:
             return
         }

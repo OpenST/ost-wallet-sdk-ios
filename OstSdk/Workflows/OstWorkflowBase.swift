@@ -20,6 +20,9 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     var retryCount = 0
     let maxRetryCount = 3
     
+    var currentUser: OstUser? = nil
+    var currentDevice: OstCurrentDevice? = nil
+    
     init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         self.userId = userId
         self.delegate = delegate
@@ -117,6 +120,8 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.retryCount += 1
         workflowThread.async {
+            
+            
             self.uPin = uPin
             self.appUserPassword = appUserPassword
             

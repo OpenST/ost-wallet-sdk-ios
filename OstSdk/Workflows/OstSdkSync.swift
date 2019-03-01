@@ -153,8 +153,7 @@ class OstSdkSync {
         }
        
         let currentDevice = user!.getCurrentDevice()
-        if (currentDevice != nil && !currentDevice!.isDeviceRevoked() &&
-            currentDevice!.isDeviceRegistered()) {
+        if (currentDevice != nil && !currentDevice!.isStatusRegistered) {
             return false
         }
         

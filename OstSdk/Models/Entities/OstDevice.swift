@@ -71,31 +71,6 @@ public class OstDevice: OstBaseEntity {
     override func getParentIdKey() -> String {
         return OstDevice.ENTITY_PARENT_IDENTIFIER
     }
-    
-    /// Check if the device is already registered
-    ///
-    /// - Returns: `true` if registered otherwise `false`
-    public func isDeviceRegistered() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return false
-        }
-        return [Status.REGISTERED.rawValue,
-                Status.AUTHORIZING.rawValue,
-                Status.AUTHORIZED.rawValue].contains(status!)
-    }
-
-    /// Check if the device status is REVOKING or REVOKED
-    ///
-    /// - Returns: `true` if status is REVOKING or REVOKED otherwise `false`
-    public func isDeviceRevoked() -> Bool {
-        let status = self.status
-        if (status == nil) {
-            return true
-        }
-        return [Status.REVOKING.rawValue,
-                Status.REVOKED.rawValue].contains(status!)
-    }
 }
 
 public extension OstDevice {
@@ -123,6 +98,10 @@ public extension OstDevice {
     public var deviceUUID: String? {
         return data["device_uuid"] as? String
 
+    }
+    
+    public var linkedAddress: String? {
+        return data["linked_address"] as? String
     }
 }
 

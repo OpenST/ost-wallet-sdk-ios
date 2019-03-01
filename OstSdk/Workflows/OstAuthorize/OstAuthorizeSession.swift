@@ -35,10 +35,10 @@ class OstAuthorizeSession: OstAuthorizeBase {
     }
  
     override func getEncodedABI() throws -> String {
-        let encodedABIHex = try GnosisSafe().getAddSessionExecutableData(abiMethodName: self.abiMethodNameForAuthorizeSession,
-                                                                         sessionAddress: self.addressToAdd,
-                                                                         expirationHeight: self.expirationHeight,
-                                                                         spendingLimit: self.spendingLimit)
+        let encodedABIHex = try TokenHolder().getAddSessionExecutableData(abiMethodName: self.abiMethodNameForAuthorizeSession,
+                                                                          sessionAddress: self.addressToAdd,
+                                                                          expirationHeight: self.expirationHeight,
+                                                                          spendingLimit: self.spendingLimit)
         return encodedABIHex
     }
     

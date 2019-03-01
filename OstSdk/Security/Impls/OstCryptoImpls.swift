@@ -144,4 +144,50 @@ class OstCryptoImpls: OstCrypto {
     func getRecoveryPinString(password: String, pin: String, userId: String) -> String {
         return "\(password)\(pin)\(userId)"
     }
+    //TODO: Remove this code asap.
+    func getWalletForm(
+        password: String,
+        pin: String,
+        userId: String,
+        salt: String,
+        n:Int,
+        r:Int,
+        p: Int,
+        size: Int) throws -> Wallet {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > password.count {
+            throw OstError.init("s_i_ci_grk_1",
+                                "Password must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > userId.count {
+            throw OstError.init("s_i_ci_grk_2",
+                                "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+        }
+        
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
+            throw OstError.init("s_i_ci_grk_3",
+                                "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+        }
+        
+        let stringToCalculate: String = getRecoveryPinString(password: password, pin: pin, userId: userId)
+        
+        let seed: Data
+        do {
+            seed = try genSCryptKey(salt: salt.data(using: .utf8)!,
+                                    n: n,
+                                    r: r,
+                                    p: p,
+                                    size: size,
+                                    stringToCalculate: stringToCalculate)
+        } catch {
+            throw OstError.init("s_i_ci_grk_4", .scryptKeyGenerationFailed)
+        }
+        
+        let privateKey = HDPrivateKey(seed: seed, network: OstConstants.OST_WALLET_NETWORK)
+        
+        let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
+                                     privateKey: privateKey.privateKey().raw.toHexString(),
+                                     debugPrints: OstConstants.PRINT_DEBUG)
+        return wallet
+    }
 }

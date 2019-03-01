@@ -20,6 +20,6 @@ class OstSessionDbQueries: OstBaseDbQueries {
     }
     
     func getSelectActiveSessionQueryForParentId(_ parentId: String) -> String {
-        return "select * from \(activityName) where parent_id=\"\(parentId)\" and status=AUTHORISED"
+        return "select * from \(activityName()) where parent_id=\"\(parentId)\" and status=\"AUTHORIZED\""
     }
 }

@@ -31,6 +31,6 @@ class OstDevicePollingService: OstBasePollingService {
     }
     
     override func fetchEntity() throws {
-        try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.deviceAddress, onSuccess: onSuccess, onFailure: onFailure)
+        try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.deviceAddress, onSuccess: self.onSuccess, onFailure: self.onFailure)
     }
 }

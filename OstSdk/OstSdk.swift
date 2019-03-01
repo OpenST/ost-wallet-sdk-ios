@@ -26,13 +26,13 @@ public class OstSdk {
     }
     
     // TODO: Remove Parse user in future.
-    public class func parseUser(_ entityData: [String: Any?]) throws -> OstUser? {
-        try OstUser.storeEntity(entityData)
-        guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData, forKey: OstUser.ENTITY_IDENTIFIER) as Any?) else {
-            throw OstError("pu_1", .invalidEntityType)
-        }
-        return try OstUser.getById(id)!
-    }
+//    public class func parseUser(_ entityData: [String: Any?]) throws -> OstUser? {
+//        try OstUser.storeEntity(entityData)
+//        guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData, forKey: OstUser.ENTITY_IDENTIFIER) as Any?) else {
+//            throw OstError("pu_1", .invalidEntityType)
+//        }
+//        return try OstUser.getById(id)!
+//    }
     
     class func setApiEndPoint(apiEndPoint:String) throws {
         let endPointSplits = apiEndPoint.split(separator: "/");

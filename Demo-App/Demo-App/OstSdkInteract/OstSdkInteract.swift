@@ -75,7 +75,7 @@ extension OstSdkInteract {
         let resourceUrl = "/users/" + self.appUserId + "/devices";
         self.post(resource: resourceUrl, params: apiParams as [String : AnyObject], onSuccess: { (appApiResponse:[String : Any]?) in
             try! ostDeviceRegisteredProtocol.deviceRegistered( appApiResponse! );
-        }) { ([String : Any]?) in
+        }) { (failureResponse) in
             ostDeviceRegisteredProtocol.cancelFlow("Register device api error.");
         }
     }

@@ -17,13 +17,10 @@ class OstAddSession: OstWorkflowBase {
     var spendingLimit: String
     var expirationHeight: Int?
     var expiresAfter: TimeInterval;
-    
-    var user: OstUser? = nil
-    var currentDevice: OstCurrentDevice? = nil
+
     var sessionAddress: String? = nil
     var chainInfo: [String: Any]? = nil
   
-
     init(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
         self.expiresAfter = expiresAfter;
@@ -43,11 +40,11 @@ class OstAddSession: OstWorkflowBase {
     }
     
     func valdiateParams() throws {
-        self.user = try getUser()
-        if (nil == self.user) {
+        self.currentUser = try getUser()
+        if (nil == self.currentUser) {
             throw OstError("w_as_vp_1", .userNotFound)
         }
-        if (!self.user!.isStatusActivated) {
+        if (!self.currentUser!.isStatusActivated) {
             throw OstError("w_as_vp_1", .userNotActivated)
         }
         

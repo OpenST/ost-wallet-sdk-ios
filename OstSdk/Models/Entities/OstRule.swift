@@ -37,6 +37,10 @@ public class OstRule: OstBaseEntity {
         return try OstRuleModelRepository.sharedRule.getById(userId) as? OstRule
     }
     
+    class func getByParentId(_ parentId: String) throws -> [OstRule]? {
+        return try OstRuleModelRepository.sharedRule.getByParentId(parentId) as? [OstRule]
+    }
+    
     /// Get key identifier for id
     ///
     /// - Returns: Key identifier for id
