@@ -124,6 +124,31 @@ extension OstPolling {
         if (nil == self.currentDevice) {
             throw OstError("w_p_vp_2", .deviceNotFound)
         }
+        
+        switch self.entityType {
+        case .user:
+            if (self.currentUser!.isStatusActivated) {
+                throw OstError("w_p_vp_3", OstErrorText.userAlreadyActivated)
+            }
+            if (!self.currentUser!.isStatusActivating) {
+                throw OstError("w_p_vp_4", OstErrorText.userNotActivating)
+            }
+        case .device:
+            if (self.currentDevice!.isStatusAuthorized) {
+                throw OstError("w_p_vp_5", OstErrorText.deviceAlreadyAuthorized)
+            }
+            if (!self.currentDevice!.isStatusAuthorizing) {
+                throw OstError("w_p_vp_5", OstErrorText.deviceNotAuthorizing)
+            }
+        case .transaction:
+            return
+        case .session:
+            if let session: OstSession = try OstSession.getById(self.entityId) {
+                if (!session.isStatusAuthorizing) {
+                    throw OstError("w_p_vp_5", OstErrorText.sessionNotAuthorizing)
+                }
+            }
+        }
     }
     
 }

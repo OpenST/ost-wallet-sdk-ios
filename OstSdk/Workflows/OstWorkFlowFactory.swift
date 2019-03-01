@@ -151,6 +151,13 @@ extension OstSdk {
         executeTransactionObj.perform()
     }
     
+    /// Polling for entity.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit User id.
+    ///   - entityId: entity id to pole.
+    ///   - entityType: entity type for polling.
+    ///   - delegate: Callback for action complete or to perform respective actions.
     public class func pole(userId: String, entityId: String, entityType: OstPollingEntityType, delegate: OstWorkFlowCallbackProtocol ) {
         let pollingObj = OstPolling(userId: userId,
                                     entityId: entityId,

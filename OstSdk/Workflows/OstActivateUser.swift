@@ -184,7 +184,7 @@ class OstActivateUser: OstWorkflowBase {
         params["expiration_height"] = self.currentBlockHeight + self.expirationHeight
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
-        params["status"] = OstSession.SESSION_STATUS_CREATED
+        params["status"] = OstSession.Status.CREATED.rawValue
         
         return params
     }

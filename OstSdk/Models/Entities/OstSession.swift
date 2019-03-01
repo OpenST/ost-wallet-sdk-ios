@@ -17,14 +17,21 @@ public class OstSession: OstBaseEntity {
         return "address"
     }
     
-    static let SESSION_STATUS_INITIALIZING = "INITIALIZING"
-    static let SESSION_STATUS_CREATED = "CREATED"
-    static let SESSION_STATUS_AUTHORISED = "AUTHORISED"
-    static let SESSION_STATUS_REVOKING = "REVOKING"
-    static let SESSION_STATUS_REVOKED = "REVOKED"
+    enum Status: String {
+        case INITIALIZING = "INITIALIZING"
+        case CREATED = "CREATED"
+        case AUTHORIZED = "AUTHORIZED"
+        case AUTHORIZING = "AUTHORIZING"
+        case REVOKING = "REVOKING"
+        case REVOKED = "REVOKED"
+    }
     
     static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
         return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
+    }
+    
+    class func getById(_ address: String) throws -> OstSession? {
+        return try OstSessionRepository.sharedSession.getById(address) as? OstSession
     }
     
     override func getId(_ params: [String: Any?]? = nil) -> String {
@@ -34,21 +41,6 @@ public class OstSession: OstBaseEntity {
     
     override func getParentId() -> String? {
         return OstUtils.toString(self.data[OstSession.OSTSESSION_PARENTID] as Any?)
-    }
-    
-    func incrementAndStoreNonce() throws {
-        var params: [String: Any?] = self.data
-        params["nonce"] = self.nonce + 1
-        params["updated_timestamp"] = Date.timestamp()
-        _ = try OstSession.parse(params)
-    }
-    
-    func isInitializing() -> Bool {
-        if (self.status != nil &&
-            OstSession.SESSION_STATUS_INITIALIZING == self.status!.uppercased()) {
-            return true
-        }
-        return false
     }
     
     func incrementAndUpdateNonce() throws {
@@ -85,6 +77,54 @@ public extension OstSession {
     }
 }
 
+public extension OstSession {
+    /// Check Session status. returns true of status is CREATED
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check Session status. returns true of status is INITIALIZING
+    var isStatusInitializing: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.INITIALIZING.rawValue == status)
+        }
+        return false
+    }
+    /// Check Session status. returns true of status is AUTHORIZED
+    var isStatusAuthorized: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.AUTHORIZED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check Session status. returns true of status is AUTHORIZING
+    var isStatusAuthorizing: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.AUTHORIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check Session status. returns true of status is REVOKING
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check Session status. returns true of status is REVOKED
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKED.rawValue == status)
+        }
+        return false
+    }
+}
 
 extension OstSession{
     class Transaction {
