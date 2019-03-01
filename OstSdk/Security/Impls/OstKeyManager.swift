@@ -651,6 +651,22 @@ extension OstKeyManager {
         }
         return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
     }
+    
+    //TODO: - remove temp code and get code from Deepesh.
+    func signWithRecoveryKey(_ message:String, pin: String, password: String, salt: String) throws -> String {
+        let wallet = try OstCryptoImpls().getWalletForm(
+            password: password,
+            pin: pin,
+            userId: self.userId,
+            salt: salt,
+            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
+            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
+            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
+            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES
+        )
+        let privateKey = wallet.privateKey()
+        return try sign(message, withPrivatekey: privateKey.toHexString())
+    }
 
     /// Sign message with private key
     ///

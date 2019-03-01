@@ -73,55 +73,6 @@ public class OstSession: OstBaseEntity {
     }
 }
 
-extension OstSession {
-    /// Check if the session is created
-    var isStatusCreated: Bool {
-        if let status: String = self.status {
-            return (OstSession.Status.CREATED.rawValue == status)
-        }
-        return false
-    }
-    
-    /// Check if the session is initializing
-    var isStatusInitializing: Bool {
-        if let status: String = self.status {
-            return (OstSession.Status.INITIALIZING.rawValue == status)
-        }
-        return false
-    }
-    
-    /// Check if the session is authorized
-    var isStatusAuthoried: Bool {
-        if let status: String = self.status {
-            return (OstSession.Status.AUTHORISED.rawValue == status)
-        }
-        return false
-    }
-    
-    func incrementAndUpdateNonce() throws {
-        var updatedData: [String: Any?] = self.data
-        updatedData["nonce"] = OstUtils.toString(nonce+1)
-        updatedData["updated_timestamp"] = OstUtils.toString(Date.timestamp())
-        try OstSession.storeEntity(updatedData)
-    }
-
-    /// Check if the session is revoking
-    var isStatusRevoking: Bool {
-        if let status: String = self.status {
-            return (OstSession.Status.REVOKING.rawValue == status)
-        }
-        return false
-    }
-    
-    /// Check if the session is revoked
-    var isStatusRevoked: Bool {
-        if let status: String = self.status {
-            return (OstSession.Status.REVOKED.rawValue == status)
-        }
-        return false
-    }
-}
-
 public extension OstSession {
     /// Get session address
     var address : String? {
@@ -153,8 +104,51 @@ public extension OstSession {
     }
 }
 
+public extension OstSession {
+    /// Check if the session is created
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is initializing
+    var isStatusInitializing: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.INITIALIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is authorized
+    var isStatusAuthoried: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.AUTHORISED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is revoking
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is revoked
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKED.rawValue == status)
+        }
+        return false
+    }
+}
 
-extension OstSession{
+
+
+extension OstSession {
     class Transaction {
         let from: String
         var to: String = "0x"

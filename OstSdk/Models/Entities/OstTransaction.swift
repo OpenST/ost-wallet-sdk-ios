@@ -10,18 +10,13 @@ import Foundation
 
 public class OstTransaction: OstBaseEntity {
     /// Entity identifier for user entity
-    static let ENTITY_IDENTIFIER = "transaction_hash"
+    static let ENTITY_IDENTIFIER = "id"
     
     enum Status: String {
         case CREATED = "CREATED"
         case FAILED = "FAILED"
         case SUCCESS = "SUCCESS"
     }
-    
-    static func getEntityIdentiferKey() -> String {
-        return "id"
-    }
-
         /// Store OstTransaction entity data in the data base and returns the OstTransaction model object
     ///
     /// - Parameter entityData: Entity data dictionary

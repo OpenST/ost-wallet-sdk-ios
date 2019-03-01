@@ -259,7 +259,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             params["signature"] = self.signature!
             params["meta_property"] = [:]
             
-            try self.activeSession!.incrementAndUpdateNonce()
+            try self.activeSession!.incrementNonce()
             
             try OstAPITransaction(userId: self.userId).executeTransaction(params: params,
                                                                           onSuccess: { (ostTransaction) in
