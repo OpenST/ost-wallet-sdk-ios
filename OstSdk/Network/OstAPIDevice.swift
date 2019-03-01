@@ -55,7 +55,7 @@ class OstAPIDevice: OstAPIBase {
         get(params: params as [String : AnyObject],
             onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(entity as! OstDevice)
                 }catch let error{
                     onFailure?(error as! OstError)
@@ -85,7 +85,7 @@ class OstAPIDevice: OstAPIBase {
         post(params: authorizeDeviceParams as [String: AnyObject],
              onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(entity as! OstDevice)
                 }catch let error{
                     onFailure?(error as! OstError)

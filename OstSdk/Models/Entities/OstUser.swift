@@ -9,110 +9,136 @@
 import Foundation
 
 public class OstUser: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "id"
     
-    var currentDevice: OstCurrentDevice? = nil
-
-    static let OSTUSER_PARENTID = "token_id"
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "token_id"
     
-    static func getEntityIdentiferKey() -> String {
-        return "id"
-    }
-    
+    /// User status
     enum Status: String {
+        // TODO: add detailed description of the status meaning.
         case CREATED = "CREATED"
-        case ACTIVATED = "ACTIVATED"
         case ACTIVATING = "ACTIVATING"
+        case ACTIVATED = "ACTIVATED"
     }
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstUser? {
-        return try OstUserModelRepository.sharedUser.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstUser
+    /// Store OstUser entity data in the data base and returns the OstUser model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstUserModelRepository
+            .sharedUser
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    public class func getById(_ userId: String) throws -> OstUser? {
+    /// Get OstUser object from given user id
+    ///
+    /// - Parameter userId: User id
+    /// - Returns: OstUser model object
+    /// - Throws: OSTError
+    class func getById(_ userId: String) throws -> OstUser? {
         return try OstUserModelRepository.sharedUser.getById(userId) as? OstUser
     }
 
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstUser.getEntityIdentiferKey()] as Any?)!
+    /// Initializer for OstUser
+    ///
+    /// - Parameters:
+    ///   - id: User id
+    ///   - tokenId: Token id
+    /// - Throws: OstError
+    class func initUser(forId id: String, withTokenId tokenId: String) throws -> OstUser {
+        if let userObj = try OstUser.getById(id) {
+            return userObj
+        }
+        
+        let userEntityData = [
+            "id": id,
+            "token_id": tokenId,
+            "status": OstUser.Status.CREATED.rawValue,
+            "updated_timestamp": OstUtils.toString(Date.timestamp())
+        ]
+        
+        try OstUser.storeEntity(userEntityData)
+        return try OstUser.getById(id)!
+    }
+
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstUser.ENTITY_IDENTIFIER
     }
     
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstUser.OSTUSER_PARENTID] as Any?)
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstUser.ENTITY_PARENT_IDENTIFIER
     }
-    
-    override func processJson(_ entityData: [String : Any?]) {
-        super.processJson(entityData)
-    }
-    
+
+    /// Check if the current device is available or not
+    ///
+    /// - Returns: `true` if available else `false`
     func hasCurrentDevice() -> Bool {
         if let _ = getCurrentDevice() {
             return true
         }
         return false
     }
-    
+
+    /// Get current device model object
+    ///
+    /// - Returns: OstCurrentDevice model object
     public func getCurrentDevice() -> OstCurrentDevice? {
-        //TODO: - remvoe this code and get Deepesh code.
-//        if (self.currentDevice != nil && !self.currentDevice!.isStatusCreated) {
-//            return self.currentDevice
-//        }
-        
-        let deviceAddress = OstKeyManager(userId: self.id).getDeviceAddress()
-        if deviceAddress == nil {
+        // if current device address is not available return nil
+        guard let deviceAddress = OstKeyManager(userId: self.id).getDeviceAddress() else {
             return nil
         }
         
-        let device: OstDevice? = try! OstDeviceRepository.sharedDevice.getById(deviceAddress!) as? OstDevice
-        if (device == nil) {
+        do {
+            // Check if the device data is available for the given device address
+            guard let device: OstDevice = try OstDeviceRepository.sharedDevice.getById(deviceAddress) as? OstDevice else {
+                return nil
+            }
+            
+            // Create a OstCurrentDevice and return it
+            let currentDevice = try OstCurrentDevice(device.data as [String : Any])
+            return currentDevice
+        } catch {
             return nil
-        }
-        //TODO: - remvoe this code and get Deepesh code.
-//        if (self.currentDevice != nil) {
-//            self.currentDevice?.data = device!.data as [String : Any]
-//        } else {
-//            self.currentDevice = try! OstCurrentDevice(device!.data as [String : Any])
-//        }
-        return try! OstCurrentDevice(device!.data as [String : Any])
+        }        
     }
 }
 
 public extension OstUser {
     /// Get name.
     var name: String? {
-        if let loName = data["name"] as? String {
-            return loName.isEmpty ? nil : loName
-        }
-        return nil
+        return self.data["name"] as? String
     }
     
     /// Get token holder address.
     var tokenHolderAddress: String? {
-        if let thAddress = data["token_holder_address"] as? String {
-            return thAddress.isEmpty ? nil : thAddress
-        }
-        return nil
+        return self.data["token_holder_address"] as? String
     }
     
     /// Get device manager address.
     var deviceManagerAddress: String? {
-        if let dmAddress = data["device_manager_address"] as? String {
-            return dmAddress.isEmpty ? nil : dmAddress
-        }
-        return nil
+        return self.data["device_manager_address"] as? String
     }
     
     /// Get recovery address.
     var recoveryAddress: String? {
-        if let rAddress = data["recovery_owner_address"] as? String {
-            return rAddress.isEmpty ? nil : rAddress
-        }
-        return nil
+        return self.data["recovery_owner_address"] as? String
     }
     
     /// Get token id.
     var tokenId: String? {
-        return  OstUtils.toString(data["token_id"] as Any?)
+        return OstUtils.toString(self.data["token_id"] as Any)
     }
 }
 

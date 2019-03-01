@@ -9,71 +9,140 @@
 import Foundation
 
 public class OstSession: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "address"
     
-    static let OSTSESSION_PARENTID = "user_id"
+    /// Parent entity identifier for user entity
+    static let ENTITY_PARENT_IDENTIFIER = "user_id"
     
-    static func getEntityIdentiferKey() -> String {
-        return "address"
+    /// Session status
+    enum Status: String {
+        // TODO: add detailed description of the status meaning.
+        case INITIALIZING = "INITIALIZING"
+        case CREATED = "CREATED"
+        case AUTHORISED = "AUTHORISED"
+        case REVOKING = "REVOKING"
+        case REVOKED = "REVOKED"
     }
     
-    static let SESSION_STATUS_INITIALIZING = "INITIALIZING"
-    static let SESSION_STATUS_CREATED = "CREATED"
-    static let SESSION_STATUS_AUTHORISED = "AUTHORISED"
-    static let SESSION_STATUS_REVOKING = "REVOKING"
-    static let SESSION_STATUS_REVOKED = "REVOKED"
-    
-    static func parse(_ entityData: [String: Any?]) throws -> OstSession? {
-        return try OstSessionRepository.sharedSession.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstSession
+    /// Store OstSession entity data in the data base
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Throws: OstError
+    static func storeEntity(_ entityData: [String: Any?]) throws {
+        try OstSessionRepository
+            .sharedSession
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstSession.getEntityIdentiferKey()] as Any?)!
+    /// Get OstRule object from given address
+    ///
+    /// - Parameter address: Session address
+    /// - Returns: OstSession model object
+    /// - Throws: OSTError
+    class func getById(_ address: String) throws -> OstSession? {
+        return try OstSessionRepository.sharedSession.getById(address) as? OstSession
     }
     
-    override func getParentId() -> String? {
-        return OstUtils.toString(self.data[OstSession.OSTSESSION_PARENTID] as Any?)
+    /// Get key identifier for id
+    ///
+    /// - Returns: Key identifier for id
+    override func getIdKey() -> String {
+        return OstSession.ENTITY_IDENTIFIER
     }
     
-    func incrementAndStoreNonce() throws {
+    /// Get key identifier for parent id
+    ///
+    /// - Returns: Key identifier for parent id
+    override func getParentIdKey() -> String {
+        return OstSession.ENTITY_PARENT_IDENTIFIER
+    }
+    
+    /// Increment nonce and store it in dabatabase
+    ///
+    /// - Throws: OstError
+    func incrementNonce() throws {
         var params: [String: Any?] = self.data
-        params["nonce"] = self.nonce + 1
-        params["updated_timestamp"] = Date.timestamp()
-        _ = try OstSession.parse(params)
-    }
-    
-    func isInitializing() -> Bool {
-        if (self.status != nil &&
-            OstSession.SESSION_STATUS_INITIALIZING == self.status!.uppercased()) {
-            return true
-        }
-        return false
+        params["nonce"] = OstUtils.toString(self.nonce+1)
+        params["updated_timestamp"] = OstUtils.toString(Date.timestamp())
+        try OstSession.storeEntity(params)
     }
 }
 
+extension OstSession {
+    /// Check if the session is created
+    var isStatusCreated: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.CREATED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is initializing
+    var isStatusInitializing: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.INITIALIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is authorized
+    var isStatusAuthoried: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.AUTHORISED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is revoking
+    var isStatusRevoking: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is revoked
+    var isStatusRevoked: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.REVOKED.rawValue == status)
+        }
+        return false
+    }
+    
+}
+
 public extension OstSession {
+    /// Get session address
     var address : String? {
         return data["address"] as? String
     }
     
+    /// Get user id
     var userId : String? {
         return data["user_id"] as? String
     }
     
+    /// Get spending limit
     var spendingLimit : Int? {
         return OstUtils.toInt(self.data["spending_limit"] as Any?)
     }
     
+    /// Get expiration height
     var expirationHeight :  Int? {
         return OstUtils.toInt(self.data["expiration_height"] as Any?)
     }
     
+    /// Get nonce
     var nonce: Int {
         return OstUtils.toInt(data["nonce"] as Any?) ?? 0
     }
 }
 
-
+/*
 extension OstSession{
     public final class Transaction {
         public var from: String
@@ -125,3 +194,4 @@ extension OstSession{
         return try OstCryptoImpls().signTx(eip1077TxnHash, withPrivatekey: privateKey)
     }
 }
+*/

@@ -20,7 +20,7 @@ class ShowQRView: BaseWalletWorkflowView {
         self.errorLabel.text = "";
         self.successLabel.text = "";
         self.nextButton.isHidden = true;
-        OstSdk.setupDevice(userId: currentUser.id, tokenId: currentUser.tokenId!, delegate: self.sdkInteract);
+        OstSdk.setupDevice(userId: currentUser.id!, tokenId: currentUser.tokenId!, delegate: self.sdkInteract);
     }
     
     override func receivedSdkEvent(eventData: [String : Any]) {

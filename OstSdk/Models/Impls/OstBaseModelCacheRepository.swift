@@ -9,74 +9,92 @@
 import Foundation
 
 class OstBaseModelCacheRepository: OstBaseModelRepository {
+    /// Max entity cache count
+    private static let MAX_CACHE_COUNT = 5
     
+    /// Cache object
     private var entityCache: NSCache<NSString, OstBaseEntity>?
     
+    /// Initializer
     override init() {
         super.init()
         entityCache = NSCache<NSString, OstBaseEntity>()
         entityCache!.countLimit = maxCountToCache()
     }
     
+    /// Maximum number of items to be cached
+    ///
+    /// - Returns: Count
     func maxCountToCache() -> Int {
-        return 5
+        return OstBaseModelCacheRepository.MAX_CACHE_COUNT
     }
     
+    /// Get Item by id
+    ///
+    /// - Parameter id: Key identifier
+    /// - Returns: OStBaseEntity object
+    /// - Throws: OSTError
     override func getById(_ id: String) throws -> OstBaseEntity? {
+        // Check if the item is avaialable in cache.
         if let entity = getEntityFromCache(forKey: id) {
-            print("got entity from cache")
+            Logger.log(message: "Got entity from cache")
             return entity
         }
-        
+        // Get entity from db
         if let entity = try super.getById(id) {
-            saveEntityInCache(key: entity.id, entity: entity)
+            // Save the entity in cache
+            self.saveEntityInCache(key: entity.id, entity: entity)
             return entity
-        }
-        
+        }        
         return nil
     }
     
-    override func getByParentId(_ parentId: String) throws -> [OstBaseEntity]? {
-        if let entity = getEntityFromCache(forKey: parentId) {
-            return [entity]
-        }
-        
-        if let entityArray = try super.getByParentId(parentId) {
-            return entityArray
-        }
-        return nil
-    }
-    
-    override func insertOrUpdateEntity(_ entity: OstBaseEntity) -> OstBaseEntity? {
-        saveEntityInCache(key: entity.id, entity: entity)
+    /// Insert or update entity. Save the entity in cache
+    ///
+    /// - Parameter entity: Entity object
+    /// - Returns: Entity object
+    override func insertOrUpdateEntity(_ entity: OstBaseEntity) {
+        self.saveEntityInCache(key: entity.id, entity: entity)
         return super.insertOrUpdateEntity(entity)
     }
     
+    /// Delete item for given identifier key
+    ///
+    /// - Parameter id: Key identifier
     func deleteForId(_ id: String) {
-        super.deleteForId(id, callback: nil)
         self.removeFromCache(key: id)
+        super.deleteForId(id, callback: nil)
     }
     
     // MARK: - In cache
    
+    /// Get entity from cache for the given key identifier
+    ///
+    /// - Parameter key: Key identifier
+    /// - Returns: OstBaseEntity object
     fileprivate func getEntityFromCache(forKey key: String) -> OstBaseEntity? {
-        
         if let cacheData = entityCache!.object(forKey: key.lowercased() as NSString) {
             return cacheData
         }
         return nil
     }
     
+    /// Save the entity object in cache
+    ///
+    /// - Parameters:
+    ///   - key: Key identifier
+    ///   - entity: Entity object
     fileprivate func saveEntityInCache(key: String, entity: OstBaseEntity) {
-        
         if let cacheData = getEntityFromCache(forKey: key) {
-            cacheData.data = entity.data
+            try! cacheData.updateEntityData(entity.data)
         }else {
             entityCache!.setObject(entity, forKey: key.lowercased() as NSString)
         }
-        
     }
     
+    /// Remove entity from cache
+    ///
+    /// - Parameter key: Key identifier
     fileprivate func removeFromCache(key: String) {
         entityCache!.removeObject(forKey: key as NSString)
     }

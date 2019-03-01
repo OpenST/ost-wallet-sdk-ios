@@ -9,55 +9,76 @@
 import Foundation
 
 public class OstTransaction: OstBaseEntity {
+    /// Entity identifier for user entity
+    static let ENTITY_IDENTIFIER = "transaction_hash"
     
-    static func getEntityIdentiferKey() -> String {
-        return "transaction_hash"
+    /// Store OstTransaction entity data in the data base and returns the OstTransaction model object
+    ///
+    /// - Parameter entityData: Entity data dictionary
+    /// - Returns: OstDeviceManager model object
+    /// - Throws: OSTError
+    class func storeEntity(_ entityData: [String: Any?]) throws {
+        return try OstTransactionRepository
+            .sharedTransaction
+            .insertOrUpdate(
+                entityData,
+                forIdentifierKey: ENTITY_IDENTIFIER
+            )
     }
     
-    static func parse(_ entityData: [String: Any?]) throws -> OstTransaction? {
-        return try OstTransactionRepository.sharedTransaction.insertOrUpdate(entityData, forIdentifierKey: self.getEntityIdentiferKey()) as? OstTransaction
-    }
-    
-    override func getId(_ params: [String: Any?]? = nil) -> String {
-        let paramData = params ?? self.data
-        return OstUtils.toString(paramData[OstTransaction.getEntityIdentiferKey()] as Any?)!
+    /// Get OstTransaction object from given transaction hash
+    ///
+    /// - Parameter transactionHash: Transaction hash
+    /// - Returns: OstTransaction model object
+    /// - Throws: OSTError
+    class func getById(_ transactionHash: String) throws -> OstTransaction? {
+        return try OstTransactionRepository.sharedTransaction.getById(transactionHash) as? OstTransaction
     }
 }
 
 public extension OstTransaction {
-    var local_entity_id : String? {
-        return data["local_entity_id"] as? String ?? nil
+    /// Get local entity id
+    var localEntityId : String? {
+        return data["local_entity_id"] as? String
     }
     
-    var user_id : String? {
-        return data["user_id"] as? String ?? nil
+    /// Get user id
+    var userId : String? {
+        return data["user_id"] as? String
     }
     
-    var token_holder_address : String? {
-        return data["token_holder_address"] as? String ?? nil
+    /// Get token holder address
+    var tokenHolderAddress : String? {
+        return data["token_holder_address"] as? String
     }
     
-    var rule_id : String? {
-        return data["rule_id"] as? String ?? nil
+    /// Get rule id
+    var ruleId : String? {
+        return data["rule_id"] as? String
     }
     
+    /// Get method
     var method : String? {
-        return data["method"] as? String ?? nil
+        return data["method"] as? String
     }
     
+    /// Get params
     var params : String? {
-        return data["params"] as? String ?? nil
+        return data["params"] as? String
     }
     
+    /// Get session
     var session : String? {
-        return data["session"] as? String ?? nil
+        return data["session"] as? String
     }
     
-    var execute_rule_payload : [String: String]? {
-        return data["execute_rule_payload"] as? [String:String] ?? nil
+    /// Get executable rule payload
+    var executeRulePayload : [String: String]? {
+        return data["execute_rule_payload"] as? [String:String]
     }
     
-    var gas_price: Int? {
+    /// Get gas price
+    var gasPrice: Int? {
         return OstUtils.toInt(data["gas_price"] as Any?) 
     }
 }

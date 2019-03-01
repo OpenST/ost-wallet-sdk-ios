@@ -9,7 +9,9 @@
 import Foundation
 
 class OstUserDbQueries: OstBaseDbQueries {
-   
+    /// Get activity name for OstUser
+    ///
+    /// - Returns: Activity name
     override func activityName() -> String{
         return "users"
     }

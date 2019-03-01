@@ -9,7 +9,9 @@
 import Foundation
 
 class OstTokenHolderDbQueries: OstBaseDbQueries {
-    
+    /// Get activity name for OstTokenHolder
+    ///
+    /// - Returns: Activity name
     override func activityName() -> String{
         return "token_holders"
     }

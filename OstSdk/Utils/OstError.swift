@@ -99,6 +99,8 @@ public enum OstErrorText: String {
     case unexpectedState = "Unexpected state."
     case toAddressNotFound = "To address not found."
     case signerAddressNotFound = "Signer address not found."
+    case dbExecutionFailed = "DB execution failed."
+    case invalidEntityType = "Invalid entity type."
     case invalidQRCode = "Invalid QR Code"
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
@@ -113,8 +115,4 @@ public enum OstErrorText: String {
     case sdkError = "An internal SDK error has occoured."
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
-    
-    
-    
-    
 }

@@ -106,7 +106,7 @@ class OstAuthorizeBase {
                 throw OstError("q_a_ab_a_2", .signerAddressNotFound)
             }
             
-            try self.deviceManager!.incrementAndUpdateNonce(deviceManagerNonce)
+            try self.deviceManager!.incrementNonce()
             
             let rawCallData: String = getRawCallData()
             

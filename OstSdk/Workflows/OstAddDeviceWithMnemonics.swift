@@ -14,16 +14,14 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     
-    let mnemonics: [String]
-    
     var user: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
-    var ostWalletKeys: OstWalletKeys? = nil
+    var mnemonicsManager: OstMnemonicsKeyManager? = nil
     
     init(userId: String,
          mnemonics: [String],
          delegate: OstWorkFlowCallbackProtocol) {
-        self.mnemonics = mnemonics
+        self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -49,31 +47,28 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     override func perform() {
         ostAddDeviceThread.async {
             do {
-                try self.validateParams()
+                if (self.mnemonicsManager!.isMnemonicsValid() == false) {
+                    throw OstError("w_adwm_p_1", .invalidMnemonics)
+                }
                 
                 self.user = try self.getUser()
                 if (self.user == nil) {
-                    throw OstError("w_adwm_p_1", OstErrorText.userNotFound)
+                    throw OstError("w_adwm_p_2", OstErrorText.userNotFound)
                 }
                 
                 if (!self.user!.isStatusActivated) {
-                    throw OstError("w_adwm_p_2", OstErrorText.userNotActivated)
+                    throw OstError("w_adwm_p_3", OstErrorText.userNotActivated)
                 }
                 
                 self.currentDevice = try self.getCurrentDevice()
                 if (self.currentDevice == nil) {
-                    throw OstError("w_adwm_p_3",  OstErrorText.deviceNotset)
+                    throw OstError("w_adwm_p_4",  OstErrorText.deviceNotset)
                 }
                 
                 if (!self.currentDevice!.isDeviceRegistered()) {
-                    throw OstError("w_adwm_p_4", .deviceNotRegistered)
+                    throw OstError("w_adwm_p_5", .deviceNotRegistered)
                 }
                 
-                self.ostWalletKeys = try OstCryptoImpls().generateEthereumKeys(withMnemonics: self.mnemonics)
-                
-                if (self.ostWalletKeys!.address == nil || self.ostWalletKeys!.privateKey == nil) {
-                    throw OstError("w_adwm_p_5", .walletGenerationFailed)
-                }
                 try self.fetchDevice()
             }catch let error {
                 self.postError(error)
@@ -81,15 +76,8 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         }
     }
     
-    func validateParams() throws {
-        let filteredWordsArray = self.mnemonics.filter({ $0 != ""})
-        if (filteredWordsArray.isEmpty) {
-            throw OstError.init("w_adwm_vp_1", .invalidMnemonics);
-        }
-    }
-    
     func fetchDevice() throws {
-        try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.ostWalletKeys!.address!, onSuccess: { (ostDevice) in
+        try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.mnemonicsManager!.address!, onSuccess: { (ostDevice) in
             do {
                 if (!ostDevice.isStatusAuthorized) {
                     throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
@@ -110,9 +98,8 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     func authorizeDeviceWithMnemonics() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
-                let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: self.ostWalletKeys!.privateKey!)
-                return (signature, self.ostWalletKeys!.address!)
-                //Get device for address generated from mnemonics.
+                let signature = try self.mnemonicsManager!.sign(signingHash)
+                return (signature, self.mnemonicsManager!.address)
             }catch let error{
                 self.postError(error)
                 return (nil, nil)

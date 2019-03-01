@@ -39,7 +39,7 @@ public class OstAPISession: OstAPIBase {
         get(params: params as [String : AnyObject],
             onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(entity as! OstSession)
                 } catch let error{
                     onFailure?(error as! OstError)
@@ -69,7 +69,7 @@ public class OstAPISession: OstAPIBase {
         post(params: authorizeSessionParams as [String : AnyObject],
              onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.getEntityFromAPIResponse(apiResponse: apiResponse)
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
                     onSuccess?(entity as! OstSession)
                 }catch let error{
                     onFailure?(error as! OstError)
