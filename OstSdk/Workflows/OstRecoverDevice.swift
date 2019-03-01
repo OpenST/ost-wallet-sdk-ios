@@ -11,17 +11,31 @@ import Foundation
 class OstRecoverDevice: OstWorkflowBase {
     let ostRecoverDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
     
-    override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+    let deviceAddressToRecover: String
+    
+    var deviceToRecover: OstDevice? = nil
+    var signature: String? = nil
+    var signer: String? = nil
+    
+    init(userId: String,
+         deviceAddressToRecover: String,
+         uPin: String,
+         password: String,
+         delegate: OstWorkFlowCallbackProtocol) {
         
+        self.deviceAddressToRecover = deviceAddressToRecover
         super.init(userId: userId, delegate: delegate)
+        
+        self.uPin = uPin
+        self.appUserPassword = password
     }
     
     /**
-    1. initiate recovery
+     1. initiate recovery
      0. user should be activated state
      1. new device should be in register state.
      2. old device should be in authorized state.
-    2.abort recovery
+     2.abort recovery
      0. user should be activated state
      1. new device should be in authorizing state.
      2. old device should be in recoving state.
@@ -36,23 +50,104 @@ class OstRecoverDevice: OstWorkflowBase {
      6. d3  = new device address
      7. signer = current user recovery owner address
      8. to = current user recovery address
-        8.1 verifyingContract = to
+     8.1 verifyingContract = to
      9. add new typed data
-     10. signature = EIP712
+     10. signature = recovery owner address private key
      11.
-
+     
      
      * for abort current user device should be authorizing and old device status should ne recoving.
      polling in case of abort
-    */
-    
-    
-    
-    
-    
+     */
     override func perform() {
         ostRecoverDeviceThread.async {
-            
+            do {
+                try self.validateParams()
+                
+                self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
+                if (nil == self.deviceToRecover) {
+                    try self.fetchDevice()
+                }else {
+                    self.fetchSalt()
+                }
+            }catch let error {
+                self.postError(error)
+            }
         }
+    }
+    
+    func validateParams() throws {
+        self.currentUser = try getUser()
+        if (nil == self.currentUser) {
+            throw OstError("w_rd_vp_1", OstErrorText.userNotFound)
+        }
+        if (!self.currentUser!.isStatusActivated) {
+            throw OstError("w_rd_vp_2", OstErrorText.userNotActivated)
+        }
+        
+        self.currentDevice = try getCurrentDevice()
+        if (nil == self.currentDevice) {
+            throw OstError("w_rd_vp_3", OstErrorText.deviceNotFound)
+        }
+        if (!self.currentDevice!.isStatusRegistered) {
+            throw OstError("w_rd_vp_4", OstErrorText.deviceNotRegistered)
+        }
+    }
+    
+    func fetchDevice() throws {
+        try OstAPIDevice(userId: self.userId)
+            .getDevice(deviceAddress: self.deviceAddressToRecover,
+                       onSuccess: { (ostDevice) in
+                        self.deviceToRecover = ostDevice
+                        if (!self.deviceToRecover!.isStatusAuthorized) {
+                            self.postError(OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized))
+                            return
+                        }
+                        self.generateHash()
+            }) { (ostError) in
+                self.postError(ostError)
+        }
+    }
+    
+    override func fetchSalt() {
+        do {
+            try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
+                do {
+                    self.saltResponse = saltResponse
+                    self.generateHash()
+                }catch let error{
+                    self.postError(error)
+                }
+            }, onFailure: { (error) in
+                self.postError(error)
+            })
+        }catch let error{
+            self.postError(error)
+        }
+    }
+    
+    func generateHash() {
+        do {
+            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryAddress!,
+                                                                              prevOwner: self.deviceToRecover!.linkedAddress!,
+                                                                              oldOwner: self.deviceToRecover!.address!,
+                                                                              newOwner: self.currentDevice!.address!)
+            
+            let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
+                                         primaryType: typedData["primaryType"] as! String,
+                                         domain: typedData["domain"] as! [String: String],
+                                         message: typedData["message"] as! [String: Any])
+            
+            let signingHash = try eip712.getEIP712SignHash()
+            let keychainManager = OstKeyManager(userId: self.userId)
+            if let deviceAddress = keychainManager.getDeviceAddress() {
+                let privatekey = try keychainManager.getDeviceKey()
+                
+                
+            }
+        }catch let error {
+            self.postError(error)
+        }
+        
     }
 }
