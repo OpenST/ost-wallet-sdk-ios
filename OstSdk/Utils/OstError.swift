@@ -48,6 +48,7 @@ public enum OstErrorText: String {
     case userNotActivated = "User is not activated."
     case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
     case deviceNotAuthorized = "Device is not authorized."
+    case deviceAuthorized = "Device is already authorized."
     case wrongDeviceAddress = "Wrong device address."
     case registerSameDevice = "Trying to register same device."
     case accessControlFailed = "Unable to create access control object."

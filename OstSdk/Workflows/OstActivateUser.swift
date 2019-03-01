@@ -56,15 +56,17 @@ class OstActivateUser: OstWorkflowBase {
                 
                 self.currentDevice = self.currentUser!.getCurrentDevice()
                 if (self.currentDevice == nil) {
-                    self.postError(OstError.init("w_p_p_2", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
+                    throw OstError.init("w_p_p_2", "Device is not present for \(self.userId). Plese setup device first by calling OstSdk.setupDevice")
                 }
 
-                if (self.currentDevice!.isStatusRegistered ||
-                    self.currentDevice!.isStatusRevoking ||
-                    self.currentDevice!.isStatusRevoked ) {
-                    self.postError(OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice"))
-                    return
+                if (!self.currentDevice!.isStatusRegistered &&
+                    (self.currentDevice!.isStatusRevoking ||
+                    self.currentDevice!.isStatusRevoked )) {
+                    throw OstError("w_p_p_3", "Device is revoked for \(self.userId). Plese setup device first by calling OstSdk.setupDevice")
+                }
+                
+                if (self.currentDevice!.isStatusAuthorized) {
+                    throw OstError("w_p_p_4", OstErrorText.deviceAuthorized)
                 }
 
                 let onCompletion: (() -> Void) = {
