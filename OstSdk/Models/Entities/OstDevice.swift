@@ -69,6 +69,10 @@ public extension OstDevice {
     public var deviceUUID: String? {
         return data["device_uuid"] as? String
     }
+    
+    public var linkedAddress: String? {
+        return data["linked_address"] as? String
+    }
 }
 
 //check for status
