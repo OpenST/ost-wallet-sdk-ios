@@ -148,9 +148,9 @@ class OstExecuteTransaction: OstWorkflowBase {
                     }
                     for rule in rules {
                         if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame) {
-                            throw OstError("w_et_gtr_2", OstErrorText.rulesNotFound)
-                        }else {
                             self.getActiveSession()
+                        }else {
+                            throw OstError("w_et_gtr_2", OstErrorText.rulesNotFound)
                         }
                     }
                     

@@ -10,7 +10,7 @@ import Foundation
 
 public class OstRule: OstBaseEntity {
     /// Entity identifier for user entity
-    static let ENTITY_IDENTIFIER = "rule_id"
+    static let ENTITY_IDENTIFIER = "address"
     
     /// Parent entity identifier for user entity
     static let ENTITY_PARENT_IDENTIFIER = "token_id"
