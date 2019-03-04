@@ -98,7 +98,6 @@ open class OstAPIBase {
         
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
-        
         dataRequest!.responseJSON { (httpResponse) in
             Logger.log(message: "httpResponse.relativePath", parameterToPrint: httpResponse.response?.url?.relativePath);
             Logger.log(message: "httpResponse.result.value", parameterToPrint: httpResponse.result.value);
