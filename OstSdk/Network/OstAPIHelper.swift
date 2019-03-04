@@ -152,6 +152,9 @@ class OstAPIHelper {
         case ResultType.session.rawValue:
             id = try getItem(OstSession.ENTITY_IDENTIFIER)
             return try OstSession.getById(id)!
+        case ResultType.transaction.rawValue:
+            id = try getItem(OstTransaction.ENTITY_IDENTIFIER)
+            return try OstTransaction.getById(id)!
         default:
             throw OstError("n_ah_gse_3", .invalidEntityType)
         }

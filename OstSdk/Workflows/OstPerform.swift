@@ -39,8 +39,8 @@ class OstPerform: OstWorkflowBase {
                 guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
                     throw OstError.init("w_p_p_1", .deviceNotset)
                 }
-                if (!currentDevice.isStatusRegistered) {
-                    throw OstError.init("w_p_p_2", .deviceNotRegistered)
+                if (!currentDevice.isStatusAuthorized) {
+                    throw OstError.init("w_p_p_2", OstErrorText.deviceNotAuthorized)
                 }
                 
                 // Note: Authenticate user is not need before validating data.

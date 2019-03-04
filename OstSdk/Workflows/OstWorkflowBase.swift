@@ -176,11 +176,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             throw OstError("w_wb_vp_1",.userNotFound)
         }
         
-        if (user.recoveryAddress == nil || user.recoveryAddress!.isEmpty) {
+        if (user.recoveryOwnerAddress == nil || user.recoveryOwnerAddress!.isEmpty) {
             throw OstError("w_wb_vp_2", .recoveryAddressNotFound);            
         }
         
-        if (user.recoveryAddress!.caseInsensitiveCompare(recoveryKey) == .orderedSame) {
+        if (user.recoveryOwnerAddress!.caseInsensitiveCompare(recoveryKey) == .orderedSame) {
             let recoveryPinString: String = OstCryptoImpls().getRecoveryPinString(password: self.appUserPassword,
                                                                                   pin: self.uPin,
                                                                                   userId: self.userId)

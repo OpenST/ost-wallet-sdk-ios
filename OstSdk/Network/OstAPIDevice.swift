@@ -96,4 +96,25 @@ class OstAPIDevice: OstAPIBase {
             }
         )
     }
+    
+    func initiateRecoverDevice(params: [String: Any], onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+        resourceURL = userApiResourceBase + "/initiate-recovery"
+        
+        var revokeDeviceParams: [String: Any] = params
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &revokeDeviceParams, withUserId: self.userId)
+        
+        // Make an API call and store the data in database.
+        post(params: revokeDeviceParams as [String: AnyObject],
+             onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstDevice)
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+        }) { (failureResponse) in
+            onFailure?(OstError.init(fromApiResponse: failureResponse!))
+        }
+    }
 }
