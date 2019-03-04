@@ -180,8 +180,7 @@ class OstExecuteTransaction: OstWorkflowBase {
                             self.activeSession = session
                             self.generateHash()
                             return
-                        }
-                        
+                        }      
                     }
                 }
                 throw OstError("w_et_gas_1", OstErrorText.sessionNotFound)

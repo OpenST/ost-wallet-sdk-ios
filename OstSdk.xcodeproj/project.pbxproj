@@ -73,6 +73,8 @@
 		4B1214222228589100C185D2 /* OstPolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214212228589100C185D2 /* OstPolling.swift */; };
 		4B121424222907EF00C185D2 /* OstRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B121423222907EF00C185D2 /* OstRecoverDevice.swift */; };
 		4B1214262229366B00C185D2 /* TypedDataForRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214252229366B00C185D2 /* TypedDataForRecovery.swift */; };
+		4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12142A222C459800C185D2 /* OstSessionHelper.swift */; };
+		4B12142D222C45B100C185D2 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -356,6 +358,8 @@
 		4B1214212228589100C185D2 /* OstPolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPolling.swift; sourceTree = "<group>"; };
 		4B121423222907EF00C185D2 /* OstRecoverDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRecoverDevice.swift; sourceTree = "<group>"; };
 		4B1214252229366B00C185D2 /* TypedDataForRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedDataForRecovery.swift; sourceTree = "<group>"; };
+		4B12142A222C459800C185D2 /* OstSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSessionHelper.swift; sourceTree = "<group>"; };
+		4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowHelperBase.swift; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -687,6 +691,7 @@
 		4B00CCDB21E481D3005A5696 /* Workflows */ = {
 			isa = PBXGroup;
 			children = (
+				4B121429222C457E00C185D2 /* WorkflowHelpers */,
 				4BE89582222128B8009C6A44 /* OstContext */,
 				4BE8956D222034B1009C6A44 /* OstAuthorize */,
 				4BAE56DB2214512800327A19 /* Services */,
@@ -729,6 +734,15 @@
 				4B1214172227D02F00C185D2 /* TokenHolder.swift */,
 			);
 			path = ABIHelper;
+			sourceTree = "<group>";
+		};
+		4B121429222C457E00C185D2 /* WorkflowHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */,
+				4B12142A222C459800C185D2 /* OstSessionHelper.swift */,
+			);
+			path = WorkflowHelpers;
 			sourceTree = "<group>";
 		};
 		4B27DFF321CA8A5300CB7D69 /* SoliditySha3 */ = {
@@ -1683,6 +1697,7 @@
 				4B7EAA25220027E300852DE2 /* BiometricIDAuth.swift in Sources */,
 				4B49890B21F6F2AF00ED0E94 /* EthereumValueConvertible.swift in Sources */,
 				4BE9E32D2203306C00427A80 /* OstWorkFlowFactory.swift in Sources */,
+				4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */,
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
 				4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
@@ -1747,6 +1762,7 @@
 				4B4988FF21F6F2AF00ED0E94 /* Web3Provider.swift in Sources */,
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,
+				4B12142D222C45B100C185D2 /* OstWorkflowHelperBase.swift in Sources */,
 				4B12141C2227D02F00C185D2 /* ABIHerlperBase.swift in Sources */,
 				4B49891221F6F2AF00ED0E94 /* Types+EthereumValueConvertible.swift in Sources */,
 				4B49892221F6F2AF00ED0E94 /* Values+GeneralHashable.swift in Sources */,

@@ -21,7 +21,8 @@ public class OstSession: OstBaseEntity {
         // TODO: add detailed description of the status meaning.
         case INITIALIZING = "INITIALIZING"
         case CREATED = "CREATED"
-        case AUTHORISED = "AUTHORISED"
+        case AUTHORIZING = "AUTHORIZING"
+        case AUTHORIZED = "AUTHORIZED"
         case REVOKING = "REVOKING"
         case REVOKED = "REVOKED"
     }
@@ -121,10 +122,18 @@ public extension OstSession {
         return false
     }
     
-    /// Check if the session is authorized
-    var isStatusAuthoried: Bool {
+    /// Check if the session is authorizing
+    var isStatusAuthorizing: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.AUTHORISED.rawValue == status)
+            return (OstSession.Status.AUTHORIZING.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the session is authorized
+    var isStatusAuthorized: Bool {
+        if let status: String = self.status {
+            return (OstSession.Status.AUTHORIZED.rawValue == status)
         }
         return false
     }

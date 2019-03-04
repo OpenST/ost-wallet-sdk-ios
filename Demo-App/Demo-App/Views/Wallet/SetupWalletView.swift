@@ -33,13 +33,12 @@ class SetupWalletView: BaseWalletWorkflowView {
     let spendingLimitInWei = String( "1000000000000000000000000" )
     Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
     
-    // expirationHeight is temp, we shall change it.
-    let expirationHeight = 10000000;
-    
     OstSdk.activateUser(userId: currentUser.ostUserId!,
                         pin: pinNumberTextField.text!,
                         password: currentUser.userPinSalt!,
-                        spendingLimit: spendingLimitInWei, expirationHeight: expirationHeight, delegate: self.sdkInteract);
+                        spendingLimit: spendingLimitInWei,
+                        expireAfter: (Date().timeIntervalSince1970 + Double(2*60*60)),
+                        delegate: self.sdkInteract);
     
     //Call super to update UI and log stuff.
     super.didTapNext(sender: sender);

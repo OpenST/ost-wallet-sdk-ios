@@ -15,10 +15,12 @@ class OstAddSession: OstWorkflowBase {
     let workflowTransactionCountForPolling = 1
     
     var spendingLimit: String
-    var expirationHeight: Int?
+//    var expirationHeight: Int?
     var expiresAfter: TimeInterval;
+    
+    var sessionHelper: OstSessionHelper.SessionHelper? = nil
 
-    var sessionAddress: String? = nil
+//    var sessionAddress: String? = nil
     var chainInfo: [String: Any]? = nil
   
     init(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
@@ -31,8 +33,16 @@ class OstAddSession: OstWorkflowBase {
         ostAddSessionThread.async {
             do {
                 try self.validateParams()
-                self.generateSessionKeys()
-                self.getCurrentBlockHeight()
+//                self.generateSessionKeys()
+//                self.getCurrentBlockHeight()
+                
+                OstSessionHelper(userId: self.userId, expiresAfter: self.expiresAfter)
+                    .getSessionData(onSuccess: { (sessionHelper) in
+                        self.sessionHelper = sessionHelper
+                        self.authorizeSession()
+                    }, onFailure: { (error) in
+                        self.postError(error)
+                    })
             }catch let error {
                 self.postError(error)
             }
@@ -54,32 +64,6 @@ class OstAddSession: OstWorkflowBase {
         }
         if (!self.currentDevice!.isStatusAuthorized) {
             throw OstError("w_as_vp_3", .deviceNotAuthorized)
-        }
-    }
-    
-    func generateSessionKeys() {
-        do {
-            let keyMananger = OstKeyManager(userId: self.userId)
-            self.sessionAddress = try keyMananger.createSessionKey()
-        }catch let error {
-            self.postError(error)
-        }
-    }
-    
-    func getCurrentBlockHeight() {
-        do {
-            let onSuccess: (([String: Any]) -> Void) = { chainInfo in
-                self.chainInfo = chainInfo
-                self.authorizeSession()
-            }
-            
-            let onFailure: ((OstError) -> Void) = { error in
-                self.postError(error)
-            }
-            
-            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailure)
-        }catch let error {
-            self.postError(error)
         }
     }
     
@@ -107,19 +91,12 @@ class OstAddSession: OstWorkflowBase {
             self.postError(error)
         }
       
-        // Calculate expiration height
-        let currentBlockHeight = OstUtils.toInt(self.chainInfo!["block_height"])!;
-        let blockGenerationTime = OstUtils.toInt(self.chainInfo!["block_time"])!;
-        let bufferedSessionTime = OstAddSession.SESSION_BUFFER_TIME + self.expiresAfter;
-        let validForBlocks = Int.init( bufferedSessionTime/Double(blockGenerationTime) );
-        self.expirationHeight = validForBlocks + currentBlockHeight;
-      
         self.generateAndSaveSessionEntity()
      
         OstAuthorizeSession(userId: self.userId,
-                            sessionAddress: self.sessionAddress!,
+                            sessionAddress: self.sessionHelper!.sessionAddress,
                             spendingLimit: self.spendingLimit,
-                            expirationHeight: OstUtils.toString(self.expirationHeight!)!,
+                            expirationHeight: self.sessionHelper!.expirationHeight,
                             generateSignatureCallback: generateSignatureCallback,
                             onSuccess: onSuccess,
                             onFailure: onFailure).perform()
@@ -137,8 +114,8 @@ class OstAddSession: OstWorkflowBase {
     func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
-        params["address"] = self.sessionAddress!
-        params["expiration_height"] = self.expirationHeight!
+        params["address"] = self.sessionHelper!.sessionAddress
+        params["expiration_height"] = self.sessionHelper!.expirationHeight
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0
         params["status"] = OstSession.Status.CREATED.rawValue

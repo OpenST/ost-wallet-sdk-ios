@@ -40,14 +40,14 @@ extension OstSdk {
     ///   - pin: user secret pin.
     ///   - password: App-server secret for user.
     ///   - spendingLimit: Max amount that user can spend per transaction.
-    ///   - expirationHeight:
+    ///   - expireAfter: Session expiration time.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
         pin: String,
         password: String,
         spendingLimit: String,
-        expirationHeight: Int,
+        expireAfter: TimeInterval,
         delegate: OstWorkFlowCallbackProtocol) {
         
         let activateUserObj = OstActivateUser(
@@ -55,7 +55,7 @@ extension OstSdk {
             pin: pin, password:
             password,
             spendingLimit: spendingLimit,
-            expirationHeight: expirationHeight,
+            expireAfter: expireAfter,
             delegate: delegate)
 
         activateUserObj.perform()
