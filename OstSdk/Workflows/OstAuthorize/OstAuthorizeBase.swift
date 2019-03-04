@@ -93,7 +93,11 @@ class OstAuthorizeBase {
                                                                                refundReceiver: self.nullAddress,
                                                                                nonce: OstUtils.toString(deviceManagerNonce)!)
             
-            let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any], primaryType: typedDataInput["primaryType"] as! String, domain: typedDataInput["domain"] as! [String: String], message: typedDataInput["message"] as! [String: Any])
+            let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any],
+                                        primaryType: typedDataInput["primaryType"] as! String,
+                                        domain: typedDataInput["domain"] as! [String: String],
+                                        message: typedDataInput["message"] as! [String: Any])
+            
             let signingHash = try! eip712.getEIP712SignHash()
             
             let (signature, signerAddress) = self.generateSignatureCallback(signingHash)

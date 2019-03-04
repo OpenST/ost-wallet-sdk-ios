@@ -54,8 +54,8 @@ class SignupViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func createOstUser(for userId: String) {
         MappyUser().createOstUser(for: userId, onSuccess: { (ostUserObj) in
            self.parseUser(ostUserObj!)
-        }) { (failuarObj) in
-            print(failuarObj as Any)
+        }) { (failureObj) in
+            print(failureObj as Any)
         }
     }
     

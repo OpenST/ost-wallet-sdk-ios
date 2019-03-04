@@ -9,12 +9,22 @@
 import Foundation
 
 public enum OstWorkflowType {
-    case setupDevice, activateUser, addDevice, addSession, getPapaerWallet,
-        perform, showQRCode, executeTransaction, scanQRCode, addDeviceWithQRCode, polling, recoverDevice
+    case setupDevice,
+    activateUser,
+    addDevice,
+    addSession,
+    getPaperWallet,
+    perform,
+    showQRCode,
+    executeTransaction,
+    scanQRCode,
+    addDeviceWithQRCode,
+    polling,
+    recoverDevice,
+    resetPin
 }
 
-public class OstWorkflowContext {
-    
+public class OstWorkflowContext {    
     public let workflowType: OstWorkflowType
     init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType

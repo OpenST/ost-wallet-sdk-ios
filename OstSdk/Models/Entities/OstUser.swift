@@ -136,7 +136,7 @@ public extension OstUser {
         return self.data["recovery_owner_address"] as? String
     }
     
-    /// Get recovery owner address.
+    /// Get recovery address.
     var recoveryAddress: String? {
         return self.data["recovery_address"] as? String
     }

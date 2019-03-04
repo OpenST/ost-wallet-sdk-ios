@@ -23,6 +23,8 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     var currentUser: OstUser? = nil
     var currentDevice: OstCurrentDevice? = nil
     
+    var workFlowValidator: OstWorkflowValidator? = nil
+    
     init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         self.userId = userId
         self.delegate = delegate
@@ -54,14 +56,13 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     
     func postError(_ error: Error) {
         let workflowContext: OstWorkflowContext = getWorkflowContext()
-        let ostError: OstError = error as? OstError ?? OstError("w_wb_pe_1", .unexpectedError)
         DispatchQueue.main.async {
             if ( error is OstError ) {
                 self.delegate.flowInterrupted1(workflowContext: workflowContext, error: error as! OstError);
             }
             else {
                 //Unknown Error. Post Something went wrong.
-                let ostError:OstError = OstError("wb_pe_1", OstErrorText.sdkError)
+                let ostError:OstError = OstError("w_wb_pe_1", OstErrorText.sdkError)
                 self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError )
             }
         }
@@ -112,7 +113,14 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
     }
     
-    /// Accept pin from user and valdiate.
+    func getWorkflowValidator() throws -> OstWorkflowValidator {
+        if (self.workFlowValidator == nil) {
+            self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
+        }
+        return self.workFlowValidator!
+    }
+
+    /// Accept pin from user and validate.
     ///
     /// - Parameters:
     ///   - uPin: user pin.
@@ -120,77 +128,82 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.retryCount += 1
         workflowThread.async {
-            
-            
             self.uPin = uPin
             self.appUserPassword = appUserPassword
-            
-            let recoveryPinString: String = OstCryptoImpls().getRecoveryPinString(password: self.appUserPassword,
-                                                                                  pin: self.uPin,
-                                                                                  userId: self.userId)
             do {
-                let isUserAuthorized = try OstKeyManager(userId: self.userId).verifyRecoveryPinString(recoveryPinString)
-                if (isUserAuthorized) {
-                    DispatchQueue.main.async {
-                        self.delegate.pinValidated(self.userId)
-                    }
-                    self.proceedWorkflowAfterAuthenticateUser()
-                }else {
+                let isPinValid  = try self.validatePin()
+                if isPinValid == false {
                     self.userAuthenticationFailed()
+                    return
                 }
-            }catch {
-               self.fetchSalt()
+                DispatchQueue.main.async {
+                    self.delegate.pinValidated(self.userId)
+                }
+                self.proceedWorkflowAfterAuthenticateUser()
+            } catch let error{
+                self.postError(error)
             }
         }
     }
 
-    func fetchSalt() {
-        do {
-            try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                do {
-                    self.saltResponse = saltResponse
-                    try self.validatePin()
-                }catch let error{
-                    self.postError(error)
-                }
-            }, onFailure: { (error) in
-                self.postError(error)
-            })
-        }catch let error{
-            self.postError(error)
+    func getSalt() throws -> String {
+        if (self.saltResponse == nil) {
+            self.saltResponse = try self.fetchSalt()
         }
+        return self.saltResponse!["scrypt_salt"] as! String
     }
     
-    func validatePin() throws {
-        let salt = self.saltResponse!["scrypt_salt"] as! String
-        let recoveryKey = try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
-                                                                   pin: self.uPin,
-                                                                   userId: self.userId,
-                                                                   salt: salt,
-                                                                   n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                                   r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                                   p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                                   size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
+    private func fetchSalt() throws -> [String: Any]? {
+        let group = DispatchGroup()
         
-        guard let user: OstUser = try getUser() else {
-            throw OstError("w_wb_vp_1",.userNotFound)
+        var salt: [String: Any]?
+        var err: OstError? = nil
+        do {
+            group.enter()
+            try OstAPISalt(userId: self.userId)
+                .getRecoverykeySalt(
+                    onSuccess: { (saltResponse) in
+                        salt = saltResponse
+                        group.leave()
+                    },
+                    onFailure: { (error) in
+                        err = error
+                        group.leave()
+                    }
+                )
+            group.wait()
+        }catch let error{
+            err = error as? OstError
+            group.leave()
         }
-        
-        if (user.recoveryOwnerAddress == nil || user.recoveryOwnerAddress!.isEmpty) {
-            throw OstError("w_wb_vp_2", .recoveryAddressNotFound);            
+        if (err != nil) {
+            throw err!
         }
+        return salt
+    }
+    
+    func validatePin() throws -> Bool{
+        let validator = try self.getWorkflowValidator()
+        let salt = try self.getSalt()
         
-        if (user.recoveryOwnerAddress!.caseInsensitiveCompare(recoveryKey) == .orderedSame) {
-            let recoveryPinString: String = OstCryptoImpls().getRecoveryPinString(password: self.appUserPassword,
-                                                                                  pin: self.uPin,
-                                                                                  userId: self.userId)
-            try OstKeyManager(userId: self.userId).storeRecoveryPinString(recoveryPinString)
-            DispatchQueue.main.async {
-                self.delegate.pinValidated(self.userId)
-            }
-            self.proceedWorkflowAfterAuthenticateUser()
-        }else {
-            userAuthenticationFailed()
+        try validator.validatePinLength(self.uPin)
+        do {
+            let isPinValid = try validator.validatePin(
+                pin: self.uPin,
+                appPassword: self.appUserPassword,
+                salt: salt
+            )
+            return isPinValid
+        } catch {
+            // Fallback
+            let recoveryOwnerAddress = try OstKeyManager(userId: self.userId)
+                .getRecoveryOwnerAddressFrom(
+                    password: self.appUserPassword,
+                    pin: self.uPin,
+                    salt: salt
+                )
+            let user = try OstUser.getById(self.userId)
+            return recoveryOwnerAddress.caseInsensitiveCompare((user!.recoveryOwnerAddress)!) ==  .orderedSame
         }
     }
     

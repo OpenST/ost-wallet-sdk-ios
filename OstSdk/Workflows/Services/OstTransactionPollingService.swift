@@ -17,13 +17,13 @@ class OstTransactionPollingService: OstBasePollingService {
          transaciotnId: String,
          workflowTransactionCount: Int,
          successCallback: ((OstTransaction) -> Void)?,
-         failuarCallback: ((OstError) -> Void)?) {
+         failureCallback: ((OstError) -> Void)?) {
         
         self.successCallback = successCallback
         self.transaciotnId = transaciotnId
         super.init(userId: userId,
                    workflowTransactionCount: workflowTransactionCount,
-                   failuarCallback: failuarCallback)
+                   failureCallback: failureCallback)
         
         self.dispatchQueue = self.TransactionPollingServiceDispatchQueue
     }
@@ -35,7 +35,7 @@ class OstTransactionPollingService: OstBasePollingService {
             self.successCallback?(ostTransaction)
         }else if (ostTransaction.isStatusFailed){
             Logger.log(message: "test User with userId: \(ostTransaction.id) and is failed at \(Date.timestamp())", parameterToPrint: ostTransaction.data)
-            self.failuarCallback?(OstError("w_s_tos_osp_1", OstErrorText.transactionFailed))
+            self.failureCallback?(OstError("w_s_tos_osp_1", OstErrorText.transactionFailed))
         }else {
             Logger.log(message: "test User status is activating for userId: \(ostTransaction.id) and is activated at \(Date.timestamp())", parameterToPrint: ostTransaction.data)
             self.getEntityAfterDelay()

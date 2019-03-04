@@ -16,13 +16,13 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     var forceSync: Bool
     var keyManager: OstKeyManager
     
-    public init(userId: String, tokenId: String, forceSync: Bool, delegat: OstWorkFlowCallbackProtocol) {
+    public init(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) {
         self.tokenId = tokenId
         self.forceSync = forceSync
         
         keyManager = OstKeyManager(userId: userId)
         
-        super.init(userId: userId, delegate: delegat)
+        super.init(userId: userId, delegate: delegate)
     }
     
     override func perform() {

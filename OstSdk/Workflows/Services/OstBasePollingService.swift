@@ -21,13 +21,13 @@ class OstBasePollingService {
     let userId: String
     let workflowTransactionCount: Int
     
-    let failuarCallback: ((OstError) -> Void)?
+    let failureCallback: ((OstError) -> Void)?
     var dispatchQueue: DispatchQueue = DispatchQueue.global()
     
-    init (userId: String, workflowTransactionCount: Int, failuarCallback: ((OstError) -> Void)?) {
+    init (userId: String, workflowTransactionCount: Int, failureCallback: ((OstError) -> Void)?) {
         self.userId = userId
         self.workflowTransactionCount = workflowTransactionCount
-        self.failuarCallback = failuarCallback
+        self.failureCallback = failureCallback
     }
     
     func perform() {
@@ -43,7 +43,7 @@ class OstBasePollingService {
         }
         
         self.onFailure = { error in
-            self.failuarCallback?(error)
+            self.failureCallback?(error)
         }
     }
     
@@ -70,11 +70,11 @@ class OstBasePollingService {
                     let ostError = error as! OstError;
                     /// TODO: Check response error code.
                     /// If it was a network error (The following status code should not be treated as network-errors: 200/404/401)
-                    /// We need to retry instead of calling failuarCallback.
+                    /// We need to retry instead of calling failureCallback.
                     /// For now, we shall check on requestCount
                     if ( self.requestCount == OstBasePollingService.MAX_RETRY_COUNT ) {
                       //Sufficient retires have been made.
-                      self.failuarCallback?(ostError)
+                      self.failureCallback?(ostError)
                       return;
                     }
                   
@@ -83,7 +83,7 @@ class OstBasePollingService {
                 }
             }
         }else {
-            self.failuarCallback?(OstError.init("w_s_bps_gead_1", .failedWithMaxRetryCount))
+            self.failureCallback?(OstError.init("w_s_bps_gead_1", .failedWithMaxRetryCount))
         }
     }
     

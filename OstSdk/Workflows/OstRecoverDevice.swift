@@ -48,7 +48,8 @@ class OstRecoverDevice: OstWorkflowBase {
                 if (nil == self.deviceToRecover) {
                     try self.fetchDevice()
                 }else {
-                    self.fetchSalt()
+                    _ = try self.getSalt()
+                    self.generateHash()
                 }
             }catch let error {
                 self.postError(error)
@@ -84,37 +85,27 @@ class OstRecoverDevice: OstWorkflowBase {
         try OstAPIDevice(userId: self.userId)
             .getDevice(deviceAddress: self.deviceAddressToRecover,
                        onSuccess: { (ostDevice) in
-                        self.deviceToRecover = ostDevice
-                        if (!self.deviceToRecover!.isStatusAuthorized) {
-                            self.postError(OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized))
-                            return
+                        
+                        do {
+                            self.deviceToRecover = ostDevice
+                            if (!self.deviceToRecover!.isStatusAuthorized) {
+                                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
+                            }
+                            _ = try self.getSalt()
+                            self.generateHash()
+                        } catch let error {
+                            self.postError(error)
                         }
-                        self.fetchSalt()
+                        
             }) { (ostError) in
                 self.postError(ostError)
         }
     }
-    
-    /// Fetch salt from kit
-    override func fetchSalt() {
-        do {
-            try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                
-                self.saltResponse = saltResponse
-                self.generateHash()
-                
-            }, onFailure: { (error) in
-                self.postError(error)
-            })
-        }catch let error{
-            self.postError(error)
-        }
-    }
-    
+
     /// Generate eip712 hash and signature from user recovery owner key
     func generateHash() {
         do {
-            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryAddress!,
+            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryOwnerAddress!,
                                                                               prevOwner: self.deviceToRecover!.linkedAddress!,
                                                                               oldOwner: self.deviceToRecover!.address!,
                                                                               newOwner: self.currentDevice!.address!)
@@ -126,10 +117,14 @@ class OstRecoverDevice: OstWorkflowBase {
             
             let signingHash = try eip712.getEIP712SignHash()
             
-            self.signature = try OstKeyManager(userId: self.userId).signWithRecoveryKey(signingHash,
+            let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash,
                                                                                         pin: self.uPin,
                                                                                         password: self.appUserPassword,
                                                                                         salt: self.saltResponse!["scrypt_salt"] as! String)
+            if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
+                throw OstError("w_rd_gh_1", .invalidRecoveryAddress)
+            }
+            self.signature = signedData.signature
             
             try self.revokeDevice()
         }catch let error {

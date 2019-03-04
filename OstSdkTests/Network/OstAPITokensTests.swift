@@ -59,8 +59,8 @@ class OstAPITokensTests: XCTestCase {
 //
 //        tokensAPIObj.get(params: params as [String: AnyObject], onSuccess: { (httpSuccessResponse) in
 //            Logger.log(message: "successResponse", parameterToPrint: httpSuccessResponse)
-//        }) { (httpFailuarResponse) in
-//            Logger.log(message: "failuarResponse", parameterToPrint: httpFailuarResponse)
+//        }) { (httpFailureResponse) in
+//            Logger.log(message: "failureResponse", parameterToPrint: httpFailureResponse)
 //        }
 //
 //    }

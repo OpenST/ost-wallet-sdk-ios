@@ -1,5 +1,5 @@
 //
-//  OstGetPapaerWallet.swift
+//  OstGetPaperWallet.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 21/02/19.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class OstGetPapaerWallet: OstWorkflowBase {
-    let ostGetPapaerWalletThread = DispatchQueue(label: "com.ost.sdk.OstGetPapaerWallet", qos: .background)
+class OstGetPaperWallet: OstWorkflowBase {
+    let ostGetPaperWalletThread = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
     
     override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         super.init(userId: userId, delegate: delegate)
     }
     
     override func perform() {
-        ostGetPapaerWalletThread.async {
+        ostGetPaperWalletThread.async {
             self.authenticateUser()
         }
     }
@@ -43,7 +43,7 @@ class OstGetPapaerWallet: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .getPapaerWallet)
+        return OstWorkflowContext(workflowType: .getPaperWallet)
     }
     
     /// Get context entity

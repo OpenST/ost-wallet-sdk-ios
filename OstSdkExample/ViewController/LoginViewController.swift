@@ -27,7 +27,7 @@ class LoginViewController: SignupViewController {
             
             OstSdk.setupDevice(userId: self.user!["ost_user_id"]! as! String, tokenId: "1003", delegate: OstWorkFlowCallbackImplementation(mappyUserId: self.user!["_id"] as! String))
             
-        }) { (failuarObj) in
+        }) { (failureObj) in
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -37,7 +37,7 @@ class LoginViewController: SignupViewController {
             let resultType = succesObj!["result_type"] as! String
             SharedDatabase.sharedInstance.insertUsers(succesObj![resultType] as! Array)
             self.relaodTable(withData: SharedDatabase.sharedInstance.getUserList())
-        }) { (failuarObj) in
+        }) { (failureObj) in
             self.navigationController?.popViewController(animated: true)
         }
     }

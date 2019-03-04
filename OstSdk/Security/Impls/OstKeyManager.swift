@@ -80,6 +80,7 @@ public struct EthMetaMapping {
 /// Class for managing the ethereum keys.
 // TODO: make this internal
 public class OstKeyManager {
+    typealias SignedData = (address: String, signature: String)
     
     // MARK: - Instance varaibles
     
@@ -246,26 +247,97 @@ public class OstKeyManager {
         try deleteMetaMapping(forAddress: sessionAddress, forKey: SESSION_META_MAPPING_KEY)
     }
 
+    //MARK: - Recovery
+    
+    func getRecoveryOwnerAddressFrom(
+        password: String,
+        pin: String,
+        salt: String) throws -> String {
+        
+        let recoveryOwnerAddress = try OstCryptoImpls().generateRecoveryKey(
+            password: password,
+            pin: pin,
+            userId: self.userId,
+            salt: salt,
+            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
+            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
+            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
+            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES
+        )
+        
+        return recoveryOwnerAddress
+    }
+    
+//    func generateRecoveryOwnerAddress(
+//        password: String,
+//        pin: String,
+//        salt: String) throws -> String {
+//        
+//        let recoveryOwnerAddress = try self.getRecoveryOwnerAddressFrom(
+//            password: password,
+//            pin: pin,
+//            salt: salt
+//        )
+//        
+//        let recoveryPinHash = generateRecoveryPinHash(
+//            password: password,
+//            pin: pin,
+//            salt: salt,
+//            recoveryOwnerAddress: recoveryOwnerAddress
+//        )
+//
+//        try storeRecoveryPinHash(recoveryPinHash)
+//        
+//        return recoveryOwnerAddress
+//    }
+    
+    private func generateRecoveryPinHash(
+        password: String,
+        pin: String,
+        salt: String,
+        recoveryOwnerAddress: String) -> String {
+        
+        let rawString = "\(self.userId)\(password)\(pin)\(salt)\(recoveryOwnerAddress.lowercased())"
+        let recoveryHash = rawString.sha3(.keccak256)
+        return recoveryHash
+    }
     //TODO: - Store data from keychain.
     /// Store recovery pin string in key chain
     ///
     /// - Parameter pinString: Pin string generated at the time of activate user.
     /// - Returns:  true if data stored in keychain successfully.
-    public func storeRecoveryPinString(_ pinString: String) throws {
+    private func storeRecoveryPinHash(_ recoveryPinHash: String) throws {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        let stringHash = pinString.sha3(.keccak256)
-        let hashData = stringHash.data(using: .utf8)!
-
-        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(hashData)
-        
+        // TODO: add secure enclave encoding here for recoveryPinHash
+        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(recoveryPinHash)
         try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
     
+    func deletePin() throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        userDeviceInfo[RECOVERY_PIN_HASH] = nil
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+    }
+    func verifyPin(
+        password: String,
+        pin: String,
+        salt: String,
+        recoveryOwnerAddress: String) throws -> Bool {
+    
+        let recoveryPinHash = generateRecoveryPinHash(
+            password: password,
+            pin: pin,
+            salt: salt,
+            recoveryOwnerAddress: recoveryOwnerAddress
+        )
+        
+        return try verifyRecoveryPinHash(recoveryPinHash)
+    }
     /// Verify stored pin string with passed one.
     ///
     /// - Parameter pinString: Pin string generated at the time of activate user.
     /// - Returns: true if data stored in keychain successfully.
-    public func verifyRecoveryPinString(_ pinString: String) throws -> Bool {
+    private func verifyRecoveryPinHash(_ recoveryPinHash: String) throws -> Bool {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
             throw OstError("s_i_km_vrps_1", .recoveryPinNotFoundInKeyManager)
@@ -273,11 +345,14 @@ public class OstKeyManager {
         guard let hashData = OstUtils.toDecodedValue(hashEncodedData) as? Data else {
             throw OstError("s_i_km_vrps_2", .recoveryPinNotFoundInKeyManager)
         }
-        let storedStringHash = String(bytes: hashData, encoding: .utf8)!
+        let existingRecoveryPinHash = String(bytes: hashData, encoding: .utf8)!
+        // TODO: add secure enclave encoding here for recoveryPinHash
         
-        let pinHash = pinString.sha3(.keccak256)
-        
-        return (pinHash == storedStringHash)
+        let isSucess = (recoveryPinHash.caseInsensitiveCompare(existingRecoveryPinHash) == .orderedSame )
+        if isSucess {
+            try storeRecoveryPinHash(recoveryPinHash)
+        }
+        return isSucess
     }
 }
 
@@ -652,9 +727,15 @@ extension OstKeyManager {
         return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
     }
     
+    
     //TODO: - remove temp code and get code from Deepesh.
-    func signWithRecoveryKey(_ message:String, pin: String, password: String, salt: String) throws -> String {
-        let wallet = try OstCryptoImpls().getWalletForm(
+    func signWithRecoveryKey(
+        message:String,
+        pin: String,
+        password: String,
+        salt: String) throws -> SignedData {
+        
+        let wallet = try OstCryptoImpls().getWallet(
             password: password,
             pin: pin,
             userId: self.userId,
@@ -664,8 +745,10 @@ extension OstKeyManager {
             p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
             size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES
         )
+        
         let privateKey = wallet.privateKey()
-        return try signTx(message, withPrivatekey: privateKey.toHexString())
+        let signedMessage = try signTx(message, withPrivatekey: privateKey.toHexString())
+        return (wallet.address(), signedMessage)
     }
 
     /// Sign message with private key

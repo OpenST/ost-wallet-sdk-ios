@@ -14,9 +14,9 @@ class OstUserPollingService: OstBasePollingService {
     let UserPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstUserPollingService", qos: .background)
     
     let successCallback: ((OstUser) -> Void)?
-    init(userId: String, workflowTransactionCount: Int, successCallback: ((OstUser) -> Void)?, failuarCallback: ((OstError) -> Void)?) {
+    init(userId: String, workflowTransactionCount: Int, successCallback: ((OstUser) -> Void)?, failureCallback: ((OstError) -> Void)?) {
         self.successCallback = successCallback
-        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failuarCallback: failuarCallback)
+        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
         self.dispatchQueue = UserPollingServiceDispatchQueue
     }
     

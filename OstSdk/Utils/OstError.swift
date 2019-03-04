@@ -25,7 +25,7 @@ public class OstError: Error {
         self.messageTextCode = messageTextCode;
     }
     
-    @available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
+    //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
     init(_ code: String, _ errorMessage: String) {
         self.internalCode = code
         self.errorMessage = errorMessage
@@ -65,6 +65,7 @@ public enum OstErrorText: String {
     case seedCreationFailed = "Failed to create seed from mnemonics."
     case walletGenerationFailed = "Failed to create wallet from seed."
     case signTxFailed = "Failed to sign transaction with private key."
+    case signatureFailed = "Failed to sign message with private key."
     case apiEndpointNotFound = "API endpoint not found."
     case userEntityNotFound = "User not found."
     case entityNotAvailable = "Entity not available."
@@ -81,6 +82,7 @@ public enum OstErrorText: String {
     case paperWalletNotFound = "Paper wallet not found."
     case invalidDataDefination = "Invalid data defination"
     case recoveryAddressNotFound = "Recovery address for user is not set."
+    case invalidRecoveryAddress = "Invalid recovery address."
     case invalidUserId = "Invalid user id."
     case invalidTokenId = "Invalid token id."
     case signatureGenerationFailed = "Signature generation failed."
@@ -111,7 +113,8 @@ public enum OstErrorText: String {
     case sessionNotFound = "Session not found."
     case callDataFormationFailed = "Calldata formation failed."
     case transactionFailed = "Transaction failed."
-    
+    case resetPinFailed = "Reset pin failed."
+    case failedFetchRecoveryOwnerAddress = "Failed to get recovery owner address."
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

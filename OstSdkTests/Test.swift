@@ -40,10 +40,10 @@ class Test: XCTestCase {
 //                                            ["id":15, "name":"Aniket"],
 //                                            ["id":16, "name":"Aniket"]
 //        ]
-//        let (successArray, failuarArray) = OstUserDbQueries().bulkInsertInDB(params: params)
+//        let (successArray, failureArray) = OstUserDbQueries().bulkInsertInDB(params: params)
 //
 //        print("testBulkInsert :: successArray : \(successArray)")
-//        print("testBulkInsert :: failuarArray : \(failuarArray)")
+//        print("testBulkInsert :: failureArray : \(failureArray)")
 //    }
 //
 //    func testBulkUpdate(){
@@ -51,10 +51,10 @@ class Test: XCTestCase {
 //                                            ["id":15, "name":"Aniket1"],
 //                                            ["id":16, "name":"Aniket2"]
 //        ]
-//        let (successArray, failuarArray) = OstUserDbQueries().bulkUpdateInDB(params: params)
+//        let (successArray, failureArray) = OstUserDbQueries().bulkUpdateInDB(params: params)
 //
 //        print("testBulkInsert :: successArray : \(successArray)")
-//        print("testBulkInsert :: failuarArray : \(failuarArray)")
+//        print("testBulkInsert :: failureArray : \(failureArray)")
 //    }
     
 //    func testCallbacks(){
