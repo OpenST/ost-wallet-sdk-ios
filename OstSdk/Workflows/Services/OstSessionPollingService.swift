@@ -12,10 +12,10 @@ class OstSessionPollingService: OstBasePollingService {
 
     let successCallback: ((OstSession) -> Void)?
     let sessionAddress: String
-    init(userId: String, sessionAddress: String, workflowTransactionCount: Int, successCallback: ((OstSession) -> Void)?, failuarCallback: ((OstError) -> Void)?) {
+    init(userId: String, sessionAddress: String, workflowTransactionCount: Int, successCallback: ((OstSession) -> Void)?, failureCallback: ((OstError) -> Void)?) {
         self.sessionAddress = sessionAddress
         self.successCallback = successCallback
-        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failuarCallback: failuarCallback)
+        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
     }
     
     override func onSuccessProcess(entity: OstBaseEntity) {

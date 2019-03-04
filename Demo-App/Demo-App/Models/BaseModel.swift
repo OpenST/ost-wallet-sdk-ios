@@ -19,7 +19,7 @@ class BaseModel {
   static let TOKEN_ID = "58";
   func post(resource:String, params: [String: AnyObject]?,
             onSuccess: (([String: Any]?) -> Void)?,
-            onFailuar: (([String: Any]?) -> Void)?) {
+            onFailure: (([String: Any]?) -> Void)?) {
     
     let url = BaseModel.MAPPY_APP_SERVER_URL + resource
     
@@ -32,14 +32,14 @@ class BaseModel {
         // Unauthorized.
         
       } else {
-        onFailuar?(httpResonse.result.value as? [String: Any])
+        onFailure?(httpResonse.result.value as? [String: Any])
       }
     }
   }
   
   func get(resource:String, params: [String: AnyObject]?,
            onSuccess: (([String: Any]?) -> Void)?,
-           onFailuar: (([String: Any]?) -> Void)?) {
+           onFailure: (([String: Any]?) -> Void)?) {
     
     let url = BaseModel.MAPPY_APP_SERVER_URL + resource
     
@@ -52,7 +52,7 @@ class BaseModel {
         // Unauthorized.
         
       } else {
-        onFailuar?(httpResonse.result.value as? [String: Any])
+        onFailure?(httpResonse.result.value as? [String: Any])
       }
     }
   }

@@ -298,7 +298,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             self.postWorkflowComplete(entity: ostSession)
         }
         
-        let failuarCallback:  ((OstError) -> Void) = { error in
+        let failureCallback:  ((OstError) -> Void) = { error in
             if (self.isRetryAfterFetch) {
                 self.postError(error)
             }else {
@@ -312,7 +312,7 @@ class OstExecuteTransaction: OstWorkflowBase {
                                      transaciotnId: transaction!.id,
                                      workflowTransactionCount: self.workflowTransactionCountForPolling,
                                      successCallback: successCallback,
-                                     failuarCallback: failuarCallback).perform()
+                                     failureCallback: failureCallback).perform()
     }
     
     /// Get current workflow context

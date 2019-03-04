@@ -68,7 +68,8 @@ class OstRecoverDevice: OstWorkflowBase {
                 if (nil == self.deviceToRecover) {
                     try self.fetchDevice()
                 }else {
-                    self.fetchSalt()
+                    _ = try self.getSalt()
+                    self.generateHash()
                 }
             }catch let error {
                 self.postError(error)
@@ -107,28 +108,11 @@ class OstRecoverDevice: OstWorkflowBase {
             }) { (ostError) in
                 self.postError(ostError)
         }
-    }
-    
-    override func fetchSalt() {
-        do {
-            try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-                do {
-                    self.saltResponse = saltResponse
-                    self.generateHash()
-                }catch let error{
-                    self.postError(error)
-                }
-            }, onFailure: { (error) in
-                self.postError(error)
-            })
-        }catch let error{
-            self.postError(error)
-        }
-    }
+    }    
     
     func generateHash() {
         do {
-            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryAddress!,
+            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryOwnerAddress!,
                                                                               prevOwner: self.deviceToRecover!.linkedAddress!,
                                                                               oldOwner: self.deviceToRecover!.address!,
                                                                               newOwner: self.currentDevice!.address!)

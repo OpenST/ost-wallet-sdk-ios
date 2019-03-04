@@ -152,11 +152,11 @@ class OstActivateUser: OstWorkflowBase {
                 self.activateUser()
             }
             
-            let onFailuar: ((OstError) -> Void) = { error in
+            let onFailure: ((OstError) -> Void) = { error in
                 self.postError(error)
             }
             
-            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailuar)
+            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailure)
         }catch let error {
             self.postError(error)
         }
@@ -216,12 +216,12 @@ class OstActivateUser: OstWorkflowBase {
             self.syncRespctiveEntity()
         }
         
-        let failuarCallback:  ((OstError) -> Void) = { error in
+        let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
-        _ = OstUserPollingService(userId: ostUser.id, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failuarCallback: failuarCallback).perform()
+        _ = OstUserPollingService(userId: ostUser.id, workflowTransactionCount: workflowTransactionCountForPolling, successCallback: successCallback, failureCallback: failureCallback).perform()
     }
     
     

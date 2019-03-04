@@ -24,8 +24,8 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
             }catch let error{
                 Logger.log(message: "registerDevice", parameterToPrint: error)
             }
-        }) { (failuarObj) in
-            Logger.log(message: "registerDevice failed", parameterToPrint: failuarObj)
+        }) { (failureObj) in
+            Logger.log(message: "registerDevice failed", parameterToPrint: failureObj)
         }
         
        

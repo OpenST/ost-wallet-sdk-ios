@@ -38,9 +38,9 @@ class OstAPIBaseTests: XCTestCase {
         OstGetAPIMockBase(userId: "123").get(params: nil, onSuccess: { (successObj) in
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)
-        }) { (failuarResponse) in
+        }) { (failureResponse) in
             exceptionObj.fulfill()
-            XCTAssertNil(failuarResponse, "received onFailure response.")
+            XCTAssertNil(failureResponse, "received onFailure response.")
         }
         
         waitForExpectations(timeout: 10) { error in
@@ -72,10 +72,10 @@ class OstAPIBaseTests: XCTestCase {
             Logger.log(message: nil, parameterToPrint: successObj)
             exceptionObj.fulfill()
             XCTAssertNotNil(successObj)
-        }) { (failuarResponse) in
-            print(failuarResponse)
+        }) { (failureResponse) in
+            print(failureResponse)
             exceptionObj.fulfill()
-            XCTAssertNil(failuarResponse, "received onFailure response.")
+            XCTAssertNil(failureResponse, "received onFailure response.")
         }
         
         waitForExpectations(timeout: 10) { error in

@@ -30,7 +30,7 @@ class OstAddSession: OstWorkflowBase {
     override func perform() {
         ostAddSessionThread.async {
             do {
-                try self.valdiateParams()
+                try self.validateParams()
                 self.generateSessionKeys()
                 self.getCurrentBlockHeight()
             }catch let error {
@@ -39,7 +39,7 @@ class OstAddSession: OstWorkflowBase {
         }
     }
     
-    func valdiateParams() throws {
+    func validateParams() throws {
         self.currentUser = try getUser()
         if (nil == self.currentUser) {
             throw OstError("w_as_vp_1", .userNotFound)
@@ -73,11 +73,11 @@ class OstAddSession: OstWorkflowBase {
                 self.authorizeSession()
             }
             
-            let onFailuar: ((OstError) -> Void) = { error in
+            let onFailure: ((OstError) -> Void) = { error in
                 self.postError(error)
             }
             
-            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailuar)
+            _ = try OstAPIChain(userId: self.userId).getChain(onSuccess: onSuccess, onFailure: onFailure)
         }catch let error {
             self.postError(error)
         }
@@ -152,7 +152,7 @@ class OstAddSession: OstWorkflowBase {
             self.postWorkflowComplete(entity: ostSession)
         }
         
-        let failuarCallback:  ((OstError) -> Void) = { error in
+        let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
@@ -160,7 +160,7 @@ class OstAddSession: OstWorkflowBase {
         OstSessionPollingService(userId: ostSession.userId!,
                                  sessionAddress: ostSession.address!,
                                  workflowTransactionCount: workflowTransactionCountForPolling,
-                                 successCallback: successCallback, failuarCallback: failuarCallback).perform()
+                                 successCallback: successCallback, failureCallback: failureCallback).perform()
     }
 
     /// Get current workflow context

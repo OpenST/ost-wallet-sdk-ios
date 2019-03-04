@@ -12,11 +12,11 @@ class OstDevicePollingService: OstBasePollingService {
     
     let successCallback: ((OstDevice) -> Void)?
     let deviceAddress: String
-    init(userId: String, deviceAddress: String, workflowTransactionCount: Int, successCallback: ((OstDevice) -> Void)?, failuarCallback: ((OstError) -> Void)?) {
+    init(userId: String, deviceAddress: String, workflowTransactionCount: Int, successCallback: ((OstDevice) -> Void)?, failureCallback: ((OstError) -> Void)?) {
         
         self.successCallback = successCallback
         self.deviceAddress = deviceAddress
-        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failuarCallback: failuarCallback)
+        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
     }
     
     override func onSuccessProcess(entity: OstBaseEntity) {

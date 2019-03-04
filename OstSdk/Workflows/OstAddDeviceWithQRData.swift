@@ -44,7 +44,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         }
     }
     
-    /// valdiate parameters
+    /// validate parameters
     ///
     /// - Throws: OstError
     func validateParams() throws {

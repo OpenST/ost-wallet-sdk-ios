@@ -37,7 +37,7 @@ class OstPolling: OstWorkflowBase {
     override func perform() {
         ostPollingThread.async {
             do {
-//                try self.valdiateParams()
+                try self.validateParams()
                 self.startPollingService()
             }catch let error {
                 self.postError(error)
@@ -62,22 +62,22 @@ class OstPolling: OstWorkflowBase {
         case .user:
             pollingService = OstUserPollingService(userId: self.userId,
                                                    workflowTransactionCount: workflowTransactionCount,
-                                                   successCallback: onSuccessCallback, failuarCallback: onFailureCallback)
+                                                   successCallback: onSuccessCallback, failureCallback: onFailureCallback)
         case .device:
             pollingService = OstDevicePollingService(userId: self.userId,
                                                      deviceAddress: self.entityId,
                                                      workflowTransactionCount: workflowTransactionCount,
-                                                     successCallback:onSuccessCallback, failuarCallback: onFailureCallback)
+                                                     successCallback:onSuccessCallback, failureCallback: onFailureCallback)
         case .session:
             pollingService = OstDevicePollingService(userId: self.userId,
                                                      deviceAddress: self.entityId,
                                                      workflowTransactionCount: workflowTransactionCount,
-                                                     successCallback: onSuccessCallback, failuarCallback: onFailureCallback)
+                                                     successCallback: onSuccessCallback, failureCallback: onFailureCallback)
         case .transaction:
             pollingService = OstTransactionPollingService(userId: self.userId,
                                                           transaciotnId: self.entityId,
                                                           workflowTransactionCount: workflowTransactionCount,
-                                                          successCallback: onSuccessCallback, failuarCallback: onFailureCallback)
+                                                          successCallback: onSuccessCallback, failureCallback: onFailureCallback)
         }
         pollingService.perform()
     }
@@ -114,7 +114,7 @@ extension OstPolling {
     /// validate workflow params.
     ///
     /// - Throws: OstError.
-    func valdiateParams() throws {
+    func validateParams() throws {
         self.currentUser = try getUser()
         if (nil == self.currentUser) {
             throw OstError("w_p_vp_1", .userNotFound)

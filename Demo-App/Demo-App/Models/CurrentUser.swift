@@ -65,7 +65,7 @@ class CurrentUser: BaseModel {
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
       
       self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
-    }) { (failuarResponse) in
+    }) { (failureResponse) in
       onComplete(false);
     }
   }
@@ -87,7 +87,7 @@ class CurrentUser: BaseModel {
         self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
         
         self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
-    }, onFailuar: { ([String : Any]?) in
+    }, onFailure: { ([String : Any]?) in
       onComplete(false);
     })
   }
@@ -104,7 +104,7 @@ class CurrentUser: BaseModel {
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
       
       self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
-    }, onFailuar: { ([String : Any]?) in
+    }, onFailure: { ([String : Any]?) in
       onComplete(false);
     })
   }

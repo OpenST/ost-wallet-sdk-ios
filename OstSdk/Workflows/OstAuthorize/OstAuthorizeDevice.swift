@@ -75,7 +75,7 @@ class OstAuthorizeDevice: OstAuthorizeBase {
             self.onSuccess(ostDevice)
         }
         
-        let failuarCallback:  ((OstError) -> Void) = { error in
+        let failureCallback:  ((OstError) -> Void) = { error in
             self.onFailure(error)
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
@@ -84,6 +84,6 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                                 deviceAddress: self.addressToAdd,
                                 workflowTransactionCount: self.workflowTransactionCountForPolling,
                                 successCallback: successCallback,
-                                failuarCallback:failuarCallback).perform()
+                                failureCallback:failureCallback).perform()
     }
 }

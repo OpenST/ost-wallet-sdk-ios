@@ -119,7 +119,7 @@ class OstCryptoImpls: OstCrypto {
         }
         
         let stringToCalculate: String = getRecoveryPinString(password: password, pin: pin, userId: userId)
-        try OstKeyManager(userId: userId).storeRecoveryPinString(stringToCalculate)
+//        try OstKeyManager(userId: userId).storeRecoveryPinString(stringToCalculate)
         
         let seed: Data
         do {
@@ -145,7 +145,7 @@ class OstCryptoImpls: OstCrypto {
         return "\(password)\(pin)\(userId)"
     }
     //TODO: Remove this code asap.
-    func getWalletForm(
+    func getWallet(
         password: String,
         pin: String,
         userId: String,

@@ -49,7 +49,7 @@ class BaseWalletWorkflowView: BaseWalletView {
                 self.successLabel.text = "This device has been authorized."
             } else if ( workFlowType == .addSession ) {
                 self.successLabel.text = "The session on this device has been authorized."
-            } else if ( workFlowType == .getPapaerWallet ) {
+            } else if ( workFlowType == .getPaperWallet ) {
                 self.successLabel.text = "Please note down these words."
             } else if ( workFlowType == .setupDevice ) {
                 self.successLabel.text = "This device has been registered."
