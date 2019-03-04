@@ -129,9 +129,9 @@ class OstResetPin: OstWorkflowBase {
     
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
-            _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
+            OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
                 self.postWorkflowComplete(entity: ostRecoveryOwner)
-            })
+            }).perform()
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
