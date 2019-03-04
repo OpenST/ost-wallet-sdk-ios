@@ -87,7 +87,7 @@ class CurrentUser: BaseModel {
         self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
         
         self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
-    }, onFailure: { ([String : Any]?) in
+    }, onFailure: { (failureResponse) in
       onComplete(false);
     })
   }

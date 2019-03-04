@@ -116,7 +116,7 @@ class OstResetPin: OstWorkflowBase {
         
         let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash, pin: self.uPin, password: self.appUserPassword, salt: salt)
         
-        if (self.currentUser!.recoveryOwnerAddress == signedData.address) {
+        if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
             throw OstError("w_rp_rp_1", .invalidRecoveryAddress)
         }
 

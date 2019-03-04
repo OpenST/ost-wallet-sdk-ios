@@ -74,6 +74,7 @@ public enum OstErrorText: String {
     case unableToGetSalt = "Unable to get salt."
     case unableToChainInformation = "Unable to get chain information."
     case deviceNotRegistered = "Device is not registered."
+    case deviceAlreadyRegistered = "Device is registered."
     case deviceManagerNotFound = "Device manager is not persent."
     case userActivationFailed = "Activation of user failed."
     case deviceNotFound = "Device not found."

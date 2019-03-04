@@ -15,13 +15,20 @@ class SendTransactionView: BaseWalletWorkflowView, AVCaptureMetadataOutputObject
     @objc override func didTapNext(sender: Any) {
         super.didTapNext(sender: sender);
 //        startReading()
+        let currentDevice = CurrentUser.getInstance()
+//        OstSdk.recoverDeviceInitialize(userId: currentDevice.ostUserId!,
+//                                       recoverDeviceAddress: "0x04772806b271306a1ce22d1e6061fc5d3d9540b3",
+//                                       uPin: "123456",
+//                                       password: "web night reunion silent naive want type tonight master deliver oppose pen",
+//                                       delegate: self.sdkInteract)
+//
         
         let qrCode: [String: Any] = ["dd": "transaction",
                                      "ddv": "1.1.0",
                                      "d":["rn": "Direct Transfer",
-                                        "ads": ["0x69dde10524bb360df6167d2d7ce8fe8b9092abd2"],
-                                        "ams": ["4"],
-                                        "tid": "1036"]
+                                        "ads": ["0xc570e4deedb1f757e638e6239a26e3d57e6bd063"],
+                                        "ams": ["40"],
+                                        "tid": "1063"]
         ]
 
         let qrCodeString = try! OstUtils.toJSONString(qrCode)
