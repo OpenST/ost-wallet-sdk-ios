@@ -33,12 +33,16 @@ class OstResetPin: OstWorkflowBase {
             do {
                 self.currentUser = try self.getUser()
                 let validator = try self.getWorkflowValidator()
-                _ = try validator.isDeviceAuthrorized()
-                _ = try validator.isUserActivated()
+                if (!(try validator.isDeviceAuthrorized())) {
+                   throw OstError("w_rp_p_1", .deviceNotAuthorized)
+                }
+                if(!(try validator.isUserActivated())) {
+                   throw OstError("w_rp_p_2", .userNotActivated)
+                }
                 try validator.validatePinLength(self.newPin)
                 let isPinValid = try self.validatePin()
                 if (isPinValid == false) {
-                    throw OstError("w_rp_p_1", .pinValidationFailed)
+                    throw OstError("w_rp_p_3", .pinValidationFailed)
                 }
                 try self.resetPin()
             }catch let error {
@@ -125,7 +129,9 @@ class OstResetPin: OstWorkflowBase {
     
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
-            self.postWorkflowComplete(entity: ostRecoveryOwner)
+            _ = OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
+                self.postWorkflowComplete(entity: ostRecoveryOwner)
+            })
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
