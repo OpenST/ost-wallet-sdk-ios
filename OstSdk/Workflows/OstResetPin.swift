@@ -11,8 +11,8 @@ import Foundation
 class OstResetPin: OstWorkflowBase {
     let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
     let workflowTransactionCountForPolling = 1
+    private let pinHandler: OstPinHandler
     
-    private let newPin: String
     private var validator: OstWorkflowValidator? = nil
     
     init(userId: String,
@@ -20,12 +20,14 @@ class OstResetPin: OstWorkflowBase {
          oldPin: String,
          newPin: String,
          delegate: OstWorkFlowCallbackProtocol) {
-        
-        self.newPin = newPin
+
+        self.pinHandler = OstPinHandler(
+            userId: userId,
+            password: password,
+            pin: oldPin,
+            newPin: newPin
+        )
         super.init(userId: userId, delegate: delegate)
-        
-        self.appUserPassword = password
-        self.uPin = oldPin
     }
     
     override func perform() {
@@ -39,12 +41,11 @@ class OstResetPin: OstWorkflowBase {
                 if(!(try validator.isUserActivated())) {
                    throw OstError("w_rp_p_2", .userNotActivated)
                 }
-                try validator.validatePinLength(self.newPin)
-                let isPinValid = try self.validatePin()
-                if (isPinValid == false) {
-                    throw OstError("w_rp_p_3", .pinValidationFailed)
-                }
-                try self.resetPin()
+                
+                let recoveryOwnerEntity = try self.pinHandler.resetPin()
+                self.postRequestAcknowledged(entity: recoveryOwnerEntity)
+                self.pollingForResetPin(recoveryOwnerEntity)
+                
             }catch let error {
                 self.postError(error)
             }
@@ -64,69 +65,7 @@ class OstResetPin: OstWorkflowBase {
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .recoveryOwner)
     }
-    
-    private func resetPin() throws {
-        try OstKeyManager(userId: self.userId).deletePin()
-        
-        let salt = try self.getSalt()
-        let newRecoveryOwnerAddress = try OstKeyManager(userId: self.userId)
-            .getRecoveryOwnerAddressFrom(
-                password: self.appUserPassword,
-                pin: self.newPin,
-                salt: salt
-            )
-        
-        let resetPinSignatureData = try self.signResetPinData(
-            newRecoveryOwnerAddress: newRecoveryOwnerAddress,
-            salt: salt
-        )
-        
-        let resetPinParams = [
-            "new_recovery_owner_address": newRecoveryOwnerAddress,
-            "signature": resetPinSignatureData.signature,
-            "signer": self.currentUser!.recoveryOwnerAddress,
-            "to": self.currentUser!.recoveryAddress
-        ]
-        
-        try OstAPIResetPin(userId: self.userId)
-            .changeRecoveryOwner(
-                params: resetPinParams as [String : Any],
-                onSuccess: { (entity: OstRecoveryOwnerEntity) in
-                    self.postRequestAcknowledged(entity: entity)
-                    self.pollingForResetPin(entity)
-                },
-                onFailure: { (error: OstError) in
-                    self.postError(error)
-                }
-            )
-    }            
-    
-    private func signResetPinData(newRecoveryOwnerAddress: String, salt: String) throws -> OstKeyManager.SignedData {
-        let typedDataInput: [String: Any] = TypedDataForResetPin
-            .getResetPinTypedData(
-                verifyingContract: self.currentUser!.recoveryAddress!,
-                oldRecoveryOwner: self.currentUser!.recoveryOwnerAddress!,
-                newRecoveryOwner: newRecoveryOwnerAddress
-        )
-        
-        let eip712: EIP712 = EIP712(
-            types: typedDataInput["types"] as! [String: Any],
-            primaryType: typedDataInput["primaryType"] as! String,
-            domain: typedDataInput["domain"] as! [String: String],
-            message: typedDataInput["message"] as! [String: Any]
-        )
-        
-        let signingHash = try! eip712.getEIP712SignHash()
-        
-        let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash, pin: self.uPin, password: self.appUserPassword, salt: salt)
-        
-        if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
-            throw OstError("w_rp_rp_1", .invalidRecoveryAddress)
-        }
-
-        return signedData
-    }
-    
+   
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
             OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in

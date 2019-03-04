@@ -730,7 +730,7 @@ extension OstKeyManager {
     
     //TODO: - remove temp code and get code from Deepesh.
     func signWithRecoveryKey(
-        message:String,
+        tx:String,
         pin: String,
         password: String,
         salt: String) throws -> SignedData {
@@ -747,7 +747,7 @@ extension OstKeyManager {
         )
         
         let privateKey = wallet.privateKey()
-        let signedMessage = try signTx(message, withPrivatekey: privateKey.toHexString())
+        let signedMessage = try signTx(tx, withPrivatekey: privateKey.toHexString())
         return (wallet.address(), signedMessage)
     }
 

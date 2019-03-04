@@ -117,7 +117,7 @@ class OstRecoverDevice: OstWorkflowBase {
             
             let signingHash = try eip712.getEIP712SignHash()
             
-            let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash,
+            let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(tx: signingHash,
                                                                                         pin: self.uPin,
                                                                                         password: self.appUserPassword,
                                                                                         salt: self.saltResponse!["scrypt_salt"] as! String)
