@@ -21,7 +21,7 @@ public class OstSession: OstBaseEntity {
         // TODO: add detailed description of the status meaning.
         case INITIALIZING = "INITIALIZING"
         case CREATED = "CREATED"
-        case AUTHORIZING = "AUTHORIZIGN"
+        case AUTHORIZING = "AUTHORIZING"
         case AUTHORIZED = "AUTHORIZED"
         case REVOKING = "REVOKING"
         case REVOKED = "REVOKED"
