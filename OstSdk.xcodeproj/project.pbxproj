@@ -257,7 +257,7 @@
 		ECCDAB9E22298FB700A6A095 /* OstAPIResetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAB9D22298FB700A6A095 /* OstAPIResetPin.swift */; };
 		ECCDABA02229A28B00A6A095 /* OstRecoveryOwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAB9F2229A28B00A6A095 /* OstRecoveryOwnerEntity.swift */; };
 		ECCDABA22229A7F600A6A095 /* OstResetPinPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */; };
-		ECCDABA4222D470F00A6A095 /* OstPinHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA3222D470F00A6A095 /* OstPinHandler.swift */; };
+		ECCDABA4222D470F00A6A095 /* OstPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA3222D470F00A6A095 /* OstPinManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -552,7 +552,7 @@
 		ECCDAB9D22298FB700A6A095 /* OstAPIResetPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIResetPin.swift; sourceTree = "<group>"; };
 		ECCDAB9F2229A28B00A6A095 /* OstRecoveryOwnerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRecoveryOwnerEntity.swift; sourceTree = "<group>"; };
 		ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstResetPinPollingService.swift; sourceTree = "<group>"; };
-		ECCDABA3222D470F00A6A095 /* OstPinHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinHandler.swift; sourceTree = "<group>"; };
+		ECCDABA3222D470F00A6A095 /* OstPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -743,7 +743,7 @@
 			children = (
 				4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */,
 				4B12142A222C459800C185D2 /* OstSessionHelper.swift */,
-				ECCDABA3222D470F00A6A095 /* OstPinHandler.swift */,
+				ECCDABA3222D470F00A6A095 /* OstPinManager.swift */,
 			);
 			path = WorkflowHelpers;
 			sourceTree = "<group>";
@@ -1713,7 +1713,7 @@
 				4B75F24821BF8FA200898960 /* OstToken.swift in Sources */,
 				4B49893221F6F2AF00ED0E94 /* ABIDecoder.swift in Sources */,
 				4B49892021F6F2AF00ED0E94 /* Exports+Web3.swift in Sources */,
-				ECCDABA4222D470F00A6A095 /* OstPinHandler.swift in Sources */,
+				ECCDABA4222D470F00A6A095 /* OstPinManager.swift in Sources */,
 				4BE89569221F0E38009C6A44 /* OstDevicePollingService.swift in Sources */,
 				4B75F28421C3B03800898960 /* OstRuleModelRepository.swift in Sources */,
 				4B75F20021B7B53200898960 /* OstMigrationManager.swift in Sources */,

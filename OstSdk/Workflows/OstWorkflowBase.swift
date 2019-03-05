@@ -13,10 +13,6 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     var delegate: OstWorkFlowCallbackProtocol
     var workflowThread: DispatchQueue
     
-    var uPin: String = ""
-    var appUserPassword : String = ""
-    var saltResponse: [String: Any]? = nil
-    
     var retryCount = 0
     let maxRetryCount = 3
     
@@ -128,10 +124,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.retryCount += 1
         workflowThread.async {
-            self.uPin = uPin
-            self.appUserPassword = appUserPassword
+            
+            let pinManager = OstPinManager(userId: self.userId, password: appUserPassword, pin: uPin)
+            
             do {
-                let isPinValid  = try self.validatePin()
+                let isPinValid  = try pinManager.validatePin()
                 if isPinValid == false {
                     self.userAuthenticationFailed()
                     return
@@ -143,67 +140,6 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             } catch let error{
                 self.postError(error)
             }
-        }
-    }
-
-    func getSalt() throws -> String {
-        if (self.saltResponse == nil) {
-            self.saltResponse = try self.fetchSalt()
-        }
-        return self.saltResponse!["scrypt_salt"] as! String
-    }
-    
-    private func fetchSalt() throws -> [String: Any]? {
-        let group = DispatchGroup()
-        
-        var salt: [String: Any]?
-        var err: OstError? = nil
-        do {
-            group.enter()
-            try OstAPISalt(userId: self.userId)
-                .getRecoverykeySalt(
-                    onSuccess: { (saltResponse) in
-                        salt = saltResponse
-                        group.leave()
-                    },
-                    onFailure: { (error) in
-                        err = error
-                        group.leave()
-                    }
-                )
-            group.wait()
-        }catch let error{
-            err = error as? OstError
-            group.leave()
-        }
-        if (err != nil) {
-            throw err!
-        }
-        return salt
-    }
-    
-    func validatePin() throws -> Bool{
-        let validator = try self.getWorkflowValidator()
-        let salt = try self.getSalt()
-        
-        try validator.validatePinLength(self.uPin)
-        do {
-            let isPinValid = try validator.validatePin(
-                pin: self.uPin,
-                appPassword: self.appUserPassword,
-                salt: salt
-            )
-            return isPinValid
-        } catch {
-            // Fallback
-            let recoveryOwnerAddress = try OstKeyManager(userId: self.userId)
-                .getRecoveryOwnerAddressFrom(
-                    password: self.appUserPassword,
-                    pin: self.uPin,
-                    salt: salt
-                )
-            let user = try OstUser.getById(self.userId)
-            return recoveryOwnerAddress.caseInsensitiveCompare((user!.recoveryOwnerAddress)!) ==  .orderedSame
         }
     }
     

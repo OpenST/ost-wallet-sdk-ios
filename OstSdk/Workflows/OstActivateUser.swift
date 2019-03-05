@@ -8,19 +8,18 @@
 
 import Foundation
 
-let API_SCRYPT_SALT_KEY = "scrypt_salt"
-
 class OstActivateUser: OstWorkflowBase {
     let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     
     var spendingLimit: String
     var expireAfter: TimeInterval
     
-    var salt: String = "salt"
     var recoveryAddress: String? = nil
     var sessionHelper: OstSessionHelper.SessionHelper? = nil
     
     let workflowTransactionCountForPolling = 2
+    
+    private var pinManager: OstPinManager? = nil
     
     init(userId: String, pin: String, password: String, spendingLimit: String, expireAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
@@ -28,8 +27,7 @@ class OstActivateUser: OstWorkflowBase {
         
         super.init(userId: userId, delegate: delegate)
         
-        self.uPin = pin
-        self.appUserPassword = password
+        self.pinManager = OstPinManager(userId: self.userId, password: password, pin: pin)
     }
     
     override func perform() {
@@ -67,29 +65,25 @@ class OstActivateUser: OstWorkflowBase {
                     throw OstError("w_p_p_4", OstErrorText.deviceAuthorized)
                 }
                 
-                let onCompletion: (() -> Void) = {
-                    self.recoveryAddress = self.getRecoveryKey()
-                    
-                    if (self.recoveryAddress == nil) {
-                        self.postError(OstError.init("w_p_p_4", .recoveryAddressNotFound))
-                        return
-                    }
-                    
-                    OstSessionHelper(userId: self.userId, expiresAfter: self.expireAfter)
-                        .getSessionData(onSuccess: { (sessionHelper) in
-                            self.sessionHelper = sessionHelper
-                            do {
-                                try self.generateAndSaveSessionEntity()
-                                self.activateUser()
-                            }catch let error {
-                                self.postError(error)
-                            }
-                        }, onFailure: { (error) in
-                            self.postError(error)
-                        })
+                self.recoveryAddress = self.pinManager!.getRecoveryOwnerAddress()
+                
+                if (self.recoveryAddress == nil) {
+                    self.postError(OstError.init("w_p_p_4", .recoveryAddressNotFound))
+                    return
                 }
                 
-                try self.getSalt(onCompletion: onCompletion)
+                OstSessionHelper(userId: self.userId, expiresAfter: self.expireAfter)
+                    .getSessionData(onSuccess: { (sessionHelper) in
+                        self.sessionHelper = sessionHelper
+                        do {
+                            try self.generateAndSaveSessionEntity()
+                            self.activateUser()
+                        }catch let error {
+                            self.postError(error)
+                        }
+                    }, onFailure: { (error) in
+                        self.postError(error)
+                    })
                 
             }catch let error{
                 self.postError(error)
@@ -98,20 +92,14 @@ class OstActivateUser: OstWorkflowBase {
     }
     
     func validateParams() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count {
-            throw OstError.init("w_au_vp_1",
-                                "Pin prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
-        }
+        try self.pinManager!.validatePinLength()
+        try self.pinManager!.validatePasswordLength()
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > self.userId.count {
             throw OstError.init("w_au_vp_2",
                                 "Pin postfix should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count {
-            throw OstError.init("w_au_vp_3",
-                                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
-        }
         
         let minExpirationTime = Date().timeIntervalSince1970 + OstSessionHelper.SESSION_BUFFER_TIME
         if minExpirationTime > self.expireAfter {
@@ -120,29 +108,8 @@ class OstActivateUser: OstWorkflowBase {
         }
     }
     
-    func getSalt(onCompletion: @escaping (() -> Void)) throws {
-        try OstAPISalt(userId: self.userId).getRecoverykeySalt(onSuccess: { (saltResponse) in
-            self.salt = saltResponse[API_SCRYPT_SALT_KEY] as! String
-            onCompletion()
-        }, onFailure: { (error) in
-            self.postError(error)
-        })
-    }
     //TODO: integrate it with AddSessionFlow. Code duplicate.
-    func getRecoveryKey() -> String? {
-        do {
-            return try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
-                                                            pin: self.uPin,
-                                                            userId: self.userId,
-                                                            salt: salt,
-                                                            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
-        }catch {
-            return nil
-        }
-    }
+    
     
     func generateAndSaveSessionEntity() throws {
         let params = self.getSessionEnityParams()

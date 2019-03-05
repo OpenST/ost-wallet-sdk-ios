@@ -17,6 +17,8 @@ class OstRecoverDevice: OstWorkflowBase {
     var signature: String? = nil
     var signer: String? = nil
     
+    private var pinManager: OstPinManager? = nil;
+    
     /// Initialization
     ///
     /// - Parameters:
@@ -34,8 +36,7 @@ class OstRecoverDevice: OstWorkflowBase {
         self.deviceAddressToRecover = deviceAddressToRecover
         super.init(userId: userId, delegate: delegate)
         
-        self.uPin = uPin
-        self.appUserPassword = password
+        self.pinManager = OstPinManager(userId: self.userId, password: password, pin: uPin)
     }
     
     /// perform
@@ -47,10 +48,14 @@ class OstRecoverDevice: OstWorkflowBase {
                 self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
                 if (nil == self.deviceToRecover) {
                     try self.fetchDevice()
-                }else {
-                    _ = try self.getSalt()
-                    self.generateHash()
                 }
+                //_ = try self.getSalt()
+                //self.generateHash()
+                let signedData = try self.pinManager?
+                    .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
+                self.signer = signedData?.address
+                self.signature = signedData?.signature
+                try self.recoverDevice()
             }catch let error {
                 self.postError(error)
             }
@@ -91,8 +96,6 @@ class OstRecoverDevice: OstWorkflowBase {
                             if (!self.deviceToRecover!.isStatusAuthorized) {
                                 throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
                             }
-                            _ = try self.getSalt()
-                            self.generateHash()
                         } catch let error {
                             self.postError(error)
                         }
@@ -101,41 +104,11 @@ class OstRecoverDevice: OstWorkflowBase {
                 self.postError(ostError)
         }
     }
-
-    /// Generate eip712 hash and signature from user recovery owner key
-    func generateHash() {
-        do {
-            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryOwnerAddress!,
-                                                                              prevOwner: self.deviceToRecover!.linkedAddress!,
-                                                                              oldOwner: self.deviceToRecover!.address!,
-                                                                              newOwner: self.currentDevice!.address!)
-            
-            let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
-                                         primaryType: typedData["primaryType"] as! String,
-                                         domain: typedData["domain"] as! [String: String],
-                                         message: typedData["message"] as! [String: Any])
-            
-            let signingHash = try eip712.getEIP712SignHash()
-            
-            let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(tx: signingHash,
-                                                                                        pin: self.uPin,
-                                                                                        password: self.appUserPassword,
-                                                                                        salt: self.saltResponse!["scrypt_salt"] as! String)
-            if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
-                throw OstError("w_rd_gh_1", .invalidRecoveryAddress)
-            }
-            self.signature = signedData.signature
-            
-            try self.revokeDevice()
-        }catch let error {
-            self.postError(error)
-        }
-    }
     
     /// Revoke device api call
     ///
     /// - Throws: OstError
-    func revokeDevice() throws {
+    func recoverDevice() throws {
         var params: [String: Any] = [:]
         params["old_linked_address"] = self.deviceToRecover!.linkedAddress!
         params["old_device_address"] = self.deviceToRecover!.address!

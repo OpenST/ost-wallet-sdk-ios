@@ -40,8 +40,8 @@ class SendTransactionView: BaseWalletWorkflowView, AVCaptureMetadataOutputObject
         let currentUser = CurrentUser.getInstance()
         OstSdk.resetPin(userId: currentUser.ostUserId!,
                         password: currentUser.userPinSalt!,
-                        oldPin: "123457",
-                        newPin: "123458",
+                        oldPin: "123456",
+                        newPin: "123457",
                         delegate: self.sdkInteract)
     }
     

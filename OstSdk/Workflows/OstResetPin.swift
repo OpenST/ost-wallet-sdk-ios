@@ -11,7 +11,7 @@ import Foundation
 class OstResetPin: OstWorkflowBase {
     let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
     let workflowTransactionCountForPolling = 1
-    private let pinHandler: OstPinHandler
+    private let pinManager: OstPinManager
     
     private var validator: OstWorkflowValidator? = nil
     
@@ -21,7 +21,7 @@ class OstResetPin: OstWorkflowBase {
          newPin: String,
          delegate: OstWorkFlowCallbackProtocol) {
 
-        self.pinHandler = OstPinHandler(
+        self.pinManager = OstPinManager(
             userId: userId,
             password: password,
             pin: oldPin,
@@ -36,13 +36,13 @@ class OstResetPin: OstWorkflowBase {
                 self.currentUser = try self.getUser()
                 let validator = try self.getWorkflowValidator()
                 if (!(try validator.isDeviceAuthrorized())) {
-                   throw OstError("w_rp_p_1", .deviceNotAuthorized)
+                    throw OstError("w_rp_p_1", .deviceNotAuthorized)
                 }
                 if(!(try validator.isUserActivated())) {
-                   throw OstError("w_rp_p_2", .userNotActivated)
+                    throw OstError("w_rp_p_2", .userNotActivated)
                 }
                 
-                let recoveryOwnerEntity = try self.pinHandler.resetPin()
+                let recoveryOwnerEntity = try self.resetPin()
                 self.postRequestAcknowledged(entity: recoveryOwnerEntity)
                 self.pollingForResetPin(recoveryOwnerEntity)
                 
@@ -66,6 +66,60 @@ class OstResetPin: OstWorkflowBase {
         return OstContextEntity(entity: entity, entityType: .recoveryOwner)
     }
    
+    func resetPin() throws -> OstRecoveryOwnerEntity{
+        if (try self.pinManager.validateResetPin()) {
+            try OstKeyManager(userId: self.userId).deletePin()
+            
+            guard let newRecoveryOwnerAddress = self.pinManager.getRecoveryOwnerAddressForNewPin() else {
+                throw OstError("w_rp_rp_1", .recoveryOwnerAddressCreationFailed)
+            }
+            
+            let resetPinSignatureData = try self.pinManager.signResetPinData(
+                newRecoveryOwnerAddress: newRecoveryOwnerAddress
+            )
+            
+            guard let user = try OstUser.getById(self.userId) else {
+                throw OstError("w_rp_rp_2", .userEntityNotFound)
+            }
+            let resetPinParams = [
+                "new_recovery_owner_address": newRecoveryOwnerAddress,
+                "signature": resetPinSignatureData.signature,
+                "signer": user.recoveryOwnerAddress,
+                "to": user.recoveryAddress
+            ]
+            
+            var recoveryOwnerEntity: OstRecoveryOwnerEntity?
+            var err: OstError? = nil
+            let group = DispatchGroup()
+            group.enter()
+            
+            do {
+                try OstAPIResetPin(userId: self.userId)
+                    .changeRecoveryOwner(
+                        params: resetPinParams as [String : Any],
+                        onSuccess: { (entity: OstRecoveryOwnerEntity) in
+                            recoveryOwnerEntity = entity
+                            group.leave()
+                    },
+                        onFailure: { (error: OstError) in
+                            err = error
+                            group.leave()
+                    }
+                )
+            } catch {
+                err = OstError("w_rp_rp_3", .resetPinFailed)
+                group.leave()
+            }
+            group.wait()
+            
+            if (err != nil) {
+                throw err!
+            }
+            return recoveryOwnerEntity!
+        } else {
+            throw OstError("w_rp_rp_4", .pinValidationFailed)
+        }
+    }
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
             OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
