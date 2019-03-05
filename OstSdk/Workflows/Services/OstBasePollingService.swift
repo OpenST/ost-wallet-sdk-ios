@@ -22,7 +22,6 @@ class OstBasePollingService {
     let workflowTransactionCount: Int
     
     let failureCallback: ((OstError) -> Void)?
-    var dispatchQueue: DispatchQueue = DispatchQueue.global()
     
     init (userId: String, workflowTransactionCount: Int, failureCallback: ((OstError) -> Void)?) {
         self.userId = userId
@@ -31,7 +30,8 @@ class OstBasePollingService {
     }
     
     func perform() {
-        dispatchQueue.async {
+        let thread: DispatchQueue = self.getPllingThread()
+        thread.async {
             self.setupCallbacks()
             self.getEntityAfterDelay()
         }
@@ -47,9 +47,6 @@ class OstBasePollingService {
         }
     }
     
-    func onSuccessProcess(entity: OstBaseEntity) {
-        fatalError("onSuccessPerocess is not override.")
-    }
     
     func getEntityAfterDelay() {
       Logger.log(message: "[\(Date.timestamp())]: getEntityAfterDelay: for userId: \(userId)", parameterToPrint: "")
@@ -60,8 +57,9 @@ class OstBasePollingService {
             } else {
               delayTime = OstConstants.OST_BLOCK_GENERATION_TIME * (OstBasePollingService.NO_OF_CONFIRMATION_BLOCKS + 1 ) * workflowTransactionCount;
             }
-          
-            self.dispatchQueue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
+            
+            let thread: DispatchQueue = self.getPllingThread()
+            thread.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
                     self.requestCount += 1
                     Logger.log(message: "[\(Date.timestamp())]: loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
@@ -87,7 +85,16 @@ class OstBasePollingService {
         }
     }
     
+    //MARK: - Methods to override
     func fetchEntity() throws {
         fatalError("fetchEntity is not override")
+    }
+    
+    func onSuccessProcess(entity: OstBaseEntity) {
+        fatalError("onSuccessPerocess is not override.")
+    }
+    
+    func getPllingThread() -> DispatchQueue {
+        fatalError("getPllingThread is not override.")
     }
 }

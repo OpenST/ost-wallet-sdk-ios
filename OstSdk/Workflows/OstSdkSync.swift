@@ -23,6 +23,13 @@ class OstSdkSync {
     
     var user: OstUser? = nil
     
+    /// Initialize.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - forceSync: Can for sync entity.
+    ///   - syncEntites: Entities to sync.
+    ///   - onCompletion: Callback
     init(userId: String, forceSync: Bool, syncEntites: SyncEntity... , onCompletion:((Bool) -> Void)?) {
         self.userId = userId
         self.syncEntites = syncEntites
@@ -30,8 +37,8 @@ class OstSdkSync {
         self.onCompletion = onCompletion
     }
     
+    /// Decide which polling flow to perform
     func perform() {
-        
         user = try! OstUser.getById(self.userId)!
         
         for syncEntity in syncEntites {
@@ -50,6 +57,11 @@ class OstSdkSync {
         }
     }
     
+    /// Process completion of sync entity
+    ///
+    /// - Parameters:
+    ///   - syncEntity: Entity type which is synced.
+    ///   - isSuccess: Sync is successed or not.
     func processIfRequired(_ syncEntity: SyncEntity, isSuccess: Bool) {
         
         NSLock().lock()
@@ -83,6 +95,9 @@ class OstSdkSync {
         }
     }
     
+    /// Check whether user needed tobe synced.
+    ///
+    /// - Returns: true if user entity need to be synced.
     func canSyncUser() -> Bool {
         if (self.forceSync) {
             return true
@@ -115,6 +130,9 @@ class OstSdkSync {
         }
     }
     
+    /// Check whether token needed tobe synced.
+    ///
+    /// - Returns:  true if token entity need to be synced.
     func canSyncToken() -> Bool {
         if (self.forceSync) {
             return true
@@ -147,6 +165,9 @@ class OstSdkSync {
         }
     }
     
+    /// Check whether device needed tobe synced.
+    ///
+    /// - Returns: true if device entity need to be synced.
     func canSyncDevice() -> Bool {
         if (self.forceSync) {
             return true

@@ -34,14 +34,12 @@ class SendTransactionView: BaseWalletWorkflowView, AVCaptureMetadataOutputObject
         let qrCodeString = try! OstUtils.toJSONString(qrCode)
         sendTransaction(qrCodeString: qrCodeString!)
         
-        
-        
 //        //Resetpin
 //        let currentUser = CurrentUser.getInstance()
 //        OstSdk.resetPin(userId: currentUser.ostUserId!,
 //                        password: currentUser.userPinSalt!,
-//                        oldPin: "123458",
-//                        newPin: "123459",
+//                        oldPin: "123456",
+//                        newPin: "123457",
 //                        delegate: self.sdkInteract)
     }
     

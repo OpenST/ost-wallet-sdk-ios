@@ -237,8 +237,6 @@
 		4BE9E32B2203306C00427A80 /* OstRegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3262203306B00427A80 /* OstRegisterDevice.swift */; };
 		4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3272203306C00427A80 /* OstActivateUser.swift */; };
 		4BE9E32D2203306C00427A80 /* OstWorkFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3282203306C00427A80 /* OstWorkFlowFactory.swift */; };
-		4BE9E32E2203306C00427A80 /* OstDeviceLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3292203306C00427A80 /* OstDeviceLogin.swift */; };
-		4BE9E32F2203306C00427A80 /* OstKeyRecoveryFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */; };
 		4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E33822041DA800427A80 /* OstBaseStorage.swift */; };
 		4BE9E3E322085F5D00427A80 /* OstAPISigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */; };
 		4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */; };
@@ -525,8 +523,6 @@
 		4BE9E3262203306B00427A80 /* OstRegisterDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRegisterDevice.swift; sourceTree = "<group>"; };
 		4BE9E3272203306C00427A80 /* OstActivateUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstActivateUser.swift; sourceTree = "<group>"; };
 		4BE9E3282203306C00427A80 /* OstWorkFlowFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowFactory.swift; sourceTree = "<group>"; };
-		4BE9E3292203306C00427A80 /* OstDeviceLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceLogin.swift; sourceTree = "<group>"; };
-		4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstKeyRecoveryFlow.swift; sourceTree = "<group>"; };
 		4BE9E33822041DA800427A80 /* OstBaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseStorage.swift; sourceTree = "<group>"; };
 		4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISigner.swift; sourceTree = "<group>"; };
 		4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokensTests.swift; sourceTree = "<group>"; };
@@ -703,8 +699,6 @@
 				4BE9E3272203306C00427A80 /* OstActivateUser.swift */,
 				4BAE56F02218076700327A19 /* OstAddDeviceWithMnemonics.swift */,
 				003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */,
-				4BE9E3292203306C00427A80 /* OstDeviceLogin.swift */,
-				4BE9E32A2203306C00427A80 /* OstKeyRecoveryFlow.swift */,
 				4BAE57022218413800327A19 /* OstPerform.swift */,
 				4BE8951C221C509B009C6A44 /* OstAddSession.swift */,
 				4BE89566221ED29A009C6A44 /* OstGetPaperWallet.swift */,
@@ -1658,7 +1652,6 @@
 				4BE9E3152202D9E300427A80 /* OstContextEntity.swift in Sources */,
 				4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */,
 				4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */,
-				4BE9E32E2203306C00427A80 /* OstDeviceLogin.swift in Sources */,
 				4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */,
 				4B49891B21F6F2AF00ED0E94 /* String+Conversion.swift in Sources */,
 				ECCDABA02229A28B00A6A095 /* OstRecoveryOwnerEntity.swift in Sources */,
@@ -1758,7 +1751,6 @@
 				4B4988FB21F6F2AF00ED0E94 /* EthereumPublicKey.swift in Sources */,
 				4B75F2A121C7775900898960 /* OstCryptoImpls.swift in Sources */,
 				4B00CBAE21DDDF2A005A5696 /* OstSessionRepository.swift in Sources */,
-				4BE9E32F2203306C00427A80 /* OstKeyRecoveryFlow.swift in Sources */,
 				4B4988FF21F6F2AF00ED0E94 /* Web3Provider.swift in Sources */,
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,

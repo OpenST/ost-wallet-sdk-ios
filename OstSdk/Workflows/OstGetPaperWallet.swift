@@ -15,27 +15,40 @@ class OstGetPaperWallet: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func perform() {
-        ostGetPaperWalletThread.async {
-            self.authenticateUser()
-        }
+    override func getWorkflowThread() -> DispatchQueue {
+        return self.ostGetPaperWalletThread
     }
     
+    override func process() throws {
+         self.authenticateUser()
+    }
+    
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        if (!self.currentUser!.isStatusActivated) {
+            throw OstError("w_as_vp_1", .userNotActivated)
+        }
+    }
+  
+    
     override func proceedWorkflowAfterAuthenticateUser() {
-        do {
-            let keychainManager = OstKeyManager(userId: self.userId)
-            
-            guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
-                throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)                
-            }
-            
-            DispatchQueue.main.async {
-                self.delegate.showPaperWallet(mnemonics: mnemonics)
+        let thread: DispatchQueue = getWorkflowThread()
+        thread.async {
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
+                    throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)
+                }
+                
+                DispatchQueue.main.async {
+                    self.delegate.showPaperWallet(mnemonics: mnemonics)
+                }
                 self.postWorkflowComplete(entity: mnemonics)
+                
+            }catch let error {
+                self.postError(error)
             }
-            
-        }catch let error {
-            self.postError(error)
         }
     }
     

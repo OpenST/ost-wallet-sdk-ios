@@ -16,78 +16,69 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     
     let mnemonicsManager: OstMnemonicsKeyManager
     
+    var deviceFromMnemonics: OstDevice? = nil
+    
     init(userId: String,
          mnemonics: [String],
          delegate: OstWorkFlowCallbackProtocol) {
         self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
         super.init(userId: userId, delegate: delegate)
     }
+
+    override func getWorkflowThread() -> DispatchQueue {
+        return self.ostAddDeviceThread
+    }
     
-    /*
-     * To Add device using QR
-     * Device B to be added
-     * 1.Validations
-     *  1.1 Device should be registered
-     *  1.2 User should be Activated.
-     * 2. Ask App for flow
-     *  2.1 QR Code
-     *      2.1.1 generate multi sig code
-     *      2.1.2 start polling
-     *  2.2 Pin(Recovery address)
-     *  2.3 12 Words
-     *
-     *
-     * Device A which will add
-     * 1. Scan QR code
-     * 2. Sign with wallet key
-     * 3. approve
-     */
-    override func perform() {
-        ostAddDeviceThread.async {
-            do {
-                if (self.mnemonicsManager.isMnemonicsValid() == false) {
-                    throw OstError("w_adwm_p_1", .invalidMnemonics)
-                }
-                
-                self.currentUser = try self.getUser()
-                if (self.currentUser == nil) {
-                    throw OstError("w_adwm_p_2", OstErrorText.userNotFound)
-                }
-                
-                if (!self.currentUser!.isStatusActivated) {
-                    throw OstError("w_adwm_p_3", OstErrorText.userNotActivated)
-                }
-                
-                self.currentDevice = try self.getCurrentDevice()
-                if (self.currentDevice == nil) {
-                    throw OstError("w_adwm_p_4",  OstErrorText.deviceNotset)
-                }
-                if (!self.currentDevice!.isStatusRegistered) {
-                    throw OstError("w_adwm_p_5", .deviceNotRegistered)
-                }
-                
-                try self.fetchDevice()
-            }catch let error {
-                self.postError(error)
-            }
+    override func process() throws {
+        try self.fetchDevice()
+        self.authorizeDeviceWithMnemonics()
+    }
+    
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        if (self.mnemonicsManager.isMnemonicsValid() == false) {
+            throw OstError("w_adwm_p_1", .invalidMnemonics)
+        }
+        
+        if (self.currentUser == nil) {
+            throw OstError("w_adwm_p_2", OstErrorText.userNotFound)
+        }
+        
+        if (!self.currentUser!.isStatusActivated) {
+            throw OstError("w_adwm_p_3", OstErrorText.userNotActivated)
+        }
+        
+        if (self.currentDevice == nil) {
+            throw OstError("w_adwm_p_4",  OstErrorText.deviceNotset)
+        }
+        if (!self.currentDevice!.isStatusRegistered) {
+            throw OstError("w_adwm_p_5", .deviceNotRegistered)
         }
     }
     
     func fetchDevice() throws {
+        var error: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
         try OstAPIDevice(userId: userId).getDevice(deviceAddress: self.mnemonicsManager.address!, onSuccess: { (ostDevice) in
-            do {
-                if (!ostDevice.isStatusAuthorized) {
-                    throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
-                }
-                if (ostDevice.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) == .orderedSame){
-                    throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
-                }
-                self.authorizeDeviceWithMnemonics()
-            }catch let error {
-                self.postError(error)
-            }
+            self.deviceFromMnemonics = ostDevice
+            group.leave()
         }) { (ostError) in
-            self.postError(ostError)
+            error = ostError
+            group.leave()
+        }
+        group.wait()
+        
+        if (nil == error) {
+            if (!self.deviceFromMnemonics!.isStatusAuthorized) {
+                throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
+            }
+            if (self.deviceFromMnemonics!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
+                throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
+            }
+        }else {
+            throw error!
         }
     }
     
@@ -116,7 +107,6 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         }
         
         //Get device for address generated from mnemonics.
-        
         OstAuthorizeDevice(userId: self.userId,
                            deviceAddressToAdd: self.currentDevice!.address!,
                            generateSignatureCallback: generateSignatureCallback,

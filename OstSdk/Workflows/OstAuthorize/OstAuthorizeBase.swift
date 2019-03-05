@@ -43,11 +43,22 @@ class OstAuthorizeBase {
     }
     
     func fetchDeviceManager() throws {
+        var error: OstError? = nil
+        let group: DispatchGroup = DispatchGroup()
+        group.enter()
         try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: { (ostDeviceManager) in
             self.deviceManager = ostDeviceManager
-            self.authorize()
+            group.leave()
         }) { (ostError) in
-            self.onFailure(ostError)
+            error = ostError
+            group.leave()
+        }
+        group.wait()
+        
+        if (nil == error) {
+            self.authorize()
+        }else {
+            self.onFailure(error!)
         }
     }
     

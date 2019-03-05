@@ -9,7 +9,8 @@
 import Foundation
 
 class OstSessionPollingService: OstBasePollingService {
-
+    let sessionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstSessionPollingService", qos: .background)
+    
     let successCallback: ((OstSession) -> Void)?
     let sessionAddress: String
     init(userId: String, sessionAddress: String, workflowTransactionCount: Int, successCallback: ((OstSession) -> Void)?, failureCallback: ((OstError) -> Void)?) {
@@ -31,5 +32,9 @@ class OstSessionPollingService: OstBasePollingService {
     
     override func fetchEntity() throws {
         try OstAPISession(userId: self.userId).getSession(sessionAddress: sessionAddress, onSuccess: self.onSuccess, onFailure: onFailure)
+    }
+    
+    override func getPllingThread() -> DispatchQueue {
+        return self.sessionPollingServiceDispatchQueue
     }
 }

@@ -116,6 +116,8 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         let qrInfoLabel = QRInfoLabel()
         qrInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         qrInfoLabel.text = "";
+        qrInfoLabel.numberOfLines = 0
+        qrInfoLabel.textColor = UIColor.white
         return qrInfoLabel;
     }();
     
@@ -260,6 +262,14 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         self.qrInfoLabel.showDeviceInfo(ostDevice: ostDevice);
     }
     
+    func showExecuteTransactionInfo(data: String) {
+        self.nextButton.isHidden = false;
+        self.cancelButton.isHidden = false;
+        self.scanAgainButton.isHidden = true;
+        self.qrInfoLabel.isHidden = false;
+        self.qrInfoLabel.text = data;
+    }
+    
     func showScanAgain() {
         self.nextButton.isHidden = true;
         self.cancelButton.isHidden = true;
@@ -339,6 +349,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
             showAuthorizeDeviceInfo(ostDevice: device);
         } else if ( workflowContext.workflowType == .executeTransaction ) {
             //To-Do: Show transaction info.
+            showExecuteTransactionInfo(data: ostContextEntity.entity as! String)
         }
     }
     

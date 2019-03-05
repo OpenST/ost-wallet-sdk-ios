@@ -37,7 +37,7 @@ class OstPolling: OstWorkflowBase {
     override func perform() {
         ostPollingThread.async {
             do {
-                try self.validateParams()
+                try self.validateParams1()
                 self.startPollingService()
             }catch let error {
                 self.postError(error)
@@ -115,7 +115,7 @@ extension OstPolling {
     /// validate workflow params.
     ///
     /// - Throws: OstError.
-    func validateParams() throws {
+    func validateParams1() throws {
         self.currentUser = try getUser()
         if (nil == self.currentUser) {
             throw OstError("w_p_vp_1", .userNotFound)

@@ -11,13 +11,12 @@ import CryptoSwift
 
 class OstUserPollingService: OstBasePollingService {
     
-    let UserPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstUserPollingService", qos: .background)
+    let userPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstUserPollingService", qos: .background)
     
     let successCallback: ((OstUser) -> Void)?
     init(userId: String, workflowTransactionCount: Int, successCallback: ((OstUser) -> Void)?, failureCallback: ((OstError) -> Void)?) {
         self.successCallback = successCallback
         super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
-        self.dispatchQueue = UserPollingServiceDispatchQueue
     }
     
     override func onSuccessProcess(entity: OstBaseEntity) {
@@ -33,5 +32,9 @@ class OstUserPollingService: OstBasePollingService {
 
     override func fetchEntity() throws {
          try OstAPIUser.init(userId: self.userId).getUser(onSuccess: self.onSuccess, onFailure: self.onFailure)
+    }
+    
+    override func getPllingThread() -> DispatchQueue {
+        return self.userPollingServiceDispatchQueue
     }
 }
