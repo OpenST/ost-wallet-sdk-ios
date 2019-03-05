@@ -8,8 +8,6 @@
 
 import Foundation
 
-let API_SCRYPT_SALT_KEY = "scrypt_salt"
-
 class OstActivateUser: OstWorkflowBase {
     let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     let workflowTransactionCountForPolling = 2
@@ -17,9 +15,9 @@ class OstActivateUser: OstWorkflowBase {
     var spendingLimit: String
     var expireAfter: TimeInterval
     
-    var salt: String? = nil
     var recoveryAddress: String? = nil
     var sessionHelper: OstSessionHelper.SessionHelper? = nil
+    private var pinManager: OstPinManager? = nil
     
     /// Initialize.
     ///
@@ -36,10 +34,9 @@ class OstActivateUser: OstWorkflowBase {
         
         super.init(userId: userId, delegate: delegate)
         
-        self.uPin = pin
-        self.appUserPassword = password
+        self.pinManager = OstPinManager(userId: self.userId, password: password, pin: pin)
     }
-    
+
     /// Get workflow queue.
     ///
     /// - Returns: DispatchQueue
@@ -56,9 +53,7 @@ class OstActivateUser: OstWorkflowBase {
             return
         }
         
-        self.salt = try self.getSalt()
-        
-        self.recoveryAddress = self.getRecoveryKey()
+        self.recoveryAddress = self.pinManager?.getRecoveryOwnerAddress()
         if (nil == self.recoveryAddress) {
             throw OstError.init("w_p_p_4", .recoveryAddressNotFound)
         }
@@ -72,20 +67,14 @@ class OstActivateUser: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.appUserPassword.count {
-            throw OstError.init("w_au_vp_1",
-                                "Pin prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
-        }
+        try self.pinManager!.validatePinLength()
+        try self.pinManager!.validatePasswordLength()
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > self.userId.count {
             throw OstError.init("w_au_vp_2",
                                 "Pin postfix should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.uPin.count {
-            throw OstError.init("w_au_vp_3",
-                                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
-        }
         
         if  OstSessionHelper.SESSION_BUFFER_TIME > self.expireAfter {
             throw OstError.init("w_au_vp_4",
@@ -113,40 +102,6 @@ class OstActivateUser: OstWorkflowBase {
             throw OstError("w_au_vp_9", OstErrorText.deviceAuthorized)
         }
     }
-    
-    //TODO: integrate it with AddSessionFlow. Code duplicate.
-    func getRecoveryKey() -> String? {
-        do {
-            return try OstCryptoImpls().generateRecoveryKey(password: self.appUserPassword,
-                                                            pin: self.uPin,
-                                                            userId: self.userId,
-                                                            salt: self.salt!,
-                                                            n: OstConstants.OST_RECOVERY_PIN_SCRYPT_N,
-                                                            r: OstConstants.OST_RECOVERY_PIN_SCRYPT_R,
-                                                            p: OstConstants.OST_RECOVERY_PIN_SCRYPT_P,
-                                                            size: OstConstants.OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES)
-        }catch {
-            return nil
-        }
-    }
-    
-    //    func generateAndSaveSessionEntity() throws {
-    //        let params = self.getSessionEnityParams()
-    //        try OstSession.storeEntity(params)
-    //
-    //    }
-    //
-    //    func getSessionEnityParams() -> [String: Any] {
-    //        var params: [String: Any] = [:]
-    //        params["user_id"] = self.userId
-    //        params["address"] = self.sessionHelper!.sessionAddress
-    //        params["expiration_height"] = self.sessionHelper!.expirationHeight
-    //        params["spending_limit"] = self.spendingLimit
-    //        params["nonce"] = 0
-    //        params["status"] = OstSession.Status.CREATED.rawValue
-    //
-    //        return params
-    //    }
     
     func activateUser() throws {
         let params = self.getActivateUserParams()

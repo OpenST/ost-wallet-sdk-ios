@@ -22,6 +22,10 @@ class OstWorkflowValidator {
     
     // MARK: - Device related validations
     
+    /// Is device status authorizes
+    ///
+    /// - Returns: `true` if authorized otherwise `false`
+    /// - Throws: OstError
     func isDeviceAuthrorized() throws -> Bool {
         guard let currentDevice = self.currentUser.getCurrentDevice() else {
             throw OstError("w_wv_ida_1", .deviceNotFound);
@@ -31,6 +35,10 @@ class OstWorkflowValidator {
     
     // MARK: - User related validations
     
+    /// Is user activated
+    ///
+    /// - Returns: `true` if user status is activated otherwise `false`
+    /// - Throws: OstError
     func isUserActivated() throws -> Bool {
         return self.currentUser.isStatusActivated
     }
@@ -122,6 +130,25 @@ class OstWorkflowValidator {
                 "Invalid salt"
             )
         }
+    }
+    
+    func isAPIKeyAvailable() -> Bool {
+        guard let apiAddress = OstKeyManager(userId: self.currentUser.id).getAPIAddress() else {
+            return false
+        }
+        return apiAddress.count > 0
+    }
+    
+    func isTokenAvailable() -> Bool {
+        guard let tokenId = self.currentUser.tokenId else {
+            return false
+        }
+        do {
+            let _ = try OstToken.getById(tokenId)
+        } catch {
+            return false
+        }
+        return true
     }
 }
 
