@@ -11,7 +11,7 @@ import UIKit
 
 class OstAddDeviceWithMnemonics: OstWorkflowBase {
     
-    let ostAddDeviceThread = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
+    let ostAddDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     
     let mnemonicsManager: OstMnemonicsKeyManager
@@ -25,8 +25,8 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
 
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostAddDeviceThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostAddDeviceQueue
     }
     
     override func process() throws {

@@ -11,7 +11,7 @@ import Foundation
 let API_SCRYPT_SALT_KEY = "scrypt_salt"
 
 class OstActivateUser: OstWorkflowBase {
-    let ostActivateUserThread = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     let workflowTransactionCountForPolling = 2
     
     var spendingLimit: String
@@ -40,11 +40,11 @@ class OstActivateUser: OstWorkflowBase {
         self.appUserPassword = password
     }
     
-    /// Get workflow thread.
+    /// Get workflow queue.
     ///
     /// - Returns: DispatchQueue
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostActivateUserThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostActivateUserQueue
     }
     
     /// process

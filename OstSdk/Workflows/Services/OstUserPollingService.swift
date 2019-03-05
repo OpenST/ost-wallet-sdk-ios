@@ -34,7 +34,7 @@ class OstUserPollingService: OstBasePollingService {
          try OstAPIUser.init(userId: self.userId).getUser(onSuccess: self.onSuccess, onFailure: self.onFailure)
     }
     
-    override func getPllingThread() -> DispatchQueue {
+    override func getPollingQueue() -> DispatchQueue {
         return self.userPollingServiceDispatchQueue
     }
 }

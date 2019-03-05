@@ -9,7 +9,7 @@
 import Foundation
 //TODO: Work here.
 class OstRecoverDevice: OstWorkflowBase {
-    let ostRecoverDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     let deviceAddressToRecover: String
     
@@ -38,8 +38,8 @@ class OstRecoverDevice: OstWorkflowBase {
         self.appUserPassword = password
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostRecoverDeviceThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostRecoverDeviceQueue
     }
     
     override func process() throws {

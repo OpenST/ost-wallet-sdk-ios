@@ -47,7 +47,7 @@ class OstTransactionPollingService: OstBasePollingService {
                                                              onFailure: self.onFailure)
     }
     
-    override func getPllingThread() -> DispatchQueue {
+    override func getPollingQueue() -> DispatchQueue {
         return self.transactionPollingServiceDispatchQueue
     }
 }

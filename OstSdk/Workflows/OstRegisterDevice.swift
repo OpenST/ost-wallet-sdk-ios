@@ -10,7 +10,7 @@ import Foundation
 
 class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     
-    let ostRegisterDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
+    let ostRegisterDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     
     var tokenId: String
     var forceSync: Bool
@@ -32,11 +32,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// Get workflow thread
+    /// Get workflow Queue
     ///
     /// - Returns: DispatchQueue
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostRegisterDeviceThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostRegisterDeviceQueue
     }
     
     /// process workflow.
@@ -160,8 +160,8 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     ///
     /// - Parameter apiResponse: API response from server.
     public func deviceRegistered(_ apiResponse: [String : Any]) {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             self.forceSync = true
             self.sync()
         }

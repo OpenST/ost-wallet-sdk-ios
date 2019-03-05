@@ -11,7 +11,7 @@ import Foundation
 let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
 
 class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
-    let ostAddDeviceWithQRDataThread = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
+    let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
     
     class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
         guard let deviceAddress: String = payload[PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
@@ -34,8 +34,8 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostAddDeviceWithQRDataThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostAddDeviceWithQRDataQueue
     }
     
     override func process() throws {
@@ -106,15 +106,15 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
     }
     
     func dataVerified() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             self.authenticateUser();
         }
     }
     
     override func proceedWorkflowAfterAuthenticateUser() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
                 do {
                     let keychainManager = OstKeyManager(userId: self.userId)

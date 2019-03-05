@@ -10,7 +10,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     
-    let ostAddSessionThread = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
     let workflowTransactionCountForPolling = 1
     
     var spendingLimit: String
@@ -24,8 +24,8 @@ class OstAddSession: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostAddSessionThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostAddSessionQueue
     }
     
     override func process() throws {

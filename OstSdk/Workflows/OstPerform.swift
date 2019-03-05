@@ -14,7 +14,7 @@ public enum OstQRCodeDataDefination: String {
 }
 
 class OstPerform: OstWorkflowBase {
-    let ostPerformThread = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
+    let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     
     let payloadString: String?
     
@@ -26,8 +26,8 @@ class OstPerform: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostPerformThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostPerformQueue
     }
     
     override func process() throws {

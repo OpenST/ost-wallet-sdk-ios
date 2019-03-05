@@ -35,7 +35,7 @@ class OstDevicePollingService: OstBasePollingService {
         try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.deviceAddress, onSuccess: self.onSuccess, onFailure: self.onFailure)
     }
     
-    override func getPllingThread() -> DispatchQueue {
+    override func getPollingQueue() -> DispatchQueue {
         return self.devicePollingServiceDispatchQueue
     }
 }

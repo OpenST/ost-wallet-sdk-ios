@@ -30,8 +30,8 @@ class OstBasePollingService {
     }
     
     func perform() {
-        let thread: DispatchQueue = self.getPllingThread()
-        thread.async {
+        let queue: DispatchQueue = getPollingQueue()
+        queue.async {
             self.setupCallbacks()
             self.getEntityAfterDelay()
         }
@@ -58,8 +58,8 @@ class OstBasePollingService {
               delayTime = OstConstants.OST_BLOCK_GENERATION_TIME * (OstBasePollingService.NO_OF_CONFIRMATION_BLOCKS + 1 ) * workflowTransactionCount;
             }
             
-            let thread: DispatchQueue = self.getPllingThread()
-            thread.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
+            let queue: DispatchQueue = self.getPollingQueue()
+            queue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
                     self.requestCount += 1
                     Logger.log(message: "[\(Date.timestamp())]: loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
@@ -94,7 +94,7 @@ class OstBasePollingService {
         fatalError("onSuccessPerocess is not override.")
     }
     
-    func getPllingThread() -> DispatchQueue {
-        fatalError("getPllingThread is not override.")
+    func getPollingQueue() -> DispatchQueue {
+        fatalError("getPollingQueue is not override.")
     }
 }

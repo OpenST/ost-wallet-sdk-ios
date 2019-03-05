@@ -23,7 +23,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     let workflowTransactionCountForPolling = 1
     
-    let ostExecuteTransactionThread = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
+    let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
@@ -93,8 +93,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostExecuteTransactionThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostExecuteTransactionQueue
     }
     
     override func process() throws {
@@ -215,15 +215,15 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     }
     
     func dataVerified() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             self.authenticateUser();
         }
     }
     
     override func proceedWorkflowAfterAuthenticateUser() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             self.generateHash()
             self.executeTransaction()
         }

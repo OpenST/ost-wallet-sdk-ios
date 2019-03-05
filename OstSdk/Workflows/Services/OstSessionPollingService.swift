@@ -34,7 +34,7 @@ class OstSessionPollingService: OstBasePollingService {
         try OstAPISession(userId: self.userId).getSession(sessionAddress: sessionAddress, onSuccess: self.onSuccess, onFailure: onFailure)
     }
     
-    override func getPllingThread() -> DispatchQueue {
+    override func getPollingQueue() -> DispatchQueue {
         return self.sessionPollingServiceDispatchQueue
     }
 }

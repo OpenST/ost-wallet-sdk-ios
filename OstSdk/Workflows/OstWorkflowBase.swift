@@ -36,8 +36,8 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     
     /// Perform
     func perform() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             do {
                 try self.setUser()
                 try self.setCurrentDevice()
@@ -173,8 +173,8 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
         self.retryCount += 1
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             self.uPin = uPin
             self.appUserPassword = appUserPassword
             do {
@@ -282,11 +282,11 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     
     //MARK: - Methods to override
     
-    /// Get worflow running thread.
+    /// Get worflow running queue.
     ///
-    /// - Returns: Thread
-    func getWorkflowThread() -> DispatchQueue {
-        fatalError("getWorkflowThread not override.")
+    /// - Returns: DispatchQueue
+    func getWorkflowQueue() -> DispatchQueue {
+        fatalError("getWorkflowQueue not override.")
     }
     
     /// Process with workflow.

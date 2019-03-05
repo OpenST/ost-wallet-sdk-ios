@@ -9,14 +9,14 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    let ostGetPaperWalletThread = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
     
     override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func getWorkflowThread() -> DispatchQueue {
-        return self.ostGetPaperWalletThread
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostGetPaperWalletQueue
     }
     
     override func process() throws {
@@ -33,8 +33,8 @@ class OstGetPaperWallet: OstWorkflowBase {
   
     
     override func proceedWorkflowAfterAuthenticateUser() {
-        let thread: DispatchQueue = getWorkflowThread()
-        thread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             do {
                 let keychainManager = OstKeyManager(userId: self.userId)
                 guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {

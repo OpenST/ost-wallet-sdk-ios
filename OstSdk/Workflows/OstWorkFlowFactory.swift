@@ -219,7 +219,7 @@ extension OstSdk {
     ///   - entityId: entity id to start polling for.
     ///   - entityType: type of entity.
     ///   - delegate: Callback for action complete or to perform respective actions.
-    public class func pole(
+    public class func poll(
         userId: String,
         entityId: String,
         entityType: OstPollingEntityType,
