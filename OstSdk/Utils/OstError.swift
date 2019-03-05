@@ -69,6 +69,7 @@ public enum OstErrorText: String {
     case walletGenerationFailed = "Failed to create wallet from seed."
     case signTxFailed = "Failed to sign transaction with private key."
     case signatureFailed = "Failed to sign message with private key."
+    case apiAddressNotFound = "API address not found."
     case apiEndpointNotFound = "API endpoint not found."
     case userEntityNotFound = "User not found."
     case entityNotAvailable = "Entity not available."
@@ -91,6 +92,7 @@ public enum OstErrorText: String {
     case invalidRecoveryAddress = "Invalid recovery address."
     case invalidUserId = "Invalid user id."
     case invalidTokenId = "Invalid token id."
+    case tokenNotFound = "Token not found."
     case signatureGenerationFailed = "Signature generation failed."
     case unexpectedError = "Unexpected error."
     case abiEncodeFailed = "ABI encoding failed."
@@ -134,4 +136,5 @@ public enum OstErrorText: String {
     case sdkError = "An internal SDK error has occoured."
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
+    case userCanceled = "User canceled"
 }

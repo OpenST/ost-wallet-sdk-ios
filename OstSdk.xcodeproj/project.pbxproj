@@ -708,7 +708,6 @@
 				4B1214212228589100C185D2 /* OstPolling.swift */,
 				4B121423222907EF00C185D2 /* OstRecoverDevice.swift */,
 				ECCDAB972228232B00A6A095 /* OstResetPin.swift */,
-				ECCDAB992229148400A6A095 /* OstWorkflowValidator.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -738,6 +737,7 @@
 				4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */,
 				4B12142A222C459800C185D2 /* OstSessionHelper.swift */,
 				ECCDABA3222D470F00A6A095 /* OstPinManager.swift */,
+				ECCDAB992229148400A6A095 /* OstWorkflowValidator.swift */,
 			);
 			path = WorkflowHelpers;
 			sourceTree = "<group>";
@@ -2020,10 +2020,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/OstSdk/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2054,10 +2051,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/OstSdk/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

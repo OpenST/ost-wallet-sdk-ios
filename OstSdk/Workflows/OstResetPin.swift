@@ -9,12 +9,18 @@
 import Foundation
 
 class OstResetPin: OstWorkflowBase {
-    let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
-    let workflowTransactionCountForPolling = 1
+    private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
+    private let workflowTransactionCountForPolling = 1
     private let pinManager: OstPinManager
     
-    private var validator: OstWorkflowValidator? = nil
-    
+    /// Initializer
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - password: Application password
+    ///   - oldPin: Old pin
+    ///   - newPin: New pin
+    ///   - delegate: Call back
     init(userId: String,
          password: String,
          oldPin: String,
@@ -30,96 +36,92 @@ class OstResetPin: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func perform() {
-        ostResetPinQueue.async {
-            do {
-                self.currentUser = try self.getUser()
-                let validator = try self.getWorkflowValidator()
-                if (!(try validator.isDeviceAuthrorized())) {
-                    throw OstError("w_rp_p_1", .deviceNotAuthorized)
-                }
-                if(!(try validator.isUserActivated())) {
-                    throw OstError("w_rp_p_2", .userNotActivated)
-                }
-                
-                let recoveryOwnerEntity = try self.resetPin()
-                self.postRequestAcknowledged(entity: recoveryOwnerEntity)
-                self.pollingForResetPin(recoveryOwnerEntity)
-                
-            }catch let error {
-                self.postError(error)
-            }
-        }
+    /// Get workflow Queue
+    ///
+    /// - Returns: DispatchQueue
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostResetPinQueue
     }
     
-    /// Get current workflow context
+    /// Validate params for reset pin
     ///
-    /// - Returns: OstWorkflowContext
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .resetPin)
+    /// - Throws: OstError
+    override func validateParams() throws {
+        try super.validateParams()
+        try self.workFlowValidator!.isUserActivated()
+        try self.workFlowValidator!.isDeviceAuthorized()
+        try self.pinManager.validateResetPin()
     }
     
-    /// Get context entity
+    /// Process reset pin
     ///
-    /// - Returns: OstContextEntity
-    override func getContextEntity(for entity: Any) -> OstContextEntity {
-        return OstContextEntity(entity: entity, entityType: .recoveryOwner)
+    /// - Throws: OstError
+    override func process() throws {
+        let recoveryOwnerEntity = try self.resetPin()
+        self.postRequestAcknowledged(entity: recoveryOwnerEntity)
+        self.pollingForResetPin(recoveryOwnerEntity)
     }
+    
    
-    func resetPin() throws -> OstRecoveryOwnerEntity{
-        if (try self.pinManager.validateResetPin()) {
-            try OstKeyManager(userId: self.userId).deletePin()
-            
-            guard let newRecoveryOwnerAddress = self.pinManager.getRecoveryOwnerAddressForNewPin() else {
-                throw OstError("w_rp_rp_1", .recoveryOwnerAddressCreationFailed)
-            }
-            
-            let resetPinSignatureData = try self.pinManager.signResetPinData(
-                newRecoveryOwnerAddress: newRecoveryOwnerAddress
-            )
-            
-            guard let user = try OstUser.getById(self.userId) else {
-                throw OstError("w_rp_rp_2", .userEntityNotFound)
-            }
-            let resetPinParams = [
-                "new_recovery_owner_address": newRecoveryOwnerAddress,
-                "signature": resetPinSignatureData.signature,
-                "signer": user.recoveryOwnerAddress,
-                "to": user.recoveryAddress
-            ]
-            
-            var recoveryOwnerEntity: OstRecoveryOwnerEntity?
-            var err: OstError? = nil
-            let group = DispatchGroup()
-            group.enter()
-            
-            do {
-                try OstAPIResetPin(userId: self.userId)
-                    .changeRecoveryOwner(
-                        params: resetPinParams as [String : Any],
-                        onSuccess: { (entity: OstRecoveryOwnerEntity) in
-                            recoveryOwnerEntity = entity
-                            group.leave()
-                    },
-                        onFailure: { (error: OstError) in
-                            err = error
-                            group.leave()
-                    }
-                )
-            } catch {
-                err = OstError("w_rp_rp_3", .resetPinFailed)
-                group.leave()
-            }
-            group.wait()
-            
-            if (err != nil) {
-                throw err!
-            }
-            return recoveryOwnerEntity!
-        } else {
-            throw OstError("w_rp_rp_4", .pinValidationFailed)
+    /// Reset pin
+    ///
+    /// - Returns: Recovery owner entity object
+    /// - Throws: OstError
+    private func resetPin() throws -> OstRecoveryOwnerEntity{
+        try self.pinManager.validateResetPin()
+        try OstKeyManager(userId: self.userId).deletePin()
+        
+        guard let newRecoveryOwnerAddress = self.pinManager.getRecoveryOwnerAddressForNewPin() else {
+            throw OstError("w_rp_rp_1", .recoveryOwnerAddressCreationFailed)
         }
+        
+        let resetPinSignatureData = try self.pinManager.signResetPinData(
+            newRecoveryOwnerAddress: newRecoveryOwnerAddress
+        )
+        
+        guard let user = try OstUser.getById(self.userId) else {
+            throw OstError("w_rp_rp_2", .userEntityNotFound)
+        }
+        let resetPinParams = [
+            "new_recovery_owner_address": newRecoveryOwnerAddress,
+            "signature": resetPinSignatureData.signature,
+            "signer": user.recoveryOwnerAddress,
+            "to": user.recoveryAddress
+        ]
+        
+        var recoveryOwnerEntity: OstRecoveryOwnerEntity?
+        var err: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        
+        do {
+            try OstAPIResetPin(userId: self.userId)
+                .changeRecoveryOwner(
+                    params: resetPinParams as [String : Any],
+                    onSuccess: { (entity: OstRecoveryOwnerEntity) in
+                        recoveryOwnerEntity = entity
+                        group.leave()
+                },
+                    onFailure: { (error: OstError) in
+                        err = error
+                        group.leave()
+                }
+            )
+        } catch {
+            err = OstError("w_rp_rp_3", .resetPinFailed)
+            group.leave()
+        }
+        group.wait()
+        
+        if (err != nil) {
+            throw err!
+        }
+        return recoveryOwnerEntity!
     }
+    
+    /// Polling for reset pin
+    ///
+    /// - Parameter entity: Recovery owner entity object
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
             OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
@@ -136,6 +138,20 @@ class OstResetPin: OstWorkflowBase {
                                  recoveryOwnerAddress: entity.address!,
                                  workflowTransactionCount: workflowTransactionCountForPolling,
                                  successCallback: successCallback, failureCallback: failureCallback).perform()
+    }
+    
+    /// Get current workflow context
+    ///
+    /// - Returns: OstWorkflowContext
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowType: .resetPin)
+    }
+    
+    /// Get context entity
+    ///
+    /// - Returns: OstContextEntity
+    override func getContextEntity(for entity: Any) -> OstContextEntity {
+        return OstContextEntity(entity: entity, entityType: .recoveryOwner)
     }
 }
 

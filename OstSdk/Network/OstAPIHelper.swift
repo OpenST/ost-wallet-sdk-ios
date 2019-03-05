@@ -84,7 +84,7 @@ class OstAPIHelper {
     /// - Throws: OSTError
     class func storeApiResponse(_ apiResponse: [String: Any?]) throws {
         let resultType = apiResponse["result_type"] as? String ?? ""
-        let entityData =  apiResponse[resultType] as? Any
+        let entityData =  apiResponse[resultType] as Any?
         
         if (nil == entityData) {
             return

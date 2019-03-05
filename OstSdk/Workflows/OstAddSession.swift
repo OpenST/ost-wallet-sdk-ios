@@ -16,7 +16,7 @@ class OstAddSession: OstWorkflowBase {
     var spendingLimit: String
     var expireAfter: TimeInterval;
     
-    var sessionHelper: OstSessionHelper.SessionHelper? = nil
+    var sessionData: OstSessionHelper.SessionData? = nil
   
     init(userId: String, spendingLimit: String, expireAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
@@ -29,7 +29,7 @@ class OstAddSession: OstWorkflowBase {
     }
     
     override func process() throws {
-        self.sessionHelper = try OstSessionHelper(userId: self.userId,
+        self.sessionData = try OstSessionHelper(userId: self.userId,
                                                   expiresAfter: self.expireAfter,
                                                   spendingLimit: self.spendingLimit).getSessionData()
         self.authorizeSession()
@@ -76,9 +76,9 @@ class OstAddSession: OstWorkflowBase {
         }
         
         OstAuthorizeSession(userId: self.userId,
-                            sessionAddress: self.sessionHelper!.sessionAddress,
+                            sessionAddress: self.sessionData!.sessionAddress,
                             spendingLimit: self.spendingLimit,
-                            expirationHeight: self.sessionHelper!.expirationHeight,
+                            expirationHeight: self.sessionData!.expirationHeight,
                             generateSignatureCallback: generateSignatureCallback,
                             onSuccess: onSuccess,
                             onFailure: onFailure).perform()
