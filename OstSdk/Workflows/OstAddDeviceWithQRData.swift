@@ -11,7 +11,7 @@ import Foundation
 let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
 
 class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
-    let ostAddDeviceWithQRDataThread = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
+    let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
     
     class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
         guard let deviceAddress: String = payload[PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
@@ -19,8 +19,10 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         }
         return deviceAddress
     }
-
+    
     let deviceAddress: String
+    
+    var deviceToAdd: OstDevice? = nil
     /// Initialization of OstAddDeviceWithQRData
     ///
     /// - Parameters:
@@ -32,31 +34,28 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// perform
-    override func perform() {
-        ostAddDeviceWithQRDataThread.async {
-            do {
-                try self.validateParams()
-                self.authorizeDevice()
-            }catch let error {
-                self.postError(error)
-            }
-        }
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostAddDeviceWithQRDataQueue
+    }
+    
+    override func process() throws {
+        try self.fetchDevice()
+        verifyData(device: self.deviceToAdd!)
     }
     
     /// validate parameters
     ///
     /// - Throws: OstError
-    func validateParams() throws {
-        let user = try self.getUser()
-        if (nil == user) {
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        if (nil == self.currentUser) {
             throw OstError("w_adwqd_vp_1", .userNotFound)
         }
-        if (!user!.isStatusActivated) {
+        if (!self.currentUser!.isStatusActivated) {
             throw OstError("w_adwqd_vp_2", .userNotActivated)
         }
         
-        self.currentDevice = try getCurrentDevice()
         if (nil == self.currentDevice) {
             throw OstError("w_adwqd_vp_3", .deviceNotset)
         }
@@ -65,42 +64,57 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
         }
     }
     
-    func authorizeDevice() {
-        do {
-            try OstAuthorizeDevice.getDevice(userId: self.userId, addressToAdd: self.deviceAddress,
-                                             onSuccess: { (ostDevice) in
-                                                do {
-                                                    if (!ostDevice.isStatusRegistered) {
-                                                        throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
-                                                    }
-                                                    if (ostDevice.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) == .orderedSame){
-                                                        throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
-                                                    }
-                                                }catch let error {
-                                                    self.postError(error)
-                                                }
-                                                self.verifyData(device: ostDevice)
+    func fetchDevice() throws {
+        var error: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        try OstAPIDevice(userId: userId)
+            .getDevice(deviceAddress: self.deviceAddress,
+                       onSuccess: { (ostDevice) in
+                        self.deviceToAdd = ostDevice
+                        group.leave()
             }) { (ostError) in
-                self.postError(ostError)
+                error = ostError
+                group.leave()
+        }
+        group.wait()
+        
+        if (nil == error) {
+            if (self.deviceToAdd!.isStatusAuthorized) {
+                throw OstError("w_adwqrd_fd_1", OstErrorText.deviceAuthorized)
+            } 
+            if (!self.deviceToAdd!.isStatusRegistered) {
+                throw OstError("w_adwqrd_fd_1", OstErrorText.deviceNotRegistered)
             }
-        }catch let error {
-            self.postError(error)
+            
+            if (self.deviceToAdd!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
+                throw OstError("w_adwqrd_fd_2", OstErrorText.registerSameDevice)
+            }
+        }else {
+            throw error!
         }
     }
     
     func verifyData(device: OstDevice) {
         let workflowContext = OstWorkflowContext(workflowType: .addDeviceWithQRCode);
         let contextEntity: OstContextEntity = OstContextEntity(entity: device, entityType: .device)
-        self.delegate.verifyData(workflowContext: workflowContext,
-                                 ostContextEntity: contextEntity,
-                                 delegate: self)
+        DispatchQueue.main.async {
+            self.delegate.verifyData(workflowContext: workflowContext,
+                                     ostContextEntity: contextEntity,
+                                     delegate: self)
+        }
     }
+    
     func dataVerified() {
-        self.authenticateUser();
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
+            self.authenticateUser();
+        }
     }
     
     override func proceedWorkflowAfterAuthenticateUser() {
-        ostAddDeviceWithQRDataThread.async {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
             let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
                 do {
                     let keychainManager = OstKeyManager(userId: self.userId)

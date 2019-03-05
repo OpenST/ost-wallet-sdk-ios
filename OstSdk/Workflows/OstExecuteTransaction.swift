@@ -17,13 +17,13 @@ let PAYLOAD_ADDRESSES_KEY = "ads"
 let PAYLOAD_AMOUNTS_KEY = "ams"
 let PAYLOAD_TOKEN_ID_KEY = "tid"
 
-class OstExecuteTransaction: OstWorkflowBase {
+class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     
     private let DIRECT_TRANSFER = "Direct Transfer"
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     let workflowTransactionCountForPolling = 1
     
-    let ostExecuteTransactionThread = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
+    let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
@@ -47,6 +47,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let tokenId: String = OstUtils.toString(payload[PAYLOAD_TOKEN_ID_KEY] as Any?) else {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
+        
         if (amounts.count != addresses.count) {
             throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
@@ -61,7 +62,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     
     var rule: OstRule? = nil
     var activeSession: OstSession? = nil
-
+    
     var calldata: String? = nil
     var eip1077Hash: String? = nil
     var signature: String? = nil
@@ -92,102 +93,92 @@ class OstExecuteTransaction: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// Perform action for send transaction in background thread.
-    override func perform() {
-        ostExecuteTransactionThread.async {
-            do {
-                //validate user
-                self.currentUser = try self.getUser()
-                if (nil == self.currentUser) {
-                    throw OstError("w_et_p_1", OstErrorText.userNotFound)
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostExecuteTransactionQueue
+    }
+    
+    override func process() throws {
+        try getRuleIfPresent()
+        if (nil == self.rule) {
+            try getToknRules()
+            try getRuleIfPresent()
+            if (nil == self.rule) {
+                throw OstError("w_et_p_1", .rulesNotFound)
+            }
+        }
+        try getActiveSession()
+        verifyData()
+    }
+    
+    override func validateParams() throws {
+        try super.validateParams()
+        if (nil == self.currentUser) {
+            throw OstError("w_et_p_1", OstErrorText.userNotFound)
+        }
+        if (!self.currentUser!.isStatusActivated) {
+            throw OstError("w_et_p_2", OstErrorText.userNotActivated)
+        }
+        if (self.currentUser!.tokenId! != self.tokenId) {
+            throw OstError("w_et_p_3", OstErrorText.invalidTokenId)
+        }
+        if (nil == self.currentDevice) {
+            throw OstError("w_et_p_4", OstErrorText.deviceNotFound)
+        }
+        if (!self.currentDevice!.isStatusAuthorized) {
+            throw OstError("w_et_p_4", OstErrorText.deviceNotAuthorized)
+        }
+    }
+    
+    func getRuleIfPresent() throws {
+        if let rules = try OstRule.getByParentId(self.tokenId) {
+            for rule in rules {
+                if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame &&
+                    rule.tokenId?.caseInsensitiveCompare(self.tokenId) == .orderedSame) {
+                    self.rule = rule
+                    break
                 }
-                if (!self.currentUser!.isStatusActivated) {
-                    throw OstError("w_et_p_2", OstErrorText.userNotActivated)
-                }
-                if (self.currentUser!.tokenId! != self.tokenId) {
-                    throw OstError("w_et_p_3", OstErrorText.invalidTokenId)
-                }
-                
-                //validate current device
-                self.currentDevice = try self.getCurrentDevice()
-                if (nil == self.currentDevice) {
-                    throw OstError("w_et_p_4", OstErrorText.deviceNotFound)
-                }
-                if (!self.currentDevice!.isStatusAuthorized) {
-                    throw OstError("w_et_p_4", OstErrorText.deviceNotAuthorized)
-                }
-                
-                //fetch rule
-                guard let rules = try OstRule.getByParentId(self.tokenId) else {
-                    throw OstError("w_et_gtr_1", .rulesNotFound)
-                }
-                for rule in rules {
-                    if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame) {
-                        self.rule = rule
-                        break
-                    }
-                }
-                if (nil == self.rule || self.rule?.tokenId?.caseInsensitiveCompare(self.tokenId) != .orderedSame) {
-                   self.getToknRules()
-                }else {
-                    self.getActiveSession()
-                }
-            }catch let error{
-                self.postError(error)
             }
         }
     }
     
     /// Get token rules from server
-    func getToknRules() {
-        do {
-            try OstAPIRule(userId: self.userId).getRules(onSuccess: { () in
-                do {
-                    guard let rules = try OstRule.getByParentId(self.tokenId) else {
-                        throw OstError("w_et_gtr_1", .rulesNotFound)
-                    }
-                    for rule in rules {
-                        if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame) {
-                            self.getActiveSession()
-                        }else {
-                            throw OstError("w_et_gtr_2", OstErrorText.rulesNotFound)
-                        }
-                    }
-                    
-                }catch  let error {
-                    self.postError(error)
-                }
-            }) { (error) in
-                self.postError(error)
-            }
-        }catch let error {
-            self.postError(error)
+    func getToknRules() throws {
+        var ostError: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        
+        try OstAPIRule(userId: self.userId).getRules(onSuccess: { () in
+            group.leave()
+        }) { (error) in
+            ostError = error
+            group.leave()
+        }
+        group.wait()
+        
+        if (nil != ostError) {
+            throw ostError!
         }
     }
     
     //TODO: - get addresses for KeyManager and get session from db.
     // validate and
     /// Get active session from db.
-    func getActiveSession() {
-        do {
-            if (nil == self.activeSession) {
-                if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
-                    for session in activeSessions {
-                        //TODO: check session expiry time.
-                        let totalTransactionSpendingLimit = try getTransactionSpendingLimit()
-                        let spendingLimit = BigInt(session.spendingLimit ?? "0")
-                        if spendingLimit >= totalTransactionSpendingLimit {
-                            self.activeSession = session
-                            self.generateHash()
-                            return
-                        }      
+    func getActiveSession() throws {
+        if (nil == self.activeSession) {
+            if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
+                for session in activeSessions {
+                    //TODO: check session expiry time.
+                    let totalTransactionSpendingLimit = try getTransactionSpendingLimit()
+                    let spendingLimit = BigInt(session.spendingLimit ?? "0")
+                    if spendingLimit >= totalTransactionSpendingLimit {
+                        self.activeSession = session
+                        break
                     }
                 }
-                throw OstError("w_et_gas_1", OstErrorText.sessionNotFound)
             }
-            self.generateHash()
-        }catch let error{
-            self.postError(error)
+        }
+        if (nil == self.activeSession) {
+            throw OstError("w_et_gas_1", OstErrorText.sessionNotFound)
         }
     }
     
@@ -206,6 +197,39 @@ class OstExecuteTransaction: OstWorkflowBase {
         return totalAmount
     }
     
+    func verifyData() {
+        var stringToConfirm: String = ""
+        stringToConfirm += "rule name : \(self.ruleName)"
+    
+        for (i, address) in self.tokenHolderAddresses.enumerated() {
+            stringToConfirm += "\n\(address): \(self.amounts[i])"
+        }
+        
+        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
+        let contextEntity: OstContextEntity = OstContextEntity(entity: stringToConfirm, entityType: .string)
+        DispatchQueue.main.async {
+            self.delegate.verifyData(workflowContext: workflowContext,
+                                     ostContextEntity: contextEntity,
+                                     delegate: self)
+        }
+    }
+    
+    func dataVerified() {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
+            self.authenticateUser();
+        }
+    }
+    
+    override func proceedWorkflowAfterAuthenticateUser() {
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
+            self.generateHash()
+            self.executeTransaction()
+        }
+    }
+    
+    
     /// Generate EIP1077 hash.
     func generateHash() {
         do {
@@ -213,7 +237,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             if ( nil == self.calldata) {
                 throw OstError("w_et_gh_1", OstErrorText.callDataFormationFailed)
             }
-
+            
             let transaction: OstSession.Transaction = OstSession.Transaction(from: self.currentUser!.tokenHolderAddress!)
             transaction.to = self.rule!.address!
             transaction.data = self.calldata!
@@ -222,8 +246,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             
             self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
             self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
-            
-            self.executeTransaction()
+        
         }catch let error {
             self.postError(error)
         }
@@ -301,7 +324,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             if (self.isRetryAfterFetch) {
                 self.postError(error)
             }else {
-               self.fetchSessionAndRetry()
+                self.fetchSessionAndRetry()
             }
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
@@ -327,5 +350,4 @@ class OstExecuteTransaction: OstWorkflowBase {
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .transaction)
     }
-    
 }

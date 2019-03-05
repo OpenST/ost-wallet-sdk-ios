@@ -9,33 +9,46 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    let ostGetPaperWalletThread = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
     
     override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func perform() {
-        ostGetPaperWalletThread.async {
-            self.authenticateUser()
-        }
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostGetPaperWalletQueue
     }
     
+    override func process() throws {
+         self.authenticateUser()
+    }
+    
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        if (!self.currentUser!.isStatusActivated) {
+            throw OstError("w_as_vp_1", .userNotActivated)
+        }
+    }
+  
+    
     override func proceedWorkflowAfterAuthenticateUser() {
-        do {
-            let keychainManager = OstKeyManager(userId: self.userId)
-            
-            guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
-                throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)                
-            }
-            
-            DispatchQueue.main.async {
-                self.delegate.showPaperWallet(mnemonics: mnemonics)
+        let queue: DispatchQueue = getWorkflowQueue()
+        queue.async {
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
+                    throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)
+                }
+                
+                DispatchQueue.main.async {
+                    self.delegate.showPaperWallet(mnemonics: mnemonics)
+                }
                 self.postWorkflowComplete(entity: mnemonics)
+                
+            }catch let error {
+                self.postError(error)
             }
-            
-        }catch let error {
-            self.postError(error)
         }
     }
     

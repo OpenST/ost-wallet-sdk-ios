@@ -9,6 +9,7 @@
 import Foundation
 
 class OstResetPinPollingService: OstBasePollingService {
+    let resetPinPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstResetPinPollingService", qos: .background)
     
     let successCallback: ((OstRecoveryOwnerEntity) -> Void)?
     let recoveryOwnerAddress: String
@@ -49,5 +50,9 @@ class OstResetPinPollingService: OstBasePollingService {
                 recoveryOwnerAddress: self.recoveryOwnerAddress,
                 onSuccess: self.onSuccess,
                 onFailure: self.onFailure)
+    }
+    
+    override func getPollingQueue() -> DispatchQueue {
+        return self.resetPinPollingServiceDispatchQueue
     }
 }

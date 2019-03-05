@@ -9,7 +9,7 @@
 import Foundation
 //TODO: Work here.
 class OstRecoverDevice: OstWorkflowBase {
-    let ostRecoverDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     let deviceAddressToRecover: String
     
@@ -38,30 +38,25 @@ class OstRecoverDevice: OstWorkflowBase {
         self.appUserPassword = password
     }
     
-    /// perform
-    override func perform() {
-        ostRecoverDeviceThread.async {
-            do {
-                try self.validateParams()
-                
-                self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
-                if (nil == self.deviceToRecover) {
-                    try self.fetchDevice()
-                }else {
-                    _ = try self.getSalt()
-                    self.generateHash()
-                }
-            }catch let error {
-                self.postError(error)
-            }
-        }
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostRecoverDeviceQueue
     }
     
+    override func process() throws {
+        self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
+        if (nil == self.deviceToRecover) {
+            try self.fetchDevice()
+        }
+         _ = try self.getSalt()
+        try self.generateHash()
+        try self.recoverDevice()
+    }
+ 
     /// Validate params.
     ///
     /// - Throws: OstError
-    func validateParams() throws {
-        self.currentUser = try getUser()
+    override func validateParams() throws {
+        try super.validateParams()
         if (nil == self.currentUser) {
             throw OstError("w_rd_vp_1", OstErrorText.userNotFound)
         }
@@ -69,7 +64,6 @@ class OstRecoverDevice: OstWorkflowBase {
             throw OstError("w_rd_vp_2", OstErrorText.userNotActivated)
         }
         
-        self.currentDevice = try getCurrentDevice()
         if (nil == self.currentDevice) {
             throw OstError("w_rd_vp_3", OstErrorText.deviceNotFound)
         }
@@ -82,29 +76,31 @@ class OstRecoverDevice: OstWorkflowBase {
     ///
     /// - Throws: OstError
     func fetchDevice() throws {
-        try OstAPIDevice(userId: self.userId)
-            .getDevice(deviceAddress: self.deviceAddressToRecover,
-                       onSuccess: { (ostDevice) in
-                        
-                        do {
-                            self.deviceToRecover = ostDevice
-                            if (!self.deviceToRecover!.isStatusAuthorized) {
-                                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
-                            }
-                            _ = try self.getSalt()
-                            self.generateHash()
-                        } catch let error {
-                            self.postError(error)
-                        }
-                        
-            }) { (ostError) in
-                self.postError(ostError)
+        var error: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        try OstAPIDevice(userId: userId)
+            .getDevice(deviceAddress: self.deviceAddressToRecover, onSuccess: { (ostDevice) in
+            self.deviceToRecover = ostDevice
+            group.leave()
+        }) { (ostError) in
+            error = ostError
+            group.leave()
+        }
+        group.wait()
+        
+        if (nil == error) {
+            if (!self.deviceToRecover!.isStatusAuthorized) {
+                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
+            }
+        }else {
+            throw error!
         }
     }
 
     /// Generate eip712 hash and signature from user recovery owner key
-    func generateHash() {
-        do {
+    func generateHash() throws {
+        
             let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryOwnerAddress!,
                                                                               prevOwner: self.deviceToRecover!.linkedAddress!,
                                                                               oldOwner: self.deviceToRecover!.address!,
@@ -120,22 +116,17 @@ class OstRecoverDevice: OstWorkflowBase {
             let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash,
                                                                                         pin: self.uPin,
                                                                                         password: self.appUserPassword,
-                                                                                        salt: self.saltResponse!["scrypt_salt"] as! String)
+                                                                                        salt: self.getSalt())
             if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
                 throw OstError("w_rd_gh_1", .invalidRecoveryAddress)
             }
             self.signature = signedData.signature
-            
-            try self.revokeDevice()
-        }catch let error {
-            self.postError(error)
-        }
     }
     
     /// Revoke device api call
     ///
     /// - Throws: OstError
-    func revokeDevice() throws {
+    func recoverDevice() throws {
         var params: [String: Any] = [:]
         params["old_linked_address"] = self.deviceToRecover!.linkedAddress!
         params["old_device_address"] = self.deviceToRecover!.address!

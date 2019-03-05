@@ -42,7 +42,6 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                                                    onFailure: onFailure)
     }
     
-  
     override func getEncodedABI() throws -> String {
         let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(abiMethodName: self.abiMethodNameForAuthorizeDevice,
                                                                                     ownerAddress: self.addressToAdd,
@@ -61,11 +60,23 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     }
     
     override func apiRequestForAuthorize(params: [String: Any]) throws {
+        var ostError: OstError? = nil
+        var authorizeDevice: OstDevice? = nil
+        let group = DispatchGroup()
+        group.enter()
         try OstAPIDevice(userId: self.userId).authorizeDevice(params: params, onSuccess: { (ostDevice) in
-            self.onRequestAcknowledged(ostDevice)
-            self.pollingForAddDevice()
+            authorizeDevice = ostDevice
+            group.leave()
         }) { (error) in
-            self.onFailure(error)
+            ostError = error
+            group.leave()
+        }
+        group.wait()
+        if (nil == ostError) {
+            self.onRequestAcknowledged(authorizeDevice!)
+            self.pollingForAddDevice()
+        }else {
+            self.onFailure(ostError!)
         }
     }
 

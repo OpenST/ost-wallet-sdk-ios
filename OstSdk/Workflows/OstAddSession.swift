@@ -9,48 +9,33 @@
 import Foundation
 
 class OstAddSession: OstWorkflowBase {
-    static let SESSION_BUFFER_TIME = Double.init(1 * 60 * 60); //1 Hour.
-  
-    let ostAddSessionThread = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    
+    let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
     let workflowTransactionCountForPolling = 1
     
     var spendingLimit: String
-//    var expirationHeight: Int?
-    var expiresAfter: TimeInterval;
+    var expireAfter: TimeInterval;
     
     var sessionHelper: OstSessionHelper.SessionHelper? = nil
-
-//    var sessionAddress: String? = nil
-    var chainInfo: [String: Any]? = nil
   
-    init(userId: String, spendingLimit: String, expiresAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, spendingLimit: String, expireAfter: TimeInterval, delegate: OstWorkFlowCallbackProtocol) {
         self.spendingLimit = spendingLimit
-        self.expiresAfter = expiresAfter;
+        self.expireAfter = expireAfter;
         super.init(userId: userId, delegate: delegate)
     }
-  
-    override func perform() {
-        ostAddSessionThread.async {
-            do {
-                try self.validateParams()
-//                self.generateSessionKeys()
-//                self.getCurrentBlockHeight()
-                
-                OstSessionHelper(userId: self.userId, expiresAfter: self.expiresAfter)
-                    .getSessionData(onSuccess: { (sessionHelper) in
-                        self.sessionHelper = sessionHelper
-                        self.authorizeSession()
-                    }, onFailure: { (error) in
-                        self.postError(error)
-                    })
-            }catch let error {
-                self.postError(error)
-            }
-        }
+    
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostAddSessionQueue
     }
     
-    func validateParams() throws {
-        self.currentUser = try getUser()
+    override func process() throws {
+        self.sessionHelper = try OstSessionHelper(userId: self.userId,
+                                                  expiresAfter: self.expireAfter,
+                                                  spendingLimit: self.spendingLimit).getSessionData()
+        self.authorizeSession()
+    }
+    
+    override func validateParams() throws {
         if (nil == self.currentUser) {
             throw OstError("w_as_vp_1", .userNotFound)
         }
@@ -58,7 +43,6 @@ class OstAddSession: OstWorkflowBase {
             throw OstError("w_as_vp_1", .userNotActivated)
         }
         
-        self.currentDevice = try getCurrentDevice()
         if (nil == self.currentDevice) {
             throw OstError("w_as_vp_2", .deviceNotFound);
         }
@@ -90,9 +74,7 @@ class OstAddSession: OstWorkflowBase {
             Logger.log(message: "I am here - OstAddSession");
             self.postError(error)
         }
-      
-        self.generateAndSaveSessionEntity()
-     
+        
         OstAuthorizeSession(userId: self.userId,
                             sessionAddress: self.sessionHelper!.sessionAddress,
                             spendingLimit: self.spendingLimit,
@@ -100,27 +82,6 @@ class OstAddSession: OstWorkflowBase {
                             generateSignatureCallback: generateSignatureCallback,
                             onSuccess: onSuccess,
                             onFailure: onFailure).perform()
-    }
-    
-    func generateAndSaveSessionEntity() {
-        do {
-            let params = self.getSessionEnityParams()
-            try OstSession.storeEntity(params)
-        }catch let error {
-            self.postError(error)
-        }
-    }
-    
-    func getSessionEnityParams() -> [String: Any] {
-        var params: [String: Any] = [:]
-        params["user_id"] = self.userId
-        params["address"] = self.sessionHelper!.sessionAddress
-        params["expiration_height"] = self.sessionHelper!.expirationHeight
-        params["spending_limit"] = self.spendingLimit
-        params["nonce"] = 0
-        params["status"] = OstSession.Status.CREATED.rawValue
-        
-        return params
     }
     
     func pollingForAuthorizeSession(_ ostSession: OstSession) {

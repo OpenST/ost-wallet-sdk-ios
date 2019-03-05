@@ -85,6 +85,7 @@ public enum OstErrorText: String {
     case paperWalletNotFound = "Paper wallet not found."
     case invalidDataDefination = "Invalid data defination"
     case recoveryAddressNotFound = "Recovery address for user is not set."
+    case recoveryOwnerAddressNotFound = "Recovery owner address for user not found."
     case invalidRecoveryAddress = "Invalid recovery address."
     case invalidUserId = "Invalid user id."
     case invalidTokenId = "Invalid token id."
