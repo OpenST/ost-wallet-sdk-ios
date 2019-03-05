@@ -66,28 +66,17 @@ class OstPinManager {
         guard let user = try OstUser.getById(self.userId) else {
             throw OstError("w_wv_vp_1", .userEntityNotFound)
         }
-        do {
-            let isValid = try OstKeyManager(userId: self.userId)
-                .verifyPin(
-                    password: self.password,
-                    pin: self.pin,
-                    salt: self.salt!,
-                    recoveryOwnerAddress: user.recoveryOwnerAddress!
-            )
-            if isValid {
-                return isValid
-            }
-            throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
-        } catch {
-            // Fallback
-            let recoveryOwnerAddress = try OstKeyManager(userId: self.userId)
-                .getRecoveryOwnerAddressFrom(
-                    password: self.password,
-                    pin: self.pin,
-                    salt: self.salt!
-            )
-            return recoveryOwnerAddress.caseInsensitiveCompare((user.recoveryOwnerAddress)!) ==  .orderedSame
+        let isValid = OstKeyManager(userId: self.userId)
+            .verifyPin(
+                password: self.password,
+                pin: self.pin,
+                salt: self.salt!,
+                recoveryOwnerAddress: user.recoveryOwnerAddress!
+        )
+        if isValid {
+            return isValid
         }
+        throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
     }
     
     /// Validate reset pin params

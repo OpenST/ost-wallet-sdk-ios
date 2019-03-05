@@ -9,6 +9,7 @@
 import Foundation
 
 class OstDevicePollingService: OstBasePollingService {
+    let devicePollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstDevicePollingService", qos: .background)
     
     let successCallback: ((OstDevice) -> Void)?
     let deviceAddress: String
@@ -32,5 +33,9 @@ class OstDevicePollingService: OstBasePollingService {
     
     override func fetchEntity() throws {
         try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.deviceAddress, onSuccess: self.onSuccess, onFailure: self.onFailure)
+    }
+    
+    override func getPollingQueue() -> DispatchQueue {
+        return self.devicePollingServiceDispatchQueue
     }
 }

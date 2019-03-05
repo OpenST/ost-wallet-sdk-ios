@@ -14,7 +14,7 @@ public enum OstPollingEntityType {
 
 class OstPolling: OstWorkflowBase {
     
-    let ostPollingThread = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
+    let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
     
     let workflowTransactionCount = 1
     let entityId: String
@@ -33,14 +33,51 @@ class OstPolling: OstWorkflowBase {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// perform
-    override func perform() {
-        ostPollingThread.async {
-            do {
-                try self.validateParams()
-                self.startPollingService()
-            }catch let error {
-                self.postError(error)
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostPollingQueue
+    }
+    
+    override func process() throws {
+        self.startPollingService()
+    }
+    
+    /// validate workflow params.
+    ///
+    /// - Throws: OstError.
+    override func validateParams() throws {
+        try super.validateParams()
+        self.currentUser = try getUser()
+        if (nil == self.currentUser) {
+            throw OstError("w_p_vp_1", .userNotFound)
+        }
+        
+        self.currentDevice = try getCurrentDevice()
+        if (nil == self.currentDevice) {
+            throw OstError("w_p_vp_2", .deviceNotFound)
+        }
+        
+        switch self.entityType {
+        case .user:
+            if (self.currentUser!.isStatusActivated) {
+                throw OstError("w_p_vp_3", OstErrorText.userAlreadyActivated)
+            }
+            if (!self.currentUser!.isStatusActivating) {
+                throw OstError("w_p_vp_4", OstErrorText.userNotActivating)
+            }
+        case .device:
+            if (self.currentDevice!.isStatusAuthorized) {
+                throw OstError("w_p_vp_5", OstErrorText.deviceAlreadyAuthorized)
+            }
+            if (!self.currentDevice!.isStatusAuthorizing) {
+                throw OstError("w_p_vp_5", OstErrorText.deviceNotAuthorizing)
+            }
+        case .transaction:
+            return
+        case .session:
+            if let session: OstSession = try OstSession.getById(self.entityId) {
+                if (!session.isStatusAuthorizing) {
+                    throw OstError("w_p_vp_5", OstErrorText.sessionNotAuthorizing)
+                }
             }
         }
     }
@@ -108,49 +145,3 @@ class OstPolling: OstWorkflowBase {
         return OstContextEntity(entity: entity, entityType: contextEntityType)
     }
 }
-
-/// valdiate params
-extension OstPolling {
-    
-    /// validate workflow params.
-    ///
-    /// - Throws: OstError.
-    func validateParams() throws {
-        self.currentUser = try getUser()
-        if (nil == self.currentUser) {
-            throw OstError("w_p_vp_1", .userNotFound)
-        }
-        
-        self.currentDevice = try getCurrentDevice()
-        if (nil == self.currentDevice) {
-            throw OstError("w_p_vp_2", .deviceNotFound)
-        }
-        
-        switch self.entityType {
-        case .user:
-            if (self.currentUser!.isStatusActivated) {
-                throw OstError("w_p_vp_3", OstErrorText.userAlreadyActivated)
-            }
-            if (!self.currentUser!.isStatusActivating) {
-                throw OstError("w_p_vp_4", OstErrorText.userNotActivating)
-            }
-        case .device:
-            if (self.currentDevice!.isStatusAuthorized) {
-                throw OstError("w_p_vp_5", OstErrorText.deviceAlreadyAuthorized)
-            }
-            if (!self.currentDevice!.isStatusAuthorizing) {
-                throw OstError("w_p_vp_5", OstErrorText.deviceNotAuthorizing)
-            }
-        case .transaction:
-            return
-        case .session:
-            if let session: OstSession = try OstSession.getById(self.entityId) {
-                if (!session.isStatusAuthorizing) {
-                    throw OstError("w_p_vp_5", OstErrorText.sessionNotAuthorizing)
-                }
-            }
-        }
-    }
-    
-}
-

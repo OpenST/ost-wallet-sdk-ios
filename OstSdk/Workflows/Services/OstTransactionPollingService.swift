@@ -9,7 +9,7 @@
 import Foundation
 
 class OstTransactionPollingService: OstBasePollingService {
-    let TransactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
+    let transactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
     
     let successCallback: ((OstTransaction) -> Void)?
     let transaciotnId: String
@@ -25,7 +25,6 @@ class OstTransactionPollingService: OstBasePollingService {
                    workflowTransactionCount: workflowTransactionCount,
                    failureCallback: failureCallback)
         
-        self.dispatchQueue = self.TransactionPollingServiceDispatchQueue
     }
     
     override func onSuccessProcess(entity: OstBaseEntity) {
@@ -46,5 +45,9 @@ class OstTransactionPollingService: OstBasePollingService {
         try OstAPITransaction(userId: userId).getTransaction(transcionId: self.transaciotnId,
                                                              onSuccess: self.onSuccess,
                                                              onFailure: self.onFailure)
+    }
+    
+    override func getPollingQueue() -> DispatchQueue {
+        return self.transactionPollingServiceDispatchQueue
     }
 }

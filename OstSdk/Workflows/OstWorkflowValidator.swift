@@ -70,16 +70,18 @@ class OstWorkflowValidator {
         guard let user = try OstUser.getById(self.currentUser.id) else {
             throw OstError("w_wv_vp_1", .userEntityNotFound)
         }
+        guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
+            throw OstError("w_wv_vp_2", .recoveryOwnerAddressNotFound)
+        }
         let isValid = try OstKeyManager(userId: self.currentUser.id)
             .verifyPin(
                 password: appPassword,
                 pin: pin,
                 salt: salt,
-                recoveryOwnerAddress: user.recoveryOwnerAddress!
+                recoveryOwnerAddress: recoveryOwnerAddress
         )
         return isValid
     }
-    
     
     /// Validate app password length
     ///
@@ -93,6 +95,16 @@ class OstWorkflowValidator {
             )
         }
     }
+    /// Validate recovery owner address
+    ///
+    /// - Parameter pin: Pin string
+    /// - Throws: Ost error
+    func validateRecoveryOwnerAddress(_ recoveryOwnerAddress: String?) throws {
+        if (nil == recoveryOwnerAddress) {
+            throw OstError("w_wfv_vroa_1", OstErrorText.recoveryOwnerAddressNotFound)
+        }
+    }
+    
     /// Validate pin length
     ///
     /// - Parameter pin: Pin string

@@ -10,48 +10,39 @@ import Foundation
 
 public enum OstQRCodeDataDefination: String {
     case AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
-    case TRANSACTION = "TRANSACTION"
+    case TRANSACTION = "TX"
 }
 
 class OstPerform: OstWorkflowBase {
-    let ostPerformThread = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
+    let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     
     let payloadString: String?
     
     var dataDefination: String? = nil
     var payloadData: [String: Any?]?;
-    var deviceManager: OstDeviceManager? = nil
-    
-    let threshold = "1"
-    let nullAddress = "0x0000000000000000000000000000000000000000"
     
     init(userId: String, payload: String?, delegate: OstWorkFlowCallbackProtocol) {
         self.payloadString = payload;
         super.init(userId: userId, delegate: delegate)
     }
     
-    override func perform() {
-        ostPerformThread.async {
-            do {
-                //Validate payload. Before asking for authentication.
-                try self.parseQRCodeString();
-                
-                guard let currentDevice: OstCurrentDevice = try self.getCurrentDevice() else {
-                    throw OstError.init("w_p_p_1", .deviceNotset)
-                }
-                if (!currentDevice.isStatusAuthorized) {
-                    throw OstError.init("w_p_p_2", OstErrorText.deviceNotAuthorized)
-                }
-                
-                // Note: Authenticate user is not need before validating data.
-                // Hence, removed self.authenticateUser()
-                // proceedWorkflowAfterAuthenticateUser renamed as startSubWorkflow.
-                // The sub workflow will authenticate-user as needed.
-                try self.startSubWorkflow();
-                
-            } catch let error {
-                self.postError(error)
-            }
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostPerformQueue
+    }
+    
+    override func process() throws {
+        try parseQRCodeString()
+        try self.startSubWorkflow();
+    }
+    
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        if (nil == self.currentDevice) {
+            throw OstError.init("w_p_p_1", .deviceNotset)
+        }
+        if (!self.currentDevice!.isStatusAuthorized) {
+            throw OstError.init("w_p_p_2", OstErrorText.deviceNotAuthorized)
         }
     }
     

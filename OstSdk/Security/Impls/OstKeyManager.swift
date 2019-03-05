@@ -309,7 +309,7 @@ public class OstKeyManager {
     private func storeRecoveryPinHash(_ recoveryPinHash: String) throws {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         // TODO: add secure enclave encoding here for recoveryPinHash
-        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(recoveryPinHash)
+        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(recoveryPinHash.data(using: .utf8)!)
         try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
     
@@ -322,8 +322,10 @@ public class OstKeyManager {
         password: String,
         pin: String,
         salt: String,
-        recoveryOwnerAddress: String) throws -> Bool {
+        recoveryOwnerAddress: String) -> Bool {
     
+        var isValid = true
+        
         let recoveryPinHash = generateRecoveryPinHash(
             password: password,
             pin: pin,
@@ -331,13 +333,31 @@ public class OstKeyManager {
             recoveryOwnerAddress: recoveryOwnerAddress
         )
         
-        return try verifyRecoveryPinHash(recoveryPinHash)
+        do {
+            try verifyRecoveryPinHash(recoveryPinHash)
+        } catch {
+            // Fallback
+            if let generatedAddress = try? self.getRecoveryOwnerAddressFrom(
+                    password: password,
+                    pin: pin,
+                    salt: salt
+                )  {
+
+                isValid = recoveryOwnerAddress.caseInsensitiveCompare(generatedAddress) ==  .orderedSame
+                if isValid {
+                    try? storeRecoveryPinHash(recoveryPinHash)
+                }
+            } else {
+                isValid = false
+            }                        
+        }
+        return isValid
     }
     /// Verify stored pin string with passed one.
     ///
     /// - Parameter pinString: Pin string generated at the time of activate user.
     /// - Returns: true if data stored in keychain successfully.
-    private func verifyRecoveryPinHash(_ recoveryPinHash: String) throws -> Bool {
+    private func verifyRecoveryPinHash(_ recoveryPinHash: String) throws {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
             throw OstError("s_i_km_vrps_1", .recoveryPinNotFoundInKeyManager)
@@ -349,10 +369,9 @@ public class OstKeyManager {
         // TODO: add secure enclave encoding here for recoveryPinHash
         
         let isSucess = (recoveryPinHash.caseInsensitiveCompare(existingRecoveryPinHash) == .orderedSame )
-        if isSucess {
-            try storeRecoveryPinHash(recoveryPinHash)
+        if !isSucess {
+            throw OstError("s_i_km_vrps_3", .pinValidationFailed)
         }
-        return isSucess
     }
 }
 

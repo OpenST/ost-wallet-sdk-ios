@@ -9,7 +9,7 @@
 import Foundation
 //TODO: Work here.
 class OstRecoverDevice: OstWorkflowBase {
-    let ostRecoverDeviceThread = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     let deviceAddressToRecover: String
     
@@ -39,34 +39,27 @@ class OstRecoverDevice: OstWorkflowBase {
         self.pinManager = OstPinManager(userId: self.userId, password: password, pin: uPin)
     }
     
-    /// perform
-    override func perform() {
-        ostRecoverDeviceThread.async {
-            do {
-                try self.validateParams()
-                
-                self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
-                if (nil == self.deviceToRecover) {
-                    try self.fetchDevice()
-                }
-                //_ = try self.getSalt()
-                //self.generateHash()
-                let signedData = try self.pinManager?
-                    .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
-                self.signer = signedData?.address
-                self.signature = signedData?.signature
-                try self.recoverDevice()
-            }catch let error {
-                self.postError(error)
-            }
-        }
+    override func getWorkflowQueue() -> DispatchQueue {
+        return self.ostRecoverDeviceQueue
     }
     
+    override func process() throws {
+        self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
+        if (nil == self.deviceToRecover) {
+            try self.fetchDevice()
+        }
+        let signedData = try self.pinManager?
+            .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
+        self.signer = signedData?.address
+        self.signature = signedData?.signature
+        try self.recoverDevice()
+    }
+ 
     /// Validate params.
     ///
     /// - Throws: OstError
-    func validateParams() throws {
-        self.currentUser = try getUser()
+    override func validateParams() throws {
+        try super.validateParams()
         if (nil == self.currentUser) {
             throw OstError("w_rd_vp_1", OstErrorText.userNotFound)
         }
@@ -74,7 +67,6 @@ class OstRecoverDevice: OstWorkflowBase {
             throw OstError("w_rd_vp_2", OstErrorText.userNotActivated)
         }
         
-        self.currentDevice = try getCurrentDevice()
         if (nil == self.currentDevice) {
             throw OstError("w_rd_vp_3", OstErrorText.deviceNotFound)
         }
@@ -87,21 +79,25 @@ class OstRecoverDevice: OstWorkflowBase {
     ///
     /// - Throws: OstError
     func fetchDevice() throws {
-        try OstAPIDevice(userId: self.userId)
-            .getDevice(deviceAddress: self.deviceAddressToRecover,
-                       onSuccess: { (ostDevice) in
-                        
-                        do {
-                            self.deviceToRecover = ostDevice
-                            if (!self.deviceToRecover!.isStatusAuthorized) {
-                                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
-                            }
-                        } catch let error {
-                            self.postError(error)
-                        }
-                        
-            }) { (ostError) in
-                self.postError(ostError)
+        var error: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        try OstAPIDevice(userId: userId)
+            .getDevice(deviceAddress: self.deviceAddressToRecover, onSuccess: { (ostDevice) in
+            self.deviceToRecover = ostDevice
+            group.leave()
+        }) { (ostError) in
+            error = ostError
+            group.leave()
+        }
+        group.wait()
+        
+        if (nil == error) {
+            if (!self.deviceToRecover!.isStatusAuthorized) {
+                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
+            }
+        }else {
+            throw error!
         }
     }
     

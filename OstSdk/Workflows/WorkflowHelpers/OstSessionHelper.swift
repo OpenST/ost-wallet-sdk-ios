@@ -16,32 +16,40 @@ class OstSessionHelper: OstWorkflowHelperBase {
     
     static let SESSION_BUFFER_TIME = Double(1 * 60 * 60); //1 Hour.
     
-    let dispatchGroup: DispatchGroup = DispatchGroup()
-    
     var chainInfo: [String: Any]? = nil
     var sessionAddress: String? = nil
     var expirationHeight: Int = 0
     var error: OstError? = nil
-    
-    var onSuccess: ((SessionHelper) -> Void)? = nil
-    var onFailure: ((OstError) -> Void)? = nil
+    let spendingLimit: String
+//
+//    var onSuccess: ((SessionHelper) -> Void)? = nil
+//    var onFailure: ((OstError) -> Void)? = nil
     
     let expiresAfter: TimeInterval
-    init(userId: String, expiresAfter: TimeInterval) {
+    init(userId: String, expiresAfter: TimeInterval, spendingLimit: String) {
         self.expiresAfter = expiresAfter
-        
+        self.spendingLimit = spendingLimit
         super.init(userId: userId)
     }
     
-    func getSessionData(onSuccess: @escaping ((SessionHelper) -> Void), onFailure: @escaping ((OstError) -> Void)) {
-        self.onSuccess = onSuccess
-        self.onFailure = onFailure
-        do {
-            try generateSessionKeys()
-            try fetchChainInfo()
-        }catch let error{
-            onFailure(error as! OstError)
-        }
+//    func getSessionData(onSuccess: @escaping ((SessionHelper) -> Void), onFailure: @escaping ((OstError) -> Void)) {
+//        self.onSuccess = onSuccess
+//        self.onFailure = onFailure
+//        do {
+//            try generateSessionKeys()
+//            try fetchChainInfo()
+//        }catch let error{
+//            onFailure(error as! OstError)
+//        }
+//    }
+    
+    func getSessionData() throws -> SessionHelper{
+        try generateSessionKeys()
+        try fetchChainInfo()
+        calcuateExpirationHeight()
+        try generateAndSaveSessionEntity()
+
+        return (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
     }
     
     private func generateSessionKeys() throws {
@@ -50,17 +58,18 @@ class OstSessionHelper: OstWorkflowHelperBase {
     }
     
     private func fetchChainInfo() throws {
-//        self.dispatchGroup.enter()
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
         try OstAPIChain(userId: self.userId).getChain(onSuccess: { (chainInfo) in
             self.chainInfo = chainInfo
-            self.calcuateExpirationHeight()
-//            self.dispatchGroup.leave()
+//            self.calcuateExpirationHeight()
+            dispatchGroup.leave()
         }) { (error) in
             self.error = error
-            self.onFailure?(error)
-//            self.dispatchGroup.leave()
+//            self.onFailure?(error)
+            dispatchGroup.leave()
         }
-//        self.dispatchGroup.wait()
+        dispatchGroup.wait()
 //        if (nil != self.error) {
 //            throw self.error!
 //        }
@@ -73,7 +82,25 @@ class OstSessionHelper: OstWorkflowHelperBase {
         let validForBlocks = Int( bufferedSessionTime/Double(blockGenerationTime) )
         self.expirationHeight = validForBlocks + currentBlockHeight;
         
-        let sessionHelper: SessionHelper = (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
-        self.onSuccess?(sessionHelper)
+//        let sessionHelper: SessionHelper = (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
+//        self.onSuccess?(sessionHelper)
     }
+    
+    func generateAndSaveSessionEntity() throws {
+        let params = self.getSessionEnityParams()
+        try OstSession.storeEntity(params)
+    }
+    
+    func getSessionEnityParams() -> [String: Any] {
+        var params: [String: Any] = [:]
+        params["user_id"] = self.userId
+        params["address"] = self.sessionAddress!
+        params["expiration_height"] = self.expirationHeight
+        params["spending_limit"] = self.spendingLimit
+        params["nonce"] = 0
+        params["status"] = OstSession.Status.CREATED.rawValue
+        
+        return params
+    }
+   
 }
