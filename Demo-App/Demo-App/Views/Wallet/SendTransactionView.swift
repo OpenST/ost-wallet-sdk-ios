@@ -23,7 +23,7 @@ class SendTransactionView: BaseWalletWorkflowView, AVCaptureMetadataOutputObject
 //                                       delegate: self.sdkInteract)
 //
         
-        let qrCode: [String: Any] = ["dd": "transaction",
+        let qrCode: [String: Any] = ["dd": "tx",
                                      "ddv": "1.1.0",
                                      "d":["rn": "Direct Transfer",
                                         "ads": ["0xc570e4deedb1f757e638e6239a26e3d57e6bd063"],
