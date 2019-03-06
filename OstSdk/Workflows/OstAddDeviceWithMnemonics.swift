@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class OstAddDeviceWithMnemonics: OstWorkflowBase {
-    
     let ostAddDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     let workflowTransactionCountForPolling = 1
     

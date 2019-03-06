@@ -12,18 +12,15 @@ let CHAIN_BLOCK_HEIGHT = "block_height"
 let CHAIN_BLOCK_TIME = "block_time"
 
 class OstSessionHelper: OstWorkflowHelperBase {
-    typealias SessionHelper = (sessionAddress: String, expirationHeight: String)
+    typealias SessionData = (sessionAddress: String, expirationHeight: String)
     
-    static let SESSION_BUFFER_TIME = Double(1 * 60 * 60); //1 Hour.
+    //static let SESSION_BUFFER_TIME = Double(1 * 60 * 60) //1 Hour.
+    static let SESSION_BUFFER_TIME = Double(0) // No buffer
     
     var chainInfo: [String: Any]? = nil
     var sessionAddress: String? = nil
     var expirationHeight: Int = 0
-    var error: OstError? = nil
     let spendingLimit: String
-//
-//    var onSuccess: ((SessionHelper) -> Void)? = nil
-//    var onFailure: ((OstError) -> Void)? = nil
     
     let expiresAfter: TimeInterval
     init(userId: String, expiresAfter: TimeInterval, spendingLimit: String) {
@@ -32,18 +29,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
         super.init(userId: userId)
     }
     
-//    func getSessionData(onSuccess: @escaping ((SessionHelper) -> Void), onFailure: @escaping ((OstError) -> Void)) {
-//        self.onSuccess = onSuccess
-//        self.onFailure = onFailure
-//        do {
-//            try generateSessionKeys()
-//            try fetchChainInfo()
-//        }catch let error{
-//            onFailure(error as! OstError)
-//        }
-//    }
-    
-    func getSessionData() throws -> SessionHelper{
+    func getSessionData() throws -> SessionData{
         try generateSessionKeys()
         try fetchChainInfo()
         calcuateExpirationHeight()
@@ -58,32 +44,28 @@ class OstSessionHelper: OstWorkflowHelperBase {
     }
     
     private func fetchChainInfo() throws {
+        var err: OstError? = nil
         let dispatchGroup: DispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         try OstAPIChain(userId: self.userId).getChain(onSuccess: { (chainInfo) in
             self.chainInfo = chainInfo
-//            self.calcuateExpirationHeight()
             dispatchGroup.leave()
         }) { (error) in
-            self.error = error
-//            self.onFailure?(error)
+            err = error
             dispatchGroup.leave()
         }
         dispatchGroup.wait()
-//        if (nil != self.error) {
-//            throw self.error!
-//        }
+        if (nil != err) {
+            throw err!
+        }
     }
     
-    private  func calcuateExpirationHeight() {
+    private func calcuateExpirationHeight() {
         let currentBlockHeight = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_HEIGHT])!
         let blockGenerationTime = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_TIME])!
         let bufferedSessionTime = OstSessionHelper.SESSION_BUFFER_TIME + self.expiresAfter
         let validForBlocks = Int( bufferedSessionTime/Double(blockGenerationTime) )
         self.expirationHeight = validForBlocks + currentBlockHeight;
-        
-//        let sessionHelper: SessionHelper = (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
-//        self.onSuccess?(sessionHelper)
     }
     
     func generateAndSaveSessionEntity() throws {

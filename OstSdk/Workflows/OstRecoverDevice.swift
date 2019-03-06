@@ -17,6 +17,8 @@ class OstRecoverDevice: OstWorkflowBase {
     var signature: String? = nil
     var signer: String? = nil
     
+    private var pinManager: OstPinManager? = nil;
+    
     /// Initialization
     ///
     /// - Parameters:
@@ -34,8 +36,7 @@ class OstRecoverDevice: OstWorkflowBase {
         self.deviceAddressToRecover = deviceAddressToRecover
         super.init(userId: userId, delegate: delegate)
         
-        self.uPin = uPin
-        self.appUserPassword = password
+        self.pinManager = OstPinManager(userId: self.userId, password: password, pin: uPin)
     }
     
     override func getWorkflowQueue() -> DispatchQueue {
@@ -47,8 +48,10 @@ class OstRecoverDevice: OstWorkflowBase {
         if (nil == self.deviceToRecover) {
             try self.fetchDevice()
         }
-         _ = try self.getSalt()
-        try self.generateHash()
+        let signedData = try self.pinManager?
+            .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
+        self.signer = signedData?.address
+        self.signature = signedData?.signature
         try self.recoverDevice()
     }
  
@@ -96,31 +99,6 @@ class OstRecoverDevice: OstWorkflowBase {
         }else {
             throw error!
         }
-    }
-
-    /// Generate eip712 hash and signature from user recovery owner key
-    func generateHash() throws {
-        
-            let typedData = TypedDataForRecovery.getInitiateRecoveryTypedData(verifyingContract: self.currentUser!.recoveryOwnerAddress!,
-                                                                              prevOwner: self.deviceToRecover!.linkedAddress!,
-                                                                              oldOwner: self.deviceToRecover!.address!,
-                                                                              newOwner: self.currentDevice!.address!)
-            
-            let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
-                                         primaryType: typedData["primaryType"] as! String,
-                                         domain: typedData["domain"] as! [String: String],
-                                         message: typedData["message"] as! [String: Any])
-            
-            let signingHash = try eip712.getEIP712SignHash()
-            
-            let signedData = try OstKeyManager(userId: self.userId).signWithRecoveryKey(message: signingHash,
-                                                                                        pin: self.uPin,
-                                                                                        password: self.appUserPassword,
-                                                                                        salt: self.getSalt())
-            if (self.currentUser!.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
-                throw OstError("w_rd_gh_1", .invalidRecoveryAddress)
-            }
-            self.signature = signedData.signature
     }
     
     /// Revoke device api call
