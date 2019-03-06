@@ -71,10 +71,10 @@ class SetupWalletView: BaseWalletWorkflowView {
   
   //Add text fields
   let pinNumberTextField: MDCTextField = {
-    let mobileNumberTextField = MDCTextField()
-    mobileNumberTextField.translatesAutoresizingMaskIntoConstraints = false
-    mobileNumberTextField.isSecureTextEntry = false
-    return mobileNumberTextField
+    let pinNumberTextField = MDCTextField()
+    pinNumberTextField.translatesAutoresizingMaskIntoConstraints = false
+    pinNumberTextField.isSecureTextEntry = true
+    return pinNumberTextField
   }()
   
   // Add text field controllers

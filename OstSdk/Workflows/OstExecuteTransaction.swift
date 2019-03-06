@@ -288,11 +288,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
                         self.postRequestAcknowledged(entity: ostTransaction)
                         self.pollingForTransaction(transaction: ostTransaction)
                 }) { (error) in
-                    if (self.isRetryAfterFetch) {
-                        self.postError(error)
-                    }else {
-                        self.fetchSessionAndRetry()
-                    }
+                    self.postError(error)
             }
         }catch let error {
             self.postError(error)
