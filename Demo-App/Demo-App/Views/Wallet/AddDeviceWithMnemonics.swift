@@ -19,12 +19,19 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
     }
     */
   @objc override func didTapNext(sender: Any) {
-    super.didTapNext(sender: sender);
-    let currentUser = CurrentUser.getInstance();
-    let mnemonics = wordsTextView.text!.components(separatedBy: " ")
-    OstSdk.addDeviceWithMnemonics(userId: currentUser.ostUserId!,
-                                  mnemonics: mnemonics,
-                                  delegate: self.sdkInteract)
+    
+    if self.nextButton.titleLabel?.text == "VERIFIED" {
+        self.ostValidateDataProtocol!.dataVerified()
+        self.activityIndicator.startAnimating()
+        self.nextButton.isHidden = true
+    }else {
+        super.didTapNext(sender: sender);
+        let currentUser = CurrentUser.getInstance();
+        let mnemonics = wordsTextView.text!.components(separatedBy: " ")
+        OstSdk.addDeviceWithMnemonics(userId: currentUser.ostUserId!,
+                                      mnemonics: mnemonics,
+                                      delegate: self.sdkInteract)
+    }
   }
   // Mark - Sub Views
   let logoImageView: UIImageView = {
@@ -43,6 +50,25 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
   }()
     var wordsTextController:MDCTextInputControllerOutlinedTextArea? = nil;
     
+    let viewPreview: UIView = {
+        var viewPreview = UIView(frame: CGRect.zero)
+        viewPreview.backgroundColor = UIColor.clear
+        viewPreview.layer.cornerRadius = 10
+        viewPreview.layer.borderColor = UIColor.gray.cgColor
+        viewPreview.layer.borderWidth = 2
+        viewPreview.translatesAutoresizingMaskIntoConstraints = false
+        viewPreview.backgroundColor = UIColor.init(red: 52.0/255.0, green: 68.0/255.0, blue: 91.0/255.0, alpha: 1.0);
+        return viewPreview
+    }();
+    let qrInfoLabel: QRInfoLabel = {
+        let qrInfoLabel = QRInfoLabel()
+        qrInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+        qrInfoLabel.text = "";
+        qrInfoLabel.numberOfLines = 0
+        qrInfoLabel.textColor = UIColor.white
+        return qrInfoLabel;
+    }();
+
   override func addSubViews() {
     let scrollView = self;
     self.wordsTextController = MDCTextInputControllerOutlinedTextArea(textInput: wordsTextView);
@@ -50,6 +76,10 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
     
     scrollView.addSubview(self.logoImageView)
     scrollView.addSubview(self.wordsTextView)
+    scrollView.addSubview(self.viewPreview);
+    self.viewPreview.addSubview(qrInfoLabel)
+    self.viewPreview.isHidden = true
+    scrollView.sendSubviewToBack(self.viewPreview)
     super.addSubViews();
     self.nextButton.setTitle("Authorize", for: .normal);
   }
@@ -97,22 +127,99 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
                                           multiplier: 1,
                                           constant: -10))
     
+    let vpConst = CGFloat(10.0);
+    constraints.append(NSLayoutConstraint(item: viewPreview,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: scrollView.contentLayoutGuide,
+                                          attribute: .top,
+                                          multiplier: 1,
+                                          constant: 120))
+    
+    constraints.append(NSLayoutConstraint(item: viewPreview,
+                                          attribute: .centerX,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .centerX,
+                                          multiplier: 1,
+                                          constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: viewPreview,
+                                          attribute: .bottom,
+                                          relatedBy: .equal,
+                                          toItem: wordsTextView,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: viewPreview,
+                                          attribute: .leading,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .leading,
+                                          multiplier: 1,
+                                          constant: vpConst))
+    
+    constraints.append(NSLayoutConstraint(item: viewPreview,
+                                          attribute: .trailing,
+                                          relatedBy: .equal,
+                                          toItem: scrollView,
+                                          attribute: .trailing,
+                                          multiplier: 1,
+                                          constant: -vpConst))
+    
+    constraints.append(NSLayoutConstraint(item: self.qrInfoLabel,
+                                          attribute: .trailing,
+                                          relatedBy: .equal,
+                                          toItem: viewPreview,
+                                          attribute: .trailing,
+                                          multiplier: 1,
+                                          constant: -10))
+    constraints.append(NSLayoutConstraint(item: self.qrInfoLabel,
+                                          attribute: .top,
+                                          relatedBy: .equal,
+                                          toItem: viewPreview,
+                                          attribute: .top,
+                                          multiplier: 1,
+                                          constant: 0))
+    constraints.append(NSLayoutConstraint(item: self.qrInfoLabel,
+                                          attribute: .bottom,
+                                          relatedBy: .equal,
+                                          toItem: viewPreview,
+                                          attribute: .bottom,
+                                          multiplier: 1,
+                                          constant: 0))
+    constraints.append(NSLayoutConstraint(item: self.qrInfoLabel,
+                                          attribute: .leading,
+                                          relatedBy: .equal,
+                                          toItem: viewPreview,
+                                          attribute: .leading,
+                                          multiplier: 1,
+                                          constant: 10))
+    
     super.addBottomSubviewConstraints(afterView:wordsTextView, constraints: constraints);
   }
   
+    var ostValidateDataProtocol:OstValidateDataProtocol?
   override func receivedSdkEvent(eventData: [String : Any]) {
     super.receivedSdkEvent(eventData: eventData);
     let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-    if ( OstSdkInteract.WorkflowEventType.showPaperWallet != eventType ) {
+    if ( OstSdkInteract.WorkflowEventType.verifyQRCodeData != eventType ) {
       return;
     }
     
-    guard let mnemonics:[String] = eventData["mnemonics"] as? [String] else {
+    guard let contextEntity: OstContextEntity = eventData["ostContextEntity"] as? OstContextEntity else {
         return;
     }
-    let wordsToShow:String = mnemonics.joined(separator: " ");
-    self.wordsTextView.text = wordsToShow;
-    self.nextButton.isHidden = true;
+    ostValidateDataProtocol = eventData["delegate"] as! OstValidateDataProtocol
+    let device: OstCurrentDevice = contextEntity.entity as! OstCurrentDevice
+    viewPreview.isHidden = false
+    let scrollView = self;
+    scrollView.bringSubviewToFront(viewPreview)
+    qrInfoLabel.text = "Device to add: \(device.address!)"
+    
+    nextButton.setTitle("VERIFIED", for: .normal)
+    self.nextButton.isHidden = false;
     self.cancelButton.isHidden = true;
     self.activityIndicator.stopAnimating();
   }

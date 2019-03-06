@@ -179,6 +179,10 @@ extension OstSdk {
         guard let currentDevice = user.getCurrentDevice() else {
             throw OstError("w_wff_gadqc_2", .deviceNotset)
         }
+        
+        if !currentDevice.isStatusRegistered {
+            throw OstError("w_wff_gadqc_2", .deviceNotRegistered)
+        }
         let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                                              "ddv": 1.0,
                                              "d":["da":currentDevice.address!]]

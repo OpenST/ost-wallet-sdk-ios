@@ -299,7 +299,8 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
                 
                 // Done.
                 return;
-            } else if ( interuptedWorkflowContext.workflowType == .addDeviceWithQRCode ) {
+            } else if ( interuptedWorkflowContext.workflowType == .addDeviceWithQRCode ||
+                        interuptedWorkflowContext.workflowType == .addDeviceWithMnemonics) {
                 // Forward it to base class.
                 super.receivedSdkEvent(eventData: eventData);
                 
@@ -318,7 +319,8 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         else if (.flowComplete == eventType ) {
             let completedWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
             if ( completedWorkflowContext.workflowType == .scanQRCode
-                || completedWorkflowContext.workflowType == .addDeviceWithQRCode) {
+                || completedWorkflowContext.workflowType == .addDeviceWithQRCode
+                || completedWorkflowContext.workflowType == .addDeviceWithMnemonics ) {
                 
                 // Forward it to base class.
                 super.receivedSdkEvent(eventData: eventData);
@@ -344,7 +346,8 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         let workflowContext = eventData["workflowContext"] as! OstWorkflowContext;
         let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
         self.ostValidateDataProtocol = eventData["delegate"] as? OstValidateDataProtocol;
-        if ( workflowContext.workflowType == .addDeviceWithQRCode ) {
+        if ( workflowContext.workflowType == .addDeviceWithQRCode
+            || workflowContext.workflowType == .addDeviceWithMnemonics) {
             let device = ostContextEntity.entity as! OstDevice;
             showAuthorizeDeviceInfo(ostDevice: device);
         } else if ( workflowContext.workflowType == .executeTransaction ) {

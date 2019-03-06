@@ -14,35 +14,46 @@ let CHAIN_BLOCK_TIME = "block_time"
 class OstSessionHelper: OstWorkflowHelperBase {
     typealias SessionData = (sessionAddress: String, expirationHeight: String)
     
-    //static let SESSION_BUFFER_TIME = Double(1 * 60 * 60) //1 Hour.
-    static let SESSION_BUFFER_TIME = Double(0) // No buffer
+    private static let SESSION_BUFFER_TIME = Double(1 * 60 * 60) //1 Hour.
+    private let expiresAfter: TimeInterval
+    private let spendingLimit: String
     
-    var chainInfo: [String: Any]? = nil
-    var sessionAddress: String? = nil
-    var expirationHeight: Int = 0
-    let spendingLimit: String
+    private var chainInfo: [String: Any]? = nil
+    private var sessionAddress: String? = nil
+    private var expirationHeight: Int = 0
     
-    let expiresAfter: TimeInterval
-    init(userId: String, expiresAfter: TimeInterval, spendingLimit: String) {
+    /// Initializer
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - expiresAfter: Relative time
+    ///   - spendingLimit: Spending limit in a Wei
+    init(userId: String,
+         expiresAfter: TimeInterval,
+         spendingLimit: String) {
+        
         self.expiresAfter = expiresAfter
         self.spendingLimit = spendingLimit
         super.init(userId: userId)
     }
     
+    /// Get session address and expiration height
+    ///
+    /// - Returns: Session data
+    /// - Throws: OstError
     func getSessionData() throws -> SessionData{
-        try generateSessionKeys()
         try fetchChainInfo()
         calcuateExpirationHeight()
-        try generateAndSaveSessionEntity()
+        try createSessionKeys()
+        let params = getSessionEnityParams()
+        try OstSession.storeEntity(params)
 
         return (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
     }
-    
-    private func generateSessionKeys() throws {
-        let keyMananger = OstKeyManager(userId: self.userId)
-        self.sessionAddress = try keyMananger.createSessionKey()
-    }
-    
+
+    /// Fetch chain information from server
+    ///
+    /// - Throws: OstError
     private func fetchChainInfo() throws {
         var err: OstError? = nil
         let dispatchGroup: DispatchGroup = DispatchGroup()
@@ -60,6 +71,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
         }
     }
     
+    /// Calculate expiration height from relative value and chain information
     private func calcuateExpirationHeight() {
         let currentBlockHeight = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_HEIGHT])!
         let blockGenerationTime = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_TIME])!
@@ -68,12 +80,18 @@ class OstSessionHelper: OstWorkflowHelperBase {
         self.expirationHeight = validForBlocks + currentBlockHeight;
     }
     
-    func generateAndSaveSessionEntity() throws {
-        let params = self.getSessionEnityParams()
-        try OstSession.storeEntity(params)
+    /// Create session keys
+    ///
+    /// - Throws: OstError
+    private func createSessionKeys() throws {
+        let keyMananger = OstKeyManager(userId: self.userId)
+        self.sessionAddress = try keyMananger.createSessionKey()
     }
     
-    func getSessionEnityParams() -> [String: Any] {
+    /// Get session entity data
+    ///
+    /// - Returns: entity dictionary
+    private func getSessionEnityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
         params["address"] = self.sessionAddress!
@@ -84,5 +102,4 @@ class OstSessionHelper: OstWorkflowHelperBase {
         
         return params
     }
-   
 }

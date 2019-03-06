@@ -8,11 +8,22 @@
 import Foundation
 
 class OstAuthorizeDevice: OstAuthorizeBase {
-    let abiMethodNameForAuthorizeDevice = "addOwnerWithThreshold"
+    private let abiMethodNameForAuthorizeDevice = "addOwnerWithThreshold"
+    private let threshold = 1
+    private let workflowTransactionCountForPolling = 1
     
-    let onRequestAcknowledged: ((OstDevice)-> Void)
-    let onSuccess: ((OstDevice)-> Void)
+    private let onRequestAcknowledged: ((OstDevice)-> Void)
+    private let onSuccess: ((OstDevice)-> Void)
     
+    /// Initializer
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - deviceAddressToAdd: Device address to add
+    ///   - generateSignatureCallback: Callback to get signature
+    ///   - onRequestAcknowledged: Callback for request acknowledge
+    ///   - onSuccess: Callback when flow successfull
+    ///   - onFailure: Callback when flow failed
     init (userId: String,
           deviceAddressToAdd: String,
           generateSignatureCallback: @escaping ((String) -> (String?, String?)),
@@ -28,7 +39,19 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                    onFailure: onFailure)
     }
     
-    class func getDevice(userId: String, addressToAdd: String, onSuccess: @escaping ((OstDevice) -> Void), onFailure: @escaping ((OstError) -> Void)) throws {
+    /// Fetch device from server
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - addressToAdd: address to fetch device
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OstError
+    class func getDevice(userId: String,
+                         addressToAdd: String,
+                         onSuccess: @escaping ((OstDevice) -> Void),
+                         onFailure: @escaping ((OstError) -> Void)) throws {
+        
         let onSuccess: ((OstDevice) -> Void) = { ostDevice in
             if (ostDevice.isStatusRegistered) {
                 onSuccess(ostDevice)
@@ -42,6 +65,10 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                                                    onFailure: onFailure)
     }
     
+    /// Get Encoded abi
+    ///
+    /// - Returns: Encoed abi hex value
+    /// - Throws: OstError
     override func getEncodedABI() throws -> String {
         let encodedABIHex = try GnosisSafe().getAddOwnerWithThresholdExecutableData(abiMethodName: self.abiMethodNameForAuthorizeDevice,
                                                                                     ownerAddress: self.addressToAdd,
@@ -49,16 +76,27 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         return encodedABIHex
     }
     
-    override func getToForTypedData() -> String? {
+    /// Get Encoded abi
+    ///
+    /// - Returns: Encoed abi hex value
+    /// - Throws: OstError
+    override func getToAddress() -> String? {
         return self.deviceManager?.address
     }
     
+    /// Get raw calldata
+    ///
+    /// - Returns: raw calldata JSON string
     override func getRawCallData() -> String {
         let callData = ["method": self.abiMethodNameForAuthorizeDevice,
-                        "parameters": [addressToAdd, "1"]] as [String : Any]
+                        "parameters": [self.addressToAdd, self.threshold]] as [String : Any]
         return try! OstUtils.toJSONString(callData)!
     }
     
+    /// API request for authorize device
+    ///
+    /// - Parameter params: API parameters for authorize device
+    /// - Throws: OstError
     override func apiRequestForAuthorize(params: [String: Any]) throws {
         var ostError: OstError? = nil
         var authorizeDevice: OstDevice? = nil
@@ -72,14 +110,15 @@ class OstAuthorizeDevice: OstAuthorizeBase {
             group.leave()
         }
         group.wait()
-        if (nil == ostError) {
-            self.onRequestAcknowledged(authorizeDevice!)
-            self.pollingForAddDevice()
-        }else {
-            self.onFailure(ostError!)
+        if (nil != ostError) {
+            throw ostError!
         }
+       
+        self.onRequestAcknowledged(authorizeDevice!)
+        self.pollingForAddDevice()
     }
 
+    /// Polling for device
     func pollingForAddDevice() {
         
         let successCallback: ((OstDevice) -> Void) = { ostDevice in

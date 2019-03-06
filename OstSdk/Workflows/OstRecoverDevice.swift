@@ -7,15 +7,15 @@
 //
 
 import Foundation
-//TODO: Work here.
+
 class OstRecoverDevice: OstWorkflowBase {
-    let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
-    let workflowTransactionCountForPolling = 1
-    let deviceAddressToRecover: String
+    private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    private let workflowTransactionCountForPolling = 1
+    private let deviceAddressToRecover: String
     
-    var deviceToRecover: OstDevice? = nil
-    var signature: String? = nil
-    var signer: String? = nil
+    private var deviceToRecover: OstDevice? = nil
+    private var signature: String? = nil
+    private var signer: String? = nil
     
     private var pinManager: OstPinManager? = nil;
     
@@ -39,46 +39,46 @@ class OstRecoverDevice: OstWorkflowBase {
         self.pinManager = OstPinManager(userId: self.userId, password: password, pin: uPin)
     }
     
+    /// Get workflow Queue
+    ///
+    /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
         return self.ostRecoverDeviceQueue
     }
     
+    /// Validate params.
+    ///
+    /// - Throws: OstError
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        try self.workFlowValidator!.isUserActivated()
+        try self.workFlowValidator!.isDeviceRegistered()
+    }
+    
+    /// process
+    ///
+    /// - Throws: OstError
     override func process() throws {
         self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
         if (nil == self.deviceToRecover) {
             try self.fetchDevice()
         }
+        if (!self.deviceToRecover!.isStatusAuthorized) {
+            throw OstError("w_rd_p_1", OstErrorText.deviceNotAuthorized)
+        }
+        
         let signedData = try self.pinManager?
             .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
         self.signer = signedData?.address
         self.signature = signedData?.signature
         try self.recoverDevice()
     }
- 
-    /// Validate params.
-    ///
-    /// - Throws: OstError
-    override func validateParams() throws {
-        try super.validateParams()
-        if (nil == self.currentUser) {
-            throw OstError("w_rd_vp_1", OstErrorText.userNotFound)
-        }
-        if (!self.currentUser!.isStatusActivated) {
-            throw OstError("w_rd_vp_2", OstErrorText.userNotActivated)
-        }
-        
-        if (nil == self.currentDevice) {
-            throw OstError("w_rd_vp_3", OstErrorText.deviceNotFound)
-        }
-        if (!self.currentDevice!.isStatusRegistered) {
-            throw OstError("w_rd_vp_4", OstErrorText.deviceNotRegistered)
-        }
-    }
     
     /// Fetch device from kit
     ///
     /// - Throws: OstError
-    func fetchDevice() throws {
+    private func fetchDevice() throws {
         var error: OstError? = nil
         let group = DispatchGroup()
         group.enter()
@@ -92,11 +92,7 @@ class OstRecoverDevice: OstWorkflowBase {
         }
         group.wait()
         
-        if (nil == error) {
-            if (!self.deviceToRecover!.isStatusAuthorized) {
-                throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
-            }
-        }else {
+        if (nil != error) {
             throw error!
         }
     }
@@ -104,7 +100,7 @@ class OstRecoverDevice: OstWorkflowBase {
     /// Revoke device api call
     ///
     /// - Throws: OstError
-    func recoverDevice() throws {
+    private func recoverDevice() throws {
         var params: [String: Any] = [:]
         params["old_linked_address"] = self.deviceToRecover!.linkedAddress!
         params["old_device_address"] = self.deviceToRecover!.address!

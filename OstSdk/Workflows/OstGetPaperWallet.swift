@@ -9,29 +9,32 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
     
-    override init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
-        super.init(userId: userId, delegate: delegate)
-    }
-    
+    /// Get workflow Queue
+    ///
+    /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
         return self.ostGetPaperWalletQueue
     }
     
+    /// validate parameters
+    ///
+    /// - Throws: OstError
+    override func validateParams() throws {
+        try super.validateParams()
+        
+        try self.workFlowValidator!.isUserActivated()
+    }
+    
+    /// process workflow
+    ///
+    /// - Throws: OstError
     override func process() throws {
          self.authenticateUser()
     }
     
-    override func validateParams() throws {
-        try super.validateParams()
-        
-        if (!self.currentUser!.isStatusActivated) {
-            throw OstError("w_as_vp_1", .userNotActivated)
-        }
-    }
-  
-    
+    /// Proceed with workflow after user is authenticated.
     override func proceedWorkflowAfterAuthenticateUser() {
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {

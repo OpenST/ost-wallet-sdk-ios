@@ -103,6 +103,10 @@ public extension OstSession {
     var nonce: Int {
         return OstUtils.toInt(data["nonce"] as Any?) ?? 0
     }
+    
+    var approxExpirationTimestamp: TimeInterval {
+        return TimeInterval(OstUtils.toString(self.data["approx_expiration_timestamp"]) ?? "0")!
+    }
 }
 
 public extension OstSession {
@@ -154,8 +158,6 @@ public extension OstSession {
         return false
     }
 }
-
-
 
 extension OstSession {
     class Transaction {
