@@ -11,14 +11,19 @@ import Foundation
 class OstWorkflowBase: OstPinAcceptProtocol {
     var userId: String
     var delegate: OstWorkFlowCallbackProtocol
-    
-    var retryCount = 0
-    let maxRetryCount = 3
-    
-    var currentUser: OstUser? = nil
-    var currentDevice: OstCurrentDevice? = nil
-    
+    var currentUser: OstUser? {
+        do {
+            return try OstUser.getById(self.userId)
+        }catch {
+            return nil
+        }
+    }
+    var currentDevice: OstCurrentDevice? {
+        return self.currentUser?.getCurrentDevice()
+    }
     var workFlowValidator: OstWorkflowValidator? = nil
+    
+    private var enterPinCount = 0
     
     /// Initialize.
     ///
@@ -35,57 +40,48 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
             do {
-                try self.setUser()
-                try self.setCurrentDevice()
+                try self.beforeProcess()
+                self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
                 
                 try self.validateParams()
-                
                 try self.process()
+
             }catch let error {
                 self.postError(error)
             }
         }
     }
-
-    /// Set user entity.
+    
+    /// Perform any tasks that are prerequisite for the workflow,
+    /// this is called before validateParams() and process()
     ///
     /// - Throws: OstError
-    func setUser() throws {
-        self.currentUser = try OstUser.getById(self.userId)
+    func beforeProcess() throws {
+        let group = DispatchGroup()
+        group.enter()
+        OstSdkSync(
+            userId: self.userId,
+            forceSync: false,
+            syncEntites: .User, .Token, .CurrentDevice, onCompletion: { (isFetched) in
+                group.leave()
+            }
+        ).perform()
+        
+        group.wait()
     }
-
-    /// Set Current Device entity
-    ///
-    /// - Throws: OstError
-    func setCurrentDevice() throws {
-        self.currentDevice = self.currentUser?.getCurrentDevice()
-    }
-
-    /// Valdiate basic parameters for workflow
+    
+    /// Validiate basic parameters for workflow
     ///
     /// - Throws: OstError
     func validateParams() throws {
-        let validator = try OstWorkflowValidator(withUserId: self.userId)
-        
-    }
-    
-    /// Get user for given userid
-    ///
-    /// - Returns: OstUser entity
-    /// - Throws: OstError
-    func getUser() throws -> OstUser? {
-        return try OstUser.getById(self.userId)
-    }
-    
-    /// get current device for user
-    ///
-    /// - Returns: OstCurrentDevice object
-    /// - Throws: OstError
-    func getCurrentDevice() throws -> OstCurrentDevice? {
-        if let ostUser: OstUser = try getUser() {
-            return ostUser.getCurrentDevice()
+        if(nil == self.currentUser) {
+            throw OstError("w_wb_vp_1", .userNotFound)
         }
-        return nil
+        if(nil == self.currentDevice) {
+            throw OstError("w_wb_vp_2", .deviceNotFound)
+        }
+        try self.workFlowValidator!.isAPIKeyAvailable()
+        try self.workFlowValidator!.isTokenAvailable()
     }
     
     /// Send callback to application if error occured in workflow.
@@ -133,12 +129,13 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///
     /// - Parameter cancelReason: reason to cancel.
     public func cancelFlow(_ cancelReason: String) {
-        
+        let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
+        self.postError(ostError)
     }
     
     //MARK: - Authenticate User
     /// authenticate user with biomatrics or user pin if biomatrics failed.
-    public func authenticateUser() {
+    func authenticateUser() {
         let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
         biomatricAuth.authenticateUser { (isSuccess, message) in
             if (isSuccess) {
@@ -168,29 +165,25 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     ///   - uPin: user pin.
     ///   - appUserPassword: application server given password.
     func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
-        self.retryCount += 1
+        self.enterPinCount += 1
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
             let pinManager = OstPinManager(userId: self.userId, password: appUserPassword, pin: uPin)
             do {
-                let isPinValid  = try pinManager.validatePin()
-                if isPinValid == false {
-                    self.userAuthenticationFailed()
-                    return
-                }
+                try pinManager.validatePin()
                 DispatchQueue.main.async {
                     self.delegate.pinValidated(self.userId)
                 }
                 self.proceedWorkflowAfterAuthenticateUser()
-            } catch let error{
-                self.postError(error)
+            } catch {
+                self.userAuthenticationFailed()
             }
         }
     }
     
     /// Check retry count of pin validation.
     func userAuthenticationFailed() {
-        if (self.maxRetryCount <= self.retryCount) {
+        if (OstConstants.OST_PIN_MAX_RETRY_COUNT <= self.enterPinCount) {
             self.postError(OstError("w_wb_pe_1", .maxUserValidatedCountReached))
         }else{
             DispatchQueue.main.async {

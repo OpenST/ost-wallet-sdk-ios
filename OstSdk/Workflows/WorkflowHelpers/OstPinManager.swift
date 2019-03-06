@@ -61,7 +61,7 @@ class OstPinManager {
     ///
     /// - Returns: `true` if valid otherwise `false`
     /// - Throws: OstError
-    func validatePin() throws -> Bool{
+    func validatePin() throws{
         try self.validate()
         guard let user = try OstUser.getById(self.userId) else {
             throw OstError("w_wv_vp_1", .userEntityNotFound)
@@ -73,19 +73,18 @@ class OstPinManager {
                 salt: self.salt!,
                 recoveryOwnerAddress: user.recoveryOwnerAddress!
         )
-        if isValid {
-            return isValid
+        if !isValid {
+            throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
         }
-        throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
     }
     
     /// Validate reset pin params
     ///
     /// - Returns: `true` if valid otherwise `false`
     /// - Throws: OstError
-    func validateResetPin() throws -> Bool {
+    func validateResetPin() throws{
         try self.validateNewPinLength()
-        return try self.validatePin()
+        try self.validatePin()
     }
     
     /// Get recovery owner address
@@ -95,8 +94,8 @@ class OstPinManager {
         do {
             try self.validatePinLength()
             try self.validatePasswordLength()
-            try self.validateSaltLength()
             try self.fetchSalt()
+            try self.validateSaltLength()
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
                     password: self.password,
@@ -183,62 +182,58 @@ class OstPinManager {
     /// - Returns: SignedData
     /// - Throws: OstError
     func signRecoverDeviceData(deviceAddressToRecover: String) throws -> OstKeyManager.SignedData {
-        let isPinValid = try validatePin()
-        if (isPinValid) {
-            guard let user = try OstUser.getById(self.userId) else {
-                throw OstError("w_wh_pm_srdd_1", .userEntityNotFound)
-            }
-            if (!user.isStatusActivated) {
-                throw OstError("w_wh_pm_srdd_2", .userNotActivated)
-            }
-            guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
-                throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
-            }
-            guard let device = try OstDevice.getById(deviceAddressToRecover) else {
-                throw OstError("w_wh_pm_srdd_4", .deviceNotFound)
-            }
-            guard let linkedAddress = device.linkedAddress else {
-                throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
-            }
-            if (!device.isStatusAuthorized) {
-                throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
-            }
-            guard let currentDevice = user.getCurrentDevice() else {
-                throw OstError("w_wh_pm_srdd_6", .deviceNotFound)
-            }
-            if (!currentDevice.isStatusRegistered) {
-                throw OstError("w_wh_pm_srdd_7", .deviceNotRegistered)
-            }
-            let typedData = TypedDataForRecovery
-                .getInitiateRecoveryTypedData(
-                    verifyingContract: recoveryOwnerAddress,
-                    prevOwner: linkedAddress,
-                    oldOwner: deviceAddressToRecover,
-                    newOwner: currentDevice.address!
-            )
-            
-            let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
-                                         primaryType: typedData["primaryType"] as! String,
-                                         domain: typedData["domain"] as! [String: String],
-                                         message: typedData["message"] as! [String: Any])
-            
-            let signingHash = try eip712.getEIP712SignHash()
-            
-            let signedData = try OstKeyManager(userId: self.userId)
-                .signWithRecoveryKey(
-                    tx: signingHash,
-                    pin: self.pin,
-                    password: self.password,
-                    salt: self.salt!
-                )
-
-            if (user.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
-                throw OstError("w_wh_pm_srdd_8", .invalidRecoveryAddress)
-            }
-            return signedData
-        } else {
-            throw OstError("w_wh_pm_srdd_9", .pinValidationFailed)
+        try validatePin()
+        guard let user = try OstUser.getById(self.userId) else {
+            throw OstError("w_wh_pm_srdd_1", .userEntityNotFound)
         }
+        if (!user.isStatusActivated) {
+            throw OstError("w_wh_pm_srdd_2", .userNotActivated)
+        }
+        guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
+            throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
+        }
+        guard let device = try OstDevice.getById(deviceAddressToRecover) else {
+            throw OstError("w_wh_pm_srdd_4", .deviceNotFound)
+        }
+        guard let linkedAddress = device.linkedAddress else {
+            throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
+        }
+        if (!device.isStatusAuthorized) {
+            throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
+        }
+        guard let currentDevice = user.getCurrentDevice() else {
+            throw OstError("w_wh_pm_srdd_6", .deviceNotFound)
+        }
+        if (!currentDevice.isStatusRegistered) {
+            throw OstError("w_wh_pm_srdd_7", .deviceNotRegistered)
+        }
+        let typedData = TypedDataForRecovery
+            .getInitiateRecoveryTypedData(
+                verifyingContract: recoveryOwnerAddress,
+                prevOwner: linkedAddress,
+                oldOwner: deviceAddressToRecover,
+                newOwner: currentDevice.address!
+        )
+        
+        let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
+                                     primaryType: typedData["primaryType"] as! String,
+                                     domain: typedData["domain"] as! [String: String],
+                                     message: typedData["message"] as! [String: Any])
+        
+        let signingHash = try eip712.getEIP712SignHash()
+        
+        let signedData = try OstKeyManager(userId: self.userId)
+            .signWithRecoveryKey(
+                tx: signingHash,
+                pin: self.pin,
+                password: self.password,
+                salt: self.salt!
+        )
+        
+        if (user.recoveryOwnerAddress!.caseInsensitiveCompare(signedData.address) != .orderedSame) {
+            throw OstError("w_wh_pm_srdd_8", .invalidRecoveryAddress)
+        }
+        return signedData
     }
     
     /// Validate salt length

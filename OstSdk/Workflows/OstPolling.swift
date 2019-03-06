@@ -37,37 +37,20 @@ class OstPolling: OstWorkflowBase {
         return self.ostPollingQueue
     }
     
-    override func process() throws {
-        self.startPollingService()
-    }
-    
     /// validate workflow params.
     ///
     /// - Throws: OstError.
     override func validateParams() throws {
         try super.validateParams()
-        self.currentUser = try getUser()
-        if (nil == self.currentUser) {
-            throw OstError("w_p_vp_1", .userNotFound)
-        }
-        
-        self.currentDevice = try getCurrentDevice()
-        if (nil == self.currentDevice) {
-            throw OstError("w_p_vp_2", .deviceNotFound)
-        }
         
         switch self.entityType {
         case .user:
-            if (self.currentUser!.isStatusActivated) {
-                throw OstError("w_p_vp_3", OstErrorText.userAlreadyActivated)
-            }
+            try self.workFlowValidator!.isUserActivated()
             if (!self.currentUser!.isStatusActivating) {
                 throw OstError("w_p_vp_4", OstErrorText.userNotActivating)
             }
         case .device:
-            if (self.currentDevice!.isStatusAuthorized) {
-                throw OstError("w_p_vp_5", OstErrorText.deviceAlreadyAuthorized)
-            }
+            try self.workFlowValidator!.isDeviceAuthorized()
             if (!self.currentDevice!.isStatusAuthorizing) {
                 throw OstError("w_p_vp_5", OstErrorText.deviceNotAuthorizing)
             }
@@ -80,6 +63,10 @@ class OstPolling: OstWorkflowBase {
                 }
             }
         }
+    }
+    
+    override func process() throws {
+        self.startPollingService()
     }
     
     /// perform specific polling service on the basis of entityType.
