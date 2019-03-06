@@ -45,7 +45,7 @@ struct OstConstants {
     
     static let OST_MIN_EXPIRATION_BLOCK_HEIGHT: Int = 3*60*60
     
-    static let PRINT_DEBUG = true
+    static let PRINT_DEBUG = false
     
     // Request time out duration in seconds
     static let OST_REQUEST_TIMEOUT_DURATION: Int = 6

@@ -16,7 +16,7 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         // Drawing code
-    }7387858886
+    }
     */
   @objc override func didTapNext(sender: Any) {
     
