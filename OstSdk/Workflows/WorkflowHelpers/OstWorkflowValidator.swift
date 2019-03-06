@@ -27,7 +27,6 @@ class OstWorkflowValidator {
     
     /// Is device status authorizes
     ///
-    /// - Returns: `true` if authorized otherwise `false`
     /// - Throws: OstError
     func isDeviceAuthorized() throws {
         let currentDevice = try self.getCurrentUserDevice()
@@ -36,11 +35,20 @@ class OstWorkflowValidator {
         }
     }
     
+    /// Is device status registered.
+    ///
+    /// - Throws: OstError
+    func isDeviceRegistered() throws {
+        let currentDevice = try self.getCurrentUserDevice()
+        if !currentDevice.isStatusRegistered {
+            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotAuthorized)
+        }
+    }
+    
     // MARK: - User related validations
     
     /// Is user activated
     ///
-    /// - Returns: `true` if user status is activated otherwise `false`
     /// - Throws: OstError
     func isUserActivated() throws {
         if (!self.currentUser!.isStatusActivated) {

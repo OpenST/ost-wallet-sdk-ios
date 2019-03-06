@@ -64,9 +64,9 @@ class OstActivateUser: OstWorkflowBase {
             throw OstError("w_au_vp_2", .deviceAlreadyAuthorized)
         }
         
-        if  OstSessionHelper.SESSION_BUFFER_TIME > self.expireAfter {
+        if  0 > self.expireAfter {
             throw OstError.init("w_au_vp_3",
-                                "Expiration height should be greater than \(OstSessionHelper.SESSION_BUFFER_TIME)")
+                                "Expiration time should be greater than 0")
         }
         
         if (!self.currentDevice!.isStatusRegistered &&

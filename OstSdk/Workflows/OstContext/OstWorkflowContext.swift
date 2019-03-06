@@ -19,6 +19,7 @@ public enum OstWorkflowType {
     executeTransaction,
     scanQRCode,
     addDeviceWithQRCode,
+    addDeviceWithMnemonics,
     polling,
     recoverDevice,
     resetPin

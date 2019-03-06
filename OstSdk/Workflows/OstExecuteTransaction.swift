@@ -9,24 +9,22 @@
 import Foundation
 import BigInt
 
-/// Rule name
-let PAYLOAD_RULE_NAME_KEY = "rn"
-/// Token holder addresses
-let PAYLOAD_ADDRESSES_KEY = "ads"
-/// amounts to transfer
-let PAYLOAD_AMOUNTS_KEY = "ams"
-let PAYLOAD_TOKEN_ID_KEY = "tid"
-
 class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     
     private let DIRECT_TRANSFER = "Direct Transfer"
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
-    let workflowTransactionCountForPolling = 1
-    
-    let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
+    
+    /// Rule name
+    private static let PAYLOAD_RULE_NAME_KEY = "rn"
+    /// Token holder addresses
+    private static let PAYLOAD_ADDRESSES_KEY = "ads"
+    /// amounts to transfer
+    private static let PAYLOAD_AMOUNTS_KEY = "ams"
+    /// token id
+    private static let PAYLOAD_TOKEN_ID_KEY = "tid"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -35,19 +33,18 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     /// - Throws: OstError
     class func getExecuteTransactionParamsFromQRPayload(_ payload: [String: Any?]) throws -> ExecuteTransactionPayloadParams {
         
-        guard let ruleName: String = payload[PAYLOAD_RULE_NAME_KEY] as? String else {
+        guard let ruleName: String = payload[OstExecuteTransaction.PAYLOAD_RULE_NAME_KEY] as? String else {
             throw OstError("w_et_getpfqrp_1", .invalidQRCode)
         }
-        guard let addresses: [String] = payload[PAYLOAD_ADDRESSES_KEY] as? [String] else {
+        guard let addresses: [String] = payload[OstExecuteTransaction.PAYLOAD_ADDRESSES_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_2", .invalidQRCode)
         }
-        guard let amounts: [String] = payload[PAYLOAD_AMOUNTS_KEY] as? [String] else {
+        guard let amounts: [String] = payload[OstExecuteTransaction.PAYLOAD_AMOUNTS_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_3", .invalidQRCode)
         }
-        guard let tokenId: String = OstUtils.toString(payload[PAYLOAD_TOKEN_ID_KEY] as Any?) else {
+        guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
-        
         if (amounts.count != addresses.count) {
             throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
@@ -55,20 +52,19 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         return (ruleName, addresses, amounts, tokenId)
     }
     
-    let tokenHolderAddresses: [String]
-    let amounts: [String]
-    let ruleName: String
-    let tokenId: String
+    private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
+    private let workflowTransactionCountForPolling = 1
+    private let tokenHolderAddresses: [String]
+    private let amounts: [String]
+    private let ruleName: String
+    private let tokenId: String
     
-    var rule: OstRule? = nil
-    var activeSession: OstSession? = nil
-    
-    var calldata: String? = nil
-    var eip1077Hash: String? = nil
-    var signature: String? = nil
-    var transaction: OstTransaction? = nil
-    
-    var isRetryAfterFetch = false
+    private var rule: OstRule? = nil
+    private var activeSession: OstSession? = nil
+    private var calldata: String? = nil
+    private var eip1077Hash: String? = nil
+    private var signature: String? = nil
+    private var isRetryAfterFetch = false
     
     /// Initialize Execute Transaction
     ///
@@ -93,56 +89,63 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         super.init(userId: userId, delegate: delegate)
     }
     
+    /// Get workflow Queue
+    ///
+    /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
         return self.ostExecuteTransactionQueue
     }
     
+    /// validate parameters
+    ///
+    /// - Throws: OstError
+    override func validateParams() throws {
+        try super.validateParams()
+        try self.workFlowValidator!.isUserActivated()
+        try self.workFlowValidator!.isDeviceAuthorized()
+        
+        if (self.currentUser!.tokenId! != self.tokenId) {
+            throw OstError("w_et_p_3", OstErrorText.invalidTokenId)
+        }
+    }
+    
+    /// process
+    ///
+    /// - Throws: OstError
     override func process() throws {
-        try getRuleIfPresent()
+        self.rule = try getRuleIfPresent()
         if (nil == self.rule) {
-            try getToknRules()
-            try getRuleIfPresent()
+            try fetchTokenRules()
+            self.rule = try getRuleIfPresent()
             if (nil == self.rule) {
                 throw OstError("w_et_p_1", .rulesNotFound)
             }
         }
-        try getActiveSession()
+        
+        guard let session = try getActiveSession() else {
+            throw OstError("w_et_p_2", OstErrorText.sessionNotFound)
+        }
+        self.activeSession = session
         verifyData()
     }
     
-    override func validateParams() throws {
-        try super.validateParams()
-        if (nil == self.currentUser) {
-            throw OstError("w_et_p_1", OstErrorText.userNotFound)
-        }
-        if (!self.currentUser!.isStatusActivated) {
-            throw OstError("w_et_p_2", OstErrorText.userNotActivated)
-        }
-        if (self.currentUser!.tokenId! != self.tokenId) {
-            throw OstError("w_et_p_3", OstErrorText.invalidTokenId)
-        }
-        if (nil == self.currentDevice) {
-            throw OstError("w_et_p_4", OstErrorText.deviceNotFound)
-        }
-        if (!self.currentDevice!.isStatusAuthorized) {
-            throw OstError("w_et_p_4", OstErrorText.deviceNotAuthorized)
-        }
-    }
-    
-    func getRuleIfPresent() throws {
+    /// Get appropriate rule from datatabase
+    ///
+    /// - Throws: OstError
+    private func getRuleIfPresent() throws -> OstRule? {
         if let rules = try OstRule.getByParentId(self.tokenId) {
             for rule in rules {
                 if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame &&
                     rule.tokenId?.caseInsensitiveCompare(self.tokenId) == .orderedSame) {
-                    self.rule = rule
-                    break
+                    return rule
                 }
             }
         }
+        return nil
     }
     
     /// Get token rules from server
-    func getToknRules() throws {
+    private func fetchTokenRules() throws {
         var ostError: OstError? = nil
         let group = DispatchGroup()
         group.enter()
@@ -163,44 +166,45 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     //TODO: - get addresses for KeyManager and get session from db.
     // validate and
     /// Get active session from db.
-    func getActiveSession() throws {
-        if (nil == self.activeSession) {
-            if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
-                for session in activeSessions {
-                    //TODO: check session expiry time.
+    private func getActiveSession() throws -> OstSession? {
+        var ostSession: OstSession?  = nil
+        if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
+            for session in activeSessions {
+                if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
                     let totalTransactionSpendingLimit = try getTransactionSpendingLimit()
                     let spendingLimit = BigInt(session.spendingLimit ?? "0")
                     if spendingLimit >= totalTransactionSpendingLimit {
-                        self.activeSession = session
+                        ostSession = session
                         break
                     }
                 }
             }
         }
-        if (nil == self.activeSession) {
-            throw OstError("w_et_gas_1", OstErrorText.sessionNotFound)
-        }
+        return ostSession
     }
     
     /// Get total spending limit of transaction
     ///
     /// - Returns: BigInt of total transaciton amount
     /// - Throws: OstError
-    func getTransactionSpendingLimit() throws -> BigInt {
+    private func getTransactionSpendingLimit() throws -> BigInt {
         var totalAmount: BigInt = BigInt("0")
         for amount in self.amounts {
             guard let amountInBigInt = BigInt(amount) else {
                 throw OstError("w_et_gtsl_1", OstErrorText.invalidAmount)
             }
-            totalAmount = totalAmount + amountInBigInt
+            totalAmount += amountInBigInt
         }
         return totalAmount
     }
     
-    func verifyData() {
+    /// verify device from user.
+    ///
+    /// - Parameter device: OstDevice entity.
+    private func verifyData() {
         var stringToConfirm: String = ""
         stringToConfirm += "rule name : \(self.ruleName)"
-    
+        
         for (i, address) in self.tokenHolderAddresses.enumerated() {
             stringToConfirm += "\n\(address): \(self.amounts[i])"
         }
@@ -214,14 +218,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         }
     }
     
-    func dataVerified() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.authenticateUser();
-        }
-    }
-    
-    override func proceedWorkflowAfterAuthenticateUser() {
+    /// Callback from user about data verified to continue.
+    public func dataVerified() {
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
             self.generateHash()
@@ -229,9 +227,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         }
     }
     
-    
     /// Generate EIP1077 hash.
-    func generateHash() {
+    private func generateHash() {
         do {
             self.calldata = try getCallData(ruleName: self.ruleName)
             if ( nil == self.calldata) {
@@ -246,7 +243,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
             
             self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
             self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
-        
+            
         }catch let error {
             self.postError(error)
         }
@@ -257,7 +254,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     /// - Parameter ruleName: rule name to execute transaction.
     /// - Returns: calldata
     /// - Throws: OstError
-    func getCallData(ruleName: String) throws -> String? {
+    private func getCallData(ruleName: String) throws -> String? {
         if (ruleName.caseInsensitiveCompare(DIRECT_TRANSFER) == .orderedSame) {
             return try TokenRule().getDirectTransfersExecutableData(abiMethodName: self.ABI_METHOD_NAME_DIRECT_TRANSFER,
                                                                     tokenHolderAddresses: self.tokenHolderAddresses,
@@ -267,7 +264,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     }
     
     /// Execute transaction.
-    func executeTransaction() {
+    private func executeTransaction() {
         do {
             let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_DIRECT_TRANSFER,
                                               "parameters": [self.tokenHolderAddresses, self.amounts]]
@@ -283,17 +280,19 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
             
             try self.activeSession!.incrementNonce()
             
-            try OstAPITransaction(userId: self.userId).executeTransaction(params: params,
-                                                                          onSuccess: { (ostTransaction) in
-                                                                            self.transaction = ostTransaction
-                                                                            self.postRequestAcknowledged(entity: ostTransaction)
-                                                                            self.pollingForTransaction()
-            }) { (error) in
-                if (self.isRetryAfterFetch) {
-                    self.postError(error)
-                }else {
-                    self.fetchSessionAndRetry()
-                }
+            try OstAPITransaction(userId: self.userId)
+                .executeTransaction(
+                    params: params,
+                    onSuccess: { (ostTransaction) in
+                    
+                        self.postRequestAcknowledged(entity: ostTransaction)
+                        self.pollingForTransaction(transaction: ostTransaction)
+                }) { (error) in
+                    if (self.isRetryAfterFetch) {
+                        self.postError(error)
+                    }else {
+                        self.fetchSessionAndRetry()
+                    }
             }
         }catch let error {
             self.postError(error)
@@ -301,7 +300,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     }
     
     /// Fetch session if transaction failed and retry.
-    func fetchSessionAndRetry() {
+    private func fetchSessionAndRetry() {
         do {
             try OstAPISession(userId: self.userId).getSession(sessionAddress: self.activeSession!.address!, onSuccess: { (ostSession) in
                 self.activeSession = ostSession
@@ -315,7 +314,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         }
     }
     
-    func pollingForTransaction() {
+    /// Polling for checking transaction status
+    private func pollingForTransaction(transaction: OstTransaction) {
         let successCallback: ((OstTransaction) -> Void) = { ostSession in
             self.postWorkflowComplete(entity: ostSession)
         }
@@ -331,7 +331,7 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         
         
         OstTransactionPollingService(userId: self.userId,
-                                     transaciotnId: transaction!.id,
+                                     transaciotnId: transaction.id,
                                      workflowTransactionCount: self.workflowTransactionCountForPolling,
                                      successCallback: successCallback,
                                      failureCallback: failureCallback).perform()

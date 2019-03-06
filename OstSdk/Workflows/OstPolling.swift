@@ -14,11 +14,10 @@ public enum OstPollingEntityType {
 
 class OstPolling: OstWorkflowBase {
     
-    let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
-    
-    let workflowTransactionCount = 1
-    let entityId: String
-    let entityType: OstPollingEntityType
+    private let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
+    private let workflowTransactionCount = 1
+    private let entityId: String
+    private let entityType: OstPollingEntityType
     
     /// Initialize.
     ///
@@ -27,12 +26,19 @@ class OstPolling: OstWorkflowBase {
     ///   - entityId: entity id.
     ///   - entityType: entity type.
     ///   - delegate: Callback.
-    init(userId: String, entityId: String, entityType: OstPollingEntityType, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String,
+         entityId: String,
+         entityType: OstPollingEntityType,
+         delegate: OstWorkFlowCallbackProtocol) {
+        
         self.entityId = entityId
         self.entityType = entityType
         super.init(userId: userId, delegate: delegate)
     }
     
+    /// Get workflow Queue
+    ///
+    /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
         return self.ostPollingQueue
     }
@@ -47,12 +53,12 @@ class OstPolling: OstWorkflowBase {
         case .user:
             try self.workFlowValidator!.isUserActivated()
             if (!self.currentUser!.isStatusActivating) {
-                throw OstError("w_p_vp_4", OstErrorText.userNotActivating)
+                throw OstError("w_p_vp_1", OstErrorText.userNotActivating)
             }
         case .device:
             try self.workFlowValidator!.isDeviceAuthorized()
-            if (!self.currentDevice!.isStatusAuthorizing) {
-                throw OstError("w_p_vp_5", OstErrorText.deviceNotAuthorizing)
+            if (!self.currentDevice!.isStatusRegistered) {
+                throw OstError("w_p_vp_2", OstErrorText.deviceNotRegistered)
             }
         case .transaction:
             return
@@ -65,12 +71,15 @@ class OstPolling: OstWorkflowBase {
         }
     }
     
+    /// process
+    ///
+    /// - Throws: OstError
     override func process() throws {
         self.startPollingService()
     }
     
     /// perform specific polling service on the basis of entityType.
-    func startPollingService() {
+    private func startPollingService() {
         
         let onSuccessCallback: ((OstBaseEntity) -> Void) = { (ostBaseEntity) in
             self.postWorkflowComplete(entity: ostBaseEntity)

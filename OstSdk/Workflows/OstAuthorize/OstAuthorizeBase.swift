@@ -9,19 +9,21 @@
 import Foundation
 
 class OstAuthorizeBase {
-    let threshold = 1
-    let workflowTransactionCountForPolling = 1
-    let nullAddress = "0x0000000000000000000000000000000000000000"
-    let dataDefination = OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue
+    private let nullAddress = "0x0000000000000000000000000000000000000000"
+    private let generateSignatureCallback: ((String) -> (String?, String?))
     
     var deviceManager: OstDeviceManager? = nil
-    
     let userId: String
     let addressToAdd: String
-    let generateSignatureCallback: ((String) -> (String?, String?))
-    
     let onFailure: ((OstError) -> Void)
-    
+
+    /// Initializer
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - addressToAdd: Address to add
+    ///   - generateSignatureCallback: Callback to get signature
+    ///   - onFailure: Callback when flow failed.
     init (userId: String,
           addressToAdd: String,
           generateSignatureCallback: @escaping ((String) -> (String?, String?)),
@@ -30,70 +32,58 @@ class OstAuthorizeBase {
         self.userId = userId
         self.addressToAdd = addressToAdd
         self.generateSignatureCallback = generateSignatureCallback
-
+        
         self.onFailure = onFailure
     }
     
+    /// Perform authorization
     func perform() {
         do {
             try self.fetchDeviceManager()
+            self.authorize()
         }catch let error {
             self.onFailure(error as! OstError)
         }
     }
     
-    func fetchDeviceManager() throws {
+    /// Get device manager from server
+    ///
+    /// - Throws: OstError
+    private func fetchDeviceManager() throws {
         var error: OstError? = nil
         let group: DispatchGroup = DispatchGroup()
         group.enter()
-        try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: { (ostDeviceManager) in
-            self.deviceManager = ostDeviceManager
-            group.leave()
-        }) { (ostError) in
-            error = ostError
-            group.leave()
+        try OstAPIDeviceManager(userId: self.userId)
+            .getDeviceManager(
+                onSuccess: { (ostDeviceManager) in
+                    
+                    self.deviceManager = ostDeviceManager
+                    group.leave()
+            }) { (ostError) in
+                
+                error = ostError
+                group.leave()
         }
         group.wait()
         
-        if (nil == error) {
-            self.authorize()
-        }else {
-            self.onFailure(error!)
+        if (nil != error) {
+            throw error!
         }
     }
     
-    func getEncodedABI() throws -> String {
-        fatalError("getEncodedABI is not override.")
-    }
-    
-    func getRawCallData() -> String {
-        fatalError("getRawCallData is not override.")
-    }
-    
-    func getABIName() -> String {
-        fatalError("getABIName is not override.")
-    }
-    
-    func apiRequestForAuthorize(params: [String: Any]) throws {
-        fatalError("apiRequestForAuthorize is not override.")
-    }
-    
-    func getToForTypedData() -> String? {
-        fatalError("getToForTypeData is not override.")
-    }
-    
+    /// Authorize
     func authorize() {
         do {
             let encodedABIHex = try getEncodedABI()
             
             let deviceManagerNonce: Int = self.deviceManager!.nonce
             
-            guard let toForTypedData = getToForTypedData() else {
+            guard let toAddress = getToAddress() else {
                 throw OstError("w_a_ab_a_1", .toAddressNotFound)
             }
             
             let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(verifyingContract: self.deviceManager!.address!,
-                                                                               to: toForTypedData,
+                                                                               to: toAddress,
                                                                                value: "0",
                                                                                data: encodedABIHex,
                                                                                operation: "0",
@@ -123,8 +113,7 @@ class OstAuthorizeBase {
             
             let rawCallData: String = getRawCallData()
             
-            let params: [String: Any] = ["data_defination":self.dataDefination,
-                                         "to": toForTypedData,
+            let params: [String: Any] = ["to": toAddress,
                                          "value": "0",
                                          "calldata": encodedABIHex,
                                          "raw_calldata": rawCallData,
@@ -138,11 +127,42 @@ class OstAuthorizeBase {
                                          "signers": [signerAddress],
                                          "signatures": signature!
             ]
-            
-            try self.deviceManager!.incrementNonce()
+
             try apiRequestForAuthorize(params: params)
         }catch let error {
             onFailure(error as! OstError)
         }
+    }
+    
+    //MARK: - Methods to override
+    
+    /// Get Encoded abi
+    ///
+    /// - Returns: Encoed abi hex value
+    /// - Throws: OstError
+    func getEncodedABI() throws -> String {
+        fatalError("getEncodedABI is not override.")
+    }
+    
+    /// Get raw calldata
+    ///
+    /// - Returns: raw calldata JSON string
+    func getRawCallData() -> String {
+        fatalError("getRawCallData is not override.")
+    }
+
+    /// Make API request to authorize
+    ///
+    /// - Parameter params: API request parameters
+    /// - Throws: OstError
+    func apiRequestForAuthorize(params: [String: Any]) throws {
+        fatalError("apiRequestForAuthorize is not override.")
+    }
+    
+    /// To address
+    ///
+    /// - Returns: to address for authorize
+    func getToAddress() -> String? {
+        fatalError("getToForTypeData is not override.")
     }
 }
