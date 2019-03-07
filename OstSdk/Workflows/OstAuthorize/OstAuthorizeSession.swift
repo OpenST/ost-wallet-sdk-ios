@@ -10,9 +10,11 @@ import Foundation
 
 class OstAuthorizeSession: OstAuthorizeBase {
     private let abiMethodNameForAuthorizeSession = "authorizeSession"
+    private let workflowTransactionCountForPolling = 1
     
     private let spendingLimit: String
     private let expirationHeight: String
+    private let onRequestAcknowledged: ((OstSession)-> Void)
     private let onSuccess: ((OstSession)-> Void)
     
     /// Initializer
@@ -30,12 +32,13 @@ class OstAuthorizeSession: OstAuthorizeBase {
          spendingLimit: String,
          expirationHeight: String,
          generateSignatureCallback: @escaping ((String) -> (String?, String?)),
+         onRequestAcknowledged: @escaping ((OstSession) -> Void),
          onSuccess: @escaping ((OstSession)-> Void),
          onFailure: @escaping ((OstError) -> Void)) {
         
         self.spendingLimit = spendingLimit
         self.expirationHeight = expirationHeight
-        
+        self.onRequestAcknowledged = onRequestAcknowledged
         self.onSuccess = onSuccess
         
         super.init(userId: userId,
@@ -83,10 +86,42 @@ class OstAuthorizeSession: OstAuthorizeBase {
     /// - Parameter params: API parameters for authorize session
     /// - Throws: OstError
     override func apiRequestForAuthorize(params: [String: Any]) throws {
-        try OstAPISession(userId: self.userId).authorizeSession(params: params, onSuccess: { (ostSession) in
-            self.onSuccess(ostSession)
-        }, onFailure: { (ostError) in
-            self.onFailure(ostError)
+        var ostError: OstError? = nil
+        var ostSession: OstSession? = nil
+        let group = DispatchGroup()
+        group.enter()
+        try OstAPISession(userId: self.userId).authorizeSession(params: params, onSuccess: { (session) in
+            ostSession = session
+            group.leave()
+        }, onFailure: { (error) in
+            ostError = error
+            group.leave()
         })
+        group.wait()
+        if (nil != ostError) {
+            throw ostError!
+        }
+        self.onRequestAcknowledged(ostSession!)
+        self.pollingForAuthorizeSession(ostSession!)
+    }
+    
+    /// Polling service for Session
+    ///
+    /// - Parameter ostSession: session entity
+    private func pollingForAuthorizeSession(_ ostSession: OstSession) {
+        
+        let successCallback: ((OstSession) -> Void) = { ostSession in
+            self.onSuccess(ostSession)
+        }
+        
+        let failureCallback:  ((OstError) -> Void) = { error in
+            self.retryAuthorization(ostError: error)
+        }
+        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        
+        OstSessionPollingService(userId: ostSession.userId!,
+                                 sessionAddress: ostSession.address!,
+                                 workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                 successCallback: successCallback, failureCallback: failureCallback).perform()
     }
 }

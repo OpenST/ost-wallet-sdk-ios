@@ -126,7 +126,7 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
-            self.onFailure(error)
+            self.retryAuthorization(ostError: error)
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
