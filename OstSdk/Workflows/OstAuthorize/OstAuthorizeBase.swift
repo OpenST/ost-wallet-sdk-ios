@@ -13,6 +13,7 @@ class OstAuthorizeBase {
     private let nullAddress = "0x0000000000000000000000000000000000000000"
     private let generateSignatureCallback: ((String) -> (String?, String?))
     private var isAuthorizationAttempted = false
+    var isRequestAcknowledged = false
     
     var deviceManager: OstDeviceManager? = nil
     let userId: String

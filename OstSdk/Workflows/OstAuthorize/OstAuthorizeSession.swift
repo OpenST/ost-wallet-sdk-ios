@@ -101,7 +101,10 @@ class OstAuthorizeSession: OstAuthorizeBase {
         if (nil != ostError) {
             throw ostError!
         }
-        self.onRequestAcknowledged(ostSession!)
+        if !self.isRequestAcknowledged {
+            self.isRequestAcknowledged = true
+            self.onRequestAcknowledged(ostSession!)
+        }
         self.pollingForAuthorizeSession(ostSession!)
     }
     

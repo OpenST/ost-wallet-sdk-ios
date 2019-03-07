@@ -114,7 +114,10 @@ class OstAuthorizeDevice: OstAuthorizeBase {
             throw ostError!
         }
        
-        self.onRequestAcknowledged(authorizeDevice!)
+        if !self.isRequestAcknowledged {
+            self.isRequestAcknowledged = true
+            self.onRequestAcknowledged(authorizeDevice!)
+        }
         self.pollingForAddDevice()
     }
 
