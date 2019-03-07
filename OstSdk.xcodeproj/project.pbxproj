@@ -78,6 +78,14 @@
 		4B12143C2230FE1500C185D2 /* PricerRule.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B12143B2230FE1500C185D2 /* PricerRule.abi.json */; };
 		4B12143E2230FF4C00C185D2 /* PricerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12143D2230FF4C00C185D2 /* PricerRule.swift */; };
 		4B12144022311D4500C185D2 /* Decimal+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12143F22311D4500C185D2 /* Decimal+Extension.swift */; };
+		4B1214572231433100C185D2 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214502231433100C185D2 /* sha256.c */; };
+		4B1214582231433100C185D2 /* sysendian.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B1214512231433100C185D2 /* sysendian.h */; };
+		4B1214592231433100C185D2 /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B1214522231433100C185D2 /* sha256.h */; };
+		4B12145A2231433100C185D2 /* crypto_scrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B1214532231433100C185D2 /* crypto_scrypt.h */; };
+		4B12145B2231433100C185D2 /* insecure_memzero.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B1214542231433100C185D2 /* insecure_memzero.h */; };
+		4B12145C2231433100C185D2 /* insecure_memzero.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214552231433100C185D2 /* insecure_memzero.c */; };
+		4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214562231433100C185D2 /* crypto_scrypt.c */; };
+		4B121460223145C400C185D2 /* COPYRIGHT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B12145F223145C400C185D2 /* COPYRIGHT.txt */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -185,8 +193,6 @@
 		4B75F28E21C3CB5100898960 /* OstTokenHolderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28D21C3CB5100898960 /* OstTokenHolderRepository.swift */; };
 		4B75F29021C3CD2700898960 /* OstTokenHolderDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F28F21C3CD2700898960 /* OstTokenHolderDbQueries.swift */; };
 		4B75F29821C3E4D600898960 /* OstKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29721C3E4D600898960 /* OstKeyManager.swift */; };
-		4B75F29C21C7763C00898960 /* ScryptParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29A21C7763C00898960 /* ScryptParams.swift */; };
-		4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29B21C7763C00898960 /* Scrypt.swift */; };
 		4B75F29F21C7771A00898960 /* OstCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F29E21C7771A00898960 /* OstCrypto.swift */; };
 		4B75F2A121C7775900898960 /* OstCryptoImpls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F2A021C7775900898960 /* OstCryptoImpls.swift */; };
 		4B75F2A421C77F2D00898960 /* OstCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F2A321C77F2D00898960 /* OstCryptoTests.swift */; };
@@ -365,6 +371,15 @@
 		4B12143B2230FE1500C185D2 /* PricerRule.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricerRule.abi.json; sourceTree = "<group>"; };
 		4B12143D2230FF4C00C185D2 /* PricerRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricerRule.swift; sourceTree = "<group>"; };
 		4B12143F22311D4500C185D2 /* Decimal+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extension.swift"; sourceTree = "<group>"; };
+		4B1214502231433100C185D2 /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha256.c; sourceTree = "<group>"; };
+		4B1214512231433100C185D2 /* sysendian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sysendian.h; sourceTree = "<group>"; };
+		4B1214522231433100C185D2 /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha256.h; sourceTree = "<group>"; };
+		4B1214532231433100C185D2 /* crypto_scrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto_scrypt.h; sourceTree = "<group>"; };
+		4B1214542231433100C185D2 /* insecure_memzero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = insecure_memzero.h; sourceTree = "<group>"; };
+		4B1214552231433100C185D2 /* insecure_memzero.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = insecure_memzero.c; sourceTree = "<group>"; };
+		4B1214562231433100C185D2 /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypto_scrypt.c; sourceTree = "<group>"; };
+		4B12145F223145C400C185D2 /* COPYRIGHT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT.txt; sourceTree = "<group>"; };
+		4B1214632231530F00C185D2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -470,8 +485,6 @@
 		4B75F28D21C3CB5100898960 /* OstTokenHolderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenHolderRepository.swift; sourceTree = "<group>"; };
 		4B75F28F21C3CD2700898960 /* OstTokenHolderDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenHolderDbQueries.swift; sourceTree = "<group>"; };
 		4B75F29721C3E4D600898960 /* OstKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstKeyManager.swift; sourceTree = "<group>"; };
-		4B75F29A21C7763C00898960 /* ScryptParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScryptParams.swift; sourceTree = "<group>"; };
-		4B75F29B21C7763C00898960 /* Scrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrypt.swift; sourceTree = "<group>"; };
 		4B75F29E21C7771A00898960 /* OstCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCrypto.swift; sourceTree = "<group>"; };
 		4B75F2A021C7775900898960 /* OstCryptoImpls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCryptoImpls.swift; sourceTree = "<group>"; };
 		4B75F2A321C77F2D00898960 /* OstCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCryptoTests.swift; sourceTree = "<group>"; };
@@ -1044,8 +1057,15 @@
 		4B75F29921C7749800898960 /* SCrypt */ = {
 			isa = PBXGroup;
 			children = (
-				4B75F29B21C7763C00898960 /* Scrypt.swift */,
-				4B75F29A21C7763C00898960 /* ScryptParams.swift */,
+				4B12145F223145C400C185D2 /* COPYRIGHT.txt */,
+				4B1214562231433100C185D2 /* crypto_scrypt.c */,
+				4B1214532231433100C185D2 /* crypto_scrypt.h */,
+				4B1214552231433100C185D2 /* insecure_memzero.c */,
+				4B1214542231433100C185D2 /* insecure_memzero.h */,
+				4B1214502231433100C185D2 /* sha256.c */,
+				4B1214522231433100C185D2 /* sha256.h */,
+				4B1214512231433100C185D2 /* sysendian.h */,
+				4B1214632231530F00C185D2 /* module.modulemap */,
 			);
 			path = SCrypt;
 			sourceTree = "<group>";
@@ -1287,7 +1307,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B12145B2231433100C185D2 /* insecure_memzero.h in Headers */,
 				4B7C931621B006E900EC0A9F /* OstSdk.h in Headers */,
+				4B1214582231433100C185D2 /* sysendian.h in Headers */,
+				4B12145A2231433100C185D2 /* crypto_scrypt.h in Headers */,
+				4B1214592231433100C185D2 /* sha256.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1420,6 +1444,7 @@
 				4B5EF34F220C6B180049AD8A /* TokenRules.abi.json in Resources */,
 				4B5EF34E220C6B180049AD8A /* TokenHolder.abi.json in Resources */,
 				4B12143C2230FE1500C185D2 /* PricerRule.abi.json in Resources */,
+				4B121460223145C400C185D2 /* COPYRIGHT.txt in Resources */,
 				ECB29E6622256144001C003E /* OST_MIGRATION_README.md in Resources */,
 				4B5EF34D220C6B180049AD8A /* GnosisSafe.abi.json in Resources */,
 				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
@@ -1649,7 +1674,6 @@
 				4B49890221F6F2AF00ED0E94 /* RLPEncoder.swift in Sources */,
 				4B75F23C21BE75F600898960 /* OstDevice.swift in Sources */,
 				4B75F22421BE45A700898960 /* Date+Timestamp.swift in Sources */,
-				4B75F29D21C7763C00898960 /* Scrypt.swift in Sources */,
 				4B75F28E21C3CB5100898960 /* OstTokenHolderRepository.swift in Sources */,
 				4B75F29F21C7771A00898960 /* OstCrypto.swift in Sources */,
 				4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */,
@@ -1664,6 +1688,7 @@
 				4B49890321F6F2AF00ED0E94 /* RLPItemConvertible.swift in Sources */,
 				4B00CC1521DF89FD005A5696 /* OstKeychainHelper.swift in Sources */,
 				4BE9E3152202D9E300427A80 /* OstContextEntity.swift in Sources */,
+				4B1214572231433100C185D2 /* sha256.c in Sources */,
 				4B49892D21F6F2AF00ED0E94 /* SolidityFunction.swift in Sources */,
 				4B75F27121C10DEC00898960 /* Dictionary+Conversion.swift in Sources */,
 				4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */,
@@ -1708,7 +1733,6 @@
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
 				4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
-				4B75F29C21C7763C00898960 /* ScryptParams.swift in Sources */,
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,
 				4B8CCDA82211508E00124586 /* OstSolidityValue.swift in Sources */,
 				4B8CCDB52211754A00124586 /* OstAPIUser.swift in Sources */,
@@ -1737,6 +1761,7 @@
 				4B75F34421C93EB600898960 /* SoliditySha3.swift in Sources */,
 				4B49893121F6F2AF00ED0E94 /* ABIEncoder.swift in Sources */,
 				4B49890D21F6F2AF00ED0E94 /* EthereumTransactionObject.swift in Sources */,
+				4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */,
 				4BE9E3082202CDBC00427A80 /* OstPinAcceptProtocol.swift in Sources */,
 				4B4988FE21F6F2AF00ED0E94 /* EthereumTransaction.swift in Sources */,
 				ECCDABA22229A7F600A6A095 /* OstResetPinPollingService.swift in Sources */,
@@ -1771,6 +1796,7 @@
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,
 				4B12142D222C45B100C185D2 /* OstWorkflowHelperBase.swift in Sources */,
+				4B12145C2231433100C185D2 /* insecure_memzero.c in Sources */,
 				4B12141C2227D02F00C185D2 /* ABIHerlperBase.swift in Sources */,
 				4B49891221F6F2AF00ED0E94 /* Types+EthereumValueConvertible.swift in Sources */,
 				4B49892221F6F2AF00ED0E94 /* Values+GeneralHashable.swift in Sources */,
@@ -2045,6 +2071,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2076,6 +2104,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
