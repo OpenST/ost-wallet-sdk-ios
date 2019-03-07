@@ -1,6 +1,6 @@
 
 //
-//  ABIHerlperBase.swift
+//  ABIHelperBase.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 25/02/19.
@@ -10,7 +10,7 @@
 import Foundation
 
 
-class ABIHerlperBase {
+class ABIHelperBase {
     
     init() {
         

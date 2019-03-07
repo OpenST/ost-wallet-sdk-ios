@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GnosisSafe: ABIHerlperBase {
+class GnosisSafe: ABIHelperBase {
     
     private let NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
     private let ABI_NAME = "GnosisSafe.abi"

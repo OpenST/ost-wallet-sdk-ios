@@ -48,7 +48,8 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
-        if (amounts.count != addresses.count) {
+        let filteredAddresses = addresses.filter({$0 != ""})
+        if (amounts.count != filteredAddresses.count) {
             throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
         
@@ -69,7 +70,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     private var signature: String? = nil
     private var isRetryAfterFetch = false
     private var rawCalldata: String? = nil
-    private var pricerPoint: [String: Any]? = nil
+    private var pricePoint: [String: Any]? = nil
     
     /// Initialize Execute Transaction
     ///
@@ -249,8 +250,9 @@ class OstExecuteTransaction: OstWorkflowBase {
                 .executeTransaction(
                     params: params,
                     onSuccess: { (ostTransaction) in
-                        
-                        self.postRequestAcknowledged(entity: ostTransaction)
+                        if !self.isRetryAfterFetch {
+                            self.postRequestAcknowledged(entity: ostTransaction)
+                        }
                         self.pollingForTransaction(transaction: ostTransaction)
                 }) { (error) in
                     self.postError(error)
@@ -318,9 +320,9 @@ extension OstExecuteTransaction {
     
     /// process for pricer
     private func processForPricer() throws {
-        if (nil == self.pricerPoint) {
-            try fetchPricerPoint()
-            if nil == self.pricerPoint {
+        if (nil == self.pricePoint) {
+            try fetchPricePoint()
+            if nil == self.pricePoint {
                 throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
             }
         }
@@ -337,13 +339,13 @@ extension OstExecuteTransaction {
     /// Fetch price point from server
     ///
     /// - Throws: OstError
-    private func fetchPricerPoint() throws {
+    private func fetchPricePoint() throws {
         var err: OstError? = nil
         let group = DispatchGroup()
         group.enter()
         try OstAPIChain(userId: self.userId)
             .getPricePoint(onSuccess: { (pricePointDict) in
-                self.pricerPoint = pricePointDict
+                self.pricePoint = pricePointDict
                 group.leave()
             }, onFailure: { (ostError) in
                 err = ostError
@@ -368,32 +370,50 @@ extension OstExecuteTransaction {
                                                      from: self.currentUser!.tokenHolderAddress!,
                                                      toAddresses: self.tokenHolderAddresses,
                                                      amounts: self.amounts,
-                                                     currencyCode: "USD",
+                                                     currencyCode: OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
                                                      currencyPrice: currencyPriceInWei
         )
     }
     
-    //TODO: - include bigInt and remove Decimal
     /// Get currency value in Wei
     ///
     /// - Returns: Currency in wei
     /// - Throws: OstError
     private func getCurrencyValueInWei() throws -> String {
-        guard let ostDict = self.pricerPoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
-            throw OstError("w_et_gcviw_1", OstErrorText.pricerPointNotFound)
+        
+        guard let ostDict = self.pricePoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
+            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
         }
+        
+        let fiatValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
+        let components = fiatValInString.split(separator: ".")
+        var exponent: Int
+        var afterDecimalString: Substring = ""
+        if components.count == 1 {
+            exponent = 0
+        }else if components.count == 2 {
+            afterDecimalString = components[1]
+            while (afterDecimalString.hasSuffix("0") && afterDecimalString.count>0) {
+                afterDecimalString = afterDecimalString.dropLast()
+            }
+            exponent = afterDecimalString.count
+        }else {
+            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
+        }
+        
+        let pricePointNumber = BigInt("\( components[0])\(afterDecimalString)")
+        if (nil == pricePointNumber) {
+            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
+        }
+        
         guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
             throw OstError("w_et_gcviw_2", OstErrorText.callDataFormationFailed)
         }
-        let usdValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
-    
-        guard let usdDecimalVal = Decimal(string: usdValInString) else {
-            throw OstError("w_et_gcviw_3", OstErrorText.callDataFormationFailed)
-        }
-        let factionalDigit = usdDecimalVal.significantFractionalDecimalDigits
-        let usdIntVal = usdDecimalVal * pow(10, factionalDigit)
-        let currencyPriceInWei = (usdDecimalVal * pow(10, (decimal-factionalDigit))).formattedString
-        return currencyPriceInWei
+        
+        let finalExponentComponent = decimal-exponent
+        
+        let currencyPriceInWei = pricePointNumber! * BigInt(10).power(finalExponentComponent)
+        return (currencyPriceInWei.description)
     }
     
     private func createRawCallDataForPay() throws {
@@ -402,7 +422,7 @@ extension OstExecuteTransaction {
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
                                                          self.tokenHolderAddresses,
                                                          self.amounts,
-                                                         "USD",
+                                                         OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
                                                          currencyPriceInWei]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }

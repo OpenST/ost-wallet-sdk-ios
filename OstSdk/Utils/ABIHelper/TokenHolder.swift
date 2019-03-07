@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TokenHolder: ABIHerlperBase {
+class TokenHolder: ABIHelperBase {
     private let ABI_NAME = "TokenHolder.abi"
 
     func getAddSessionExecutableData(abiMethodName: String, sessionAddress: String, expirationHeight: String, spendingLimit: String) throws -> String {

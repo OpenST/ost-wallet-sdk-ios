@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PricerRule: ABIHerlperBase {
+class PricerRule: ABIHelperBase {
     private let ABI_NAME = "PricerRule.abi"
     
     func getPayExecutableData(abiMethodName: String,

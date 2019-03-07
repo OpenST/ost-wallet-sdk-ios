@@ -67,7 +67,7 @@
 		4B1214192227D02F00C185D2 /* TokenRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214152227D02F00C185D2 /* TokenRule.swift */; };
 		4B12141A2227D02F00C185D2 /* GnosisSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214162227D02F00C185D2 /* GnosisSafe.swift */; };
 		4B12141B2227D02F00C185D2 /* TokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214172227D02F00C185D2 /* TokenHolder.swift */; };
-		4B12141C2227D02F00C185D2 /* ABIHerlperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214182227D02F00C185D2 /* ABIHerlperBase.swift */; };
+		4B12141C2227D02F00C185D2 /* ABIHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214182227D02F00C185D2 /* ABIHelperBase.swift */; };
 		4B12141E2227D3A200C185D2 /* OstAPITransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12141D2227D3A200C185D2 /* OstAPITransaction.swift */; };
 		4B1214202228062000C185D2 /* OstTransactionPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12141F2228062000C185D2 /* OstTransactionPollingService.swift */; };
 		4B1214222228589100C185D2 /* OstPolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214212228589100C185D2 /* OstPolling.swift */; };
@@ -354,7 +354,7 @@
 		4B1214152227D02F00C185D2 /* TokenRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenRule.swift; sourceTree = "<group>"; };
 		4B1214162227D02F00C185D2 /* GnosisSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GnosisSafe.swift; sourceTree = "<group>"; };
 		4B1214172227D02F00C185D2 /* TokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenHolder.swift; sourceTree = "<group>"; };
-		4B1214182227D02F00C185D2 /* ABIHerlperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIHerlperBase.swift; sourceTree = "<group>"; };
+		4B1214182227D02F00C185D2 /* ABIHelperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIHelperBase.swift; sourceTree = "<group>"; };
 		4B12141D2227D3A200C185D2 /* OstAPITransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITransaction.swift; sourceTree = "<group>"; };
 		4B12141F2228062000C185D2 /* OstTransactionPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionPollingService.swift; sourceTree = "<group>"; };
 		4B1214212228589100C185D2 /* OstPolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPolling.swift; sourceTree = "<group>"; };
@@ -729,7 +729,7 @@
 		4B1214142227D02F00C185D2 /* ABIHelper */ = {
 			isa = PBXGroup;
 			children = (
-				4B1214182227D02F00C185D2 /* ABIHerlperBase.swift */,
+				4B1214182227D02F00C185D2 /* ABIHelperBase.swift */,
 				4B1214152227D02F00C185D2 /* TokenRule.swift */,
 				4B1214162227D02F00C185D2 /* GnosisSafe.swift */,
 				4B1214172227D02F00C185D2 /* TokenHolder.swift */,
@@ -1771,7 +1771,7 @@
 				4BE9E30A2202D1B700427A80 /* OstStartPollingProtocol.swift in Sources */,
 				4B49891921F6F2AF00ED0E94 /* String+HexBytes.swift in Sources */,
 				4B12142D222C45B100C185D2 /* OstWorkflowHelperBase.swift in Sources */,
-				4B12141C2227D02F00C185D2 /* ABIHerlperBase.swift in Sources */,
+				4B12141C2227D02F00C185D2 /* ABIHelperBase.swift in Sources */,
 				4B49891221F6F2AF00ED0E94 /* Types+EthereumValueConvertible.swift in Sources */,
 				4B49892221F6F2AF00ED0E94 /* Values+GeneralHashable.swift in Sources */,
 			);
