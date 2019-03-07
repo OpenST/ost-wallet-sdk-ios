@@ -50,5 +50,8 @@ struct OstConstants {
     // Request time out duration in seconds
     static let OST_REQUEST_TIMEOUT_DURATION: Int = 6
     
-    static let OST_PIN_MAX_RETRY_COUNT: Int = 3    
+    static let OST_PIN_MAX_RETRY_COUNT: Int = 3
+    
+    static let OST_PRICE_POINT_TOKEN_SYMBOL = "OST"
+    static let OST_PRICE_POINT_CURRENCY_SYMBOL = "USD"
 }

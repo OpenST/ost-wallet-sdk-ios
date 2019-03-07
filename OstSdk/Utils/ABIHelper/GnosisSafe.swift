@@ -10,12 +10,8 @@ import Foundation
 
 class GnosisSafe: ABIHerlperBase {
     
-    let NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
-    let ABI_NAME = "GnosisSafe.abi"
-    
-    override init() {
-        super.init()
-    }
+    private let NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
+    private let ABI_NAME = "GnosisSafe.abi"
     
     /// Get encodedABI data for `addOwnerWithThreshold`
     ///

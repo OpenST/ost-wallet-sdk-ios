@@ -10,10 +10,7 @@ import Foundation
 
 class TokenRule: ABIHerlperBase {
     static let EXECUTE_RULE_CALLPREFIX = "0x59793b00"
-    let ABI_NAME = "TokenRules.abi"
-    override init() {
-        super.init()
-    }
+    private let ABI_NAME = "TokenRules.abi"
     
     func getDirectTransfersExecutableData(abiMethodName: String, tokenHolderAddresses: [String], amounts: [String]) throws -> String {
         

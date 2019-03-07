@@ -75,6 +75,9 @@
 		4B1214262229366B00C185D2 /* TypedDataForRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214252229366B00C185D2 /* TypedDataForRecovery.swift */; };
 		4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12142A222C459800C185D2 /* OstSessionHelper.swift */; };
 		4B12142D222C45B100C185D2 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */; };
+		4B12143C2230FE1500C185D2 /* PricerRule.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B12143B2230FE1500C185D2 /* PricerRule.abi.json */; };
+		4B12143E2230FF4C00C185D2 /* PricerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12143D2230FF4C00C185D2 /* PricerRule.swift */; };
+		4B12144022311D4500C185D2 /* Decimal+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12143F22311D4500C185D2 /* Decimal+Extension.swift */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -359,6 +362,9 @@
 		4B1214252229366B00C185D2 /* TypedDataForRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedDataForRecovery.swift; sourceTree = "<group>"; };
 		4B12142A222C459800C185D2 /* OstSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSessionHelper.swift; sourceTree = "<group>"; };
 		4B12142C222C45B100C185D2 /* OstWorkflowHelperBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowHelperBase.swift; sourceTree = "<group>"; };
+		4B12143B2230FE1500C185D2 /* PricerRule.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricerRule.abi.json; sourceTree = "<group>"; };
+		4B12143D2230FF4C00C185D2 /* PricerRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricerRule.swift; sourceTree = "<group>"; };
+		4B12143F22311D4500C185D2 /* Decimal+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extension.swift"; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -727,6 +733,7 @@
 				4B1214152227D02F00C185D2 /* TokenRule.swift */,
 				4B1214162227D02F00C185D2 /* GnosisSafe.swift */,
 				4B1214172227D02F00C185D2 /* TokenHolder.swift */,
+				4B12143D2230FF4C00C185D2 /* PricerRule.swift */,
 			);
 			path = ABIHelper;
 			sourceTree = "<group>";
@@ -909,6 +916,7 @@
 		4B5EF349220C6AEF0049AD8A /* Abis */ = {
 			isa = PBXGroup;
 			children = (
+				4B12143B2230FE1500C185D2 /* PricerRule.abi.json */,
 				4B5EF34A220C6B180049AD8A /* GnosisSafe.abi.json */,
 				4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */,
 				4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */,
@@ -966,6 +974,7 @@
 				4B5EF317220AE8F70049AD8A /* Logger.swift */,
 				4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */,
 				4B5EF350220C6E9C0049AD8A /* OstBundle.swift */,
+				4B12143F22311D4500C185D2 /* Decimal+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1410,6 +1419,7 @@
 				005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */,
 				4B5EF34F220C6B180049AD8A /* TokenRules.abi.json in Resources */,
 				4B5EF34E220C6B180049AD8A /* TokenHolder.abi.json in Resources */,
+				4B12143C2230FE1500C185D2 /* PricerRule.abi.json in Resources */,
 				ECB29E6622256144001C003E /* OST_MIGRATION_README.md in Resources */,
 				4B5EF34D220C6B180049AD8A /* GnosisSafe.abi.json in Resources */,
 				005AAF6C22032B8A00A2F8E4 /* README.md in Resources */,
@@ -1619,6 +1629,7 @@
 				4B49871421EF85C500ED0E94 /* OstError.swift in Sources */,
 				4B49891021F6F2AF00ED0E94 /* EthereumCall.swift in Sources */,
 				4B5EF324220B1EF10049AD8A /* OstConnectivity.swift in Sources */,
+				4B12143E2230FF4C00C185D2 /* PricerRule.swift in Sources */,
 				4B00CCEA21E4B577005A5696 /* OstSdkBaseDatabase.swift in Sources */,
 				4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */,
 				4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */,
@@ -1753,6 +1764,7 @@
 				EC9185572227CF6A00905C54 /* OstMnemonicsKeyManager.swift in Sources */,
 				4B75F1FA21B6B09000898960 /* OstBaseMigration.swift in Sources */,
 				4B4988FB21F6F2AF00ED0E94 /* EthereumPublicKey.swift in Sources */,
+				4B12144022311D4500C185D2 /* Decimal+Extension.swift in Sources */,
 				4B75F2A121C7775900898960 /* OstCryptoImpls.swift in Sources */,
 				4B00CBAE21DDDF2A005A5696 /* OstSessionRepository.swift in Sources */,
 				4B4988FF21F6F2AF00ED0E94 /* Web3Provider.swift in Sources */,

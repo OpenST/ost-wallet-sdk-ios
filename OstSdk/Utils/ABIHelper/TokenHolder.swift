@@ -9,12 +9,8 @@
 import Foundation
 
 class TokenHolder: ABIHerlperBase {
-    let ABI_NAME = "TokenHolder.abi"
-    
-    override init() {
-        super.init()
-    }
-    
+    private let ABI_NAME = "TokenHolder.abi"
+
     func getAddSessionExecutableData(abiMethodName: String, sessionAddress: String, expirationHeight: String, spendingLimit: String) throws -> String {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: abiMethodName)
