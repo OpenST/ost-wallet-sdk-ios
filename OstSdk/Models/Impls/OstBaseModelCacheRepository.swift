@@ -52,10 +52,11 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
     /// Insert or update entity. Save the entity in cache
     ///
     /// - Parameter entity: Entity object
+    ///   - isSynchronous: Indicated if its a synchronous task
     /// - Returns: Entity object
-    override func insertOrUpdateEntity(_ entity: OstBaseEntity) {
+    override func insertOrUpdateEntity(_ entity: OstBaseEntity, _ isSynchronous:Bool = false) {
         self.saveEntityInCache(key: entity.id, entity: entity)
-        return super.insertOrUpdateEntity(entity)
+        return super.insertOrUpdateEntity(entity, isSynchronous)
     }
     
     /// Delete item for given identifier key

@@ -54,6 +54,7 @@ class OstActivateUser: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         
+        try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePasswordLength()
         
