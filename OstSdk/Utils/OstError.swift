@@ -126,6 +126,8 @@ public enum OstErrorText: String {
     case failedFetchRecoveryOwnerAddress = "Failed to get recovery owner address."
     case pricePointNotFound = "Price point not found."
     case invalidPricePoint = "Invalid price point."
+    case inValidNumber = "Invalid number"
+    
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."

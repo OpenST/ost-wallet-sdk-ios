@@ -106,7 +106,7 @@ class OstFunctionEncoder {
             
         }else if(type.starts(with: "uint") || type.starts(with: "int")) {
             let uintValue = BigInt(element)
-            formattedArgs.append(uintValue as! ABIEncodable)
+            formattedArgs.append(uintValue!)
             
         }else if(type.starts(with: "bytes")) {
             
