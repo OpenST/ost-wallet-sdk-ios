@@ -9,10 +9,13 @@
 import Foundation
 import BigInt
 
-class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
+class OstExecuteTransaction: OstWorkflowBase {
     
-    private let DIRECT_TRANSFER = "Direct Transfer"
+    private let RULE_NAME_DIRECT_TRANSFER = "Direct Transfer"
+    private let RULE_NAME_PRICER = "Pricer"
+    
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
+    private let ABI_METHOD_NAME_PAY = "pay"
     
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
@@ -45,7 +48,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
-        if (amounts.count != addresses.count) {
+        let filteredAddresses = addresses.filter({$0 != ""})
+        if (amounts.count != filteredAddresses.count) {
             throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
         
@@ -65,6 +69,8 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     private var eip1077Hash: String? = nil
     private var signature: String? = nil
     private var isRetryAfterFetch = false
+    private var rawCalldata: String? = nil
+    private var pricePoint: [String: Any]? = nil
     
     /// Initialize Execute Transaction
     ///
@@ -105,7 +111,13 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         try self.workFlowValidator!.isDeviceAuthorized()
         
         if (self.currentUser!.tokenId! != self.tokenId) {
-            throw OstError("w_et_p_3", OstErrorText.invalidTokenId)
+            throw OstError("w_et_vp_1", OstErrorText.invalidTokenId)
+        }
+        
+        let allowedRuleNames = [self.RULE_NAME_DIRECT_TRANSFER.uppercased(),
+                                self.RULE_NAME_PRICER.uppercased()]
+        if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
+            throw OstError("w_et_vp_2", OstErrorText.invalidQRCode)
         }
     }
     
@@ -126,7 +138,17 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
             throw OstError("w_et_p_2", OstErrorText.sessionNotFound)
         }
         self.activeSession = session
-        verifyData()
+        
+        switch self.ruleName.uppercased() {
+        case self.RULE_NAME_PRICER.uppercased():
+            try self.processForPricer()
+            
+        case self.RULE_NAME_DIRECT_TRANSFER.uppercased():
+            try self.processForDirectTransfer()
+            
+        default:
+            return
+        }
     }
     
     /// Get appropriate rule from datatabase
@@ -198,80 +220,24 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
         return totalAmount
     }
     
-    /// verify device from user.
-    ///
-    /// - Parameter device: OstDevice entity.
-    private func verifyData() {
-        var stringToConfirm: String = ""
-        stringToConfirm += "rule name : \(self.ruleName)"
-        
-        for (i, address) in self.tokenHolderAddresses.enumerated() {
-            stringToConfirm += "\n\(address): \(self.amounts[i])"
-        }
-        
-        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
-        let contextEntity: OstContextEntity = OstContextEntity(entity: stringToConfirm, entityType: .string)
-        DispatchQueue.main.async {
-            self.delegate.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
-        }
-    }
-    
-    /// Callback from user about data verified to continue.
-    public func dataVerified() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.generateHash()
-            self.executeTransaction()
-        }
-    }
-    
     /// Generate EIP1077 hash.
-    private func generateHash() {
-        do {
-            self.calldata = try getCallData(ruleName: self.ruleName)
-            if ( nil == self.calldata) {
-                throw OstError("w_et_gh_1", OstErrorText.callDataFormationFailed)
-            }
-            
-            let transaction: OstSession.Transaction = OstSession.Transaction(from: self.currentUser!.tokenHolderAddress!)
-            transaction.to = self.rule!.address!
-            transaction.data = self.calldata!
-            transaction.nonce = OstUtils.toString(self.activeSession!.nonce)!
-            transaction.txnCallPrefix = TokenRule.EXECUTE_RULE_CALLPREFIX
-            
-            self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
-            self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
-            
-        }catch let error {
-            self.postError(error)
-        }
-    }
-    
-    /// Get call data for given rule name.
-    ///
-    /// - Parameter ruleName: rule name to execute transaction.
-    /// - Returns: calldata
-    /// - Throws: OstError
-    private func getCallData(ruleName: String) throws -> String? {
-        if (ruleName.caseInsensitiveCompare(DIRECT_TRANSFER) == .orderedSame) {
-            return try TokenRule().getDirectTransfersExecutableData(abiMethodName: self.ABI_METHOD_NAME_DIRECT_TRANSFER,
-                                                                    tokenHolderAddresses: self.tokenHolderAddresses,
-                                                                    amounts: self.amounts)
-        }
-        return nil
+    private func createSignatureForTransaction() throws {
+        let transaction: OstSession.Transaction = OstSession.Transaction(from: self.currentUser!.tokenHolderAddress!)
+        transaction.to = self.rule!.address!
+        transaction.data = self.calldata!
+        transaction.nonce = OstUtils.toString(self.activeSession!.nonce)!
+        transaction.txnCallPrefix = TokenRule.EXECUTE_RULE_CALLPREFIX
+        
+        self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
+        self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
     }
     
     /// Execute transaction.
     private func executeTransaction() {
         do {
-            let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_DIRECT_TRANSFER,
-                                              "parameters": [self.tokenHolderAddresses, self.amounts]]
-            let rawCalldataString = try OstUtils.toJSONString(rawCalldata)
             var params: [String: Any] = [:]
             params["to"] = self.rule!.address!
-            params["raw_calldata"] = rawCalldataString
+            params["raw_calldata"] = self.rawCalldata!
             params["nonce"] = OstUtils.toString(self.activeSession!.nonce)!
             params["calldata"] = self.calldata!
             params["signer"] = self.activeSession!.address!
@@ -284,8 +250,9 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
                 .executeTransaction(
                     params: params,
                     onSuccess: { (ostTransaction) in
-                    
-                        self.postRequestAcknowledged(entity: ostTransaction)
+                        if !self.isRetryAfterFetch {
+                            self.postRequestAcknowledged(entity: ostTransaction)
+                        }
                         self.pollingForTransaction(transaction: ostTransaction)
                 }) { (error) in
                     self.postError(error)
@@ -345,5 +312,151 @@ class OstExecuteTransaction: OstWorkflowBase, OstValidateDataProtocol {
     /// - Returns: OstContextEntity
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .transaction)
+    }
+}
+
+//MARK: - Execute transaction for pay
+extension OstExecuteTransaction {
+    
+    /// process for pricer
+    private func processForPricer() throws {
+        if (nil == self.pricePoint) {
+            try fetchPricePoint()
+            if nil == self.pricePoint {
+                throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+            }
+        }
+        self.calldata = try getCallDataForPricerRule()
+        if ( nil == self.calldata) {
+            throw OstError("w_et_pfdt_2", OstErrorText.callDataFormationFailed)
+        }
+        
+        try createSignatureForTransaction()
+        try createRawCallDataForPay()
+        executeTransaction()
+    }
+    
+    /// Fetch price point from server
+    ///
+    /// - Throws: OstError
+    private func fetchPricePoint() throws {
+        var err: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
+        try OstAPIChain(userId: self.userId)
+            .getPricePoint(onSuccess: { (pricePointDict) in
+                self.pricePoint = pricePointDict
+                group.leave()
+            }, onFailure: { (ostError) in
+                err = ostError
+                group.leave()
+            })
+        group.wait()
+        
+        if (nil != err) {
+            throw err!
+        }
+    }
+    
+    /// Get call data for given rule name.
+    ///
+    /// - Parameter ruleName: rule name to execute transaction.
+    /// - Returns: calldata
+    /// - Throws: OstError
+    private func getCallDataForPricerRule() throws -> String? {
+        
+        let currencyPriceInWei = try getCurrencyValueInWei()
+        return try PricerRule().getPayExecutableData(abiMethodName: self.ABI_METHOD_NAME_PAY,
+                                                     from: self.currentUser!.tokenHolderAddress!,
+                                                     toAddresses: self.tokenHolderAddresses,
+                                                     amounts: self.amounts,
+                                                     currencyCode: OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
+                                                     currencyPrice: currencyPriceInWei
+        )
+    }
+    
+    /// Get currency value in Wei
+    ///
+    /// - Returns: Currency in wei
+    /// - Throws: OstError
+    private func getCurrencyValueInWei() throws -> String {
+        
+        guard let ostDict = self.pricePoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
+            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        }
+        
+        let fiatValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
+        let components = fiatValInString.split(separator: ".")
+        var exponent: Int
+        var afterDecimalString: Substring = ""
+        if components.count == 1 {
+            exponent = 0
+        }else if components.count == 2 {
+            afterDecimalString = components[1]
+            while (afterDecimalString.hasSuffix("0") && afterDecimalString.count>0) {
+                afterDecimalString = afterDecimalString.dropLast()
+            }
+            exponent = afterDecimalString.count
+        }else {
+            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
+        }
+        
+        let pricePointNumber = BigInt("\( components[0])\(afterDecimalString)")
+        if (nil == pricePointNumber) {
+            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
+        }
+        
+        guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
+            throw OstError("w_et_gcviw_2", OstErrorText.callDataFormationFailed)
+        }
+        
+        let finalExponentComponent = decimal-exponent
+        
+        let currencyPriceInWei = pricePointNumber! * BigInt(10).power(finalExponentComponent)
+        return (currencyPriceInWei.description)
+    }
+    
+    private func createRawCallDataForPay() throws {
+        let currencyPriceInWei = try getCurrencyValueInWei()
+        let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_PAY,
+                                          "parameters": [self.currentUser!.tokenHolderAddress!,
+                                                         self.tokenHolderAddresses,
+                                                         self.amounts,
+                                                         OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
+                                                         currencyPriceInWei]]
+        self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
+    }
+}
+
+//MARK: - Execute transaction for direct transfer
+extension OstExecuteTransaction {
+    
+    /// process for direct transfer
+    private func processForDirectTransfer() throws  {
+        self.calldata = try getCallDataForDirectTransfer()
+        if ( nil == self.calldata) {
+            throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+        }
+        
+        try createSignatureForTransaction()
+        try createRawCallDataForDirectTransfer()
+        executeTransaction()
+    }
+    
+    /// Get call data for given rule name.
+    ///
+    /// - Parameter ruleName: rule name to execute transaction.
+    /// - Returns: calldata
+    /// - Throws: OstError
+    private func getCallDataForDirectTransfer() throws -> String? {
+        return try TokenRule().getDirectTransfersExecutableData(abiMethodName: self.ABI_METHOD_NAME_DIRECT_TRANSFER,
+                                                                tokenHolderAddresses: self.tokenHolderAddresses,
+                                                                amounts: self.amounts)
+    }
+    
+    private func createRawCallDataForDirectTransfer() throws {
+        let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_DIRECT_TRANSFER,
+                                          "parameters": [self.tokenHolderAddresses, self.amounts]]
+        self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }
 }
