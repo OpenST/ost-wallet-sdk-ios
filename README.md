@@ -19,4 +19,17 @@ iOS version : 9.0 and above (**suggested version 10.3** )
 
 ## OstSdk apis
 
+### Init
 
+To get started with the SDK, you must first initialize SDK by calling _initialize()_ api.
+It initializes all the required instances and run migrations of db. 
+        
+        func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            do {
+                try OstSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+            } catch let ostError {
+            
+            }
+            return true
+        }
+    
