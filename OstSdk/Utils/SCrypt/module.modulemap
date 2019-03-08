@@ -1,0 +1,4 @@
+module SCrypt [system][extern_c] {
+    header "crypto_scrypt.h"
+    export *
+}

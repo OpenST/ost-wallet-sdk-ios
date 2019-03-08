@@ -9,6 +9,7 @@
 import Foundation
 import CryptoSwift
 import EthereumKit
+import SCrypt
 
 class OstCryptoImpls: OstCrypto {
 
@@ -24,21 +25,28 @@ class OstCryptoImpls: OstCrypto {
     /// - Returns: Data that can be used for OSTWalletKeys generation
     /// - Throws: OSTError
     func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data {
-        var params = ScryptParams()
-        params.n = n
-        params.r = r
-        params.p = p
-        params.desiredKeyLength = size
-        params.salt = salt
+        let password = stringToCalculate.bytes
+        let salt = Array(salt)
+        let powerOfTwo = pow(2, n)
+        let powerOfTwoDecimalVal = NSDecimalNumber(decimal: powerOfTwo)
+        let nVal = UInt64(truncating: powerOfTwoDecimalVal);
         
-        let scrypt = Scrypt(params: params)
-        do {
-            let scryptKey = try scrypt.calculate(password: stringToCalculate)
-            return scryptKey;
-        } catch {
-            throw OstError.init("s_i_ci_gsck_1", .scryptKeyGenerationFailed)
-        }
-    }    
+        let rVal = UInt32(r)
+        let pVal = UInt32(p)
+        var buffer = [CUnsignedChar](repeating: 0, count: Int(size));
+        
+        crypto_scrypt(password,
+                      password.count,
+                      salt,
+                      salt.count,
+                      nVal,
+                      rVal,
+                      pVal,
+                      &buffer,
+                      buffer.count)
+    
+        return Data(bytes: buffer)
+    }
     
     /// Generate OST wallet keys
     ///

@@ -254,7 +254,8 @@ public class OstKeyManager {
         pin: String,
         salt: String) throws -> String {
         
-        let recoveryOwnerAddress = try OstCryptoImpls().generateRecoveryKey(
+        let recoveryOwnerAddress = try OstCryptoImpls()
+            .generateRecoveryKey(
             password: password,
             pin: pin,
             userId: self.userId,

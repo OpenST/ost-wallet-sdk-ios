@@ -65,7 +65,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     }()
 
     //Add text fields
-    let spendingLimitTestField: MDCTextField = {
+    var spendingLimitTestField: MDCTextField = {
         let spendingLimitTestFiled = MDCTextField()
         spendingLimitTestFiled.translatesAutoresizingMaskIntoConstraints = false
         spendingLimitTestFiled.clearButtonMode = .unlessEditing
@@ -75,7 +75,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     var spendingLimitTestFieldController: MDCTextInputControllerOutlined? = nil
   
     var expiresAfterSelectedIndex:Int = DEFAULT_EXPIRES;
-    let expiresAfterTextField: MDCTextField = {
+    var expiresAfterTextField: MDCTextField = {
         let expiresAfterTextField = MDCTextField()
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
         expiresAfterTextField.clearButtonMode = .unlessEditing
