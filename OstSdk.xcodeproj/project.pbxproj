@@ -57,7 +57,6 @@
 		4B00CBB821DDE1CD005A5696 /* OstTransactionDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBB721DDE1CD005A5696 /* OstTransactionDbQueries.swift */; };
 		4B00CC1321DF89E6005A5696 /* OstSecureEnclaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1221DF89E6005A5696 /* OstSecureEnclaveHelper.swift */; };
 		4B00CC1521DF89FD005A5696 /* OstKeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CC1421DF89FD005A5696 /* OstKeychainHelper.swift */; };
-		4B00CCE821E4B3AD005A5696 /* OstKeyDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CCE721E4B3AD005A5696 /* OstKeyDatabaseTests.swift */; };
 		4B00CCEA21E4B577005A5696 /* OstSdkBaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CCE921E4B577005A5696 /* OstSdkBaseDatabase.swift */; };
 		4B00CCF621E603B7005A5696 /* OstWorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CCF521E603B7005A5696 /* OstWorkflowBase.swift */; };
 		4B00CD2B21E87B62005A5696 /* Extension+OstQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CD2A21E87B62005A5696 /* Extension+OstQRCode.swift */; };
@@ -159,7 +158,6 @@
 		4B5EF34E220C6B180049AD8A /* TokenHolder.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */; };
 		4B5EF34F220C6B180049AD8A /* TokenRules.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */; };
 		4B5EF351220C6E9C0049AD8A /* OstBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF350220C6E9C0049AD8A /* OstBundle.swift */; };
-		4B5EF35A220D831E0049AD8A /* OstSecureKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */; };
 		4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */; };
 		4B75F1F821B6A31D00898960 /* OstSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */; };
@@ -349,7 +347,6 @@
 		4B00CBB721DDE1CD005A5696 /* OstTransactionDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTransactionDbQueries.swift; sourceTree = "<group>"; };
 		4B00CC1221DF89E6005A5696 /* OstSecureEnclaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSecureEnclaveHelper.swift; sourceTree = "<group>"; };
 		4B00CC1421DF89FD005A5696 /* OstKeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstKeychainHelper.swift; sourceTree = "<group>"; };
-		4B00CCE721E4B3AD005A5696 /* OstKeyDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstKeyDatabaseTests.swift; sourceTree = "<group>"; };
 		4B00CCE921E4B577005A5696 /* OstSdkBaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkBaseDatabase.swift; sourceTree = "<group>"; };
 		4B00CCF521E603B7005A5696 /* OstWorkflowBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowBase.swift; sourceTree = "<group>"; };
 		4B00CD2A21E87B62005A5696 /* Extension+OstQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+OstQRCode.swift"; sourceTree = "<group>"; };
@@ -452,7 +449,6 @@
 		4B5EF34B220C6B180049AD8A /* TokenHolder.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenHolder.abi.json; sourceTree = "<group>"; };
 		4B5EF34C220C6B180049AD8A /* TokenRules.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenRules.abi.json; sourceTree = "<group>"; };
 		4B5EF350220C6E9C0049AD8A /* OstBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBundle.swift; sourceTree = "<group>"; };
-		4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecureKeyTests.swift; sourceTree = "<group>"; };
 		4B75F1F721B6A31D00898960 /* OstSdkDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkDatabase.swift; sourceTree = "<group>"; };
 		4B75F1F921B6B09000898960 /* OstBaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseMigration.swift; sourceTree = "<group>"; };
 		4B75F1FB21B6B0E400898960 /* OstMigration_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
@@ -1009,7 +1005,6 @@
 				4B7EAA342201871600852DE2 /* OstTokenHolderTests.swift */,
 				4B7EAA362201898500852DE2 /* OstTokenTests.swift */,
 				4B7EAA3C2201906B00852DE2 /* OstTransactionTests.swift */,
-				4B5EF359220D831E0049AD8A /* OstSecureKeyTests.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1150,7 +1145,6 @@
 			isa = PBXGroup;
 			children = (
 				4B75F21C21BA908D00898960 /* OstBaseDBQueriesTests.swift */,
-				4B00CCE721E4B3AD005A5696 /* OstKeyDatabaseTests.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -1809,7 +1803,6 @@
 				4BAE570122183A7200327A19 /* GnosisSafeTests.swift in Sources */,
 				4B7EAA2F2200CDEC00852DE2 /* OstRuleTests.swift in Sources */,
 				4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */,
-				4B00CCE821E4B3AD005A5696 /* OstKeyDatabaseTests.swift in Sources */,
 				4B49872321F61F7000ED0E94 /* EIP712Tests.swift in Sources */,
 				4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */,
 				4B7EAA272200617900852DE2 /* OstDeviceManagerTests.swift in Sources */,
@@ -1818,7 +1811,6 @@
 				4B75F21D21BA908D00898960 /* OstBaseDBQueriesTests.swift in Sources */,
 				4B75F2A421C77F2D00898960 /* OstCryptoTests.swift in Sources */,
 				4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */,
-				4B5EF35A220D831E0049AD8A /* OstSecureKeyTests.swift in Sources */,
 				4B7EAA312200D30700852DE2 /* OstDeviceTests.swift in Sources */,
 				4B7EAA352201871600852DE2 /* OstTokenHolderTests.swift in Sources */,
 				4B7EAA3D2201906B00852DE2 /* OstTransactionTests.swift in Sources */,
