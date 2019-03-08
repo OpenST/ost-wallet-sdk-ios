@@ -14,7 +14,7 @@ class OstDeviceTests: XCTestCase {
     var JSONObject = [
         "address": "0x12",
         "user_id": "abcd-kdlk...",
-        "deviceName": "0xsdsd..",
+        "device_name": "0xsdsd..",
         "status": "AUTHORIZING",
         "updated_timestamp": 12344,
         "device_name": "",
@@ -39,12 +39,12 @@ class OstDeviceTests: XCTestCase {
     }
     
     func testUpdateEntity() throws {
-        JSONObject["deviceName"] = "4dt2"
+        JSONObject["device_name"] = "4dt2"
         JSONObject["updated_timestamp"] = Date.timestamp()
         XCTAssertNotNil(try OstDevice.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstDevice? = try OstDeviceRepository.sharedDevice.getById("0x12") as? OstDevice
         XCTAssertNotNil(entity, "entity should not be nil")
-        XCTAssertEqual(entity?.deviceName, JSONObject["deviceName"] as? String, "address is not same")
+        XCTAssertEqual(entity?.deviceName, JSONObject["device_name"] as? String, "address is not same")
     }
 
     func testPerformanceExample() {
