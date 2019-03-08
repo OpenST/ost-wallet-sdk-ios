@@ -218,6 +218,24 @@ OstSdk.recoverDeviceInitialize(
     )
 ```
 
+### Polling
+
+To poll provided entity.
+Polling can be used when any entity is in transition status and desired status update is needed.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_entityId: entity id to be polled_<br/>
+&nbsp;_entityType: entity type to be polled_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.poll(
+    userId: String,
+    entityId: String,
+    entityType: OstPollingEntityType,
+    delegate: OstWorkFlowCallbackProtocol 
+    )
+```
 
 ## Workflow Callbacks
 
