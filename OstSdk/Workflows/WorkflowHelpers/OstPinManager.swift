@@ -189,7 +189,7 @@ class OstPinManager {
         if (!user.isStatusActivated) {
             throw OstError("w_wh_pm_srdd_2", .userNotActivated)
         }
-        guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
+        guard let recoveryAddress = user.recoveryAddress else {
             throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
         }
         guard let device = try OstDevice.getById(deviceAddressToRecover) else {
@@ -209,7 +209,7 @@ class OstPinManager {
         }
         let typedData = TypedDataForRecovery
             .getInitiateRecoveryTypedData(
-                verifyingContract: recoveryOwnerAddress,
+                verifyingContract: recoveryAddress,
                 prevOwner: linkedAddress,
                 oldOwner: deviceAddressToRecover,
                 newOwner: currentDevice.address!

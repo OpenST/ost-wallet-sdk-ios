@@ -31,6 +31,7 @@
 		4B12140D2225D2F100C185D2 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12140C2225D2F100C185D2 /* UserDetailsView.swift */; };
 		4B12140F2227B6B400C185D2 /* SendTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12140E2227B6B400C185D2 /* SendTransactionView.swift */; };
 		4B121468223171CC00C185D2 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B121467223171CC00C185D2 /* ResetPinView.swift */; };
+		4B12146A22325ED600C185D2 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146922325ED600C185D2 /* RecoverDeviceView.swift */; };
 		4BD841462212093200808901 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841402212093200808901 /* ViewController.swift */; };
 		4BD841472212093200808901 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841412212093200808901 /* AppDelegate.swift */; };
 		4BD841482212093200808901 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD841422212093200808901 /* HomeViewController.swift */; };
@@ -105,6 +106,7 @@
 		4B12140C2225D2F100C185D2 /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
 		4B12140E2227B6B400C185D2 /* SendTransactionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTransactionView.swift; sourceTree = "<group>"; };
 		4B121467223171CC00C185D2 /* ResetPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinView.swift; sourceTree = "<group>"; };
+		4B12146922325ED600C185D2 /* RecoverDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverDeviceView.swift; sourceTree = "<group>"; };
 		4BD8410B2212084900808901 /* Demo-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD8411A2212084A00808901 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BD841402212093200808901 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				4B12140C2225D2F100C185D2 /* UserDetailsView.swift */,
 				4B12140E2227B6B400C185D2 /* SendTransactionView.swift */,
 				4B121467223171CC00C185D2 /* ResetPinView.swift */,
+				4B12146922325ED600C185D2 /* RecoverDeviceView.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 			files = (
 				4B12140D2225D2F100C185D2 /* UserDetailsView.swift in Sources */,
 				4BE8957F22212368009C6A44 /* PaperWalletView.swift in Sources */,
+				4B12146A22325ED600C185D2 /* RecoverDeviceView.swift in Sources */,
 				0044DE1E2213069700AD9643 /* HomeCustomLayout.swift in Sources */,
 				0078D620222494CB00F9AED6 /* QRInfoLabel.swift in Sources */,
 				0044DE132213053800AD9643 /* ColorTheme.swift in Sources */,

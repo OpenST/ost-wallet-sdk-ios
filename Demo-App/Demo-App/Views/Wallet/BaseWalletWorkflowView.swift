@@ -55,6 +55,8 @@ class BaseWalletWorkflowView: BaseWalletView {
                 self.successLabel.text = "This device has been registered."
             } else if ( workFlowType == .resetPin ) {
                 self.successLabel.text = "Pin reset successfully."
+            } else if ( workFlowType == .recoverDevice ) {
+                self.successLabel.text = "Recover device successfully."
             }
             
         } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {

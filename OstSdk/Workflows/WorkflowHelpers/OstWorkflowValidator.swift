@@ -32,7 +32,7 @@ class OstWorkflowValidator {
     /// - Throws: OstError
     func isValidNumber(input: String) throws{
         guard let _ = BigInt(input) else {
-            throw OstError("w_wfv_ivn_1", .inValidNumber)
+            throw OstError("w_wfv_ivn_1", .invalidNumber)
         }        
     }
     
