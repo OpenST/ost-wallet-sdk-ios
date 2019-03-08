@@ -121,13 +121,13 @@ To execute Rule.<br/><br/>
 
 ```Swift
 OstSdk.executeTransaction(
-        userId: String,
-        tokenId: String,
-        transactionType: ExecuteTransactionType,
-        toAddresses: [String],
-        amounts: [String],
-        delegate: OstWorkFlowCallbackProtocol
-        )
+    userId: String,
+    tokenId: String,
+    transactionType: ExecuteTransactionType,
+    toAddresses: [String],
+    amounts: [String],
+    delegate: OstWorkFlowCallbackProtocol
+    )
 ```
 
 ### Add Device Using Mnemonics
@@ -141,8 +141,8 @@ Using mnemonics it generates wallet key to add new current device..<br/><br/>
 
 ```Swift
 OstSdk.addDeviceWithMnemonicsString(
-        userId: String,
-        mnemonics: String,
-        delegate: OstWorkFlowCallbackProtocol
-        )
+    userId: String,
+    mnemonics: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
 ```
