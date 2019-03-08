@@ -114,7 +114,7 @@ OstSdk.getPaperWallet(
 To execute Rule.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_transactionType: ExecuteTransactionType value _<br/>
+&nbsp;_transactionType: ExecuteTransactionType value_<br/>
 &nbsp;_toAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -196,5 +196,28 @@ OstSdk.resetPin(
     delegate: OstWorkFlowCallbackProtocol
     )
 ```
+
+### Recover Device Initialize
+
+To recover authorized device which could be misplaced or no more in use.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
+&nbsp;_password: Password provided by application server_<br/>
+&nbsp;_uPin: Users Pin_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+
+```Swift
+OstSdk.recoverDeviceInitialize(
+    userId: String,
+    recoverDeviceAddress: String,
+    uPin: String,
+    password: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
+```
+
+
 
 
