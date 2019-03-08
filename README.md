@@ -43,3 +43,15 @@ It ensures current device is in registered state before calling kit apis.
             tokenId: <TOKEN-ID>, 
             delegate: <OstWorkFlowCallbackProtocol-Object>)
      
+### Activate User
+
+It Authorizes the Registered device and Activate the user.
+It makes user eligible to do device operations and transactions.
+
+        OstSdk.activateUser(
+            userId: <USER-Id>,
+            pin: <PIN>,
+            password: <USER-PIN-SALT-FROM>,
+            spendingLimit: <SPENDING-LIMIT-IN-WEI>,
+            expireAfter: <RELATIVE-EXPIRATION-TIME-IN-SECONDS>,
+            delegate: <OstWorkFlowCallbackProtocol-Object>)
