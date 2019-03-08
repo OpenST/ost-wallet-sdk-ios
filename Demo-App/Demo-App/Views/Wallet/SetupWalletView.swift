@@ -31,7 +31,7 @@ class SetupWalletView: BaseWalletWorkflowView {
     
     // Always convert the token into Wei Untis.
     let spendingLimitInWei = String( "1000000000000000000000000" )
-    Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
+    //Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
     
     OstSdk.activateUser(userId: currentUser.ostUserId!,
                         pin: pinNumberTextField.text!,

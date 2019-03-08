@@ -31,8 +31,7 @@ class ViewController: UIViewController {
 //        let a = try! OstKeyManager(userId: "123").getEthereumKey(forAddresss: "0x72A1ade35F9dB59e150f01c62F0ae17cBd0133D9")
 //        let b = try! OstKeyManager(userId: "123").getAPIKey()
 //        let c = try! OstKeyManager(userId: "123").getDeviceAddress()
-//        let d = try! OstKeyManager(userId: "123").getAPIAddress()
-        print("a")
+//        let d = try! OstKeyManager(userId: "123").getAPIAddress()        
     }
     
 //    Using mainnet network

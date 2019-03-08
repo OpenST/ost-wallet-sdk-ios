@@ -18,7 +18,6 @@ public class OstSession: OstBaseEntity {
     
     /// Session status
     enum Status: String {
-        // TODO: add detailed description of the status meaning.
         case INITIALIZING = "INITIALIZING"
         case CREATED = "CREATED"
         case AUTHORIZING = "AUTHORIZING"
@@ -77,7 +76,6 @@ public class OstSession: OstBaseEntity {
 public extension OstSession {
     /// Get session address
     var address : String? {
-//        return "0xeE80C0A613C5c026C08EE1cA9330a626747CE29f"
         return data["address"] as? String
     }
     

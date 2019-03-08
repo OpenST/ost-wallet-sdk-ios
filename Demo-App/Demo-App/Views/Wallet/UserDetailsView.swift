@@ -193,7 +193,7 @@ class UserDetailsView: BaseWalletWorkflowView {
             self.cancelButton.isHidden = true;
             self.logsTextView.isHidden = true;
         } catch let err {
-            Logger.log(message: "Some error has occoured.", parameterToPrint: err);
+            //Logger.log(message: "Some error has occoured.", parameterToPrint: err);
         }
     }
 }

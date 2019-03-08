@@ -16,7 +16,7 @@ class OstAPIDeviceManager: OstAPIBase {
     /// Initializer
     ///
     /// - Parameter userId: User Id
-    override public init(userId: String) {
+    override init(userId: String) {
         deviceManagerApiResourceBase = "/users/\(userId)"
         super.init(userId: userId)
     }

@@ -11,19 +11,19 @@ import CryptoSwift
 import EthereumKit
 
 class EIP712 {
-    var types: [String: Any] = [:]
-    var primaryType: String = ""
-    var domain: [String: String] = [:]
-    var message: [String: Any] = [:]
+    private var types: [String: Any] = [:]
+    private var primaryType: String = ""
+    private var domain: [String: String] = [:]
+    private var message: [String: Any] = [:]
     
-    static var INITIAL_BYTE: String {
+    private static var INITIAL_BYTE: String {
         return "0x19"
     }
-    static var VERSION: String {
+    private static var VERSION: String {
         return "0x01"
     }
     
-    static let DEFAULT_EIP712_DOMAIN_TYPE: Array<[String: String]> = [["name": "verifyingContract", "type": "address"]]
+    private static let DEFAULT_EIP712_DOMAIN_TYPE: Array<[String: String]> = [["name": "verifyingContract", "type": "address"]]
     
     init(types: [String: Any], primaryType: String, domain: [String: String], message: [String: Any]) {
         setPrimaryType(primaryType)
@@ -32,31 +32,42 @@ class EIP712 {
         setMessage(message)
     }
     
-    func setPrimaryType(_ primaryType: String) {
+    func getEIP712Hash() throws -> String {
+        let domainSeparator = try hashData("EIP712Domain", data: self.domain);
+        let message = try hashData(primaryType, data: self.message);
+        
+        return try SoliditySha3.getHash(["t": "bytes", "v": EIP712.INITIAL_BYTE ],
+                                        ["t": "bytes", "v": EIP712.VERSION ],
+                                        ["t": "bytes32", "v": domainSeparator ],
+                                        ["t": "bytes32", "v": message])
+        
+    }
+    
+    private func setPrimaryType(_ primaryType: String) {
         self.primaryType = primaryType;
     }
     
-    func getPrimaryType() -> String {
+    private func getPrimaryType() -> String {
         return primaryType
     }
     
-    func setDomain(_ domain: [String: String]) {
+    private func setDomain(_ domain: [String: String]) {
         self.domain = domain
     }
     
-    func getDomain() -> [String: String] {
+    private func getDomain() -> [String: String] {
         return domain
     }
     
-    func setMessage(_ message: [String: Any]) {
+    private func setMessage(_ message: [String: Any]) {
         self.message = message
     }
     
-    func getMessage() -> [String: Any] {
+    private func getMessage() -> [String: Any] {
         return message
     }
     
-    func setTypes(_ types: [String: Any]) {
+    private func setTypes(_ types: [String: Any]) {
         self.types.merge(dict: types)
         
         let eip712Domain: Array<Any>? = self.types["EIP712Domain"] as? Array<Any> ?? nil
@@ -66,19 +77,19 @@ class EIP712 {
         
     }
     
-    func setDataType(_ dataType: String, dataTypeProperties: Any){
+    private func setDataType(_ dataType: String, dataTypeProperties: Any){
         self.types[dataType] = dataTypeProperties
     }
     
-    func getTypes() -> [String: Any] {
+    private func getTypes() -> [String: Any] {
         return types
     }
     
-    func getDataType(_ dataType: String) -> Any? {
+    private func getDataType(_ dataType: String) -> Any? {
         return self.types[dataType]
     }
     
-    func getDataTypeDependencies(_ dataType: String, found: inout Array<String>) -> Array<String> {
+    private func getDataTypeDependencies(_ dataType: String, found: inout Array<String>) -> Array<String> {
         
         let index = found.index(of: dataType);
         
@@ -101,7 +112,7 @@ class EIP712 {
         return found
     }
     
-    func encodeDataType(_ dataType: String) -> String {
+    private func encodeDataType(_ dataType: String) -> String {
         var found: Array<String> = []
         var deps = getDataTypeDependencies(dataType, found: &found);
         let index = deps.index(of: dataType)
@@ -126,13 +137,13 @@ class EIP712 {
         return result
     }
     
-    func hashDataType(_ dataType: String) -> String {
+    private func hashDataType(_ dataType: String) -> String {
         
         let encodedDataType: String = encodeDataType(dataType);
         return encodedDataType.sha3(.keccak256)
     }
     
-    func  encodeData(_ dataType: String, data: [String: Any]) throws -> String {
+    private func encodeData(_ dataType: String, data: [String: Any]) throws -> String {
         
         var encTypes: Array<SolidityType> = []
         var encValues: Array<ABIEncodable> = []
@@ -144,7 +155,6 @@ class EIP712 {
         solidityType = SolidityType.bytes(length: 32)
         encTypes.append(solidityType);
         solidityValue = try OstSolidityValue.getSolidtyValue( hashDataType(dataType), for: solidityType)
-        Logger.log(message: "oThis.hashDataType(dataType)", parameterToPrint: hashDataType(dataType))
         encValues.append(solidityValue);
         
         // Add field contents
@@ -171,13 +181,9 @@ class EIP712 {
                 
             } else if (types[fieldType] != nil) {
                 solidityType = SolidityType.bytes(length: 32)
-                print("fieldType : ",fieldType)
-                print("fieldValue : ",(value as! [String: String]))
-                
                 let encodedDataString = try encodeData(fieldType, data: (value as! [String: String]))
                 let data: Data = Data(hex: encodedDataString)
                 let keccakValue = data.soliditySHA3Hash
-                print("value2 :", keccakValue)
                 
                 solidityValue = try OstSolidityValue.getSolidtyValue(keccakValue, for: solidityType)
                 
@@ -185,7 +191,6 @@ class EIP712 {
                 encValues.append(solidityValue);
                 
             } else if (fieldType.lastIndexOf("]") == fieldType.count - 1) {
-                // TODO: May be this error needs to be corrected.
                 throw OstError.init("u_eip712_eip712_ed_1", "Arrays currently unimplemented in encodeData")
                 
             } else{
@@ -193,39 +198,18 @@ class EIP712 {
                 solidityValue = try OstSolidityValue.getSolidtyValue(value as! String, for: solidityType)
                 
                 encTypes.append(solidityType);
-                print("value3 :", value as! String)
                 encValues.append(solidityValue);
             }
         }
         
         let encodeParams = try ABI.encodeParameters(types: encTypes, values: encValues)
-        print ("encodeParams :", encodeParams)
         return encodeParams
     }
     
-    func hashData(_ dataType: String, data: [String: Any]) throws -> String {
+    private func hashData(_ dataType: String, data: [String: Any]) throws -> String {
         let encodedDataString = try encodeData(dataType, data: data)
         let data: Data = Data(hex: encodedDataString)
         let keccakValue = data.soliditySHA3Hash
         return keccakValue;
     }
-    
-    func getEIP712SignHash() throws -> String {
-        
-        let domainSeparator = try hashData("EIP712Domain", data: self.domain);
-        print("Domain Seperator", domainSeparator);
-        let message = try hashData(primaryType, data: self.message);
-        print("message", message);
-        
-        return try SoliditySha3.getHash(["t": "bytes", "v": EIP712.INITIAL_BYTE ],
-                                      ["t": "bytes", "v": EIP712.VERSION ],
-                                      ["t": "bytes32", "v": domainSeparator ],
-                                      ["t": "bytes32", "v": message])
-        
-    }
-    
-    func validate() -> Bool {
-        return true
-    }
-    
 }

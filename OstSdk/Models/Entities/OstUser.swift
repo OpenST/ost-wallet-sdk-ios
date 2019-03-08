@@ -17,7 +17,6 @@ public class OstUser: OstBaseEntity {
     
     /// User status
     enum Status: String {
-        // TODO: add detailed description of the status meaning.
         case CREATED = "CREATED"
         case ACTIVATING = "ACTIVATING"
         case ACTIVATED = "ACTIVATED"

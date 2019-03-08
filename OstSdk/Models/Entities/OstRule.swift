@@ -73,7 +73,6 @@ public extension OstRule {
         return self.data["address"] as? String
     }
     
-    // TODO: check if the returen type should be Array or string
     /// Get rule ABI
     var abi : String? {
         return self.data["abi"] as? String

@@ -24,7 +24,7 @@ let API_ADDRESS_KEY = "api_address"
 let DEVICE_ADDRESS_KEY = "device_address"
 let RECOVERY_PIN_HASH = "recovery_pin_hash"
 
-public struct EthMetaMapping {
+struct EthMetaMapping {
     /// Ethererum address
     var address: String
     
@@ -78,8 +78,7 @@ public struct EthMetaMapping {
 }
 
 /// Class for managing the ethereum keys.
-// TODO: make this internal
-public class OstKeyManager {
+class OstKeyManager {
     typealias SignedData = (address: String, signature: String)
     
     // MARK: - Instance varaibles
@@ -269,29 +268,6 @@ public class OstKeyManager {
         return recoveryOwnerAddress
     }
     
-//    func generateRecoveryOwnerAddress(
-//        password: String,
-//        pin: String,
-//        salt: String) throws -> String {
-//        
-//        let recoveryOwnerAddress = try self.getRecoveryOwnerAddressFrom(
-//            password: password,
-//            pin: pin,
-//            salt: salt
-//        )
-//        
-//        let recoveryPinHash = generateRecoveryPinHash(
-//            password: password,
-//            pin: pin,
-//            salt: salt,
-//            recoveryOwnerAddress: recoveryOwnerAddress
-//        )
-//
-//        try storeRecoveryPinHash(recoveryPinHash)
-//        
-//        return recoveryOwnerAddress
-//    }
-    
     private func generateRecoveryPinHash(
         password: String,
         pin: String,
@@ -302,6 +278,7 @@ public class OstKeyManager {
         let recoveryHash = rawString.sha3(.keccak256)
         return recoveryHash
     }
+
     //TODO: - Store data from keychain.
     /// Store recovery pin string in key chain
     ///
@@ -319,6 +296,7 @@ public class OstKeyManager {
         userDeviceInfo[RECOVERY_PIN_HASH] = nil
         try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
+
     func verifyPin(
         password: String,
         pin: String,
@@ -354,6 +332,7 @@ public class OstKeyManager {
         }
         return isValid
     }
+
     /// Verify stored pin string with passed one.
     ///
     /// - Parameter pinString: Pin string generated at the time of activate user.
@@ -747,8 +726,6 @@ extension OstKeyManager {
         return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
     }
     
-    
-    //TODO: - remove temp code and get code from Deepesh.
     func signWithRecoveryKey(
         tx:String,
         pin: String,

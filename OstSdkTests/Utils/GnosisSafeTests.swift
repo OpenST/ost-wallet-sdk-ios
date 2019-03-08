@@ -55,7 +55,7 @@ class GnosisSafeTests: XCTestCase {
                                                              nonce: "0")
         
         let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any], primaryType: typedDataInput["primaryType"] as! String, domain: typedDataInput["domain"] as! [String: String], message: typedDataInput["message"] as! [String: Any])
-        let signingHash = try! eip712.getEIP712SignHash()
+        let signingHash = try! eip712.getEIP712Hash()
         
         XCTAssertEqual(signingHash, expectedOutput)
     }
@@ -84,7 +84,7 @@ class GnosisSafeTests: XCTestCase {
                                                             nonce: "4")
         
         let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any], primaryType: typedDataInput["primaryType"] as! String, domain: typedDataInput["domain"] as! [String: String], message: typedDataInput["message"] as! [String: Any])
-        let signingHash = try! eip712.getEIP712SignHash()
+        let signingHash = try! eip712.getEIP712Hash()
         
         let signature = try OstCryptoImpls().signTx(signingHash, withPrivatekey: privateKey)
         

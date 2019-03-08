@@ -86,7 +86,7 @@ class EIP712Tests: XCTestCase {
     }
 
     func testEIP712SignedHash() {
-        XCTAssertEqual(try eip712?.getEIP712SignHash(), expectedEIP712SignedHash)
+        XCTAssertEqual(try eip712?.getEIP712Hash(), expectedEIP712SignedHash)
     }
     
     func testABIEncodeParamForString() throws {

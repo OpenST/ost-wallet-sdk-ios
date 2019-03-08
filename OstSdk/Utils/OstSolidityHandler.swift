@@ -9,7 +9,7 @@
 import Foundation
 
 class OstSolidityHandler: SolidityFunctionHandler {
-    public var address: EthereumAddress?
+    var address: EthereumAddress?
     
     init() { }
     func call(_ call: EthereumCall, outputs: [SolidityFunctionParameter], block: EthereumQuantityTag, completion: @escaping ([String : Any]?, Error?) -> Void) {
