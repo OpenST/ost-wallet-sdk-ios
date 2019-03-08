@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 class OstAPITokens: OstAPIBase {
-    let tokenApiResourceBase = "/tokens"
+    private let tokenApiResourceBase = "/tokens"
     
     /// Initializer
     ///
@@ -19,14 +19,13 @@ class OstAPITokens: OstAPIBase {
         super.init(userId: userId)
     }
     
-    // TODO: remove public from this function
     /// Get token. Make an API call and store the result in the database
     ///
     /// - Parameters:
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
-    public func getToken(onSuccess:((OstToken) -> Void)?,
+    func getToken(onSuccess:((OstToken) -> Void)?,
                          onFailure:((OstError) -> Void)?) throws {
         resourceURL = tokenApiResourceBase + "/"
         var params: [String: Any] = [:]

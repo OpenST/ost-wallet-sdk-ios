@@ -69,7 +69,6 @@ class OstResetPin: OstWorkflowBase {
     /// - Throws: OstError
     private func resetPin() throws -> OstRecoveryOwnerEntity{
         try self.pinManager.validateResetPin()
-        try OstKeyManager(userId: self.userId).deletePin()
         
         guard let newRecoveryOwnerAddress = self.pinManager.getRecoveryOwnerAddressForNewPin() else {
             throw OstError("w_rp_rp_1", .recoveryOwnerAddressCreationFailed)

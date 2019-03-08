@@ -9,13 +9,7 @@
 import Foundation
 
 class OstUserModelRepository: OstBaseModelCacheRepository {
-    // TODO: change this to sharedInstance.
     static let sharedUser = OstUserModelRepository()
-    
-    // TODO: remove this.
-    private override init() {
-        Logger.log(message:"\n**************\ninit for 'OstUserModelRepository' called\n**************\n")
-    }
     
     //MARK: - overrider
     

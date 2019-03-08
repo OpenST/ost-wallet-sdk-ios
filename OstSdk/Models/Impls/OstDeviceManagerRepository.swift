@@ -9,14 +9,8 @@
 import Foundation
 
 class OstDeviceManagerRepository: OstBaseModelCacheRepository {
-    // TODO: change this to sharedInstance.
     static let sharedDeviceManager = OstDeviceManagerRepository()
-    
-    // TODO: remove this.
-    private override init() {
-        Logger.log(message:"\n**************\ninit for 'OstDeviceManagerRepository' called\n**************\n")
-    }
-    
+
     //MARK: - overrider
     
     /// Get DB query object

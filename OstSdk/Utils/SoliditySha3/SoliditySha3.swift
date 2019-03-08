@@ -14,20 +14,16 @@ class SoliditySha3 {
     private static let TYPE_START_WITH_UINT = "uint"
     private static let TYPE_START_WITH_INT = "int"
     
-    public static func getHash(_ args: Any...) throws -> String {
+    static func getHash(_ args: Any...) throws -> String {
         var messageHex: String = ""
         for arg: Any in args {
             do {
                 if arg is Array<Any> {
                     var index = 1
                     for ele:Any in arg as! Array<Any> {
-                        print("******************************index : \(index)")
                         index += 1
-                        print("ele: \(ele)")
                         let r = try processArg(ele)
                         messageHex += r
-                        print("r : \(r)")
-                        print("messageHex : \(messageHex)")
                     }
                 }else if arg is [String: Any] {
                     let r = try processArg(arg)
@@ -210,7 +206,7 @@ class SoliditySha3 {
         return BigInt(BigUInt(Data(bytes: result)))
     }
     
-    static func parseNumber(_ value: Any) throws -> BigInt {
+    fileprivate static func parseNumber(_ value: Any) throws -> BigInt {
         if (value is String) {
             if ((value as! String).lowercased().hasPrefix("0x")) {
                 return BigInt( (value as! String).stripHexPrefix(), radix: 16)!

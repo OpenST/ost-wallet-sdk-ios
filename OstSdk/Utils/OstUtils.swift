@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class OstUtils {
+class OstUtils {
     
     static func toString(_ val: Any?) -> String? {
         if val == nil {
@@ -34,7 +34,7 @@ public class OstUtils {
         return nil
     }
     
-    public static func toJSONString(_ val: Any) throws -> String? {
+    static func toJSONString(_ val: Any) throws -> String? {
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: val,
             options: []) {
@@ -87,29 +87,29 @@ public class OstUtils {
     }
 }
 
-public class HttpParam {
+class HttpParam {
     var  paramName: String = ""
     var  paramValue: String = ""
     init() {}
     
-    public init(_ paramName: String, _ paramValue: String) {
+    init(_ paramName: String, _ paramValue: String) {
         self.paramName = paramName;
         self.paramValue = paramValue;
     }
     
-    public func getParamValue() -> String {
+    func getParamValue() -> String {
         return paramValue;
     }
     
-    public func setParamValue(paramValue: String) {
+    func setParamValue(paramValue: String) {
         self.paramValue = paramValue
     }
     
-    public func getParamName() -> String {
+    func getParamName() -> String {
         return paramName;
     }
     
-    public func setParamName(paramName: String) {
+    func setParamName(paramName: String) {
         self.paramName = paramName;
     }
     

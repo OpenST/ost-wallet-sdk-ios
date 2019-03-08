@@ -9,13 +9,7 @@
 import Foundation
 
 class OstTokenHolderRepository: OstBaseModelCacheRepository{
-    // TODO: change this to sharedInstance.
     static let sharedTokenHolder = OstTokenHolderRepository()
-    
-    // TODO: remove this.
-    private override init() {
-        Logger.log(message:"\n**************\ninit for 'OstTokenHolderRepository' called\n**************\n")
-    }
     
     //MARK: - overrider
     

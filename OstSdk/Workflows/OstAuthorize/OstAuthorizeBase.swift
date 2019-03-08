@@ -129,7 +129,7 @@ class OstAuthorizeBase {
                                         domain: typedDataInput["domain"] as! [String: String],
                                         message: typedDataInput["message"] as! [String: Any])
             
-            let signingHash = try! eip712.getEIP712SignHash()
+            let signingHash = try! eip712.getEIP712Hash()
             
             let (signature, signerAddress) = self.generateSignatureCallback(signingHash)
             

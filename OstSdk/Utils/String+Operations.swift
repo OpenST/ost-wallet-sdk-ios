@@ -61,8 +61,7 @@ extension String {
                     return String(text[range])
                 }
             }
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
+        } catch {
             return []
         }
     }

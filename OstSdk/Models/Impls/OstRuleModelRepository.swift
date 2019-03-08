@@ -9,14 +9,8 @@
 import Foundation
 
 class OstRuleModelRepository: OstBaseModelCacheRepository{
-    // TODO: change this to sharedInstance.
     static let sharedRule = OstRuleModelRepository()
     
-    // TODO: remove this.
-    private override init() {
-        Logger.log(message:"\n**************\ninit for 'OstRuleModelRepository' called\n**************\n")
-    }
-
     //MARK: - overrider
     
     /// Get DB query object

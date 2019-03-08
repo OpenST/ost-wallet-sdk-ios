@@ -24,16 +24,7 @@ public class OstSdk {
     public class func getUser(_ id: String) throws -> OstUser? {
         return try OstUser.getById(id)
     }
-    
-    // TODO: Remove Parse user in future.
-//    public class func parseUser(_ entityData: [String: Any?]) throws -> OstUser? {
-//        try OstUser.storeEntity(entityData)
-//        guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData, forKey: OstUser.ENTITY_IDENTIFIER) as Any?) else {
-//            throw OstError("pu_1", .invalidEntityType)
-//        }
-//        return try OstUser.getById(id)!
-//    }
-    
+        
     class func setApiEndPoint(apiEndPoint:String) throws {
         let endPointSplits = apiEndPoint.split(separator: "/");
         if ( endPointSplits.count < 4 ) {

@@ -65,8 +65,6 @@ class OstCryptoImpls: OstCrypto {
     func generateEthereumKeys(withMnemonics mnemonics: [String]) throws -> OstWalletKeys {
         let seed: Data
         do {
-            // TODO: Discuss this with wider audience to decide if passphrase really needs to be in Constants. Looks incorrect to me.
-            // The passphrase must always be equal to empty string. This is in consistent with the Metamask.
             seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
         } catch {
             throw OstError.init("s_i_ci_gek_1", .seedCreationFailed)
@@ -127,7 +125,6 @@ class OstCryptoImpls: OstCrypto {
         }
         
         let stringToCalculate: String = getRecoveryPinString(password: password, pin: pin, userId: userId)
-//        try OstKeyManager(userId: userId).storeRecoveryPinString(stringToCalculate)
         
         let seed: Data
         do {
@@ -152,7 +149,7 @@ class OstCryptoImpls: OstCrypto {
     func getRecoveryPinString(password: String, pin: String, userId: String) -> String {
         return "\(password)\(pin)\(userId)"
     }
-    //TODO: Remove this code asap.
+    
     func getWallet(
         password: String,
         pin: String,

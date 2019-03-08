@@ -9,15 +9,8 @@
 import Foundation
 
 class OstSessionRepository: OstBaseModelCacheRepository {
-    // TODO: change this to sharedInstance.
     static let sharedSession = OstSessionRepository()
-    
-    // TODO: remove this.
-    private override init() {
-        Logger.log(message:"\n**************\ninit for 'OstSessionRepository' called\n**************\n")
-    }
-    
-   
+       
     func getActiveSessionsFor(parentId: String) throws -> [OstSession]? {
         let dbQueryObj = getDBQueriesObj() as! OstSessionDbQueries
         

@@ -85,7 +85,6 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
         Logger.log(message: "error ", parameterToPrint: error)
     }
  
-    func showPaperWallet(mnemonics: [String]) {
-        print(mnemonics)
+    func showPaperWallet(mnemonics: [String]) {        
     }
 }

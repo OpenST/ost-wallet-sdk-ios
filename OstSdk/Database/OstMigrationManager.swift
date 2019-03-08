@@ -25,7 +25,7 @@ internal class OstMigrationManager{
     fileprivate static let migrationFilePrefix: String = "OstMigration_"
     
     // Getter for migration prefix
-    var migrationPrefix: String {
+    private var migrationPrefix: String {
         return OstMigrationManager.migrationFilePrefix
     }
     
