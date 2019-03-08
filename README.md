@@ -104,9 +104,9 @@ Paper wallet will be used to add new device incase device is lost<br/><br/>
 
 ```Swift
 OstSdk.getPaperWallet(
-        userId: String,
-        delegate: OstWorkFlowCallbackProtocol
-        )
+    userId: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
 ```        
 
 ### Execute Transaction
@@ -133,7 +133,7 @@ OstSdk.executeTransaction(
 ### Add Device Using Mnemonics
 
 It add new device using mnemonics provided.
-Using mnemonics it generates wallet key to add new current device..<br/><br/>
+Using mnemonics it generates wallet key to add new current device.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_mnemonics: String value of mnemonics_<br/>
@@ -146,3 +146,55 @@ OstSdk.addDeviceWithMnemonicsString(
     delegate: OstWorkFlowCallbackProtocol
     )
 ```
+
+### OstPerform
+
+To perform operations based on QR data provided.
+Through QR, Add device and transaction operations can be performed.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.perfrom(
+    userId: String,
+    payload: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
+```
+
+### Get QR-Code To Add Device
+
+Getter method which return QR-Code CIImage for add device.
+Use this methods to generate QR code of current device to be added from authorized device.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+
+```Swift
+OstSdk.getAddDeviceQRCode(
+    userId: String
+    ) throws -> CIImage?
+```
+
+### Reset Pin
+
+To update current Pin with new Pin.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_password: Password provided by application server_<br/>
+&nbsp;_oldPin: Users old Pin_<br/>
+&nbsp;_newPin: Users new Pin_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.resetPin(
+    userId: String,
+    password: String,
+    oldPin: String,
+    newPin: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
+```
+
+
