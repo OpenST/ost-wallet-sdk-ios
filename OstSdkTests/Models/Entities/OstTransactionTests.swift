@@ -43,24 +43,24 @@ class OstTransactionTests: XCTestCase {
     }
 
     func testInitEntity() throws {
-        XCTAssertNotNil(try OstTransaction.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstTransaction.storeEntity(JSONObject), "Entity should not be nil")
     }
     
     func testGetEntity() throws {
         let entity: OstTransaction? = try OstTransactionRepository.sharedTransaction.getById(JSONObject["transaction_hash"] as! String) as? OstTransaction
         XCTAssertNotNil(entity, "entity should not be nil")
         XCTAssertEqual(entity?.id, JSONObject["transaction_hash"] as? String, "address is not same")
-        XCTAssertEqual(entity?.gas_price, JSONObject["gas_price"] as? Int, "address is not same")
+        XCTAssertEqual(entity?.gasPrice, JSONObject["gas_price"] as? Int, "address is not same")
     }
     
     func testUpdateEntity() throws {
         JSONObject["gas_price"] = 10000001
         JSONObject["updated_timestamp"] = Date.timestamp()
-        XCTAssertNotNil(try OstTransaction.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstTransaction.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstTransaction? = try OstTransactionRepository.sharedTransaction.getById(JSONObject["transaction_hash"] as! String) as? OstTransaction
         XCTAssertNotNil(entity, "entity should not be nil")
-        XCTAssertEqual(entity?.updated_timestamp, JSONObject["updated_timestamp"] as? Int, "address is not same")
-        XCTAssertEqual(entity?.gas_price, JSONObject["gas_price"] as? Int, "address is not same")
+        XCTAssertEqual(entity?.updatedTimestamp, JSONObject["updated_timestamp"] as? TimeInterval, "address is not same")
+        XCTAssertEqual(entity?.gasPrice, JSONObject["gas_price"] as? Int, "address is not same")
     }
 
     

@@ -21,6 +21,10 @@ class ResetPinView: AddSessionView {
                         oldPin: spendingLimitTestField.text!,
                         newPin: expiresAfterTextField.text!,
                         delegate: self.sdkInteract)
+        
+        self.nextButton.isHidden = true
+        self.cancelButton.isHidden = true
+        self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppearCallback() {

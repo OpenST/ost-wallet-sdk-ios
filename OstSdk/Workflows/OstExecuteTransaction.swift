@@ -9,11 +9,13 @@
 import Foundation
 import BigInt
 
+public enum ExecuteTransactionType: String {
+    case ExecuteTransactionTypeDirectTransfer = "Direct Transfer"
+    case ExecuteTransactionTypePay = "Pricer"
+}
+
 class OstExecuteTransaction: OstWorkflowBase {
-    
-    private let RULE_NAME_DIRECT_TRANSFER = "Direct Transfer"
-    private let RULE_NAME_PRICER = "Pricer"
-    
+
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
@@ -48,17 +50,13 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
-        let filteredAddresses = addresses.filter({$0 != ""})
-        if (amounts.count != filteredAddresses.count) {
-            throw OstError("w_et_getpfqrp_5", .invalidQRCode)
-        }
         
         return (ruleName, addresses, amounts, tokenId)
     }
     
     private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     private let workflowTransactionCountForPolling = 1
-    private let tokenHolderAddresses: [String]
+    private let toAddresses: [String]
     private let amounts: [String]
     private let ruleName: String
     private let tokenId: String
@@ -75,20 +73,20 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// Initialize Execute Transaction
     ///
     /// - Parameters:
-    ///   - userId: Kit User id.
-    ///   - ruleName: rule name to execute.
-    ///   - tokenHolderAddresses: token holder address whome to transfer amount.
-    ///   - amounts: amount to transfer.
-    ///   - tokenId: token id.
+    ///   - userId: User id.
+    ///   - ruleName: Rule name to execute.
+    ///   - toAddresses: Address whome to transfer amount.
+    ///   - amounts: Amount to transfer.
+    ///   - tokenId: Token id.
     ///   - delegate: Callback.
     init(userId: String,
          ruleName: String,
-         tokenHolderAddresses: [String],
+         toAddresses: [String],
          amounts: [String],
          tokenId: String,
          delegate: OstWorkFlowCallbackProtocol) {
         
-        self.tokenHolderAddresses = tokenHolderAddresses
+        self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
         self.tokenId = tokenId
@@ -114,10 +112,15 @@ class OstExecuteTransaction: OstWorkflowBase {
             throw OstError("w_et_vp_1", OstErrorText.invalidTokenId)
         }
         
-        let allowedRuleNames = [self.RULE_NAME_DIRECT_TRANSFER.uppercased(),
-                                self.RULE_NAME_PRICER.uppercased()]
+        let allowedRuleNames = [ExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased(),
+                                ExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_2", OstErrorText.invalidQRCode)
+            throw OstError("w_et_vp_2", OstErrorText.invalidRuleName)
+        }
+        
+        let filteredAddresses = toAddresses.filter({$0 != ""})
+        if (amounts.count != filteredAddresses.count) {
+            throw OstError("w_et_vp_3", .invalidAddressToTransfer)
         }
     }
     
@@ -140,10 +143,10 @@ class OstExecuteTransaction: OstWorkflowBase {
         self.activeSession = session
         
         switch self.ruleName.uppercased() {
-        case self.RULE_NAME_PRICER.uppercased():
+        case ExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased():
             try self.processForPricer()
             
-        case self.RULE_NAME_DIRECT_TRANSFER.uppercased():
+        case ExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased():
             try self.processForDirectTransfer()
             
         default:
@@ -368,7 +371,7 @@ extension OstExecuteTransaction {
         let currencyPriceInWei = try getCurrencyValueInWei()
         return try PricerRule().getPayExecutableData(abiMethodName: self.ABI_METHOD_NAME_PAY,
                                                      from: self.currentUser!.tokenHolderAddress!,
-                                                     toAddresses: self.tokenHolderAddresses,
+                                                     toAddresses: self.toAddresses,
                                                      amounts: self.amounts,
                                                      currencyCode: OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
                                                      currencyPrice: currencyPriceInWei
@@ -416,11 +419,14 @@ extension OstExecuteTransaction {
         return (currencyPriceInWei.description)
     }
     
+    /// Create raw call data for pay
+    ///
+    /// - Throws: OstError
     private func createRawCallDataForPay() throws {
         let currencyPriceInWei = try getCurrencyValueInWei()
         let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_PAY,
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
-                                                         self.tokenHolderAddresses,
+                                                         self.toAddresses,
                                                          self.amounts,
                                                          OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
                                                          currencyPriceInWei]]
@@ -450,13 +456,16 @@ extension OstExecuteTransaction {
     /// - Throws: OstError
     private func getCallDataForDirectTransfer() throws -> String? {
         return try TokenRule().getDirectTransfersExecutableData(abiMethodName: self.ABI_METHOD_NAME_DIRECT_TRANSFER,
-                                                                tokenHolderAddresses: self.tokenHolderAddresses,
+                                                                tokenHolderAddresses: self.toAddresses,
                                                                 amounts: self.amounts)
     }
     
+    /// Create raw call data for direct transfer
+    ///
+    /// - Throws: OstError
     private func createRawCallDataForDirectTransfer() throws {
         let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_DIRECT_TRANSFER,
-                                          "parameters": [self.tokenHolderAddresses, self.amounts]]
+                                          "parameters": [self.toAddresses, self.amounts]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }
 }

@@ -26,7 +26,7 @@ class OstTokenHolderTests: XCTestCase {
     }
 
     func testInitEntity() throws {
-        XCTAssertNotNil(try OstTokenHolder.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstTokenHolder.storeEntity(JSONObject), "Entity should not be nil")
     }
     
     func testGetEntity() throws {
@@ -48,10 +48,10 @@ class OstTokenHolderTests: XCTestCase {
     
     func testUpdateEntity() throws {
         JSONObject["updated_timestamp"] = Date.timestamp()
-        XCTAssertNotNil(try OstTokenHolder.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstTokenHolder.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstTokenHolder? = try OstTokenHolderRepository.sharedTokenHolder.getById("0x1") as? OstTokenHolder
         XCTAssertNotNil(entity, "entity should not be nil")
-        XCTAssertEqual(entity?.updated_timestamp, JSONObject["updated_timestamp"] as? Int, "address is not same")
+        XCTAssertEqual(entity?.updatedTimestamp, JSONObject["updated_timestamp"] as? TimeInterval, "address is not same")
     }
 
     func testPerformanceExample() {

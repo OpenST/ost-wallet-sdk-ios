@@ -28,7 +28,7 @@ class OstRuleTests: XCTestCase {
     }
     
     func testInitEntity() throws {
-        XCTAssertNotNil(try OstRule.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstRule.storeEntity(JSONObject), "Entity should not be nil")
     }
     
     func testGetEntity() throws {
@@ -40,7 +40,7 @@ class OstRuleTests: XCTestCase {
     func testUpdateEntity() throws {
         JSONObject["address"] = "4dt2"
         JSONObject["updated_timestamp"] = Date.timestamp()
-        XCTAssertNotNil(try OstRule.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstRule.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstRule? = try OstRuleModelRepository.sharedRule.getById("123a") as? OstRule
         XCTAssertNotNil(entity, "entity should not be nil")
         XCTAssertEqual(entity?.address, JSONObject["address"] as? String, "address is not same")

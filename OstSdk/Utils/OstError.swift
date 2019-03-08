@@ -114,10 +114,12 @@ public enum OstErrorText: String {
     case dbExecutionFailed = "DB execution failed."
     case invalidEntityType = "Invalid entity type."
     case invalidQRCode = "Invalid QR Code"
+    case invalidRuleName = "Invalid Rule name"
+    case invalidAddressToTransfer = "Invalid address to transfer value."
     case sessionNotAuthorizing = "Session is not authorizing."
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
-    case rulesNotFound = "Rulse not found."
+    case rulesNotFound = "Rules not found."
     case invalidAmount = "Amount to do transaction is invalid."
     case sessionNotFound = "Session not found."
     case callDataFormationFailed = "Calldata formation failed."
@@ -126,7 +128,8 @@ public enum OstErrorText: String {
     case failedFetchRecoveryOwnerAddress = "Failed to get recovery owner address."
     case pricePointNotFound = "Price point not found."
     case invalidPricePoint = "Invalid price point."
-    case inValidNumber = "Invalid number"
+    case invalidNumber = "Invalid number"
+    case invalidExpirationTimeStamp = "Invalid expiration timestamp"
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

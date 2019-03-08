@@ -26,9 +26,10 @@ class OstUserTests: XCTestCase {
             "multisig_id": "\(id)a",
             "economy_id" : "\(id)a",
             "updated_timestamp" : Date.timestamp()] as [String : Any]
-            
-            
-        let user: OstUser? = try OstSdk.parseUser(userDict)
+
+
+         try OstUser.storeEntity(userDict)
+        let user: OstUser? = try OstUser.getById(userDict["id"])
         print(user ?? "")
         XCTAssertNotNil(user, "user should not be nil")
         XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
@@ -43,7 +44,8 @@ class OstUserTests: XCTestCase {
                 "economy_id" : "\(id)a",
                 "updated_timestamp" : Date.timestamp()] as [String : Any]
             
-            let user: OstUser? = try OstSdk.parseUser(userDict)
+            try OstUser.storeEntity(userDict)
+            let user: OstUser? = try OstUser.getById(userDict["id"])
             print(user ?? "")
             XCTAssertNotNil(user, "user should not be nil")
             XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")

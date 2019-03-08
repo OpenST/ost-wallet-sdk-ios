@@ -26,6 +26,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     case addDeviceByQRCode = "addDeviceByQRCode"
     case showQRCode = "showQRCode"
     case resetPin = "resetPin"
+    case recoverDevice = "recoverDevice"
     case showUserDetails = "showUserDetails"
   }
   
@@ -41,6 +42,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     var setupWallet: [String: String] = [:];
     var paperWallet: [String: String] = [:];
     var resetPin: [String: String] = [:]
+    var recoverDevice: [String: String] = [:]
     var scanQRCode: [String: String] = [:];
     var showUserDetails: [String: String] = [:]
     
@@ -69,28 +71,35 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     resetPin[ACTION_TYPE] = ACTIONS.resetPin.rawValue
     resetPin[ACTION_TEXT] = "Reset pin"
     
+    recoverDevice[ACTION_TYPE] = ACTIONS.recoverDevice.rawValue
+    recoverDevice[ACTION_TEXT] = "Recover device"
+    
     if ( userDevice.isStatusAuthorizing ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        recoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
     } else if ( userDevice.isStatusAuthorized ) {
         addSession[ACTION_DETAILS] = "Create session a new session.";
         scanQRCode[ACTION_DETAILS] = "Perform transactions and Authorize devices by scanning QR code.";
         resetPin[ACTION_DETAILS] = "Don't worry, Reset Pin to continue.";
+        recoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorized.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
     } else if ( userDevice.isStatusRegistered ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is not authorized";
+        recoverDevice[ACTION_DETAILS] = "Recover device by providing device address.";
         showAddDeviceCode[ACTION_DETAILS] = "Authorize this device by scanning the QR code.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
     } else if ( userDevice.isStatusRevoked ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        recoverDevice[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is revoked.";
     }
@@ -107,7 +116,8 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     
     //Add back sendTransaction later on.
     //Final Ordering.
-    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, showAddDeviceCode, showAddDeviceWithMnemonics, resetPin];
+    dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode,
+                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -258,7 +268,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         
         else if ( actionType.caseInsensitiveCompare(ACTIONS.resetPin.rawValue) == .orderedSame ) {
             let walletController = WalletViewController(nibName: nil, bundle: nil);
-            walletController.viewMode = WalletViewController.ViewMode.ResetPin;
+            walletController.viewMode = WalletViewController.ViewMode.RESET_PIN;
             self.present(walletController, animated: true, completion: nil);
         }
         else if ( actionType.caseInsensitiveCompare(ACTIONS.addDeviceUsingMnemonics.rawValue) == .orderedSame ) {
@@ -272,6 +282,12 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
             walletController.viewMode = WalletViewController.ViewMode.SHOW_USER_DETAILS;
             self.present(walletController, animated: true, completion: nil);
         }
+        
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.recoverDevice.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.RECOVER_DEVICE;
+            self.present(walletController, animated: true, completion: nil);
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -280,7 +296,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         let actionDetailsLabel = UILabel(frame: collectionView.frame)
         actionDetailsLabel.numberOfLines = 0
         actionDetailsLabel.font = MDCTypography.body1Font();
-        actionDetailsLabel.text = itemData[ACTION_DETAILS]!
+        actionDetailsLabel.text = itemData[ACTION_DETAILS] ?? ""
         actionDetailsLabel.sizeToFit()
         let acLines = actionDetailsLabel.calculateMaxLines();
         let cellHeight = (acLines == 1) ? MDCCellDefaultTwoLineHeight : MDCCellDefaultThreeLineHeight;

@@ -14,7 +14,7 @@ class OstDeviceTests: XCTestCase {
     var JSONObject = [
         "address": "0x12",
         "user_id": "abcd-kdlk...",
-        "device_manager_address": "0xsdsd..",
+        "device_name": "0xsdsd..",
         "status": "AUTHORIZING",
         "updated_timestamp": 12344,
         "device_name": "",
@@ -29,7 +29,7 @@ class OstDeviceTests: XCTestCase {
     }
 
     func testInitEntity() throws {
-        XCTAssertNotNil(try OstDevice.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstDevice.storeEntity(JSONObject), "Entity should not be nil")
     }
     
     func testGetEntity() throws {
@@ -39,12 +39,12 @@ class OstDeviceTests: XCTestCase {
     }
     
     func testUpdateEntity() throws {
-        JSONObject["device_manager_address"] = "4dt2"
+        JSONObject["device_name"] = "4dt2"
         JSONObject["updated_timestamp"] = Date.timestamp()
-        XCTAssertNotNil(try OstDevice.parse(JSONObject), "Entity should not be nil")
+        XCTAssertNotNil(try OstDevice.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstDevice? = try OstDeviceRepository.sharedDevice.getById("0x12") as? OstDevice
         XCTAssertNotNil(entity, "entity should not be nil")
-        XCTAssertEqual(entity?.device_manager_address, JSONObject["device_manager_address"] as? String, "address is not same")
+        XCTAssertEqual(entity?.deviceName, JSONObject["device_name"] as? String, "address is not same")
     }
 
     func testPerformanceExample() {

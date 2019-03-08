@@ -65,7 +65,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         let qrCode = (videoPreviewLayer?.transformedMetadataObject(for: metadataObjects[0]) as? AVMetadataMachineReadableCodeObject)?.stringValue
         
         if (nil == qrCode) {
-            showInvalidQRCode();
+            showInvalidQRCode("QR-Code is not readable.");
             return;
         }
         let currentUser = CurrentUser.getInstance();
@@ -248,10 +248,10 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         //To-Do: Implement this.
     }
     
-    func showInvalidQRCode() {
+    func showInvalidQRCode(_ message: String) {
         showScanAgain();
         self.qrInfoLabel.isHidden = false;
-        self.qrInfoLabel.text = "Invalid QR Code. Please try again.";
+        self.qrInfoLabel.text = "\(message)";
     }
     
     func showAuthorizeDeviceInfo(ostDevice:OstDevice) {
@@ -295,7 +295,8 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
             let interuptedWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
             if ( interuptedWorkflowContext.workflowType == .scanQRCode ) {
                 //Show invalid QR Code.
-                showInvalidQRCode();
+                let error: OstError = eventData["ostError"] as! OstError
+                showInvalidQRCode(error.errorMessage);
                 
                 // Done.
                 return;

@@ -32,7 +32,7 @@ class OstWorkflowValidator {
     /// - Throws: OstError
     func isValidNumber(input: String) throws{
         guard let _ = BigInt(input) else {
-            throw OstError("w_wfv_ivn_1", .inValidNumber)
+            throw OstError("w_wfv_ivn_1", .invalidNumber)
         }        
     }
     
@@ -52,7 +52,7 @@ class OstWorkflowValidator {
     func isDeviceRegistered() throws {
         let currentDevice = try self.getCurrentUserDevice()
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotRegistered)
         }
     }
     

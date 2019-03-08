@@ -26,7 +26,7 @@ class OstDeviceManagerTests: XCTestCase {
     }
 
     func testInitEntity() throws {
-        XCTAssertNotNil(try OstDeviceManager.parse(multiSigJSON), "Entity should not be nil")
+        XCTAssertNotNil(try OstDeviceManager.storeEntity(multiSigJSON), "Entity should not be nil")
     }
     
     func testGetEntity() throws {
@@ -38,7 +38,7 @@ class OstDeviceManagerTests: XCTestCase {
     func testUpdateEntity() throws {
         multiSigJSON["nonce"] = 2
         multiSigJSON["updated_timestamp"] = Date.timestamp()
-        XCTAssertNotNil(try OstDeviceManager.parse(multiSigJSON), "Entity should not be nil")
+        XCTAssertNotNil(try OstDeviceManager.storeEntity(multiSigJSON), "Entity should not be nil")
         let multiSig: OstDeviceManager? = try OstDeviceManagerRepository.sharedDeviceManager.getById("0x...") as? OstDeviceManager
         XCTAssertNotNil(multiSig, "entity should not be nil")
         XCTAssertEqual(multiSig?.nonce, multiSigJSON["nonce"] as? Int, "address is not same")
