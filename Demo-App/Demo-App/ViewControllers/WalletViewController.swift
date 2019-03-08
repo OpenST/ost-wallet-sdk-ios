@@ -30,7 +30,7 @@ class WalletViewController: UIViewController {
     case QR_CODE
     case PAPER_WALLET
     case SHOW_QR_CODE
-    case SEND_TRANSACTION
+    case ResetPin
     case SHOW_USER_DETAILS
   }
   
@@ -131,9 +131,9 @@ class WalletViewController: UIViewController {
     case ViewMode.SHOW_USER_DETAILS:
         self.title = "View Details"
         return UserDetailsView()
-    case ViewMode.SEND_TRANSACTION:
-        self.title = "Send Transaction"
-        return SendTransactionView()
+    case ViewMode.ResetPin:
+        self.title = "Reset Pin"
+        return ResetPinView()
     default:
       self.title = "Setup Your Wallet";
       return SetupWalletView()

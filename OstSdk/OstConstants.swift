@@ -23,7 +23,7 @@ struct OstConstants {
     static let OST_SCRYPT_R: Int = 2
     static let OST_SCRYPT_DESIRED_SIZE_BYTES: Int = 32
     
-    static let OST_RECOVERY_PIN_SCRYPT_N: Int = 16
+    static let OST_RECOVERY_PIN_SCRYPT_N: Int = 14 // power of 2
     static let OST_RECOVERY_PIN_SCRYPT_P: Int = 1
     static let OST_RECOVERY_PIN_SCRYPT_R: Int = 8
     static let OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES: Int = 32

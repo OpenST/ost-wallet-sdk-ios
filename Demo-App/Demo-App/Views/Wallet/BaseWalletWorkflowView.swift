@@ -53,6 +53,8 @@ class BaseWalletWorkflowView: BaseWalletView {
                 self.successLabel.text = "Please note down these words."
             } else if ( workFlowType == .setupDevice ) {
                 self.successLabel.text = "This device has been registered."
+            } else if ( workFlowType == .resetPin ) {
+                self.successLabel.text = "Pin reset successfully."
             }
             
         } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {

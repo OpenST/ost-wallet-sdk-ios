@@ -25,7 +25,7 @@ class OstCryptoImpls: OstCrypto {
     /// - Returns: Data that can be used for OSTWalletKeys generation
     /// - Throws: OSTError
     func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data {
-        let password = "stringToCalculate".bytes
+        let password = stringToCalculate.bytes
         let salt = Array(salt)
         let powerOfTwo = pow(2, n)
         let powerOfTwoDecimalVal = NSDecimalNumber(decimal: powerOfTwo)
