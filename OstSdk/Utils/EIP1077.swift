@@ -73,42 +73,4 @@ class EIP1077 {
         
         return sha3Args
     }
-    
-//    static func processSHA3Arg(type: String, value: String) throws -> String {
-//        var unitNibble: Int = 0
-//        var startIndex: String.Index
-//
-//        if (type.starts(with: "uint")) {
-//            startIndex = type.index(type.startIndex, offsetBy: EIP1077.UINT_BIT_OFFSET)
-//            let unitBits = Int(type[startIndex..<type.endIndex])!
-//
-//            unitNibble = unitBits/EIP1077.BIT_NIBBLE_DIVISOR;
-//            var hexVal: String = value
-//            if (!value.starts(with: EIP1077.HEX_PREFIX)) {
-//                let intVal: Int = Int(value)!
-//                hexVal = String(format: "%0\(unitNibble)X", intVal)
-//            }
-//            hexVal = hexVal.stripHexPrefix()
-//            if unitNibble < hexVal.count {
-//                throw OstError.invalidInput("uint size exceed")
-//            }
-//            return hexVal.padLeft(totalWidth: unitNibble, with: "0")
-//
-//        }else if (type.starts(with: "bytes")) {
-//            startIndex = type.index(type.startIndex, offsetBy: EIP1077.BYTES_BYTE_OFFSET)
-//            if (startIndex < type.endIndex) {
-//                let unitBytes = Int(type[startIndex..<type.endIndex])!
-//                unitNibble = unitBytes*EIP1077.BYTE_NIBBLE_MULTIPLIER;
-//                let filteredVal = value.stripHexPrefix()
-//
-//                if unitNibble < filteredVal.count {
-//                    throw OstError.invalidInput("bytes size exceed")
-//                }
-//                return filteredVal.padLeft(totalWidth: unitNibble, with: "0")
-//            }
-//        }
-//
-////        return value.getFilteredHexString()
-//        return ""
-//    }
 }

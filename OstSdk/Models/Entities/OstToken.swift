@@ -61,7 +61,7 @@ public class OstToken: OstBaseEntity {
     }
 }
 
-extension OstToken {
+public extension OstToken {
     /// Get token symbol
     var symbol: String? {
         return self.data["symbol"] as? String

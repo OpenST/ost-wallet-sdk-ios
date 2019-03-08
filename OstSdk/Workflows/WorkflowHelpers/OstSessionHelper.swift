@@ -14,7 +14,6 @@ let CHAIN_BLOCK_TIME = "block_time"
 class OstSessionHelper: OstWorkflowHelperBase {
     typealias SessionData = (sessionAddress: String, expirationHeight: String)
     
-    private static let SESSION_BUFFER_TIME = Double(1 * 60 * 60) //1 Hour.
     private let expiresAfter: TimeInterval
     private let spendingLimit: String
     
@@ -75,7 +74,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
     private func calcuateExpirationHeight() {
         let currentBlockHeight = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_HEIGHT])!
         let blockGenerationTime = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_TIME])!
-        let bufferedSessionTime = OstSessionHelper.SESSION_BUFFER_TIME + self.expiresAfter
+        let bufferedSessionTime = OstConstants.OST_SESSION_BUFFER_TIME + self.expiresAfter
         let validForBlocks = Int( bufferedSessionTime/Double(blockGenerationTime) )
         self.expirationHeight = validForBlocks + currentBlockHeight;
     }

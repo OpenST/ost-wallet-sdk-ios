@@ -159,7 +159,7 @@ class OstPinManager {
             message: typedDataInput["message"] as! [String: Any]
         )
         
-        let signingHash = try! eip712.getEIP712SignHash()
+        let signingHash = try! eip712.getEIP712Hash()
         
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
@@ -220,7 +220,7 @@ class OstPinManager {
                                      domain: typedData["domain"] as! [String: String],
                                      message: typedData["message"] as! [String: Any])
         
-        let signingHash = try eip712.getEIP712SignHash()
+        let signingHash = try eip712.getEIP712Hash()
         
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(

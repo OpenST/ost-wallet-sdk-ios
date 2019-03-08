@@ -107,7 +107,7 @@ class WalletViewController: UIViewController {
     //To-Do: Check the ref address of both self.choosenView and choosenView
     self.choosenView = choosenView;
     
-    Logger.log(message: "------------- Breaking Constraints before this point can be ignored.");
+    //Logger.log(message: "------------- Breaking Constraints before this point can be ignored.");
   }
   
   func chooseSubView() -> BaseWalletView {

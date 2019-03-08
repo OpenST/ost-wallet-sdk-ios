@@ -17,7 +17,6 @@ public class OstRecoveryOwnerEntity: OstBaseEntity {
     
     /// User status
     enum Status: String {
-        // TODO: add detailed description of the status meaning.
         case AUTHORIZATION_FAILED = "AUTHORIZATION_FAILED"
         case AUTHORIZING = "AUTHORIZING"
         case AUTHORIZED = "AUTHORIZED"

@@ -16,7 +16,7 @@ class OstKeychainHelper: OstBaseStorage {
     /// Initializer
     ///
     /// - Parameter service: Keychain service string
-    public init(service: String) {
+    init(service: String) {
         self.service = service
         super.init()
     }

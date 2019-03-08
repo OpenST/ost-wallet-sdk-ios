@@ -9,16 +9,15 @@
 import Foundation
 
 class OstAPIUser: OstAPIBase {
-    let userApiResourceBase = "/users"
+    private let userApiResourceBase = "/users"
     
     /// Initializer
     ///
     /// - Parameter userId: User id
-    override public init(userId: String) {
+    override init(userId: String) {
         super.init(userId: userId)
     }
     
-    // TODO: remove public from this function
     /// Get user entity. Make an API call and store the result in the database
     ///
     /// - Parameters:

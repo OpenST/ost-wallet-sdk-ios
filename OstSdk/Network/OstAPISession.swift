@@ -8,19 +8,18 @@
 
 import Foundation
 
-public class OstAPISession: OstAPIBase {
+class OstAPISession: OstAPIBase {
     
-    let sessionApiResourceBase: String
+    private let sessionApiResourceBase: String
     
     /// Initializer
     ///
     /// - Parameter userId: User id
-    override public init(userId: String) {
+    override init(userId: String) {
         sessionApiResourceBase = "/users/\(userId)/sessions"
         super.init(userId: userId)
     }
     
-    // TODO:  remove open from this function
     /// Get session. Make an API call and store the result in the database
     ///
     /// - Parameters:
@@ -28,7 +27,7 @@ public class OstAPISession: OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
-    open func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
         var params: [String: Any] = [:]
 

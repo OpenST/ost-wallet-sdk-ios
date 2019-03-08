@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    public var qrCode: CIImage?  {
+    var qrCode: CIImage?  {
         let data = self.data(using: .isoLatin1, allowLossyConversion: false)
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
             return nil
@@ -23,7 +23,7 @@ extension String {
 }
 
 extension UIImage {
-    public var readQRCode: [String]? {
+    var readQRCode: [String]? {
         guard let ciImage = self.ciImage else {
             return nil
         }
@@ -40,7 +40,7 @@ extension UIImage {
 }
 
 extension CIImage {
-    public var readQRCode: [String]? {
+    var readQRCode: [String]? {
         let detector = CIDetector(ofType: CIDetectorTypeQRCode,
                                   context: nil,
                                   options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])

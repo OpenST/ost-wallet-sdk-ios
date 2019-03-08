@@ -9,9 +9,8 @@
 import Foundation
 import Alamofire
 
-// TODO: Remove the Open keyword from this class.
 /// Base class for all API calls
-open class OstAPIBase {
+class OstAPIBase {
     /// URL endpoint
     static var baseURL: String = "";
     
@@ -38,7 +37,7 @@ open class OstAPIBase {
     /// Initializer
     ///
     /// - Parameter userId: User Id associated with the API requests
-    public init(userId: String) {
+    init(userId: String) {
         self.userId = userId
         self.manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
@@ -47,21 +46,19 @@ open class OstAPIBase {
     /// Get HTTP request header params
     ///
     /// - Returns: HTTP header params
-    func getHeader() -> [String: String] {
+    private func getHeader() -> [String: String] {
         let httpHeaders = ["Content-Type": OstConstants.OST_CONTENT_TYPE,
                            "User-Agent": OstConstants.OST_USER_AGENT]
         return httpHeaders
     }
     
-    // TODO: Remove this method once we remove open keywords.
     /// Get the base URL string
-    open var getBaseURL: String {
+    var getBaseURL: String {
         return OstAPIBase.baseURL
     }
     
-    // TODO: Remove open keyword
     /// Get the relative resource URL string
-    open var getResource: String {
+    var getResource: String {
         return resourceURL
     }
     
@@ -106,6 +103,7 @@ open class OstAPIBase {
             if (httpResponse.result.isSuccess && isSuccess) {
                 let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
                 onSuccess(responseEntity)
+                self.manager.session.configuration.urlCache?.removeAllCachedResponses()
             }else {
                 let failureResponse = OstAPIErrorHandler.getErrorResponse(httpResponse);
                 onFailure(failureResponse)
@@ -113,14 +111,13 @@ open class OstAPIBase {
         }
     }
     
-    // TODO: Remove open keyword
     /// Performs HTTP Get
     ///
     /// - Parameters:
     ///   - params: Request params
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
-    open func get(params: [String: AnyObject]? = nil,
+    func get(params: [String: AnyObject]? = nil,
                   onSuccess:@escaping (([String: Any]?) -> Void),
                   onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .get,
@@ -129,14 +126,13 @@ open class OstAPIBase {
                      onFailure: onFailure)
     }
     
-    // TODO: Remove open keyword
     /// Performs HTTP post
     ///
     /// - Parameters:
     ///   - params: Request params
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
-    open func post(params: [String: AnyObject]? = nil,
+    func post(params: [String: AnyObject]? = nil,
                    onSuccess:@escaping (([String: Any]?) -> Void),
                    onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .post,
@@ -145,12 +141,11 @@ open class OstAPIBase {
                      onFailure: onFailure)
     }
 
-    // TODO: Remove open keyword
     /// Check if the response is successful
     ///
     /// - Parameter response: API response object
     /// - Returns: `true` if successful otherwise false
-    open func isResponseSuccess(_ response: Any?) -> Bool {
+    func isResponseSuccess(_ response: Any?) -> Bool {
         if (response == nil) { return false }
         if let successValue = (response as? [String: Any])?["success"] {
             if successValue is Int {

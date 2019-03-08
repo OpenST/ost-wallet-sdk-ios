@@ -36,7 +36,7 @@ public class OstBaseEntity: NSObject {
     ///
     /// - Parameter entityData: Entity data dictionary
     /// - Returns: `true` if valid, otherwise `false`
-    func validateEntityData(_ entityData: [String: Any]) throws {
+    private func validateEntityData(_ entityData: [String: Any]) throws {
         // Check if the id in entity data is valid.
         let isValid = isIdValid(entityData)
         if (!isValid) {

@@ -24,7 +24,7 @@ let API_ADDRESS_KEY = "api_address"
 let DEVICE_ADDRESS_KEY = "device_address"
 let RECOVERY_PIN_HASH = "recovery_pin_hash"
 
-public struct EthMetaMapping {
+struct EthMetaMapping {
     /// Ethererum address
     var address: String
     
@@ -78,8 +78,7 @@ public struct EthMetaMapping {
 }
 
 /// Class for managing the ethereum keys.
-// TODO: make this internal
-public class OstKeyManager {
+class OstKeyManager {
     typealias SignedData = (address: String, signature: String)
     
     // MARK: - Instance varaibles
@@ -268,57 +267,8 @@ public class OstKeyManager {
         
         return recoveryOwnerAddress
     }
-    
-//    func generateRecoveryOwnerAddress(
-//        password: String,
-//        pin: String,
-//        salt: String) throws -> String {
-//        
-//        let recoveryOwnerAddress = try self.getRecoveryOwnerAddressFrom(
-//            password: password,
-//            pin: pin,
-//            salt: salt
-//        )
-//        
-//        let recoveryPinHash = generateRecoveryPinHash(
-//            password: password,
-//            pin: pin,
-//            salt: salt,
-//            recoveryOwnerAddress: recoveryOwnerAddress
-//        )
-//
-//        try storeRecoveryPinHash(recoveryPinHash)
-//        
-//        return recoveryOwnerAddress
-//    }
-    
-    private func generateRecoveryPinHash(
-        password: String,
-        pin: String,
-        salt: String,
-        recoveryOwnerAddress: String) -> String {
-        
-        let rawString = "\(self.userId)\(password)\(pin)\(salt)\(recoveryOwnerAddress.lowercased())"
-        let recoveryHash = rawString.sha3(.keccak256)
-        return recoveryHash
-    }
-    //TODO: - Store data from keychain.
-    /// Store recovery pin string in key chain
-    ///
-    /// - Parameter pinString: Pin string generated at the time of activate user.
-    /// - Returns:  true if data stored in keychain successfully.
-    private func storeRecoveryPinHash(_ recoveryPinHash: String) throws {
-        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        // TODO: add secure enclave encoding here for recoveryPinHash
-        userDeviceInfo[RECOVERY_PIN_HASH] = OstUtils.toEncodedData(recoveryPinHash.data(using: .utf8)!)
-        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
-    }
-    
-    func deletePin() throws {
-        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        userDeviceInfo[RECOVERY_PIN_HASH] = nil
-        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
-    }
+
+
     func verifyPin(
         password: String,
         pin: String,
@@ -326,53 +276,21 @@ public class OstKeyManager {
         recoveryOwnerAddress: String) -> Bool {
     
         var isValid = true
-        
-        let recoveryPinHash = generateRecoveryPinHash(
-            password: password,
-            pin: pin,
-            salt: salt,
-            recoveryOwnerAddress: recoveryOwnerAddress
-        )
-        
-        do {
-            try verifyRecoveryPinHash(recoveryPinHash)
-        } catch {
-            // Fallback
-            if let generatedAddress = try? self.getRecoveryOwnerAddressFrom(
-                    password: password,
-                    pin: pin,
-                    salt: salt
-                )  {
 
-                isValid = recoveryOwnerAddress.caseInsensitiveCompare(generatedAddress) ==  .orderedSame
-                if isValid {
-                    try? storeRecoveryPinHash(recoveryPinHash)
-                }
-            } else {
-                isValid = false
-            }                        
+        do {
+            let generatedAddress = try self.getRecoveryOwnerAddressFrom(
+                password: password,
+                pin: pin,
+                salt: salt
+            )
+                
+            isValid = recoveryOwnerAddress.caseInsensitiveCompare(generatedAddress) ==  .orderedSame
+
+        } catch {
+           isValid = false
         }
         return isValid
-    }
-    /// Verify stored pin string with passed one.
-    ///
-    /// - Parameter pinString: Pin string generated at the time of activate user.
-    /// - Returns: true if data stored in keychain successfully.
-    private func verifyRecoveryPinHash(_ recoveryPinHash: String) throws {
-        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
-        guard let hashEncodedData : Data = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
-            throw OstError("s_i_km_vrps_1", .recoveryPinNotFoundInKeyManager)
-        }
-        guard let hashData = OstUtils.toDecodedValue(hashEncodedData) as? Data else {
-            throw OstError("s_i_km_vrps_2", .recoveryPinNotFoundInKeyManager)
-        }
-        let existingRecoveryPinHash = String(bytes: hashData, encoding: .utf8)!
-        // TODO: add secure enclave encoding here for recoveryPinHash
-        
-        let isSucess = (recoveryPinHash.caseInsensitiveCompare(existingRecoveryPinHash) == .orderedSame )
-        if !isSucess {
-            throw OstError("s_i_km_vrps_3", .pinValidationFailed)
-        }
+    
     }
 }
 
@@ -747,8 +665,6 @@ extension OstKeyManager {
         return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
     }
     
-    
-    //TODO: - remove temp code and get code from Deepesh.
     func signWithRecoveryKey(
         tx:String,
         pin: String,
