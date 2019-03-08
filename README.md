@@ -94,21 +94,6 @@ OstSdk.addSession(
     )
 ```
 
-### Get Paper Wallet
-
-To get Paper wallet( 12 words used to generate wallet) of the current device.
-Paper wallet will be used to add new device incase device is lost<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstSdk.getPaperWallet(
-    userId: String,
-    delegate: OstWorkFlowCallbackProtocol
-    )
-```        
-
 ### Execute Transaction
 
 To execute Rule.<br/><br/>
@@ -130,6 +115,21 @@ OstSdk.executeTransaction(
     )
 ```
 
+### Get Paper Wallet
+
+To get Paper wallet( 12 words used to generate wallet) of the current device.
+Paper wallet will be used to add new device incase device is lost<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.getPaperWallet(
+    userId: String,
+    delegate: OstWorkFlowCallbackProtocol
+    )
+```
+
 ### Add Device Using Mnemonics
 
 It add new device using mnemonics provided.
@@ -147,6 +147,19 @@ OstSdk.addDeviceWithMnemonicsString(
     )
 ```
 
+### Get QR-Code To Add Device
+
+Getter method which return QR-Code CIImage for add device.
+Use this methods to generate QR code of current device to be added from authorized device.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+
+```Swift
+OstSdk.getAddDeviceQRCode(
+    userId: String
+    ) throws -> CIImage?
+```
+
 ### OstPerform
 
 To perform operations based on QR data provided.
@@ -162,19 +175,6 @@ OstSdk.perfrom(
     payload: String,
     delegate: OstWorkFlowCallbackProtocol
     )
-```
-
-### Get QR-Code To Add Device
-
-Getter method which return QR-Code CIImage for add device.
-Use this methods to generate QR code of current device to be added from authorized device.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
-
-```Swift
-OstSdk.getAddDeviceQRCode(
-    userId: String
-    ) throws -> CIImage?
 ```
 
 ### Reset Pin
