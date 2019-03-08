@@ -148,7 +148,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     public func dataVerified() {
         OstExecuteTransaction(userId: self.userId,
                               ruleName: self.executeTxPayloadParams!.ruleName,
-                              tokenHolderAddresses: self.executeTxPayloadParams!.addresses,
+                              toAddresses: self.executeTxPayloadParams!.addresses,
                               amounts: self.executeTxPayloadParams!.amounts,
                               tokenId: self.executeTxPayloadParams!.tokenId,
                               delegate: self.delegate).perform()

@@ -209,7 +209,7 @@ extension OstSdk {
         delegate: OstWorkFlowCallbackProtocol) {
         let executeTransactionObj = OstExecuteTransaction(userId: userId,
                                                           ruleName: ruleName,
-                                                          tokenHolderAddresses: tokenHolderAddresses,
+                                                          toAddresses: tokenHolderAddresses,
                                                           amounts: amounts,
                                                           tokenId: tokenId,
                                                           delegate: delegate)
@@ -280,5 +280,34 @@ extension OstSdk {
             delegate: delegate)
         
         resetPinWorkFlow.perform()
+    }
+    
+   
+    /// Execute transaction
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - transactionType: Type of transaction to execute. Either ExecuteTransactionTypeDirectTransfer or ExecuteTransactionTypePay
+    ///   - toAddresses: Addresses to transfer fund
+    ///   - amounts: anounts to transfer
+    ///   - tokenId: token id
+    ///   - delegate: Callback
+    public class func executeTransaction(
+        userId: String,
+        transactionType: ExecuteTransactionType,
+        toAddresses: [String],
+        amounts: [String],
+        tokenId: String,
+        delegate: OstWorkFlowCallbackProtocol) {
+        
+        let executeTransactionFlow = OstExecuteTransaction(
+            userId: userId,
+            ruleName: transactionType.rawValue,
+            toAddresses: toAddresses,
+            amounts: amounts,
+            tokenId: tokenId,
+            delegate: delegate)
+        
+        executeTransactionFlow.perform()
     }
 }

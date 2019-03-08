@@ -114,6 +114,8 @@ public enum OstErrorText: String {
     case dbExecutionFailed = "DB execution failed."
     case invalidEntityType = "Invalid entity type."
     case invalidQRCode = "Invalid QR Code"
+    case invalidRuleName = "Invalid Rule name"
+    case invalidAddressToTransfer = "Invalid address to transfer value."
     case sessionNotAuthorizing = "Session is not authorizing."
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
