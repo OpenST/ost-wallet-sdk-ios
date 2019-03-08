@@ -219,5 +219,78 @@ OstSdk.recoverDeviceInitialize(
 ```
 
 
+## Workflow Callbacks
+
+```Swift
+/// Register device passed as parameter.
+///
+/// - Parameters:
+///   - apiParams: Register Device API parameters.
+///   - ostDeviceRegisteredProtocol: To pass response.
+func registerDevice(_ apiParams: [String: Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol)
+```
+```Swift
+/// Pin needed to check the authenticity of the user.
+/// Developers should show pin dialog on this callback.
+///
+/// - Parameters:
+///   - userId: Id of user whose password and pin are needed.
+///   - ostPinAcceptProtocol: To pass pin
+func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+```
+```Swift    
+/// Inform SDK user about invalid pin.
+/// Developers should show invalid pin error and ask for pin again on this callback.
+///
+/// - Parameters:
+///   - userId: Id of user whose password and pin are needed.
+///   - ostPinAcceptProtocol: To pass another pin.
+func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+```
+```Swift
+/// Inform SDK user that entered pin is validated.
+/// Developers should dismiss pin dialog on this callback.
+/// - Parameter userId: Id of user whose pin and password has been validated.
+func pinValidated(_ userId: String)
+```
+```Swift
+/// Inform SDK user the the flow is complete.
+///
+/// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
+/// - Parameter ostContextEntity: Status of the flow.
+func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+```
+```Swift
+/// Inform SDK user that flow is interrupted with errorCode.
+/// Developers should dismiss pin dialog (if open) on this callback.
+///
+/// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
+/// - Parameter ostError: Reason of interruption.
+func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
+```
+```Swift
+/// Show paper wallet
+///
+/// - Parameter mnemonics: array of Words.
+func showPaperWallet(mnemonics: [String])
+```
+```Swift
+/// Verify data which is scan from QR-Code
+///
+/// - Parameters:
+///   - workflowContext: OstWorkflowContext
+///   - ostContextEntity: OstContextEntity
+///   - delegate: callback
+func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity, delegate: OstValidateDataProtocol)
+```
+```Swift
+/// Acknowledge user about the request which is going to make by SDK.
+///
+/// - Parameters:
+///   - workflowContext: OstWorkflowContext
+///   - ostContextEntity: OstContextEntity
+func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+```
+
 
 
