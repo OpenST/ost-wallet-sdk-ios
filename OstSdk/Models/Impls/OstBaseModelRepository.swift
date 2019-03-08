@@ -45,9 +45,10 @@ class OstBaseModelRepository {
     /// - Parameters:
     ///   - entityData: Entity data
     ///   - identifier: Identifier key
+    ///   - isSynchronous: Indicated if its a synchronous task
     /// - Returns: OstBaseEntity object
     /// - Throws: OSTError
-    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifierKey identifier: String) throws {
+    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifierKey identifier: String, isSynchronous:Bool = false) throws {
         // Get the primary id value of the entity
         let id: String = try OstBaseModelRepository.getItem(fromEntityData: entityData, forKey: identifier)
         
@@ -62,7 +63,7 @@ class OstBaseModelRepository {
         
         // Create a new entity object and update the db
         let entity = try getEntity(entityData)
-        insertOrUpdateEntity(entity)
+        insertOrUpdateEntity(entity, isSynchronous)
     }
     
     /// Get entity object for the given id value
@@ -110,19 +111,31 @@ class OstBaseModelRepository {
     /// Insert or update entity
     ///
     /// - Parameter entity: Entity object
+    ///   - isSynchronous: Indicated if its a synchronous task
     /// - Returns: Entity object
-    func insertOrUpdateEntity(_ entity: OstBaseEntity) {
+    func insertOrUpdateEntity(_ entity: OstBaseEntity, _ isSynchronous:Bool = false) {
         // Save the entity object in mememory cache.
         saveEntityInMemory(key: entity.id, val: entity)
         
-        OstBaseModelRepository.DBQUEUE.async {
+        func perform() {
             let dbQueryObj = self.getDBQueriesObj()
             dbQueryObj.insertOrUpdate(entity, onUpdate: {(result:Bool) in
                 if (result == true) {
                     self.removeInMemoryEntity(key: entity.id)
                 }
             })
-        }        
+        }
+        
+        if isSynchronous {
+            OstBaseModelRepository.DBQUEUE.sync {
+                perform()
+            }
+        } else {
+            OstBaseModelRepository.DBQUEUE.async {
+                perform()
+            }
+        }
+        
     }
     
     /// Delete item for the give key identifier

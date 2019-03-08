@@ -73,8 +73,8 @@ extension OstToken {
     }
     
     /// Get token supply
-    var totalSupply: Int? {
-        return OstUtils.toInt(self.data["total_supply"] as Any?)
+    var totalSupply: String? {
+        return OstUtils.toString(self.data["total_supply"] as Any?)
     }
     
     /// Get auxiliary chain id

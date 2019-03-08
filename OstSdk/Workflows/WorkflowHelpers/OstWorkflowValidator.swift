@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BigInt
 
 class OstWorkflowValidator {
     private let userId: String
@@ -24,6 +25,16 @@ class OstWorkflowValidator {
     }
     
     // MARK: - Device related validations
+    
+    /// Check if the given input is valid number
+    ///
+    /// - Parameter input: Input string
+    /// - Throws: OstError
+    func isValidNumber(input: String) throws{
+        guard let _ = BigInt(input) else {
+            throw OstError("w_wfv_ivn_1", .inValidNumber)
+        }        
+    }
     
     /// Is device status authorizes
     ///

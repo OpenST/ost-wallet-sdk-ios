@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TokenRule: ABIHerlperBase {
+class TokenRule: ABIHelperBase {
     static let EXECUTE_RULE_CALLPREFIX = "0x59793b00"
     private let ABI_NAME = "TokenRules.abi"
     

@@ -184,7 +184,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// Check retry count of pin validation.
     func userAuthenticationFailed() {
         if (OstConstants.OST_PIN_MAX_RETRY_COUNT <= self.enterPinCount) {
-            self.postError(OstError("w_wb_pe_1", .maxUserValidatedCountReached))
+            self.postError(OstError("w_wb_uaf_1", .maxUserValidatedCountReached))
         }else{
             DispatchQueue.main.async {
                 self.delegate.invalidPin(self.userId, delegate: self)

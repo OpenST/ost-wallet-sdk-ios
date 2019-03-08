@@ -139,7 +139,7 @@ class OstSdkSync {
         }
         do {
             let token: OstToken? = try OstTokenRepository.sharedToken.getById(user!.tokenId!) as? OstToken
-            if (token?.totalSupply != nil) {
+            if (token?.auxiliaryChainId != nil) {
                 return false
             }
         }catch {  }

@@ -24,7 +24,8 @@ public class OstRule: OstBaseEntity {
             .sharedRule
             .insertOrUpdate(
                 entityData,
-                forIdentifierKey: ENTITY_IDENTIFIER
+                forIdentifierKey: ENTITY_IDENTIFIER,
+                isSynchronous: true
             )
     }
     

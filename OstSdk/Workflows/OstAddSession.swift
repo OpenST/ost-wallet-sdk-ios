@@ -11,7 +11,6 @@ import Foundation
 class OstAddSession: OstWorkflowBase {
     
     private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
-    private let workflowTransactionCountForPolling = 1
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     
@@ -47,6 +46,7 @@ class OstAddSession: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         
+        try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
     }
@@ -89,9 +89,11 @@ class OstAddSession: OstWorkflowBase {
             }
         }
         
-        let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+        let onRequestAcknowledged: ((OstSession) -> Void) = { (ostSession) in
             self.postRequestAcknowledged(entity: ostSession)
-            self.pollingForAuthorizeSession(ostSession)
+        }
+
+        let onSuccess: ((OstSession) -> Void) = { (ostSession) in            self.postWorkflowComplete(entity: ostSession)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
@@ -103,29 +105,10 @@ class OstAddSession: OstWorkflowBase {
                             spendingLimit: self.spendingLimit,
                             expirationHeight: self.sessionData!.expirationHeight,
                             generateSignatureCallback: generateSignatureCallback,
+                            onRequestAcknowledged: onRequestAcknowledged,
                             onSuccess: onSuccess,
                             onFailure: onFailure).perform()
-    }
-    
-    /// Polling service for Session
-    ///
-    /// - Parameter ostSession: session entity
-    private func pollingForAuthorizeSession(_ ostSession: OstSession) {
-        
-        let successCallback: ((OstSession) -> Void) = { ostSession in
-            self.postWorkflowComplete(entity: ostSession)
-        }
-        
-        let failureCallback:  ((OstError) -> Void) = { error in
-            self.postError(error)
-        }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
-        
-        OstSessionPollingService(userId: ostSession.userId!,
-                                 sessionAddress: ostSession.address!,
-                                 workflowTransactionCount: workflowTransactionCountForPolling,
-                                 successCallback: successCallback, failureCallback: failureCallback).perform()
-    }
+    }        
 
     /// Get current workflow context
     ///
