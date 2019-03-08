@@ -66,7 +66,6 @@ class OstExecuteTransaction: OstWorkflowBase {
     private var calldata: String? = nil
     private var eip1077Hash: String? = nil
     private var signature: String? = nil
-    private var isRetryAfterFetch = false
     private var rawCalldata: String? = nil
     private var pricePoint: [String: Any]? = nil
     
@@ -247,33 +246,29 @@ class OstExecuteTransaction: OstWorkflowBase {
             params["signature"] = self.signature!
             params["meta_property"] = [:]
             
-            try self.activeSession!.incrementNonce()
+            try? self.activeSession!.incrementNonce()
             
             try OstAPITransaction(userId: self.userId)
                 .executeTransaction(
                     params: params,
                     onSuccess: { (ostTransaction) in
-                        if !self.isRetryAfterFetch {
-                            self.postRequestAcknowledged(entity: ostTransaction)
-                        }
+                        self.postRequestAcknowledged(entity: ostTransaction)
                         self.pollingForTransaction(transaction: ostTransaction)
                 }) { (error) in
-                    self.postError(error)
+                    self.fetchSession(error: error)
             }
         }catch let error {
-            self.postError(error)
+            self.fetchSession(error: error as! OstError)
         }
     }
     
     /// Fetch session if transaction failed and retry.
-    private func fetchSessionAndRetry() {
+    private func fetchSession(error: OstError) {
         do {
             try OstAPISession(userId: self.userId).getSession(sessionAddress: self.activeSession!.address!, onSuccess: { (ostSession) in
-                self.activeSession = ostSession
-                self.isRetryAfterFetch = true
-                self.perform()
+                self.postError(error)
             }) { (ostError) in
-                self.postError(ostError)
+                self.postError(error)
             }
         }catch let error {
             self.postError(error)
@@ -287,11 +282,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
-            if (self.isRetryAfterFetch) {
-                self.postError(error)
-            }else {
-                self.fetchSessionAndRetry()
-            }
+            self.fetchSession(error: error)            
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         

@@ -353,7 +353,19 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
             showAuthorizeDeviceInfo(ostDevice: device);
         } else if ( workflowContext.workflowType == .executeTransaction ) {
             //To-Do: Show transaction info.
-            showExecuteTransactionInfo(data: ostContextEntity.entity as! String)
+            let entity = ostContextEntity.entity as! [String: Any]
+            
+            let tokenHolderAddresses = entity["addresses"] as! [String]
+            let amounts = entity["amounts"]  as! [String]
+            
+            var stringToConfirm: String = ""
+            stringToConfirm += "rule name : \(entity["ruleName"] as! String)"
+            
+            for (i, address) in tokenHolderAddresses.enumerated() {
+                stringToConfirm += "\n\(address): \(amounts[i])"
+            }
+            
+            showExecuteTransactionInfo(data: stringToConfirm)
         }
     }
     
