@@ -117,7 +117,7 @@ public enum OstErrorText: String {
     case sessionNotAuthorizing = "Session is not authorizing."
     case maxUserValidatedCountReached = "Exceeded pin retry limit."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
-    case rulesNotFound = "Rulse not found."
+    case rulesNotFound = "Rules not found."
     case invalidAmount = "Amount to do transaction is invalid."
     case sessionNotFound = "Session not found."
     case callDataFormationFailed = "Calldata formation failed."

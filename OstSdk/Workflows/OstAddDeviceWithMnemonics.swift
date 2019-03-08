@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class OstAddDeviceWithMnemonics: OstWorkflowBase, OstValidateDataProtocol {
+class OstAddDeviceWithMnemonics: OstWorkflowBase {
     private let ostAddDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
@@ -44,6 +44,10 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstValidateDataProtocol {
         if (self.mnemonicsManager.isMnemonicsValid() == false) {
             throw OstError("w_adwm_p_1", .invalidMnemonics)
         }
+        
+        if (self.currentDevice!.isStatusAuthorized) {
+            throw OstError("w_adwm_p_2", .deviceAuthorized)
+        }
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceRegistered()
     }
@@ -53,7 +57,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstValidateDataProtocol {
     /// - Throws: OstError
     override func process() throws {
         try fetchDevice()
-        verifyData(device: self.currentDevice!)
+        self.authenticateUser()
     }
     
     /// Fetch device to validate mnemonics
@@ -86,28 +90,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase, OstValidateDataProtocol {
             throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
         }
     }
-    
-    /// verify device from user.
-    ///
-    /// - Parameter device: OstDevice entity.
-    private func verifyData(device: OstDevice) {
-        let workflowContext = OstWorkflowContext(workflowType: .addDeviceWithMnemonics);
-        let contextEntity: OstContextEntity = OstContextEntity(entity: device, entityType: .device)
-        DispatchQueue.main.async {
-            self.delegate.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
-        }
-    }
-    
-    /// Callback from user about data verified to continue.
-    public func dataVerified() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.authenticateUser()
-        }
-    }
-    
+
     /// Proceed with workflow after user is authenticated.
     override func proceedWorkflowAfterAuthenticateUser() {
         let queue: DispatchQueue = getWorkflowQueue()

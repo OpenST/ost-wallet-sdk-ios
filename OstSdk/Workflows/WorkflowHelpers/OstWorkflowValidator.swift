@@ -52,7 +52,7 @@ class OstWorkflowValidator {
     func isDeviceRegistered() throws {
         let currentDevice = try self.getCurrentUserDevice()
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotRegistered)
         }
     }
     

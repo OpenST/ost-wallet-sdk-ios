@@ -13,12 +13,13 @@ enum OstQRCodeDataDefination: String {
     case TRANSACTION = "TX"
 }
 
-class OstPerform: OstWorkflowBase {
+class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     private let payloadString: String?
     
     private var dataDefination: String? = nil
     private var payloadData: [String: Any?]?;
+    private var executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams? = nil
     
     /// Initializer
     ///
@@ -114,17 +115,45 @@ class OstPerform: OstWorkflowBase {
             
         case OstQRCodeDataDefination.TRANSACTION.rawValue:
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
-            OstExecuteTransaction(userId: self.userId,
-                                  ruleName: executeTxPayloadParams.ruleName,
-                                  tokenHolderAddresses: executeTxPayloadParams.addresses,
-                                  amounts: executeTxPayloadParams.amounts,
-                                  tokenId: executeTxPayloadParams.tokenId,
-                                  delegate: self.delegate).perform()
+            self.executeTxPayloadParams = executeTxPayloadParams
+            verifyDataForExecuteTransaction(executeTxPayloadParams)
         default:
             throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
         }
     }
     
+    /// Verify data from user about transaction through QR-Code
+    ///
+    /// - Parameter executeTxPayloadParams: ExecuteTxPayloadParams
+    private func verifyDataForExecuteTransaction(_ executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams) {
+        let tokenHolderAddresses = executeTxPayloadParams.addresses
+        let amounts = executeTxPayloadParams.amounts
+        
+        var stringToConfirm: String = ""
+        stringToConfirm += "rule name : \(executeTxPayloadParams.ruleName)"
+        
+        for (i, address) in tokenHolderAddresses.enumerated() {
+            stringToConfirm += "\n\(address): \(amounts[i])"
+        }
+        
+        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
+        let contextEntity: OstContextEntity = OstContextEntity(entity: stringToConfirm, entityType: .string)
+        DispatchQueue.main.async {
+            self.delegate.verifyData(workflowContext: workflowContext,
+                                     ostContextEntity: contextEntity,
+                                     delegate: self)
+        }
+    }
+    
+    public func dataVerified() {
+        OstExecuteTransaction(userId: self.userId,
+                              ruleName: self.executeTxPayloadParams!.ruleName,
+                              tokenHolderAddresses: self.executeTxPayloadParams!.addresses,
+                              amounts: self.executeTxPayloadParams!.amounts,
+                              tokenId: self.executeTxPayloadParams!.tokenId,
+                              delegate: self.delegate).perform()
+    }
+
     /// Get current workflow context
     ///
     /// - Returns: OstWorkflowContext
