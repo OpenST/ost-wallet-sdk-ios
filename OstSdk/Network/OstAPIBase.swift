@@ -103,6 +103,7 @@ class OstAPIBase {
             if (httpResponse.result.isSuccess && isSuccess) {
                 let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
                 onSuccess(responseEntity)
+                self.manager.session.configuration.urlCache?.removeAllCachedResponses()
             }else {
                 let failureResponse = OstAPIErrorHandler.getErrorResponse(httpResponse);
                 onFailure(failureResponse)
