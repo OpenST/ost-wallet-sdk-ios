@@ -38,6 +38,11 @@ It initializes all the required instances and run migrations of db.
 After init, setupDevice api should be called everytime the app launches.
 It ensures current device is in registered state before calling kit apis.
 
+- userId: OstKit user id provided by application server
+- tokenId: Token id provided by appicationn server
+- delegate: Callback implementation object for application communication 
+
+
         OstSdk.setupDevice(
             userId: <USER-Id>, 
             tokenId: <TOKEN-ID>, 
@@ -55,3 +60,6 @@ It makes user eligible to do device operations and transactions.
             spendingLimit: <SPENDING-LIMIT-IN-WEI>,
             expireAfter: <RELATIVE-EXPIRATION-TIME-IN-SECONDS>,
             delegate: <OstWorkFlowCallbackProtocol-Object>)
+            
+            
+###             
