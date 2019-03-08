@@ -91,12 +91,12 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         DispatchQueue.main.async {
             if ( error is OstError ) {
-                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: error as! OstError);
+                self.delegate.flowInterrupted(workflowContext: workflowContext, error: error as! OstError);
             }
             else {
                 //Unknown Error. Post Something went wrong.
                 let ostError:OstError = OstError("w_wb_pe_1", OstErrorText.sdkError)
-                self.delegate.flowInterrupted1(workflowContext: workflowContext, error: ostError )
+                self.delegate.flowInterrupted(workflowContext: workflowContext, error: ostError )
             }
         }
     }
@@ -121,7 +121,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         let contextEntity: OstContextEntity = getContextEntity(for: entity)
         
         DispatchQueue.main.async {
-            self.delegate.flowComplete1(workflowContext: workflowContext, ostContextEntity: contextEntity)
+            self.delegate.flowComplete(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
     }
     

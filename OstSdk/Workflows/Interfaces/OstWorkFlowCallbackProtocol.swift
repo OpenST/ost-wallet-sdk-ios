@@ -44,14 +44,14 @@ public protocol OstWorkFlowCallbackProtocol {
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostContextEntity: Status of the flow.
-    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
 
     /// Inform SDK user that flow is interrupted with errorCode.
     /// Developers should dismiss pin dialog (if open) on this callback.
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostError: Reason of interruption.
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError)
     
     /// Show paper wallet
     ///

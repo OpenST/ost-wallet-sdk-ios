@@ -191,31 +191,6 @@ extension OstSdk {
         return qrCodePayloadString.qrCode
     }
     
-    /// Execute transaction
-    ///
-    /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - tokenId: Token id.
-    ///   - ruleName: Rule name to execute.
-    ///   - tokenHolderAddresses: Token holder address whome to send amount.
-    ///   - amounts: Amount to send.
-    ///   - delegate: Callback for action complete or to perform respective actions.
-    public class func executeTransaction(
-        userId: String,
-        tokenId: String,
-        ruleName: String,
-        tokenHolderAddresses: [String],
-        amounts: [String],
-        delegate: OstWorkFlowCallbackProtocol) {
-        let executeTransactionObj = OstExecuteTransaction(userId: userId,
-                                                          ruleName: ruleName,
-                                                          toAddresses: tokenHolderAddresses,
-                                                          amounts: amounts,
-                                                          tokenId: tokenId,
-                                                          delegate: delegate)
-        executeTransactionObj.perform()
-    }
-    
     /// Start polling for entity id.
     ///
     /// - Parameters:
@@ -282,7 +257,6 @@ extension OstSdk {
         resetPinWorkFlow.perform()
     }
     
-   
     /// Execute transaction
     ///
     /// - Parameters:
@@ -294,7 +268,7 @@ extension OstSdk {
     ///   - delegate: Callback
     public class func executeTransaction(
         userId: String,
-        transactionType: ExecuteTransactionType,
+        transactionType: OstExecuteTransactionType,
         toAddresses: [String],
         amounts: [String],
         tokenId: String,

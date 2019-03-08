@@ -110,7 +110,7 @@ extension OstSdkInteract {
         
     }
     
-    func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
@@ -123,7 +123,7 @@ extension OstSdkInteract {
     }
     
     
-    func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
