@@ -258,7 +258,7 @@ func pinValidated(_ userId: String)
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostContextEntity: Status of the flow.
-func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
 ```
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
@@ -266,7 +266,7 @@ func flowComplete1(workflowContext: OstWorkflowContext, ostContextEntity: OstCon
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostError: Reason of interruption.
-func flowInterrupted1(workflowContext: OstWorkflowContext, error: OstError)
+func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError)
 ```
 ```Swift
 /// Show paper wallet
