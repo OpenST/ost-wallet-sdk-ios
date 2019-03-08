@@ -111,13 +111,11 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         }
         group.wait()
         if (nil != ostError) {
+            try? self.fetchDeviceManager()
             throw ostError!
         }
        
-        if !self.isRequestAcknowledged {
-            self.isRequestAcknowledged = true
-            self.onRequestAcknowledged(authorizeDevice!)
-        }
+        self.onRequestAcknowledged(authorizeDevice!)
         self.pollingForAddDevice()
     }
 
@@ -129,7 +127,10 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
-            self.retryAuthorization(ostError: error)
+            DispatchQueue.init(label: "retryQueue").async {
+                try? self.fetchDeviceManager()
+                self.onFailure(error)
+            }
         }
         Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         

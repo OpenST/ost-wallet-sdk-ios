@@ -126,18 +126,16 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     ///
     /// - Parameter executeTxPayloadParams: ExecuteTxPayloadParams
     private func verifyDataForExecuteTransaction(_ executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams) {
-        let tokenHolderAddresses = executeTxPayloadParams.addresses
-        let amounts = executeTxPayloadParams.amounts
-        
-        var stringToConfirm: String = ""
-        stringToConfirm += "rule name : \(executeTxPayloadParams.ruleName)"
-        
-        for (i, address) in tokenHolderAddresses.enumerated() {
-            stringToConfirm += "\n\(address): \(amounts[i])"
-        }
-        
         let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
-        let contextEntity: OstContextEntity = OstContextEntity(entity: stringToConfirm, entityType: .string)
+        
+        let verifyData: [String: Any] = [
+            "ruleName": executeTxPayloadParams.ruleName,
+            "addresses": executeTxPayloadParams.addresses,
+            "amounts": executeTxPayloadParams.amounts,
+            "tokenId": executeTxPayloadParams.tokenId
+        ]
+
+        let contextEntity: OstContextEntity = OstContextEntity(entity: verifyData, entityType: .dictionary)
         DispatchQueue.main.async {
             self.delegate.verifyData(workflowContext: workflowContext,
                                      ostContextEntity: contextEntity,

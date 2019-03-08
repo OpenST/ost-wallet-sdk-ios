@@ -130,6 +130,7 @@ public enum OstErrorText: String {
     case invalidPricePoint = "Invalid price point."
     case invalidNumber = "Invalid number"
     case invalidExpirationTimeStamp = "Invalid expiration timestamp"
+    case requestTimedOut = "Request timed out"
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

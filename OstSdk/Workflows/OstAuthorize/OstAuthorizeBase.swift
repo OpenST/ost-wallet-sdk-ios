@@ -12,8 +12,6 @@ class OstAuthorizeBase {
     private let ostAuthorizeRetryQueue = DispatchQueue(label: "OstAuthorizeRetryQueue", qos: .background)
     private let nullAddress = "0x0000000000000000000000000000000000000000"
     private let generateSignatureCallback: ((String) -> (String?, String?))
-    private var isAuthorizationAttempted = false
-    var isRequestAcknowledged = false
     
     var deviceManager: OstDeviceManager? = nil
     let userId: String
@@ -57,29 +55,10 @@ class OstAuthorizeBase {
         self.authorize()
     }
     
-    /// Retry authorization in case of any failure
-    ///
-    /// - Parameter ostRrror: The error due to which the retry authorization is triggered
-    /// - Throws: OstError
-    func retryAuthorization(ostError: OstError) {
-        ostAuthorizeRetryQueue.async {
-            if false == self.isAuthorizationAttempted {
-                self.isAuthorizationAttempted = true
-                do {
-                    try self.fetchDeviceManager()
-                    self.perform()
-                } catch let error {
-                    self.onFailure(error as! OstError)
-                }
-            }else {
-                self.onFailure(ostError)
-            }
-        }
-    }
     /// Get device manager from server
     ///
     /// - Throws: OstError
-    private func fetchDeviceManager() throws {
+    func fetchDeviceManager() throws {
         var error: OstError? = nil
         let group: DispatchGroup = DispatchGroup()
         group.enter()
