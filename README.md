@@ -33,3 +33,13 @@ It initializes all the required instances and run migrations of db.
             return true
         }
     
+### Setup Device
+
+After init, setupDevice api should be called everytime the app launches.
+It ensures current device is in registered state before calling kit apis.
+
+        OstSdk.setupDevice(
+            userId: <USER-Id>, 
+            tokenId: <TOKEN-ID>, 
+            delegate: <OstWorkFlowCallbackProtocol-Object>)
+     
