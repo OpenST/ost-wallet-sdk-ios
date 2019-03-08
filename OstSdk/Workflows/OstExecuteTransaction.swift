@@ -9,7 +9,7 @@
 import Foundation
 import BigInt
 
-public enum ExecuteTransactionType: String {
+public enum OstExecuteTransactionType: String {
     case ExecuteTransactionTypeDirectTransfer = "Direct Transfer"
     case ExecuteTransactionTypePay = "Pricer"
 }
@@ -112,8 +112,8 @@ class OstExecuteTransaction: OstWorkflowBase {
             throw OstError("w_et_vp_1", OstErrorText.invalidTokenId)
         }
         
-        let allowedRuleNames = [ExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased(),
-                                ExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased()]
+        let allowedRuleNames = [OstExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased(),
+                                OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
             throw OstError("w_et_vp_2", OstErrorText.invalidRuleName)
         }
@@ -143,10 +143,10 @@ class OstExecuteTransaction: OstWorkflowBase {
         self.activeSession = session
         
         switch self.ruleName.uppercased() {
-        case ExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased():
+        case OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased():
             try self.processForPricer()
             
-        case ExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased():
+        case OstExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased():
             try self.processForDirectTransfer()
             
         default:

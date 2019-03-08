@@ -99,7 +99,7 @@ OstSdk.addSession(
 To execute Rule.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_transactionType: ExecuteTransactionType value_<br/>
+&nbsp;_transactionType: OstExecuteTransactionType value_<br/>
 &nbsp;_toAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -108,7 +108,7 @@ To execute Rule.<br/><br/>
 OstSdk.executeTransaction(
     userId: String,
     tokenId: String,
-    transactionType: ExecuteTransactionType,
+    transactionType: OstExecuteTransactionType,
     toAddresses: [String],
     amounts: [String],
     delegate: OstWorkFlowCallbackProtocol
