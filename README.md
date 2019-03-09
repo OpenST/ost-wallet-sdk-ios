@@ -313,3 +313,11 @@ func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: 
 ## Reference
 
 For reference you can refer our [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
+
+There are other references are listed below:
+
+- [OstWorkflowContext](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstWorkflowContext.swift)
+
+- [OstContextEntity](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstContextEntity.swift)
+
+- [OstError](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Utils/OstError.swift)
