@@ -245,7 +245,10 @@ OstSdk.poll(
 /// - Parameters:
 ///   - apiParams: Register Device API parameters.
 ///   - ostDeviceRegisteredProtocol: To pass response.
-func registerDevice(_ apiParams: [String: Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol)
+func registerDevice(
+        _ apiParams: [String: Any], 
+        delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol
+        )
 ```
 ```Swift
 /// Pin needed to check the authenticity of the user.
@@ -254,7 +257,10 @@ func registerDevice(_ apiParams: [String: Any], delegate ostDeviceRegisteredProt
 /// - Parameters:
 ///   - userId: Id of user whose password and pin are needed.
 ///   - ostPinAcceptProtocol: To pass pin
-func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+func getPin(
+        _ userId: String, 
+        delegate ostPinAcceptProtocol: OstPinAcceptProtocol
+        )
 ```
 ```Swift    
 /// Inform SDK user about invalid pin.
@@ -263,7 +269,10 @@ func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtoco
 /// - Parameters:
 ///   - userId: Id of user whose password and pin are needed.
 ///   - ostPinAcceptProtocol: To pass another pin.
-func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+func invalidPin(
+        _ userId: String, 
+        delegate ostPinAcceptProtocol: OstPinAcceptProtocol
+        )
 ```
 ```Swift
 /// Inform SDK user that entered pin is validated.
@@ -276,7 +285,10 @@ func pinValidated(_ userId: String)
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostContextEntity: Status of the flow.
-func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+func flowComplete(
+        workflowContext: OstWorkflowContext, 
+        ostContextEntity: OstContextEntity
+        )
 ```
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
@@ -284,7 +296,10 @@ func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstCont
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostError: Reason of interruption.
-func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError)
+func flowInterrupted(
+        workflowContext: OstWorkflowContext, 
+        error: OstError
+        )
 ```
 ```Swift
 /// Show paper wallet
@@ -299,7 +314,11 @@ func showPaperWallet(mnemonics: [String])
 ///   - workflowContext: OstWorkflowContext
 ///   - ostContextEntity: OstContextEntity
 ///   - delegate: callback
-func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity, delegate: OstValidateDataProtocol)
+func verifyData(
+        workflowContext: OstWorkflowContext, 
+        ostContextEntity: OstContextEntity, 
+        delegate: OstValidateDataProtocol
+        )
 ```
 ```Swift
 /// Acknowledge user about the request which is going to make by SDK.
@@ -307,7 +326,10 @@ func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContex
 /// - Parameters:
 ///   - workflowContext: OstWorkflowContext
 ///   - ostContextEntity: OstContextEntity
-func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+func requestAcknowledged(
+        workflowContext: OstWorkflowContext, 
+        ostContextEntity: OstContextEntity
+        )
 ```
 
 ## Reference
