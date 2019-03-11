@@ -68,7 +68,7 @@ extension OstSdkInteract {
     func registerDevice(_ apiParams: [String : Any],
                         delegate: OstDeviceRegisteredDelegate) {
         if ( !isCurrentUser() ) {
-            delegate.cancelFlow("User logged-out");
+            delegate.cancelFlow();
             return;
         }
         
@@ -80,13 +80,13 @@ extension OstSdkInteract {
                     
                     try! delegate.deviceRegistered( appApiResponse! );
         }) { (failureResponse) in
-            delegate.cancelFlow("Register device api error.");
+            delegate.cancelFlow();
         }
     }
     
     func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
         if ( !isCurrentUser() ) {
-            delegate.cancelFlow("User logged-out");
+            delegate.cancelFlow();
             return;
         }
         
@@ -101,7 +101,7 @@ extension OstSdkInteract {
                     delegate: OstPinAcceptDelegate) {
         
         if ( !isCurrentUser() ) {
-            delegate.cancelFlow("User logged-out");
+            delegate.cancelFlow();
             return;
         }
         

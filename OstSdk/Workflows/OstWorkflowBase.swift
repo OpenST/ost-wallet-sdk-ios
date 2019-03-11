@@ -9,6 +9,7 @@
 import Foundation
 
 class OstWorkflowBase: OstPinAcceptDelegate {
+    
     var userId: String
     var delegate: OstWorkFlowCallbackDelegate
     var currentUser: OstUser? {
@@ -128,7 +129,7 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     /// Cancel currently ongoing workflow.
     ///
     /// - Parameter cancelReason: reason to cancel.
-    public func cancelFlow(_ cancelReason: String) {
+    public func cancelFlow() {
         let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
         self.postError(ostError)
     }
