@@ -207,6 +207,7 @@ extension OstSdk {
         entityId: String,
         entityType: OstPollingEntityType,
         delegate: OstWorkFlowCallbackDelegate ) {
+        
         let pollingObj = OstPolling(userId: userId,
                                     entityId: entityId,
                                     entityType: entityType,
@@ -214,7 +215,7 @@ extension OstSdk {
         pollingObj.perform()
     }
     
-    /// Recover device.
+    /// Initialize recover device.
     ///
     /// - Parameters:
     ///   - userId: Kit user id.
@@ -222,18 +223,40 @@ extension OstSdk {
     ///   - uPin: user pin.
     ///   - password: application password provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
-    public class func recoverDeviceInitialize(
+    public class func initializeRecoverDevice(
         userId: String,
         recoverDeviceAddress: String,
         uPin: String,
         password: String,
         delegate: OstWorkFlowCallbackDelegate) {
+        
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
                                                        uPin: uPin,
                                                        password: password,
                                                        delegate: delegate)
         recoverDeviceInitialize.perform()
+    }
+    
+    //TODO: Update README
+    /// Abort recover device.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - uPin: user pin.
+    ///   - password: application password provied by application server.
+    ///   - delegate: Callback for action complete or to perform respective actions.
+    public class func abortRecoverDevice(
+        userId: String,
+        uPin: String,
+        password: String,
+        delegate: OstWorkFlowCallbackDelegate) {
+        
+        let recoverDeviceAbort = OstAbortRecoverDevice(userId: userId,
+                                                       uPin: uPin,
+                                                       password: password,
+                                                       delegate: delegate)
+        recoverDeviceAbort.perform()
     }
     
     /// Reset pin

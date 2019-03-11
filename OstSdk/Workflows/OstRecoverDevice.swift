@@ -97,7 +97,7 @@ class OstRecoverDevice: OstWorkflowBase {
         }
     }
     
-    /// Revoke device api call
+    /// Recover device api call
     ///
     /// - Throws: OstError
     private func recoverDevice() throws {

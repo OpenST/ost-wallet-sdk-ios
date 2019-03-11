@@ -85,6 +85,7 @@
 		4B12145C2231433100C185D2 /* insecure_memzero.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214552231433100C185D2 /* insecure_memzero.c */; };
 		4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214562231433100C185D2 /* crypto_scrypt.c */; };
 		4B121460223145C400C185D2 /* COPYRIGHT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B12145F223145C400C185D2 /* COPYRIGHT.txt */; };
+		4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -373,6 +374,7 @@
 		4B1214562231433100C185D2 /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypto_scrypt.c; sourceTree = "<group>"; };
 		4B12145F223145C400C185D2 /* COPYRIGHT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT.txt; sourceTree = "<group>"; };
 		4B1214632231530F00C185D2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortRecoverDevice.swift; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -715,6 +717,7 @@
 				4B1214212228589100C185D2 /* OstPolling.swift */,
 				4B121423222907EF00C185D2 /* OstRecoverDevice.swift */,
 				ECCDAB972228232B00A6A095 /* OstResetPin.swift */,
+				4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -1710,6 +1713,7 @@
 				4BE9E32D2203306C00427A80 /* OstWorkFlowFactory.swift in Sources */,
 				4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */,
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
+				4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */,
 				4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,

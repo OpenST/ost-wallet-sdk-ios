@@ -50,6 +50,8 @@ public enum OstErrorText: String {
     case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
     case deviceNotAuthorized = "Device is not authorized."
     case deviceAuthorized = "Device is already authorized."
+    case deviceNotRecovering = "Device is not in recovering mode."
+    case deviceNotRevoking = "Device is not revoking."
     case deviceAlreadyAuthorized = "Device is authorized."
     case deviceNotAuthorizing = "Device is not authorizing."
     case wrongDeviceAddress = "Wrong device address."

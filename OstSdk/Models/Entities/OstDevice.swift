@@ -20,11 +20,11 @@ public class OstDevice: OstBaseEntity {
     private enum Status: String {
         case CREATED = "CREATED"
         case REGISTERED = "REGISTERED"
-        case RECOVERYING = "RECOVERYING"
         case AUTHORIZING = "AUTHORIZING"
         case AUTHORIZED = "AUTHORIZED"
         case REVOKING = "REVOKING"
         case REVOKED = "REVOKED"
+        case RECOVERING = "RECOVERING"
     }
     
     /// Store OstDevice entity data in the data base and returns the OstDevice model object
@@ -151,6 +151,14 @@ public extension OstDevice {
     var isStatusRevoked: Bool {
         if let status: String = self.status {
             return (OstDevice.Status.REVOKED.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check if the device status is RECOVERING
+    var isStatusRecovering: Bool {
+        if let status: String = self.status {
+            return (OstDevice.Status.RECOVERING.rawValue == status)
         }
         return false
     }
