@@ -83,7 +83,7 @@ class OstExecuteTransaction: OstWorkflowBase {
          toAddresses: [String],
          amounts: [String],
          tokenId: String,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts

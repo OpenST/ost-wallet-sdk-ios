@@ -10,7 +10,7 @@ import Foundation
 import OstSdk
 import MaterialComponents
 
-class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
+class OstSdkInteract: BaseModel, OstWorkFlowCallbackDelegate {
     
     typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
     
@@ -65,43 +65,49 @@ class OstSdkInteract: BaseModel, OstWorkFlowCallbackProtocol {
 extension OstSdkInteract {
     
     
-    func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
+    func registerDevice(_ apiParams: [String : Any],
+                        delegate: OstDeviceRegisteredDelegate) {
         if ( !isCurrentUser() ) {
-            ostDeviceRegisteredProtocol.cancelFlow("User logged-out");
+            delegate.cancelFlow("User logged-out");
             return;
         }
         
         //Make API call to Mappy App Server.
         let resourceUrl = "/users/" + self.appUserId + "/devices";
-        self.post(resource: resourceUrl, params: apiParams as [String : AnyObject], onSuccess: { (appApiResponse:[String : Any]?) in
-            try! ostDeviceRegisteredProtocol.deviceRegistered( appApiResponse! );
+        self.post(resource: resourceUrl,
+                  params: apiParams as [String : AnyObject],
+                  onSuccess: { (appApiResponse:[String : Any]?) in
+                    
+                    try! delegate.deviceRegistered( appApiResponse! );
         }) { (failureResponse) in
-            ostDeviceRegisteredProtocol.cancelFlow("Register device api error.");
+            delegate.cancelFlow("Register device api error.");
         }
     }
     
-    func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
+    func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
         if ( !isCurrentUser() ) {
-            ostPinAcceptProtocol.cancelFlow("User logged-out");
+            delegate.cancelFlow("User logged-out");
             return;
         }
         
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.getPinFromUser;
-        eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+        eventData["ostPinAcceptProtocol"] = delegate;
         self.fireEvent(eventData: eventData);
         
     }
     
-    func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
+    func invalidPin(_ userId: String,
+                    delegate: OstPinAcceptDelegate) {
+        
         if ( !isCurrentUser() ) {
-            ostPinAcceptProtocol.cancelFlow("User logged-out");
+            delegate.cancelFlow("User logged-out");
             return;
         }
         
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.getPinFromUser;
-        eventData["ostPinAcceptProtocol"] = ostPinAcceptProtocol;
+        eventData["ostPinAcceptProtocol"] = delegate;
         self.fireEvent(eventData: eventData);
         
     }
@@ -110,7 +116,9 @@ extension OstSdkInteract {
         
     }
     
-    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext,
+                      ostContextEntity: OstContextEntity) {
+        
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
@@ -123,7 +131,9 @@ extension OstSdkInteract {
     }
     
     
-    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext,
+                         error: OstError) {
+        
         if ( !isCurrentUser() ) {
             //Ignore it.
             return;
@@ -145,7 +155,7 @@ extension OstSdkInteract {
     
     func verifyData(workflowContext: OstWorkflowContext,
                     ostContextEntity: OstContextEntity,
-                    delegate: OstValidateDataProtocol) {
+                    delegate: OstValidateDataDelegate) {
         
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.verifyQRCodeData;
@@ -156,7 +166,9 @@ extension OstSdkInteract {
         
     }
     
-    func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext,
+                             ostContextEntity: OstContextEntity) {
+        
         var eventData:[String : Any] = [:];
         eventData["eventType"] = WorkflowEventType.requestAcknowledged;
         eventData["workflowContext"] = workflowContext;

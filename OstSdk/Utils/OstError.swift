@@ -136,7 +136,7 @@ public enum OstErrorText: String {
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."
     case sessionApiFailed = "Failed to fetch session information."
-    case pinValidationFailed = "Pin validation failed."
+    case pinValidationFailed = "Pin entered are same or wrong."
     case invalidMnemonics = "Incorrect mnemonics."
 
     //Generic errors.

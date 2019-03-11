@@ -25,7 +25,7 @@ class OstResetPin: OstWorkflowBase {
          password: String,
          oldPin: String,
          newPin: String,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
 
         self.pinManager = OstPinManager(
             userId: userId,

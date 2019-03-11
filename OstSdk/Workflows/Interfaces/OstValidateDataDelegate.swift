@@ -1,5 +1,5 @@
 //
-//  OstActionConfirmProtocol.swift
+//  OstValidateDataDelegate.swift
 //  OstSdk
 //
 //  Created by Rachin Kapoor on 25/02/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol OstValidateDataProtocol: OstBaseProtocol {
+public protocol OstValidateDataDelegate: OstBaseDelegate {
     
     /// Confirm desired action taken by user.
     func dataVerified()

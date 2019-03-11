@@ -22,7 +22,7 @@ extension OstSdk {
         userId: String,
         tokenId: String,
         forceSync: Bool = false,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let registerDeviceObj = OstRegisterDevice(
             userId: userId,
@@ -48,7 +48,7 @@ extension OstSdk {
         password: String,
         spendingLimit: String,
         expireAfter: TimeInterval,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let activateUserObj = OstActivateUser(
             userId: userId,
@@ -69,7 +69,7 @@ extension OstSdk {
     public class func addDeviceWithMnemonics(
         userId: String,
         mnemonics: [String],
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let addDeviceObject = OstAddDeviceWithMnemonics(
             userId: userId,
@@ -87,7 +87,7 @@ extension OstSdk {
     public class func addDeviceWithMnemonicsString(
         userId: String,
         mnemonics: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let mnemonicsArray = mnemonics.components(separatedBy: " ")
         self.addDeviceWithMnemonics(userId: userId,
@@ -106,7 +106,7 @@ extension OstSdk {
         userId: String,
         spendingLimit: String,
         expireAfter: TimeInterval,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let ostAddSession = OstAddSession(
             userId: userId,
@@ -126,7 +126,7 @@ extension OstSdk {
     public class func perform(
         userId: String,
         ciImage qrCodeCoreImage: CIImage,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let payload: [String]? = qrCodeCoreImage.readQRCode
         
@@ -144,7 +144,7 @@ extension OstSdk {
     public class func perfrom(
         userId: String,
         payload: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
         
@@ -158,7 +158,7 @@ extension OstSdk {
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func getPaperWallet(
         userId: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let paperWalletObj = OstGetPaperWallet(userId: userId,
                                                delegate: delegate)
@@ -206,7 +206,7 @@ extension OstSdk {
         userId: String,
         entityId: String,
         entityType: OstPollingEntityType,
-        delegate: OstWorkFlowCallbackProtocol ) {
+        delegate: OstWorkFlowCallbackDelegate ) {
         let pollingObj = OstPolling(userId: userId,
                                     entityId: entityId,
                                     entityType: entityType,
@@ -227,7 +227,7 @@ extension OstSdk {
         recoverDeviceAddress: String,
         uPin: String,
         password: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
                                                        uPin: uPin,
@@ -249,7 +249,7 @@ extension OstSdk {
         password: String,
         oldPin: String,
         newPin: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let resetPinWorkFlow = OstResetPin(
             userId: userId,
@@ -276,7 +276,7 @@ extension OstSdk {
         toAddresses: [String],
         amounts: [String],
         tokenId: String,
-        delegate: OstWorkFlowCallbackProtocol) {
+        delegate: OstWorkFlowCallbackDelegate) {
         
         let executeTransactionFlow = OstExecuteTransaction(
             userId: userId,

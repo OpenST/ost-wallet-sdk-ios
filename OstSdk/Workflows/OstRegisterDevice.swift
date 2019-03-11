@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
+class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     private let ostRegisterDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     
     private let tokenId: String
@@ -21,7 +21,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredProtocol {
     ///   - tokenId: Kit token id.
     ///   - forceSync: Need to do forceSync.
     ///   - delegate: Callback.
-    init(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackDelegate) {
         self.tokenId = tokenId
         self.forceSync = forceSync            
         super.init(userId: userId, delegate: delegate)

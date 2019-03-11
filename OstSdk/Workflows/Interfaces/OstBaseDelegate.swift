@@ -1,5 +1,5 @@
 //
-//  OstBaseProtocol.swift
+//  OstBaseDelegate.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 31/01/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol OstBaseProtocol {
+public protocol OstBaseDelegate {
     
     /**
      Base Interface having SDK's flows common methods.

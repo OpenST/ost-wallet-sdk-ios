@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OstWorkflowBase: OstPinAcceptProtocol {
+class OstWorkflowBase: OstPinAcceptDelegate {
     var userId: String
-    var delegate: OstWorkFlowCallbackProtocol
+    var delegate: OstWorkFlowCallbackDelegate
     var currentUser: OstUser? {
         do {
             return try OstUser.getById(self.userId)
@@ -30,7 +30,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// - Parameters:
     ///   - userId: Kit user id.
     ///   - delegate: Callback.
-    init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, delegate: OstWorkFlowCallbackDelegate) {
         self.userId = userId
         self.delegate = delegate
     }
