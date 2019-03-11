@@ -16,10 +16,6 @@ public class OstSdk {
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);
     }
-    
-    public class func parse(_ apiResponse: [String: Any?]) throws {
-        try OstAPIHelper.storeApiResponse(apiResponse)
-    }
 
     public class func getUser(_ id: String) throws -> OstUser? {
         return try OstUser.getById(id)

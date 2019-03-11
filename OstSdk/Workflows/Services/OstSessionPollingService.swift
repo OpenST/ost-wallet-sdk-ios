@@ -31,7 +31,11 @@ class OstSessionPollingService: OstBasePollingService {
     }
     
     override func fetchEntity() throws {
-        try OstAPISession(userId: self.userId).getSession(sessionAddress: sessionAddress, onSuccess: self.onSuccess, onFailure: onFailure)
+        try OstAPISession(userId: self.userId)
+            .getSession(
+                sessionAddress: sessionAddress,
+                onSuccess: self.onSuccess,
+                onFailure: onFailure)
     }
     
     override func getPollingQueue() -> DispatchQueue {
