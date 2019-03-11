@@ -10,11 +10,6 @@ import Foundation
 
 public protocol OstBaseDelegate {
     
-    /**
-     Base Interface having SDK's flows common methods.
-     
-     - Parameter cancelReason: reason to cancel flow
-    */
-    func cancelFlow(_ cancelReason: String)
-    
+    /// Cancel ongoing workflow
+    func cancelFlow()
 }
