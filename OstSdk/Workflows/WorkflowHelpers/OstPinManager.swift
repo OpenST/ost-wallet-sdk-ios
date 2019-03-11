@@ -236,6 +236,7 @@ class OstPinManager {
         return signedData
     }
     
+    ///TODO: Rethink about implementation
     /// Get signed data for abort recover device
     ///
     /// - Parameter deviceAddressToRecover: Device address that needs to be recovered

@@ -55,7 +55,7 @@ class OstAbortRecoverDevice: OstWorkflowBase {
     ///
     /// - Throws: OstError
     override func process() throws {
-        //TODO: add
+        //TODO: add api call and get devices. Yet to be implemented.
         self.deviceAddressToAbort = "0x5e772eebe89eb3e5e6c446ba42ec7c7ea42df488"
         self.deviceAddressOfRecovering = self.currentDevice!.address!
         self.linkedAddress = "0x0000000000000000000000000000000000000001"
@@ -88,8 +88,10 @@ class OstAbortRecoverDevice: OstWorkflowBase {
             })
     }
     
+    //TODO: Implement polling.
+    /// Polling for checking transaction status
     func pollingForAbortRecover() {
-        
+    
     }
         
     /// Get current workflow context
