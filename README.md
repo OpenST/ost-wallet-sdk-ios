@@ -48,7 +48,7 @@ It ensures current device is in registered state before calling kit apis.<br/><b
 OstSdk.setupDevice(
     userId: String,
     tokenId: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```    
      
@@ -71,7 +71,7 @@ OstSdk.activateUser(
     password: String,
     spendingLimit: String,
     expireAfter: TimeInterval,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
                      
@@ -90,7 +90,7 @@ OstSdk.addSession(
     userId: String,
     spendingLimit: String,
     expireAfter: TimeInterval,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -111,7 +111,7 @@ OstSdk.executeTransaction(
     transactionType: OstExecuteTransactionType,
     toAddresses: [String],
     amounts: [String],
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -126,7 +126,7 @@ Paper wallet will be used to add new device incase device is lost<br/><br/>
 ```Swift
 OstSdk.getPaperWallet(
     userId: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -143,7 +143,7 @@ Using mnemonics it generates wallet key to add new current device.<br/><br/>
 OstSdk.addDeviceWithMnemonicsString(
     userId: String,
     mnemonics: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -173,7 +173,7 @@ Through QR, Add device and transaction operations can be performed.<br/><br/>
 OstSdk.perfrom(
     userId: String,
     payload: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -193,7 +193,7 @@ OstSdk.resetPin(
     password: String,
     oldPin: String,
     newPin: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -214,7 +214,7 @@ OstSdk.recoverDeviceInitialize(
     recoverDeviceAddress: String,
     uPin: String,
     password: String,
-    delegate: OstWorkFlowCallbackProtocol
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -233,7 +233,7 @@ OstSdk.poll(
     userId: String,
     entityId: String,
     entityType: OstPollingEntityType,
-    delegate: OstWorkFlowCallbackProtocol 
+    delegate: OstWorkFlowCallbackDelegate 
     )
 ```
 
@@ -244,10 +244,10 @@ OstSdk.poll(
 ///
 /// - Parameters:
 ///   - apiParams: Register Device API parameters.
-///   - ostDeviceRegisteredProtocol: To pass response.
+///   - delegate: To pass response.
 func registerDevice(
         _ apiParams: [String: Any], 
-        delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol
+        delegate: OstDeviceRegisteredDelegate
         )
 ```
 ```Swift
@@ -256,10 +256,10 @@ func registerDevice(
 ///
 /// - Parameters:
 ///   - userId: Id of user whose password and pin are needed.
-///   - ostPinAcceptProtocol: To pass pin
+///   - delegate: To pass pin
 func getPin(
         _ userId: String, 
-        delegate ostPinAcceptProtocol: OstPinAcceptProtocol
+        delegate: OstPinAcceptDelegate
         )
 ```
 ```Swift    
@@ -268,10 +268,10 @@ func getPin(
 ///
 /// - Parameters:
 ///   - userId: Id of user whose password and pin are needed.
-///   - ostPinAcceptProtocol: To pass another pin.
+///   - delegate: To pass another pin.
 func invalidPin(
         _ userId: String, 
-        delegate ostPinAcceptProtocol: OstPinAcceptProtocol
+        delegate: OstPinAcceptDelegate
         )
 ```
 ```Swift
@@ -317,7 +317,7 @@ func showPaperWallet(mnemonics: [String])
 func verifyData(
         workflowContext: OstWorkflowContext, 
         ostContextEntity: OstContextEntity, 
-        delegate: OstValidateDataProtocol
+        delegate: OstValidateDataDelegate
         )
 ```
 ```Swift
