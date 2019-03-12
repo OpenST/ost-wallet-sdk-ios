@@ -15,7 +15,7 @@ enum OstQRCodeDataDefination: String {
 }
 
 class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
-    private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
+    static private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     private let payloadString: String?
     
     private var dataDefination: String? = nil
@@ -40,7 +40,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostPerformQueue
+        return OstPerform.ostPerformQueue
     }
     
     /// validate parameters
@@ -118,7 +118,8 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         case OstQRCodeDataDefination.TRANSACTION.rawValue:
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
             self.executeTxPayloadParams = executeTxPayloadParams
-            verifyDataForExecuteTransaction(executeTxPayloadParams)
+//            verifyDataForExecuteTransaction(executeTxPayloadParams)
+            dataVerified()
             
         case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
             let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)

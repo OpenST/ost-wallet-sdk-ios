@@ -9,7 +9,7 @@
 import Foundation
 
 class OstResetPin: OstWorkflowBase {
-    private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
+    static private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let pinManager: OstPinManager
     
@@ -40,7 +40,7 @@ class OstResetPin: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostResetPinQueue
+        return OstResetPin.ostResetPinQueue
     }
     
     /// Validate params for reset pin

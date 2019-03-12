@@ -9,7 +9,7 @@
 import Foundation
 
 class OstTransactionPollingService: OstBasePollingService {
-    let transactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
+    static  let transactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
     let successCallback: ((OstTransaction) -> Void)?
     let transaciotnId: String
     
@@ -65,6 +65,6 @@ class OstTransactionPollingService: OstBasePollingService {
     ///
     /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
-        return self.transactionPollingServiceDispatchQueue
+        return OstTransactionPollingService.transactionPollingServiceDispatchQueue
     }
 }

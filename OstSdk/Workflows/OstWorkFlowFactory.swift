@@ -147,7 +147,6 @@ extension OstSdk {
         delegate: OstWorkFlowCallbackDelegate) {
         
         let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
-        
         performObj.perform()
     }
     
@@ -202,7 +201,7 @@ extension OstSdk {
     ///   - entityId: entity id to start polling for.
     ///   - entityType: type of entity.
     ///   - delegate: Callback for action complete or to perform respective actions.
-    public class func poll(
+    fileprivate class func poll(
         userId: String,
         entityId: String,
         entityType: OstPollingEntityType,

@@ -9,7 +9,7 @@
 import Foundation
 
 class OstAbortRecoverDevice: OstWorkflowBase {
-    private let ostAbortRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAbortRecoverDevice", qos: .background)
+    static private let ostAbortRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAbortRecoverDevice", qos: .background)
     private let workflowTransactionCountForPolling = 1
     
     private var deviceAddressToAbort: String? = nil
@@ -41,7 +41,7 @@ class OstAbortRecoverDevice: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostAbortRecoverDeviceQueue
+        return OstAbortRecoverDevice.ostAbortRecoverDeviceQueue
     }
     
     /// process

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class OstAddDeviceWithMnemonics: OstWorkflowBase {
-    private let ostAddDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
+    static private let ostAddDeviceWithMnemonicsQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithMnemonics", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
     
@@ -32,7 +32,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostAddDeviceQueue
+        return OstAddDeviceWithMnemonics.ostAddDeviceWithMnemonicsQueue
     }
     
     /// Validiate basic parameters for workflow

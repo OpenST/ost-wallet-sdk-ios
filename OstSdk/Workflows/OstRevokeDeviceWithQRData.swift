@@ -21,7 +21,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         return deviceAddress
     }
 
-    private let ostRevokeDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRevokeDevice", qos: .background)
+    static private let ostRevokeDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRevokeDevice", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRevoke: String
 
@@ -45,7 +45,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostRevokeDeviceQueue
+        return OstRevokeDeviceWithQRData.ostRevokeDeviceQueue
     }
 
     /// Validate params.

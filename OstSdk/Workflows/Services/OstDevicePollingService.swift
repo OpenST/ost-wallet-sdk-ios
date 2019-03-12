@@ -9,7 +9,7 @@
 import Foundation
 
 class OstDevicePollingService: OstBasePollingService {
-    private let devicePollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstDevicePollingService", qos: .background)
+    static private let devicePollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstDevicePollingService", qos: .background)
     
     private let successStatus: String
     private let failureStatus: String
@@ -69,6 +69,6 @@ class OstDevicePollingService: OstBasePollingService {
     ///
     /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
-        return self.devicePollingServiceDispatchQueue
+        return OstDevicePollingService.devicePollingServiceDispatchQueue
     }
 }

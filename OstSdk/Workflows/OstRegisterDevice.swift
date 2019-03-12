@@ -9,8 +9,7 @@
 import Foundation
 
 class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
-    private let ostRegisterDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
-    
+    static private let ostRegisterDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     private let tokenId: String
     private var forceSync: Bool
     
@@ -31,7 +30,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostRegisterDeviceQueue
+        return OstRegisterDevice.ostRegisterDeviceQueue
     }
     
     /// Perform any tasks that are prerequisite for the workflow,

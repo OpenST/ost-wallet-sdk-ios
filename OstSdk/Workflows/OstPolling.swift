@@ -14,7 +14,7 @@ public enum OstPollingEntityType {
 
 class OstPolling: OstWorkflowBase {
     
-    private let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
+    static private let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
     private let workflowTransactionCount = 1
     private let entityId: String
     private let entityType: OstPollingEntityType
@@ -40,7 +40,7 @@ class OstPolling: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostPollingQueue
+        return OstPolling.ostPollingQueue
     }
     
     /// validate workflow params.

@@ -9,13 +9,13 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    static private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
     
     /// Get workflow Queue
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostGetPaperWalletQueue
+        return OstGetPaperWallet.ostGetPaperWalletQueue
     }
     
     /// validate parameters

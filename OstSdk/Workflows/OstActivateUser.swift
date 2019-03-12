@@ -9,7 +9,7 @@
 import Foundation
 
 class OstActivateUser: OstWorkflowBase {
-    private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
     private var expireAfter: TimeInterval
@@ -45,7 +45,7 @@ class OstActivateUser: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostActivateUserQueue
+        return OstActivateUser.ostActivateUserQueue
     }
     
     /// Validate params for activate user

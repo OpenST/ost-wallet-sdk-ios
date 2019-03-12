@@ -56,7 +56,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         return (ruleName, addresses, amounts, tokenId)
     }
     
-    private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
+    static private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let toAddresses: [String]
     private let amounts: [String]
@@ -99,7 +99,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostExecuteTransactionQueue
+        return OstExecuteTransaction.ostExecuteTransactionQueue
     }
     
     /// validate parameters
