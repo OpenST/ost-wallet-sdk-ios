@@ -8,9 +8,10 @@
 
 import Foundation
 
-class OstWorkflowBase: OstPinAcceptProtocol {
+class OstWorkflowBase: OstPinAcceptDelegate {
+    
     var userId: String
-    var delegate: OstWorkFlowCallbackProtocol
+    var delegate: OstWorkFlowCallbackDelegate
     var currentUser: OstUser? {
         do {
             return try OstUser.getById(self.userId)
@@ -30,7 +31,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// - Parameters:
     ///   - userId: Kit user id.
     ///   - delegate: Callback.
-    init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, delegate: OstWorkFlowCallbackDelegate) {
         self.userId = userId
         self.delegate = delegate
     }
@@ -128,7 +129,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// Cancel currently ongoing workflow.
     ///
     /// - Parameter cancelReason: reason to cancel.
-    public func cancelFlow(_ cancelReason: String) {
+    public func cancelFlow() {
         let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
         self.postError(ostError)
     }

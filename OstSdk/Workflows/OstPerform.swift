@@ -13,7 +13,7 @@ enum OstQRCodeDataDefination: String {
     case TRANSACTION = "TX"
 }
 
-class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
+class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     private let payloadString: String?
     
@@ -29,7 +29,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     ///   - delegate: Callback
     init(userId: String,
          payload: String?,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.payloadString = payload;
         super.init(userId: userId, delegate: delegate)

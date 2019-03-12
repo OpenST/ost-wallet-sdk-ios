@@ -22,7 +22,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     ///   - delegate: Callback.
     init(userId: String,
          mnemonics: [String],
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
         super.init(userId: userId, delegate: delegate)

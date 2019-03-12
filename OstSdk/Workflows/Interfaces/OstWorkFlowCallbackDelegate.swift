@@ -1,5 +1,5 @@
 //
-//  OstWorkFlowCallbackProtocol.swift
+//  OstWorkFlowCallbackDelegate.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 31/01/19.
@@ -10,30 +10,33 @@ import Foundation
 
 /// OstWorkFlowCallback implemented by SDK user to perform prerequisites task.
 /// These tasks are assigned by SDK workflows with help of callbacks.
-public protocol OstWorkFlowCallbackProtocol {
+public protocol OstWorkFlowCallbackDelegate {
     
     /// Register device passed as parameter.
     ///
     /// - Parameters:
     ///   - apiParams: Register Device API parameters.
-    ///   - ostDeviceRegisteredProtocol: To pass response.
-    func registerDevice(_ apiParams: [String: Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol)
+    ///   - delegate: To pass response.
+    func registerDevice(_ apiParams: [String: Any],
+                        delegate: OstDeviceRegisteredDelegate)
     
     /// Pin needed to check the authenticity of the user.
     /// Developers should show pin dialog on this callback.
     ///
     /// - Parameters:
     ///   - userId: Id of user whose password and pin are needed.
-    ///   - ostPinAcceptProtocol: To pass pin
-    func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+    ///   - delegate: To pass pin
+    func getPin(_ userId: String,
+                delegate: OstPinAcceptDelegate)
     
     /// Inform SDK user about invalid pin.
     /// Developers should show invalid pin error and ask for pin again on this callback.
     ///
     /// - Parameters:
     ///   - userId: Id of user whose password and pin are needed.
-    ///   - ostPinAcceptProtocol: To pass another pin.
-    func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol)
+    ///   - delegate: To pass another pin.
+    func invalidPin(_ userId: String,
+                    delegate: OstPinAcceptDelegate)
     
     /// Inform SDK user that entered pin is validated.
     /// Developers should dismiss pin dialog on this callback.
@@ -44,14 +47,16 @@ public protocol OstWorkFlowCallbackProtocol {
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostContextEntity: Status of the flow.
-    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+    func flowComplete(workflowContext: OstWorkflowContext,
+                      ostContextEntity: OstContextEntity)
 
     /// Inform SDK user that flow is interrupted with errorCode.
     /// Developers should dismiss pin dialog (if open) on this callback.
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostError: Reason of interruption.
-    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError)
+    func flowInterrupted(workflowContext: OstWorkflowContext,
+                         error: OstError)
     
     /// Show paper wallet
     ///
@@ -64,12 +69,15 @@ public protocol OstWorkFlowCallbackProtocol {
     ///   - workflowContext: OstWorkflowContext
     ///   - ostContextEntity: OstContextEntity
     ///   - delegate: callback
-    func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity, delegate: OstValidateDataProtocol)
+    func verifyData(workflowContext: OstWorkflowContext,
+                    ostContextEntity: OstContextEntity,
+                    delegate: OstValidateDataDelegate)
     
     /// Acknowledge user about the request which is going to make by SDK.
     ///
     /// - Parameters:
     ///   - workflowContext: OstWorkflowContext
     ///   - ostContextEntity: OstContextEntity
-    func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity)
+    func requestAcknowledged(workflowContext: OstWorkflowContext,
+                             ostContextEntity: OstContextEntity)
 }

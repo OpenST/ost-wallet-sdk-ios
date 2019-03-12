@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
+class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     static private let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
     
     class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
@@ -31,7 +31,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataProtocol {
     ///   - delegate:
     init(userId: String,
          deviceAddress: String,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.deviceAddress = deviceAddress
         super.init(userId: userId, delegate: delegate)

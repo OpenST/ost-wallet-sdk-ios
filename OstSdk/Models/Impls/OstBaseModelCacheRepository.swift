@@ -37,7 +37,6 @@ class OstBaseModelCacheRepository: OstBaseModelRepository {
     override func getById(_ id: String) throws -> OstBaseEntity? {
         // Check if the item is avaialable in cache.
         if let entity = getEntityFromCache(forKey: id) {
-            Logger.log(message: "Got entity from cache")
             return entity
         }
         // Get entity from db
