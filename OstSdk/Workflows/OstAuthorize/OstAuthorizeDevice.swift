@@ -38,33 +38,7 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                    generateSignatureCallback: generateSignatureCallback,
                    onFailure: onFailure)
     }
-    
-    /// Fetch device from server
-    ///
-    /// - Parameters:
-    ///   - userId: User id
-    ///   - addressToAdd: address to fetch device
-    ///   - onSuccess: Success callback
-    ///   - onFailure: Failure callback
-    /// - Throws: OstError
-    class func getDevice(userId: String,
-                         addressToAdd: String,
-                         onSuccess: @escaping ((OstDevice) -> Void),
-                         onFailure: @escaping ((OstError) -> Void)) throws {
-        
-        let onSuccess: ((OstDevice) -> Void) = { ostDevice in
-            if (ostDevice.isStatusRegistered) {
-                onSuccess(ostDevice)
-            }else {
-                onFailure(OstError("w_a_ad_gd_1", .deviceNotRegistered))
-            }
-        }
-        
-        try OstAPIDevice(userId: userId).getDevice(deviceAddress: addressToAdd,
-                                                   onSuccess: onSuccess,
-                                                   onFailure: onFailure)
-    }
-    
+   
     /// Get Encoded abi
     ///
     /// - Returns: Encoed abi hex value
