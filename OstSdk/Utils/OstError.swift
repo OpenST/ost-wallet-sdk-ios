@@ -136,6 +136,9 @@ public enum OstErrorText: String {
     case requestTimedOut = "Request timed out"
     case failedToProcess = "Entity failed to process"
     case samePin = "Old and new pin both are same"
+    case conversionFactorNotFound = "Conversion factor not present"
+    case btDecimalNotFound = "Decimal value not found"
+    
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

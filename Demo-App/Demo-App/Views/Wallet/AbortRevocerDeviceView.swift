@@ -13,11 +13,12 @@ class AbortRevocerDeviceView: RecoverDeviceView {
 
     override func recoverDevice() {
         let currentUser = CurrentUser.getInstance()
-        OstSdk.abortRecoverDevice(
-            userId: currentUser.ostUserId!,
-            uPin: spendingLimitTestField.text!,
-            password: currentUser.userPinSalt!,
-            delegate: self.sdkInteract)
+        //TODO: Future work
+//        OstSdk.abortRecoverDevice(
+//            userId: currentUser.ostUserId!,
+//            uPin: spendingLimitTestField.text!,
+//            password: currentUser.userPinSalt!,
+//            delegate: self.sdkInteract)
     }
     
     override func viewDidAppearCallback() {
