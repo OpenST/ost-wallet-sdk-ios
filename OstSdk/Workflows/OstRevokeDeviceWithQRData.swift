@@ -15,6 +15,9 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         guard let deviceAddress: String = payload[OstRevokeDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
             throw OstError("w_rd_gadpfqrp_1", .invalidQRCode)
         }
+        if deviceAddress.isEmpty {
+            throw OstError("w_rd_gadpfqrp_2", .invalidQRCode)
+        }
         return deviceAddress
     }
 
@@ -87,8 +90,12 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         if (nil != error) {
             throw error!
         }
+        if (nil == self.deviceToRevoke?.linkedAddress) {
+            throw OstError("w_rd_fd_1", OstErrorText.linkedAddressNotFound)
+        }
+        
         if (!self.deviceToRevoke!.isStatusAuthorized) {
-            throw OstError("w_rd_fd_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_rd_fd_2", OstErrorText.deviceNotAuthorized)
         }
         if (self.deviceToRevoke!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
             throw OstError("w_rd_fd_3", OstErrorText.differentOwnerDevice)
@@ -116,6 +123,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         }
     }
 
+    /// proceed workflow after user authentication
     override func proceedWorkflowAfterAuthenticateUser() {
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
@@ -145,8 +153,8 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
             }
 
             OstRevokeDevice(userId: self.userId,
-                            linkedAddress: "0x0000000000000000000000000000000000000001",
-                            deviceAddressToRevoke: self.deviceAddressToRevoke,
+                            linkedAddress: self.deviceToRevoke!.linkedAddress!,
+                            deviceAddressToRevoke: self.deviceToRevoke!.address!,
                             generateSignatureCallback: generateSignatureCallback,
                             onRequestAcknowledged: onRequestAcknowledged,
                             onSuccess: onSuccess,

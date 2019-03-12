@@ -79,10 +79,12 @@ class OstAbortRecoverDevice: OstWorkflowBase {
         params["to"] = self.currentUser!.recoveryAddress!
         
         try OstAPIDevice(userId: self.userId)
-            .abortRecoverDevice(params: params,
-                                   onSuccess: { (ostDevice) in
-                                    
-                                    self.postWorkflowComplete(entity: ostDevice)
+            .abortRecoverDevice(
+                params: params,
+                onSuccess: { (ostDevice) in
+            
+                    self.postRequestAcknowledged(entity: ostDevice)
+                    self.pollingForAbortRecover(device: ostDevice)
             }, onFailure: { (ostError) in
                 self.postError(ostError)
             })
@@ -90,8 +92,8 @@ class OstAbortRecoverDevice: OstWorkflowBase {
     
     //TODO: Implement polling.
     /// Polling for checking transaction status
-    func pollingForAbortRecover() {
-    
+    func pollingForAbortRecover(device: OstDevice) {
+        
     }
         
     /// Get current workflow context

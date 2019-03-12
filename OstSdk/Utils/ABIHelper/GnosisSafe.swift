@@ -14,7 +14,7 @@ class GnosisSafe: ABIHelperBase {
     private let ABI_NAME = "GnosisSafe.abi"
     
     private let ADD_OWNER_ABI_METHOD_NAME = "addOwnerWithThreshold"
-    private let REVOKE_DEVICE_ABI_METHOD_NAME = "addOwnerWithThreshold"
+    private let REVOKE_DEVICE_ABI_METHOD_NAME = "removeOwner"
     
     /// Get encodedABI data for `addOwnerWithThreshold`
     ///
