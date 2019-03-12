@@ -18,7 +18,9 @@ class OstAbortRecoverDevice: OstWorkflowBase {
     private var pinManager: OstPinManager? = nil
     private var signature: String? = nil
     private var signer: String? = nil
-
+    private var recoveringDevice: OstDevice? = nil
+    private var revokingDevice: OstDevice? = nil
+    
     /// Initializer
     ///
     /// - Parameters:
@@ -42,23 +44,14 @@ class OstAbortRecoverDevice: OstWorkflowBase {
         return self.ostAbortRecoverDeviceQueue
     }
     
-    /// Validate params.
-    ///
-    /// - Throws: OstError
-    override func validateParams() throws {
-        try super.validateParams()
-        
-        try self.workFlowValidator!.isUserActivated()
-    }
-    
     /// process
     ///
     /// - Throws: OstError
     override func process() throws {
         //TODO: add api call and get devices. Yet to be implemented.
-        self.deviceAddressToAbort = "0x5e772eebe89eb3e5e6c446ba42ec7c7ea42df488"
-        self.deviceAddressOfRecovering = self.currentDevice!.address!
-        self.linkedAddress = "0x0000000000000000000000000000000000000001"
+        self.deviceAddressToAbort = self.currentDevice!.address!
+        self.deviceAddressOfRecovering = ""
+        self.linkedAddress = ""
         
         let signedData = try self.pinManager!.signAbortRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToAbort!)
         self.signer = signedData.address
@@ -82,20 +75,62 @@ class OstAbortRecoverDevice: OstWorkflowBase {
             .abortRecoverDevice(
                 params: params,
                 onSuccess: { (ostDevice) in
-            
+                    
                     self.postRequestAcknowledged(entity: ostDevice)
                     self.pollingForAbortRecover(device: ostDevice)
             }, onFailure: { (ostError) in
                 self.postError(ostError)
             })
     }
-    
-    //TODO: Implement polling.
+
     /// Polling for checking transaction status
     func pollingForAbortRecover(device: OstDevice) {
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
+            let queue = self.getWorkflowQueue()
+            queue.async {
+                try? self.fetchRevokingDevice()
+                self.postWorkflowComplete(entity: ostDevice)
+            }
+        }
         
+        let failureCallback:  ((OstError) -> Void) = { error in
+            self.postError(error)
+        }
+        
+        OstDevicePollingService(
+            userId: self.userId,
+            deviceAddress: deviceAddressOfRecovering!,
+            workflowTransactionCount: workflowTransactionCountForPolling,
+            successStatus: OstDevice.Status.REGISTERED.rawValue,
+            failureStatus: OstDevice.Status.AUTHORIZED.rawValue,
+            successCallback: successCallback,
+            failureCallback: failureCallback).perform()
     }
+    
+    /// Fetch revoking device entity
+    ///
+    /// - Throws: OstError
+    func fetchRevokingDevice() throws {
+        var err: OstError? = nil
+        let group = DispatchGroup()
+        group.enter()
         
+        try OstAPIDevice(userId: self.userId)
+            .getDevice(deviceAddress: self.revokingDevice!.address!,
+                       onSuccess: { (_) in
+                        
+                        group.leave()
+            }, onFailure: { (ostError) in
+                err = ostError
+                group.leave()
+            })
+        group.wait()
+        
+        if(nil != err) {
+            throw err!
+        }
+    }
+    
     /// Get current workflow context
     ///
     /// - Returns: OstWorkflowContext
