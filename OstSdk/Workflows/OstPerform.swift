@@ -9,8 +9,9 @@
 import Foundation
 
 enum OstQRCodeDataDefination: String {
-    case AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+    case AUTHORIZE_DEVICE = "AD"
     case TRANSACTION = "TX"
+    case REVOKE_DEVICE = "RD"
 }
 
 class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
@@ -87,7 +88,8 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         }
         
         let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
-                                         OstQRCodeDataDefination.TRANSACTION.rawValue];
+                                         OstQRCodeDataDefination.TRANSACTION.rawValue,
+                                         OstQRCodeDataDefination.REVOKE_DEVICE.rawValue];
         
         if ( validDefinations.contains(dataDefination) ) {
             self.dataDefination = dataDefination;
@@ -117,6 +119,13 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
             self.executeTxPayloadParams = executeTxPayloadParams
             verifyDataForExecuteTransaction(executeTxPayloadParams)
+            
+        case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
+            let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
+            OstRevokeDeviceWithQRData(userId: self.userId,
+                                      deviceAddressToRevoke: deviceAddress,
+                                      delegate: self.delegate).perform()
+            
         default:
             throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
         }

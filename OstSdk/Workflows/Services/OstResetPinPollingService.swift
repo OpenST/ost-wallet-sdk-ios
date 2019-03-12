@@ -9,17 +9,23 @@
 import Foundation
 
 class OstResetPinPollingService: OstBasePollingService {
-    let resetPinPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstResetPinPollingService", qos: .background)
-    
-    let successCallback: ((OstRecoveryOwnerEntity) -> Void)?
-    let recoveryOwnerAddress: String
+    private let resetPinPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstResetPinPollingService", qos: .background)
+    private let successCallback: ((OstRecoveryOwnerEntity) -> Void)?
+    private let recoveryOwnerAddress: String
 
-    init(
-        userId: String,
-        recoveryOwnerAddress: String,
-        workflowTransactionCount: Int,
-        successCallback: ((OstRecoveryOwnerEntity) -> Void)?,
-        failureCallback: ((OstError) -> Void)?) {
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - recoveryOwnerAddress: recovery owner address
+    ///   - workflowTransactionCount: workflow transaction count
+    ///   - successCallback: Success callback
+    ///   - failureCallback: Failure callback
+    init(userId: String,
+         recoveryOwnerAddress: String,
+         workflowTransactionCount: Int,
+         successCallback: ((OstRecoveryOwnerEntity) -> Void)?,
+         failureCallback: ((OstError) -> Void)?) {
         
         self.recoveryOwnerAddress = recoveryOwnerAddress
         self.successCallback = successCallback
@@ -31,6 +37,9 @@ class OstResetPinPollingService: OstBasePollingService {
         )
     }
     
+    /// Process Entity after success from API
+    ///
+    /// - Parameter entity: User entity
     override func onSuccessProcess(entity: OstBaseEntity) {
         let recoveryOwnerEntity: OstRecoveryOwnerEntity = entity as! OstRecoveryOwnerEntity
         if (recoveryOwnerEntity.isStatusAuthorized) {
@@ -44,6 +53,9 @@ class OstResetPinPollingService: OstBasePollingService {
         }
     }
     
+    /// Fetch entity from server
+    ///
+    /// - Throws: OstError
     override func fetchEntity() throws {
         try OstAPIResetPin(userId: self.userId)
             .getRecoverOwner(
@@ -52,6 +64,9 @@ class OstResetPinPollingService: OstBasePollingService {
                 onFailure: self.onFailure)
     }
     
+    /// Get polling queue
+    ///
+    /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
         return self.resetPinPollingServiceDispatchQueue
     }

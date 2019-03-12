@@ -21,7 +21,7 @@ class GnosisSafeTests: XCTestCase {
 
     func testAddOwnerWithThreshold() {
         let expectedOutput = "0x0d582f1300000000000000000000000098443ba43e5a55ff9c0ebeddfd1db32d7b1a949a0000000000000000000000000000000000000000000000000000000000000001"
-        XCTAssertEqual(try! GnosisSafe().getAddOwnerWithThresholdExecutableData(abiMethodName: "addOwnerWithThreshold", ownerAddress: "0x98443bA43e5a55fF9c0EbeDdfd1db32d7b1A949A"), expectedOutput)
+        XCTAssertEqual(try! GnosisSafe().getAddOwnerWithThresholdExecutableData(ownerAddress: "0x98443bA43e5a55fF9c0EbeDdfd1db32d7b1A949A"), expectedOutput)
     }
     
     func testAuthorizeSession() {

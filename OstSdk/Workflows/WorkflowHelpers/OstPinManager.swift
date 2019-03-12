@@ -83,6 +83,11 @@ class OstPinManager {
     /// - Returns: `true` if valid otherwise `false`
     /// - Throws: OstError
     func validateResetPin() throws{
+        
+        if (self.pin.caseInsensitiveCompare(self.newPin!) == .orderedSame  ) {
+            throw OstError("w_wh_pm_vrp_1", .samePin)
+        }
+        
         try self.validateNewPinLength()
         try self.validatePin()
     }

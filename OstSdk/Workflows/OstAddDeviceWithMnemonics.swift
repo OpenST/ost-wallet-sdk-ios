@@ -87,7 +87,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
             throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
         }
         if (deviceFromMnemonics!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
+            throw OstError("w_adwm_fd_2", OstErrorText.differentOwnerDevice)
         }
     }
 

@@ -17,7 +17,7 @@ public class OstDevice: OstBaseEntity {
     static let ENTITY_PARENT_IDENTIFIER = "user_id"
     
     /// Device status
-    private enum Status: String {
+    enum Status: String {
         case CREATED = "CREATED"
         case REGISTERED = "REGISTERED"
         case AUTHORIZING = "AUTHORIZING"

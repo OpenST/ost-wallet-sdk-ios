@@ -100,6 +100,8 @@ class OstPolling: OstWorkflowBase {
             pollingService = OstDevicePollingService(userId: self.userId,
                                                      deviceAddress: self.entityId,
                                                      workflowTransactionCount: workflowTransactionCount,
+                                                     successStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                                     failureStatus: OstDevice.Status.REGISTERED.rawValue,
                                                      successCallback:onSuccessCallback, failureCallback: onFailureCallback)
         case .session:
             pollingService = OstSessionPollingService(userId: self.userId,

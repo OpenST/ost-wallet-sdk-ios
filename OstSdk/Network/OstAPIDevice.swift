@@ -97,6 +97,39 @@ class OstAPIDevice: OstAPIBase {
         )
     }
     
+    /// Authorize device. Make an API call and store the result in the database
+    ///
+    /// - Parameters:
+    ///   - params: Authorize device parameters
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
+    func revokeDevice(params: [String: Any],
+                      onSuccess: ((OstDevice) -> Void)?,
+                      onFailure: ((OstError) -> Void)?) throws {
+        
+        resourceURL = userApiResourceBase + "/revoke"
+        var revokeDeviceParams: [String: Any] = params
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &revokeDeviceParams, withUserId: self.userId)
+        
+        // Make an API call and store the data in database.
+        post(params: revokeDeviceParams as [String: AnyObject],
+             onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entity as! OstDevice)
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+        },
+             onFailure: { (failureResponse) in
+                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+        }
+        )
+    }
+    
     /// Initiate recover device
     ///
     /// - Parameters:
