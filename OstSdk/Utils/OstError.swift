@@ -138,7 +138,7 @@ public enum OstErrorText: String {
     case samePin = "Old and new pin both are same"
     case conversionFactorNotFound = "Conversion factor not present"
     case btDecimalNotFound = "Decimal value not found"
-    
+    case keyNotFound = "Key not found"
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
