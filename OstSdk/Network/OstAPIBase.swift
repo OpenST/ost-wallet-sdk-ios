@@ -26,7 +26,7 @@ class OstAPIBase {
     var resourceURL: String = ""
     
     /// Request timeout duration in seconds
-    var requestTimeout: Int  = OstConstants.OST_REQUEST_TIMEOUT_DURATION
+    var requestTimeout: Int  = OstConfig.getRequestTimeoutDuration()
     
     /// Request data
     var dataRequest: DataRequest? = nil
@@ -81,22 +81,22 @@ class OstAPIBase {
                  onFailure:@escaping (([String: Any]?) -> Void)) {
         // Check if the internet connectivity is available, if not then dont send request
         guard OstConnectivity.isConnectedToInternet else {
-            Logger.log(message: "System appears offline. Please check your internet connectivity")
+             // Logger.log(message: "System appears offline. Please check your internet connectivity")
             let noInternetResponse = OstAPIErrorHandler.getNoInternetConnectivityResponse()
             onFailure(noInternetResponse)
             return
         }
         
-        Logger.log(message: "url", parameterToPrint: url)
-        Logger.log(message: "params", parameterToPrint: params as Any)
+         // Logger.log(message: "url", parameterToPrint: url)
+         // Logger.log(message: "params", parameterToPrint: params as Any)
         
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
         
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
         dataRequest!.responseJSON { (httpResponse) in
-            Logger.log(message: "httpResponse.relativePath", parameterToPrint: httpResponse.response?.url?.relativePath);
-            Logger.log(message: "httpResponse.result.value", parameterToPrint: httpResponse.result.value);
+             // Logger.log(message: "httpResponse.relativePath", parameterToPrint: httpResponse.response?.url?.relativePath);
+             // Logger.log(message: "httpResponse.result.value", parameterToPrint: httpResponse.result.value);
             
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {

@@ -10,7 +10,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     
-    private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     
@@ -26,7 +26,7 @@ class OstAddSession: OstWorkflowBase {
     init(userId: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter;
@@ -37,7 +37,7 @@ class OstAddSession: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostAddSessionQueue
+        return OstAddSession.ostAddSessionQueue
     }
     
     /// validate parameters

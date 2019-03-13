@@ -9,14 +9,14 @@
 import Foundation
 import OstSdk
 
-class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
+class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackDelegate {
    
     var mappyUserId: String
     init(mappyUserId: String) {
         self.mappyUserId = mappyUserId
     }
     
-    func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
+    func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredDelegate) {
         
         MappyRegisterDevice().registerDevice(apiParams as [String : AnyObject], forUserId: mappyUserId,  onSuccess: { (deviceObj) in
             do {
@@ -31,11 +31,11 @@ class OstWorkFlowCallbackImplementation: OstWorkFlowCallbackProtocol {
        
     }
     
-    func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
+    func getPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptDelegate) {
         ostPinAcceptProtocol.pinEntered("123456", applicationPassword: "fjkaefbhawebkfkuhwabfuwaebfyu3bfyubruq23h87hriuq3hrniuq")
     }
     
-    func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptProtocol) {
+    func invalidPin(_ userId: String, delegate ostPinAcceptProtocol: OstPinAcceptDelegate) {
         
     }
     

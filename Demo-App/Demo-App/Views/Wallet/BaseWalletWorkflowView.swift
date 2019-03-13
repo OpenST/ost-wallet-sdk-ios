@@ -74,7 +74,7 @@ class BaseWalletWorkflowView: BaseWalletView {
             self.activityIndicator.stopAnimating();
 
         } else if (OstSdkInteract.WorkflowEventType.getPinFromUser == eventType ) {
-            let ostPinAcceptProtocol:OstPinAcceptProtocol = eventData["ostPinAcceptProtocol"] as! OstPinAcceptProtocol;
+            let ostPinAcceptProtocol:OstPinAcceptDelegate = eventData["ostPinAcceptProtocol"] as! OstPinAcceptDelegate;
             getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol);
         }
     }
@@ -105,7 +105,7 @@ class BaseWalletWorkflowView: BaseWalletView {
  
     let alertTitle = "Enter your pin"
     var alertMessage = ""
-  func getPinFromUser(ostPinAcceptProtocol: OstPinAcceptProtocol) {
+  func getPinFromUser(ostPinAcceptProtocol: OstPinAcceptDelegate) {
     let currentUser = CurrentUser.getInstance();
     let alert = UIAlertController(title: self.alertTitle, message: self.alertMessage, preferredStyle: UIAlertController.Style.alert);
     //Add a text field.

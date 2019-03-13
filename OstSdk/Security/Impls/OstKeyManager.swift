@@ -592,7 +592,7 @@ private extension OstKeyManager {
                         let jsonString: String = String(data: dData, encoding: .utf8)!
                         return jsonString
                     } else {
-                        Logger.log(message: "Private key not found.")
+                        // Logger.log(message: "Private key not found.")
                         throw OstError.init("s_i_km_gs_1", .noPrivateKeyFound)
                     }
                 }

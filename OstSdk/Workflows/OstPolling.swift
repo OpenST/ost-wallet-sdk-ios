@@ -14,7 +14,7 @@ public enum OstPollingEntityType {
 
 class OstPolling: OstWorkflowBase {
     
-    private let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
+    static private let ostPollingQueue = DispatchQueue(label: "com.ost.sdk.OstPolling", qos: .background)
     private let workflowTransactionCount = 1
     private let entityId: String
     private let entityType: OstPollingEntityType
@@ -29,7 +29,7 @@ class OstPolling: OstWorkflowBase {
     init(userId: String,
          entityId: String,
          entityType: OstPollingEntityType,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.entityId = entityId
         self.entityType = entityType
@@ -40,7 +40,7 @@ class OstPolling: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostPollingQueue
+        return OstPolling.ostPollingQueue
     }
     
     /// validate workflow params.
@@ -100,6 +100,8 @@ class OstPolling: OstWorkflowBase {
             pollingService = OstDevicePollingService(userId: self.userId,
                                                      deviceAddress: self.entityId,
                                                      workflowTransactionCount: workflowTransactionCount,
+                                                     successStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                                     failureStatus: OstDevice.Status.REGISTERED.rawValue,
                                                      successCallback:onSuccessCallback, failureCallback: onFailureCallback)
         case .session:
             pollingService = OstSessionPollingService(userId: self.userId,

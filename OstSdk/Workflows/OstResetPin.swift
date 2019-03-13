@@ -9,7 +9,7 @@
 import Foundation
 
 class OstResetPin: OstWorkflowBase {
-    private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
+    static private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let pinManager: OstPinManager
     
@@ -25,7 +25,7 @@ class OstResetPin: OstWorkflowBase {
          password: String,
          oldPin: String,
          newPin: String,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
 
         self.pinManager = OstPinManager(
             userId: userId,
@@ -40,7 +40,7 @@ class OstResetPin: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostResetPinQueue
+        return OstResetPin.ostResetPinQueue
     }
     
     /// Validate params for reset pin
@@ -131,7 +131,7 @@ class OstResetPin: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstResetPinPollingService(userId: entity.userId!,
                                  recoveryOwnerAddress: entity.address!,

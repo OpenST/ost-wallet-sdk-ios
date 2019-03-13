@@ -287,7 +287,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         startReading();
     }
     
-    var ostValidateDataProtocol:OstValidateDataProtocol?;
+    var ostValidateDataProtocol:OstValidateDataDelegate?;
     
     override func receivedSdkEvent(eventData: [String : Any]) {
         let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
@@ -346,7 +346,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         
         let workflowContext = eventData["workflowContext"] as! OstWorkflowContext;
         let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
-        self.ostValidateDataProtocol = eventData["delegate"] as? OstValidateDataProtocol;
+        self.ostValidateDataProtocol = eventData["delegate"] as? OstValidateDataDelegate;
         if ( workflowContext.workflowType == .addDeviceWithQRCode
             || workflowContext.workflowType == .addDeviceWithMnemonics) {
             let device = ostContextEntity.entity as! OstDevice;

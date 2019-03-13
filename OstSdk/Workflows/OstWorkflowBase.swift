@@ -8,9 +8,10 @@
 
 import Foundation
 
-class OstWorkflowBase: OstPinAcceptProtocol {
+class OstWorkflowBase: OstPinAcceptDelegate {
+    
     var userId: String
-    var delegate: OstWorkFlowCallbackProtocol
+    var delegate: OstWorkFlowCallbackDelegate
     var currentUser: OstUser? {
         do {
             return try OstUser.getById(self.userId)
@@ -30,24 +31,26 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// - Parameters:
     ///   - userId: Kit user id.
     ///   - delegate: Callback.
-    init(userId: String, delegate: OstWorkFlowCallbackProtocol) {
+    init(userId: String, delegate: OstWorkFlowCallbackDelegate) {
         self.userId = userId
         self.delegate = delegate
     }
-    
+
     /// Perform
     func perform() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            do {
-                try self.beforeProcess()
-                self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
-                
-                try self.validateParams()
-                try self.process()
-
-            }catch let error {
-                self.postError(error)
+        let asyncQueue: DispatchQueue = DispatchQueue(label: "asyncThread")
+        asyncQueue.async {
+            let queue: DispatchQueue = self.getWorkflowQueue()
+            queue.sync {
+                do {
+                    try self.beforeProcess()
+                    self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
+                    
+                    try self.validateParams()
+                    try self.process()
+                }catch let error {
+                    self.postError(error)
+                }
             }
         }
     }
@@ -64,8 +67,8 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             forceSync: false,
             syncEntites: .User, .Token, .CurrentDevice, onCompletion: { (isFetched) in
                 group.leave()
-            }
-        ).perform()
+        }
+            ).perform()
         
         group.wait()
     }
@@ -100,14 +103,13 @@ class OstWorkflowBase: OstPinAcceptProtocol {
             }
         }
     }
-
+    
     /// Send callback to application about request has been sent to server.
     ///
     /// - Parameter entity: OstEntity whose response has received.
     func postRequestAcknowledged(entity: Any) {
         let workflowContext: OstWorkflowContext = getWorkflowContext()
         let contextEntity: OstContextEntity = getContextEntity(for: entity)
-        
         DispatchQueue.main.async {
             self.delegate.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
@@ -128,7 +130,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     /// Cancel currently ongoing workflow.
     ///
     /// - Parameter cancelReason: reason to cancel.
-    public func cancelFlow(_ cancelReason: String) {
+    public func cancelFlow() {
         let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
         self.postError(ostError)
     }
@@ -158,7 +160,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
         }
         return self.workFlowValidator!
     }
-
+    
     /// Accept pin from user and validate.
     ///
     /// - Parameters:
@@ -183,7 +185,7 @@ class OstWorkflowBase: OstPinAcceptProtocol {
     
     /// Check retry count of pin validation.
     func userAuthenticationFailed() {
-        if (OstConstants.OST_PIN_MAX_RETRY_COUNT <= self.enterPinCount) {
+        if (OstConfig.getPinMaxRetryCount() <= self.enterPinCount) {
             self.postError(OstError("w_wb_uaf_1", .maxUserValidatedCountReached))
         }else{
             DispatchQueue.main.async {

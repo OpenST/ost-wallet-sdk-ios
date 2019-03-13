@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class OstAddDeviceWithMnemonics: OstWorkflowBase {
-    private let ostAddDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstAddDevice", qos: .background)
+    static private let ostAddDeviceWithMnemonicsQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithMnemonics", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
     
@@ -22,7 +22,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     ///   - delegate: Callback.
     init(userId: String,
          mnemonics: [String],
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
         super.init(userId: userId, delegate: delegate)
@@ -32,7 +32,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostAddDeviceQueue
+        return OstAddDeviceWithMnemonics.ostAddDeviceWithMnemonicsQueue
     }
     
     /// Validiate basic parameters for workflow
@@ -87,7 +87,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
             throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
         }
         if (deviceFromMnemonics!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwm_fd_2", OstErrorText.registerSameDevice)
+            throw OstError("w_adwm_fd_2", OstErrorText.differentOwnerDevice)
         }
     }
 

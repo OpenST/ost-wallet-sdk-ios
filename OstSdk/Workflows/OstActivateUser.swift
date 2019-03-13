@@ -9,7 +9,7 @@
 import Foundation
 
 class OstActivateUser: OstWorkflowBase {
-    private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
     private var expireAfter: TimeInterval
@@ -31,7 +31,7 @@ class OstActivateUser: OstWorkflowBase {
          password: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter
@@ -45,7 +45,7 @@ class OstActivateUser: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostActivateUserQueue
+        return OstActivateUser.ostActivateUserQueue
     }
     
     /// Validate params for activate user
@@ -152,7 +152,7 @@ class OstActivateUser: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstUserPollingService(
             userId: ostUser.id,

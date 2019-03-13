@@ -9,12 +9,13 @@
 import Foundation
 
 enum OstQRCodeDataDefination: String {
-    case AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+    case AUTHORIZE_DEVICE = "AD"
     case TRANSACTION = "TX"
+    case REVOKE_DEVICE = "RD"
 }
 
-class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
-    private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
+class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
+    static private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     private let payloadString: String?
     
     private var dataDefination: String? = nil
@@ -29,7 +30,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     ///   - delegate: Callback
     init(userId: String,
          payload: String?,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.payloadString = payload;
         super.init(userId: userId, delegate: delegate)
@@ -39,7 +40,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostPerformQueue
+        return OstPerform.ostPerformQueue
     }
     
     /// validate parameters
@@ -87,7 +88,8 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
         }
         
         let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
-                                         OstQRCodeDataDefination.TRANSACTION.rawValue];
+                                         OstQRCodeDataDefination.TRANSACTION.rawValue,
+                                         OstQRCodeDataDefination.REVOKE_DEVICE.rawValue];
         
         if ( validDefinations.contains(dataDefination) ) {
             self.dataDefination = dataDefination;
@@ -117,6 +119,13 @@ class OstPerform: OstWorkflowBase, OstValidateDataProtocol {
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
             self.executeTxPayloadParams = executeTxPayloadParams
             verifyDataForExecuteTransaction(executeTxPayloadParams)
+            
+        case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
+            let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
+            OstRevokeDeviceWithQRData(userId: self.userId,
+                                      deviceAddressToRevoke: deviceAddress,
+                                      delegate: self.delegate).perform()
+            
         default:
             throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
         }

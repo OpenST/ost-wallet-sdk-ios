@@ -27,6 +27,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     case showQRCode = "showQRCode"
     case resetPin = "resetPin"
     case recoverDevice = "recoverDevice"
+    case abortRecoverDevice = "abortRecoverDevice"
     case showUserDetails = "showUserDetails"
   }
   
@@ -43,6 +44,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     var paperWallet: [String: String] = [:];
     var resetPin: [String: String] = [:]
     var recoverDevice: [String: String] = [:]
+    var abortRecoverDevice: [String: String] = [:]
     var scanQRCode: [String: String] = [:];
     var showUserDetails: [String: String] = [:]
     
@@ -74,11 +76,15 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     recoverDevice[ACTION_TYPE] = ACTIONS.recoverDevice.rawValue
     recoverDevice[ACTION_TEXT] = "Recover device"
     
+    abortRecoverDevice[ACTION_TYPE] = ACTIONS.abortRecoverDevice.rawValue
+    abortRecoverDevice[ACTION_TEXT] = "Abort Recover device"
+    
     if ( userDevice.isStatusAuthorizing ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         recoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
+        abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
     } else if ( userDevice.isStatusAuthorized ) {
@@ -86,6 +92,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         scanQRCode[ACTION_DETAILS] = "Perform transactions and Authorize devices by scanning QR code.";
         resetPin[ACTION_DETAILS] = "Don't worry, Reset Pin to continue.";
         recoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorized.";
+        abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorized.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
     } else if ( userDevice.isStatusRegistered ) {
@@ -93,6 +100,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is not authorized";
         recoverDevice[ACTION_DETAILS] = "Recover device by providing device address.";
+        abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is Registered.";
         showAddDeviceCode[ACTION_DETAILS] = "Authorize this device by scanning the QR code.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
     } else if ( userDevice.isStatusRevoked ) {
@@ -100,6 +108,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         scanQRCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         resetPin[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         recoverDevice[ACTION_DETAILS] = "Likely to fail as device is revoked.";
+        abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is revoked.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is revoked.";
     }
@@ -286,6 +295,12 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         else if ( actionType.caseInsensitiveCompare(ACTIONS.recoverDevice.rawValue) == .orderedSame ) {
             let walletController = WalletViewController(nibName: nil, bundle: nil);
             walletController.viewMode = WalletViewController.ViewMode.RECOVER_DEVICE;
+            self.present(walletController, animated: true, completion: nil);
+        }
+        
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.abortRecoverDevice.rawValue) == .orderedSame ) {
+            let walletController = WalletViewController(nibName: nil, bundle: nil);
+            walletController.viewMode = WalletViewController.ViewMode.ABORT_RECOVER_DEVICE;
             self.present(walletController, animated: true, completion: nil);
         }
     }

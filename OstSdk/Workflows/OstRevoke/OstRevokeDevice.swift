@@ -1,17 +1,19 @@
 //
-//  OstAuthorizeDevice.swift
-//  
+//  OstRevokeDevice.swift
+//  OstSdk
 //
-//  Created by aniket ayachit on 21/02/19.
+//  Created by aniket ayachit on 11/03/19.
+//  Copyright © 2019 aniket ayachit. All rights reserved.
 //
 
 import Foundation
 
-class OstAuthorizeDevice: OstAuthorizeBase {
-    private let abiMethodNameForAuthorizeDevice = "addOwnerWithThreshold"
+class OstRevokeDevice: OstRevokeBase {
+    private let abiMethodNameForRevokeDevice = "removeOwner"
     private let threshold = 1
     private let workflowTransactionCountForPolling = 1
     
+    private let linkedAddress: String
     private let onRequestAcknowledged: ((OstDevice)-> Void)
     private let onSuccess: ((OstDevice)-> Void)
     
@@ -19,34 +21,38 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - deviceAddressToAdd: Device address to add
+    ///   - linkedAddress: Linked address of device
+    ///   - deviceAddressToRevoke: Device address to revoke
     ///   - generateSignatureCallback: Callback to get signature
     ///   - onRequestAcknowledged: Callback for request acknowledge
     ///   - onSuccess: Callback when flow successfull
     ///   - onFailure: Callback when flow failed
     init (userId: String,
-          deviceAddressToAdd: String,
+          linkedAddress: String,
+          deviceAddressToRevoke: String,
           generateSignatureCallback: @escaping ((String) -> (String?, String?)),
           onRequestAcknowledged: @escaping ((OstDevice) -> Void),
           onSuccess: @escaping ((OstDevice) -> Void),
           onFailure: @escaping ((OstError) -> Void)) {
         
+        self.linkedAddress = linkedAddress
         self.onSuccess = onSuccess
         self.onRequestAcknowledged = onRequestAcknowledged
         super.init(userId: userId,
-                   addressToAdd: deviceAddressToAdd,
+                   addressToRevoke: deviceAddressToRevoke,
                    generateSignatureCallback: generateSignatureCallback,
                    onFailure: onFailure)
     }
-   
+    
     /// Get Encoded abi
     ///
     /// - Returns: Encoed abi hex value
     /// - Throws: OstError
     override func getEncodedABI() throws -> String {
         let encodedABIHex = try GnosisSafe()
-            .getAddOwnerWithThresholdExecutableData(ownerAddress: self.addressToAdd,
-                                                    threshold: OstUtils.toString(self.threshold)!)
+            .getRevokeDeviceWithThresholdExecutableData(prevOwner: self.linkedAddress,
+                                                        owner: self.addressToRevoke,
+                                                        threshold: OstUtils.toString(self.threshold)!)
         return encodedABIHex
     }
     
@@ -62,8 +68,11 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     ///
     /// - Returns: raw calldata JSON string
     override func getRawCallData() -> String {
-        let callData = ["method": self.abiMethodNameForAuthorizeDevice,
-                        "parameters": [self.addressToAdd, self.threshold]] as [String : Any]
+        let callData:[String : Any] = ["method": self.abiMethodNameForRevokeDevice,
+                                       "parameters": [self.linkedAddress,
+                                                      self.addressToRevoke,
+                                                      self.threshold]
+                                      ]
         return try! OstUtils.toJSONString(callData)!
     }
     
@@ -73,11 +82,11 @@ class OstAuthorizeDevice: OstAuthorizeBase {
     /// - Throws: OstError
     override func apiRequestForAuthorize(params: [String: Any]) throws {
         var ostError: OstError? = nil
-        var authorizeDevice: OstDevice? = nil
+        var revokeDevice: OstDevice? = nil
         let group = DispatchGroup()
         group.enter()
-        try OstAPIDevice(userId: self.userId).authorizeDevice(params: params, onSuccess: { (ostDevice) in
-            authorizeDevice = ostDevice
+        try OstAPIDevice(userId: self.userId).revokeDevice(params: params, onSuccess: { (ostDevice) in
+            revokeDevice = ostDevice
             group.leave()
         }) { (error) in
             ostError = error
@@ -88,13 +97,13 @@ class OstAuthorizeDevice: OstAuthorizeBase {
             try? self.fetchDeviceManager()
             throw ostError!
         }
-       
-        self.onRequestAcknowledged(authorizeDevice!)
-        self.pollingForAddDevice()
+        
+        self.onRequestAcknowledged(revokeDevice!)
+        self.pollingForRevokeDevice()
     }
-
+    
     /// Polling for device
-    func pollingForAddDevice() {
+    func pollingForRevokeDevice() {
         
         let successCallback: ((OstDevice) -> Void) = { ostDevice in
             self.onSuccess(ostDevice)
@@ -109,10 +118,10 @@ class OstAuthorizeDevice: OstAuthorizeBase {
         // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstDevicePollingService(userId: self.userId,
-                                deviceAddress: self.addressToAdd,
+                                deviceAddress: self.addressToRevoke,
                                 workflowTransactionCount: self.workflowTransactionCountForPolling,
-                                successStatus: OstDevice.Status.AUTHORIZED.rawValue,
-                                failureStatus: OstDevice.Status.REGISTERED.rawValue,
+                                successStatus: OstDevice.Status.REVOKED.rawValue,
+                                failureStatus: OstDevice.Status.AUTHORIZED.rawValue,
                                 successCallback: successCallback,
                                 failureCallback:failureCallback).perform()
     }

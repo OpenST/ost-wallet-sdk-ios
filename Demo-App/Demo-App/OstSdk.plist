@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BlockGenerationTime</key>
+	<integer>3</integer>
+	<key>PricePointTokenSymbol</key>
+	<string>OST</string>
+	<key>PricePointCurrencySymbol</key>
+	<string>USD</string>
+	<key>RequestTimeoutDuration</key>
+	<integer>60</integer>
+	<key>PinMaxRetryCount</key>
+	<integer>3</integer>
+	<key>SessionBufferTime</key>
+	<integer>3600</integer>
+</dict>
+</plist>

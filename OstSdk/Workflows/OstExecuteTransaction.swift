@@ -19,6 +19,8 @@ class OstExecuteTransaction: OstWorkflowBase {
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
+    private let OST_DECIMAL_VALUE = 18
+    
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
     
@@ -54,7 +56,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         return (ruleName, addresses, amounts, tokenId)
     }
     
-    private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
+    static private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let toAddresses: [String]
     private let amounts: [String]
@@ -68,6 +70,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     private var signature: String? = nil
     private var rawCalldata: String? = nil
     private var pricePoint: [String: Any]? = nil
+    private var transactionValueInWei: BigInt? = nil
     
     /// Initialize Execute Transaction
     ///
@@ -83,7 +86,7 @@ class OstExecuteTransaction: OstWorkflowBase {
          toAddresses: [String],
          amounts: [String],
          tokenId: String,
-         delegate: OstWorkFlowCallbackProtocol) {
+         delegate: OstWorkFlowCallbackDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
@@ -96,7 +99,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostExecuteTransactionQueue
+        return OstExecuteTransaction.ostExecuteTransactionQueue
     }
     
     /// validate parameters
@@ -135,11 +138,6 @@ class OstExecuteTransaction: OstWorkflowBase {
                 throw OstError("w_et_p_1", .rulesNotFound)
             }
         }
-        
-        guard let session = try getActiveSession() else {
-            throw OstError("w_et_p_2", OstErrorText.sessionNotFound)
-        }
-        self.activeSession = session
         
         switch self.ruleName.uppercased() {
         case OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased():
@@ -195,9 +193,8 @@ class OstExecuteTransaction: OstWorkflowBase {
         if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
             for session in activeSessions {
                 if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
-                    let totalTransactionSpendingLimit = try getTransactionSpendingLimit()
                     let spendingLimit = BigInt(session.spendingLimit ?? "0")
-                    if spendingLimit >= totalTransactionSpendingLimit {
+                    if spendingLimit >= self.transactionValueInWei! {
                         ostSession = session
                         break
                     }
@@ -205,21 +202,6 @@ class OstExecuteTransaction: OstWorkflowBase {
             }
         }
         return ostSession
-    }
-    
-    /// Get total spending limit of transaction
-    ///
-    /// - Returns: BigInt of total transaciton amount
-    /// - Throws: OstError
-    private func getTransactionSpendingLimit() throws -> BigInt {
-        var totalAmount: BigInt = BigInt("0")
-        for amount in self.amounts {
-            guard let amountInBigInt = BigInt(amount) else {
-                throw OstError("w_et_gtsl_1", OstErrorText.invalidAmount)
-            }
-            totalAmount += amountInBigInt
-        }
-        return totalAmount
     }
     
     /// Generate EIP1077 hash.
@@ -284,7 +266,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.fetchSession(error: error)            
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         
         OstTransactionPollingService(userId: self.userId,
@@ -320,6 +302,14 @@ extension OstExecuteTransaction {
                 throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
             }
         }
+        
+        self.transactionValueInWei = try getTransactionValueInWeiForPay()
+        
+        guard let session = try getActiveSession() else {
+            throw OstError("w_et_pfp_2", OstErrorText.sessionNotFound)
+        }
+        self.activeSession = session
+        
         self.calldata = try getCallDataForPricerRule()
         if ( nil == self.calldata) {
             throw OstError("w_et_pfdt_2", OstErrorText.callDataFormationFailed)
@@ -358,14 +348,13 @@ extension OstExecuteTransaction {
     /// - Returns: calldata
     /// - Throws: OstError
     private func getCallDataForPricerRule() throws -> String? {
-        
-        let currencyPriceInWei = try getCurrencyValueInWei()
+        let currencyPriceInWei = try getPricePointInWei()
         return try PricerRule().getPayExecutableData(abiMethodName: self.ABI_METHOD_NAME_PAY,
                                                      from: self.currentUser!.tokenHolderAddress!,
                                                      toAddresses: self.toAddresses,
                                                      amounts: self.amounts,
-                                                     currencyCode: OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
-                                                     currencyPrice: currencyPriceInWei
+                                                     currencyCode: OstConfig.getPricePointCurrencySymbol(),
+                                                     currencyPrice: currencyPriceInWei.description
         )
     }
     
@@ -373,54 +362,69 @@ extension OstExecuteTransaction {
     ///
     /// - Returns: Currency in wei
     /// - Throws: OstError
-    private func getCurrencyValueInWei() throws -> String {
-        
-        guard let ostDict = self.pricePoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
+    private func getPricePointInWei() throws -> BigInt {
+        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
             throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
         }
         
-        let fiatValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
-        let components = fiatValInString.split(separator: ".")
-        var exponent: Int
-        var afterDecimalString: Substring = ""
-        if components.count == 1 {
-            exponent = 0
-        }else if components.count == 2 {
-            afterDecimalString = components[1]
-            while (afterDecimalString.hasSuffix("0") && afterDecimalString.count>0) {
-                afterDecimalString = afterDecimalString.dropLast()
-            }
-            exponent = afterDecimalString.count
-        }else {
-            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
-        }
-        
-        let pricePointNumber = BigInt("\( components[0])\(afterDecimalString)")
-        if (nil == pricePointNumber) {
-            throw OstError("w_et_gcviw_2", OstErrorText.invalidPricePoint)
-        }
+        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        let components = try OstConversion.getNumberComponents(fiatValInString)
         
         guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
             throw OstError("w_et_gcviw_2", OstErrorText.callDataFormationFailed)
         }
         
-        let finalExponentComponent = decimal-exponent
-        
-        let currencyPriceInWei = pricePointNumber! * BigInt(10).power(finalExponentComponent)
-        return (currencyPriceInWei.description)
+        let finalExponentComponent = decimal + components.exponent
+        let currencyPriceInWei = components.number * BigInt(10).power(finalExponentComponent)
+    
+        return currencyPriceInWei
     }
+    
+    /// Get Transaction spending amount.
+    ///
+    /// - Returns: BigInt of transaction spending amount
+    /// - Throws: OstError
+    func getTransactionValueInWeiForPay() throws -> BigInt {
+        var totalAmount: BigInt = BigInt("0")
+        
+        guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
+            throw OstError("w_et_gtviwfp_1", OstErrorText.invalidAmount)
+        }
+        guard let btToOstConversionFactor = token.conversionFactor else {
+            throw OstError("w_et_gtviwfp_2", OstErrorText.conversionFactorNotFound)
+        }
+        guard let btDecimal = token.decimals else {
+            throw OstError("w_et_gtviwfp_2", OstErrorText.btDecimalNotFound)
+        }
+        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
+            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        }
+        
+        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        
+        for amount in self.amounts {
+            let btAmount = try OstConversion.fiatToBt(btToOstConversionFactor: btToOstConversionFactor,
+                                       btDecimal: btDecimal,
+                                       ostDecimal: self.OST_DECIMAL_VALUE,
+                                       fiatAmount: BigInt(amount)!,
+                                       pricePoint: fiatValInString)
+            totalAmount += btAmount
+        }
+        return totalAmount
+    }
+    
     
     /// Create raw call data for pay
     ///
     /// - Throws: OstError
     private func createRawCallDataForPay() throws {
-        let currencyPriceInWei = try getCurrencyValueInWei()
+        let currencyPriceInWei = try getPricePointInWei()
         let rawCalldata: [String: Any] = ["method": self.ABI_METHOD_NAME_PAY,
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
                                                          self.toAddresses,
                                                          self.amounts,
-                                                         OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
-                                                         currencyPriceInWei]]
+                                                         OstConfig.getPricePointCurrencySymbol(),
+                                                         currencyPriceInWei.description]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }
 }
@@ -430,6 +434,13 @@ extension OstExecuteTransaction {
     
     /// process for direct transfer
     private func processForDirectTransfer() throws  {
+        self.transactionValueInWei = try getTransactionValueForDirectTransfer()
+        
+        guard let session = try getActiveSession() else {
+            throw OstError("w_et_pfdt_1", OstErrorText.sessionNotFound)
+        }
+        self.activeSession = session
+        
         self.calldata = try getCallDataForDirectTransfer()
         if ( nil == self.calldata) {
             throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
@@ -459,4 +470,20 @@ extension OstExecuteTransaction {
                                           "parameters": [self.toAddresses, self.amounts]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }
+    
+    /// Get total spending limit of transaction
+    ///
+    /// - Returns: BigInt of total transaciton amount
+    /// - Throws: OstError
+    private func getTransactionValueForDirectTransfer() throws -> BigInt {
+        var totalAmount: BigInt = BigInt("0")
+        for amount in self.amounts {
+            guard let amountInBigInt = BigInt(amount) else {
+                throw OstError("w_et_gtsl_1", OstErrorText.invalidAmount)
+            }
+            totalAmount += amountInBigInt
+        }
+        return totalAmount
+    }
+    
 }

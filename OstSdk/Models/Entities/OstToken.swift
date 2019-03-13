@@ -87,4 +87,14 @@ public extension OstToken {
         let auxiliaryChain = (auxiliaryChains?.first)!
         return OstUtils.toString(auxiliaryChain["chain_id"] as Any?)
     }
+    
+    /// Decimal value
+    var decimals: Int? {
+        return OstUtils.toInt(self.data["decimals"])
+    }
+    
+    /// Conversion factor
+    var conversionFactor: String? {
+        return OstUtils.toString(self.data["conversion_factor"])
+    }
 }

@@ -12,28 +12,48 @@ import CryptoSwift
 class OstUserPollingService: OstBasePollingService {
     
     let userPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstUserPollingService", qos: .background)
-    
     let successCallback: ((OstUser) -> Void)?
-    init(userId: String, workflowTransactionCount: Int, successCallback: ((OstUser) -> Void)?, failureCallback: ((OstError) -> Void)?) {
+    
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - workflowTransactionCount: workflow transaction count
+    ///   - successCallback: Success callback
+    ///   - failureCallback: Failure callback
+    init(userId: String,
+         workflowTransactionCount: Int,
+         successCallback: ((OstUser) -> Void)?,
+         failureCallback: ((OstError) -> Void)?) {
+        
         self.successCallback = successCallback
         super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
     }
     
+    /// Process Entity after success from API
+    ///
+    /// - Parameter entity: User entity
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostUser: OstUser = entity as! OstUser
         if (ostUser.isStatusActivating) {
-            Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
+            // Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
             self.getEntityAfterDelay()
         }else{
-            Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
+            // Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
             self.successCallback?(ostUser)
         }
     }
 
+    /// Fetch entity from server
+    ///
+    /// - Throws: OstError
     override func fetchEntity() throws {
          try OstAPIUser.init(userId: self.userId).getUser(onSuccess: self.onSuccess, onFailure: self.onFailure)
     }
     
+    /// Get polling queue
+    ///
+    /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
         return self.userPollingServiceDispatchQueue
     }

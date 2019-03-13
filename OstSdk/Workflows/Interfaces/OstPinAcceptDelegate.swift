@@ -1,5 +1,5 @@
 //
-//  OstPinAcceptProtocol.swift
+//  OstPinAcceptDelegate.swift
 //  OstSdk
 //
 //  Created by aniket ayachit on 31/01/19.
@@ -10,7 +10,7 @@ import Foundation
 
 
 /// Sub Interface of `OstBaseInterface` It declares pinEntered api of Workflows.
-public protocol OstPinAcceptProtocol: OstBaseProtocol {
+public protocol OstPinAcceptDelegate: OstBaseDelegate {
     
     /// SDK user will use it to pass user pin to SDK.
     ///

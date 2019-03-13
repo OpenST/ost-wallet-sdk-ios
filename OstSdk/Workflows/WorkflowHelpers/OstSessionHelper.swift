@@ -74,7 +74,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
     private func calcuateExpirationHeight() {
         let currentBlockHeight = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_HEIGHT])!
         let blockGenerationTime = OstUtils.toInt(self.chainInfo![CHAIN_BLOCK_TIME])!
-        let bufferedSessionTime = OstConstants.OST_SESSION_BUFFER_TIME + self.expiresAfter
+        let bufferedSessionTime = OstConfig.getSessionBufferTime() + self.expiresAfter
         let validForBlocks = Int( bufferedSessionTime/Double(blockGenerationTime) )
         self.expirationHeight = validForBlocks + currentBlockHeight;
     }
