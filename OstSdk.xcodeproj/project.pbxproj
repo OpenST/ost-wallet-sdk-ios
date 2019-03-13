@@ -2077,7 +2077,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
@@ -2110,7 +2110,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
