@@ -11,6 +11,21 @@ import Alamofire
 
 /// Format the error response
 class OstAPIErrorHandler {
+    
+    /// API error code
+    enum APIErrorCode: String {
+        case
+        SOMETHING_WENT_WRONG,
+        NOT_FOUND,
+        TOO_MANY_REQUESTS,
+        INTERNAL_SERVER_ERROR,
+        BAD_GATEWAY,
+        SERVICE_UNAVAILABLE,
+        GATEWAY_TIMEOUT,
+        BAD_URL,
+        NOT_CONNECTED_TO_INTERNET,
+        REQUEST_TIMED_OUT
+    }
 
     /// Get the formated error response data
     ///
@@ -22,46 +37,46 @@ class OstAPIErrorHandler {
         if (responseValue != nil && responseValue!["success"] != nil && responseValue!["err"] != nil){
             return responseValue!
         }
-        var code: String = "SOMETHING_WENT_WRONG"
+        var code: String = APIErrorCode.SOMETHING_WENT_WRONG.rawValue
         var errorMessage: String = "Something went wrong."
         if (response.response != nil) {
             switch response.response!.statusCode {
             case 404:
-                code = "NOT_FOUND"
+                code = APIErrorCode.NOT_FOUND.rawValue
                 errorMessage = "The requested resource could not be located."
             case 429:
-                code = "TOO_MANY_REQUESTS"
+                code = APIErrorCode.TOO_MANY_REQUESTS.rawValue
                 errorMessage = "Too many requests."
             case 500:
-                code = "INTERNAL_SERVER_ERROR"
+                code = APIErrorCode.INTERNAL_SERVER_ERROR.rawValue
                 errorMessage = "Internal server error."
             case 502:
-                code = "BAD_GATEWAY"
+                code = APIErrorCode.BAD_GATEWAY.rawValue
                 errorMessage = "Bad gateway."
             case 503:
-                code = "SERVICE_UNAVAILABLE"
+                code = APIErrorCode.SERVICE_UNAVAILABLE.rawValue
                 errorMessage = "Service unavailable."
             case 504:
-                code = "GATEWAY_TIMEOUT"
+                code = APIErrorCode.GATEWAY_TIMEOUT.rawValue
                 errorMessage = "Gateway timeout."
             default:
-                code = "SOMETHING_WENT_WRONG"
+                code = APIErrorCode.SOMETHING_WENT_WRONG.rawValue
                 errorMessage = "Something went wrong."
             }
         } else if (response.error != nil) {
             let errorCode = (response.error! as NSError).code
             switch errorCode {
             case -1000:
-                code = "BAD_URL"
+                code = APIErrorCode.BAD_URL.rawValue
                 errorMessage = "The connection failed due to a malformed URL."
             case -1001:
-                code = "REQUEST_TIMED_OUT"
+                code = APIErrorCode.REQUEST_TIMED_OUT.rawValue
                 errorMessage = "The connection timed out."
             case -1009:
-                code = "NOT_CONNECTED_TO_INTERNET"
+                code = APIErrorCode.NOT_CONNECTED_TO_INTERNET.rawValue
                 errorMessage = "The connection failed because the device is not connected to the internet."
             default:
-                code = "SOMETHING_WENT_WRONG"
+                code = APIErrorCode.SOMETHING_WENT_WRONG.rawValue
                 errorMessage = "Something went wrong."
             }
         }
@@ -73,7 +88,7 @@ class OstAPIErrorHandler {
     /// - Returns: Formated response dictionary
     class func getNoInternetConnectivityResponse() -> [String : Any] {
         return OstAPIErrorHandler.getResponse(
-            "NOT_CONNECTED_TO_INTERNET",
+            APIErrorCode.NOT_CONNECTED_TO_INTERNET.rawValue,
             "The connection failed because the device is not connected to the internet."
         )
     }
