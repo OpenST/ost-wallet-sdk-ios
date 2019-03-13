@@ -152,7 +152,7 @@ class OstActivateUser: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstUserPollingService(
             userId: ostUser.id,

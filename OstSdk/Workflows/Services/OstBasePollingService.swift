@@ -58,7 +58,7 @@ class OstBasePollingService {
     
     /// Get entity after delay
     func getEntityAfterDelay() {
-      Logger.log(message: "[\(Date.timestamp())]: getEntityAfterDelay: for userId: \(userId)", parameterToPrint: "")
+      // Logger.log(message: "[\(Date.timestamp())]: getEntityAfterDelay: for userId: \(userId)", parameterToPrint: "")
         //check for max retry count
         if (self.requestCount < OstBasePollingService.MAX_RETRY_COUNT ) {
             let delayTime: Int;
@@ -75,7 +75,7 @@ class OstBasePollingService {
             queue.asyncAfter(deadline: .now() + .seconds(delayTime) ) {
                 do {
                     self.requestCount += 1
-                    Logger.log(message: "[\(Date.timestamp())]: loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
+                    // Logger.log(message: "[\(Date.timestamp())]: loDispatchQueue for userId: \(self.userId) and is started at \(Date.timestamp())", parameterToPrint: "")
                     try self.fetchEntity()
                 }catch let error {
                     let ostError = error as! OstError;

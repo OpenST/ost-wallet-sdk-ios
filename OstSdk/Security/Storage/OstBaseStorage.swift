@@ -44,13 +44,13 @@ class OstBaseStorage {
         if status == errSecDuplicateItem {
             status = SecItemDelete(query as CFDictionary)
             guard status == errSecSuccess else {
-                Logger.log(message: "Error while deleting from keychain.")
+                // Logger.log(message: "Error while deleting from keychain.")
                 throw OstError.init("s_s_bs_hs_1", .keychainDeleteItemFail)
             }
             status = SecItemAdd(query as CFDictionary, nil)
         }
         guard status == errSecSuccess else {
-            Logger.log(message: "Error while adding item in keychain.")
+            // Logger.log(message: "Error while adding item in keychain.")
             throw OstError.init("s_s_bs_hs_2", .keychainAddItemFail)
         }
     }
@@ -63,7 +63,7 @@ class OstBaseStorage {
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         guard status == errSecSuccess else {
-            Logger.log(message: "No item found in keychain.")
+            // Logger.log(message: "No item found in keychain.")
             return nil
         }
         return item
@@ -76,7 +76,7 @@ class OstBaseStorage {
     func deleteFromKeyChain(_ query: [String: Any]) throws {
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess else {
-            Logger.log(message: "Error while deleting item from keychain.")
+            // Logger.log(message: "Error while deleting item from keychain.")
             throw OstError.init("s_s_bs_dfkc_1", .keychainDeleteItemFail)
         }
     }

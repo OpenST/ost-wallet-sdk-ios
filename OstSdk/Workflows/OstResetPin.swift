@@ -131,7 +131,7 @@ class OstResetPin: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstResetPinPollingService(userId: entity.userId!,
                                  recoveryOwnerAddress: entity.address!,

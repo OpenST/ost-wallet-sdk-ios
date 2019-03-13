@@ -42,7 +42,7 @@ public class OstSdk {
             finalApiEndpoint = String(finalApiEndpoint.dropLast());
         }
         
-        Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
+        // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
     }
 }

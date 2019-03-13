@@ -121,7 +121,7 @@ class OstAuthorizeSession: OstAuthorizeBase {
                 self.onFailure(error)
             }
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstSessionPollingService(userId: ostSession.userId!,
                                  sessionAddress: ostSession.address!,

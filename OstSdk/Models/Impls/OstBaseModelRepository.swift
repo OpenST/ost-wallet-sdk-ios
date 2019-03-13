@@ -49,17 +49,19 @@ class OstBaseModelRepository {
     /// - Returns: OstBaseEntity object
     /// - Throws: OSTError
     final func insertOrUpdate(_ entityData: [String: Any?], forIdentifierKey identifier: String, isSynchronous:Bool = false) throws {
-        // Get the primary id value of the entity
-        let id: String = try OstBaseModelRepository.getItem(fromEntityData: entityData, forKey: identifier)
+        // Commenting the below code. The entities will always be written in DB
         
-        // Check if the entity already exists
-        if let dbEntity = try getById(id) {
-            let updatedTimestamp = OstBaseModelRepository.getUpdatedTimestamp(entityData)
-            // Check if the entity is already updated or not, if updated nothing is to be done.
-            if (updatedTimestamp == dbEntity.updatedTimestamp) {
-                return
-            }
-        }
+        //        // Get the primary id value of the entity
+        //        let id: String = try OstBaseModelRepository.getItem(fromEntityData: entityData, forKey: identifier)
+        //
+        //        // Check if the entity already exists
+        //        if let dbEntity = try getById(id) {
+        //            let updatedTimestamp = OstBaseModelRepository.getUpdatedTimestamp(entityData)
+        //            // Check if the entity is already updated or not, if updated nothing is to be done.
+        //            if (updatedTimestamp == dbEntity.updatedTimestamp) {
+        //                return
+        //            }
+        //        }
         
         // Create a new entity object and update the db
         let entity = try getEntity(entityData)

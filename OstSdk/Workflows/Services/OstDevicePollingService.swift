@@ -47,13 +47,13 @@ class OstDevicePollingService: OstBasePollingService {
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostDevice: OstDevice = entity as! OstDevice
         if (ostDevice.status!.caseInsensitiveCompare(self.successStatus) == .orderedSame) {
-            Logger.log(message: "test User with userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
+            // Logger.log(message: "test User with userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
             self.successCallback?(ostDevice)
             
         }else if (ostDevice.status!.caseInsensitiveCompare(self.failureStatus) == .orderedSame){
             self.onFailure?(OstError("w_s_dps_osp_1", OstErrorText.failedToProcess) )
         }else{
-            Logger.log(message: "test User status is activating for userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
+            // Logger.log(message: "test User status is activating for userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
             self.getEntityAfterDelay()
         }
     }

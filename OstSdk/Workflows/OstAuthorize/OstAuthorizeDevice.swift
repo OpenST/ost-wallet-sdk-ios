@@ -106,7 +106,7 @@ class OstAuthorizeDevice: OstAuthorizeBase {
                 self.onFailure(error)
             }
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         OstDevicePollingService(userId: self.userId,
                                 deviceAddress: self.addressToAdd,
