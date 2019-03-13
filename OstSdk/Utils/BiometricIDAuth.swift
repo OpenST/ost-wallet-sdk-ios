@@ -37,7 +37,7 @@ enum BiometricType {
 
 class BiometricIDAuth {
     private let context = LAContext()
-    private var loginReason = "Logging in with Touch ID"
+    private var loginReason = "Please authenticate yourself to access sensitive information."
     
     private func biometricType() -> BiometricType {
         let _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
@@ -55,7 +55,28 @@ class BiometricIDAuth {
     }
     
     private func canEvaluatePolicy() -> Bool {
-        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        var canDeviceEvaluatePolicy: Bool = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        if canDeviceEvaluatePolicy {
+            if #available(iOS 11.0, *) {
+                switch self.context.biometryType {
+                case .none:
+                    canDeviceEvaluatePolicy = false
+                    
+                case .faceID:
+                    do {
+                        _ = try OstBundle
+                            .getApplicationPlistContent(for: OstBundle.PermissionKey.NSFaceIDUsageDescription.rawValue,
+                                                        fromFile: "Info")
+                    }catch {
+                        canDeviceEvaluatePolicy = false
+                    }
+                    
+                case .touchID:
+                    canDeviceEvaluatePolicy = true
+                }
+            }
+        }
+        return canDeviceEvaluatePolicy
     }
     
     func authenticateUser(completion: @escaping (Bool, String?) -> Void) {
