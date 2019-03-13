@@ -139,6 +139,7 @@ public enum OstErrorText: String {
     case conversionFactorNotFound = "Conversion factor not present"
     case btDecimalNotFound = "Decimal value not found"
     case keyNotFound = "Key not found"
+    case failedToReadOstSdkPlist = "Failed to read configurations from OstSdk.plist"
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

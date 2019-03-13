@@ -52,6 +52,7 @@
 		4BE895D422224E4C009C6A44 /* CryptoEthereumSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4BE895D522224E68009C6A44 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; };
 		4BE895D622224E68009C6A44 /* EthereumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECCDAF042238F09300A6A095 /* OstSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECCDAF032238F09300A6A095 /* OstSdk.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -126,6 +127,7 @@
 		4BE895CE2221B74C009C6A44 /* ShowQRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRView.swift; sourceTree = "<group>"; };
 		869B4474A24E12496F6DADBB /* Pods-Demo-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo-App.debug.xcconfig"; path = "Target Support Files/Pods-Demo-App/Pods-Demo-App.debug.xcconfig"; sourceTree = "<group>"; };
 		942189716441E093BEA6715C /* Pods_Demo_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECCDAF032238F09300A6A095 /* OstSdk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OstSdk.plist; sourceTree = "<group>"; };
 		FB63963E6BCB21D9A0F370DF /* Pods_Demo_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -251,6 +253,7 @@
 				4BD841412212093200808901 /* AppDelegate.swift */,
 				4BD841402212093200808901 /* ViewController.swift */,
 				4BD8411A2212084A00808901 /* Info.plist */,
+				ECCDAF032238F09300A6A095 /* OstSdk.plist */,
 			);
 			path = "Demo-App";
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 			files = (
 				4BD841512212093E00808901 /* LaunchScreen.storyboard in Resources */,
 				0044DE2022130B0300AD9643 /* Main.storyboard in Resources */,
+				ECCDAF042238F09300A6A095 /* OstSdk.plist in Resources */,
 				4BD841502212093E00808901 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

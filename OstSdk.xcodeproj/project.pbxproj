@@ -264,6 +264,7 @@
 		ECCDABA02229A28B00A6A095 /* OstRecoveryOwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAB9F2229A28B00A6A095 /* OstRecoveryOwnerEntity.swift */; };
 		ECCDABA22229A7F600A6A095 /* OstResetPinPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */; };
 		ECCDABA4222D470F00A6A095 /* OstPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA3222D470F00A6A095 /* OstPinManager.swift */; };
+		ECCDAF062238F5DB00A6A095 /* OstConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAF052238F5DB00A6A095 /* OstConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -566,6 +567,7 @@
 		ECCDAB9F2229A28B00A6A095 /* OstRecoveryOwnerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRecoveryOwnerEntity.swift; sourceTree = "<group>"; };
 		ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstResetPinPollingService.swift; sourceTree = "<group>"; };
 		ECCDABA3222D470F00A6A095 /* OstPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinManager.swift; sourceTree = "<group>"; };
+		ECCDAF052238F5DB00A6A095 /* OstConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1136,6 +1138,7 @@
 				4B00CCDB21E481D3005A5696 /* Workflows */,
 				ECB29E672226F188001C003E /* Signers */,
 				4B49894D21F99CE300ED0E94 /* OstConstants.swift */,
+				ECCDAF052238F5DB00A6A095 /* OstConfig.swift */,
 				4B75F27A21C391DB00898960 /* OstSdk.swift */,
 				4B7C930821B006E900EC0A9F /* OstSdk.h */,
 				4B7C930921B006E900EC0A9F /* Info.plist */,
@@ -1769,6 +1772,7 @@
 				4B49893121F6F2AF00ED0E94 /* ABIEncoder.swift in Sources */,
 				4B49890D21F6F2AF00ED0E94 /* EthereumTransactionObject.swift in Sources */,
 				4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */,
+				ECCDAF062238F5DB00A6A095 /* OstConfig.swift in Sources */,
 				4BE9E3082202CDBC00427A80 /* OstPinAcceptDelegate.swift in Sources */,
 				4B4988FE21F6F2AF00ED0E94 /* EthereumTransaction.swift in Sources */,
 				ECCDABA22229A7F600A6A095 /* OstResetPinPollingService.swift in Sources */,

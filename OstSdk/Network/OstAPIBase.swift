@@ -26,7 +26,7 @@ class OstAPIBase {
     var resourceURL: String = ""
     
     /// Request timeout duration in seconds
-    var requestTimeout: Int  = OstConstants.OST_REQUEST_TIMEOUT_DURATION
+    var requestTimeout: Int  = OstConfig.getRequestTimeoutDuration()
     
     /// Request data
     var dataRequest: DataRequest? = nil
