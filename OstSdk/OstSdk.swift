@@ -15,6 +15,7 @@ public class OstSdk {
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);
+        try OstConfig.loadConfig()
     }
 
     public class func getUser(_ id: String) throws -> OstUser? {

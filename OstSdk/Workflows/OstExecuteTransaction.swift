@@ -353,7 +353,7 @@ extension OstExecuteTransaction {
                                                      from: self.currentUser!.tokenHolderAddress!,
                                                      toAddresses: self.toAddresses,
                                                      amounts: self.amounts,
-                                                     currencyCode: OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
+                                                     currencyCode: OstConfig.getPricePointCurrencySymbol(),
                                                      currencyPrice: currencyPriceInWei.description
         )
     }
@@ -363,11 +363,11 @@ extension OstExecuteTransaction {
     /// - Returns: Currency in wei
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
-        guard let ostDict = self.pricePoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
+        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
             throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
         }
         
-        let fiatValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
+        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
         guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
@@ -396,11 +396,11 @@ extension OstExecuteTransaction {
         guard let btDecimal = token.decimals else {
             throw OstError("w_et_gtviwfp_2", OstErrorText.btDecimalNotFound)
         }
-        guard let ostDict = self.pricePoint![OstConstants.OST_PRICE_POINT_TOKEN_SYMBOL] as? [String: Any] else {
+        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
             throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
         }
         
-        let fiatValInString = String(format: "%@", ostDict[OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL] as! CVarArg)
+        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
         for amount in self.amounts {
             let btAmount = try OstConversion.fiatToBt(btToOstConversionFactor: btToOstConversionFactor,
@@ -423,7 +423,7 @@ extension OstExecuteTransaction {
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
                                                          self.toAddresses,
                                                          self.amounts,
-                                                         OstConstants.OST_PRICE_POINT_CURRENCY_SYMBOL,
+                                                         OstConfig.getPricePointCurrencySymbol(),
                                                          currencyPriceInWei.description]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }

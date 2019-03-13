@@ -66,9 +66,9 @@ class OstBasePollingService {
             //If request count is 0 then start polling after
             //delay = (BLOCK_GENERATION_TIME + CONFIRMATION_BLOCKS + 1(Buffer)) * WORKFLOW_TRANSACTION_COUNT
             if (self.requestCount > 0 ) {
-              delayTime = OstConstants.OST_BLOCK_GENERATION_TIME;
+              delayTime = OstConfig.getBlockGenerationTime()
             } else {
-              delayTime = OstConstants.OST_BLOCK_GENERATION_TIME * (OstBasePollingService.NO_OF_CONFIRMATION_BLOCKS + 1 ) * workflowTransactionCount;
+              delayTime = OstConfig.getBlockGenerationTime() * (OstBasePollingService.NO_OF_CONFIRMATION_BLOCKS + 1 ) * workflowTransactionCount;
             }
             
             let queue: DispatchQueue = self.getPollingQueue()

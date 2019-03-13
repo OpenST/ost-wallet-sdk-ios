@@ -36,15 +36,18 @@ class OstBundle {
     ///   - fileName: File name
     /// - Returns: Content for key
     /// - Throws: OstError
-    class func getApplicationPlistContent(for key: String,
-                                          fromFile fileName: String) throws -> AnyObject {
+    class func getApplicationPlistContent(
+        for key: String,
+        fromFile fileName: String) throws -> AnyObject {
         
         let ostBundle = OstBundle()
         let bundleObj = ostBundle.getApplicatoinBundle()
-        return try ostBundle.getPermissionDescription(for: key,
-                                                      fromFile: fileName,
-                                                      withExtension: "plist",
-                                                      inBundle: bundleObj)
+        return try ostBundle.getDescription(
+            for: key,
+            fromFile: fileName,
+            withExtension: "plist",
+            inBundle: bundleObj
+        )
     }
     
     //MARK: Private Methods
@@ -95,7 +98,7 @@ class OstBundle {
     ///   - bundle: Bundle
     /// - Returns: Description Text
     /// - Throws: OstError
-    fileprivate func getPermissionDescription(for key: String,
+    fileprivate func getDescription(for key: String,
                                               fromFile fileName: String,
                                               withExtension fileExtension: String,
                                               inBundle bundle: Bundle) throws -> AnyObject {
