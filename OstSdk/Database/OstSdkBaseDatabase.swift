@@ -42,7 +42,7 @@ class OstSdkBaseDatabase {
         let documentsDir: String = docPath.first!
         let dbPath = NSURL(fileURLWithPath:documentsDir).appendingPathComponent(dbName)
         
-        Logger.log(message: "DB path", parameterToPrint: dbPath!.absoluteString)
+        // Logger.log(message: "DB path", parameterToPrint: dbPath!.absoluteString)
         return dbPath!.absoluteString
     }
     
@@ -53,7 +53,7 @@ class OstSdkBaseDatabase {
         let filemanager = FileManager.default
         let path = filemanager.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last?.appendingPathComponent(dbName)
         if !filemanager.fileExists(atPath: (path?.path)!) {
-            Logger.log(message: "Creating file at location", parameterToPrint: String(describing: path?.path))
+            // Logger.log(message: "Creating file at location", parameterToPrint: String(describing: path?.path))
             filemanager.createFile(atPath: (path?.path)!, contents: nil, attributes: nil)
         }
     }

@@ -38,10 +38,10 @@ class OstSessionPollingService: OstBasePollingService {
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostSession: OstSession = entity as! OstSession
         if (ostSession.isStatusInitializing) {
-            Logger.log(message: "[\(Date.timestamp())]: Session status is activating for userId: \(ostSession.id) and is Initializing.", parameterToPrint: ostSession.data)
+            // Logger.log(message: "[\(Date.timestamp())]: Session status is activating for userId: \(ostSession.id) and is Initializing.", parameterToPrint: ostSession.data)
             self.getEntityAfterDelay()
         }else{
-          Logger.log(message: "[\(Date.timestamp())]: Session with userId: \(ostSession.id) and is activated.", parameterToPrint: ostSession.data)
+          // Logger.log(message: "[\(Date.timestamp())]: Session with userId: \(ostSession.id) and is activated.", parameterToPrint: ostSession.data)
             self.successCallback?(ostSession)
         }
     }

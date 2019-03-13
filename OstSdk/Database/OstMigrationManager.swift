@@ -96,7 +96,7 @@ internal class OstMigrationManager{
         while resultSet.next(){
             version = max(version, Int(resultSet.int(forColumn: OstMigrationManager.versionString)))
         }
-        Logger.log(message: "getLastMigration", parameterToPrint: version)
+        // Logger.log(message: "getLastMigration", parameterToPrint: version)
         return version
     }
     
@@ -108,8 +108,8 @@ internal class OstMigrationManager{
         // Get namespace
         let namespace = bundle.infoDictionary!["CFBundleExecutable"] as! String;
         let cls: AnyClass = NSClassFromString("\(namespace).\(className)")!;
-        Logger.log(message: "OstMigrationManager :: namespace : \(namespace)")
-        Logger.log(message: "OstMigrationManager :: cls : \(cls)")
+        // Logger.log(message: "OstMigrationManager :: namespace : \(namespace)")
+        // Logger.log(message: "OstMigrationManager :: cls : \(cls)")
         // return AnyClass!
         return cls;
     }
@@ -119,7 +119,7 @@ internal class OstMigrationManager{
     /// - Parameter version: Migration version
     /// - Returns: `true` if success otherwise `false`
     fileprivate func updateVersionInMigrationTable(version: String) -> Bool {
-        Logger.log(message: "updateVersionInMigrationTable : \(version)")
+        // Logger.log(message: "updateVersionInMigrationTable : \(version)")
         let intVersion: Int = Int(version) ?? -1
         if(intVersion > -1){
             return database.executeUpdate(OstMigrationManager.iVersionQ, withParameterDictionary:["version":version])

@@ -107,7 +107,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
         
         var error: Unmanaged<CFError>?
         guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
-            Logger.log(message: "Error while generating private key.")
+            // Logger.log(message: "Error while generating private key.")
             throw OstError.init("s_s_seh_gpk_1", .generatePrivateKeyFail)
         }
         return privateKey
@@ -160,7 +160,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
                                                data as CFData,
                                                &error)
         if result == nil {
-            Logger.log(message: "Error while encrypting data with public key.")
+            // Logger.log(message: "Error while encrypting data with public key.")
             throw OstError.init("s_s_seh_e1_1", .encryptFail)
         }
         return result! as Data
@@ -180,7 +180,7 @@ class OstSecureEnclaveHelper: OstBaseStorage {
                                                data as CFData,
                                                &error)
         if result == nil {
-            Logger.log(message: "Error while decrypting data with private key.")
+            // Logger.log(message: "Error while decrypting data with private key.")
             throw OstError.init("s_s_seh_d1_1", .decryptFail)
         }
         return result! as Data

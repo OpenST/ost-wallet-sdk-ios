@@ -15,17 +15,17 @@ import Foundation
  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
  <plist version="1.0">
  <dict>
- <key>BLOCK_GENERATION_TIME</key>
+ <key>BlockGenerationTime</key>
  <integer>3</integer>
- <key>PRICE_POINT_TOKEN_SYMBOL</key>
+ <key>PricePointTokenSymbol</key>
  <string>OST</string>
- <key>PRICE_POINT_CURRENCY_SYMBOL</key>
+ <key>PricePointCurrencySymbol</key>
  <string>USD</string>
- <key>REQUEST_TIMEOUT_DURATION</key>
+ <key>RequestTimeoutDuration</key>
  <integer>6</integer>
- <key>PIN_MAX_RETRY_COUNT</key>
+ <key>PinMaxRetryCount</key>
  <integer>3</integer>
- <key>SESSION_BUFFER_TIME</key>
+ <key>SessionBufferTime</key>
  <integer>3600</integer>
  </dict>
  </plist>
@@ -45,42 +45,42 @@ class OstConfig {
         do {
             let generationTime = try OstBundle
                 .getApplicationPlistContent(
-                    for: "BLOCK_GENERATION_TIME",
+                    for: "BlockGenerationTime",
                     fromFile: plistFileName
                 ) as! Int
             blockGenerationTime = generationTime
             
             let tokenSymbol = try OstBundle
                 .getApplicationPlistContent(
-                    for: "PRICE_POINT_TOKEN_SYMBOL",
+                    for: "PricePointTokenSymbol",
                     fromFile: plistFileName
                 ) as! String
             pricePointTokenSymbol = tokenSymbol
             
             let currencySymbol = try OstBundle
                 .getApplicationPlistContent(
-                    for: "PRICE_POINT_CURRENCY_SYMBOL",
+                    for: "PricePointCurrencySymbol",
                     fromFile: plistFileName
                 ) as! String
             pricePointCurrencySymbol = currencySymbol
             
             let timeoutDuration = try OstBundle
                 .getApplicationPlistContent(
-                    for: "REQUEST_TIMEOUT_DURATION",
+                    for: "RequestTimeoutDuration",
                     fromFile: plistFileName
                 ) as! Int
             requestTimeoutDuration = timeoutDuration
             
             let maxRetryCount = try OstBundle
                 .getApplicationPlistContent(
-                    for: "PIN_MAX_RETRY_COUNT",
+                    for: "PinMaxRetryCount",
                     fromFile: plistFileName
                 ) as! Int
             pinMaxRetryCount = maxRetryCount
             
             let bufferTime = try OstBundle
                 .getApplicationPlistContent(
-                    for: "SESSION_BUFFER_TIME",
+                    for: "SessionBufferTime",
                     fromFile: plistFileName
                 ) as! Double
             sessionBufferTime = bufferTime

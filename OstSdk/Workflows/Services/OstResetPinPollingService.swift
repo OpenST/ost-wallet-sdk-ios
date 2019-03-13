@@ -43,10 +43,10 @@ class OstResetPinPollingService: OstBasePollingService {
     override func onSuccessProcess(entity: OstBaseEntity) {
         let recoveryOwnerEntity: OstRecoveryOwnerEntity = entity as! OstRecoveryOwnerEntity
         if (recoveryOwnerEntity.isStatusAuthorized) {
-            Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorized.", parameterToPrint: recoveryOwnerEntity.data)
+            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorized.", parameterToPrint: recoveryOwnerEntity.data)
             self.successCallback?(recoveryOwnerEntity)
         } else if (recoveryOwnerEntity.isStatusAuthorizing) {
-            Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorizing.", parameterToPrint: recoveryOwnerEntity.data)
+            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorizing.", parameterToPrint: recoveryOwnerEntity.data)
             self.getEntityAfterDelay()
         } else {
             self.failureCallback?(OstError("w_s_rpps_1", OstErrorText.transactionFailed))

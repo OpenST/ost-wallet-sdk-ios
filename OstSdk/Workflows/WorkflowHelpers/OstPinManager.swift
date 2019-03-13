@@ -63,9 +63,8 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePin() throws{
         try self.validate()
-        guard let user = try OstUser.getById(self.userId) else {
-            throw OstError("w_wv_vp_1", .userEntityNotFound)
-        }
+        let user = try self.fetchUser()
+        
         let isValid = OstKeyManager(userId: self.userId)
             .verifyPin(
                 password: self.password,
@@ -363,5 +362,35 @@ class OstPinManager {
             }
             self.salt = salt!["scrypt_salt"] as? String
         }
+    }
+    
+    /// Fetch user
+    ///
+    /// - Returns: OstUser object
+    /// - Throws: OstError
+    private func fetchUser() throws -> OstUser {
+        let group = DispatchGroup()
+        
+        var ostUser: OstUser? = nil
+        var err: OstError? = nil
+        
+        group.enter()
+        
+        try OstAPIUser.init(userId: self.userId)
+            .getUser(onSuccess: { (user:OstUser) in
+                ostUser = user
+                group.leave()
+            }, onFailure: { (error:OstError) in
+                err = error
+                group.leave()
+            })
+        
+        group.wait()
+        
+        if (err != nil) {
+            throw err!
+        }
+        
+        return ostUser!
     }
 }

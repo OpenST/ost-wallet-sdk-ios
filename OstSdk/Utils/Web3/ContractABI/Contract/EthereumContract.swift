@@ -71,7 +71,8 @@ public class DynamicContract: EthereumContract {
             case (.constructor, _):
                 self.constructor = SolidityConstructor(abiObject: abiObject, handler: self)
             default:
-                Logger.log(message: "Could not parse abi object", parameterToPrint: abiObject)
+                break
+                // Logger.log(message: "Could not parse abi object", parameterToPrint: abiObject)
             }
         }
     }

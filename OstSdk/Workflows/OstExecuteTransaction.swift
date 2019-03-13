@@ -266,7 +266,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         let failureCallback:  ((OstError) -> Void) = { error in
             self.fetchSession(error: error)            
         }
-        Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
+        // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
         
         OstTransactionPollingService(userId: self.userId,

@@ -36,10 +36,10 @@ class OstUserPollingService: OstBasePollingService {
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostUser: OstUser = entity as! OstUser
         if (ostUser.isStatusActivating) {
-            Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
+            // Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
             self.getEntityAfterDelay()
         }else{
-            Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
+            // Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
             self.successCallback?(ostUser)
         }
     }

@@ -29,17 +29,6 @@ struct OstConstants {
     static let OST_WALLET_NETWORK: Network = .mainnet
     static let OST_WALLET_SEED_PASSPHRASE: String = ""
     
-    static let PRINT_DEBUG = false
-    
-    // Following constants must come from config
-    static let OST_BLOCK_GENERATION_TIME: Int = 3
-    static let OST_PRICE_POINT_TOKEN_SYMBOL = "OST"
-    static let OST_PRICE_POINT_CURRENCY_SYMBOL = "USD"
-    
-    // Request time out duration in seconds
-    static let OST_REQUEST_TIMEOUT_DURATION: Int = 6
-    static let OST_PIN_MAX_RETRY_COUNT: Int = 3
-    
-    static let OST_SESSION_BUFFER_TIME = Double(1 * 60 * 60) //1 Hour.
+    static let PRINT_DEBUG = false                
     
 }
