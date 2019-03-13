@@ -37,7 +37,6 @@ class OstAuthorizeBase {
         self.onFailure = onFailure
     }
     
-    //TODO: check with deepesh for fetch deviceManager every time. android doing it.
     /// Perform authorization
     func perform() {
         if (nil == self.deviceManager) {
