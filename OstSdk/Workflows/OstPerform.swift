@@ -118,8 +118,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         case OstQRCodeDataDefination.TRANSACTION.rawValue:
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
             self.executeTxPayloadParams = executeTxPayloadParams
-//            verifyDataForExecuteTransaction(executeTxPayloadParams)
-            dataVerified()
+            verifyDataForExecuteTransaction(executeTxPayloadParams)
             
         case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
             let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
