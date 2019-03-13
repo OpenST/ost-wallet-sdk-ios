@@ -15,7 +15,7 @@ These digital signatures ensure that users have complete control of there tokens
     
 ## Support
 
-iOS version : 9.0 and above (**suggested version 10.3** )
+iOS version : 9.0 and above (**recommended version 10.3** )
 
 ## OstSdk apis
 

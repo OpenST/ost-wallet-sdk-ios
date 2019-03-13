@@ -50,10 +50,13 @@ public enum OstErrorText: String {
     case deviceNotset = "Device is not setup. Please Setup device first. call OstSdk.setupDevice"
     case deviceNotAuthorized = "Device is not authorized."
     case deviceAuthorized = "Device is already authorized."
+    case deviceNotRecovering = "Device is not in recovering mode."
+    case deviceNotRevoking = "Device is not revoking."
     case deviceAlreadyAuthorized = "Device is authorized."
     case deviceNotAuthorizing = "Device is not authorizing."
     case wrongDeviceAddress = "Wrong device address."
-    case registerSameDevice = "Trying to register same device."
+    case processSameDevice = "Trying to process same device."
+    case differentOwnerDevice = "Device does not belongs to you."
     case accessControlFailed = "Unable to create access control object."
     case unableToGetPublicKey = "Unable to get public key."
     case encryptFail = "Error while encrypting data with public key."
@@ -131,6 +134,11 @@ public enum OstErrorText: String {
     case invalidNumber = "Invalid number"
     case invalidExpirationTimeStamp = "Invalid expiration timestamp"
     case requestTimedOut = "Request timed out"
+    case failedToProcess = "Entity failed to process"
+    case samePin = "Old and new pin both are same"
+    case conversionFactorNotFound = "Conversion factor not present"
+    case btDecimalNotFound = "Decimal value not found"
+    
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

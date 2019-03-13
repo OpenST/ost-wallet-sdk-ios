@@ -85,6 +85,10 @@
 		4B12145C2231433100C185D2 /* insecure_memzero.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214552231433100C185D2 /* insecure_memzero.c */; };
 		4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214562231433100C185D2 /* crypto_scrypt.c */; };
 		4B121460223145C400C185D2 /* COPYRIGHT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B12145F223145C400C185D2 /* COPYRIGHT.txt */; };
+		4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */; };
+		4B1214702236971D00C185D2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */; };
+		4B1214732236AAC500C185D2 /* OstRevokeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214722236AAC500C185D2 /* OstRevokeBase.swift */; };
+		4B1214752236AB6B00C185D2 /* OstRevokeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214742236AB6B00C185D2 /* OstRevokeDevice.swift */; };
 		4B49871421EF85C500ED0E94 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871321EF85C500ED0E94 /* OstError.swift */; };
 		4B49871621F091FC00ED0E94 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */; };
 		4B49871E21F5AD1E00ED0E94 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B49871D21F5AD1E00ED0E94 /* EIP712.swift */; };
@@ -213,6 +217,7 @@
 		4B8CCDA92211508E00124586 /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */; };
 		4B8CCDB3221167AB00124586 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB2221167AB00124586 /* OstSdkSync.swift */; };
 		4B8CCDB52211754A00124586 /* OstAPIUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB42211754A00124586 /* OstAPIUser.swift */; };
+		4B92CA1522380019007AB0D1 /* OstConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92CA1422380019007AB0D1 /* OstConversion.swift */; };
 		4BAE56D9221305AC00327A19 /* OstAPIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */; };
 		4BAE56DD2214514600327A19 /* OstBasePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56DC2214514600327A19 /* OstBasePollingService.swift */; };
 		4BAE56DF2214516200327A19 /* OstUserPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE56DE2214516200327A19 /* OstUserPollingService.swift */; };
@@ -373,6 +378,10 @@
 		4B1214562231433100C185D2 /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypto_scrypt.c; sourceTree = "<group>"; };
 		4B12145F223145C400C185D2 /* COPYRIGHT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT.txt; sourceTree = "<group>"; };
 		4B1214632231530F00C185D2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortRecoverDevice.swift; sourceTree = "<group>"; };
+		4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
+		4B1214722236AAC500C185D2 /* OstRevokeBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeBase.swift; sourceTree = "<group>"; };
+		4B1214742236AB6B00C185D2 /* OstRevokeDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDevice.swift; sourceTree = "<group>"; };
 		4B49871321EF85C500ED0E94 /* OstError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
 		4B49871521F091FC00ED0E94 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
 		4B49871D21F5AD1E00ED0E94 /* EIP712.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
@@ -504,6 +513,7 @@
 		4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityHandler.swift; sourceTree = "<group>"; };
 		4B8CCDB2221167AB00124586 /* OstSdkSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
 		4B8CCDB42211754A00124586 /* OstAPIUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIUser.swift; sourceTree = "<group>"; };
+		4B92CA1422380019007AB0D1 /* OstConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConversion.swift; sourceTree = "<group>"; };
 		4BAE56D8221305AC00327A19 /* OstAPIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIDevice.swift; sourceTree = "<group>"; };
 		4BAE56DC2214514600327A19 /* OstBasePollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBasePollingService.swift; sourceTree = "<group>"; };
 		4BAE56DE2214516200327A19 /* OstUserPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUserPollingService.swift; sourceTree = "<group>"; };
@@ -696,6 +706,7 @@
 		4B00CCDB21E481D3005A5696 /* Workflows */ = {
 			isa = PBXGroup;
 			children = (
+				4B1214712236AA9800C185D2 /* OstRevoke */,
 				4B121429222C457E00C185D2 /* WorkflowHelpers */,
 				4BE89582222128B8009C6A44 /* OstContext */,
 				4BE8956D222034B1009C6A44 /* OstAuthorize */,
@@ -715,6 +726,8 @@
 				4B1214212228589100C185D2 /* OstPolling.swift */,
 				4B121423222907EF00C185D2 /* OstRecoverDevice.swift */,
 				ECCDAB972228232B00A6A095 /* OstResetPin.swift */,
+				4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */,
+				4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -748,6 +761,15 @@
 				ECCDAB992229148400A6A095 /* OstWorkflowValidator.swift */,
 			);
 			path = WorkflowHelpers;
+			sourceTree = "<group>";
+		};
+		4B1214712236AA9800C185D2 /* OstRevoke */ = {
+			isa = PBXGroup;
+			children = (
+				4B1214722236AAC500C185D2 /* OstRevokeBase.swift */,
+				4B1214742236AB6B00C185D2 /* OstRevokeDevice.swift */,
+			);
+			path = OstRevoke;
 			sourceTree = "<group>";
 		};
 		4B27DFF321CA8A5300CB7D69 /* SoliditySha3 */ = {
@@ -975,6 +997,7 @@
 				4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */,
 				4B5EF350220C6E9C0049AD8A /* OstBundle.swift */,
 				4B12143F22311D4500C185D2 /* Decimal+Extension.swift */,
+				4B92CA1422380019007AB0D1 /* OstConversion.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1602,6 +1625,7 @@
 			files = (
 				4B49893821F6F2AF00ED0E94 /* ABIConvertible.swift in Sources */,
 				4B75F23821BE75CF00898960 /* OstTokenHolder.swift in Sources */,
+				4B92CA1522380019007AB0D1 /* OstConversion.swift in Sources */,
 				4BE8957122207964009C6A44 /* OstAuthorizeDevice.swift in Sources */,
 				4B00CBA621DCD9BB005A5696 /* OstDeviceManagerDbQueries.swift in Sources */,
 				4B75F1FC21B6B0E400898960 /* OstMigration_1.swift in Sources */,
@@ -1660,7 +1684,9 @@
 				4BE9E33922041DA800427A80 /* OstBaseStorage.swift in Sources */,
 				4BAE56EF2215BD3100327A19 /* OstAPIChain.swift in Sources */,
 				4B75F23221BE758500898960 /* OstTransaction.swift in Sources */,
+				4B1214752236AB6B00C185D2 /* OstRevokeDevice.swift in Sources */,
 				4B49893521F6F2AF00ED0E94 /* SolidityWrappedValue.swift in Sources */,
+				4B1214732236AAC500C185D2 /* OstRevokeBase.swift in Sources */,
 				4BAE56ED2215989900327A19 /* OstAPIDeviceManager.swift in Sources */,
 				4B49893721F6F2AF00ED0E94 /* SolidityTuple.swift in Sources */,
 				4B49892E21F6F2AF00ED0E94 /* EthereumContract.swift in Sources */,
@@ -1694,6 +1720,7 @@
 				4B75F29821C3E4D600898960 /* OstKeyManager.swift in Sources */,
 				4B49893621F6F2AF00ED0E94 /* ABI.swift in Sources */,
 				4BE8956F222034C9009C6A44 /* OstAuthorizeBase.swift in Sources */,
+				4B1214702236971D00C185D2 /* OstRevokeDeviceWithQRData.swift in Sources */,
 				4B1214192227D02F00C185D2 /* TokenRule.swift in Sources */,
 				4B4988FD21F6F2AF00ED0E94 /* EthereumPrivateKey.swift in Sources */,
 				00383296222443D300AA4F44 /* OstValidateDataDelegate.swift in Sources */,
@@ -1710,6 +1737,7 @@
 				4BE9E32D2203306C00427A80 /* OstWorkFlowFactory.swift in Sources */,
 				4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */,
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
+				4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */,
 				4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,

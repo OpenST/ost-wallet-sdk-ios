@@ -9,26 +9,33 @@
 import Foundation
 
 class OstBasePollingService {
+    private static let MAX_RETRY_COUNT = 20
+    private static let NO_OF_CONFIRMATION_BLOCKS = 6;
+    private let workflowTransactionCount: Int
     
-    static let MAX_RETRY_COUNT = 20
-    static let NO_OF_CONFIRMATION_BLOCKS = 6;
-  
+    let userId: String
+    let failureCallback: ((OstError) -> Void)?
+    
     var requestCount = 0;
-    
     var onSuccess: ((OstBaseEntity) -> Void)? = nil
     var onFailure: ((OstError) -> Void)? = nil
     
-    let userId: String
-    let workflowTransactionCount: Int
-    
-    let failureCallback: ((OstError) -> Void)?
-    
-    init (userId: String, workflowTransactionCount: Int, failureCallback: ((OstError) -> Void)?) {
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - workflowTransactionCount: workflow transaction count
+    ///   - failureCallback: Failure callback
+    init (userId: String,
+          workflowTransactionCount: Int,
+          failureCallback: ((OstError) -> Void)?) {
+        
         self.userId = userId
         self.workflowTransactionCount = workflowTransactionCount
         self.failureCallback = failureCallback
     }
     
+    /// Perform
     func perform() {
         let queue: DispatchQueue = getPollingQueue()
         queue.async {
@@ -37,6 +44,7 @@ class OstBasePollingService {
         }
     }
     
+    /// Setup callback for API
     func setupCallbacks() {
         self.onSuccess = { entity in
             self.onSuccessProcess(entity: entity)
@@ -48,10 +56,15 @@ class OstBasePollingService {
     }
     
     
+    /// Get entity after delay
     func getEntityAfterDelay() {
       Logger.log(message: "[\(Date.timestamp())]: getEntityAfterDelay: for userId: \(userId)", parameterToPrint: "")
+        //check for max retry count
         if (self.requestCount < OstBasePollingService.MAX_RETRY_COUNT ) {
             let delayTime: Int;
+            //check request count of polling.
+            //If request count is 0 then start polling after
+            //delay = (BLOCK_GENERATION_TIME + CONFIRMATION_BLOCKS + 1(Buffer)) * WORKFLOW_TRANSACTION_COUNT
             if (self.requestCount > 0 ) {
               delayTime = OstConstants.OST_BLOCK_GENERATION_TIME;
             } else {
@@ -86,14 +99,24 @@ class OstBasePollingService {
     }
     
     //MARK: - Methods to override
+    
+    /// Fetch entity from server
+    ///
+    /// - Throws: OstError
     func fetchEntity() throws {
         fatalError("fetchEntity is not override")
     }
     
+    /// Process Entity after success from API
+    ///
+    /// - Parameter entity: OstEntity
     func onSuccessProcess(entity: OstBaseEntity) {
         fatalError("onSuccessPerocess is not override.")
     }
     
+    /// Get polling queue
+    ///
+    /// - Returns: DispatchQueue
     func getPollingQueue() -> DispatchQueue {
         fatalError("getPollingQueue is not override.")
     }

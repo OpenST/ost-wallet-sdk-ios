@@ -9,7 +9,7 @@
 import Foundation
 
 class OstRecoverDevice: OstWorkflowBase {
-    private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRecover: String
     
@@ -43,7 +43,7 @@ class OstRecoverDevice: OstWorkflowBase {
     ///
     /// - Returns: DispatchQueue
     override func getWorkflowQueue() -> DispatchQueue {
-        return self.ostRecoverDeviceQueue
+        return OstRecoverDevice.ostRecoverDeviceQueue
     }
     
     /// Validate params.
@@ -97,7 +97,7 @@ class OstRecoverDevice: OstWorkflowBase {
         }
     }
     
-    /// Revoke device api call
+    /// Recover device api call
     ///
     /// - Throws: OstError
     private func recoverDevice() throws {

@@ -32,6 +32,7 @@ class WalletViewController: UIViewController {
     case SHOW_QR_CODE
     case RESET_PIN
     case RECOVER_DEVICE
+    case ABORT_RECOVER_DEVICE
     case SHOW_USER_DETAILS
   }
   
@@ -138,6 +139,9 @@ class WalletViewController: UIViewController {
     case ViewMode.RECOVER_DEVICE:
         self.title = "Recover device"
         return RecoverDeviceView()
+    case ViewMode.ABORT_RECOVER_DEVICE:
+        self.title = "Abort Recover device"
+        return AbortRevocerDeviceView()
     }
   }
   

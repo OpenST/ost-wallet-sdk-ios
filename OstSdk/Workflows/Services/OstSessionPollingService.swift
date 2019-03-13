@@ -10,15 +10,31 @@ import Foundation
 
 class OstSessionPollingService: OstBasePollingService {
     let sessionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstSessionPollingService", qos: .background)
-    
     let successCallback: ((OstSession) -> Void)?
     let sessionAddress: String
-    init(userId: String, sessionAddress: String, workflowTransactionCount: Int, successCallback: ((OstSession) -> Void)?, failureCallback: ((OstError) -> Void)?) {
+    
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - sessionAddress: Session address to poll
+    ///   - workflowTransactionCount: workflow transaction count
+    ///   - successCallback: Success callback
+    ///   - failureCallback: Failure callback
+    init(userId: String,
+         sessionAddress: String,
+         workflowTransactionCount: Int,
+         successCallback: ((OstSession) -> Void)?,
+         failureCallback: ((OstError) -> Void)?) {
+        
         self.sessionAddress = sessionAddress
         self.successCallback = successCallback
         super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
     }
     
+    /// Process Entity after success from API
+    ///
+    /// - Parameter entity: Session entity
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostSession: OstSession = entity as! OstSession
         if (ostSession.isStatusInitializing) {
@@ -30,6 +46,9 @@ class OstSessionPollingService: OstBasePollingService {
         }
     }
     
+    /// Fetch entity from server
+    ///
+    /// - Throws: OstError
     override func fetchEntity() throws {
         try OstAPISession(userId: self.userId)
             .getSession(
@@ -38,6 +57,9 @@ class OstSessionPollingService: OstBasePollingService {
                 onFailure: onFailure)
     }
     
+    /// Get polling queue
+    ///
+    /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
         return self.sessionPollingServiceDispatchQueue
     }

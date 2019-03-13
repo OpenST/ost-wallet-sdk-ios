@@ -9,10 +9,18 @@
 import Foundation
 
 class OstTransactionPollingService: OstBasePollingService {
-    let transactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
-    
+    static  let transactionPollingServiceDispatchQueue = DispatchQueue(label: "com.ost.OstTransactionPollingService", qos: .background)
     let successCallback: ((OstTransaction) -> Void)?
     let transaciotnId: String
+    
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - transaciotnId: Transaction id to poll
+    ///   - workflowTransactionCount: workflow transaction count
+    ///   - successCallback: Success callback
+    ///   - failureCallback: Failure callback
     init(userId: String,
          transaciotnId: String,
          workflowTransactionCount: Int,
@@ -27,6 +35,9 @@ class OstTransactionPollingService: OstBasePollingService {
         
     }
     
+    /// Process Entity after success from API
+    ///
+    /// - Parameter entity: User entity
     override func onSuccessProcess(entity: OstBaseEntity) {
         let ostTransaction: OstTransaction = entity as! OstTransaction
         if (ostTransaction.isStatusSuccess) {
@@ -41,13 +52,19 @@ class OstTransactionPollingService: OstBasePollingService {
         }
     }
     
+    /// Fetch entity from server
+    ///
+    /// - Throws: OstError
     override func fetchEntity() throws {
         try OstAPITransaction(userId: userId).getTransaction(transcionId: self.transaciotnId,
                                                              onSuccess: self.onSuccess,
                                                              onFailure: self.onFailure)
     }
     
+    /// Get polling queue
+    ///
+    /// - Returns: DispatchQueue
     override func getPollingQueue() -> DispatchQueue {
-        return self.transactionPollingServiceDispatchQueue
+        return OstTransactionPollingService.transactionPollingServiceDispatchQueue
     }
 }
