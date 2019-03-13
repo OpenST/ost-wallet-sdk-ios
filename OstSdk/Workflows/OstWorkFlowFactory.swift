@@ -245,18 +245,18 @@ extension OstSdk {
     ///   - uPin: user pin.
     ///   - password: application password provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
-    fileprivate class func abortRecoverDevice(
-        userId: String,
-        uPin: String,
-        password: String,
-        delegate: OstWorkFlowCallbackDelegate) {
-        
-        let recoverDeviceAbort = OstAbortRecoverDevice(userId: userId,
-                                                       uPin: uPin,
-                                                       password: password,
-                                                       delegate: delegate)
-        recoverDeviceAbort.perform()
-    }
+//  fileprivate class func abortRecoverDevice(
+//        userId: String,
+//        uPin: String,
+//        password: String,
+//        delegate: OstWorkFlowCallbackDelegate) {
+//
+//        let recoverDeviceAbort = OstAbortRecoverDevice(userId: userId,
+//                                                       uPin: uPin,
+//                                                       password: password,
+//                                                       delegate: delegate)
+//        recoverDeviceAbort.perform()
+//    }
     
     /// Reset pin
     ///
