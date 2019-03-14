@@ -125,6 +125,8 @@ class OstAuthorizeSession: OstAuthorizeBase {
         
         OstSessionPollingService(userId: ostSession.userId!,
                                  sessionAddress: ostSession.address!,
+                                 successStatus: OstSession.Status.AUTHORIZED.rawValue,
+                                 failureStatus: OstSession.Status.CREATED.rawValue,
                                  workflowTransactionCount: self.workflowTransactionCountForPolling,
                                  successCallback: successCallback, failureCallback: failureCallback).perform()
     }

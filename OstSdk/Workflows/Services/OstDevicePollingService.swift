@@ -38,31 +38,42 @@ class OstDevicePollingService: OstBasePollingService {
         self.failureStatus = failureStatus
         self.successCallback = successCallback
         self.deviceAddress = deviceAddress
-        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
+        super.init(userId: userId,
+                   successStatus: successStatus,
+                   failureStatus: failureStatus,
+                   workflowTransactionCount: workflowTransactionCount,
+                   failureCallback: failureCallback)
     }
 
-    /// Process entity after getting success callback from server
-    ///
-    /// - Parameter entity: Device entity
-    override func onSuccessProcess(entity: OstBaseEntity) {
-        let ostDevice: OstDevice = entity as! OstDevice
-        if (ostDevice.status!.caseInsensitiveCompare(self.successStatus) == .orderedSame) {
-            // Logger.log(message: "test User with userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
-            self.successCallback?(ostDevice)
-            
-        }else if (ostDevice.status!.caseInsensitiveCompare(self.failureStatus) == .orderedSame){
-            self.onFailure?(OstError("w_s_dps_osp_1", OstErrorText.failedToProcess) )
-        }else{
-            // Logger.log(message: "test User status is activating for userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
-            self.getEntityAfterDelay()
-        }
-    }
+//    /// Process entity after getting success callback from server
+//    ///
+//    /// - Parameter entity: Device entity
+//    override func onSuccessProcess(entity: OstBaseEntity) {
+//        let ostDevice: OstDevice = entity as! OstDevice
+//        if (ostDevice.status!.caseInsensitiveCompare(self.successStatus) == .orderedSame) {
+//            // Logger.log(message: "test User with userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
+//            self.successCallback?(ostDevice)
+//            
+//        }else if (ostDevice.status!.caseInsensitiveCompare(self.failureStatus) == .orderedSame){
+//            self.onFailure?(OstError("w_s_dps_osp_1", OstErrorText.failedToProcess) )
+//        }else{
+//            // Logger.log(message: "test User status is activating for userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)
+//            self.getEntityAfterDelay()
+//        }
+//    }
     
     /// Fetch entity
     ///
     /// - Throws: OstError
     override func fetchEntity() throws {
         try OstAPIDevice(userId: self.userId).getDevice(deviceAddress: self.deviceAddress, onSuccess: self.onSuccess, onFailure: self.onFailure)
+    }
+    
+    /// Post success callback
+    ///
+    /// - Parameter entity: Device entity
+    override func postSuccessCallback(entity: OstBaseEntity) {
+        self.successCallback?(entity as! OstDevice)
     }
     
     /// Get queue for polling
