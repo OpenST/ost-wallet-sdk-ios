@@ -39,23 +39,7 @@ class OstSessionPollingService: OstBasePollingService {
                    workflowTransactionCount: workflowTransactionCount,
                    failureCallback: failureCallback)
     }
-    
-//    /// Process Entity after success from API
-//    ///
-//    /// - Parameter entity: Session entity
-//    override func onSuccessProcess(entity: OstBaseEntity) {
-//        let ostSession: OstSession = entity as! OstSession
-//        if (ostSession.isStatusInitializing) {
-//            // Logger.log(message: "[\(Date.timestamp())]: Session status is activating for userId: \(ostSession.id) and is Initializing.", parameterToPrint: ostSession.data)
-//            self.getEntityAfterDelay()
-//
-//        }
-//        else{
-//          // Logger.log(message: "[\(Date.timestamp())]: Session with userId: \(ostSession.id) and is activated.", parameterToPrint: ostSession.data)
-//            self.successCallback?(ostSession)
-//        }
-//    }
-    
+
     /// Fetch entity from server
     ///
     /// - Throws: OstError

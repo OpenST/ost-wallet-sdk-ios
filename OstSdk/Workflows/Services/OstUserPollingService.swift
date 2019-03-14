@@ -38,24 +38,6 @@ class OstUserPollingService: OstBasePollingService {
                    failureCallback: failureCallback)
     }
     
-//    /// Process Entity after success from API
-//    ///
-//    /// - Parameter entity: User entity
-//    override func onSuccessProcess(entity: OstBaseEntity) {
-//        let ostUser: OstUser = entity as! OstUser
-//        if (ostUser.isStatusActivating) {
-//            // Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-//            self.getEntityAfterDelay()
-//        }else if (ostUser.isStatusActivated) {
-//            self.successCallback?(ostUser)
-//        }else{
-//            // Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-//            self.onFailure?(OstError("w_s_dps_osp_1", OstErrorText.failedToProcess) )
-//        }
-//    }
-//
-//
-
     /// Fetch entity from server
     ///
     /// - Throws: OstError

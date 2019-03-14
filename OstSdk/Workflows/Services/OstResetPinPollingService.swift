@@ -42,22 +42,6 @@ class OstResetPinPollingService: OstBasePollingService {
         )
     }
     
-    /// Process Entity after success from API
-    ///
-    /// - Parameter entity: User entity
-//    override func onSuccessProcess(entity: OstBaseEntity) {
-//        let recoveryOwnerEntity: OstRecoveryOwnerEntity = entity as! OstRecoveryOwnerEntity
-//        if (recoveryOwnerEntity.isStatusAuthorized) {
-//            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorized.", parameterToPrint: recoveryOwnerEntity.data)
-//            self.postSuccessCallback(entity: recoveryOwnerEntity)
-//        } else if (recoveryOwnerEntity.isStatusAuthorizing) {
-//            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorizing.", parameterToPrint: recoveryOwnerEntity.data)
-//            self.getEntityAfterDelay()
-//        } else {
-//            self.failureCallback?(OstError("w_s_rpps_1", OstErrorText.transactionFailed))
-//        }
-//    }
-    
     /// Fetch entity from server
     ///
     /// - Throws: OstError
