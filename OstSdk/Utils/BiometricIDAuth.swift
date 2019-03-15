@@ -93,33 +93,33 @@ class BiometricIDAuth {
                 
                 switch evaluateError {
                 case LAError.authenticationFailed?:
-                    message = "There was a problem verifying your identity."
+                    message = "Authentication was not successful, because user failed to provide valid credentials."
                 case LAError.userCancel?:
-                    message = "You pressed cancel."
+                    message = "Authentication was canceled by user"
                 case LAError.userFallback?:
-                    message = "You pressed password."
+                    message = "Authentication was canceled, because the user tapped the fallback button."
                 default:
                     message = "Face ID/Touch ID may not be configured"
                 }
                 if #available(iOS 11.0, *) {
                     switch evaluateError {
                     case LAError.biometryNotAvailable?:
-                        message = "Face ID/Touch ID is not available."
+                        message = "Authentication could not start, because biometry is not available on the device."
                     case LAError.biometryNotEnrolled?:
-                        message = "Face ID/Touch ID is not set up."
+                        message = "Authentication could not start, because biometry has no enrolled identities."
                     case LAError.biometryLockout?:
-                        message = "Face ID/Touch ID is locked."
+                        message = "Authentication was not successful, because there were too many failed biometry attempts."
                     default:
                         message = "Face ID/Touch ID may not be configured"
                     }
                 } else {
                     switch evaluateError {
                     case LAError.touchIDLockout?:
-                        message = "Touch ID is locked."
+                        message = "Authentication was not successful, because there were too many failed Touch ID attempts."
                     case LAError.touchIDNotEnrolled?:
-                        message = "Touch ID is not set up."
+                        message = "Authentication could not start, because Touch ID has no enrolled fingers."
                     case LAError.touchIDNotAvailable?:
-                        message = "Touch ID is not available."
+                        message = "Authentication could not start, because Touch ID is not available on the device."
                     default:
                         message = "Touch ID may not be configured"
                     }

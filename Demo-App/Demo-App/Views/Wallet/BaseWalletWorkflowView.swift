@@ -123,7 +123,7 @@ class BaseWalletWorkflowView: BaseWalletView {
         self.getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol)
         return;
       }
-      ostPinAcceptProtocol.pinEntered(pinTextField.text!, applicationPassword: currentUser.userPinSalt!);
+      ostPinAcceptProtocol.pinEntered(pinTextField.text!, passphrasePrefix: currentUser.userPinSalt!);
       alert.dismiss(animated: true, completion: nil);
     }
     alert.addAction(action);

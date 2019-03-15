@@ -61,7 +61,6 @@ class OstExecuteTransaction: OstWorkflowBase {
     private let toAddresses: [String]
     private let amounts: [String]
     private let ruleName: String
-    private let tokenId: String
     
     private var rule: OstRule? = nil
     private var activeSession: OstSession? = nil
@@ -79,19 +78,16 @@ class OstExecuteTransaction: OstWorkflowBase {
     ///   - ruleName: Rule name to execute.
     ///   - toAddresses: Address whome to transfer amount.
     ///   - amounts: Amount to transfer.
-    ///   - tokenId: Token id.
     ///   - delegate: Callback.
     init(userId: String,
          ruleName: String,
          toAddresses: [String],
          amounts: [String],
-         tokenId: String,
          delegate: OstWorkFlowCallbackDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
-        self.tokenId = tokenId
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -109,10 +105,6 @@ class OstExecuteTransaction: OstWorkflowBase {
         try super.validateParams()
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
-        
-        if (self.currentUser!.tokenId! != self.tokenId) {
-            throw OstError("w_et_vp_1", OstErrorText.invalidTokenId)
-        }
         
         let allowedRuleNames = [OstExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased(),
                                 OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased()]
@@ -155,10 +147,9 @@ class OstExecuteTransaction: OstWorkflowBase {
     ///
     /// - Throws: OstError
     private func getRuleIfPresent() throws -> OstRule? {
-        if let rules = try OstRule.getByParentId(self.tokenId) {
+        if let rules = try OstRule.getByParentId(self.currentUser!.tokenId!) {
             for rule in rules {
-                if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame &&
-                    rule.tokenId?.caseInsensitiveCompare(self.tokenId) == .orderedSame) {
+                if (self.ruleName.caseInsensitiveCompare(rule.name!) == .orderedSame) {
                     return rule
                 }
             }
@@ -392,7 +383,7 @@ extension OstExecuteTransaction {
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
             throw OstError("w_et_gtviwfp_1", OstErrorText.invalidAmount)
         }
-        guard let btToOstConversionFactor = token.conversionFactor else {
+        guard let ostToBtConversionFactor = token.conversionFactor else {
             throw OstError("w_et_gtviwfp_2", OstErrorText.conversionFactorNotFound)
         }
         guard let btDecimal = token.decimals else {
@@ -405,11 +396,11 @@ extension OstExecuteTransaction {
         let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
         for amount in self.amounts {
-            let btAmount = try OstConversion.fiatToBt(btToOstConversionFactor: btToOstConversionFactor,
-                                       btDecimal: btDecimal,
-                                       ostDecimal: self.OST_DECIMAL_VALUE,
-                                       fiatAmount: BigInt(amount)!,
-                                       pricePoint: fiatValInString)
+            let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
+                                                      btDecimal: btDecimal,
+                                                      ostDecimal: self.OST_DECIMAL_VALUE,
+                                                      fiatAmount: BigInt(amount)!,
+                                                      pricePoint: fiatValInString)    
             totalAmount += btAmount
         }
         return totalAmount

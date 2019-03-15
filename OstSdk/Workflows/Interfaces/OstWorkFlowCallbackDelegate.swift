@@ -24,7 +24,7 @@ public protocol OstWorkFlowCallbackDelegate {
     /// Developers should show pin dialog on this callback.
     ///
     /// - Parameters:
-    ///   - userId: Id of user whose password and pin are needed.
+    ///   - userId: Id of user whose passphrase prefix and pin are needed.
     ///   - delegate: To pass pin
     func getPin(_ userId: String,
                 delegate: OstPinAcceptDelegate)
@@ -33,14 +33,14 @@ public protocol OstWorkFlowCallbackDelegate {
     /// Developers should show invalid pin error and ask for pin again on this callback.
     ///
     /// - Parameters:
-    ///   - userId: Id of user whose password and pin are needed.
+    ///   - userId: User id whose passphrase prefix and pin failed to validate
     ///   - delegate: To pass another pin.
     func invalidPin(_ userId: String,
                     delegate: OstPinAcceptDelegate)
     
     /// Inform SDK user that entered pin is validated.
     /// Developers should dismiss pin dialog on this callback.
-    /// - Parameter userId: Id of user whose pin and password has been validated.
+    /// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
     func pinValidated(_ userId: String)
     
     /// Inform SDK user the the flow is complete.

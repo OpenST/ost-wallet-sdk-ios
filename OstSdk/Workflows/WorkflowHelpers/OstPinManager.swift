@@ -11,48 +11,48 @@ import Foundation
 class OstPinManager {
     private let ostPinManagerQueue = DispatchQueue(label: "OstPinManager", qos: .background)
     private let userId: String
-    private let password: String
-    private let pin: String
-    private var newPin: String? = nil
+    private let passphrasePrefix: String
+    private let userPin: String
+    private var newUserPin: String? = nil
     private var salt: String? = nil
     
     /// Initializer
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - password: App password
-    ///   - pin: User pin
-    ///   - newPin: User new pin
+    ///   - passphrasePrefix: App passphrase prefix
+    ///   - userPin: User pin
+    ///   - newUserPin: User new pin
     init(userId: String,
-         password: String,
-         pin: String,
-         newPin: String? = "") {
+         passphrasePrefix: String,
+         userPin: String,
+         newUserPin: String? = "") {
         
         self.userId = userId
-        self.password = password
-        self.pin = pin
-        self.newPin = newPin
+        self.passphrasePrefix = passphrasePrefix
+        self.userPin = userPin
+        self.newUserPin = newUserPin
     }
     
-    /// Validate pin length
+    /// Validate user pin length
     ///
     /// - Throws: OstError
     func validatePinLength() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
             throw OstError.init(
                 "w_wh_pm_vpl_1",
                 "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }
-    /// Validate Password length
+    /// Validate passphrase prefix length
     ///
     /// - Throws: OstError
-    func validatePasswordLength() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.password.count {
+    func validatePassphrasePrefixLength() throws {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.passphrasePrefix.count {
             throw OstError.init(
                 "w_wh_pm_vpwdl_1",
-                "Password must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
+                "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
             )
         }
     }
@@ -67,8 +67,8 @@ class OstPinManager {
         
         let isValid = OstKeyManager(userId: self.userId)
             .verifyPin(
-                password: self.password,
-                pin: self.pin,
+                passphrasePrefix: self.passphrasePrefix,
+                userPin: self.userPin,
                 salt: self.salt!,
                 recoveryOwnerAddress: user.recoveryOwnerAddress!
         )
@@ -92,13 +92,13 @@ class OstPinManager {
     func getRecoveryOwnerAddress() -> String? {
         do {
             try self.validatePinLength()
-            try self.validatePasswordLength()
+            try self.validatePassphrasePrefixLength()
             try self.fetchSalt()
             try self.validateSaltLength()
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
-                    password: self.password,
-                    pin: self.pin,
+                    passphrasePrefix: self.passphrasePrefix,
+                    userPin: self.userPin,
                     salt: self.salt!
             )
         }catch {
@@ -112,13 +112,13 @@ class OstPinManager {
     func getRecoveryOwnerAddressForNewPin() -> String? {
         do {
             try self.validateNewPinLength()
-            try self.validatePasswordLength()
+            try self.validatePassphrasePrefixLength()
             try self.validateSaltLength()
             try self.fetchSalt()
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
-                    password: self.password,
-                    pin: self.newPin!,
+                    passphrasePrefix: self.passphrasePrefix,
+                    userPin: self.newUserPin!,
                     salt: self.salt!
             )
         }catch {
@@ -163,8 +163,8 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
-                password: self.password,
+                userPin: self.userPin,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
             )
         
@@ -224,8 +224,8 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
-                password: self.password,
+                userPin: self.userPin,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )
         
@@ -283,8 +283,8 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
-                password: self.password,
+                userPin: self.userPin,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )
         
@@ -312,7 +312,7 @@ class OstPinManager {
     ///
     /// - Throws: OstError
     private func validateNewPinLength() throws {
-        if (self.newPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newPin!.count) {
+        if (self.newUserPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
             throw OstError.init(
                 "w_wh_pm_v_1",
                 "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
@@ -324,7 +324,7 @@ class OstPinManager {
     /// - Throws: OstError
     private func validate() throws{
         try self.validatePinLength()
-        try self.validatePasswordLength()
+        try self.validatePassphrasePrefixLength()
         try self.validateSaltLength()
     }
     

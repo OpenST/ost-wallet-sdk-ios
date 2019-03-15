@@ -16,7 +16,7 @@ extension OstSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - tokenId: Token identifier for user.
-    ///   - forceSync: Force sync data from Kit.
+    ///   - forceSync: Force sync data from server.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func setupDevice(
         userId: String,
@@ -37,36 +37,36 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
-    ///   - pin: user secret pin.
-    ///   - password: App-server secret for user.
-    ///   - spendingLimit: Max amount that user can spend per transaction.
-    ///   - expireAfter: Session expiration time.
+    ///   - userPin: User secret pin.
+    ///   - passphrasePrefix: App-server secret for user.
+    ///   - spendingLimitInWei: Max amount that user can spend per transaction.
+    ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
-        pin: String,
-        password: String,
-        spendingLimit: String,
-        expireAfter: TimeInterval,
+        userPin: String,
+        passphrasePrefix: String,
+        spendingLimitInWei: String,
+        expireAfterInSec: TimeInterval,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let activateUserObj = OstActivateUser(
             userId: userId,
-            pin: pin, password:
-            password,
-            spendingLimit: spendingLimit,
-            expireAfter: expireAfter,
+            userPin: userPin,
+            passphrasePrefix: passphrasePrefix,
+            spendingLimit: spendingLimitInWei,
+            expireAfter: expireAfterInSec,
             delegate: delegate)
         
         activateUserObj.perform()
     }
     
-    /// Add device with mnemonicss.
+    /// Add device using mnemonics.
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDeviceWithMnemonics(
+    public class func addDeviceUsingMnemonics(
         userId: String,
         mnemonics: [String],
         delegate: OstWorkFlowCallbackDelegate) {
@@ -90,55 +90,37 @@ extension OstSdk {
         delegate: OstWorkFlowCallbackDelegate) {
         
         let mnemonicsArray = mnemonics.components(separatedBy: " ")
-        self.addDeviceWithMnemonics(userId: userId,
-                                    mnemonics: mnemonicsArray,
-                                    delegate: delegate)
+        self.addDeviceUsingMnemonics(userId: userId,
+                                     mnemonics: mnemonicsArray,
+                                     delegate: delegate)
     }
     
     /// Add session for user.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id
-    ///   - spendingLimit: Amount user can spend in a transaction.
-    ///   - expiresAfter: Seconds after which the session key should expire.
+    ///   - userId: User id
+    ///   - spendingLimitInWei: Amount user can spend in a transaction.
+    ///   - expireAfterInSec: Seconds after which the session key should expire.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func addSession(
         userId: String,
-        spendingLimit: String,
-        expireAfter: TimeInterval,
+        spendingLimitInWei: String,
+        expireAfterInSec: TimeInterval,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let ostAddSession = OstAddSession(
             userId: userId,
-            spendingLimit: spendingLimit,
-            expireAfter: expireAfter,
+            spendingLimit: spendingLimitInWei,
+            expireAfter: expireAfterInSec,
             delegate: delegate)
         
         ostAddSession.perform()
     }
     
-    /// Perform operations for given QR-Code image of core image type.
-    ///
-    /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - qrCodeCoreImage: QR-Code image of Core Image type
-    ///   - delegate: Callback for action complete or to perform respective action
-    public class func perform(
-        userId: String,
-        ciImage qrCodeCoreImage: CIImage,
-        delegate: OstWorkFlowCallbackDelegate) {
-        
-        let payload: [String]? = qrCodeCoreImage.readQRCode
-        
-        //Note: Validations have been moved inside.
-        //This is done to trigger flowInterupt; IMHO; the proper way.
-        self.perfrom(userId: userId, payload: payload!.first!, delegate: delegate)
-    }
-    
     ///  Perform operations for given paylaod
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
+    ///   - userId: User id.
     ///   - payload: Json string of payload is expected.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func perfrom(
@@ -153,7 +135,7 @@ extension OstSdk {
     /// Get paper wallet of given user id.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
+    ///   - userId: User id.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func getPaperWallet(
         userId: String,
@@ -166,7 +148,7 @@ extension OstSdk {
     
     /// Get QR-Code to add device.
     ///
-    /// - Parameter userId: Kit user id.
+    /// - Parameter userId: User id.
     /// - Returns: Core image of QR-Code.
     /// - Throws: OstError
     public class func getAddDeviceQRCode(
@@ -197,7 +179,7 @@ extension OstSdk {
     /// Start polling for entity id.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
+    ///   - userId: User id.
     ///   - entityId: entity id to start polling for.
     ///   - entityType: type of entity.
     ///   - delegate: Callback for action complete or to perform respective actions.
@@ -217,67 +199,46 @@ extension OstSdk {
     /// Initialize recover device.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - recoverDeviceAddress: device address of device tobe recovered.
-    ///   - uPin: user pin.
-    ///   - password: application password provied by application server.
+    ///   - userId: User id.
+    ///   - recoverDeviceAddress: Device address of device tobe recovered.
+    ///   - userPin: User pin.
+    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func initializeRecoverDevice(
         userId: String,
         recoverDeviceAddress: String,
-        uPin: String,
-        password: String,
+        userPin: String,
+        passphrasePrefix: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
-                                                       uPin: uPin,
-                                                       password: password,
+                                                       userPin: userPin,
+                                                       passphrasePrefix: passphrasePrefix,
                                                        delegate: delegate)
         recoverDeviceInitialize.perform()
     }
     
-    //TODO: Update README
-    /// Abort recover device.
-    ///
-    /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - uPin: user pin.
-    ///   - password: application password provied by application server.
-    ///   - delegate: Callback for action complete or to perform respective actions.
-//  fileprivate class func abortRecoverDevice(
-//        userId: String,
-//        uPin: String,
-//        password: String,
-//        delegate: OstWorkFlowCallbackDelegate) {
-//
-//        let recoverDeviceAbort = OstAbortRecoverDevice(userId: userId,
-//                                                       uPin: uPin,
-//                                                       password: password,
-//                                                       delegate: delegate)
-//        recoverDeviceAbort.perform()
-//    }
-    
     /// Reset pin
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - password: application password provied by application server.
-    ///   - oldPin: old pin.
-    ///   - newPin: new pin.
+    ///   - userId: User id.
+    ///   - passphrasePrefix: application passphrase prefix provied by application server.
+    ///   - oldUserPin: Old user pin.
+    ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func resetPin(
         userId: String,
-        password: String,
-        oldPin: String,
-        newPin: String,
+        passphrasePrefix: String,
+        oldUserPin: String,
+        newUserPin: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let resetPinWorkFlow = OstResetPin(
             userId: userId,
-            password: password,
-            oldPin: oldPin,
-            newPin: newPin,
+            passphrasePrefix: passphrasePrefix,
+            oldUserPin: oldUserPin,
+            newUserPin: newUserPin,
             delegate: delegate)
         
         resetPinWorkFlow.perform()
@@ -287,25 +248,23 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - transactionType: Type of transaction to execute. Either ExecuteTransactionTypeDirectTransfer or ExecuteTransactionTypePay
-    ///   - toAddresses: Addresses to transfer fund
+    ///   - tokenHolderAddresses: Addresses to transfer fund
     ///   - amounts: anounts to transfer
+    ///   - transactionType: Type of transaction to execute. Either ExecuteTransactionTypeDirectTransfer or ExecuteTransactionTypePay
     ///   - tokenId: token id
     ///   - delegate: Callback
     public class func executeTransaction(
         userId: String,
-        transactionType: OstExecuteTransactionType,
-        toAddresses: [String],
+        tokenHolderAddresses: [String],
         amounts: [String],
-        tokenId: String,
+        transactionType: OstExecuteTransactionType,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let executeTransactionFlow = OstExecuteTransaction(
             userId: userId,
             ruleName: transactionType.rawValue,
-            toAddresses: toAddresses,
+            toAddresses: tokenHolderAddresses,
             amounts: amounts,
-            tokenId: tokenId,
             delegate: delegate)
         
         executeTransactionFlow.perform()

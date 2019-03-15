@@ -21,14 +21,14 @@ class OstActivateUser: OstWorkflowBase {
     ///
     /// - Parameters:
     ///   - userId: Kit user id.
-    ///   - pin: User pin.
-    ///   - password: Password provied by application server.
+    ///   - userPin: User pin.
+    ///   - passphrasePrefix: Passphrase prefix provied by application server.
     ///   - spendingLimit: Maximum spending limit of transaction.
     ///   - expireAfter: Relative time.
     ///   - delegate: Callback.
     init(userId: String,
-         pin: String,
-         password: String,
+         userPin: String,
+         passphrasePrefix: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
          delegate: OstWorkFlowCallbackDelegate) {
@@ -38,7 +38,9 @@ class OstActivateUser: OstWorkflowBase {
         
         super.init(userId: userId, delegate: delegate)
         
-        self.pinManager = OstPinManager(userId: self.userId, password: password, pin: pin)
+        self.pinManager = OstPinManager(userId: self.userId,
+                                        passphrasePrefix: passphrasePrefix,
+                                        userPin: userPin)
     }
     
     /// Get workflow queue.
@@ -56,7 +58,7 @@ class OstActivateUser: OstWorkflowBase {
         
         try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         try self.pinManager!.validatePinLength()
-        try self.pinManager!.validatePasswordLength()
+        try self.pinManager!.validatePassphrasePrefixLength()
         
         if (self.currentUser?.isStatusActivated)! {
             throw OstError("w_au_vp_1", .userAlreadyActivated)

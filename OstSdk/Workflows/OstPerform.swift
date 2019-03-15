@@ -117,6 +117,9 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             
         case OstQRCodeDataDefination.TRANSACTION.rawValue:
             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
+            if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
+                throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
+            }
             self.executeTxPayloadParams = executeTxPayloadParams
             verifyDataForExecuteTransaction(executeTxPayloadParams)
             
@@ -157,7 +160,6 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
                               ruleName: self.executeTxPayloadParams!.ruleName,
                               toAddresses: self.executeTxPayloadParams!.addresses,
                               amounts: self.executeTxPayloadParams!.amounts,
-                              tokenId: self.executeTxPayloadParams!.tokenId,
                               delegate: self.delegate).perform()
     }
 

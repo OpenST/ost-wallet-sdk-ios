@@ -15,7 +15,7 @@ public protocol OstPinAcceptDelegate: OstBaseDelegate {
     /// SDK user will use it to pass user pin to SDK.
     ///
     /// - Parameters:
-    ///   - uPin: user pin passed from Application
-    ///   - appUserPassword: Application Provided Password for the user
-    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String)
+    ///   - userPin: User pin passed from Application
+    ///   - passphrasePrefix: Application provided passphrase prefix
+    func pinEntered(_ userPin: String, passphrasePrefix: String)
 }

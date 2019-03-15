@@ -17,9 +17,9 @@ class ResetPinView: AddSessionView {
         let currentUser = CurrentUser.getInstance()
         
         OstSdk.resetPin(userId: currentUser.ostUserId!,
-                        password: currentUser.userPinSalt!,
-                        oldPin: spendingLimitTestField.text!,
-                        newPin: expiresAfterTextField.text!,
+                        passphrasePrefix: currentUser.userPinSalt!,
+                        oldUserPin: spendingLimitTestField.text!,
+                        newUserPin: expiresAfterTextField.text!,
                         delegate: self.sdkInteract)
         
         self.nextButton.isHidden = true

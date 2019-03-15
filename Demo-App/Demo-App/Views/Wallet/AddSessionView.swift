@@ -19,8 +19,8 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
             super.didTapNext(sender: sender);
             let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
             OstSdk.addSession(userId: currentUser.ostUserId!,
-                              spendingLimit: self.spendingLimitTestField.text!,
-                              expireAfter: Double(expireAfter),
+                              spendingLimitInWei: self.spendingLimitTestField.text!,
+                              expireAfterInSec: Double(expireAfter),
                               delegate: self.sdkInteract)
         }
     }
