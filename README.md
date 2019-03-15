@@ -191,8 +191,8 @@ To update current Pin with new Pin.<br/><br/>
 OstSdk.resetPin(
     userId: String,
     passphrasePrefix: String,
-    oldPin: String,
-    newPin: String,
+    oldUserPin: String,
+    newUserPin: String,
     delegate: OstWorkFlowCallbackDelegate
     )
 ```

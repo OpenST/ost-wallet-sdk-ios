@@ -33,7 +33,7 @@ public protocol OstWorkFlowCallbackDelegate {
     /// Developers should show invalid pin error and ask for pin again on this callback.
     ///
     /// - Parameters:
-    ///   - userId: User id whose passphrase prefix and pin failed to vaildate
+    ///   - userId: User id whose passphrase prefix and pin failed to validate
     ///   - delegate: To pass another pin.
     func invalidPin(_ userId: String,
                     delegate: OstPinAcceptDelegate)

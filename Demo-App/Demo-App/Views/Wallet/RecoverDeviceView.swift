@@ -22,7 +22,7 @@ class RecoverDeviceView: AddSessionView {
         OstSdk.initializeRecoverDevice(
             userId: currentUser.ostUserId!,
             recoverDeviceAddress: spendingLimitTestField.text!,
-            uPin: expiresAfterTextField.text!,
+            userPin: expiresAfterTextField.text!,
             passphrasePrefix: currentUser.userPinSalt!,
             delegate: self.sdkInteract)
     }

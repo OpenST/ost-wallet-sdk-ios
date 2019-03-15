@@ -45,7 +45,7 @@ public class OstSdk {
     ///
     /// - Parameter id: Token id
     /// - Returns: Token entity
-    public class func getTokne( _ id: String) -> OstToken? {
+    public class func getToken( _ id: String) -> OstToken? {
         do {
             return try OstToken.getById(id)
         } catch {

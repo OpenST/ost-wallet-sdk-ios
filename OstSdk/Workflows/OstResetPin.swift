@@ -18,20 +18,20 @@ class OstResetPin: OstWorkflowBase {
     /// - Parameters:
     ///   - userId: User id
     ///   - passphrasePrefix: Application Passphrase prefix
-    ///   - oldPin: Old pin
-    ///   - newPin: New pin
+    ///   - oldUserPin: Old user pin
+    ///   - newUserPin: New user pin
     ///   - delegate: Call back
     init(userId: String,
          passphrasePrefix: String,
-         oldPin: String,
-         newPin: String,
+         oldUserPin: String,
+         newUserPin: String,
          delegate: OstWorkFlowCallbackDelegate) {
 
         self.pinManager = OstPinManager(
             userId: userId,
             passphrasePrefix: passphrasePrefix,
-            userPin: oldPin,
-            newPin: newPin
+            userPin: oldUserPin,
+            newPin: newUserPin
         )
         super.init(userId: userId, delegate: delegate)
     }

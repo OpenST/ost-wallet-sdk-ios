@@ -61,7 +61,7 @@ extension OstSdk {
         activateUserObj.perform()
     }
     
-    /// Add device Using mnemonicss.
+    /// Add device using mnemonics.
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
@@ -224,21 +224,21 @@ extension OstSdk {
     /// - Parameters:
     ///   - userId: User id.
     ///   - passphrasePrefix: application passphrase prefix provied by application server.
-    ///   - oldPin: old pin.
-    ///   - newPin: new pin.
+    ///   - oldUserPin: Old user pin.
+    ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func resetPin(
         userId: String,
         passphrasePrefix: String,
-        oldPin: String,
-        newPin: String,
+        oldUserPin: String,
+        newUserPin: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let resetPinWorkFlow = OstResetPin(
             userId: userId,
             passphrasePrefix: passphrasePrefix,
-            oldPin: oldPin,
-            newPin: newPin,
+            oldUserPin: oldUserPin,
+            newUserPin: newUserPin,
             delegate: delegate)
         
         resetPinWorkFlow.perform()

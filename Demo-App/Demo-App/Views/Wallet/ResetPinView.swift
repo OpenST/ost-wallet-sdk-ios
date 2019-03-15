@@ -18,8 +18,8 @@ class ResetPinView: AddSessionView {
         
         OstSdk.resetPin(userId: currentUser.ostUserId!,
                         passphrasePrefix: currentUser.userPinSalt!,
-                        oldPin: spendingLimitTestField.text!,
-                        newPin: expiresAfterTextField.text!,
+                        oldUserPin: spendingLimitTestField.text!,
+                        newUserPin: expiresAfterTextField.text!,
                         delegate: self.sdkInteract)
         
         self.nextButton.isHidden = true

@@ -121,7 +121,7 @@ class OstCryptoImpls: OstCrypto {
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
             throw OstError.init("s_i_ci_grk_3",
-                                 "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+                                 "User pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,
@@ -175,7 +175,7 @@ class OstCryptoImpls: OstCrypto {
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
             throw OstError.init("s_i_ci_grk_3",
-                                "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+                                "User pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,
