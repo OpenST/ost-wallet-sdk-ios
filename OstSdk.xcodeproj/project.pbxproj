@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001C71C0222223DE00905BF1 /* OstSdkExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 001C71BE222223DE00905BF1 /* OstSdkExample.xcdatamodeld */; };
 		00383296222443D300AA4F44 /* OstValidateDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00383295222443D300AA4F44 /* OstValidateDataDelegate.swift */; };
 		003832982224482500AA4F44 /* OstAddDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */; };
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
@@ -19,32 +18,6 @@
 		00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D022224188000ABAB2 /* EthereumKit.framework */; };
 		00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D222224188000ABAB2 /* FMDB.framework */; };
 		00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D422224188000ABAB2 /* SipHash.framework */; };
-		00E63B0522221E5B00C61363 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B0422221E5B00C61363 /* AppDelegate.swift */; };
-		00E63B0722221E5B00C61363 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B0622221E5B00C61363 /* ViewController.swift */; };
-		00E63B0A22221E5B00C61363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B0822221E5B00C61363 /* Main.storyboard */; };
-		00E63B0C22221E5C00C61363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B0B22221E5C00C61363 /* Assets.xcassets */; };
-		00E63B0F22221E5C00C61363 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B0D22221E5C00C61363 /* LaunchScreen.storyboard */; };
-		00E63B4C22221ED200C61363 /* DeployTokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3122221ED200C61363 /* DeployTokenHolder.swift */; };
-		00E63B4D22221ED200C61363 /* OstWorkFlowCallbackImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3222221ED200C61363 /* OstWorkFlowCallbackImplementation.swift */; };
-		00E63B4E22221ED200C61363 /* SetupDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3322221ED200C61363 /* SetupDevice.swift */; };
-		00E63B4F22221ED200C61363 /* ActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3422221ED200C61363 /* ActivateUser.swift */; };
-		00E63B5022221ED200C61363 /* AddDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3522221ED200C61363 /* AddDevice.swift */; };
-		00E63B5122221ED200C61363 /* WorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3622221ED200C61363 /* WorkflowBase.swift */; };
-		00E63B5222221ED200C61363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B3722221ED200C61363 /* Assets.xcassets */; };
-		00E63B5322221ED200C61363 /* UserDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3922221ED200C61363 /* UserDetailsTableViewCell.swift */; };
-		00E63B5422221ED200C61363 /* UserDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B3A22221ED200C61363 /* UserDetailsTableViewCell.xib */; };
-		00E63B5522221ED200C61363 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3C22221ED200C61363 /* SignupViewController.swift */; };
-		00E63B5622221ED200C61363 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3D22221ED200C61363 /* EntryViewController.swift */; };
-		00E63B5722221ED200C61363 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B3E22221ED200C61363 /* LoginViewController.swift */; };
-		00E63B5922221ED200C61363 /* MappyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B4222221ED200C61363 /* MappyUser.swift */; };
-		00E63B5A22221ED200C61363 /* MappyRegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B4322221ED200C61363 /* MappyRegisterDevice.swift */; };
-		00E63B5B22221ED200C61363 /* MappyAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B4422221ED200C61363 /* MappyAPIBase.swift */; };
-		00E63B5C22221ED200C61363 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B4622221ED200C61363 /* LaunchScreen.storyboard */; };
-		00E63B5D22221ED200C61363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B4822221ED200C61363 /* Main.storyboard */; };
-		00E63B5E22221ED200C61363 /* SharedDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E63B4A22221ED200C61363 /* SharedDatabase.swift */; };
-		00E63B5F22221ED200C61363 /* MockToken.abi in Resources */ = {isa = PBXBuildFile; fileRef = 00E63B4B22221ED200C61363 /* MockToken.abi */; };
-		00E63B6022221FEB00C61363 /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; };
-		00E63B6122221FEB00C61363 /* OstSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
 		4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */; };
 		4B00CBA421DCD8C4005A5696 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */; };
@@ -251,7 +224,6 @@
 		4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */; };
 		4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */; };
 		5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */; };
-		61F0232BC72692B3D7A74E44 /* Pods_OstSdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */; };
 		B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */; };
 		EC9185572227CF6A00905C54 /* OstMnemonicsKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */; };
 		ECB29E6622256144001C003E /* OST_MIGRATION_README.md in Resources */ = {isa = PBXBuildFile; fileRef = ECB29E6522256144001C003E /* OST_MIGRATION_README.md */; };
@@ -268,13 +240,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		00E63B6222221FEB00C61363 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B7C92FC21B006E900EC0A9F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4B7C930421B006E900EC0A9F;
-			remoteInfo = OstSdk;
-		};
 		4B7C931021B006E900EC0A9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4B7C92FC21B006E900EC0A9F /* Project object */;
@@ -284,22 +249,7 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		00E63B6422221FEC00C61363 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				00E63B6122221FEB00C61363 /* OstSdk.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		001C71BF222223DE00905BF1 /* Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example.xcdatamodel; sourceTree = "<group>"; };
 		00383295222443D300AA4F44 /* OstValidateDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstValidateDataDelegate.swift; sourceTree = "<group>"; };
 		003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithQRData.swift; sourceTree = "<group>"; };
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -311,32 +261,6 @@
 		00C282D022224188000ABAB2 /* EthereumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EthereumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C282D222224188000ABAB2 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C282D422224188000ABAB2 /* SipHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SipHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E63B0222221E5B00C61363 /* OstSdkExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OstSdkExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E63B0422221E5B00C61363 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		00E63B0622221E5B00C61363 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		00E63B0922221E5B00C61363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		00E63B0B22221E5C00C61363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		00E63B0E22221E5C00C61363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		00E63B1022221E5C00C61363 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E63B3122221ED200C61363 /* DeployTokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeployTokenHolder.swift; sourceTree = "<group>"; };
-		00E63B3222221ED200C61363 /* OstWorkFlowCallbackImplementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowCallbackImplementation.swift; sourceTree = "<group>"; };
-		00E63B3322221ED200C61363 /* SetupDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupDevice.swift; sourceTree = "<group>"; };
-		00E63B3422221ED200C61363 /* ActivateUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateUser.swift; sourceTree = "<group>"; };
-		00E63B3522221ED200C61363 /* AddDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDevice.swift; sourceTree = "<group>"; };
-		00E63B3622221ED200C61363 /* WorkflowBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowBase.swift; sourceTree = "<group>"; };
-		00E63B3722221ED200C61363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		00E63B3922221ED200C61363 /* UserDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsTableViewCell.swift; sourceTree = "<group>"; };
-		00E63B3A22221ED200C61363 /* UserDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsTableViewCell.xib; sourceTree = "<group>"; };
-		00E63B3C22221ED200C61363 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		00E63B3D22221ED200C61363 /* EntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
-		00E63B3E22221ED200C61363 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		00E63B4222221ED200C61363 /* MappyUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappyUser.swift; sourceTree = "<group>"; };
-		00E63B4322221ED200C61363 /* MappyRegisterDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappyRegisterDevice.swift; sourceTree = "<group>"; };
-		00E63B4422221ED200C61363 /* MappyAPIBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappyAPIBase.swift; sourceTree = "<group>"; };
-		00E63B4722221ED200C61363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		00E63B4922221ED200C61363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		00E63B4A22221ED200C61363 /* SharedDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedDatabase.swift; sourceTree = "<group>"; };
-		00E63B4B22221ED200C61363 /* MockToken.abi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MockToken.abi; sourceTree = "<group>"; };
 		456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
@@ -571,15 +495,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E63AFF22221E5B00C61363 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E63B6022221FEB00C61363 /* OstSdk.framework in Frameworks */,
-				61F0232BC72692B3D7A74E44 /* Pods_OstSdkExample.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B7C930221B006E900EC0A9F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -609,79 +524,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E63B0322221E5B00C61363 /* OstSdkExample */ = {
-			isa = PBXGroup;
-			children = (
-				001C71BE222223DE00905BF1 /* OstSdkExample.xcdatamodeld */,
-				00E63B3722221ED200C61363 /* Assets.xcassets */,
-				00E63B4522221ED200C61363 /* Base.lproj */,
-				00E63B4B22221ED200C61363 /* MockToken.abi */,
-				00E63B4122221ED200C61363 /* Network */,
-				00E63B4A22221ED200C61363 /* SharedDatabase.swift */,
-				00E63B3822221ED200C61363 /* TableViewCell */,
-				00E63B3B22221ED200C61363 /* ViewController */,
-				00E63B3022221ED200C61363 /* Workflows */,
-				00E63B0422221E5B00C61363 /* AppDelegate.swift */,
-				00E63B0622221E5B00C61363 /* ViewController.swift */,
-				00E63B0822221E5B00C61363 /* Main.storyboard */,
-				00E63B0B22221E5C00C61363 /* Assets.xcassets */,
-				00E63B0D22221E5C00C61363 /* LaunchScreen.storyboard */,
-				00E63B1022221E5C00C61363 /* Info.plist */,
-			);
-			path = OstSdkExample;
-			sourceTree = "<group>";
-		};
-		00E63B3022221ED200C61363 /* Workflows */ = {
-			isa = PBXGroup;
-			children = (
-				00E63B3122221ED200C61363 /* DeployTokenHolder.swift */,
-				00E63B3222221ED200C61363 /* OstWorkFlowCallbackImplementation.swift */,
-				00E63B3322221ED200C61363 /* SetupDevice.swift */,
-				00E63B3422221ED200C61363 /* ActivateUser.swift */,
-				00E63B3522221ED200C61363 /* AddDevice.swift */,
-				00E63B3622221ED200C61363 /* WorkflowBase.swift */,
-			);
-			path = Workflows;
-			sourceTree = "<group>";
-		};
-		00E63B3822221ED200C61363 /* TableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				00E63B3922221ED200C61363 /* UserDetailsTableViewCell.swift */,
-				00E63B3A22221ED200C61363 /* UserDetailsTableViewCell.xib */,
-			);
-			path = TableViewCell;
-			sourceTree = "<group>";
-		};
-		00E63B3B22221ED200C61363 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				00E63B3C22221ED200C61363 /* SignupViewController.swift */,
-				00E63B3D22221ED200C61363 /* EntryViewController.swift */,
-				00E63B3E22221ED200C61363 /* LoginViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		00E63B4122221ED200C61363 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				00E63B4222221ED200C61363 /* MappyUser.swift */,
-				00E63B4322221ED200C61363 /* MappyRegisterDevice.swift */,
-				00E63B4422221ED200C61363 /* MappyAPIBase.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		00E63B4522221ED200C61363 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				00E63B4622221ED200C61363 /* LaunchScreen.storyboard */,
-				00E63B4822221ED200C61363 /* Main.storyboard */,
-			);
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
 		3786C4EE2FD59024C6B7673C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1109,7 +951,6 @@
 				005AAF6A22032B8A00A2F8E4 /* README.md */,
 				4B7C930721B006E900EC0A9F /* OstSdk */,
 				4B7C931221B006E900EC0A9F /* OstSdkTests */,
-				00E63B0322221E5B00C61363 /* OstSdkExample */,
 				4B7C930621B006E900EC0A9F /* Products */,
 				4B7C933821B150AF00EC0A9F /* Frameworks */,
 				3786C4EE2FD59024C6B7673C /* Pods */,
@@ -1121,7 +962,6 @@
 			children = (
 				4B7C930521B006E900EC0A9F /* OstSdk.framework */,
 				4B7C930E21B006E900EC0A9F /* OstSdkTests.xctest */,
-				00E63B0222221E5B00C61363 /* OstSdkExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1326,27 +1166,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		00E63B0122221E5B00C61363 /* OstSdkExample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E63B2722221E5C00C61363 /* Build configuration list for PBXNativeTarget "OstSdkExample" */;
-			buildPhases = (
-				8A8EC24BC789BE3E124757B4 /* [CP] Check Pods Manifest.lock */,
-				00E63AFE22221E5B00C61363 /* Sources */,
-				00E63AFF22221E5B00C61363 /* Frameworks */,
-				00E63B0022221E5B00C61363 /* Resources */,
-				00E63B6422221FEC00C61363 /* Embed Frameworks */,
-				E7AC21673F4446818AB625D8 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				00E63B6322221FEB00C61363 /* PBXTargetDependency */,
-			);
-			name = OstSdkExample;
-			productName = OstSdkExample;
-			productReference = 00E63B0222221E5B00C61363 /* OstSdkExample.app */;
-			productType = "com.apple.product-type.application";
-		};
 		4B7C930421B006E900EC0A9F /* OstSdk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B7C931921B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdk" */;
@@ -1396,9 +1215,6 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "aniket ayachit";
 				TargetAttributes = {
-					00E63B0122221E5B00C61363 = {
-						CreatedOnToolsVersion = 10.1;
-					};
 					4B7C930421B006E900EC0A9F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
@@ -1423,27 +1239,11 @@
 			targets = (
 				4B7C930421B006E900EC0A9F /* OstSdk */,
 				4B7C930D21B006E900EC0A9F /* OstSdkTests */,
-				00E63B0122221E5B00C61363 /* OstSdkExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		00E63B0022221E5B00C61363 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E63B5D22221ED200C61363 /* Main.storyboard in Resources */,
-				00E63B5422221ED200C61363 /* UserDetailsTableViewCell.xib in Resources */,
-				00E63B5F22221ED200C61363 /* MockToken.abi in Resources */,
-				00E63B0F22221E5C00C61363 /* LaunchScreen.storyboard in Resources */,
-				00E63B0C22221E5C00C61363 /* Assets.xcassets in Resources */,
-				00E63B5C22221ED200C61363 /* LaunchScreen.storyboard in Resources */,
-				00E63B5222221ED200C61363 /* Assets.xcassets in Resources */,
-				00E63B0A22221E5B00C61363 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B7C930321B006E900EC0A9F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1543,85 +1343,9 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8A8EC24BC789BE3E124757B4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OstSdkExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7AC21673F4446818AB625D8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00E63AFE22221E5B00C61363 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E63B5722221ED200C61363 /* LoginViewController.swift in Sources */,
-				00E63B5022221ED200C61363 /* AddDevice.swift in Sources */,
-				00E63B5A22221ED200C61363 /* MappyRegisterDevice.swift in Sources */,
-				00E63B0722221E5B00C61363 /* ViewController.swift in Sources */,
-				00E63B5922221ED200C61363 /* MappyUser.swift in Sources */,
-				00E63B5522221ED200C61363 /* SignupViewController.swift in Sources */,
-				00E63B0522221E5B00C61363 /* AppDelegate.swift in Sources */,
-				00E63B5122221ED200C61363 /* WorkflowBase.swift in Sources */,
-				00E63B5B22221ED200C61363 /* MappyAPIBase.swift in Sources */,
-				001C71C0222223DE00905BF1 /* OstSdkExample.xcdatamodeld in Sources */,
-				00E63B5E22221ED200C61363 /* SharedDatabase.swift in Sources */,
-				00E63B4D22221ED200C61363 /* OstWorkFlowCallbackImplementation.swift in Sources */,
-				00E63B5622221ED200C61363 /* EntryViewController.swift in Sources */,
-				00E63B4C22221ED200C61363 /* DeployTokenHolder.swift in Sources */,
-				00E63B4E22221ED200C61363 /* SetupDevice.swift in Sources */,
-				00E63B5322221ED200C61363 /* UserDetailsTableViewCell.swift in Sources */,
-				00E63B4F22221ED200C61363 /* ActivateUser.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B7C930121B006E900EC0A9F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1845,11 +1569,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		00E63B6322221FEB00C61363 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4B7C930421B006E900EC0A9F /* OstSdk */;
-			targetProxy = 00E63B6222221FEB00C61363 /* PBXContainerItemProxy */;
-		};
 		4B7C931121B006E900EC0A9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4B7C930421B006E900EC0A9F /* OstSdk */;
@@ -1857,82 +1576,7 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		00E63B0822221E5B00C61363 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				00E63B0922221E5B00C61363 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		00E63B0D22221E5C00C61363 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				00E63B0E22221E5C00C61363 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		00E63B4622221ED200C61363 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				00E63B4722221ED200C61363 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		00E63B4822221ED200C61363 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				00E63B4922221ED200C61363 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		00E63B2822221E5C00C61363 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N83K86W6P4;
-				INFOPLIST_FILE = OstSdkExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdkExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		00E63B2922221E5C00C61363 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N83K86W6P4;
-				INFOPLIST_FILE = OstSdkExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdkExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		4B7C931721B006E900EC0A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2077,7 +1721,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstSdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
@@ -2110,7 +1754,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstSdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.OstSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstSdk/Utils/SCrypt/**";
@@ -2171,15 +1815,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E63B2722221E5C00C61363 /* Build configuration list for PBXNativeTarget "OstSdkExample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				00E63B2822221E5C00C61363 /* Debug */,
-				00E63B2922221E5C00C61363 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4B7C92FF21B006E900EC0A9F /* Build configuration list for PBXProject "OstSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2208,19 +1843,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		001C71BE222223DE00905BF1 /* OstSdkExample.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				001C71BF222223DE00905BF1 /* Example.xcdatamodel */,
-			);
-			currentVersion = 001C71BF222223DE00905BF1 /* Example.xcdatamodel */;
-			path = OstSdkExample.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 4B7C92FC21B006E900EC0A9F /* Project object */;
 }
