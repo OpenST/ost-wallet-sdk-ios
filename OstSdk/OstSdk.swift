@@ -9,7 +9,11 @@
 import Foundation
 
 public class OstSdk {
-
+    
+    /// Initialize SDK
+    ///
+    /// - Parameter apiEndPoint: API end point
+    /// - Throws: OstError
     public class func initialize(apiEndPoint:String) throws {
         
         let sdkRef = OstSdkDatabase.sharedInstance
@@ -17,12 +21,43 @@ public class OstSdk {
         try setApiEndPoint(apiEndPoint:apiEndPoint);
         try OstConfig.loadConfig()
     }
-
-    public class func getUser(_ id: String) throws -> OstUser? {
-        return try OstUser.getById(id)
+    
+    /// Get api end point
+    ///
+    /// - Returns: String
+    public class func getApiEndPoint() -> String {
+        return OstAPIBase.baseURL
     }
-        
-    class func setApiEndPoint(apiEndPoint:String) throws {
+    
+    /// Get user entity for given user id
+    ///
+    /// - Parameter id: User id
+    /// - Returns: User entity
+    public class func getUser(_ id: String) -> OstUser? {
+        do {
+            return try OstUser.getById(id)
+        } catch {
+            return nil
+        }
+    }
+    
+    /// Get token entity for given token id
+    ///
+    /// - Parameter id: Token id
+    /// - Returns: Token entity
+    public class func getTokne( _ id: String) -> OstToken? {
+        do {
+            return try OstToken.getById(id)
+        } catch {
+            return nil
+        }
+    }
+    
+    /// Validate and set api end point
+    ///
+    /// - Parameter apiEndPoint: API end point
+    /// - Throws: OstError
+    fileprivate class func setApiEndPoint(apiEndPoint: String) throws {
         let endPointSplits = apiEndPoint.split(separator: "/");
         if ( endPointSplits.count < 4 ) {
             throw OstError("ost_sdk_vpep_1", .invalidApiEndPoint);

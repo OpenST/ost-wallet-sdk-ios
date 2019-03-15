@@ -58,22 +58,6 @@ target 'OstSdk' do
     pod 'FMDB', '2.7.5'
   end
 
-  target 'OstSdkExample' do
-    project 'OstSdk.xcodeproj'
-    workspace 'OstSdk.xcworkspace'
-    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-    use_frameworks!
-
-    inherit! :search_paths
-    
-    # Pods for OstSdkExample
-      pod 'CryptoSwift', '0.14.0'
-      pod 'Alamofire', '4.8.1'
-      pod 'BigInt', '3.1.0'
-      pod 'FMDB', '2.7.5'
-
-  end
-
   pod 'CryptoSwift', '0.14.0'
   pod 'Alamofire', '4.8.1'
   pod 'BigInt', '3.1.0'

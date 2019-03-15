@@ -22,7 +22,7 @@ class AddDeviceWithMnemonics: BaseWalletWorkflowView {
         super.didTapNext(sender: sender);
         let currentUser = CurrentUser.getInstance();
         let mnemonics = wordsTextView.text!.components(separatedBy: " ")
-        OstSdk.addDeviceWithMnemonics(userId: currentUser.ostUserId!,
+        OstSdk.addDeviceUsingMnemonics(userId: currentUser.ostUserId!,
                                       mnemonics: mnemonics,
                                       delegate: self.sdkInteract)
   }
