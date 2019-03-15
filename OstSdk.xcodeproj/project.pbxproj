@@ -175,7 +175,6 @@
 		4B7C930F21B006E900EC0A9F /* OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7C930521B006E900EC0A9F /* OstSdk.framework */; };
 		4B7C931421B006E900EC0A9F /* OstSdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C931321B006E900EC0A9F /* OstSdkTests.swift */; };
 		4B7C931621B006E900EC0A9F /* OstSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7C930821B006E900EC0A9F /* OstSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C933D21B15BAB00EC0A9F /* Test.swift */; };
 		4B7EAA25220027E300852DE2 /* BiometricIDAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA24220027E300852DE2 /* BiometricIDAuth.swift */; };
 		4B7EAA272200617900852DE2 /* OstDeviceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA262200617900852DE2 /* OstDeviceManagerTests.swift */; };
 		4B7EAA2F2200CDEC00852DE2 /* OstRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA2E2200CDEC00852DE2 /* OstRuleTests.swift */; };
@@ -421,7 +420,6 @@
 		4B7C930E21B006E900EC0A9F /* OstSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7C931321B006E900EC0A9F /* OstSdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkTests.swift; sourceTree = "<group>"; };
 		4B7C931521B006E900EC0A9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B7C933D21B15BAB00EC0A9F /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		4B7EAA24220027E300852DE2 /* BiometricIDAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricIDAuth.swift; sourceTree = "<group>"; };
@@ -996,7 +994,6 @@
 				4B7C932321B00EBF00EC0A9F /* Database */,
 				4B7C931321B006E900EC0A9F /* OstSdkTests.swift */,
 				4B7C931521B006E900EC0A9F /* Info.plist */,
-				4B7C933D21B15BAB00EC0A9F /* Test.swift */,
 			);
 			path = OstSdkTests;
 			sourceTree = "<group>";
@@ -1561,7 +1558,6 @@
 				4B75F33F21C91DDE00898960 /* EIP1077Tests.swift in Sources */,
 				4B7EAA332200D7CE00852DE2 /* OstSessionTests.swift in Sources */,
 				4B5EF30F220AC5C80049AD8A /* OstUtilsTests.swift in Sources */,
-				4B7C933E21B15BAB00EC0A9F /* Test.swift in Sources */,
 				4B7EAA372201898500852DE2 /* OstTokenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
