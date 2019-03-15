@@ -10,6 +10,8 @@ import Foundation
 
 public class OstError: Error {
     
+    public internal(set) var isApiError = false
+    
     public let internalCode:String
     public let errorMessage:String
     public let messageTextCode:OstErrorText;

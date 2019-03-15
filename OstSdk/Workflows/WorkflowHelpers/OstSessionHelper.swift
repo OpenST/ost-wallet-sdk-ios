@@ -44,7 +44,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
         try fetchChainInfo()
         calcuateExpirationHeight()
         try createSessionKeys()
-        let params = getSessionEnityParams()
+        let params = getSessionEntityParams()
         try OstSession.storeEntity(params)
 
         return (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
@@ -90,7 +90,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
     /// Get session entity data
     ///
     /// - Returns: entity dictionary
-    private func getSessionEnityParams() -> [String: Any] {
+    private func getSessionEntityParams() -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
         params["address"] = self.sessionAddress!
