@@ -67,7 +67,7 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 ```Swift
 OstSdk.activateUser(
     userId: String,
-    pin: String,
+    userPin: String,
     passphrasePrefix: String,
     spendingLimit: String,
     expireAfter: TimeInterval,
@@ -204,7 +204,7 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_uPin: Users Pin_<br/>
+&nbsp;_userPin: Users Pin_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 
@@ -212,7 +212,7 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 OstSdk.recoverDeviceInitialize(
     userId: String,
     recoverDeviceAddress: String,
-    uPin: String,
+    userPin: String,
     passphrasePrefix: String,
     delegate: OstWorkFlowCallbackDelegate
     )

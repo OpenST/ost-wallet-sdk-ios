@@ -12,7 +12,7 @@ class OstPinManager {
     private let ostPinManagerQueue = DispatchQueue(label: "OstPinManager", qos: .background)
     private let userId: String
     private let passphrasePrefix: String
-    private let pin: String
+    private let userPin: String
     private var newPin: String? = nil
     private var salt: String? = nil
     
@@ -21,24 +21,24 @@ class OstPinManager {
     /// - Parameters:
     ///   - userId: User id
     ///   - passphrasePrefix: App passphrase prefix
-    ///   - pin: User pin
+    ///   - userPin: User pin
     ///   - newPin: User new pin
     init(userId: String,
          passphrasePrefix: String,
-         pin: String,
+         userPin: String,
          newPin: String? = "") {
         
         self.userId = userId
         self.passphrasePrefix = passphrasePrefix
-        self.pin = pin
+        self.userPin = userPin
         self.newPin = newPin
     }
     
-    /// Validate pin length
+    /// Validate user pin length
     ///
     /// - Throws: OstError
     func validatePinLength() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
             throw OstError.init(
                 "w_wh_pm_vpl_1",
                 "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
@@ -68,7 +68,7 @@ class OstPinManager {
         let isValid = OstKeyManager(userId: self.userId)
             .verifyPin(
                 passphrasePrefix: self.passphrasePrefix,
-                pin: self.pin,
+                userPin: self.userPin,
                 salt: self.salt!,
                 recoveryOwnerAddress: user.recoveryOwnerAddress!
         )
@@ -98,7 +98,7 @@ class OstPinManager {
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
                     passphrasePrefix: self.passphrasePrefix,
-                    pin: self.pin,
+                    userPin: self.userPin,
                     salt: self.salt!
             )
         }catch {
@@ -118,7 +118,7 @@ class OstPinManager {
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
                     passphrasePrefix: self.passphrasePrefix,
-                    pin: self.newPin!,
+                    userPin: self.newPin!,
                     salt: self.salt!
             )
         }catch {
@@ -163,7 +163,7 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
+                userPin: self.userPin,
                 passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
             )
@@ -224,7 +224,7 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
+                userPin: self.userPin,
                 passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )
@@ -283,7 +283,7 @@ class OstPinManager {
         let signedData = try OstKeyManager(userId: self.userId)
             .signWithRecoveryKey(
                 tx: signingHash,
-                pin: self.pin,
+                userPin: self.userPin,
                 passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )

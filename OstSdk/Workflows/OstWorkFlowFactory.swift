@@ -37,14 +37,14 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: Ost user identifier.
-    ///   - pin: user secret pin.
+    ///   - userPin: User secret pin.
     ///   - passphrasePrefix: App-server secret for user.
     ///   - spendingLimitInWei: Max amount that user can spend per transaction.
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
-        pin: String,
+        userPin: String,
         passphrasePrefix: String,
         spendingLimitInWei: String,
         expireAfterInSec: TimeInterval,
@@ -52,7 +52,7 @@ extension OstSdk {
         
         let activateUserObj = OstActivateUser(
             userId: userId,
-            pin: pin,
+            userPin: userPin,
             passphrasePrefix: passphrasePrefix,
             spendingLimit: spendingLimitInWei,
             expireAfter: expireAfterInSec,
@@ -201,19 +201,19 @@ extension OstSdk {
     /// - Parameters:
     ///   - userId: User id.
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
-    ///   - uPin: User pin.
+    ///   - userPin: User pin.
     ///   - passphrasePrefix: Application passphrase prefix provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func initializeRecoverDevice(
         userId: String,
         recoverDeviceAddress: String,
-        uPin: String,
+        userPin: String,
         passphrasePrefix: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
-                                                       uPin: uPin,
+                                                       userPin: userPin,
                                                        passphrasePrefix: passphrasePrefix,
                                                        delegate: delegate)
         recoverDeviceInitialize.perform()

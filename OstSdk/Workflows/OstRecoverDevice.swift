@@ -24,12 +24,12 @@ class OstRecoverDevice: OstWorkflowBase {
     /// - Parameters:
     ///   - userId: User id from kit.
     ///   - deviceAddressToRecover: device address to revoke.
-    ///   - uPin: user pin.
+    ///   - userPin: User pin.
     ///   - passphrasePrefix: Passphrase prefix of user from application server
     ///   - delegate: Callback.
     init(userId: String,
          deviceAddressToRecover: String,
-         uPin: String,
+         userPin: String,
          passphrasePrefix: String,
          delegate: OstWorkFlowCallbackDelegate) {
         
@@ -38,7 +38,7 @@ class OstRecoverDevice: OstWorkflowBase {
         
         self.pinManager = OstPinManager(userId: self.userId,
                                         passphrasePrefix: passphrasePrefix,
-                                        pin: uPin)
+                                        userPin: userPin)
     }
     
     /// Get workflow Queue

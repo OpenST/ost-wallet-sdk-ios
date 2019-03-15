@@ -91,7 +91,7 @@ class OstCryptoImpls: OstCrypto {
     ///
     /// - Parameters:
     ///   - passphrasePrefix: Passphrase prefix for recovery passphrase
-    ///   - pin: Pin for recovery passphrase
+    ///   - userPin: Pin for recovery passphrase
     ///   - userId: User id for recovery recovery
     ///   - salt: Salt data
     ///   - n: The `N` parameter of Scrypt encryption algorithm
@@ -101,7 +101,7 @@ class OstCryptoImpls: OstCrypto {
     /// - Returns: Recovery address
     /// - Throws: OSTError
     func generateRecoveryKey(passphrasePrefix: String,
-                             pin: String,
+                             userPin: String,
                              userId: String,
                              salt: String,
                              n:Int,
@@ -119,13 +119,13 @@ class OstCryptoImpls: OstCrypto {
                                  "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
             throw OstError.init("s_i_ci_grk_3",
                                  "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,
-                                                             pin: pin,
+                                                             userPin: userPin,
                                                              userId: userId)
         
         let seed: Data
@@ -149,14 +149,14 @@ class OstCryptoImpls: OstCrypto {
     }
     
     func getRecoveryPinString(passphrasePrefix: String,
-                              pin: String,
+                              userPin: String,
                               userId: String) -> String {
-        return "\(passphrasePrefix)\(pin)\(userId)"
+        return "\(passphrasePrefix)\(userPin)\(userId)"
     }
     
     func getWallet(
         passphrasePrefix: String,
-        pin: String,
+        userPin: String,
         userId: String,
         salt: String,
         n:Int,
@@ -173,13 +173,13 @@ class OstCryptoImpls: OstCrypto {
                                 "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
         }
         
-        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > pin.count {
+        if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
             throw OstError.init("s_i_ci_grk_3",
                                 "Pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,
-                                                             pin: pin,
+                                                             userPin: userPin,
                                                              userId: userId)
         
         let seed: Data

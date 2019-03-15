@@ -69,14 +69,17 @@ class OstWorkflowValidator {
     
     /// Validate recovery owner address
     ///
-    /// - Parameter pin: Pin string
-    /// - Throws: Ost error
+    /// - Parameter recoveryOwnerAddress: Recovery owner address
+    /// - Throws: OstError
     func validateRecoveryOwnerAddress(_ recoveryOwnerAddress: String?) throws {
         if (nil == recoveryOwnerAddress) {
             throw OstError("w_wfv_vroa_1", OstErrorText.recoveryOwnerAddressNotFound)
         }
     }
     
+    /// Check whether api key is available or not
+    ///
+    /// - Throws: OstError
     func isAPIKeyAvailable() throws {
         guard let apiAddress = OstKeyManager(userId: self.currentUser!.id).getAPIAddress() else {
             throw OstError("w_wfv_ialv_1", OstErrorText.apiAddressNotFound)
@@ -86,6 +89,9 @@ class OstWorkflowValidator {
         }
     }
     
+    /// Check whether token entity is present or not
+    ///
+    /// - Throws: OstError
     func isTokenAvailable() throws {
         guard let tokenId = self.currentUser!.tokenId else {
             throw OstError("w_wfv_ita_1", OstErrorText.tokenNotFound)
@@ -94,6 +100,10 @@ class OstWorkflowValidator {
     }
     
     
+    /// Get current device from database
+    ///
+    /// - Returns: Current device entity
+    /// - Throws: OstError
     private func getCurrentUserDevice() throws -> OstCurrentDevice{
         guard let currentDevice = self.currentUser!.getCurrentDevice() else {
             throw OstError("w_wv_gcud_1", .deviceNotFound);

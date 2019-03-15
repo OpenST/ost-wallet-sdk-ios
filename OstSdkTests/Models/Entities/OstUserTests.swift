@@ -29,7 +29,7 @@ class OstUserTests: XCTestCase {
 
 
          try OstUser.storeEntity(userDict)
-        let user: OstUser? = try OstUser.getById(userDict["id"])
+        let user: OstUser? = try OstUser.getById(userDict["id"] as! String)
         print(user ?? "")
         XCTAssertNotNil(user, "user should not be nil")
         XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")
@@ -45,7 +45,7 @@ class OstUserTests: XCTestCase {
                 "updated_timestamp" : Date.timestamp()] as [String : Any]
             
             try OstUser.storeEntity(userDict)
-            let user: OstUser? = try OstUser.getById(userDict["id"])
+            let user: OstUser? = try OstUser.getById(userDict["id"] as! String)
             print(user ?? "")
             XCTAssertNotNil(user, "user should not be nil")
             XCTAssertEqual(user?.id, userDict["id"] as? String, "id is not equal")

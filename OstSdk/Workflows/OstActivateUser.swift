@@ -21,13 +21,13 @@ class OstActivateUser: OstWorkflowBase {
     ///
     /// - Parameters:
     ///   - userId: Kit user id.
-    ///   - pin: User pin.
+    ///   - userPin: User pin.
     ///   - passphrasePrefix: Passphrase prefix provied by application server.
     ///   - spendingLimit: Maximum spending limit of transaction.
     ///   - expireAfter: Relative time.
     ///   - delegate: Callback.
     init(userId: String,
-         pin: String,
+         userPin: String,
          passphrasePrefix: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
@@ -40,7 +40,7 @@ class OstActivateUser: OstWorkflowBase {
         
         self.pinManager = OstPinManager(userId: self.userId,
                                         passphrasePrefix: passphrasePrefix,
-                                        pin: pin)
+                                        userPin: userPin)
     }
     
     /// Get workflow queue.

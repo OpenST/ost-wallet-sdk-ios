@@ -49,17 +49,17 @@ class OstCryptoTests: XCTestCase {
         let expectedRecoveryAddress = "0x6bb02bba5beda4cfb33aa3a3e39f861bb12a0fd7"
         
         let pinPrefix = "steel polar replace claw crew fever winter dragon excess sick possible cry"
-        let pin = "123456"
+        let userPin = "123456"
         let pinPostFix = "d54ef261-a1e3-409a-85bd-6b856e8a2098"
         let salt = "8902a8e658b6-db58-a904-3e1a-162fe45d"
         
         let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(passphrasePrefix: pinPrefix,
-                                                                       pin: pin,
+                                                                       userPin: userPin,
                                                                        userId: pinPostFix,
                                                                        salt: salt, n: 2, r: 2, p: 2, size: 32)
         
         let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(passphrasePrefix: pinPrefix,
-                                                                             pin: pin,
+                                                                             userPin: userPin,
                                                                              userId: pinPostFix,
                                                                              salt: salt, n: 2, r: 2, p: 2, size: 32)
         
