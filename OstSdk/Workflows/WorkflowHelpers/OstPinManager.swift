@@ -13,7 +13,7 @@ class OstPinManager {
     private let userId: String
     private let passphrasePrefix: String
     private let userPin: String
-    private var newPin: String? = nil
+    private var newUserPin: String? = nil
     private var salt: String? = nil
     
     /// Initializer
@@ -22,16 +22,16 @@ class OstPinManager {
     ///   - userId: User id
     ///   - passphrasePrefix: App passphrase prefix
     ///   - userPin: User pin
-    ///   - newPin: User new pin
+    ///   - newUserPin: User new pin
     init(userId: String,
          passphrasePrefix: String,
          userPin: String,
-         newPin: String? = "") {
+         newUserPin: String? = "") {
         
         self.userId = userId
         self.passphrasePrefix = passphrasePrefix
         self.userPin = userPin
-        self.newPin = newPin
+        self.newUserPin = newUserPin
     }
     
     /// Validate user pin length
@@ -118,7 +118,7 @@ class OstPinManager {
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
                     passphrasePrefix: self.passphrasePrefix,
-                    userPin: self.newPin!,
+                    userPin: self.newUserPin!,
                     salt: self.salt!
             )
         }catch {
@@ -312,7 +312,7 @@ class OstPinManager {
     ///
     /// - Throws: OstError
     private func validateNewPinLength() throws {
-        if (self.newPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newPin!.count) {
+        if (self.newUserPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
             throw OstError.init(
                 "w_wh_pm_v_1",
                 "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
