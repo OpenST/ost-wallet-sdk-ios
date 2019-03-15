@@ -135,8 +135,11 @@ class OstResetPin: OstWorkflowBase {
         
         OstResetPinPollingService(userId: entity.userId!,
                                  recoveryOwnerAddress: entity.address!,
+                                 successStatus: OstRecoveryOwnerEntity.Status.AUTHORIZED.rawValue,
+                                 failureStatus: OstRecoveryOwnerEntity.Status.AUTHORIZATION_FAILED.rawValue,
                                  workflowTransactionCount: workflowTransactionCountForPolling,
-                                 successCallback: successCallback, failureCallback: failureCallback).perform()
+                                 successCallback: successCallback, failureCallback: failureCallback)
+            .perform()
     }
     
     /// Get current workflow context

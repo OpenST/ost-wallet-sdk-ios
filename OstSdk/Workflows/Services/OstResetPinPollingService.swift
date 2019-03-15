@@ -18,11 +18,15 @@ class OstResetPinPollingService: OstBasePollingService {
     /// - Parameters:
     ///   - userId: User id
     ///   - recoveryOwnerAddress: recovery owner address
+    ///   - successStatus: Entity success status
+    ///   - failureStatus: Entity failure status
     ///   - workflowTransactionCount: workflow transaction count
     ///   - successCallback: Success callback
     ///   - failureCallback: Failure callback
     init(userId: String,
          recoveryOwnerAddress: String,
+         successStatus: String,
+         failureStatus: String,
          workflowTransactionCount: Int,
          successCallback: ((OstRecoveryOwnerEntity) -> Void)?,
          failureCallback: ((OstError) -> Void)?) {
@@ -30,27 +34,12 @@ class OstResetPinPollingService: OstBasePollingService {
         self.recoveryOwnerAddress = recoveryOwnerAddress
         self.successCallback = successCallback
         
-        super.init(
-            userId: userId,
-            workflowTransactionCount: workflowTransactionCount,
-            failureCallback: failureCallback
+        super.init(userId: userId,
+                   successStatus: successStatus,
+                   failureStatus: failureStatus,
+                   workflowTransactionCount: workflowTransactionCount,
+                   failureCallback: failureCallback
         )
-    }
-    
-    /// Process Entity after success from API
-    ///
-    /// - Parameter entity: User entity
-    override func onSuccessProcess(entity: OstBaseEntity) {
-        let recoveryOwnerEntity: OstRecoveryOwnerEntity = entity as! OstRecoveryOwnerEntity
-        if (recoveryOwnerEntity.isStatusAuthorized) {
-            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorized.", parameterToPrint: recoveryOwnerEntity.data)
-            self.successCallback?(recoveryOwnerEntity)
-        } else if (recoveryOwnerEntity.isStatusAuthorizing) {
-            // Logger.log(message: "[\(Date.timestamp())]: Recovery owner entity with address: \(recoveryOwnerEntity.address!) and is authorizing.", parameterToPrint: recoveryOwnerEntity.data)
-            self.getEntityAfterDelay()
-        } else {
-            self.failureCallback?(OstError("w_s_rpps_1", OstErrorText.transactionFailed))
-        }
     }
     
     /// Fetch entity from server
@@ -62,6 +51,13 @@ class OstResetPinPollingService: OstBasePollingService {
                 recoveryOwnerAddress: self.recoveryOwnerAddress,
                 onSuccess: self.onSuccess,
                 onFailure: self.onFailure)
+    }
+    
+    /// Post success callback
+    ///
+    /// - Parameter entity: Recovery owner entity
+    override func postSuccessCallback(entity: OstBaseEntity) {
+        self.successCallback?(entity as! OstRecoveryOwnerEntity)
     }
     
     /// Get polling queue

@@ -18,37 +18,38 @@ class OstUserPollingService: OstBasePollingService {
     ///
     /// - Parameters:
     ///   - userId: User id
+    ///   - successStatus: Entity success status
+    ///   - failureStatus: Entity failure status
     ///   - workflowTransactionCount: workflow transaction count
     ///   - successCallback: Success callback
     ///   - failureCallback: Failure callback
     init(userId: String,
+         successStatus: String,
+         failureStatus: String,
          workflowTransactionCount: Int,
          successCallback: ((OstUser) -> Void)?,
          failureCallback: ((OstError) -> Void)?) {
         
         self.successCallback = successCallback
-        super.init(userId: userId, workflowTransactionCount: workflowTransactionCount, failureCallback: failureCallback)
+        super.init(userId: userId,
+                   successStatus: successStatus,
+                   failureStatus: failureStatus,
+                   workflowTransactionCount: workflowTransactionCount,
+                   failureCallback: failureCallback)
     }
     
-    /// Process Entity after success from API
-    ///
-    /// - Parameter entity: User entity
-    override func onSuccessProcess(entity: OstBaseEntity) {
-        let ostUser: OstUser = entity as! OstUser
-        if (ostUser.isStatusActivating) {
-            // Logger.log(message: "test User status is activating for userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-            self.getEntityAfterDelay()
-        }else{
-            // Logger.log(message: "test User with userId: \(ostUser.id) and is activated at \(Date.timestamp())", parameterToPrint: ostUser.data)
-            self.successCallback?(ostUser)
-        }
-    }
-
     /// Fetch entity from server
     ///
     /// - Throws: OstError
     override func fetchEntity() throws {
          try OstAPIUser.init(userId: self.userId).getUser(onSuccess: self.onSuccess, onFailure: self.onFailure)
+    }
+    
+    /// Post success callback
+    ///
+    /// - Parameter entity: User entity
+    override func postSuccessCallback(entity: OstBaseEntity) {
+        self.successCallback?(entity as! OstUser)
     }
     
     /// Get polling queue

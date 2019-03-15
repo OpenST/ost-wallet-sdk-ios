@@ -94,6 +94,8 @@ class OstPolling: OstWorkflowBase {
         switch entityType {
         case .user:
             pollingService = OstUserPollingService(userId: self.userId,
+                                                   successStatus: OstUser.Status.ACTIVATED.rawValue,
+                                                   failureStatus: OstUser.Status.CREATED.rawValue,
                                                    workflowTransactionCount: workflowTransactionCount,
                                                    successCallback: onSuccessCallback, failureCallback: onFailureCallback)
         case .device:
@@ -106,12 +108,16 @@ class OstPolling: OstWorkflowBase {
         case .session:
             pollingService = OstSessionPollingService(userId: self.userId,
                                                       sessionAddress: self.entityId,
+                                                      successStatus: OstSession.Status.AUTHORIZED.rawValue,
+                                                      failureStatus: OstSession.Status.INITIALIZING.rawValue,
                                                       workflowTransactionCount: workflowTransactionCount,
                                                       successCallback: onSuccessCallback,
                                                       failureCallback: onFailureCallback)
         case .transaction:
             pollingService = OstTransactionPollingService(userId: self.userId,
                                                           transaciotnId: self.entityId,
+                                                          successStatus: OstTransaction.Status.SUCCESS.rawValue,
+                                                          failureStatus: OstTransaction.Status.FAILED.rawValue,
                                                           workflowTransactionCount: workflowTransactionCount,
                                                           successCallback: onSuccessCallback, failureCallback: onFailureCallback)
         }

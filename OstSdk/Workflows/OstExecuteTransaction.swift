@@ -271,6 +271,8 @@ class OstExecuteTransaction: OstWorkflowBase {
         
         OstTransactionPollingService(userId: self.userId,
                                      transaciotnId: transaction.id,
+                                     successStatus: OstTransaction.Status.SUCCESS.rawValue,
+                                     failureStatus: OstTransaction.Status.FAILED.rawValue,
                                      workflowTransactionCount: self.workflowTransactionCountForPolling,
                                      successCallback: successCallback,
                                      failureCallback: failureCallback).perform()

@@ -154,12 +154,13 @@ class OstActivateUser: OstWorkflowBase {
         }
         // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
         
-        OstUserPollingService(
-            userId: ostUser.id,
-            workflowTransactionCount: workflowTransactionCountForPolling,
-            successCallback: successCallback,
-            failureCallback: failureCallback
-       ).perform()
+        OstUserPollingService(userId: ostUser.id,
+                              successStatus: OstUser.Status.ACTIVATED.rawValue,
+                              failureStatus: OstUser.Status.CREATED.rawValue,
+                              workflowTransactionCount: workflowTransactionCountForPolling,
+                              successCallback: successCallback,
+                              failureCallback: failureCallback
+            ).perform()
     }
     
     
