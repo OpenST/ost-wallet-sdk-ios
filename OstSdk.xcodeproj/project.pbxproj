@@ -58,7 +58,6 @@
 		4B12145C2231433100C185D2 /* insecure_memzero.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214552231433100C185D2 /* insecure_memzero.c */; };
 		4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214562231433100C185D2 /* crypto_scrypt.c */; };
 		4B121460223145C400C185D2 /* COPYRIGHT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B12145F223145C400C185D2 /* COPYRIGHT.txt */; };
-		4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */; };
 		4B1214702236971D00C185D2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */; };
 		4B1214732236AAC500C185D2 /* OstRevokeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214722236AAC500C185D2 /* OstRevokeBase.swift */; };
 		4B1214752236AB6B00C185D2 /* OstRevokeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1214742236AB6B00C185D2 /* OstRevokeDevice.swift */; };
@@ -186,6 +185,7 @@
 		4B7EAA372201898500852DE2 /* OstTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA362201898500852DE2 /* OstTokenTests.swift */; };
 		4B7EAA3D2201906B00852DE2 /* OstTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA3C2201906B00852DE2 /* OstTransactionTests.swift */; };
 		4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */; };
+		4B7FCCC4223BC364000015E1 /* OstConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FCCC3223BC364000015E1 /* OstConversionTests.swift */; };
 		4B8CCDA82211508E00124586 /* OstSolidityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA62211508E00124586 /* OstSolidityValue.swift */; };
 		4B8CCDA92211508E00124586 /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */; };
 		4B8CCDB3221167AB00124586 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8CCDB2221167AB00124586 /* OstSdkSync.swift */; };
@@ -303,7 +303,6 @@
 		4B1214562231433100C185D2 /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypto_scrypt.c; sourceTree = "<group>"; };
 		4B12145F223145C400C185D2 /* COPYRIGHT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT.txt; sourceTree = "<group>"; };
 		4B1214632231530F00C185D2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortRecoverDevice.swift; sourceTree = "<group>"; };
 		4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
 		4B1214722236AAC500C185D2 /* OstRevokeBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeBase.swift; sourceTree = "<group>"; };
 		4B1214742236AB6B00C185D2 /* OstRevokeDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDevice.swift; sourceTree = "<group>"; };
@@ -434,6 +433,7 @@
 		4B7EAA362201898500852DE2 /* OstTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenTests.swift; sourceTree = "<group>"; };
 		4B7EAA3C2201906B00852DE2 /* OstTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTransactionTests.swift; sourceTree = "<group>"; };
 		4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerationTests.swift; sourceTree = "<group>"; };
+		4B7FCCC3223BC364000015E1 /* OstConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConversionTests.swift; sourceTree = "<group>"; };
 		4B8CCDA62211508E00124586 /* OstSolidityValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityValue.swift; sourceTree = "<group>"; };
 		4B8CCDA72211508E00124586 /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityHandler.swift; sourceTree = "<group>"; };
 		4B8CCDB2221167AB00124586 /* OstSdkSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
@@ -570,7 +570,6 @@
 				4B1214212228589100C185D2 /* OstPolling.swift */,
 				4B121423222907EF00C185D2 /* OstRecoverDevice.swift */,
 				ECCDAB972228232B00A6A095 /* OstResetPin.swift */,
-				4B12146D2236735800C185D2 /* OstAbortRecoverDevice.swift */,
 				4B12146F2236971D00C185D2 /* OstRevokeDeviceWithQRData.swift */,
 			);
 			path = Workflows;
@@ -940,6 +939,7 @@
 				4B7EAA3E2201942800852DE2 /* QRCodeGenerationTests.swift */,
 				4B5EF30E220AC5C80049AD8A /* OstUtilsTests.swift */,
 				4BAE570022183A7200327A19 /* GnosisSafeTests.swift */,
+				4B7FCCC3223BC364000015E1 /* OstConversionTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1464,7 +1464,6 @@
 				4BE9E32D2203306C00427A80 /* OstWorkFlowFactory.swift in Sources */,
 				4B12142B222C459800C185D2 /* OstSessionHelper.swift in Sources */,
 				4B75F22621BE504700898960 /* String+Operations.swift in Sources */,
-				4B12146E2236735800C185D2 /* OstAbortRecoverDevice.swift in Sources */,
 				4BE9E32C2203306C00427A80 /* OstActivateUser.swift in Sources */,
 				4B75F26121BF9A5C00898960 /* OstBaseModelRepository.swift in Sources */,
 				4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */,
@@ -1548,6 +1547,7 @@
 				4B7EAA2F2200CDEC00852DE2 /* OstRuleTests.swift in Sources */,
 				4B7EAA3F2201942800852DE2 /* QRCodeGenerationTests.swift in Sources */,
 				4B49872321F61F7000ED0E94 /* EIP712Tests.swift in Sources */,
+				4B7FCCC4223BC364000015E1 /* OstConversionTests.swift in Sources */,
 				4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */,
 				4B7EAA272200617900852DE2 /* OstDeviceManagerTests.swift in Sources */,
 				4B75F22A21BE581E00898960 /* OstBaseEntityTests.swift in Sources */,

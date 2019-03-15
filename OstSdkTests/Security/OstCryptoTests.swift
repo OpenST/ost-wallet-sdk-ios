@@ -21,11 +21,11 @@ class OstCryptoTests: XCTestCase {
     
     func testSCrypt() throws {
         let saltData: Data = "salt".data(using: .utf8)!
-        let password: String = "Sachin"
+        let stringToCalculate: String = "Sachin"
         
         let output: String = "22db5466eb082120723a67ebd334ae93796286759e5640b297bd2bd3054cde8a"
         
-        let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, n: 2, r: 2, p: 2, size: 32, stringToCalculate: password)
+        let SCryptOutput: Data = try OstCryptoImpls().genSCryptKey(salt: saltData, n: 2, r: 2, p: 2, size: 32, stringToCalculate: stringToCalculate)
         XCTAssertEqual(SCryptOutput.toHexString(), output, "SCrypt output is different")
         
     }
@@ -53,12 +53,12 @@ class OstCryptoTests: XCTestCase {
         let pinPostFix = "d54ef261-a1e3-409a-85bd-6b856e8a2098"
         let salt = "8902a8e658b6-db58-a904-3e1a-162fe45d"
         
-        let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(password: pinPrefix,
+        let recoveryAddress = try OstCryptoImpls().generateRecoveryKey(passphrasePrefix: pinPrefix,
                                                                        pin: pin,
                                                                        userId: pinPostFix,
                                                                        salt: salt, n: 2, r: 2, p: 2, size: 32)
         
-        let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(password: pinPrefix,
+        let recoveryAddressRepeat = try OstCryptoImpls().generateRecoveryKey(passphrasePrefix: pinPrefix,
                                                                              pin: pin,
                                                                              userId: pinPostFix,
                                                                              salt: salt, n: 2, r: 2, p: 2, size: 32)

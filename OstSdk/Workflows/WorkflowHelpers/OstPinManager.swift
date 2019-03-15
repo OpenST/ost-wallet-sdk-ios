@@ -11,7 +11,7 @@ import Foundation
 class OstPinManager {
     private let ostPinManagerQueue = DispatchQueue(label: "OstPinManager", qos: .background)
     private let userId: String
-    private let password: String
+    private let passphrasePrefix: String
     private let pin: String
     private var newPin: String? = nil
     private var salt: String? = nil
@@ -20,16 +20,16 @@ class OstPinManager {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - password: App password
+    ///   - passphrasePrefix: App passphrase prefix
     ///   - pin: User pin
     ///   - newPin: User new pin
     init(userId: String,
-         password: String,
+         passphrasePrefix: String,
          pin: String,
          newPin: String? = "") {
         
         self.userId = userId
-        self.password = password
+        self.passphrasePrefix = passphrasePrefix
         self.pin = pin
         self.newPin = newPin
     }
@@ -45,14 +45,14 @@ class OstPinManager {
             )
         }
     }
-    /// Validate Password length
+    /// Validate passphrase prefix length
     ///
     /// - Throws: OstError
-    func validatePasswordLength() throws {
-        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.password.count {
+    func validatePassphrasePrefixLength() throws {
+        if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.passphrasePrefix.count {
             throw OstError.init(
                 "w_wh_pm_vpwdl_1",
-                "Password must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
+                "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
             )
         }
     }
@@ -67,7 +67,7 @@ class OstPinManager {
         
         let isValid = OstKeyManager(userId: self.userId)
             .verifyPin(
-                password: self.password,
+                passphrasePrefix: self.passphrasePrefix,
                 pin: self.pin,
                 salt: self.salt!,
                 recoveryOwnerAddress: user.recoveryOwnerAddress!
@@ -92,12 +92,12 @@ class OstPinManager {
     func getRecoveryOwnerAddress() -> String? {
         do {
             try self.validatePinLength()
-            try self.validatePasswordLength()
+            try self.validatePassphrasePrefixLength()
             try self.fetchSalt()
             try self.validateSaltLength()
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
-                    password: self.password,
+                    passphrasePrefix: self.passphrasePrefix,
                     pin: self.pin,
                     salt: self.salt!
             )
@@ -112,12 +112,12 @@ class OstPinManager {
     func getRecoveryOwnerAddressForNewPin() -> String? {
         do {
             try self.validateNewPinLength()
-            try self.validatePasswordLength()
+            try self.validatePassphrasePrefixLength()
             try self.validateSaltLength()
             try self.fetchSalt()
             return try OstKeyManager(userId: self.userId)
                 .getRecoveryOwnerAddressFrom(
-                    password: self.password,
+                    passphrasePrefix: self.passphrasePrefix,
                     pin: self.newPin!,
                     salt: self.salt!
             )
@@ -164,7 +164,7 @@ class OstPinManager {
             .signWithRecoveryKey(
                 tx: signingHash,
                 pin: self.pin,
-                password: self.password,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
             )
         
@@ -225,7 +225,7 @@ class OstPinManager {
             .signWithRecoveryKey(
                 tx: signingHash,
                 pin: self.pin,
-                password: self.password,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )
         
@@ -284,7 +284,7 @@ class OstPinManager {
             .signWithRecoveryKey(
                 tx: signingHash,
                 pin: self.pin,
-                password: self.password,
+                passphrasePrefix: self.passphrasePrefix,
                 salt: self.salt!
         )
         
@@ -324,7 +324,7 @@ class OstPinManager {
     /// - Throws: OstError
     private func validate() throws{
         try self.validatePinLength()
-        try self.validatePasswordLength()
+        try self.validatePassphrasePrefixLength()
         try self.validateSaltLength()
     }
     

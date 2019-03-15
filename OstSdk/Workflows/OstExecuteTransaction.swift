@@ -396,11 +396,18 @@ extension OstExecuteTransaction {
         let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
         for amount in self.amounts {
-            let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
-                                                      btDecimal: btDecimal,
+//            let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
+//                                                      btDecimal: btDecimal,
+//                                                      ostDecimal: self.OST_DECIMAL_VALUE,
+//                                                      fiatAmount: BigInt(amount)!,
+//                                                      pricePoint: fiatValInString)
+//
+            let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: "500",
+                                                      btDecimal: 18,
                                                       ostDecimal: self.OST_DECIMAL_VALUE,
-                                                      fiatAmount: BigInt(amount)!,
-                                                      pricePoint: fiatValInString)
+                                                      fiatAmount: BigInt("1")!,
+                                                      pricePoint: "0.027626")
+            //18098
             totalAmount += btAmount
         }
         return totalAmount

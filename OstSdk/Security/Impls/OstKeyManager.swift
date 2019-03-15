@@ -249,13 +249,13 @@ class OstKeyManager {
     //MARK: - Recovery
     
     func getRecoveryOwnerAddressFrom(
-        password: String,
+        passphrasePrefix: String,
         pin: String,
         salt: String) throws -> String {
         
         let recoveryOwnerAddress = try OstCryptoImpls()
             .generateRecoveryKey(
-            password: password,
+            passphrasePrefix: passphrasePrefix,
             pin: pin,
             userId: self.userId,
             salt: salt,
@@ -270,7 +270,7 @@ class OstKeyManager {
 
 
     func verifyPin(
-        password: String,
+        passphrasePrefix: String,
         pin: String,
         salt: String,
         recoveryOwnerAddress: String) -> Bool {
@@ -279,7 +279,7 @@ class OstKeyManager {
 
         do {
             let generatedAddress = try self.getRecoveryOwnerAddressFrom(
-                password: password,
+                passphrasePrefix: passphrasePrefix,
                 pin: pin,
                 salt: salt
             )
@@ -668,11 +668,11 @@ extension OstKeyManager {
     func signWithRecoveryKey(
         tx:String,
         pin: String,
-        password: String,
+        passphrasePrefix: String,
         salt: String) throws -> SignedData {
         
         let wallet = try OstCryptoImpls().getWallet(
-            password: password,
+            passphrasePrefix: passphrasePrefix,
             pin: pin,
             userId: self.userId,
             salt: salt,

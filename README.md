@@ -59,7 +59,7 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
-&nbsp;_password: Password provided by application server_<br/>
+&nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_spendingLimit: Spending limit in a transaction in WEI_<br/>
 &nbsp;_expireAfter: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -68,7 +68,7 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 OstSdk.activateUser(
     userId: String,
     pin: String,
-    password: String,
+    passphrasePrefix: String,
     spendingLimit: String,
     expireAfter: TimeInterval,
     delegate: OstWorkFlowCallbackDelegate
@@ -182,7 +182,7 @@ OstSdk.perfrom(
 To update current Pin with new Pin.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_password: Password provided by application server_<br/>
+&nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_oldPin: Users old Pin_<br/>
 &nbsp;_newPin: Users new Pin_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -190,7 +190,7 @@ To update current Pin with new Pin.<br/><br/>
 ```Swift
 OstSdk.resetPin(
     userId: String,
-    password: String,
+    passphrasePrefix: String,
     oldPin: String,
     newPin: String,
     delegate: OstWorkFlowCallbackDelegate
@@ -203,7 +203,7 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
-&nbsp;_password: Password provided by application server_<br/>
+&nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_uPin: Users Pin_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -213,7 +213,7 @@ OstSdk.recoverDeviceInitialize(
     userId: String,
     recoverDeviceAddress: String,
     uPin: String,
-    password: String,
+    passphrasePrefix: String,
     delegate: OstWorkFlowCallbackDelegate
     )
 ```
@@ -255,7 +255,7 @@ func registerDevice(
 /// Developers should show pin dialog on this callback.
 ///
 /// - Parameters:
-///   - userId: Id of user whose password and pin are needed.
+///   - userId: User id whose passphrase prefix and pin required.
 ///   - delegate: To pass pin
 func getPin(
         _ userId: String, 
@@ -267,7 +267,7 @@ func getPin(
 /// Developers should show invalid pin error and ask for pin again on this callback.
 ///
 /// - Parameters:
-///   - userId: Id of user whose password and pin are needed.
+///   - userId: User id whose passphrase prefix and pin validattion failed.
 ///   - delegate: To pass another pin.
 func invalidPin(
         _ userId: String, 
@@ -277,7 +277,7 @@ func invalidPin(
 ```Swift
 /// Inform SDK user that entered pin is validated.
 /// Developers should dismiss pin dialog on this callback.
-/// - Parameter userId: Id of user whose pin and password has been validated.
+/// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
 func pinValidated(_ userId: String)
 ```
 ```Swift

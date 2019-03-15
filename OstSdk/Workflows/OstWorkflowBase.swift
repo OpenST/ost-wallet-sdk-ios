@@ -164,13 +164,15 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     /// Accept pin from user and validate.
     ///
     /// - Parameters:
-    ///   - uPin: user pin.
-    ///   - appUserPassword: application server given password.
-    func pinEntered(_ uPin: String, applicationPassword appUserPassword: String) {
+    ///   - uPin: User pin.
+    ///   - passphrasePrefix: Application server given passphrase prefix.
+    func pinEntered(_ uPin: String, passphrasePrefix: String) {
         self.enterPinCount += 1
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
-            let pinManager = OstPinManager(userId: self.userId, password: appUserPassword, pin: uPin)
+            let pinManager = OstPinManager(userId: self.userId,
+                                           passphrasePrefix: passphrasePrefix,
+                                           pin: uPin)
             do {
                 try pinManager.validatePin()
                 DispatchQueue.main.async {

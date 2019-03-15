@@ -38,22 +38,22 @@ extension OstSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - pin: user secret pin.
-    ///   - password: App-server secret for user.
+    ///   - passphrasePrefix: App-server secret for user.
     ///   - spendingLimitInWei: Max amount that user can spend per transaction.
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
         pin: String,
-        password: String,
+        passphrasePrefix: String,
         spendingLimitInWei: String,
         expireAfterInSec: TimeInterval,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let activateUserObj = OstActivateUser(
             userId: userId,
-            pin: pin, password:
-            password,
+            pin: pin,
+            passphrasePrefix: passphrasePrefix,
             spendingLimit: spendingLimitInWei,
             expireAfter: expireAfterInSec,
             delegate: delegate)
@@ -200,21 +200,21 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - recoverDeviceAddress: device address of device tobe recovered.
-    ///   - uPin: user pin.
-    ///   - password: application password provied by application server.
+    ///   - recoverDeviceAddress: Device address of device tobe recovered.
+    ///   - uPin: User pin.
+    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func initializeRecoverDevice(
         userId: String,
         recoverDeviceAddress: String,
         uPin: String,
-        password: String,
+        passphrasePrefix: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
                                                        uPin: uPin,
-                                                       password: password,
+                                                       passphrasePrefix: passphrasePrefix,
                                                        delegate: delegate)
         recoverDeviceInitialize.perform()
     }
@@ -223,20 +223,20 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - password: application password provied by application server.
+    ///   - passphrasePrefix: application passphrase prefix provied by application server.
     ///   - oldPin: old pin.
     ///   - newPin: new pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func resetPin(
         userId: String,
-        password: String,
+        passphrasePrefix: String,
         oldPin: String,
         newPin: String,
         delegate: OstWorkFlowCallbackDelegate) {
         
         let resetPinWorkFlow = OstResetPin(
             userId: userId,
-            password: password,
+            passphrasePrefix: passphrasePrefix,
             oldPin: oldPin,
             newPin: newPin,
             delegate: delegate)

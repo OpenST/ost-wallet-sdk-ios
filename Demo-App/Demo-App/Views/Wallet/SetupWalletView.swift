@@ -35,7 +35,7 @@ class SetupWalletView: BaseWalletWorkflowView {
     
     OstSdk.activateUser(userId: currentUser.ostUserId!,
                         pin: pinNumberTextField.text!,
-                        password: currentUser.userPinSalt!,
+                        passphrasePrefix: currentUser.userPinSalt!,
                         spendingLimitInWei: spendingLimitInWei,
                         expireAfterInSec: TimeInterval(Double(2*60*60)),
                         delegate: self.sdkInteract);
