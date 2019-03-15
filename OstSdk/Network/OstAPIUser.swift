@@ -44,7 +44,7 @@ class OstAPIUser: OstAPIBase {
                 }
             },
             onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
             }
         )
     }
@@ -74,7 +74,7 @@ class OstAPIUser: OstAPIBase {
                 }
             },
             onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
             }
         )
     }

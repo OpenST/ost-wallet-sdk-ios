@@ -34,7 +34,7 @@ class OstAPIRule: OstAPIBase {
                 onFailure?(error as! OstError)
             }
         }) { (failureResponse) in
-             onFailure?(OstError.init(fromApiResponse: failureResponse!))
+             onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
         }
     }
 }

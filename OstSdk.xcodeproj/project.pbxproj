@@ -236,6 +236,7 @@
 		ECCDABA22229A7F600A6A095 /* OstResetPinPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */; };
 		ECCDABA4222D470F00A6A095 /* OstPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDABA3222D470F00A6A095 /* OstPinManager.swift */; };
 		ECCDAF062238F5DB00A6A095 /* OstConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAF052238F5DB00A6A095 /* OstConfig.swift */; };
+		ECCDAF2D223BE21C00A6A095 /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCDAF2C223BE21C00A6A095 /* OstApiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -490,6 +491,7 @@
 		ECCDABA12229A7F600A6A095 /* OstResetPinPollingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstResetPinPollingService.swift; sourceTree = "<group>"; };
 		ECCDABA3222D470F00A6A095 /* OstPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinManager.swift; sourceTree = "<group>"; };
 		ECCDAF052238F5DB00A6A095 /* OstConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConfig.swift; sourceTree = "<group>"; };
+		ECCDAF2C223BE21C00A6A095 /* OstApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -833,7 +835,6 @@
 				4B75F2A621C7A41800898960 /* EIP1077.swift */,
 				4B00CD2A21E87B62005A5696 /* Extension+OstQRCode.swift */,
 				4B00CD3721EE2068005A5696 /* OstUtils.swift */,
-				4B49871321EF85C500ED0E94 /* OstError.swift */,
 				4B5EF317220AE8F70049AD8A /* Logger.swift */,
 				4B5EF323220B1EF10049AD8A /* OstConnectivity.swift */,
 				4B5EF350220C6E9C0049AD8A /* OstBundle.swift */,
@@ -967,6 +968,7 @@
 		4B7C930721B006E900EC0A9F /* OstSdk */ = {
 			isa = PBXGroup;
 			children = (
+				ECCDAF2B223BE20000A6A095 /* Errors */,
 				4B5EF349220C6AEF0049AD8A /* Abis */,
 				4B7C932D21B1148E00EC0A9F /* Database */,
 				4B75F22221BE439B00898960 /* Utils */,
@@ -1143,6 +1145,15 @@
 				4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */,
 			);
 			path = Signers;
+			sourceTree = "<group>";
+		};
+		ECCDAF2B223BE20000A6A095 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				4B49871321EF85C500ED0E94 /* OstError.swift */,
+				ECCDAF2C223BE21C00A6A095 /* OstApiError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1491,6 +1502,7 @@
 				4B75F34421C93EB600898960 /* SoliditySha3.swift in Sources */,
 				4B49893121F6F2AF00ED0E94 /* ABIEncoder.swift in Sources */,
 				4B49890D21F6F2AF00ED0E94 /* EthereumTransactionObject.swift in Sources */,
+				ECCDAF2D223BE21C00A6A095 /* OstApiError.swift in Sources */,
 				4B12145D2231433100C185D2 /* crypto_scrypt.c in Sources */,
 				ECCDAF062238F5DB00A6A095 /* OstConfig.swift in Sources */,
 				4BE9E3082202CDBC00427A80 /* OstPinAcceptDelegate.swift in Sources */,

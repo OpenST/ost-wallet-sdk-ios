@@ -45,7 +45,7 @@ class OstAPITokens: OstAPIBase {
                 }
             },
             onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
             }
         )
         
