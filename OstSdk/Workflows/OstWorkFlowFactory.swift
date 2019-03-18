@@ -182,8 +182,8 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - entityId: entity id to start polling for.
-    ///   - entityType: type of entity.
+    ///   - entityId: Entity id to start polling for.
+    ///   - entityType: Type of entity.
     ///   - delegate: Callback for action complete or to perform respective actions.
     fileprivate class func poll(
         userId: String,
@@ -225,7 +225,7 @@ extension OstSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - passphrasePrefix: application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
     ///   - oldUserPin: Old user pin.
     ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
@@ -247,19 +247,29 @@ extension OstSdk {
     }
     
     /// Execute transaction
-    ///
+    ///````
+    /// meta:
+    /// [
+    ///   "name":"Thanks for like",
+    ///   "type": "user_to_user",
+    ///   "details": "like"
+    /// ]
+    ///````
     /// - Parameters:
     ///   - userId: User id
     ///   - tokenHolderAddresses: Addresses to transfer fund
-    ///   - amounts: anounts to transfer
-    ///   - transactionType: Type of transaction to execute. Either ExecuteTransactionTypeDirectTransfer or ExecuteTransactionTypePay
-    ///   - tokenId: token id
+    ///   - amounts: Amounts to transfer
+    ///   - transactionType: Type of transaction to execute. Either **ExecuteTransactionTypeDirectTransfer** or **ExecuteTransactionTypePay**.
+    ///   - meta: Refer discussion for example
+    ///     * name: Name of transaction
+    ///     * type: It could be *user_to_user* or *company_to_user*
     ///   - delegate: Callback
     public class func executeTransaction(
         userId: String,
         tokenHolderAddresses: [String],
         amounts: [String],
         transactionType: OstExecuteTransactionType,
+        meta: [String: String],
         delegate: OstWorkFlowCallbackDelegate) {
         
         let executeTransactionFlow = OstExecuteTransaction(
@@ -267,6 +277,7 @@ extension OstSdk {
             ruleName: transactionType.rawValue,
             toAddresses: tokenHolderAddresses,
             amounts: amounts,
+            transactionMeta: meta,
             delegate: delegate)
         
         executeTransactionFlow.perform()
