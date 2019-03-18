@@ -35,7 +35,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// token id
     private static let PAYLOAD_TOKEN_ID_KEY = "tid"
     // transaction
-    private static let META_PAYLOAD_TRANSACTION_KEY = "tn"
+    private static let META_PAYLOAD_TRANSACTION_NAME_KEY = "tn"
     // transaction type
     private static let META_PAYLOAD_TRANSACTION_TYPE_KEY = "tt"
     // transaction detail
