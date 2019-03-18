@@ -69,7 +69,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
             return;
         }
         let currentUser = CurrentUser.getInstance();
-        OstSdk.perfrom(userId: currentUser.ostUserId!,
+        OstSdk.performQRAction(userId: currentUser.ostUserId!,
                        payload: qrCode!,
                        delegate: self.sdkInteract)
         
@@ -83,14 +83,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         super.didTapNext(sender: sender);
         self.ostValidateDataProtocol?.dataVerified();
     }
-    
-    func executeQRCodeInfo(qrCodeString: String) {
-        let currentUser = CurrentUser.getInstance();
-        OstSdk.perfrom(userId: currentUser.ostUserId!,
-                       payload: qrCodeString,
-                       delegate: self.sdkInteract)
-    }
-    
+
     var captureSession: AVCaptureSession? = nil
     var videoPreviewLayer: AVCaptureVideoPreviewLayer? = nil
     

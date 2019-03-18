@@ -119,13 +119,13 @@ extension OstSdk {
         ostAddSession.perform()
     }
     
-    ///  Perform operations for given paylaod
+    /// Perform operations for given paylaod
     ///
     /// - Parameters:
     ///   - userId: User id.
     ///   - payload: Json string of payload is expected.
     ///   - delegate: Callback for action complete or to perform respective action
-    public class func perfrom(
+    public class func performQRAction(
         userId: String,
         payload: String,
         delegate: OstWorkFlowCallbackDelegate) {
