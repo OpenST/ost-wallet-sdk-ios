@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "OstWalletSdk"
-  spec.version      = "0.1.0-alpha.3"
+  spec.version      = "0.1.0-alpha.4"
   spec.summary      = "Ost mobile wallet sdk for iOS."
   spec.swift_version = "4.2"
 
