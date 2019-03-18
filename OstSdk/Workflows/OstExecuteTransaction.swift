@@ -65,6 +65,10 @@ class OstExecuteTransaction: OstWorkflowBase {
     }
     
     
+    /// Get transaction meta property from QR-Code payload
+    ///
+    /// - Parameter metaPayload: Meta property payload
+    /// - Returns: Dictionary
     class func getTransactionMetaFromFromQRPayload(_ metaPayload: [String: Any?]?) -> [String: String] {
         var transactionMeta: [String: String] = [:]
         if (nil != metaPayload) {
