@@ -60,8 +60,8 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in WEI_<br/>
-&nbsp;_expireAfter: Session key validat duration_<br/>
+&nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
+&nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
@@ -69,8 +69,8 @@ OstSdk.activateUser(
     userId: String,
     userPin: String,
     passphrasePrefix: String,
-    spendingLimit: String,
-    expireAfter: TimeInterval,
+    spendingLimitInWei: String,
+    expireAfterInSec: TimeInterval,
     delegate: OstWorkFlowCallbackDelegate
     )
 ```
@@ -81,15 +81,15 @@ To add new session to device manager.
 Will be used when there are no current session available to do transactions.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in WEI_<br/>
-&nbsp;_expireAfter: Session key validat duration_<br/>
+&nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
+&nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
 OstSdk.addSession(
     userId: String,
-    spendingLimit: String,
-    expireAfter: TimeInterval,
+    spendingLimitInWei: String,
+    expireAfterInSec: TimeInterval,
     delegate: OstWorkFlowCallbackDelegate
     )
 ```
@@ -99,18 +99,17 @@ OstSdk.addSession(
 To execute Rule.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_transactionType: OstExecuteTransactionType value_<br/>
-&nbsp;_toAddresses: Token holder addresses of amount receiver_<br/>
+&nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
+&nbsp;_transactionType: OstExecuteTransactionType value_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
 OstSdk.executeTransaction(
     userId: String,
-    tokenId: String,
-    transactionType: OstExecuteTransactionType,
-    toAddresses: [String],
+    tokenHolderAddresses: [String],
     amounts: [String],
+    transactionType: OstExecuteTransactionType,
     delegate: OstWorkFlowCallbackDelegate
     )
 ```
@@ -140,11 +139,25 @@ Using mnemonics it generates wallet key to add new current device.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.addDeviceWithMnemonicsString(
+OstSdk.addDeviceUsingMnemonics(
     userId: String,
     mnemonics: String,
     delegate: OstWorkFlowCallbackDelegate
     )
+```
+
+**or**<br/>
+
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_mnemonics: Array of mnemonics_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.addDeviceUsingMnemonics(
+    userId: String,
+    mnemonics: [String],
+    delegate: OstWorkFlowCallbackDelegate
+)
 ```
 
 ### Get QR-Code To Add Device
@@ -183,8 +196,8 @@ To update current Pin with new Pin.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_oldPin: Users old Pin_<br/>
-&nbsp;_newPin: Users new Pin_<br/>
+&nbsp;_oldUserPin: Users old Pin_<br/>
+&nbsp;_newUserPin: Users new Pin_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift

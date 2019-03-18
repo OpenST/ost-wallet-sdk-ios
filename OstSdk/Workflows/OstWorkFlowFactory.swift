@@ -86,7 +86,7 @@ extension OstSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDeviceWithMnemonicsString(
+    public class func addDeviceUsingMnemonicsString(
         userId: String,
         mnemonics: String,
         delegate: OstWorkFlowCallbackDelegate) {
