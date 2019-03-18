@@ -34,6 +34,12 @@ class OstExecuteTransaction: OstWorkflowBase {
     private static let PAYLOAD_AMOUNTS_KEY = "ams"
     /// token id
     private static let PAYLOAD_TOKEN_ID_KEY = "tid"
+    // transaction
+    private static let META_PAYLOAD_TRANSACTION_KEY = "tn"
+    // transaction type
+    private static let META_PAYLOAD_TRANSACTION_TYPE_KEY = "tt"
+    // transaction detail
+    private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -58,11 +64,30 @@ class OstExecuteTransaction: OstWorkflowBase {
         return (ruleName, addresses, amounts, tokenId)
     }
     
+    
+    class func getTransactionMetaFromFromQRPayload(_ metaPayload: [String: Any?]?) -> [String: String] {
+        var transactionMeta: [String: String] = [:]
+        if (nil != metaPayload) {
+            if let transactionName = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_KEY] as? String {
+                transactionMeta["name"] = transactionName
+            }
+            if let transactionType = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_TYPE_KEY] as? String {
+                transactionMeta["type"] = transactionType
+            }
+            if let transactionDetails = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_DETAILS_KEY] as? String {
+                transactionMeta["details"] = transactionDetails
+            }
+        }
+        
+        return transactionMeta
+    }
+    
     static private let ostExecuteTransactionQueue = DispatchQueue(label: "com.ost.sdk.OstExecuteTransaction", qos: .background)
     private let workflowTransactionCountForPolling = 1
     private let toAddresses: [String]
     private let amounts: [String]
     private let ruleName: String
+    private let transactionMeta: [String: String]
     
     private var rule: OstRule? = nil
     private var activeSession: OstSession? = nil
@@ -85,11 +110,13 @@ class OstExecuteTransaction: OstWorkflowBase {
          ruleName: String,
          toAddresses: [String],
          amounts: [String],
+         transactionMeta: [String: String],
          delegate: OstWorkFlowCallbackDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
+        self.transactionMeta = transactionMeta
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -219,7 +246,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             params["calldata"] = self.calldata!
             params["signer"] = self.activeSession!.address!
             params["signature"] = self.signature!
-            params["meta_property"] = [:]
+            params["meta_property"] = self.transactionMeta
             
             try? self.activeSession!.incrementNonce()
             

@@ -21,7 +21,8 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     private let payloadString: String?
     
     private var dataDefination: String? = nil
-    private var payloadData: [String: Any?]?;
+    private var payloadData: [String: Any?]? = nil
+    private var meta: [String: Any?]? = nil
     private var executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams? = nil
     
     /// Initializer
@@ -104,6 +105,10 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             throw OstError("w_p_pqrcs_5", OstErrorText.invalidQRCode);
         }
         self.payloadData = payloadData;
+        
+        if let payloadMeta = jsonObj!["m"] as? [String: Any?] {
+            self.meta = payloadMeta
+        }
     }
 
     /// Delegate process to respective workflow
@@ -122,6 +127,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
                 throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
             }
+            self.meta = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
             self.executeTxPayloadParams = executeTxPayloadParams
             verifyDataForExecuteTransaction(executeTxPayloadParams)
             
@@ -162,6 +168,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
                               ruleName: self.executeTxPayloadParams!.ruleName,
                               toAddresses: self.executeTxPayloadParams!.addresses,
                               amounts: self.executeTxPayloadParams!.amounts,
+                              transactionMeta: self.meta! as! [String : String],
                               delegate: self.delegate).perform()
     }
 
