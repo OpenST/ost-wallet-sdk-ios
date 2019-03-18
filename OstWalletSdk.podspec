@@ -16,8 +16,9 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "OstWalletSdk"
-  spec.version      = "v0.1.0-alpha.1"
+  spec.version      = "0.1.0-alpha.2"
   spec.summary      = "Ost mobile wallet sdk for iOS."
+  spec.swift_version = "4.2"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -28,7 +29,7 @@ Pod::Spec.new do |spec|
   The official Ost mobile wallet sdk for iOS.
                    DESC
 
-  spec.homepage     = "https://github.com/ostdotcom/ost-client-ios-sdk"
+  spec.homepage     = "https://ost.com/"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +81,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/ostdotcom/ost-client-ios-sdk.git", :tag => spec.version.to_s }
+  spec.source       = { :git => "https://github.com/ostdotcom/ost-client-ios-sdk.git", :tag => "v#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
