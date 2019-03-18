@@ -135,20 +135,6 @@ It add new device using mnemonics provided.
 Using mnemonics it generates wallet key to add new current device.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_mnemonics: String value of mnemonics_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstSdk.addDeviceUsingMnemonics(
-    userId: String,
-    mnemonics: String,
-    delegate: OstWorkFlowCallbackDelegate
-    )
-```
-
-**or**<br/>
-
-&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_mnemonics: Array of mnemonics_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
