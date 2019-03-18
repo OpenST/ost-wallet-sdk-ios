@@ -72,7 +72,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     class func getTransactionMetaFromFromQRPayload(_ metaPayload: [String: Any?]?) -> [String: String] {
         var transactionMeta: [String: String] = [:]
         if (nil != metaPayload) {
-            if let transactionName = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_KEY] as? String {
+            if let transactionName = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_NAME_KEY] as? String {
                 transactionMeta["name"] = transactionName
             }
             if let transactionType = metaPayload![OstExecuteTransaction.META_PAYLOAD_TRANSACTION_TYPE_KEY] as? String {
