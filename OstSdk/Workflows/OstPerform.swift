@@ -127,7 +127,6 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
                 throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
             }
-            self.meta = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
             self.executeTxPayloadParams = executeTxPayloadParams
             verifyDataForExecuteTransaction(executeTxPayloadParams)
             
@@ -164,11 +163,13 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     }
     
     public func dataVerified() {
+        
+        let transactionMeta: [String: String] = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
         OstExecuteTransaction(userId: self.userId,
                               ruleName: self.executeTxPayloadParams!.ruleName,
                               toAddresses: self.executeTxPayloadParams!.addresses,
                               amounts: self.executeTxPayloadParams!.amounts,
-                              transactionMeta: self.meta! as! [String : String],
+                              transactionMeta: transactionMeta,
                               delegate: self.delegate).perform()
     }
 

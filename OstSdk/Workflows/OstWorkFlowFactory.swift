@@ -247,7 +247,14 @@ extension OstSdk {
     }
     
     /// Execute transaction
-    ///
+    ///````
+    /// meta:
+    /// [
+    ///   "name":"Thanks for like",
+    ///   "type": "user_to_user",
+    ///   "details": "like"
+    /// ]
+    ///````
     /// - Parameters:
     ///   - userId: User id
     ///   - tokenHolderAddresses: Addresses to transfer fund
@@ -256,14 +263,6 @@ extension OstSdk {
     ///   - meta: Refer discussion for example
     ///     * name: Name of transaction
     ///     * type: It could be *user_to_user* or *company_to_user*
-    /// ````
-    /// meta:
-    /// [
-    ///   "name":"Thanks for like",
-    ///   "type": "user_to_user",
-    ///   "details": "like"
-    /// ]
-    ///````
     ///   - delegate: Callback
     public class func executeTransaction(
         userId: String,
