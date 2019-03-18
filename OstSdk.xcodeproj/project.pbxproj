@@ -13,9 +13,7 @@
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
 		00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282C822224188000ABAB2 /* Alamofire.framework */; };
 		00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CA22224188000ABAB2 /* BigInt.framework */; };
-		00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */; };
 		00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CE22224188000ABAB2 /* CryptoSwift.framework */; };
-		00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D022224188000ABAB2 /* EthereumKit.framework */; };
 		00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D222224188000ABAB2 /* FMDB.framework */; };
 		00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D422224188000ABAB2 /* SipHash.framework */; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
@@ -501,9 +499,7 @@
 			files = (
 				00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */,
 				00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */,
-				00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */,
 				00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */,
-				00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */,
 				00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */,
 				00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */,
 				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
