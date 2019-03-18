@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "OstWalletSdk"
-  spec.version      = "0.1.0-alpha.2"
+  spec.version      = "0.1.0-alpha.3"
   spec.summary      = "Ost mobile wallet sdk for iOS."
   spec.swift_version = "4.2"
 
@@ -92,7 +92,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "OstSdk/**/**/**/**/*.{h,m,json,c}"
+  spec.source_files  = "OstSdk/**/**/**/**/*.{h,m,json,c,swift}"
   #spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -109,7 +109,8 @@ Pod::Spec.new do |spec|
   # spec.resource  = "icon.png"
   # spec.resources = "Resources/*.png"
 
-  # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
+   spec.preserve_paths = "OstSdk/Utils/SCrypt/module.modulemap"
+   spec.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/OstSdk/OstSdk/Utils/SCrypt/**','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/OstSdk/OstSdk/'}
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
