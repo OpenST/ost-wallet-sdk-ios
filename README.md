@@ -15,11 +15,68 @@ These digital signatures ensure that users have complete control of there tokens
     
 ## Support
 
-iOS version : 9.0 and above (**recommended version 10.3** )
+- iOS version : 9.0 and above (**recommended version 10.3** )
+- Swift version: 4.2
 
-## OstSdk apis
+## Quick Setup
 
-### Init
+- Get [Carthage](https://github.com/Carthage/Carthage) by running `brew install carthage` or choose [another installation method](https://github.com/Carthage/Carthage/#installing-carthage)
+- Create a [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile) in the same directory where your `.xcodeproj` or `.xcworkspace` is
+- Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
+
+```
+github "ostdotcom/ost-wallet-sdk-ios"
+```
+
+- Run `carthage update --platform iOS`
+- A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is
+- Open application target, under `General` tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
+- On your application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
+
+```sh
+/usr/local/bin/carthage copy-frameworks
+```
+
+- Click the + under `Input Files` and add an entry for each framework:
+
+```
+$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework
+$(SRCROOT)/Carthage/Build/iOS/BigInt.framework
+$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework
+$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
+$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
+$(SRCROOT)/Carthage/Build/iOS/FMDB.framework
+$(SRCROOT)/Carthage/Build/iOS/SipHash.framework
+$(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
+```
+- Create `OstWalletSdk.plist` file. Following is the default configurations. 
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0">
+ <dict>
+ <key>BlockGenerationTime</key>
+ <integer>3</integer>
+ <key>PricePointTokenSymbol</key>
+ <string>OST</string>
+ <key>PricePointCurrencySymbol</key>
+ <string>USD</string>
+ <key>RequestTimeoutDuration</key>
+ <integer>6</integer>
+ <key>PinMaxRetryCount</key>
+ <integer>3</integer>
+ <key>SessionBufferTime</key>
+ <integer>3600</integer>
+ </dict>
+ </plist>
+```
+
+## OstWalletSdk apis
+
+To use Ost wallet sdk use `import OstWalletSdk`
+
+### Initialize
 
 To get started with the SDK, you must first initialize SDK by calling _initialize()_ api.
 It initializes all the required instances and run migrations of db. 
@@ -27,7 +84,7 @@ It initializes all the required instances and run migrations of db.
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     do {
-        try OstSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+        try OstWalletSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
      } catch let ostError {
            
      }
@@ -45,7 +102,7 @@ It ensures current device is in registered state before calling kit apis.<br/><b
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
  
 ```Swift
-OstSdk.setupDevice(
+OstWalletSdk.setupDevice(
     userId: String,
     tokenId: String,
     delegate: OstWorkFlowCallbackDelegate
@@ -65,7 +122,7 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.activateUser(
+OstWalletSdk.activateUser(
     userId: String,
     userPin: String,
     passphrasePrefix: String,
@@ -86,7 +143,7 @@ Will be used when there are no current session available to do transactions.<br/
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.addSession(
+OstWalletSdk.addSession(
     userId: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
@@ -105,7 +162,7 @@ To execute Rule.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.executeTransaction(
+OstWalletSdk.executeTransaction(
     userId: String,
     tokenHolderAddresses: [String],
     amounts: [String],
@@ -123,7 +180,7 @@ Paper wallet will be used to add new device incase device is lost<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.getPaperWallet(
+OstWalletSdk.getPaperWallet(
     userId: String,
     delegate: OstWorkFlowCallbackDelegate
     )
@@ -139,7 +196,7 @@ Using mnemonics it generates wallet key to add new current device.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.addDeviceUsingMnemonics(
+OstWalletSdk.addDeviceUsingMnemonics(
     userId: String,
     mnemonics: [String],
     delegate: OstWorkFlowCallbackDelegate
@@ -154,7 +211,7 @@ Use this methods to generate QR code of current device to be added from authoriz
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 
 ```Swift
-OstSdk.getAddDeviceQRCode(
+OstWalletSdk.getAddDeviceQRCode(
     userId: String
     ) throws -> CIImage?
 ```
@@ -169,7 +226,7 @@ Through QR, Add device and transaction operations can be performed.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.perfrom(
+OstWalletSdk.perfrom(
     userId: String,
     payload: String,
     delegate: OstWorkFlowCallbackDelegate
@@ -187,7 +244,7 @@ To update current Pin with new Pin.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.resetPin(
+OstWalletSdk.resetPin(
     userId: String,
     passphrasePrefix: String,
     oldUserPin: String,
@@ -208,7 +265,7 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 
 
 ```Swift
-OstSdk.recoverDeviceInitialize(
+OstWalletSdk.recoverDeviceInitialize(
     userId: String,
     recoverDeviceAddress: String,
     userPin: String,
@@ -228,7 +285,7 @@ Polling can be used when any entity is in transition status and desired status u
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.poll(
+OstWalletSdk.poll(
     userId: String,
     entityId: String,
     entityType: OstPollingEntityType,
@@ -333,7 +390,7 @@ func requestAcknowledged(
 
 ## Reference
 
-For reference you can refer our [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
+For reference you can refer our [ios-demo-app](https://github.com/ostdotcom/ios-demo-app/tree/develop)
 
 There are other references are listed below:
 
