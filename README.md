@@ -15,7 +15,40 @@ These digital signatures ensure that users have complete control of there tokens
     
 ## Support
 
-iOS version : 9.0 and above (**recommended version 10.3** )
+- iOS version : 9.0 and above (**recommended version 10.3** )
+- Swift version: 4.2
+
+## Quick Setup
+
+- Get [Carthage](https://github.com/Carthage/Carthage) by running `brew install carthage` or choose [another installation method](https://github.com/Carthage/Carthage/#installing-carthage)
+- Create a [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile) in the same directory where your `.xcodeproj` or `.xcworkspace` is
+- Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
+
+```
+github "ostdotcom/ost-wallet-sdk-ios"
+```
+
+- Run `carthage update --platform iOS`
+- A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is
+- Open application target, under `General` tab, drag the built `OstSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
+- On your application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
+
+```sh
+/usr/local/bin/carthage copy-frameworks
+```
+
+- Click the + under `Input Files` and add an entry for each framework:
+
+```
+$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework
+$(SRCROOT)/Carthage/Build/iOS/BigInt.framework
+$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework
+$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
+$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
+$(SRCROOT)/Carthage/Build/iOS/FMDB.framework
+$(SRCROOT)/Carthage/Build/iOS/SipHash.framework
+$(SRCROOT)/Carthage/Build/iOS/OstSdk.framework
+```
 
 ## OstSdk apis
 
