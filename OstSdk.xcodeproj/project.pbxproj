@@ -11,13 +11,6 @@
 		003832982224482500AA4F44 /* OstAddDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */; };
 		005AAF6C22032B8A00A2F8E4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6A22032B8A00A2F8E4 /* README.md */; };
 		005AAF6D22032B8A00A2F8E4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 005AAF6B22032B8A00A2F8E4 /* LICENSE */; };
-		00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282C822224188000ABAB2 /* Alamofire.framework */; };
-		00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CA22224188000ABAB2 /* BigInt.framework */; };
-		00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */; };
-		00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282CE22224188000ABAB2 /* CryptoSwift.framework */; };
-		00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D022224188000ABAB2 /* EthereumKit.framework */; };
-		00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D222224188000ABAB2 /* FMDB.framework */; };
-		00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C282D422224188000ABAB2 /* SipHash.framework */; };
 		4B00CB9C21DCD39C005A5696 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */; };
 		4B00CBA021DCD669005A5696 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */; };
 		4B00CBA421DCD8C4005A5696 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */; };
@@ -222,8 +215,13 @@
 		4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */; };
 		4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */; };
 		4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */; };
-		5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */; };
-		B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */; };
+		4BF8FD5F2240D87900519779 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD5E2240D87900519779 /* BigInt.framework */; };
+		4BF8FD612240D8A500519779 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD602240D8A500519779 /* Alamofire.framework */; };
+		4BF8FD632240D8AA00519779 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD622240D8AA00519779 /* CryptoSwift.framework */; };
+		4BF8FD652240D8AD00519779 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD642240D8AD00519779 /* CryptoEthereumSwift.framework */; };
+		4BF8FD672240D8B500519779 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD662240D8B500519779 /* EthereumKit.framework */; };
+		4BF8FD692240D8B700519779 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD682240D8B700519779 /* FMDB.framework */; };
+		4BF8FD6B2240D8BC00519779 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD6A2240D8BC00519779 /* SipHash.framework */; };
 		EC9185572227CF6A00905C54 /* OstMnemonicsKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */; };
 		ECB29E6622256144001C003E /* OST_MIGRATION_README.md in Resources */ = {isa = PBXBuildFile; fileRef = ECB29E6522256144001C003E /* OST_MIGRATION_README.md */; };
 		ECCB9350222143BB00D7C44F /* OstAPIErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB934F222143BB00D7C44F /* OstAPIErrorHandler.swift */; };
@@ -254,14 +252,6 @@
 		003832972224482500AA4F44 /* OstAddDeviceWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithQRData.swift; sourceTree = "<group>"; };
 		005AAF6A22032B8A00A2F8E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		005AAF6B22032B8A00A2F8E4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		00C282C822224188000ABAB2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282CA22224188000ABAB2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoEthereumSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282CE22224188000ABAB2 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282D022224188000ABAB2 /* EthereumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EthereumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282D222224188000ABAB2 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C282D422224188000ABAB2 /* SipHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SipHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B00CB9B21DCD39C005A5696 /* OstTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
 		4B00CB9F21DCD669005A5696 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
 		4B00CBA321DCD8C4005A5696 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
@@ -468,17 +458,15 @@
 		4BE9E33822041DA800427A80 /* OstBaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseStorage.swift; sourceTree = "<group>"; };
 		4BE9E3E222085F5D00427A80 /* OstAPISigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPISigner.swift; sourceTree = "<group>"; };
 		4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokensTests.swift; sourceTree = "<group>"; };
-		4BE9E3EC220989E600427A80 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokens.swift; sourceTree = "<group>"; };
 		4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCurrentDevice.swift; sourceTree = "<group>"; };
-		5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
-		81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.release.xcconfig"; path = "Target Support Files/Pods-OstSdk/Pods-OstSdk.release.xcconfig"; sourceTree = "<group>"; };
-		87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.release.xcconfig"; path = "Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.release.xcconfig"; sourceTree = "<group>"; };
-		C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkExample.release.xcconfig"; path = "Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample.release.xcconfig"; sourceTree = "<group>"; };
-		D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.debug.xcconfig"; path = "Target Support Files/Pods-OstSdk/Pods-OstSdk.debug.xcconfig"; sourceTree = "<group>"; };
-		E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkTests.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4BF8FD5E2240D87900519779 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
+		4BF8FD602240D8A500519779 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		4BF8FD622240D8AA00519779 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		4BF8FD642240D8AD00519779 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoEthereumSwift.framework; path = Carthage/Build/iOS/CryptoEthereumSwift.framework; sourceTree = "<group>"; };
+		4BF8FD662240D8B500519779 /* EthereumKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EthereumKit.framework; path = Carthage/Build/iOS/EthereumKit.framework; sourceTree = "<group>"; };
+		4BF8FD682240D8B700519779 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
+		4BF8FD6A2240D8BC00519779 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstMnemonicsKeyManager.swift; sourceTree = "<group>"; };
 		ECB29E6522256144001C003E /* OST_MIGRATION_README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = OST_MIGRATION_README.md; sourceTree = "<group>"; };
 		ECCB934F222143BB00D7C44F /* OstAPIErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIErrorHandler.swift; sourceTree = "<group>"; };
@@ -499,15 +487,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */,
-				00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */,
-				00C282CD22224188000ABAB2 /* CryptoEthereumSwift.framework in Frameworks */,
-				00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */,
-				00C282D122224188000ABAB2 /* EthereumKit.framework in Frameworks */,
-				00C282D322224188000ABAB2 /* FMDB.framework in Frameworks */,
-				00C282D522224188000ABAB2 /* SipHash.framework in Frameworks */,
 				4B75F1EB21B65BFE00898960 /* libsqlite3.0.tbd in Frameworks */,
-				B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */,
+				4BF8FD5F2240D87900519779 /* BigInt.framework in Frameworks */,
+				4BF8FD632240D8AA00519779 /* CryptoSwift.framework in Frameworks */,
+				4BF8FD652240D8AD00519779 /* CryptoEthereumSwift.framework in Frameworks */,
+				4BF8FD692240D8B700519779 /* FMDB.framework in Frameworks */,
+				4BF8FD672240D8B500519779 /* EthereumKit.framework in Frameworks */,
+				4BF8FD6B2240D8BC00519779 /* SipHash.framework in Frameworks */,
+				4BF8FD612240D8A500519779 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,26 +504,12 @@
 			files = (
 				4B75F1F121B65E1D00898960 /* libsqlite3.0.tbd in Frameworks */,
 				4B7C930F21B006E900EC0A9F /* OstSdk.framework in Frameworks */,
-				5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3786C4EE2FD59024C6B7673C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */,
-				81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */,
-				5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */,
-				C976426F62D5BA6EE15C7616 /* Pods-OstSdkExample.release.xcconfig */,
-				E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */,
-				C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		4B00CC1121DF89C7005A5696 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,7 +925,6 @@
 				4B7C931221B006E900EC0A9F /* OstSdkTests */,
 				4B7C930621B006E900EC0A9F /* Products */,
 				4B7C933821B150AF00EC0A9F /* Frameworks */,
-				3786C4EE2FD59024C6B7673C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1049,19 +1021,15 @@
 		4B7C933821B150AF00EC0A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				00C282C822224188000ABAB2 /* Alamofire.framework */,
-				00C282CA22224188000ABAB2 /* BigInt.framework */,
-				00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */,
-				00C282CE22224188000ABAB2 /* CryptoSwift.framework */,
-				00C282D022224188000ABAB2 /* EthereumKit.framework */,
-				00C282D222224188000ABAB2 /* FMDB.framework */,
-				00C282D422224188000ABAB2 /* SipHash.framework */,
-				4BE9E3EC220989E600427A80 /* Alamofire.framework */,
+				4BF8FD6A2240D8BC00519779 /* SipHash.framework */,
+				4BF8FD682240D8B700519779 /* FMDB.framework */,
+				4BF8FD662240D8B500519779 /* EthereumKit.framework */,
+				4BF8FD642240D8AD00519779 /* CryptoEthereumSwift.framework */,
+				4BF8FD622240D8AA00519779 /* CryptoSwift.framework */,
+				4BF8FD602240D8A500519779 /* Alamofire.framework */,
+				4BF8FD5E2240D87900519779 /* BigInt.framework */,
 				4B7C934821B5004E00EC0A9F /* libsqlite3.0.tbd */,
 				4B7C934621B16FE600EC0A9F /* libsqlite3.tbd */,
-				87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */,
-				456CF7A8463C45B9E1F9D150 /* Pods_OstSdkExample.framework */,
-				91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1178,11 +1146,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B7C931921B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdk" */;
 			buildPhases = (
-				0A69A602A4D9CBF180022562 /* [CP] Check Pods Manifest.lock */,
 				4B7C930021B006E900EC0A9F /* Headers */,
 				4B7C930121B006E900EC0A9F /* Sources */,
 				4B7C930221B006E900EC0A9F /* Frameworks */,
 				4B7C930321B006E900EC0A9F /* Resources */,
+				4BF8FD5B2240D19D00519779 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1197,7 +1165,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B7C931C21B006E900EC0A9F /* Build configuration list for PBXNativeTarget "OstSdkTests" */;
 			buildPhases = (
-				3DA84799508CB520CF28B36D /* [CP] Check Pods Manifest.lock */,
 				4B7C930A21B006E900EC0A9F /* Sources */,
 				4B7C930B21B006E900EC0A9F /* Frameworks */,
 				4B7C930C21B006E900EC0A9F /* Resources */,
@@ -1277,28 +1244,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0A69A602A4D9CBF180022562 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OstSdk-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		30C85F0D8E213D6B57A691AB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1329,27 +1274,29 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OstSdkTests/Pods-OstSdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3DA84799508CB520CF28B36D /* [CP] Check Pods Manifest.lock */ = {
+		4BF8FD5B2240D19D00519779 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OstSdkTests-checkManifestLockResult.txt",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1709,7 +1656,6 @@
 		};
 		4B7C931A21B006E900EC0A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D55317FB1715F59A609FCA2E /* Pods-OstSdk.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -1719,7 +1665,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1742,7 +1691,6 @@
 		};
 		4B7C931B21B006E900EC0A9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -1752,7 +1700,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1774,7 +1725,6 @@
 		};
 		4B7C931D21B006E900EC0A9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E712B895925128BCAAA1B751 /* Pods-OstSdkTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1798,7 +1748,6 @@
 		};
 		4B7C931E21B006E900EC0A9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C69DBA560E91533EF665E4AA /* Pods-OstSdkTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;

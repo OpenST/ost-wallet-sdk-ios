@@ -1,0 +1,4 @@
+github "attaswift/BigInt" == 3.1.0
+github "yuzushioh/EthereumKit" == 2.0.1
+github "Alamofire/Alamofire" == 4.8.1
+github "ccgus/fmdb" ~> 2.7.4
