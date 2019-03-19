@@ -390,7 +390,7 @@ func requestAcknowledged(
 
 ## Reference
 
-For reference you can refer our [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
+For reference you can refer our [ios-demo-app](https://github.com/ostdotcom/ios-demo-app/tree/develop)
 
 There are other references are listed below:
 
