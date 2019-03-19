@@ -1,0 +1,1754 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
+		EC38BE2122413992006F8DA2 /* OstWalletSdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE2022413992006F8DA2 /* OstWalletSdkTests.swift */; };
+		EC38BE2322413992006F8DA2 /* OstWalletSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE1522413992006F8DA2 /* OstWalletSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EC38BF1922413A96006F8DA2 /* OstConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE2C22413A95006F8DA2 /* OstConstants.swift */; };
+		EC38BF1A22413A96006F8DA2 /* OstMnemonicsKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE2F22413A95006F8DA2 /* OstMnemonicsKeyManager.swift */; };
+		EC38BF1C22413A96006F8DA2 /* OstKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3122413A95006F8DA2 /* OstKeyManager.swift */; };
+		EC38BF1D22413A96006F8DA2 /* OstCryptoImpls.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3222413A95006F8DA2 /* OstCryptoImpls.swift */; };
+		EC38BF1E22413A96006F8DA2 /* OstBaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3422413A95006F8DA2 /* OstBaseStorage.swift */; };
+		EC38BF1F22413A96006F8DA2 /* OstKeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3522413A95006F8DA2 /* OstKeychainHelper.swift */; };
+		EC38BF2022413A96006F8DA2 /* OstSecureEnclaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3622413A95006F8DA2 /* OstSecureEnclaveHelper.swift */; };
+		EC38BF2122413A96006F8DA2 /* OstCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3722413A95006F8DA2 /* OstCrypto.swift */; };
+		EC38BF2222413A96006F8DA2 /* ABIHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3A22413A95006F8DA2 /* ABIHelperBase.swift */; };
+		EC38BF2322413A96006F8DA2 /* TokenRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3B22413A95006F8DA2 /* TokenRule.swift */; };
+		EC38BF2422413A96006F8DA2 /* PricerRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3C22413A95006F8DA2 /* PricerRule.swift */; };
+		EC38BF2522413A96006F8DA2 /* GnosisSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3D22413A95006F8DA2 /* GnosisSafe.swift */; };
+		EC38BF2622413A96006F8DA2 /* TokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3E22413A95006F8DA2 /* TokenHolder.swift */; };
+		EC38BF2722413A96006F8DA2 /* OstConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3F22413A95006F8DA2 /* OstConnectivity.swift */; };
+		EC38BF2822413A96006F8DA2 /* SoliditySha3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4122413A95006F8DA2 /* SoliditySha3.swift */; };
+		EC38BF2A22413A96006F8DA2 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4322413A95006F8DA2 /* Date+Timestamp.swift */; };
+		EC38BF2B22413A96006F8DA2 /* Decimal+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4422413A95006F8DA2 /* Decimal+Extension.swift */; };
+		EC38BF2C22413A96006F8DA2 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4522413A95006F8DA2 /* Logger.swift */; };
+		EC38BF2D22413A96006F8DA2 /* EthereumPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4922413A95006F8DA2 /* EthereumPublicKey.swift */; };
+		EC38BF2E22413A96006F8DA2 /* EthereumAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4A22413A95006F8DA2 /* EthereumAddress.swift */; };
+		EC38BF2F22413A96006F8DA2 /* EthereumPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4B22413A95006F8DA2 /* EthereumPrivateKey.swift */; };
+		EC38BF3022413A96006F8DA2 /* EthereumTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4C22413A95006F8DA2 /* EthereumTransaction.swift */; };
+		EC38BF3122413A96006F8DA2 /* Web3Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE4E22413A95006F8DA2 /* Web3Provider.swift */; };
+		EC38BF3222413A96006F8DA2 /* Web3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5022413A95006F8DA2 /* Web3.swift */; };
+		EC38BF3322413A96006F8DA2 /* RLPItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5222413A95006F8DA2 /* RLPItem.swift */; };
+		EC38BF3422413A96006F8DA2 /* RLPEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5322413A95006F8DA2 /* RLPEncoder.swift */; };
+		EC38BF3522413A96006F8DA2 /* RLPItemConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5422413A95006F8DA2 /* RLPItemConvertible.swift */; };
+		EC38BF3622413A96006F8DA2 /* RLPDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5522413A95006F8DA2 /* RLPDecoder.swift */; };
+		EC38BF3722413A96006F8DA2 /* Types+RLPItemConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5622413A95006F8DA2 /* Types+RLPItemConvertible.swift */; };
+		EC38BF3822413A96006F8DA2 /* EthereumBlockObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5822413A95006F8DA2 /* EthereumBlockObject.swift */; };
+		EC38BF3922413A96006F8DA2 /* EthereumTransactionReceiptObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5922413A95006F8DA2 /* EthereumTransactionReceiptObject.swift */; };
+		EC38BF3A22413A96006F8DA2 /* EthereumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5A22413A95006F8DA2 /* EthereumData.swift */; };
+		EC38BF3B22413A96006F8DA2 /* RPCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5B22413A95006F8DA2 /* RPCRequest.swift */; };
+		EC38BF3C22413A96006F8DA2 /* EthereumSyncStatusObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5C22413A95006F8DA2 /* EthereumSyncStatusObject.swift */; };
+		EC38BF3D22413A96006F8DA2 /* EthereumValueConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5D22413A95006F8DA2 /* EthereumValueConvertible.swift */; };
+		EC38BF3E22413A96006F8DA2 /* EthereumQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5E22413A95006F8DA2 /* EthereumQuantity.swift */; };
+		EC38BF3F22413A96006F8DA2 /* EthereumTransactionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE5F22413A95006F8DA2 /* EthereumTransactionObject.swift */; };
+		EC38BF4022413A96006F8DA2 /* EthereumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6022413A95006F8DA2 /* EthereumValue.swift */; };
+		EC38BF4122413A96006F8DA2 /* RPCResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6122413A95006F8DA2 /* RPCResponse.swift */; };
+		EC38BF4222413A96006F8DA2 /* EthereumCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6222413A95006F8DA2 /* EthereumCall.swift */; };
+		EC38BF4322413A96006F8DA2 /* EthereumQuantityTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6322413A95006F8DA2 /* EthereumQuantityTag.swift */; };
+		EC38BF4422413A96006F8DA2 /* Types+EthereumValueConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6422413A95006F8DA2 /* Types+EthereumValueConvertible.swift */; };
+		EC38BF4522413A96006F8DA2 /* EthereumLogObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6522413A95006F8DA2 /* EthereumLogObject.swift */; };
+		EC38BF4622413A96006F8DA2 /* String+BytesConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6722413A95006F8DA2 /* String+BytesConvertible.swift */; };
+		EC38BF4722413A96006F8DA2 /* Bytes+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6822413A95006F8DA2 /* Bytes+HexString.swift */; };
+		EC38BF4822413A96006F8DA2 /* UInt+BytesRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6922413A95006F8DA2 /* UInt+BytesRepresentable.swift */; };
+		EC38BF4922413A96006F8DA2 /* Bytes+TrimLeadingZeros.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6A22413A95006F8DA2 /* Bytes+TrimLeadingZeros.swift */; };
+		EC38BF4A22413A96006F8DA2 /* Bytes+SecureRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6B22413A95006F8DA2 /* Bytes+SecureRandom.swift */; };
+		EC38BF4B22413A96006F8DA2 /* String+HexBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6C22413A95006F8DA2 /* String+HexBytes.swift */; };
+		EC38BF4C22413A96006F8DA2 /* BytesConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6D22413A95006F8DA2 /* BytesConvertible.swift */; };
+		EC38BF4D22413A96006F8DA2 /* String+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6E22413A95006F8DA2 /* String+Conversion.swift */; };
+		EC38BF4E22413A96006F8DA2 /* Data+BytesConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE6F22413A95006F8DA2 /* Data+BytesConvertible.swift */; };
+		EC38BF4F22413A96006F8DA2 /* CharacterSet+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7022413A95006F8DA2 /* CharacterSet+Hex.swift */; };
+		EC38BF5022413A96006F8DA2 /* BigUInt+BytesConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7122413A95006F8DA2 /* BigUInt+BytesConvertible.swift */; };
+		EC38BF5122413A96006F8DA2 /* Bytes+UInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7222413A95006F8DA2 /* Bytes+UInt.swift */; };
+		EC38BF5222413A96006F8DA2 /* Exports+Web3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7322413A95006F8DA2 /* Exports+Web3.swift */; };
+		EC38BF5322413A96006F8DA2 /* Int+ETH.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7422413A95006F8DA2 /* Int+ETH.swift */; };
+		EC38BF5422413A96006F8DA2 /* Values+GeneralHashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7522413A95006F8DA2 /* Values+GeneralHashable.swift */; };
+		EC38BF5522413A96006F8DA2 /* UnsignedInteger+BytesConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7622413A95006F8DA2 /* UnsignedInteger+BytesConvertible.swift */; };
+		EC38BF5622413A96006F8DA2 /* Secp256k1+CTXCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7722413A95006F8DA2 /* Secp256k1+CTXCreator.swift */; };
+		EC38BF5722413A96006F8DA2 /* UnsignedInteger+Shifting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7822413A95006F8DA2 /* UnsignedInteger+Shifting.swift */; };
+		EC38BF5822413A96006F8DA2 /* Eth+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7B22413A95006F8DA2 /* Eth+Contract.swift */; };
+		EC38BF5922413A96006F8DA2 /* SolidityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7C22413A95006F8DA2 /* SolidityEvent.swift */; };
+		EC38BF5A22413A96006F8DA2 /* ABIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7D22413A95006F8DA2 /* ABIObject.swift */; };
+		EC38BF5B22413A96006F8DA2 /* ContractPromiseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7E22413A95006F8DA2 /* ContractPromiseExtensions.swift */; };
+		EC38BF5C22413A96006F8DA2 /* SolidityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE7F22413A95006F8DA2 /* SolidityFunction.swift */; };
+		EC38BF5D22413A96006F8DA2 /* EthereumContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8022413A95006F8DA2 /* EthereumContract.swift */; };
+		EC38BF5E22413A96006F8DA2 /* SolidityInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8122413A95006F8DA2 /* SolidityInvocation.swift */; };
+		EC38BF5F22413A96006F8DA2 /* Eth+ABI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8322413A95006F8DA2 /* Eth+ABI.swift */; };
+		EC38BF6022413A96006F8DA2 /* ABIEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8422413A95006F8DA2 /* ABIEncoder.swift */; };
+		EC38BF6122413A96006F8DA2 /* ABIDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8522413A95006F8DA2 /* ABIDecoder.swift */; };
+		EC38BF6222413A96006F8DA2 /* SolidityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8622413A95006F8DA2 /* SolidityType.swift */; };
+		EC38BF6322413A96006F8DA2 /* SolidityType+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8722413A95006F8DA2 /* SolidityType+Codable.swift */; };
+		EC38BF6422413A96006F8DA2 /* SolidityWrappedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8822413A95006F8DA2 /* SolidityWrappedValue.swift */; };
+		EC38BF6522413A96006F8DA2 /* ABI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8922413A95006F8DA2 /* ABI.swift */; };
+		EC38BF6622413A96006F8DA2 /* SolidityTuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8A22413A95006F8DA2 /* SolidityTuple.swift */; };
+		EC38BF6722413A96006F8DA2 /* ABIConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8B22413A95006F8DA2 /* ABIConvertible.swift */; };
+		EC38BF6822413A96006F8DA2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC38BE8C22413A95006F8DA2 /* README.md */; };
+		EC38BF6922413A96006F8DA2 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC38BE8D22413A95006F8DA2 /* LICENSE.txt */; };
+		EC38BF6A22413A96006F8DA2 /* OstConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8E22413A95006F8DA2 /* OstConversion.swift */; };
+		EC38BF6B22413A96006F8DA2 /* OstBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE8F22413A95006F8DA2 /* OstBundle.swift */; };
+		EC38BF6C22413A96006F8DA2 /* Dictionary+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9022413A95006F8DA2 /* Dictionary+Conversion.swift */; };
+		EC38BF6D22413A96006F8DA2 /* OstSolidityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9122413A95006F8DA2 /* OstSolidityHandler.swift */; };
+		EC38BF6E22413A96006F8DA2 /* EIP1077.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9222413A95006F8DA2 /* EIP1077.swift */; };
+		EC38BF6F22413A96006F8DA2 /* Data+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9322413A95006F8DA2 /* Data+Conversion.swift */; };
+		EC38BF7022413A96006F8DA2 /* BiometricIDAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9422413A95006F8DA2 /* BiometricIDAuth.swift */; };
+		EC38BF7122413A96006F8DA2 /* OstSolidityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9522413A95006F8DA2 /* OstSolidityValue.swift */; };
+		EC38BF7222413A96006F8DA2 /* COPYRIGHT.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC38BE9722413A95006F8DA2 /* COPYRIGHT.txt */; };
+		EC38BF7322413A96006F8DA2 /* insecure_memzero.c in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9822413A95006F8DA2 /* insecure_memzero.c */; };
+		EC38BF7422413A96006F8DA2 /* crypto_scrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE9922413A95006F8DA2 /* crypto_scrypt.h */; };
+		EC38BF7522413A96006F8DA2 /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE9A22413A95006F8DA2 /* sha256.h */; };
+		EC38BF7622413A96006F8DA2 /* sysendian.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE9B22413A95006F8DA2 /* sysendian.h */; };
+		EC38BF7722413A96006F8DA2 /* insecure_memzero.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE9C22413A95006F8DA2 /* insecure_memzero.h */; };
+		EC38BF7822413A96006F8DA2 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9D22413A95006F8DA2 /* sha256.c */; };
+		EC38BF7922413A96006F8DA2 /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE9E22413A95006F8DA2 /* crypto_scrypt.c */; };
+		EC38BF7A22413A96006F8DA2 /* String+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA022413A95006F8DA2 /* String+Operations.swift */; };
+		EC38BF7B22413A96006F8DA2 /* Extension+OstQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA122413A95006F8DA2 /* Extension+OstQRCode.swift */; };
+		EC38BF7C22413A96006F8DA2 /* EIP712.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA322413A95006F8DA2 /* EIP712.swift */; };
+		EC38BF7D22413A96006F8DA2 /* TypedDataForRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA422413A95006F8DA2 /* TypedDataForRecovery.swift */; };
+		EC38BF7E22413A96006F8DA2 /* TypedDataForResetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA522413A95006F8DA2 /* TypedDataForResetPin.swift */; };
+		EC38BF7F22413A96006F8DA2 /* OstUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA622413A95006F8DA2 /* OstUtils.swift */; };
+		EC38BF8022413A96006F8DA2 /* OstAuthorizeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEA922413A96006F8DA2 /* OstAuthorizeDevice.swift */; };
+		EC38BF8122413A96006F8DA2 /* OstAuthorizeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAA22413A96006F8DA2 /* OstAuthorizeBase.swift */; };
+		EC38BF8222413A96006F8DA2 /* OstAuthorizeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAB22413A96006F8DA2 /* OstAuthorizeSession.swift */; };
+		EC38BF8322413A96006F8DA2 /* OstResetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */; };
+		EC38BF8422413A96006F8DA2 /* OstAddDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */; };
+		EC38BF8522413A96006F8DA2 /* OstWorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */; };
+		EC38BF8622413A96006F8DA2 /* OstRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */; };
+		EC38BF8722413A96006F8DA2 /* OstWorkFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */; };
+		EC38BF8822413A96006F8DA2 /* OstContextEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB222413A96006F8DA2 /* OstContextEntity.swift */; };
+		EC38BF8922413A96006F8DA2 /* OstWorkflowContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB322413A96006F8DA2 /* OstWorkflowContext.swift */; };
+		EC38BF8A22413A96006F8DA2 /* OstActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */; };
+		EC38BF8B22413A96006F8DA2 /* OstPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB622413A96006F8DA2 /* OstPinManager.swift */; };
+		EC38BF8C22413A96006F8DA2 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */; };
+		EC38BF8D22413A96006F8DA2 /* OstWorkflowValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */; };
+		EC38BF8E22413A96006F8DA2 /* OstSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */; };
+		EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */; };
+		EC38BF9022413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */; };
+		EC38BF9122413A96006F8DA2 /* OstGetPaperWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */; };
+		EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */; };
+		EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */; };
+		EC38BF9422413A96006F8DA2 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBF22413A96006F8DA2 /* OstPerform.swift */; };
+		EC38BF9522413A96006F8DA2 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */; };
+		EC38BF9722413A96006F8DA2 /* OstPolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC222413A96006F8DA2 /* OstPolling.swift */; };
+		EC38BF9822413A96006F8DA2 /* OstRevokeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */; };
+		EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */; };
+		EC38BF9A22413A96006F8DA2 /* OstBasePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */; };
+		EC38BF9B22413A96006F8DA2 /* OstSessionPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC822413A96006F8DA2 /* OstSessionPollingService.swift */; };
+		EC38BF9C22413A96006F8DA2 /* OstTransactionPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC922413A96006F8DA2 /* OstTransactionPollingService.swift */; };
+		EC38BF9D22413A96006F8DA2 /* OstUserPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECA22413A96006F8DA2 /* OstUserPollingService.swift */; };
+		EC38BF9E22413A96006F8DA2 /* OstDevicePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECB22413A96006F8DA2 /* OstDevicePollingService.swift */; };
+		EC38BF9F22413A96006F8DA2 /* OstResetPinPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECC22413A96006F8DA2 /* OstResetPinPollingService.swift */; };
+		EC38BFA022413A96006F8DA2 /* OstRegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */; };
+		EC38BFA122413A96006F8DA2 /* OstPinAcceptDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */; };
+		EC38BFA222413A96006F8DA2 /* OstBaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */; };
+		EC38BFA322413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */; };
+		EC38BFA422413A96006F8DA2 /* OstValidateDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */; };
+		EC38BFA522413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */; };
+		EC38BFA622413A96006F8DA2 /* OstMigration_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED722413A96006F8DA2 /* OstMigration_1.swift */; };
+		EC38BFA722413A96006F8DA2 /* OstBaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED822413A96006F8DA2 /* OstBaseMigration.swift */; };
+		EC38BFA822413A96006F8DA2 /* OstBaseDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDA22413A96006F8DA2 /* OstBaseDbQueries.swift */; };
+		EC38BFA922413A96006F8DA2 /* OstSessionDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDB22413A96006F8DA2 /* OstSessionDbQueries.swift */; };
+		EC38BFAA22413A96006F8DA2 /* OstTransactionDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDC22413A96006F8DA2 /* OstTransactionDbQueries.swift */; };
+		EC38BFAB22413A96006F8DA2 /* OstUserDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDD22413A96006F8DA2 /* OstUserDbQueries.swift */; };
+		EC38BFAC22413A96006F8DA2 /* OstTokenHolderDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDE22413A96006F8DA2 /* OstTokenHolderDbQueries.swift */; };
+		EC38BFAD22413A96006F8DA2 /* OstRuleDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEDF22413A96006F8DA2 /* OstRuleDbQueries.swift */; };
+		EC38BFAE22413A96006F8DA2 /* OstTokenDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE022413A96006F8DA2 /* OstTokenDbQueries.swift */; };
+		EC38BFAF22413A96006F8DA2 /* OstDeviceDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE122413A96006F8DA2 /* OstDeviceDbQueries.swift */; };
+		EC38BFB022413A96006F8DA2 /* OstDeviceManagerDbQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE222413A96006F8DA2 /* OstDeviceManagerDbQueries.swift */; };
+		EC38BFB122413A96006F8DA2 /* OstSdkDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE322413A96006F8DA2 /* OstSdkDatabase.swift */; };
+		EC38BFB222413A96006F8DA2 /* OstSdkBaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE422413A96006F8DA2 /* OstSdkBaseDatabase.swift */; };
+		EC38BFB322413A96006F8DA2 /* OstMigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE522413A96006F8DA2 /* OstMigrationManager.swift */; };
+		EC38BFB422413A96006F8DA2 /* OST_MIGRATION_README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC38BEE622413A96006F8DA2 /* OST_MIGRATION_README.md */; };
+		EC38BFB522413A96006F8DA2 /* OstAPISigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEE822413A96006F8DA2 /* OstAPISigner.swift */; };
+		EC38BFB622413A96006F8DA2 /* OstAPISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEEA22413A96006F8DA2 /* OstAPISession.swift */; };
+		EC38BFB722413A96006F8DA2 /* OstAPIResetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEEB22413A96006F8DA2 /* OstAPIResetPin.swift */; };
+		EC38BFB822413A96006F8DA2 /* OstAPITransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEEC22413A96006F8DA2 /* OstAPITransaction.swift */; };
+		EC38BFB922413A96006F8DA2 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEED22413A96006F8DA2 /* OstAPIBase.swift */; };
+		EC38BFBA22413A96006F8DA2 /* OstAPIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEEE22413A96006F8DA2 /* OstAPIDevice.swift */; };
+		EC38BFBB22413A96006F8DA2 /* OstAPIRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEEF22413A96006F8DA2 /* OstAPIRule.swift */; };
+		EC38BFBC22413A96006F8DA2 /* OstAPIErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF022413A96006F8DA2 /* OstAPIErrorHandler.swift */; };
+		EC38BFBD22413A96006F8DA2 /* OstAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF122413A96006F8DA2 /* OstAPIHelper.swift */; };
+		EC38BFBE22413A96006F8DA2 /* OstAPIUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF222413A96006F8DA2 /* OstAPIUser.swift */; };
+		EC38BFBF22413A96006F8DA2 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF322413A96006F8DA2 /* OstAPITokens.swift */; };
+		EC38BFC022413A96006F8DA2 /* OstAPISalt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF422413A96006F8DA2 /* OstAPISalt.swift */; };
+		EC38BFC122413A96006F8DA2 /* OstAPIDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */; };
+		EC38BFC222413A96006F8DA2 /* OstAPIChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF622413A96006F8DA2 /* OstAPIChain.swift */; };
+		EC38BFC322413A96006F8DA2 /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF722413A96006F8DA2 /* OstWalletSdk.swift */; };
+		EC38BFC422413A96006F8DA2 /* PricerRule.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = EC38BEF922413A96006F8DA2 /* PricerRule.abi.json */; };
+		EC38BFC522413A96006F8DA2 /* TokenRules.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = EC38BEFA22413A96006F8DA2 /* TokenRules.abi.json */; };
+		EC38BFC622413A96006F8DA2 /* TokenHolder.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = EC38BEFB22413A96006F8DA2 /* TokenHolder.abi.json */; };
+		EC38BFC722413A96006F8DA2 /* GnosisSafe.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = EC38BEFC22413A96006F8DA2 /* GnosisSafe.abi.json */; };
+		EC38BFC822413A96006F8DA2 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEFE22413A96006F8DA2 /* OstError.swift */; };
+		EC38BFC922413A96006F8DA2 /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEFF22413A96006F8DA2 /* OstApiError.swift */; };
+		EC38BFCA22413A96006F8DA2 /* OstConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0022413A96006F8DA2 /* OstConfig.swift */; };
+		EC38BFCB22413A96006F8DA2 /* OstTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0322413A96006F8DA2 /* OstTokenRepository.swift */; };
+		EC38BFCC22413A96006F8DA2 /* OstRuleModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0422413A96006F8DA2 /* OstRuleModelRepository.swift */; };
+		EC38BFCD22413A96006F8DA2 /* OstBaseModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0522413A96006F8DA2 /* OstBaseModelRepository.swift */; };
+		EC38BFCE22413A96006F8DA2 /* OstUserModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0622413A96006F8DA2 /* OstUserModelRepository.swift */; };
+		EC38BFCF22413A96006F8DA2 /* OstDeviceManagerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0722413A96006F8DA2 /* OstDeviceManagerRepository.swift */; };
+		EC38BFD022413A96006F8DA2 /* OstBaseModelCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0822413A96006F8DA2 /* OstBaseModelCacheRepository.swift */; };
+		EC38BFD122413A96006F8DA2 /* OstTokenHolderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0922413A96006F8DA2 /* OstTokenHolderRepository.swift */; };
+		EC38BFD222413A96006F8DA2 /* OstTransactionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0A22413A96006F8DA2 /* OstTransactionRepository.swift */; };
+		EC38BFD322413A96006F8DA2 /* OstSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0B22413A96006F8DA2 /* OstSessionRepository.swift */; };
+		EC38BFD422413A96006F8DA2 /* OstDeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0C22413A96006F8DA2 /* OstDeviceRepository.swift */; };
+		EC38BFD522413A96006F8DA2 /* OstTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0E22413A96006F8DA2 /* OstTransaction.swift */; };
+		EC38BFD622413A96006F8DA2 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF0F22413A96006F8DA2 /* OstCurrentDevice.swift */; };
+		EC38BFD722413A96006F8DA2 /* OstRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1022413A96006F8DA2 /* OstRule.swift */; };
+		EC38BFD822413A96006F8DA2 /* OstTokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1122413A96006F8DA2 /* OstTokenHolder.swift */; };
+		EC38BFD922413A96006F8DA2 /* OstDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1222413A96006F8DA2 /* OstDevice.swift */; };
+		EC38BFDA22413A96006F8DA2 /* OstBaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1322413A96006F8DA2 /* OstBaseEntity.swift */; };
+		EC38BFDB22413A96006F8DA2 /* OstDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1422413A96006F8DA2 /* OstDeviceManager.swift */; };
+		EC38BFDC22413A96006F8DA2 /* OstSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1522413A96006F8DA2 /* OstSession.swift */; };
+		EC38BFDD22413A96006F8DA2 /* OstRecoveryOwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1622413A96006F8DA2 /* OstRecoveryOwnerEntity.swift */; };
+		EC38BFDE22413A96006F8DA2 /* OstToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1722413A96006F8DA2 /* OstToken.swift */; };
+		EC38BFDF22413A96006F8DA2 /* OstUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BF1822413A96006F8DA2 /* OstUser.swift */; };
+		EC38BFFA22413AA1006F8DA2 /* OstDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE222413AA0006F8DA2 /* OstDeviceTests.swift */; };
+		EC38BFFB22413AA1006F8DA2 /* OstDeviceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE322413AA0006F8DA2 /* OstDeviceManagerTests.swift */; };
+		EC38BFFC22413AA1006F8DA2 /* OstUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE422413AA0006F8DA2 /* OstUserTests.swift */; };
+		EC38BFFD22413AA1006F8DA2 /* OstTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE522413AA0006F8DA2 /* OstTokenTests.swift */; };
+		EC38BFFE22413AA1006F8DA2 /* OstBaseEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE622413AA0006F8DA2 /* OstBaseEntityTests.swift */; };
+		EC38BFFF22413AA1006F8DA2 /* OstTokenHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE722413AA0006F8DA2 /* OstTokenHolderTests.swift */; };
+		EC38C00022413AA1006F8DA2 /* OstTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE822413AA0006F8DA2 /* OstTransactionTests.swift */; };
+		EC38C00122413AA1006F8DA2 /* OstRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFE922413AA0006F8DA2 /* OstRuleTests.swift */; };
+		EC38C00222413AA1006F8DA2 /* OstSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFEA22413AA0006F8DA2 /* OstSessionTests.swift */; };
+		EC38C00322413AA1006F8DA2 /* OstBaseDBQueriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFEC22413AA1006F8DA2 /* OstBaseDBQueriesTests.swift */; };
+		EC38C00422413AA1006F8DA2 /* OstUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFEE22413AA1006F8DA2 /* OstUtilsTests.swift */; };
+		EC38C00522413AA1006F8DA2 /* EIP1077Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFEF22413AA1006F8DA2 /* EIP1077Tests.swift */; };
+		EC38C00622413AA1006F8DA2 /* QRCodeGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF022413AA1006F8DA2 /* QRCodeGenerationTests.swift */; };
+		EC38C00722413AA1006F8DA2 /* OstConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF122413AA1006F8DA2 /* OstConversionTests.swift */; };
+		EC38C00822413AA1006F8DA2 /* EIP712Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF222413AA1006F8DA2 /* EIP712Tests.swift */; };
+		EC38C00922413AA1006F8DA2 /* ABIEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF322413AA1006F8DA2 /* ABIEncoderTests.swift */; };
+		EC38C00A22413AA1006F8DA2 /* GnosisSafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF422413AA1006F8DA2 /* GnosisSafeTests.swift */; };
+		EC38C00B22413AA1006F8DA2 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF622413AA1006F8DA2 /* OstAPITokensTests.swift */; };
+		EC38C00C22413AA1006F8DA2 /* OstAPIBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF722413AA1006F8DA2 /* OstAPIBaseTests.swift */; };
+		EC38C00D22413AA1006F8DA2 /* OstCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BFF922413AA1006F8DA2 /* OstCryptoTests.swift */; };
+		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
+		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
+		EC38C01922413C94006F8DA2 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01222413C94006F8DA2 /* SipHash.framework */; };
+		EC38C01A22413C94006F8DA2 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01322413C94006F8DA2 /* FMDB.framework */; };
+		EC38C01B22413C94006F8DA2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01422413C94006F8DA2 /* BigInt.framework */; };
+		EC38C01C22413C94006F8DA2 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01522413C94006F8DA2 /* CryptoEthereumSwift.framework */; };
+		EC38C01D22413C94006F8DA2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01622413C94006F8DA2 /* Alamofire.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EC38BE1D22413992006F8DA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC38BE0922413992006F8DA2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC38BE1122413992006F8DA2;
+			remoteInfo = OstWalletSdk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC38BE1522413992006F8DA2 /* OstWalletSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OstWalletSdk.h; sourceTree = "<group>"; };
+		EC38BE1622413992006F8DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC38BE2022413992006F8DA2 /* OstWalletSdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletSdkTests.swift; sourceTree = "<group>"; };
+		EC38BE2222413992006F8DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC38BE2C22413A95006F8DA2 /* OstConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstConstants.swift; sourceTree = "<group>"; };
+		EC38BE2F22413A95006F8DA2 /* OstMnemonicsKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMnemonicsKeyManager.swift; sourceTree = "<group>"; };
+		EC38BE3122413A95006F8DA2 /* OstKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstKeyManager.swift; sourceTree = "<group>"; };
+		EC38BE3222413A95006F8DA2 /* OstCryptoImpls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstCryptoImpls.swift; sourceTree = "<group>"; };
+		EC38BE3422413A95006F8DA2 /* OstBaseStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseStorage.swift; sourceTree = "<group>"; };
+		EC38BE3522413A95006F8DA2 /* OstKeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstKeychainHelper.swift; sourceTree = "<group>"; };
+		EC38BE3622413A95006F8DA2 /* OstSecureEnclaveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSecureEnclaveHelper.swift; sourceTree = "<group>"; };
+		EC38BE3722413A95006F8DA2 /* OstCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstCrypto.swift; sourceTree = "<group>"; };
+		EC38BE3A22413A95006F8DA2 /* ABIHelperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIHelperBase.swift; sourceTree = "<group>"; };
+		EC38BE3B22413A95006F8DA2 /* TokenRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenRule.swift; sourceTree = "<group>"; };
+		EC38BE3C22413A95006F8DA2 /* PricerRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PricerRule.swift; sourceTree = "<group>"; };
+		EC38BE3D22413A95006F8DA2 /* GnosisSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GnosisSafe.swift; sourceTree = "<group>"; };
+		EC38BE3E22413A95006F8DA2 /* TokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenHolder.swift; sourceTree = "<group>"; };
+		EC38BE3F22413A95006F8DA2 /* OstConnectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstConnectivity.swift; sourceTree = "<group>"; };
+		EC38BE4122413A95006F8DA2 /* SoliditySha3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoliditySha3.swift; sourceTree = "<group>"; };
+		EC38BE4322413A95006F8DA2 /* Date+Timestamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
+		EC38BE4422413A95006F8DA2 /* Decimal+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+Extension.swift"; sourceTree = "<group>"; };
+		EC38BE4522413A95006F8DA2 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		EC38BE4922413A95006F8DA2 /* EthereumPublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumPublicKey.swift; sourceTree = "<group>"; };
+		EC38BE4A22413A95006F8DA2 /* EthereumAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumAddress.swift; sourceTree = "<group>"; };
+		EC38BE4B22413A95006F8DA2 /* EthereumPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumPrivateKey.swift; sourceTree = "<group>"; };
+		EC38BE4C22413A95006F8DA2 /* EthereumTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransaction.swift; sourceTree = "<group>"; };
+		EC38BE4E22413A95006F8DA2 /* Web3Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Provider.swift; sourceTree = "<group>"; };
+		EC38BE5022413A95006F8DA2 /* Web3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3.swift; sourceTree = "<group>"; };
+		EC38BE5222413A95006F8DA2 /* RLPItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLPItem.swift; sourceTree = "<group>"; };
+		EC38BE5322413A95006F8DA2 /* RLPEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLPEncoder.swift; sourceTree = "<group>"; };
+		EC38BE5422413A95006F8DA2 /* RLPItemConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLPItemConvertible.swift; sourceTree = "<group>"; };
+		EC38BE5522413A95006F8DA2 /* RLPDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLPDecoder.swift; sourceTree = "<group>"; };
+		EC38BE5622413A95006F8DA2 /* Types+RLPItemConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Types+RLPItemConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE5822413A95006F8DA2 /* EthereumBlockObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumBlockObject.swift; sourceTree = "<group>"; };
+		EC38BE5922413A95006F8DA2 /* EthereumTransactionReceiptObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionReceiptObject.swift; sourceTree = "<group>"; };
+		EC38BE5A22413A95006F8DA2 /* EthereumData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumData.swift; sourceTree = "<group>"; };
+		EC38BE5B22413A95006F8DA2 /* RPCRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCRequest.swift; sourceTree = "<group>"; };
+		EC38BE5C22413A95006F8DA2 /* EthereumSyncStatusObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumSyncStatusObject.swift; sourceTree = "<group>"; };
+		EC38BE5D22413A95006F8DA2 /* EthereumValueConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumValueConvertible.swift; sourceTree = "<group>"; };
+		EC38BE5E22413A95006F8DA2 /* EthereumQuantity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumQuantity.swift; sourceTree = "<group>"; };
+		EC38BE5F22413A95006F8DA2 /* EthereumTransactionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionObject.swift; sourceTree = "<group>"; };
+		EC38BE6022413A95006F8DA2 /* EthereumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumValue.swift; sourceTree = "<group>"; };
+		EC38BE6122413A95006F8DA2 /* RPCResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCResponse.swift; sourceTree = "<group>"; };
+		EC38BE6222413A95006F8DA2 /* EthereumCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumCall.swift; sourceTree = "<group>"; };
+		EC38BE6322413A95006F8DA2 /* EthereumQuantityTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumQuantityTag.swift; sourceTree = "<group>"; };
+		EC38BE6422413A95006F8DA2 /* Types+EthereumValueConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Types+EthereumValueConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE6522413A95006F8DA2 /* EthereumLogObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumLogObject.swift; sourceTree = "<group>"; };
+		EC38BE6722413A95006F8DA2 /* String+BytesConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+BytesConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE6822413A95006F8DA2 /* Bytes+HexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bytes+HexString.swift"; sourceTree = "<group>"; };
+		EC38BE6922413A95006F8DA2 /* UInt+BytesRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt+BytesRepresentable.swift"; sourceTree = "<group>"; };
+		EC38BE6A22413A95006F8DA2 /* Bytes+TrimLeadingZeros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bytes+TrimLeadingZeros.swift"; sourceTree = "<group>"; };
+		EC38BE6B22413A95006F8DA2 /* Bytes+SecureRandom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bytes+SecureRandom.swift"; sourceTree = "<group>"; };
+		EC38BE6C22413A95006F8DA2 /* String+HexBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HexBytes.swift"; sourceTree = "<group>"; };
+		EC38BE6D22413A95006F8DA2 /* BytesConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BytesConvertible.swift; sourceTree = "<group>"; };
+		EC38BE6E22413A95006F8DA2 /* String+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Conversion.swift"; sourceTree = "<group>"; };
+		EC38BE6F22413A95006F8DA2 /* Data+BytesConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+BytesConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE7022413A95006F8DA2 /* CharacterSet+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Hex.swift"; sourceTree = "<group>"; };
+		EC38BE7122413A95006F8DA2 /* BigUInt+BytesConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BigUInt+BytesConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE7222413A95006F8DA2 /* Bytes+UInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bytes+UInt.swift"; sourceTree = "<group>"; };
+		EC38BE7322413A95006F8DA2 /* Exports+Web3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exports+Web3.swift"; sourceTree = "<group>"; };
+		EC38BE7422413A95006F8DA2 /* Int+ETH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+ETH.swift"; sourceTree = "<group>"; };
+		EC38BE7522413A95006F8DA2 /* Values+GeneralHashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Values+GeneralHashable.swift"; sourceTree = "<group>"; };
+		EC38BE7622413A95006F8DA2 /* UnsignedInteger+BytesConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+BytesConvertible.swift"; sourceTree = "<group>"; };
+		EC38BE7722413A95006F8DA2 /* Secp256k1+CTXCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Secp256k1+CTXCreator.swift"; sourceTree = "<group>"; };
+		EC38BE7822413A95006F8DA2 /* UnsignedInteger+Shifting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+Shifting.swift"; sourceTree = "<group>"; };
+		EC38BE7B22413A95006F8DA2 /* Eth+Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eth+Contract.swift"; sourceTree = "<group>"; };
+		EC38BE7C22413A95006F8DA2 /* SolidityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityEvent.swift; sourceTree = "<group>"; };
+		EC38BE7D22413A95006F8DA2 /* ABIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIObject.swift; sourceTree = "<group>"; };
+		EC38BE7E22413A95006F8DA2 /* ContractPromiseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPromiseExtensions.swift; sourceTree = "<group>"; };
+		EC38BE7F22413A95006F8DA2 /* SolidityFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityFunction.swift; sourceTree = "<group>"; };
+		EC38BE8022413A95006F8DA2 /* EthereumContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumContract.swift; sourceTree = "<group>"; };
+		EC38BE8122413A95006F8DA2 /* SolidityInvocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityInvocation.swift; sourceTree = "<group>"; };
+		EC38BE8322413A95006F8DA2 /* Eth+ABI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Eth+ABI.swift"; sourceTree = "<group>"; };
+		EC38BE8422413A95006F8DA2 /* ABIEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIEncoder.swift; sourceTree = "<group>"; };
+		EC38BE8522413A95006F8DA2 /* ABIDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIDecoder.swift; sourceTree = "<group>"; };
+		EC38BE8622413A95006F8DA2 /* SolidityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityType.swift; sourceTree = "<group>"; };
+		EC38BE8722413A95006F8DA2 /* SolidityType+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SolidityType+Codable.swift"; sourceTree = "<group>"; };
+		EC38BE8822413A95006F8DA2 /* SolidityWrappedValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityWrappedValue.swift; sourceTree = "<group>"; };
+		EC38BE8922413A95006F8DA2 /* ABI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABI.swift; sourceTree = "<group>"; };
+		EC38BE8A22413A95006F8DA2 /* SolidityTuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidityTuple.swift; sourceTree = "<group>"; };
+		EC38BE8B22413A95006F8DA2 /* ABIConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIConvertible.swift; sourceTree = "<group>"; };
+		EC38BE8C22413A95006F8DA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EC38BE8D22413A95006F8DA2 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		EC38BE8E22413A95006F8DA2 /* OstConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstConversion.swift; sourceTree = "<group>"; };
+		EC38BE8F22413A95006F8DA2 /* OstBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBundle.swift; sourceTree = "<group>"; };
+		EC38BE9022413A95006F8DA2 /* Dictionary+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Conversion.swift"; sourceTree = "<group>"; };
+		EC38BE9122413A95006F8DA2 /* OstSolidityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityHandler.swift; sourceTree = "<group>"; };
+		EC38BE9222413A95006F8DA2 /* EIP1077.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP1077.swift; sourceTree = "<group>"; };
+		EC38BE9322413A95006F8DA2 /* Data+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Conversion.swift"; sourceTree = "<group>"; };
+		EC38BE9422413A95006F8DA2 /* BiometricIDAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricIDAuth.swift; sourceTree = "<group>"; };
+		EC38BE9522413A95006F8DA2 /* OstSolidityValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSolidityValue.swift; sourceTree = "<group>"; };
+		EC38BE9722413A95006F8DA2 /* COPYRIGHT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT.txt; sourceTree = "<group>"; };
+		EC38BE9822413A95006F8DA2 /* insecure_memzero.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = insecure_memzero.c; sourceTree = "<group>"; };
+		EC38BE9922413A95006F8DA2 /* crypto_scrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto_scrypt.h; sourceTree = "<group>"; };
+		EC38BE9A22413A95006F8DA2 /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha256.h; sourceTree = "<group>"; };
+		EC38BE9B22413A95006F8DA2 /* sysendian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sysendian.h; sourceTree = "<group>"; };
+		EC38BE9C22413A95006F8DA2 /* insecure_memzero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = insecure_memzero.h; sourceTree = "<group>"; };
+		EC38BE9D22413A95006F8DA2 /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha256.c; sourceTree = "<group>"; };
+		EC38BE9E22413A95006F8DA2 /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypto_scrypt.c; sourceTree = "<group>"; };
+		EC38BE9F22413A95006F8DA2 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		EC38BEA022413A95006F8DA2 /* String+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Operations.swift"; sourceTree = "<group>"; };
+		EC38BEA122413A95006F8DA2 /* Extension+OstQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+OstQRCode.swift"; sourceTree = "<group>"; };
+		EC38BEA322413A95006F8DA2 /* EIP712.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP712.swift; sourceTree = "<group>"; };
+		EC38BEA422413A95006F8DA2 /* TypedDataForRecovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedDataForRecovery.swift; sourceTree = "<group>"; };
+		EC38BEA522413A95006F8DA2 /* TypedDataForResetPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedDataForResetPin.swift; sourceTree = "<group>"; };
+		EC38BEA622413A95006F8DA2 /* OstUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUtils.swift; sourceTree = "<group>"; };
+		EC38BEA922413A96006F8DA2 /* OstAuthorizeDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAuthorizeDevice.swift; sourceTree = "<group>"; };
+		EC38BEAA22413A96006F8DA2 /* OstAuthorizeBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAuthorizeBase.swift; sourceTree = "<group>"; };
+		EC38BEAB22413A96006F8DA2 /* OstAuthorizeSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAuthorizeSession.swift; sourceTree = "<group>"; };
+		EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstResetPin.swift; sourceTree = "<group>"; };
+		EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithQRData.swift; sourceTree = "<group>"; };
+		EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowBase.swift; sourceTree = "<group>"; };
+		EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRecoverDevice.swift; sourceTree = "<group>"; };
+		EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowFactory.swift; sourceTree = "<group>"; };
+		EC38BEB222413A96006F8DA2 /* OstContextEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstContextEntity.swift; sourceTree = "<group>"; };
+		EC38BEB322413A96006F8DA2 /* OstWorkflowContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowContext.swift; sourceTree = "<group>"; };
+		EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstActivateUser.swift; sourceTree = "<group>"; };
+		EC38BEB622413A96006F8DA2 /* OstPinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinManager.swift; sourceTree = "<group>"; };
+		EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowHelperBase.swift; sourceTree = "<group>"; };
+		EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowValidator.swift; sourceTree = "<group>"; };
+		EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionHelper.swift; sourceTree = "<group>"; };
+		EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstExecuteTransaction.swift; sourceTree = "<group>"; };
+		EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
+		EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstGetPaperWallet.swift; sourceTree = "<group>"; };
+		EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddSession.swift; sourceTree = "<group>"; };
+		EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
+		EC38BEBF22413A96006F8DA2 /* OstPerform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
+		EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
+		EC38BEC222413A96006F8DA2 /* OstPolling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPolling.swift; sourceTree = "<group>"; };
+		EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDevice.swift; sourceTree = "<group>"; };
+		EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeBase.swift; sourceTree = "<group>"; };
+		EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBasePollingService.swift; sourceTree = "<group>"; };
+		EC38BEC822413A96006F8DA2 /* OstSessionPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionPollingService.swift; sourceTree = "<group>"; };
+		EC38BEC922413A96006F8DA2 /* OstTransactionPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionPollingService.swift; sourceTree = "<group>"; };
+		EC38BECA22413A96006F8DA2 /* OstUserPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUserPollingService.swift; sourceTree = "<group>"; };
+		EC38BECB22413A96006F8DA2 /* OstDevicePollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDevicePollingService.swift; sourceTree = "<group>"; };
+		EC38BECC22413A96006F8DA2 /* OstResetPinPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstResetPinPollingService.swift; sourceTree = "<group>"; };
+		EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRegisterDevice.swift; sourceTree = "<group>"; };
+		EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinAcceptDelegate.swift; sourceTree = "<group>"; };
+		EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseDelegate.swift; sourceTree = "<group>"; };
+		EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowCallbackDelegate.swift; sourceTree = "<group>"; };
+		EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstValidateDataDelegate.swift; sourceTree = "<group>"; };
+		EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceRegisteredDelegate.swift; sourceTree = "<group>"; };
+		EC38BED722413A96006F8DA2 /* OstMigration_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
+		EC38BED822413A96006F8DA2 /* OstBaseMigration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseMigration.swift; sourceTree = "<group>"; };
+		EC38BEDA22413A96006F8DA2 /* OstBaseDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEDB22413A96006F8DA2 /* OstSessionDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEDC22413A96006F8DA2 /* OstTransactionDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEDD22413A96006F8DA2 /* OstUserDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUserDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEDE22413A96006F8DA2 /* OstTokenHolderDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenHolderDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEDF22413A96006F8DA2 /* OstRuleDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRuleDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEE022413A96006F8DA2 /* OstTokenDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEE122413A96006F8DA2 /* OstDeviceDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEE222413A96006F8DA2 /* OstDeviceManagerDbQueries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerDbQueries.swift; sourceTree = "<group>"; };
+		EC38BEE322413A96006F8DA2 /* OstSdkDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkDatabase.swift; sourceTree = "<group>"; };
+		EC38BEE422413A96006F8DA2 /* OstSdkBaseDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkBaseDatabase.swift; sourceTree = "<group>"; };
+		EC38BEE522413A96006F8DA2 /* OstMigrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMigrationManager.swift; sourceTree = "<group>"; };
+		EC38BEE622413A96006F8DA2 /* OST_MIGRATION_README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = OST_MIGRATION_README.md; sourceTree = "<group>"; };
+		EC38BEE822413A96006F8DA2 /* OstAPISigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPISigner.swift; sourceTree = "<group>"; };
+		EC38BEEA22413A96006F8DA2 /* OstAPISession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPISession.swift; sourceTree = "<group>"; };
+		EC38BEEB22413A96006F8DA2 /* OstAPIResetPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIResetPin.swift; sourceTree = "<group>"; };
+		EC38BEEC22413A96006F8DA2 /* OstAPITransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITransaction.swift; sourceTree = "<group>"; };
+		EC38BEED22413A96006F8DA2 /* OstAPIBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIBase.swift; sourceTree = "<group>"; };
+		EC38BEEE22413A96006F8DA2 /* OstAPIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIDevice.swift; sourceTree = "<group>"; };
+		EC38BEEF22413A96006F8DA2 /* OstAPIRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIRule.swift; sourceTree = "<group>"; };
+		EC38BEF022413A96006F8DA2 /* OstAPIErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIErrorHandler.swift; sourceTree = "<group>"; };
+		EC38BEF122413A96006F8DA2 /* OstAPIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIHelper.swift; sourceTree = "<group>"; };
+		EC38BEF222413A96006F8DA2 /* OstAPIUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIUser.swift; sourceTree = "<group>"; };
+		EC38BEF322413A96006F8DA2 /* OstAPITokens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITokens.swift; sourceTree = "<group>"; };
+		EC38BEF422413A96006F8DA2 /* OstAPISalt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPISalt.swift; sourceTree = "<group>"; };
+		EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIDeviceManager.swift; sourceTree = "<group>"; };
+		EC38BEF622413A96006F8DA2 /* OstAPIChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIChain.swift; sourceTree = "<group>"; };
+		EC38BEF722413A96006F8DA2 /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		EC38BEF922413A96006F8DA2 /* PricerRule.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricerRule.abi.json; sourceTree = "<group>"; };
+		EC38BEFA22413A96006F8DA2 /* TokenRules.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenRules.abi.json; sourceTree = "<group>"; };
+		EC38BEFB22413A96006F8DA2 /* TokenHolder.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenHolder.abi.json; sourceTree = "<group>"; };
+		EC38BEFC22413A96006F8DA2 /* GnosisSafe.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GnosisSafe.abi.json; sourceTree = "<group>"; };
+		EC38BEFE22413A96006F8DA2 /* OstError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstError.swift; sourceTree = "<group>"; };
+		EC38BEFF22413A96006F8DA2 /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
+		EC38BF0022413A96006F8DA2 /* OstConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstConfig.swift; sourceTree = "<group>"; };
+		EC38BF0322413A96006F8DA2 /* OstTokenRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenRepository.swift; sourceTree = "<group>"; };
+		EC38BF0422413A96006F8DA2 /* OstRuleModelRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRuleModelRepository.swift; sourceTree = "<group>"; };
+		EC38BF0522413A96006F8DA2 /* OstBaseModelRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseModelRepository.swift; sourceTree = "<group>"; };
+		EC38BF0622413A96006F8DA2 /* OstUserModelRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUserModelRepository.swift; sourceTree = "<group>"; };
+		EC38BF0722413A96006F8DA2 /* OstDeviceManagerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerRepository.swift; sourceTree = "<group>"; };
+		EC38BF0822413A96006F8DA2 /* OstBaseModelCacheRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseModelCacheRepository.swift; sourceTree = "<group>"; };
+		EC38BF0922413A96006F8DA2 /* OstTokenHolderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenHolderRepository.swift; sourceTree = "<group>"; };
+		EC38BF0A22413A96006F8DA2 /* OstTransactionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionRepository.swift; sourceTree = "<group>"; };
+		EC38BF0B22413A96006F8DA2 /* OstSessionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionRepository.swift; sourceTree = "<group>"; };
+		EC38BF0C22413A96006F8DA2 /* OstDeviceRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceRepository.swift; sourceTree = "<group>"; };
+		EC38BF0E22413A96006F8DA2 /* OstTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransaction.swift; sourceTree = "<group>"; };
+		EC38BF0F22413A96006F8DA2 /* OstCurrentDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstCurrentDevice.swift; sourceTree = "<group>"; };
+		EC38BF1022413A96006F8DA2 /* OstRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRule.swift; sourceTree = "<group>"; };
+		EC38BF1122413A96006F8DA2 /* OstTokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenHolder.swift; sourceTree = "<group>"; };
+		EC38BF1222413A96006F8DA2 /* OstDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDevice.swift; sourceTree = "<group>"; };
+		EC38BF1322413A96006F8DA2 /* OstBaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseEntity.swift; sourceTree = "<group>"; };
+		EC38BF1422413A96006F8DA2 /* OstDeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceManager.swift; sourceTree = "<group>"; };
+		EC38BF1522413A96006F8DA2 /* OstSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSession.swift; sourceTree = "<group>"; };
+		EC38BF1622413A96006F8DA2 /* OstRecoveryOwnerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRecoveryOwnerEntity.swift; sourceTree = "<group>"; };
+		EC38BF1722413A96006F8DA2 /* OstToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstToken.swift; sourceTree = "<group>"; };
+		EC38BF1822413A96006F8DA2 /* OstUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUser.swift; sourceTree = "<group>"; };
+		EC38BFE222413AA0006F8DA2 /* OstDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceTests.swift; sourceTree = "<group>"; };
+		EC38BFE322413AA0006F8DA2 /* OstDeviceManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerTests.swift; sourceTree = "<group>"; };
+		EC38BFE422413AA0006F8DA2 /* OstUserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUserTests.swift; sourceTree = "<group>"; };
+		EC38BFE522413AA0006F8DA2 /* OstTokenTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenTests.swift; sourceTree = "<group>"; };
+		EC38BFE622413AA0006F8DA2 /* OstBaseEntityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseEntityTests.swift; sourceTree = "<group>"; };
+		EC38BFE722413AA0006F8DA2 /* OstTokenHolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTokenHolderTests.swift; sourceTree = "<group>"; };
+		EC38BFE822413AA0006F8DA2 /* OstTransactionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionTests.swift; sourceTree = "<group>"; };
+		EC38BFE922413AA0006F8DA2 /* OstRuleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRuleTests.swift; sourceTree = "<group>"; };
+		EC38BFEA22413AA0006F8DA2 /* OstSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionTests.swift; sourceTree = "<group>"; };
+		EC38BFEC22413AA1006F8DA2 /* OstBaseDBQueriesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseDBQueriesTests.swift; sourceTree = "<group>"; };
+		EC38BFEE22413AA1006F8DA2 /* OstUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstUtilsTests.swift; sourceTree = "<group>"; };
+		EC38BFEF22413AA1006F8DA2 /* EIP1077Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP1077Tests.swift; sourceTree = "<group>"; };
+		EC38BFF022413AA1006F8DA2 /* QRCodeGenerationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeGenerationTests.swift; sourceTree = "<group>"; };
+		EC38BFF122413AA1006F8DA2 /* OstConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstConversionTests.swift; sourceTree = "<group>"; };
+		EC38BFF222413AA1006F8DA2 /* EIP712Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP712Tests.swift; sourceTree = "<group>"; };
+		EC38BFF322413AA1006F8DA2 /* ABIEncoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABIEncoderTests.swift; sourceTree = "<group>"; };
+		EC38BFF422413AA1006F8DA2 /* GnosisSafeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GnosisSafeTests.swift; sourceTree = "<group>"; };
+		EC38BFF622413AA1006F8DA2 /* OstAPITokensTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITokensTests.swift; sourceTree = "<group>"; };
+		EC38BFF722413AA1006F8DA2 /* OstAPIBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPIBaseTests.swift; sourceTree = "<group>"; };
+		EC38BFF922413AA1006F8DA2 /* OstCryptoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstCryptoTests.swift; sourceTree = "<group>"; };
+		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		EC38C01122413C93006F8DA2 /* EthereumKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EthereumKit.framework; path = Carthage/Build/iOS/EthereumKit.framework; sourceTree = "<group>"; };
+		EC38C01222413C94006F8DA2 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
+		EC38C01322413C94006F8DA2 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
+		EC38C01422413C94006F8DA2 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
+		EC38C01522413C94006F8DA2 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoEthereumSwift.framework; path = Carthage/Build/iOS/CryptoEthereumSwift.framework; sourceTree = "<group>"; };
+		EC38C01622413C94006F8DA2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC38BE0F22413992006F8DA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */,
+				EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */,
+				EC38C01922413C94006F8DA2 /* SipHash.framework in Frameworks */,
+				EC38C01A22413C94006F8DA2 /* FMDB.framework in Frameworks */,
+				EC38C01B22413C94006F8DA2 /* BigInt.framework in Frameworks */,
+				EC38C01C22413C94006F8DA2 /* CryptoEthereumSwift.framework in Frameworks */,
+				EC38C01D22413C94006F8DA2 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC38BE1822413992006F8DA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC38BE0822413992006F8DA2 = {
+			isa = PBXGroup;
+			children = (
+				EC38BE1422413992006F8DA2 /* OstWalletSdk */,
+				EC38BE1F22413992006F8DA2 /* OstWalletSdkTests */,
+				EC38BE1322413992006F8DA2 /* Products */,
+				EC38C00F22413C93006F8DA2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		EC38BE1322413992006F8DA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */,
+				EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EC38BE1422413992006F8DA2 /* OstWalletSdk */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BF0022413A96006F8DA2 /* OstConfig.swift */,
+				EC38BE2C22413A95006F8DA2 /* OstConstants.swift */,
+				EC38BEF722413A96006F8DA2 /* OstWalletSdk.swift */,
+				EC38BE1522413992006F8DA2 /* OstWalletSdk.h */,
+				EC38BE1622413992006F8DA2 /* Info.plist */,
+				EC38BEF822413A96006F8DA2 /* Abis */,
+				EC38BED422413A96006F8DA2 /* Database */,
+				EC38BEFD22413A96006F8DA2 /* Errors */,
+				EC38BF0122413A96006F8DA2 /* Models */,
+				EC38BEE922413A96006F8DA2 /* Network */,
+				EC38BE2D22413A95006F8DA2 /* Security */,
+				EC38BEE722413A96006F8DA2 /* Signers */,
+				EC38BE3822413A95006F8DA2 /* Utils */,
+				EC38BEA722413A96006F8DA2 /* Workflows */,
+			);
+			path = OstWalletSdk;
+			sourceTree = "<group>";
+		};
+		EC38BE1F22413992006F8DA2 /* OstWalletSdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFEB22413AA1006F8DA2 /* Database */,
+				EC38BFE022413AA0006F8DA2 /* Models */,
+				EC38BFF522413AA1006F8DA2 /* Network */,
+				EC38BFF822413AA1006F8DA2 /* Security */,
+				EC38BFED22413AA1006F8DA2 /* Utils */,
+				EC38BE2022413992006F8DA2 /* OstWalletSdkTests.swift */,
+				EC38BE2222413992006F8DA2 /* Info.plist */,
+			);
+			path = OstWalletSdkTests;
+			sourceTree = "<group>";
+		};
+		EC38BE2D22413A95006F8DA2 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE2E22413A95006F8DA2 /* Impls */,
+				EC38BE3322413A95006F8DA2 /* Storage */,
+				EC38BE3722413A95006F8DA2 /* OstCrypto.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		EC38BE2E22413A95006F8DA2 /* Impls */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE2F22413A95006F8DA2 /* OstMnemonicsKeyManager.swift */,
+				EC38BE3122413A95006F8DA2 /* OstKeyManager.swift */,
+				EC38BE3222413A95006F8DA2 /* OstCryptoImpls.swift */,
+			);
+			path = Impls;
+			sourceTree = "<group>";
+		};
+		EC38BE3322413A95006F8DA2 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE3422413A95006F8DA2 /* OstBaseStorage.swift */,
+				EC38BE3522413A95006F8DA2 /* OstKeychainHelper.swift */,
+				EC38BE3622413A95006F8DA2 /* OstSecureEnclaveHelper.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		EC38BE3822413A95006F8DA2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE3922413A95006F8DA2 /* ABIHelper */,
+				EC38BE3F22413A95006F8DA2 /* OstConnectivity.swift */,
+				EC38BE4022413A95006F8DA2 /* SoliditySha3 */,
+				EC38BE4322413A95006F8DA2 /* Date+Timestamp.swift */,
+				EC38BE4422413A95006F8DA2 /* Decimal+Extension.swift */,
+				EC38BE4522413A95006F8DA2 /* Logger.swift */,
+				EC38BE4622413A95006F8DA2 /* Web3 */,
+				EC38BE8E22413A95006F8DA2 /* OstConversion.swift */,
+				EC38BE8F22413A95006F8DA2 /* OstBundle.swift */,
+				EC38BE9022413A95006F8DA2 /* Dictionary+Conversion.swift */,
+				EC38BE9122413A95006F8DA2 /* OstSolidityHandler.swift */,
+				EC38BE9222413A95006F8DA2 /* EIP1077.swift */,
+				EC38BE9322413A95006F8DA2 /* Data+Conversion.swift */,
+				EC38BE9422413A95006F8DA2 /* BiometricIDAuth.swift */,
+				EC38BE9522413A95006F8DA2 /* OstSolidityValue.swift */,
+				EC38BE9622413A95006F8DA2 /* SCrypt */,
+				EC38BEA022413A95006F8DA2 /* String+Operations.swift */,
+				EC38BEA122413A95006F8DA2 /* Extension+OstQRCode.swift */,
+				EC38BEA222413A95006F8DA2 /* EIP712 */,
+				EC38BEA622413A95006F8DA2 /* OstUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		EC38BE3922413A95006F8DA2 /* ABIHelper */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE3A22413A95006F8DA2 /* ABIHelperBase.swift */,
+				EC38BE3B22413A95006F8DA2 /* TokenRule.swift */,
+				EC38BE3C22413A95006F8DA2 /* PricerRule.swift */,
+				EC38BE3D22413A95006F8DA2 /* GnosisSafe.swift */,
+				EC38BE3E22413A95006F8DA2 /* TokenHolder.swift */,
+			);
+			path = ABIHelper;
+			sourceTree = "<group>";
+		};
+		EC38BE4022413A95006F8DA2 /* SoliditySha3 */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE4122413A95006F8DA2 /* SoliditySha3.swift */,
+			);
+			path = SoliditySha3;
+			sourceTree = "<group>";
+		};
+		EC38BE4622413A95006F8DA2 /* Web3 */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE4722413A95006F8DA2 /* Core */,
+				EC38BE7922413A95006F8DA2 /* ContractABI */,
+				EC38BE8C22413A95006F8DA2 /* README.md */,
+				EC38BE8D22413A95006F8DA2 /* LICENSE.txt */,
+			);
+			path = Web3;
+			sourceTree = "<group>";
+		};
+		EC38BE4722413A95006F8DA2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE4822413A95006F8DA2 /* Transaction */,
+				EC38BE4D22413A95006F8DA2 /* Providers */,
+				EC38BE4F22413A95006F8DA2 /* Web3 */,
+				EC38BE5122413A95006F8DA2 /* RLP */,
+				EC38BE5722413A95006F8DA2 /* Json */,
+				EC38BE6622413A95006F8DA2 /* Toolbox */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		EC38BE4822413A95006F8DA2 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE4922413A95006F8DA2 /* EthereumPublicKey.swift */,
+				EC38BE4A22413A95006F8DA2 /* EthereumAddress.swift */,
+				EC38BE4B22413A95006F8DA2 /* EthereumPrivateKey.swift */,
+				EC38BE4C22413A95006F8DA2 /* EthereumTransaction.swift */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
+		EC38BE4D22413A95006F8DA2 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE4E22413A95006F8DA2 /* Web3Provider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		EC38BE4F22413A95006F8DA2 /* Web3 */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE5022413A95006F8DA2 /* Web3.swift */,
+			);
+			path = Web3;
+			sourceTree = "<group>";
+		};
+		EC38BE5122413A95006F8DA2 /* RLP */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE5222413A95006F8DA2 /* RLPItem.swift */,
+				EC38BE5322413A95006F8DA2 /* RLPEncoder.swift */,
+				EC38BE5422413A95006F8DA2 /* RLPItemConvertible.swift */,
+				EC38BE5522413A95006F8DA2 /* RLPDecoder.swift */,
+				EC38BE5622413A95006F8DA2 /* Types+RLPItemConvertible.swift */,
+			);
+			path = RLP;
+			sourceTree = "<group>";
+		};
+		EC38BE5722413A95006F8DA2 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE5822413A95006F8DA2 /* EthereumBlockObject.swift */,
+				EC38BE5922413A95006F8DA2 /* EthereumTransactionReceiptObject.swift */,
+				EC38BE5A22413A95006F8DA2 /* EthereumData.swift */,
+				EC38BE5B22413A95006F8DA2 /* RPCRequest.swift */,
+				EC38BE5C22413A95006F8DA2 /* EthereumSyncStatusObject.swift */,
+				EC38BE5D22413A95006F8DA2 /* EthereumValueConvertible.swift */,
+				EC38BE5E22413A95006F8DA2 /* EthereumQuantity.swift */,
+				EC38BE5F22413A95006F8DA2 /* EthereumTransactionObject.swift */,
+				EC38BE6022413A95006F8DA2 /* EthereumValue.swift */,
+				EC38BE6122413A95006F8DA2 /* RPCResponse.swift */,
+				EC38BE6222413A95006F8DA2 /* EthereumCall.swift */,
+				EC38BE6322413A95006F8DA2 /* EthereumQuantityTag.swift */,
+				EC38BE6422413A95006F8DA2 /* Types+EthereumValueConvertible.swift */,
+				EC38BE6522413A95006F8DA2 /* EthereumLogObject.swift */,
+			);
+			path = Json;
+			sourceTree = "<group>";
+		};
+		EC38BE6622413A95006F8DA2 /* Toolbox */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE6722413A95006F8DA2 /* String+BytesConvertible.swift */,
+				EC38BE6822413A95006F8DA2 /* Bytes+HexString.swift */,
+				EC38BE6922413A95006F8DA2 /* UInt+BytesRepresentable.swift */,
+				EC38BE6A22413A95006F8DA2 /* Bytes+TrimLeadingZeros.swift */,
+				EC38BE6B22413A95006F8DA2 /* Bytes+SecureRandom.swift */,
+				EC38BE6C22413A95006F8DA2 /* String+HexBytes.swift */,
+				EC38BE6D22413A95006F8DA2 /* BytesConvertible.swift */,
+				EC38BE6E22413A95006F8DA2 /* String+Conversion.swift */,
+				EC38BE6F22413A95006F8DA2 /* Data+BytesConvertible.swift */,
+				EC38BE7022413A95006F8DA2 /* CharacterSet+Hex.swift */,
+				EC38BE7122413A95006F8DA2 /* BigUInt+BytesConvertible.swift */,
+				EC38BE7222413A95006F8DA2 /* Bytes+UInt.swift */,
+				EC38BE7322413A95006F8DA2 /* Exports+Web3.swift */,
+				EC38BE7422413A95006F8DA2 /* Int+ETH.swift */,
+				EC38BE7522413A95006F8DA2 /* Values+GeneralHashable.swift */,
+				EC38BE7622413A95006F8DA2 /* UnsignedInteger+BytesConvertible.swift */,
+				EC38BE7722413A95006F8DA2 /* Secp256k1+CTXCreator.swift */,
+				EC38BE7822413A95006F8DA2 /* UnsignedInteger+Shifting.swift */,
+			);
+			path = Toolbox;
+			sourceTree = "<group>";
+		};
+		EC38BE7922413A95006F8DA2 /* ContractABI */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE7A22413A95006F8DA2 /* Contract */,
+				EC38BE8222413A95006F8DA2 /* ABI */,
+			);
+			path = ContractABI;
+			sourceTree = "<group>";
+		};
+		EC38BE7A22413A95006F8DA2 /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE7B22413A95006F8DA2 /* Eth+Contract.swift */,
+				EC38BE7C22413A95006F8DA2 /* SolidityEvent.swift */,
+				EC38BE7D22413A95006F8DA2 /* ABIObject.swift */,
+				EC38BE7E22413A95006F8DA2 /* ContractPromiseExtensions.swift */,
+				EC38BE7F22413A95006F8DA2 /* SolidityFunction.swift */,
+				EC38BE8022413A95006F8DA2 /* EthereumContract.swift */,
+				EC38BE8122413A95006F8DA2 /* SolidityInvocation.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		EC38BE8222413A95006F8DA2 /* ABI */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE8322413A95006F8DA2 /* Eth+ABI.swift */,
+				EC38BE8422413A95006F8DA2 /* ABIEncoder.swift */,
+				EC38BE8522413A95006F8DA2 /* ABIDecoder.swift */,
+				EC38BE8622413A95006F8DA2 /* SolidityType.swift */,
+				EC38BE8722413A95006F8DA2 /* SolidityType+Codable.swift */,
+				EC38BE8822413A95006F8DA2 /* SolidityWrappedValue.swift */,
+				EC38BE8922413A95006F8DA2 /* ABI.swift */,
+				EC38BE8A22413A95006F8DA2 /* SolidityTuple.swift */,
+				EC38BE8B22413A95006F8DA2 /* ABIConvertible.swift */,
+			);
+			path = ABI;
+			sourceTree = "<group>";
+		};
+		EC38BE9622413A95006F8DA2 /* SCrypt */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BE9722413A95006F8DA2 /* COPYRIGHT.txt */,
+				EC38BE9822413A95006F8DA2 /* insecure_memzero.c */,
+				EC38BE9922413A95006F8DA2 /* crypto_scrypt.h */,
+				EC38BE9A22413A95006F8DA2 /* sha256.h */,
+				EC38BE9B22413A95006F8DA2 /* sysendian.h */,
+				EC38BE9C22413A95006F8DA2 /* insecure_memzero.h */,
+				EC38BE9D22413A95006F8DA2 /* sha256.c */,
+				EC38BE9E22413A95006F8DA2 /* crypto_scrypt.c */,
+				EC38BE9F22413A95006F8DA2 /* module.modulemap */,
+			);
+			path = SCrypt;
+			sourceTree = "<group>";
+		};
+		EC38BEA222413A95006F8DA2 /* EIP712 */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEA322413A95006F8DA2 /* EIP712.swift */,
+				EC38BEA422413A95006F8DA2 /* TypedDataForRecovery.swift */,
+				EC38BEA522413A95006F8DA2 /* TypedDataForResetPin.swift */,
+			);
+			path = EIP712;
+			sourceTree = "<group>";
+		};
+		EC38BEA722413A96006F8DA2 /* Workflows */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
+				EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */,
+				EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */,
+				EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */,
+				EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */,
+				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
+				EC38BEB122413A96006F8DA2 /* OstContext */,
+				EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */,
+				EC38BEB522413A96006F8DA2 /* WorkflowHelpers */,
+				EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */,
+				EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */,
+				EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */,
+				EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */,
+				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
+				EC38BEBF22413A96006F8DA2 /* OstPerform.swift */,
+				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
+				EC38BEC222413A96006F8DA2 /* OstPolling.swift */,
+				EC38BEC322413A96006F8DA2 /* OstRevoke */,
+				EC38BEC622413A96006F8DA2 /* Services */,
+				EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */,
+				EC38BECE22413A96006F8DA2 /* Interfaces */,
+			);
+			path = Workflows;
+			sourceTree = "<group>";
+		};
+		EC38BEA822413A96006F8DA2 /* OstAuthorize */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEA922413A96006F8DA2 /* OstAuthorizeDevice.swift */,
+				EC38BEAA22413A96006F8DA2 /* OstAuthorizeBase.swift */,
+				EC38BEAB22413A96006F8DA2 /* OstAuthorizeSession.swift */,
+			);
+			path = OstAuthorize;
+			sourceTree = "<group>";
+		};
+		EC38BEB122413A96006F8DA2 /* OstContext */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEB222413A96006F8DA2 /* OstContextEntity.swift */,
+				EC38BEB322413A96006F8DA2 /* OstWorkflowContext.swift */,
+			);
+			path = OstContext;
+			sourceTree = "<group>";
+		};
+		EC38BEB522413A96006F8DA2 /* WorkflowHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEB622413A96006F8DA2 /* OstPinManager.swift */,
+				EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */,
+				EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */,
+				EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */,
+			);
+			path = WorkflowHelpers;
+			sourceTree = "<group>";
+		};
+		EC38BEC322413A96006F8DA2 /* OstRevoke */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */,
+				EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */,
+			);
+			path = OstRevoke;
+			sourceTree = "<group>";
+		};
+		EC38BEC622413A96006F8DA2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */,
+				EC38BEC822413A96006F8DA2 /* OstSessionPollingService.swift */,
+				EC38BEC922413A96006F8DA2 /* OstTransactionPollingService.swift */,
+				EC38BECA22413A96006F8DA2 /* OstUserPollingService.swift */,
+				EC38BECB22413A96006F8DA2 /* OstDevicePollingService.swift */,
+				EC38BECC22413A96006F8DA2 /* OstResetPinPollingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EC38BECE22413A96006F8DA2 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */,
+				EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */,
+				EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */,
+				EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */,
+				EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		EC38BED422413A96006F8DA2 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BED522413A96006F8DA2 /* Migrations */,
+				EC38BED922413A96006F8DA2 /* DBQueries */,
+				EC38BEE322413A96006F8DA2 /* OstSdkDatabase.swift */,
+				EC38BEE422413A96006F8DA2 /* OstSdkBaseDatabase.swift */,
+				EC38BEE522413A96006F8DA2 /* OstMigrationManager.swift */,
+				EC38BEE622413A96006F8DA2 /* OST_MIGRATION_README.md */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		EC38BED522413A96006F8DA2 /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BED622413A96006F8DA2 /* DBMigration */,
+				EC38BED822413A96006F8DA2 /* OstBaseMigration.swift */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
+		EC38BED622413A96006F8DA2 /* DBMigration */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BED722413A96006F8DA2 /* OstMigration_1.swift */,
+			);
+			path = DBMigration;
+			sourceTree = "<group>";
+		};
+		EC38BED922413A96006F8DA2 /* DBQueries */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEDA22413A96006F8DA2 /* OstBaseDbQueries.swift */,
+				EC38BEDB22413A96006F8DA2 /* OstSessionDbQueries.swift */,
+				EC38BEDC22413A96006F8DA2 /* OstTransactionDbQueries.swift */,
+				EC38BEDD22413A96006F8DA2 /* OstUserDbQueries.swift */,
+				EC38BEDE22413A96006F8DA2 /* OstTokenHolderDbQueries.swift */,
+				EC38BEDF22413A96006F8DA2 /* OstRuleDbQueries.swift */,
+				EC38BEE022413A96006F8DA2 /* OstTokenDbQueries.swift */,
+				EC38BEE122413A96006F8DA2 /* OstDeviceDbQueries.swift */,
+				EC38BEE222413A96006F8DA2 /* OstDeviceManagerDbQueries.swift */,
+			);
+			path = DBQueries;
+			sourceTree = "<group>";
+		};
+		EC38BEE722413A96006F8DA2 /* Signers */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEE822413A96006F8DA2 /* OstAPISigner.swift */,
+			);
+			path = Signers;
+			sourceTree = "<group>";
+		};
+		EC38BEE922413A96006F8DA2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEEA22413A96006F8DA2 /* OstAPISession.swift */,
+				EC38BEEB22413A96006F8DA2 /* OstAPIResetPin.swift */,
+				EC38BEEC22413A96006F8DA2 /* OstAPITransaction.swift */,
+				EC38BEED22413A96006F8DA2 /* OstAPIBase.swift */,
+				EC38BEEE22413A96006F8DA2 /* OstAPIDevice.swift */,
+				EC38BEEF22413A96006F8DA2 /* OstAPIRule.swift */,
+				EC38BEF022413A96006F8DA2 /* OstAPIErrorHandler.swift */,
+				EC38BEF122413A96006F8DA2 /* OstAPIHelper.swift */,
+				EC38BEF222413A96006F8DA2 /* OstAPIUser.swift */,
+				EC38BEF322413A96006F8DA2 /* OstAPITokens.swift */,
+				EC38BEF422413A96006F8DA2 /* OstAPISalt.swift */,
+				EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */,
+				EC38BEF622413A96006F8DA2 /* OstAPIChain.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		EC38BEF822413A96006F8DA2 /* Abis */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEF922413A96006F8DA2 /* PricerRule.abi.json */,
+				EC38BEFA22413A96006F8DA2 /* TokenRules.abi.json */,
+				EC38BEFB22413A96006F8DA2 /* TokenHolder.abi.json */,
+				EC38BEFC22413A96006F8DA2 /* GnosisSafe.abi.json */,
+			);
+			path = Abis;
+			sourceTree = "<group>";
+		};
+		EC38BEFD22413A96006F8DA2 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BEFE22413A96006F8DA2 /* OstError.swift */,
+				EC38BEFF22413A96006F8DA2 /* OstApiError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		EC38BF0122413A96006F8DA2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BF0222413A96006F8DA2 /* Impls */,
+				EC38BF0D22413A96006F8DA2 /* Entities */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EC38BF0222413A96006F8DA2 /* Impls */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BF0322413A96006F8DA2 /* OstTokenRepository.swift */,
+				EC38BF0422413A96006F8DA2 /* OstRuleModelRepository.swift */,
+				EC38BF0522413A96006F8DA2 /* OstBaseModelRepository.swift */,
+				EC38BF0622413A96006F8DA2 /* OstUserModelRepository.swift */,
+				EC38BF0722413A96006F8DA2 /* OstDeviceManagerRepository.swift */,
+				EC38BF0822413A96006F8DA2 /* OstBaseModelCacheRepository.swift */,
+				EC38BF0922413A96006F8DA2 /* OstTokenHolderRepository.swift */,
+				EC38BF0A22413A96006F8DA2 /* OstTransactionRepository.swift */,
+				EC38BF0B22413A96006F8DA2 /* OstSessionRepository.swift */,
+				EC38BF0C22413A96006F8DA2 /* OstDeviceRepository.swift */,
+			);
+			path = Impls;
+			sourceTree = "<group>";
+		};
+		EC38BF0D22413A96006F8DA2 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BF0E22413A96006F8DA2 /* OstTransaction.swift */,
+				EC38BF0F22413A96006F8DA2 /* OstCurrentDevice.swift */,
+				EC38BF1022413A96006F8DA2 /* OstRule.swift */,
+				EC38BF1122413A96006F8DA2 /* OstTokenHolder.swift */,
+				EC38BF1222413A96006F8DA2 /* OstDevice.swift */,
+				EC38BF1322413A96006F8DA2 /* OstBaseEntity.swift */,
+				EC38BF1422413A96006F8DA2 /* OstDeviceManager.swift */,
+				EC38BF1522413A96006F8DA2 /* OstSession.swift */,
+				EC38BF1622413A96006F8DA2 /* OstRecoveryOwnerEntity.swift */,
+				EC38BF1722413A96006F8DA2 /* OstToken.swift */,
+				EC38BF1822413A96006F8DA2 /* OstUser.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		EC38BFE022413AA0006F8DA2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFE122413AA0006F8DA2 /* Entities */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EC38BFE122413AA0006F8DA2 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFE222413AA0006F8DA2 /* OstDeviceTests.swift */,
+				EC38BFE322413AA0006F8DA2 /* OstDeviceManagerTests.swift */,
+				EC38BFE422413AA0006F8DA2 /* OstUserTests.swift */,
+				EC38BFE522413AA0006F8DA2 /* OstTokenTests.swift */,
+				EC38BFE622413AA0006F8DA2 /* OstBaseEntityTests.swift */,
+				EC38BFE722413AA0006F8DA2 /* OstTokenHolderTests.swift */,
+				EC38BFE822413AA0006F8DA2 /* OstTransactionTests.swift */,
+				EC38BFE922413AA0006F8DA2 /* OstRuleTests.swift */,
+				EC38BFEA22413AA0006F8DA2 /* OstSessionTests.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		EC38BFEB22413AA1006F8DA2 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFEC22413AA1006F8DA2 /* OstBaseDBQueriesTests.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		EC38BFED22413AA1006F8DA2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFEE22413AA1006F8DA2 /* OstUtilsTests.swift */,
+				EC38BFEF22413AA1006F8DA2 /* EIP1077Tests.swift */,
+				EC38BFF022413AA1006F8DA2 /* QRCodeGenerationTests.swift */,
+				EC38BFF122413AA1006F8DA2 /* OstConversionTests.swift */,
+				EC38BFF222413AA1006F8DA2 /* EIP712Tests.swift */,
+				EC38BFF322413AA1006F8DA2 /* ABIEncoderTests.swift */,
+				EC38BFF422413AA1006F8DA2 /* GnosisSafeTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		EC38BFF522413AA1006F8DA2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFF622413AA1006F8DA2 /* OstAPITokensTests.swift */,
+				EC38BFF722413AA1006F8DA2 /* OstAPIBaseTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		EC38BFF822413AA1006F8DA2 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				EC38BFF922413AA1006F8DA2 /* OstCryptoTests.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		EC38C00F22413C93006F8DA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC38C01622413C94006F8DA2 /* Alamofire.framework */,
+				EC38C01422413C94006F8DA2 /* BigInt.framework */,
+				EC38C01522413C94006F8DA2 /* CryptoEthereumSwift.framework */,
+				EC38C01022413C93006F8DA2 /* CryptoSwift.framework */,
+				EC38C01122413C93006F8DA2 /* EthereumKit.framework */,
+				EC38C01322413C94006F8DA2 /* FMDB.framework */,
+				EC38C01222413C94006F8DA2 /* SipHash.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EC38BE0D22413992006F8DA2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38BF7722413A96006F8DA2 /* insecure_memzero.h in Headers */,
+				EC38BF7422413A96006F8DA2 /* crypto_scrypt.h in Headers */,
+				EC38BE2322413992006F8DA2 /* OstWalletSdk.h in Headers */,
+				EC38BF7522413A96006F8DA2 /* sha256.h in Headers */,
+				EC38BF7622413A96006F8DA2 /* sysendian.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		EC38BE1122413992006F8DA2 /* OstWalletSdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC38BE2622413992006F8DA2 /* Build configuration list for PBXNativeTarget "OstWalletSdk" */;
+			buildPhases = (
+				EC38BE0D22413992006F8DA2 /* Headers */,
+				EC38BE0E22413992006F8DA2 /* Sources */,
+				EC38BE0F22413992006F8DA2 /* Frameworks */,
+				EC38BE1022413992006F8DA2 /* Resources */,
+				EC38C00E22413C22006F8DA2 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OstWalletSdk;
+			productName = OstWalletSdk;
+			productReference = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EC38BE1A22413992006F8DA2 /* OstWalletSdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC38BE2922413992006F8DA2 /* Build configuration list for PBXNativeTarget "OstWalletSdkTests" */;
+			buildPhases = (
+				EC38BE1722413992006F8DA2 /* Sources */,
+				EC38BE1822413992006F8DA2 /* Frameworks */,
+				EC38BE1922413992006F8DA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC38BE1E22413992006F8DA2 /* PBXTargetDependency */,
+			);
+			name = OstWalletSdkTests;
+			productName = OstWalletSdkTests;
+			productReference = EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC38BE0922413992006F8DA2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "OST.com Inc";
+				TargetAttributes = {
+					EC38BE1122413992006F8DA2 = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
+					};
+					EC38BE1A22413992006F8DA2 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = EC38BE0C22413992006F8DA2 /* Build configuration list for PBXProject "OstWalletSdk" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EC38BE0822413992006F8DA2;
+			productRefGroup = EC38BE1322413992006F8DA2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC38BE1122413992006F8DA2 /* OstWalletSdk */,
+				EC38BE1A22413992006F8DA2 /* OstWalletSdkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EC38BE1022413992006F8DA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38BF6922413A96006F8DA2 /* LICENSE.txt in Resources */,
+				EC38BFC622413A96006F8DA2 /* TokenHolder.abi.json in Resources */,
+				EC38BF6822413A96006F8DA2 /* README.md in Resources */,
+				EC38BFB422413A96006F8DA2 /* OST_MIGRATION_README.md in Resources */,
+				EC38BFC422413A96006F8DA2 /* PricerRule.abi.json in Resources */,
+				EC38BF7222413A96006F8DA2 /* COPYRIGHT.txt in Resources */,
+				EC38BFC522413A96006F8DA2 /* TokenRules.abi.json in Resources */,
+				EC38BFC722413A96006F8DA2 /* GnosisSafe.abi.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC38BE1922413992006F8DA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EC38C00E22413C22006F8DA2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC38BE0E22413992006F8DA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38BF9F22413A96006F8DA2 /* OstResetPinPollingService.swift in Sources */,
+				EC38BF2422413A96006F8DA2 /* PricerRule.swift in Sources */,
+				EC38BF6622413A96006F8DA2 /* SolidityTuple.swift in Sources */,
+				EC38BF2622413A96006F8DA2 /* TokenHolder.swift in Sources */,
+				EC38BF1C22413A96006F8DA2 /* OstKeyManager.swift in Sources */,
+				EC38BF4E22413A96006F8DA2 /* Data+BytesConvertible.swift in Sources */,
+				EC38BF2F22413A96006F8DA2 /* EthereumPrivateKey.swift in Sources */,
+				EC38BF4222413A96006F8DA2 /* EthereumCall.swift in Sources */,
+				EC38BF7322413A96006F8DA2 /* insecure_memzero.c in Sources */,
+				EC38BFA122413A96006F8DA2 /* OstPinAcceptDelegate.swift in Sources */,
+				EC38BFD422413A96006F8DA2 /* OstDeviceRepository.swift in Sources */,
+				EC38BF2222413A96006F8DA2 /* ABIHelperBase.swift in Sources */,
+				EC38BF5A22413A96006F8DA2 /* ABIObject.swift in Sources */,
+				EC38BFAC22413A96006F8DA2 /* OstTokenHolderDbQueries.swift in Sources */,
+				EC38BFAF22413A96006F8DA2 /* OstDeviceDbQueries.swift in Sources */,
+				EC38BFCC22413A96006F8DA2 /* OstRuleModelRepository.swift in Sources */,
+				EC38BFCA22413A96006F8DA2 /* OstConfig.swift in Sources */,
+				EC38BF4822413A96006F8DA2 /* UInt+BytesRepresentable.swift in Sources */,
+				EC38BF7822413A96006F8DA2 /* sha256.c in Sources */,
+				EC38BF6A22413A96006F8DA2 /* OstConversion.swift in Sources */,
+				EC38BF9722413A96006F8DA2 /* OstPolling.swift in Sources */,
+				EC38BFA522413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift in Sources */,
+				EC38BFAD22413A96006F8DA2 /* OstRuleDbQueries.swift in Sources */,
+				EC38BF3622413A96006F8DA2 /* RLPDecoder.swift in Sources */,
+				EC38BF6F22413A96006F8DA2 /* Data+Conversion.swift in Sources */,
+				EC38BF9E22413A96006F8DA2 /* OstDevicePollingService.swift in Sources */,
+				EC38BF8E22413A96006F8DA2 /* OstSessionHelper.swift in Sources */,
+				EC38BFCB22413A96006F8DA2 /* OstTokenRepository.swift in Sources */,
+				EC38BFB022413A96006F8DA2 /* OstDeviceManagerDbQueries.swift in Sources */,
+				EC38BF6422413A96006F8DA2 /* SolidityWrappedValue.swift in Sources */,
+				EC38BF7B22413A96006F8DA2 /* Extension+OstQRCode.swift in Sources */,
+				EC38BF6322413A96006F8DA2 /* SolidityType+Codable.swift in Sources */,
+				EC38BF9D22413A96006F8DA2 /* OstUserPollingService.swift in Sources */,
+				EC38BFA622413A96006F8DA2 /* OstMigration_1.swift in Sources */,
+				EC38BF9822413A96006F8DA2 /* OstRevokeDevice.swift in Sources */,
+				EC38BF1A22413A96006F8DA2 /* OstMnemonicsKeyManager.swift in Sources */,
+				EC38BF6722413A96006F8DA2 /* ABIConvertible.swift in Sources */,
+				EC38BF6522413A96006F8DA2 /* ABI.swift in Sources */,
+				EC38BF7D22413A96006F8DA2 /* TypedDataForRecovery.swift in Sources */,
+				EC38BF5022413A96006F8DA2 /* BigUInt+BytesConvertible.swift in Sources */,
+				EC38BF8122413A96006F8DA2 /* OstAuthorizeBase.swift in Sources */,
+				EC38BF7022413A96006F8DA2 /* BiometricIDAuth.swift in Sources */,
+				EC38BF5F22413A96006F8DA2 /* Eth+ABI.swift in Sources */,
+				EC38BFB822413A96006F8DA2 /* OstAPITransaction.swift in Sources */,
+				EC38BFDC22413A96006F8DA2 /* OstSession.swift in Sources */,
+				EC38BF7922413A96006F8DA2 /* crypto_scrypt.c in Sources */,
+				EC38BFCF22413A96006F8DA2 /* OstDeviceManagerRepository.swift in Sources */,
+				EC38BF3922413A96006F8DA2 /* EthereumTransactionReceiptObject.swift in Sources */,
+				EC38BFBF22413A96006F8DA2 /* OstAPITokens.swift in Sources */,
+				EC38BFBD22413A96006F8DA2 /* OstAPIHelper.swift in Sources */,
+				EC38BFD322413A96006F8DA2 /* OstSessionRepository.swift in Sources */,
+				EC38BFDE22413A96006F8DA2 /* OstToken.swift in Sources */,
+				EC38BF8722413A96006F8DA2 /* OstWorkFlowFactory.swift in Sources */,
+				EC38BFA222413A96006F8DA2 /* OstBaseDelegate.swift in Sources */,
+				EC38BF4B22413A96006F8DA2 /* String+HexBytes.swift in Sources */,
+				EC38BF5B22413A96006F8DA2 /* ContractPromiseExtensions.swift in Sources */,
+				EC38BF2E22413A96006F8DA2 /* EthereumAddress.swift in Sources */,
+				EC38BFD022413A96006F8DA2 /* OstBaseModelCacheRepository.swift in Sources */,
+				EC38BFBB22413A96006F8DA2 /* OstAPIRule.swift in Sources */,
+				EC38BF5322413A96006F8DA2 /* Int+ETH.swift in Sources */,
+				EC38BFB622413A96006F8DA2 /* OstAPISession.swift in Sources */,
+				EC38BF2B22413A96006F8DA2 /* Decimal+Extension.swift in Sources */,
+				EC38BF5522413A96006F8DA2 /* UnsignedInteger+BytesConvertible.swift in Sources */,
+				EC38BFAB22413A96006F8DA2 /* OstUserDbQueries.swift in Sources */,
+				EC38BF7122413A96006F8DA2 /* OstSolidityValue.swift in Sources */,
+				EC38BFDB22413A96006F8DA2 /* OstDeviceManager.swift in Sources */,
+				EC38BF2D22413A96006F8DA2 /* EthereumPublicKey.swift in Sources */,
+				EC38BFCD22413A96006F8DA2 /* OstBaseModelRepository.swift in Sources */,
+				EC38BFDF22413A96006F8DA2 /* OstUser.swift in Sources */,
+				EC38BF2322413A96006F8DA2 /* TokenRule.swift in Sources */,
+				EC38BF9422413A96006F8DA2 /* OstPerform.swift in Sources */,
+				EC38BF9A22413A96006F8DA2 /* OstBasePollingService.swift in Sources */,
+				EC38BF7A22413A96006F8DA2 /* String+Operations.swift in Sources */,
+				EC38BF5622413A96006F8DA2 /* Secp256k1+CTXCreator.swift in Sources */,
+				EC38BF6022413A96006F8DA2 /* ABIEncoder.swift in Sources */,
+				EC38BFD822413A96006F8DA2 /* OstTokenHolder.swift in Sources */,
+				EC38BFB322413A96006F8DA2 /* OstMigrationManager.swift in Sources */,
+				EC38BFA922413A96006F8DA2 /* OstSessionDbQueries.swift in Sources */,
+				EC38BFD122413A96006F8DA2 /* OstTokenHolderRepository.swift in Sources */,
+				EC38BF8322413A96006F8DA2 /* OstResetPin.swift in Sources */,
+				EC38BF3A22413A96006F8DA2 /* EthereumData.swift in Sources */,
+				EC38BF3E22413A96006F8DA2 /* EthereumQuantity.swift in Sources */,
+				EC38BF2722413A96006F8DA2 /* OstConnectivity.swift in Sources */,
+				EC38BFD722413A96006F8DA2 /* OstRule.swift in Sources */,
+				EC38BFB722413A96006F8DA2 /* OstAPIResetPin.swift in Sources */,
+				EC38BF2522413A96006F8DA2 /* GnosisSafe.swift in Sources */,
+				EC38BF3F22413A96006F8DA2 /* EthereumTransactionObject.swift in Sources */,
+				EC38BF2022413A96006F8DA2 /* OstSecureEnclaveHelper.swift in Sources */,
+				EC38BFD222413A96006F8DA2 /* OstTransactionRepository.swift in Sources */,
+				EC38BFD922413A96006F8DA2 /* OstDevice.swift in Sources */,
+				EC38BFD522413A96006F8DA2 /* OstTransaction.swift in Sources */,
+				EC38BF4022413A96006F8DA2 /* EthereumValue.swift in Sources */,
+				EC38BFB122413A96006F8DA2 /* OstSdkDatabase.swift in Sources */,
+				EC38BF6E22413A96006F8DA2 /* EIP1077.swift in Sources */,
+				EC38BFC822413A96006F8DA2 /* OstError.swift in Sources */,
+				EC38BF4622413A96006F8DA2 /* String+BytesConvertible.swift in Sources */,
+				EC38BF8522413A96006F8DA2 /* OstWorkflowBase.swift in Sources */,
+				EC38BF8822413A96006F8DA2 /* OstContextEntity.swift in Sources */,
+				EC38BF7F22413A96006F8DA2 /* OstUtils.swift in Sources */,
+				EC38BF9522413A96006F8DA2 /* OstSdkSync.swift in Sources */,
+				EC38BFCE22413A96006F8DA2 /* OstUserModelRepository.swift in Sources */,
+				EC38BFA822413A96006F8DA2 /* OstBaseDbQueries.swift in Sources */,
+				EC38BF4122413A96006F8DA2 /* RPCResponse.swift in Sources */,
+				EC38BFC322413A96006F8DA2 /* OstWalletSdk.swift in Sources */,
+				EC38BFA322413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift in Sources */,
+				EC38BF7C22413A96006F8DA2 /* EIP712.swift in Sources */,
+				EC38BF5222413A96006F8DA2 /* Exports+Web3.swift in Sources */,
+				EC38BF5D22413A96006F8DA2 /* EthereumContract.swift in Sources */,
+				EC38BF6B22413A96006F8DA2 /* OstBundle.swift in Sources */,
+				EC38BF7E22413A96006F8DA2 /* TypedDataForResetPin.swift in Sources */,
+				EC38BF6D22413A96006F8DA2 /* OstSolidityHandler.swift in Sources */,
+				EC38BFB522413A96006F8DA2 /* OstAPISigner.swift in Sources */,
+				EC38BF1D22413A96006F8DA2 /* OstCryptoImpls.swift in Sources */,
+				EC38BFBE22413A96006F8DA2 /* OstAPIUser.swift in Sources */,
+				EC38BF3322413A96006F8DA2 /* RLPItem.swift in Sources */,
+				EC38BF3222413A96006F8DA2 /* Web3.swift in Sources */,
+				EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */,
+				EC38BF5122413A96006F8DA2 /* Bytes+UInt.swift in Sources */,
+				EC38BF3D22413A96006F8DA2 /* EthereumValueConvertible.swift in Sources */,
+				EC38BF4522413A96006F8DA2 /* EthereumLogObject.swift in Sources */,
+				EC38BF4C22413A96006F8DA2 /* BytesConvertible.swift in Sources */,
+				EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */,
+				EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */,
+				EC38BF2A22413A96006F8DA2 /* Date+Timestamp.swift in Sources */,
+				EC38BF5C22413A96006F8DA2 /* SolidityFunction.swift in Sources */,
+				EC38BFDA22413A96006F8DA2 /* OstBaseEntity.swift in Sources */,
+				EC38BF1922413A96006F8DA2 /* OstConstants.swift in Sources */,
+				EC38BF8922413A96006F8DA2 /* OstWorkflowContext.swift in Sources */,
+				EC38BF8222413A96006F8DA2 /* OstAuthorizeSession.swift in Sources */,
+				EC38BF9C22413A96006F8DA2 /* OstTransactionPollingService.swift in Sources */,
+				EC38BF4722413A96006F8DA2 /* Bytes+HexString.swift in Sources */,
+				EC38BF8622413A96006F8DA2 /* OstRecoverDevice.swift in Sources */,
+				EC38BFC022413A96006F8DA2 /* OstAPISalt.swift in Sources */,
+				EC38BF2122413A96006F8DA2 /* OstCrypto.swift in Sources */,
+				EC38BFB922413A96006F8DA2 /* OstAPIBase.swift in Sources */,
+				EC38BF3022413A96006F8DA2 /* EthereumTransaction.swift in Sources */,
+				EC38BF5E22413A96006F8DA2 /* SolidityInvocation.swift in Sources */,
+				EC38BF8B22413A96006F8DA2 /* OstPinManager.swift in Sources */,
+				EC38BF6122413A96006F8DA2 /* ABIDecoder.swift in Sources */,
+				EC38BF5922413A96006F8DA2 /* SolidityEvent.swift in Sources */,
+				EC38BF3822413A96006F8DA2 /* EthereumBlockObject.swift in Sources */,
+				EC38BFA022413A96006F8DA2 /* OstRegisterDevice.swift in Sources */,
+				EC38BF3522413A96006F8DA2 /* RLPItemConvertible.swift in Sources */,
+				EC38BFAA22413A96006F8DA2 /* OstTransactionDbQueries.swift in Sources */,
+				EC38BF4F22413A96006F8DA2 /* CharacterSet+Hex.swift in Sources */,
+				EC38BFC122413A96006F8DA2 /* OstAPIDeviceManager.swift in Sources */,
+				EC38BF9122413A96006F8DA2 /* OstGetPaperWallet.swift in Sources */,
+				EC38BFC922413A96006F8DA2 /* OstApiError.swift in Sources */,
+				EC38BF5422413A96006F8DA2 /* Values+GeneralHashable.swift in Sources */,
+				EC38BF2C22413A96006F8DA2 /* Logger.swift in Sources */,
+				EC38BFA722413A96006F8DA2 /* OstBaseMigration.swift in Sources */,
+				EC38BF9022413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift in Sources */,
+				EC38BF4922413A96006F8DA2 /* Bytes+TrimLeadingZeros.swift in Sources */,
+				EC38BF1F22413A96006F8DA2 /* OstKeychainHelper.swift in Sources */,
+				EC38BF9B22413A96006F8DA2 /* OstSessionPollingService.swift in Sources */,
+				EC38BF3C22413A96006F8DA2 /* EthereumSyncStatusObject.swift in Sources */,
+				EC38BF3B22413A96006F8DA2 /* RPCRequest.swift in Sources */,
+				EC38BFBC22413A96006F8DA2 /* OstAPIErrorHandler.swift in Sources */,
+				EC38BFC222413A96006F8DA2 /* OstAPIChain.swift in Sources */,
+				EC38BF2822413A96006F8DA2 /* SoliditySha3.swift in Sources */,
+				EC38BF8D22413A96006F8DA2 /* OstWorkflowValidator.swift in Sources */,
+				EC38BF6C22413A96006F8DA2 /* Dictionary+Conversion.swift in Sources */,
+				EC38BFBA22413A96006F8DA2 /* OstAPIDevice.swift in Sources */,
+				EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */,
+				EC38BF3722413A96006F8DA2 /* Types+RLPItemConvertible.swift in Sources */,
+				EC38BF8022413A96006F8DA2 /* OstAuthorizeDevice.swift in Sources */,
+				EC38BF5822413A96006F8DA2 /* Eth+Contract.swift in Sources */,
+				EC38BF3422413A96006F8DA2 /* RLPEncoder.swift in Sources */,
+				EC38BFAE22413A96006F8DA2 /* OstTokenDbQueries.swift in Sources */,
+				EC38BFD622413A96006F8DA2 /* OstCurrentDevice.swift in Sources */,
+				EC38BFB222413A96006F8DA2 /* OstSdkBaseDatabase.swift in Sources */,
+				EC38BFDD22413A96006F8DA2 /* OstRecoveryOwnerEntity.swift in Sources */,
+				EC38BF4422413A96006F8DA2 /* Types+EthereumValueConvertible.swift in Sources */,
+				EC38BF1E22413A96006F8DA2 /* OstBaseStorage.swift in Sources */,
+				EC38BF3122413A96006F8DA2 /* Web3Provider.swift in Sources */,
+				EC38BF5722413A96006F8DA2 /* UnsignedInteger+Shifting.swift in Sources */,
+				EC38BF8422413A96006F8DA2 /* OstAddDeviceWithQRData.swift in Sources */,
+				EC38BFA422413A96006F8DA2 /* OstValidateDataDelegate.swift in Sources */,
+				EC38BF8A22413A96006F8DA2 /* OstActivateUser.swift in Sources */,
+				EC38BF4322413A96006F8DA2 /* EthereumQuantityTag.swift in Sources */,
+				EC38BF4D22413A96006F8DA2 /* String+Conversion.swift in Sources */,
+				EC38BF6222413A96006F8DA2 /* SolidityType.swift in Sources */,
+				EC38BF4A22413A96006F8DA2 /* Bytes+SecureRandom.swift in Sources */,
+				EC38BF8C22413A96006F8DA2 /* OstWorkflowHelperBase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC38BE1722413992006F8DA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC38C00B22413AA1006F8DA2 /* OstAPITokensTests.swift in Sources */,
+				EC38BFFE22413AA1006F8DA2 /* OstBaseEntityTests.swift in Sources */,
+				EC38C00A22413AA1006F8DA2 /* GnosisSafeTests.swift in Sources */,
+				EC38C00222413AA1006F8DA2 /* OstSessionTests.swift in Sources */,
+				EC38BFFA22413AA1006F8DA2 /* OstDeviceTests.swift in Sources */,
+				EC38C00922413AA1006F8DA2 /* ABIEncoderTests.swift in Sources */,
+				EC38C00C22413AA1006F8DA2 /* OstAPIBaseTests.swift in Sources */,
+				EC38BFFC22413AA1006F8DA2 /* OstUserTests.swift in Sources */,
+				EC38C00422413AA1006F8DA2 /* OstUtilsTests.swift in Sources */,
+				EC38C00022413AA1006F8DA2 /* OstTransactionTests.swift in Sources */,
+				EC38C00122413AA1006F8DA2 /* OstRuleTests.swift in Sources */,
+				EC38C00822413AA1006F8DA2 /* EIP712Tests.swift in Sources */,
+				EC38BFFD22413AA1006F8DA2 /* OstTokenTests.swift in Sources */,
+				EC38BFFB22413AA1006F8DA2 /* OstDeviceManagerTests.swift in Sources */,
+				EC38C00622413AA1006F8DA2 /* QRCodeGenerationTests.swift in Sources */,
+				EC38BE2122413992006F8DA2 /* OstWalletSdkTests.swift in Sources */,
+				EC38BFFF22413AA1006F8DA2 /* OstTokenHolderTests.swift in Sources */,
+				EC38C00722413AA1006F8DA2 /* OstConversionTests.swift in Sources */,
+				EC38C00522413AA1006F8DA2 /* EIP1077Tests.swift in Sources */,
+				EC38C00D22413AA1006F8DA2 /* OstCryptoTests.swift in Sources */,
+				EC38C00322413AA1006F8DA2 /* OstBaseDBQueriesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EC38BE1E22413992006F8DA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC38BE1122413992006F8DA2 /* OstWalletSdk */;
+			targetProxy = EC38BE1D22413992006F8DA2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EC38BE2422413992006F8DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EC38BE2522413992006F8DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EC38BE2722413992006F8DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstWalletSdk/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdk;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstWalletSdk/Utils/SCrypt/**";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC38BE2822413992006F8DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = OstWalletSdk/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdk;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/OstWalletSdk/Utils/SCrypt/**";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EC38BE2A22413992006F8DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = OstWalletSdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC38BE2B22413992006F8DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = OstWalletSdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC38BE0C22413992006F8DA2 /* Build configuration list for PBXProject "OstWalletSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC38BE2422413992006F8DA2 /* Debug */,
+				EC38BE2522413992006F8DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC38BE2622413992006F8DA2 /* Build configuration list for PBXNativeTarget "OstWalletSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC38BE2722413992006F8DA2 /* Debug */,
+				EC38BE2822413992006F8DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC38BE2922413992006F8DA2 /* Build configuration list for PBXNativeTarget "OstWalletSdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC38BE2A22413992006F8DA2 /* Debug */,
+				EC38BE2B22413992006F8DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC38BE0922413992006F8DA2 /* Project object */;
+}
