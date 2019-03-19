@@ -220,6 +220,8 @@
 		4BE9E3EB22097F6600427A80 /* OstAPITokensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EA22097F6600427A80 /* OstAPITokensTests.swift */; };
 		4BE9E3EF2209A03500427A80 /* OstAPITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */; };
 		4BE9E3F12209CEA700427A80 /* OstCurrentDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */; };
+		4BF8FD212240AA7E00519779 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD1F2240AA7E00519779 /* CryptoEthereumSwift.framework */; };
+		4BF8FD222240AA7E00519779 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FD202240AA7E00519779 /* EthereumKit.framework */; };
 		5568BA50DA628C6131887F82 /* Pods_OstSdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C58B8B234D91D5A2CCED5C /* Pods_OstSdkTests.framework */; };
 		B2E46E04294A4199C97795E0 /* Pods_OstSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */; };
 		EC9185572227CF6A00905C54 /* OstMnemonicsKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9185562227CF6A00905C54 /* OstMnemonicsKeyManager.swift */; };
@@ -469,6 +471,8 @@
 		4BE9E3EC220989E600427A80 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		4BE9E3EE2209A03500427A80 /* OstAPITokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokens.swift; sourceTree = "<group>"; };
 		4BE9E3F02209CEA700427A80 /* OstCurrentDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCurrentDevice.swift; sourceTree = "<group>"; };
+		4BF8FD1F2240AA7E00519779 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoEthereumSwift.framework; path = Carthage/Build/iOS/CryptoEthereumSwift.framework; sourceTree = "<group>"; };
+		4BF8FD202240AA7E00519779 /* EthereumKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EthereumKit.framework; path = Carthage/Build/iOS/EthereumKit.framework; sourceTree = "<group>"; };
 		5486CC2C005166284833107E /* Pods-OstSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-OstSdkExample/Pods-OstSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		81FB4A4E9D41A82529B15467 /* Pods-OstSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OstSdk.release.xcconfig"; path = "Target Support Files/Pods-OstSdk/Pods-OstSdk.release.xcconfig"; sourceTree = "<group>"; };
 		87B0D5DA1D674B9768A337AD /* Pods_OstSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OstSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -497,6 +501,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BF8FD212240AA7E00519779 /* CryptoEthereumSwift.framework in Frameworks */,
+				4BF8FD222240AA7E00519779 /* EthereumKit.framework in Frameworks */,
 				00C282C922224188000ABAB2 /* Alamofire.framework in Frameworks */,
 				00C282CB22224188000ABAB2 /* BigInt.framework in Frameworks */,
 				00C282CF22224188000ABAB2 /* CryptoSwift.framework in Frameworks */,
@@ -1045,6 +1051,8 @@
 		4B7C933821B150AF00EC0A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BF8FD1F2240AA7E00519779 /* CryptoEthereumSwift.framework */,
+				4BF8FD202240AA7E00519779 /* EthereumKit.framework */,
 				00C282C822224188000ABAB2 /* Alamofire.framework */,
 				00C282CA22224188000ABAB2 /* BigInt.framework */,
 				00C282CC22224188000ABAB2 /* CryptoEthereumSwift.framework */,
@@ -1715,7 +1723,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1748,7 +1759,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OstSdk/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

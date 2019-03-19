@@ -48,10 +48,6 @@
 		4BE8958822216FCD009C6A44 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8958722216FCD009C6A44 /* ScanQRCodeView.swift */; };
 		4BE895CF2221B74C009C6A44 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE895CE2221B74C009C6A44 /* ShowQRView.swift */; };
 		4BE895D122224E13009C6A44 /* OstSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 00C28305222245D3000ABAB2 /* OstSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4BE895D322224E4C009C6A44 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; };
-		4BE895D422224E4C009C6A44 /* CryptoEthereumSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84522223B870052B71E /* CryptoEthereumSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4BE895D522224E68009C6A44 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; };
-		4BE895D622224E68009C6A44 /* EthereumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0064C84722223B8B0052B71E /* EthereumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ECCDAF042238F09300A6A095 /* OstSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECCDAF032238F09300A6A095 /* OstSdk.plist */; };
 /* End PBXBuildFile section */
 
@@ -62,9 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4BE895D422224E4C009C6A44 /* CryptoEthereumSwift.framework in Embed Frameworks */,
 				4BE895D122224E13009C6A44 /* OstSdk.framework in Embed Frameworks */,
-				4BE895D622224E68009C6A44 /* EthereumKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,10 +131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				00613BEA22224D94006A26D0 /* IQKeyboardManagerSwift.framework in Frameworks */,
-				4BE895D322224E4C009C6A44 /* CryptoEthereumSwift.framework in Frameworks */,
 				00C2831222224729000ABAB2 /* MaterialComponents.framework in Frameworks */,
 				00C2831022224722000ABAB2 /* FMDB.framework in Frameworks */,
-				4BE895D522224E68009C6A44 /* EthereumKit.framework in Frameworks */,
 				00C282FE2222458A000ABAB2 /* Alamofire.framework in Frameworks */,
 				00C283002222458A000ABAB2 /* BigInt.framework in Frameworks */,
 				00C92C42B7DEFE4B26C7FADD /* Pods_Demo_App.framework in Frameworks */,
