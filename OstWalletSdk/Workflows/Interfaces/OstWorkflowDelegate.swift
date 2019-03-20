@@ -61,11 +61,6 @@ public protocol OstWorkflowDelegate {
     func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
     
-    /// Show paper wallet
-    ///
-    /// - Parameter mnemonics: array of Words.
-    func showPaperWallet(mnemonics: [String])
-    
     /// Verify data which is scan from QR-Code
     ///
     /// - Parameters:

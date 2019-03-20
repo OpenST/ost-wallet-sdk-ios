@@ -31,8 +31,8 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     /// Initialize.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - delegate: Callback.
+    ///   - userId: User id
+    ///   - delegate: Callback
     init(userId: String,
          delegate: OstWorkflowDelegate) {
         

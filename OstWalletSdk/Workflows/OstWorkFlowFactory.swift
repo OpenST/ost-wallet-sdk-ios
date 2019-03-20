@@ -123,9 +123,9 @@ extension OstWalletSdk {
     /// Get paper wallet of given user id.
     ///
     /// - Parameters:
-    ///   - userId: User id.
-    ///   - delegate: Callback for action complete or to perform respective action.
-    public class func getPaperWallet(
+    ///   - userId: User id
+    ///   - delegate: Callback for action complete or to perform respective action
+    public class func getDeviceMnemonics(
         userId: String,
         delegate: OstWorkflowDelegate) {
         
