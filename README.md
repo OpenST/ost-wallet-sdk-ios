@@ -25,7 +25,7 @@ These digital signatures ensure that users have complete control of there tokens
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios"
+github "ostdotcom/ost-wallet-sdk-ios" "v0.1.0-beta.1"
 ```
 
 - Run `carthage update --platform iOS`
@@ -63,7 +63,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
  <key>PricePointCurrencySymbol</key>
  <string>USD</string>
  <key>RequestTimeoutDuration</key>
- <integer>6</integer>
+ <integer>30</integer>
  <key>PinMaxRetryCount</key>
  <integer>3</integer>
  <key>SessionBufferTime</key>
@@ -71,6 +71,13 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
  </dict>
  </plist>
 ```
+
+- _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
+- _PricePointTokenSymbol_: This is the symbol of base currency. So it's value will be OST.
+- _PricePointCurrencySymbol_: It is the symbol of quote currency used in price conversion.
+- _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
+- _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
+- _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 
 ## OstWalletSdk apis
 
