@@ -25,7 +25,7 @@ These digital signatures ensure that users have complete control of there tokens
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios"
+github "ostdotcom/ost-wallet-sdk-ios" "v0.1.0-beta.1"
 ```
 
 - Run `carthage update --platform iOS`
