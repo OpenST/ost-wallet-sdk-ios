@@ -300,7 +300,7 @@ func getPin(
         )
 ```
 ```Swift    
-/// Inform SDK user about invalid pin.
+/// A callback that triggers when pin validation failed.
 /// Developers should show invalid pin error and ask for pin again on this callback.
 ///
 /// - Parameters:
@@ -312,13 +312,13 @@ func invalidPin(
         )
 ```
 ```Swift
-/// Inform SDK user that entered pin is validated.
+/// A callback that informs application that pin has been validated successfully.
 /// Developers should dismiss pin dialog on this callback.
 /// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
 func pinValidated(_ userId: String)
 ```
 ```Swift
-/// Inform SDK user the the flow is complete.
+/// Informs application the the flow is complete.
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostContextEntity: Status of the flow.
@@ -328,7 +328,7 @@ func flowComplete(
         )
 ```
 ```Swift
-/// Inform SDK user that flow is interrupted with errorCode.
+/// Informs application that flow is interrupted with errorCode.
 /// Developers should dismiss pin dialog (if open) on this callback.
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
@@ -339,7 +339,7 @@ func flowInterrupted(
         )
 ```
 ```Swift
-/// Verify data which is scan from QR-Code
+/// Verify data which is scaned from QR-Code
 ///
 /// - Parameters:
 ///   - workflowContext: OstWorkflowContext
@@ -373,4 +373,4 @@ There are other references are listed below:
 
 - [OstContextEntity](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstContextEntity.swift)
 
-- [OstError](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Utils/OstError.swift)
+- [OstError](https://github.com/ostdotcom/ost-wallet-sdk-ios/tree/develop/OstWalletSdk/Errors)
