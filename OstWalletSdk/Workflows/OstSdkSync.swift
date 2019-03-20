@@ -28,9 +28,9 @@ class OstSdkSync {
     /// Initialize.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - forceSync: Can for sync entity.
-    ///   - syncEntites: Entities to sync.
+    ///   - userId: User id
+    ///   - forceSync: Can for sync entity
+    ///   - syncEntites: Entities to sync
     ///   - onCompletion: Callback
     init(userId: String, forceSync: Bool, syncEntites: SyncEntity... , onCompletion:((Bool) -> Void)?) {
         self.userId = userId

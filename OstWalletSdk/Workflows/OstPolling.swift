@@ -24,14 +24,14 @@ class OstPolling: OstWorkflowBase {
     /// Initialize.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - entityId: entity id.
-    ///   - entityType: entity type.
-    ///   - delegate: Callback.
+    ///   - userId: User id
+    ///   - entityId: Entity id
+    ///   - entityType: Entity type
+    ///   - delegate: Callback
     init(userId: String,
          entityId: String,
          entityType: OstPollingEntityType,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.entityId = entityId
         self.entityType = entityType

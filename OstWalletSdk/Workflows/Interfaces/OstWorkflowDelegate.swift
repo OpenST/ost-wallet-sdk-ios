@@ -13,7 +13,7 @@ import Foundation
 
 /// OstWorkFlowCallback implemented by SDK user to perform prerequisites task.
 /// These tasks are assigned by SDK workflows with help of callbacks.
-public protocol OstWorkFlowCallbackDelegate {
+public protocol OstWorkflowDelegate {
     
     /// Register device passed as parameter.
     ///
@@ -60,11 +60,6 @@ public protocol OstWorkFlowCallbackDelegate {
     /// - Parameter ostError: Reason of interruption.
     func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
-    
-    /// Show paper wallet
-    ///
-    /// - Parameter mnemonics: array of Words.
-    func showPaperWallet(mnemonics: [String])
     
     /// Verify data which is scan from QR-Code
     ///

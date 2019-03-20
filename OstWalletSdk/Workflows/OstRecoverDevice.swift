@@ -21,19 +21,19 @@ class OstRecoverDevice: OstWorkflowBase {
     
     private var pinManager: OstPinManager? = nil;
     
-    /// Initialization
+    /// Initialize
     ///
     /// - Parameters:
-    ///   - userId: User id from kit.
-    ///   - deviceAddressToRecover: device address to revoke.
-    ///   - userPin: User pin.
+    ///   - userId: User id
+    ///   - deviceAddressToRecover: Device address to revoke
+    ///   - userPin: User pin
     ///   - passphrasePrefix: Passphrase prefix of user from application server
-    ///   - delegate: Callback.
+    ///   - delegate: Callback
     init(userId: String,
          deviceAddressToRecover: String,
          userPin: String,
          passphrasePrefix: String,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.deviceAddressToRecover = deviceAddressToRecover
         super.init(userId: userId, delegate: delegate)
@@ -79,7 +79,7 @@ class OstRecoverDevice: OstWorkflowBase {
         try self.recoverDevice()
     }
     
-    /// Fetch device from kit
+    /// Fetch device from OST platform
     ///
     /// - Throws: OstError
     private func fetchDevice() throws {
