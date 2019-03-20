@@ -1,36 +1,32 @@
-# ost-client-ios-sdk
+# ost-Wallet-sdk-iOS
 
 ## Introduction
 
-Wallet SDK is a mobile application development SDK that enables our partner companies to
-- Key Management
-- Safely generate and store keys on the mobile device
-- Encrypt the wallet keys.
-- Sign ethereum transactions and data as defined by contracts using EIP-1077.
-- Signed transactions needed for activities such as adding, authorizing and removing keys.
-- Signed data is needed to execute actions on the blockchain.
+Wallet SDK is a mobile application development SDK that enables developers to integrate the  functionality of a non-custodial crypto-wallet into consumer applications. The functionality
+- Safely generate and store keys on their user's  mobile device
+- Sign ethereum transactions and data as defined by contracts using EIP-1077
+- Enable their user's to recover access to funds in case the user loses their authorized device
 
 
-These digital signatures ensure that users have complete control of there tokens and these tokens can only be transferred with their explicit or implicit consent.
-    
+
 ## Support
 
 - iOS version : 9.0 and above (**recommended version 10.3** )
 - Swift version: 4.2
 
-## Quick Setup
+## Setup
 
 - Get [Carthage](https://github.com/Carthage/Carthage) by running `brew install carthage` or choose [another installation method](https://github.com/Carthage/Carthage/#installing-carthage)
 - Create a [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile) in the same directory where your `.xcodeproj` or `.xcworkspace` is
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" "v0.1.0-beta.1"
+github "ostdotcom/ost-wallet-sdk-ios"
 ```
 
 - Run `carthage update --platform iOS`
 - A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is
-- Open application target, under `General` tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
+- Open application target, under `General` tab, drag the built `OstSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
 - On your application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
 
 ```sh
@@ -47,81 +43,52 @@ $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
 $(SRCROOT)/Carthage/Build/iOS/FMDB.framework
 $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
-$(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
-```
-- Create `OstWalletSdk.plist` file. Following is the default configurations. 
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
- <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
- <plist version="1.0">
- <dict>
- <key>BlockGenerationTime</key>
- <integer>3</integer>
- <key>PricePointTokenSymbol</key>
- <string>OST</string>
- <key>PricePointCurrencySymbol</key>
- <string>USD</string>
- <key>RequestTimeoutDuration</key>
- <integer>30</integer>
- <key>PinMaxRetryCount</key>
- <integer>3</integer>
- <key>SessionBufferTime</key>
- <integer>3600</integer>
- </dict>
- </plist>
+$(SRCROOT)/Carthage/Build/iOS/OstSdk.framework
 ```
 
-- _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
-- _PricePointTokenSymbol_: This is the symbol of base currency. So it's value will be OST.
-- _PricePointCurrencySymbol_: It is the symbol of quote currency used in price conversion.
-- _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
-- _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
-- _SessionBufferTime_: Buffer expiration time for session keys in seconds.
+## OstSdk APIs
 
-## OstWalletSdk apis
 
-To use Ost wallet sdk use `import OstWalletSdk`
-
-### Initialize
+### Initialize the SDK
 
 To get started with the SDK, you must first initialize SDK by calling _initialize()_ api.
-It initializes all the required instances and run migrations of db. 
-        
+It initializes all the required instances and run migrations of db.
+
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     do {
-        try OstWalletSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+        try OstSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
      } catch let ostError {
-           
+
      }
      return true
 }
 ```
-    
-### Setup Device
 
-After Initialize, setupDevice api should be called everytime the app launches.
-It ensures current device is in registered state before calling kit apis.<br/><br/>
+### Setup the device
+
+After initialization, the setupDevice API should be called every time the app launches.
+It ensures that the current device is `registered` state before calling OST Platform APIs.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by appicationn server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
- 
+
 ```Swift
-OstWalletSdk.setupDevice(
+OstSdk.setupDevice(
     userId: String,
     tokenId: String,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```    
-     
-### Activate User
 
-It authorizes the registered device and activate the user.
-It makes user eligible to do device operations and transactions.<br/><br/>
+### Activate the user
+
+It authorizes the registered device and activates the user. User activation refers to the deployment of smart-contracts that form the user's Brand Token Wallet.
+
+A user can start engaging with a Brand Token economy once they have been activated.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
@@ -129,114 +96,113 @@ It makes user eligible to do device operations and transactions.<br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.activateUser(
+OstSdk.activateUser(
     userId: String,
     userPin: String,
     passphrasePrefix: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
-                     
-### Add Session
 
-To add new session to device manager.
-Will be used when there are no current session available to do transactions.<br/><br/>
+### Authorize session
+A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user.
+
+The device manager, which controls the tokens authorizes sessions. <br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.addSession(
+OstSdk.addSession(
     userId: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
 ### Execute Transaction
+A transactions where Brand Tokens are transferred from a user to another actor in the Brand Token economy are signed using `sessionKey` if there is an active session. In the absense of an active session, a new session is authorized.
 
 To execute Rule.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_transactionType: OstExecuteTransactionType value_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.executeTransaction(
+OstSdk.executeTransaction(
     userId: String,
     tokenHolderAddresses: [String],
     amounts: [String],
     transactionType: OstExecuteTransactionType,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
-### Get Device Mnemonics
+### Get Mnemonic Phrase
 
-To get device mnemonics( 12 words used to generate wallet) of the current device.
-Mnemonics will be used to add new device incase device is lost<br/><br/>
+The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
+ <br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.getDeviceMnemonics(
+OstSdk.getPaperWallet(
     userId: String,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
-### Authorize Current Device With Mnemonics
+### Add Device Using Mnemonics
 
-It authorizes current device using mnemonics provided.
-Using mnemonics it generates wallet key to add new current device.<br/><br/>
+A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_mnemonics: Array of mnemonics_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
+OstSdk.addDeviceUsingMnemonics(
     userId: String,
     mnemonics: [String],
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
 )
 ```
 
-### Get QR-Code To Add Device
+### Get QR Code To Add Device
 
-Getter method which return QR-Code CIImage for add device.
-Use this methods to get QR-Code of current device to be added from authorized device.<br/><br/>
+A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on.Scanning this QR code with a authorized mobile device will result in the new device being authorized.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 
 ```Swift
-OstWalletSdk.getAddDeviceQRCode(
+OstSdk.getAddDeviceQRCode(
     userId: String
     ) throws -> CIImage?
 ```
 
-### Perform QR Action
+### OstPerform
 
 To perform operations based on QR data provided.
 Through QR, Add device and transaction operations can be performed.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.performQRAction(
+OstSdk.perfrom(
     userId: String,
     payload: String,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -244,27 +210,27 @@ OstWalletSdk.performQRAction(
 
 To update current Pin with new Pin.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_oldUserPin: Users old Pin_<br/>
 &nbsp;_newUserPin: Users new Pin_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.resetPin(
+OstSdk.resetPin(
     userId: String,
     passphrasePrefix: String,
     oldUserPin: String,
     newUserPin: String,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
-###  Initiate Device Recovery
+### Recover Device Initialize
 
 To recover authorized device which could be misplaced or no more in use.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_userPin: Users Pin_<br/>
@@ -272,12 +238,31 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 
 
 ```Swift
-OstWalletSdk.initiateDeviceRecovery(
+OstSdk.recoverDeviceInitialize(
     userId: String,
     recoverDeviceAddress: String,
     userPin: String,
     passphrasePrefix: String,
-    delegate: OstWorkflowDelegate
+    delegate: OstWorkFlowCallbackDelegate
+    )
+```
+
+### Polling
+
+To poll provided entity.
+Polling can be used when any entity is in transition status and desired status update is needed.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_entityId: entity id to be polled_<br/>
+&nbsp;_entityType: entity type to be polled_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstSdk.poll(
+    userId: String,
+    entityId: String,
+    entityType: OstPollingEntityType,
+    delegate: OstWorkFlowCallbackDelegate
     )
 ```
 
@@ -290,7 +275,7 @@ OstWalletSdk.initiateDeviceRecovery(
 ///   - apiParams: Register Device API parameters.
 ///   - delegate: To pass response.
 func registerDevice(
-        _ apiParams: [String: Any], 
+        _ apiParams: [String: Any],
         delegate: OstDeviceRegisteredDelegate
         )
 ```
@@ -302,59 +287,65 @@ func registerDevice(
 ///   - userId: User id whose passphrase prefix and pin required.
 ///   - delegate: To pass pin
 func getPin(
-        _ userId: String, 
+        _ userId: String,
         delegate: OstPinAcceptDelegate
         )
 ```
 ```Swift    
-/// A callback that triggers when pin validation failed.
+/// Inform SDK user about invalid pin.
 /// Developers should show invalid pin error and ask for pin again on this callback.
 ///
 /// - Parameters:
 ///   - userId: User id whose passphrase prefix and pin validattion failed.
 ///   - delegate: To pass another pin.
 func invalidPin(
-        _ userId: String, 
+        _ userId: String,
         delegate: OstPinAcceptDelegate
         )
 ```
 ```Swift
-/// A callback that informs application that pin has been validated successfully.
+/// Inform SDK user that entered pin is validated.
 /// Developers should dismiss pin dialog on this callback.
 /// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
 func pinValidated(_ userId: String)
 ```
 ```Swift
-/// Informs application the the flow is complete.
+/// Inform SDK user the the flow is complete.
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostContextEntity: Status of the flow.
 func flowComplete(
-        workflowContext: OstWorkflowContext, 
+        workflowContext: OstWorkflowContext,
         ostContextEntity: OstContextEntity
         )
 ```
 ```Swift
-/// Informs application that flow is interrupted with errorCode.
+/// Inform SDK user that flow is interrupted with errorCode.
 /// Developers should dismiss pin dialog (if open) on this callback.
 ///
 /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
 /// - Parameter ostError: Reason of interruption.
 func flowInterrupted(
-        workflowContext: OstWorkflowContext, 
+        workflowContext: OstWorkflowContext,
         error: OstError
         )
 ```
 ```Swift
-/// Verify data which is scaned from QR-Code
+/// Show paper wallet
+///
+/// - Parameter mnemonics: array of Words.
+func showPaperWallet(mnemonics: [String])
+```
+```Swift
+/// Verify data which is scan from QR-Code
 ///
 /// - Parameters:
 ///   - workflowContext: OstWorkflowContext
 ///   - ostContextEntity: OstContextEntity
 ///   - delegate: callback
 func verifyData(
-        workflowContext: OstWorkflowContext, 
-        ostContextEntity: OstContextEntity, 
+        workflowContext: OstWorkflowContext,
+        ostContextEntity: OstContextEntity,
         delegate: OstValidateDataDelegate
         )
 ```
@@ -365,14 +356,14 @@ func verifyData(
 ///   - workflowContext: OstWorkflowContext
 ///   - ostContextEntity: OstContextEntity
 func requestAcknowledged(
-        workflowContext: OstWorkflowContext, 
+        workflowContext: OstWorkflowContext,
         ostContextEntity: OstContextEntity
         )
 ```
 
 ## Reference
 
-For reference you can refer our [ios-demo-app](https://github.com/ostdotcom/ios-demo-app/tree/develop)
+For reference you can refer our [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
 
 There are other references are listed below:
 
@@ -380,4 +371,4 @@ There are other references are listed below:
 
 - [OstContextEntity](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstContextEntity.swift)
 
-- [OstError](https://github.com/ostdotcom/ost-wallet-sdk-ios/tree/develop/OstWalletSdk/Errors)
+- [OstError](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Utils/OstError.swift)
