@@ -13,7 +13,7 @@ import Foundation
 class OstWorkflowBase: OstPinAcceptDelegate {
     
     var userId: String
-    var delegate: OstWorkFlowCallbackDelegate
+    var delegate: OstWorkflowDelegate
     var currentUser: OstUser? {
         do {
             return try OstUser.getById(self.userId)
@@ -31,9 +31,11 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     /// Initialize.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - delegate: Callback.
-    init(userId: String, delegate: OstWorkFlowCallbackDelegate) {
+    ///   - userId: User id
+    ///   - delegate: Callback
+    init(userId: String,
+         delegate: OstWorkflowDelegate) {
+        
         self.userId = userId
         self.delegate = delegate
     }

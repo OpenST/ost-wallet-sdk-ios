@@ -60,9 +60,9 @@ class OstUtilsTests: XCTestCase {
                 "c1": [["p21": "a", "p22": "b"], [ "p21": "c", "p22": "d"]],
                 "a1": "Hello",
                 "b1": 123456,
-                "d1": ["Hello","World","OST","KIT"]
+                "d1": ["Hello","World","OST","PLATFORM"]
             ],
-            "b":["Hello","World","OST","KIT"],
+            "b":["Hello","World","OST","PLATFORM"],
             "a":[[ "p2": "b", "p1": "a"], [ "p1": "c", "p2": "d"]],
             "token_id": 58,
             "user_id":"6c6ea645-d86d-4449-8efa-3b54743f83de",

@@ -22,18 +22,18 @@ class OstActivateUser: OstWorkflowBase {
     /// Initialize.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - userPin: User pin.
-    ///   - passphrasePrefix: Passphrase prefix provied by application server.
-    ///   - spendingLimit: Maximum spending limit of transaction.
-    ///   - expireAfter: Relative time.
-    ///   - delegate: Callback.
+    ///   - userId: User id
+    ///   - userPin: User pin
+    ///   - passphrasePrefix: Passphrase prefix provied by application server
+    ///   - spendingLimit: Maximum spending limit of transaction
+    ///   - expireAfter: Relative time
+    ///   - delegate: Callback
     init(userId: String,
          userPin: String,
          passphrasePrefix: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter

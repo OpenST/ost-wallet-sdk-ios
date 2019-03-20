@@ -12,8 +12,8 @@ import Foundation
 import BigInt
 
 public enum OstExecuteTransactionType: String {
-    case ExecuteTransactionTypeDirectTransfer = "Direct Transfer"
-    case ExecuteTransactionTypePay = "Pricer"
+    case DirectTransfer = "Direct Transfer"
+    case Pay = "Pricer"
 }
 
 class OstExecuteTransaction: OstWorkflowBase {
@@ -115,7 +115,7 @@ class OstExecuteTransaction: OstWorkflowBase {
          toAddresses: [String],
          amounts: [String],
          transactionMeta: [String: String],
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
@@ -139,8 +139,8 @@ class OstExecuteTransaction: OstWorkflowBase {
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
         
-        let allowedRuleNames = [OstExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased(),
-                                OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased()]
+        let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
+                                OstExecuteTransactionType.Pay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
             throw OstError("w_et_vp_2", OstErrorText.invalidRuleName)
         }
@@ -165,10 +165,10 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
         
         switch self.ruleName.uppercased() {
-        case OstExecuteTransactionType.ExecuteTransactionTypePay.rawValue.uppercased():
+        case OstExecuteTransactionType.Pay.rawValue.uppercased():
             try self.processForPricer()
             
-        case OstExecuteTransactionType.ExecuteTransactionTypeDirectTransfer.rawValue.uppercased():
+        case OstExecuteTransactionType.DirectTransfer.rawValue.uppercased():
             try self.processForDirectTransfer()
             
         default:

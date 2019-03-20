@@ -94,10 +94,10 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     
 ### Setup Device
 
-After init, setupDevice api should be called everytime the app launches.
+After Initialize, setupDevice api should be called everytime the app launches.
 It ensures current device is in registered state before calling kit apis.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by appicationn server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
  
@@ -105,16 +105,16 @@ It ensures current device is in registered state before calling kit apis.<br/><b
 OstWalletSdk.setupDevice(
     userId: String,
     tokenId: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```    
      
 ### Activate User
 
-It Authorizes the Registered device and Activate the user.
+It authorizes the registered device and activate the user.
 It makes user eligible to do device operations and transactions.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
@@ -128,7 +128,7 @@ OstWalletSdk.activateUser(
     passphrasePrefix: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
                      
@@ -137,7 +137,7 @@ OstWalletSdk.activateUser(
 To add new session to device manager.
 Will be used when there are no current session available to do transactions.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -147,7 +147,7 @@ OstWalletSdk.addSession(
     userId: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -155,7 +155,7 @@ OstWalletSdk.addSession(
 
 To execute Rule.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_transactionType: OstExecuteTransactionType value_<br/>
@@ -167,48 +167,48 @@ OstWalletSdk.executeTransaction(
     tokenHolderAddresses: [String],
     amounts: [String],
     transactionType: OstExecuteTransactionType,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
-### Get Paper Wallet
+### Get Device Mnemonics
 
-To get Paper wallet( 12 words used to generate wallet) of the current device.
-Paper wallet will be used to add new device incase device is lost<br/><br/>
+To get device mnemonics( 12 words used to generate wallet) of the current device.
+Mnemonics will be used to add new device incase device is lost<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.getPaperWallet(
+OstWalletSdk.getDeviceMnemonics(
     userId: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
-### Add Device Using Mnemonics
+### Authorize Current Device With Mnemonics
 
-It add new device using mnemonics provided.
+It authorizes current device using mnemonics provided.
 Using mnemonics it generates wallet key to add new current device.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_mnemonics: Array of mnemonics_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.addDeviceUsingMnemonics(
+OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
     userId: String,
     mnemonics: [String],
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
 )
 ```
 
 ### Get QR-Code To Add Device
 
 Getter method which return QR-Code CIImage for add device.
-Use this methods to generate QR code of current device to be added from authorized device.<br/><br/>
+Use this methods to get QR-Code of current device to be added from authorized device.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 
 ```Swift
 OstWalletSdk.getAddDeviceQRCode(
@@ -216,20 +216,20 @@ OstWalletSdk.getAddDeviceQRCode(
     ) throws -> CIImage?
 ```
 
-### OstPerform
+### Perform QR Action
 
 To perform operations based on QR data provided.
 Through QR, Add device and transaction operations can be performed.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk.perfrom(
+OstWalletSdk.performQRAction(
     userId: String,
     payload: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -237,7 +237,7 @@ OstWalletSdk.perfrom(
 
 To update current Pin with new Pin.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_oldUserPin: Users old Pin_<br/>
 &nbsp;_newUserPin: Users new Pin_<br/>
@@ -249,15 +249,15 @@ OstWalletSdk.resetPin(
     passphrasePrefix: String,
     oldUserPin: String,
     newUserPin: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
-### Recover Device Initialize
+###  Initiate Device Recovery
 
 To recover authorized device which could be misplaced or no more in use.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_userPin: Users Pin_<br/>
@@ -265,31 +265,12 @@ To recover authorized device which could be misplaced or no more in use.<br/><br
 
 
 ```Swift
-OstWalletSdk.recoverDeviceInitialize(
+OstWalletSdk.initiateDeviceRecovery(
     userId: String,
     recoverDeviceAddress: String,
     userPin: String,
     passphrasePrefix: String,
-    delegate: OstWorkFlowCallbackDelegate
-    )
-```
-
-### Polling
-
-To poll provided entity.
-Polling can be used when any entity is in transition status and desired status update is needed.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_entityId: entity id to be polled_<br/>
-&nbsp;_entityType: entity type to be polled_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstWalletSdk.poll(
-    userId: String,
-    entityId: String,
-    entityType: OstPollingEntityType,
-    delegate: OstWorkFlowCallbackDelegate 
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -356,12 +337,6 @@ func flowInterrupted(
         workflowContext: OstWorkflowContext, 
         error: OstError
         )
-```
-```Swift
-/// Show paper wallet
-///
-/// - Parameter mnemonics: array of Words.
-func showPaperWallet(mnemonics: [String])
 ```
 ```Swift
 /// Verify data which is scan from QR-Code

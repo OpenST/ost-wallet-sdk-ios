@@ -25,15 +25,15 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     
     private var deviceToAdd: OstDevice? = nil
     
-    /// Initialization of OstAddDeviceWithQRData
+    /// Initialize
     ///
     /// - Parameters:
-    ///   - userId: Kit user id
+    ///   - userId: User id
     ///   - qrCodeData: QR-Code data
-    ///   - delegate:
+    ///   - delegate: Callback
     init(userId: String,
          deviceAddress: String,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.deviceAddress = deviceAddress
         super.init(userId: userId, delegate: delegate)

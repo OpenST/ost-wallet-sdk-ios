@@ -33,7 +33,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     ///   - delegate: Callback
     init(userId: String,
          payload: String?,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.payloadString = payload;
         super.init(userId: userId, delegate: delegate)

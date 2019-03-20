@@ -46,9 +46,6 @@ class OstGetPaperWallet: OstWorkflowBase {
                     throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)
                 }
                 
-                DispatchQueue.main.async {
-                    self.delegate.showPaperWallet(mnemonics: mnemonics)
-                }
                 self.postWorkflowComplete(entity: mnemonics)
                 
             }catch let error {
