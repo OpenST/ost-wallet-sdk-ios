@@ -163,27 +163,7 @@ extension OstWalletSdk {
         
         return qrCodePayloadString.qrCode
     }
-    
-    /// Start polling for entity id.
-    ///
-    /// - Parameters:
-    ///   - userId: User id.
-    ///   - entityId: Entity id to start polling for.
-    ///   - entityType: Type of entity.
-    ///   - delegate: Callback for action complete or to perform respective actions.
-    fileprivate class func poll(
-        userId: String,
-        entityId: String,
-        entityType: OstPollingEntityType,
-        delegate: OstWorkflowDelegate ) {
         
-        let pollingObj = OstPolling(userId: userId,
-                                    entityId: entityId,
-                                    entityType: entityType,
-                                    delegate: delegate)
-        pollingObj.perform()
-    }
-    
     /// Initiate device recovery.
     ///
     /// - Parameters:
