@@ -31,7 +31,7 @@ class OstPolling: OstWorkflowBase {
     init(userId: String,
          entityId: String,
          entityType: OstPollingEntityType,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.entityId = entityId
         self.entityType = entityType

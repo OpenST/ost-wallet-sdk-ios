@@ -145,7 +145,7 @@
 		EC38BFA022413A96006F8DA2 /* OstRegisterDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */; };
 		EC38BFA122413A96006F8DA2 /* OstPinAcceptDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */; };
 		EC38BFA222413A96006F8DA2 /* OstBaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */; };
-		EC38BFA322413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */; };
+		EC38BFA322413A96006F8DA2 /* OstWorkflowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED122413A96006F8DA2 /* OstWorkflowDelegate.swift */; };
 		EC38BFA422413A96006F8DA2 /* OstValidateDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */; };
 		EC38BFA522413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */; };
 		EC38BFA622413A96006F8DA2 /* OstMigration_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BED722413A96006F8DA2 /* OstMigration_1.swift */; };
@@ -388,7 +388,7 @@
 		EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRegisterDevice.swift; sourceTree = "<group>"; };
 		EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinAcceptDelegate.swift; sourceTree = "<group>"; };
 		EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseDelegate.swift; sourceTree = "<group>"; };
-		EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowCallbackDelegate.swift; sourceTree = "<group>"; };
+		EC38BED122413A96006F8DA2 /* OstWorkflowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowDelegate.swift; sourceTree = "<group>"; };
 		EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstValidateDataDelegate.swift; sourceTree = "<group>"; };
 		EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceRegisteredDelegate.swift; sourceTree = "<group>"; };
 		EC38BED722413A96006F8DA2 /* OstMigration_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMigration_1.swift; sourceTree = "<group>"; };
@@ -894,7 +894,7 @@
 			children = (
 				EC38BECF22413A96006F8DA2 /* OstPinAcceptDelegate.swift */,
 				EC38BED022413A96006F8DA2 /* OstBaseDelegate.swift */,
-				EC38BED122413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift */,
+				EC38BED122413A96006F8DA2 /* OstWorkflowDelegate.swift */,
 				EC38BED222413A96006F8DA2 /* OstValidateDataDelegate.swift */,
 				EC38BED322413A96006F8DA2 /* OstDeviceRegisteredDelegate.swift */,
 			);
@@ -1369,7 +1369,7 @@
 				EC38BFA822413A96006F8DA2 /* OstBaseDbQueries.swift in Sources */,
 				EC38BF4122413A96006F8DA2 /* RPCResponse.swift in Sources */,
 				EC38BFC322413A96006F8DA2 /* OstWalletSdk.swift in Sources */,
-				EC38BFA322413A96006F8DA2 /* OstWorkFlowCallbackDelegate.swift in Sources */,
+				EC38BFA322413A96006F8DA2 /* OstWorkflowDelegate.swift in Sources */,
 				EC38BF7C22413A96006F8DA2 /* EIP712.swift in Sources */,
 				EC38BF5222413A96006F8DA2 /* Exports+Web3.swift in Sources */,
 				EC38BF5D22413A96006F8DA2 /* EthereumContract.swift in Sources */,

@@ -24,7 +24,7 @@ extension OstWalletSdk {
         userId: String,
         tokenId: String,
         forceSync: Bool = false,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let registerDeviceObj = OstRegisterDevice(
             userId: userId,
@@ -50,7 +50,7 @@ extension OstWalletSdk {
         passphrasePrefix: String,
         spendingLimitInWei: String,
         expireAfterInSec: TimeInterval,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let activateUserObj = OstActivateUser(
             userId: userId,
@@ -68,10 +68,10 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDeviceUsingMnemonics(
+    public class func authorizeCurrentDeviceWithMnemonics(
         userId: String,
         mnemonics: [String],
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let addDeviceObject = OstAddDeviceWithMnemonics(
             userId: userId,
@@ -79,22 +79,6 @@ extension OstWalletSdk {
             delegate: delegate)
         
         addDeviceObject.perform()
-    }
-    
-    /// Add device
-    ///
-    /// - Parameters:
-    ///   - userId: Ost user identifier.
-    ///   - delegate: Callback for action complete or to perform respective action.
-    public class func addDeviceUsingMnemonicsString(
-        userId: String,
-        mnemonics: String,
-        delegate: OstWorkFlowCallbackDelegate) {
-        
-        let mnemonicsArray = mnemonics.components(separatedBy: " ")
-        self.addDeviceUsingMnemonics(userId: userId,
-                                     mnemonics: mnemonicsArray,
-                                     delegate: delegate)
     }
     
     /// Add session for user.
@@ -108,7 +92,7 @@ extension OstWalletSdk {
         userId: String,
         spendingLimitInWei: String,
         expireAfterInSec: TimeInterval,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let ostAddSession = OstAddSession(
             userId: userId,
@@ -128,9 +112,11 @@ extension OstWalletSdk {
     public class func performQRAction(
         userId: String,
         payload: String,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
-        let performObj = OstPerform(userId: userId, payload: payload, delegate: delegate)
+        let performObj = OstPerform(userId: userId,
+                                    payload: payload,
+                                    delegate: delegate)
         performObj.perform()
     }
     
@@ -141,7 +127,7 @@ extension OstWalletSdk {
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func getPaperWallet(
         userId: String,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let paperWalletObj = OstGetPaperWallet(userId: userId,
                                                delegate: delegate)
@@ -189,7 +175,7 @@ extension OstWalletSdk {
         userId: String,
         entityId: String,
         entityType: OstPollingEntityType,
-        delegate: OstWorkFlowCallbackDelegate ) {
+        delegate: OstWorkflowDelegate ) {
         
         let pollingObj = OstPolling(userId: userId,
                                     entityId: entityId,
@@ -198,7 +184,7 @@ extension OstWalletSdk {
         pollingObj.perform()
     }
     
-    /// Initialize recover device.
+    /// Initiate device recovery.
     ///
     /// - Parameters:
     ///   - userId: User id.
@@ -206,12 +192,12 @@ extension OstWalletSdk {
     ///   - userPin: User pin.
     ///   - passphrasePrefix: Application passphrase prefix provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
-    public class func initializeRecoverDevice(
+    public class func initiateDeviceRecovery(
         userId: String,
         recoverDeviceAddress: String,
         userPin: String,
         passphrasePrefix: String,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
                                                        deviceAddressToRecover: recoverDeviceAddress,
@@ -234,7 +220,7 @@ extension OstWalletSdk {
         passphrasePrefix: String,
         oldUserPin: String,
         newUserPin: String,
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let resetPinWorkFlow = OstResetPin(
             userId: userId,
@@ -270,7 +256,7 @@ extension OstWalletSdk {
         amounts: [String],
         transactionType: OstExecuteTransactionType,
         meta: [String: String],
-        delegate: OstWorkFlowCallbackDelegate) {
+        delegate: OstWorkflowDelegate) {
         
         let executeTransactionFlow = OstExecuteTransaction(
             userId: userId,

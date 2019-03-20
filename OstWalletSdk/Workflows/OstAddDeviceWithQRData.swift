@@ -33,7 +33,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///   - delegate:
     init(userId: String,
          deviceAddress: String,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.deviceAddress = deviceAddress
         super.init(userId: userId, delegate: delegate)

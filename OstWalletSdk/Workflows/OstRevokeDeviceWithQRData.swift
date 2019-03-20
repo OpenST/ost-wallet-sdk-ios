@@ -37,7 +37,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///   - delegate: Callback
     init(userId: String,
          deviceAddressToRevoke: String,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
 
         self.deviceAddressToRevoke = deviceAddressToRevoke
         super.init(userId: userId, delegate: delegate)

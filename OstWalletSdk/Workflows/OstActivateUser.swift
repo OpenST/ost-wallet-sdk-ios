@@ -33,7 +33,7 @@ class OstActivateUser: OstWorkflowBase {
          passphrasePrefix: String,
          spendingLimit: String,
          expireAfter: TimeInterval,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter

@@ -33,7 +33,7 @@ class OstRecoverDevice: OstWorkflowBase {
          deviceAddressToRecover: String,
          userPin: String,
          passphrasePrefix: String,
-         delegate: OstWorkFlowCallbackDelegate) {
+         delegate: OstWorkflowDelegate) {
         
         self.deviceAddressToRecover = deviceAddressToRecover
         super.init(userId: userId, delegate: delegate)

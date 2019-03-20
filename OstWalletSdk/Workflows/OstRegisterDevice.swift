@@ -22,7 +22,11 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///   - tokenId: Kit token id.
     ///   - forceSync: Need to do forceSync.
     ///   - delegate: Callback.
-    init(userId: String, tokenId: String, forceSync: Bool, delegate: OstWorkFlowCallbackDelegate) {
+    init(userId: String,
+         tokenId: String,
+         forceSync: Bool,
+         delegate: OstWorkflowDelegate) {
+        
         self.tokenId = tokenId
         self.forceSync = forceSync            
         super.init(userId: userId, delegate: delegate)
