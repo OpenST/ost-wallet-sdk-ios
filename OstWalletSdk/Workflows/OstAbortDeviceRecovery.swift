@@ -26,14 +26,14 @@ class OstAbortDeviceRecovery: OstWorkflowBase {
     ///   - password: Application password
     ///   - delegate: Call back
     init(userId: String,
-         uPin: String,
-         password: String,
+         userPin: String,
+         passphrasePrefix: String,
          delegate: OstWorkflowDelegate) {
         
         super.init(userId: userId, delegate: delegate)
         self.pinManager = OstPinManager(userId: self.userId,
-                                        passphrasePrefix: password,
-                                        userPin: uPin)
+                                        passphrasePrefix: passphrasePrefix,
+                                        userPin: userPin)
     }
     
     /// Get workflow Queue

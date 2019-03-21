@@ -196,13 +196,13 @@ extension OstWalletSdk {
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func abortDeviceRecovery(
         userId: String,
-        uPin: String,
-        password: String,
+        userPin: String,
+        passphrasePrefix: String,
         delegate: OstWorkflowDelegate) {
         
         let abortDeviceRecoveryFlow = OstAbortDeviceRecovery(userId: userId,
-                                                             uPin: uPin,
-                                                             password: password,
+                                                             userPin: userPin,
+                                                             passphrasePrefix: passphrasePrefix,
                                                              delegate: delegate)
         abortDeviceRecoveryFlow.perform()
     }
