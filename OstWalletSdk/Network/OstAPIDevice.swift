@@ -12,13 +12,13 @@ import Foundation
 
 class OstAPIDevice: OstAPIBase {
     
-    let userApiResourceBase: String
+    let deviceApiResourceBase: String
 
     /// Initializer
     ///
     /// - Parameter userId: User Id
     override init(userId: String) {
-        userApiResourceBase = "/users/\(userId)/devices"
+        deviceApiResourceBase = "/users/\(userId)/devices"
         super.init(userId: userId)
     }
     
@@ -47,7 +47,7 @@ class OstAPIDevice: OstAPIBase {
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
     func getDevice(deviceAddress: String, onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-        resourceURL = userApiResourceBase + "/" + deviceAddress
+        resourceURL = deviceApiResourceBase + "/" + deviceAddress
         var params: [String: Any] = [:]
 
         // Sign API resource
@@ -77,7 +77,7 @@ class OstAPIDevice: OstAPIBase {
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
     func authorizeDevice(params: [String: Any], onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-        resourceURL = userApiResourceBase + "/authorize"
+        resourceURL = deviceApiResourceBase + "/authorize"
         var authorizeDeviceParams: [String: Any] = params
         
         // Sign API resource
@@ -110,7 +110,7 @@ class OstAPIDevice: OstAPIBase {
                       onSuccess: ((OstDevice) -> Void)?,
                       onFailure: ((OstError) -> Void)?) throws {
         
-        resourceURL = userApiResourceBase + "/revoke"
+        resourceURL = deviceApiResourceBase + "/revoke"
         var revokeDeviceParams: [String: Any] = params
         
         // Sign API resource
@@ -143,7 +143,7 @@ class OstAPIDevice: OstAPIBase {
                                onSuccess: ((OstDevice) -> Void)?,
                                onFailure: ((OstError) -> Void)?) throws {
         
-        resourceURL = userApiResourceBase + "/initiate-recovery"
+        resourceURL = deviceApiResourceBase + "/initiate-recovery"
         
         var revokeDeviceParams: [String: Any] = params
         // Sign API resource
@@ -174,7 +174,7 @@ class OstAPIDevice: OstAPIBase {
                             onSuccess: ((OstDevice) -> Void)?,
                             onFailure: ((OstError) -> Void)?) throws {
         
-        resourceURL = userApiResourceBase + "/abort-recovery"
+        resourceURL = deviceApiResourceBase + "/abort-recovery"
         
         var revokeDeviceParams: [String: Any] = params
         // Sign API resource
@@ -191,6 +191,34 @@ class OstAPIDevice: OstAPIBase {
                 }
         }) { (failureResponse) in
             onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
+        }
+    }
+    
+    /// Get pending recovery for user
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    func getPendingRecovery(onSuccess: (([OstDevice]) -> Void)?,
+                            onFailure: ((OstError) -> Void)?) throws {
+        
+        resourceURL = deviceApiResourceBase + "/pending-recovery/"
+        
+        var pendingRecoveryDeviceParams: [String: Any] = [:]
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &pendingRecoveryDeviceParams, withUserId: self.userId)
+        
+        // Make an API call and store the data in database.
+        get(params: pendingRecoveryDeviceParams as [String: AnyObject],
+            onSuccess: { (apiResponse) in
+                do {
+                    let entities = try OstAPIHelper.syncEntitiesWithAPIResponse(apiResponse: apiResponse)
+                    onSuccess?(entities as! [OstDevice])
+                }catch let error{
+                    onFailure?(error as! OstError)
+                }
+        }) { (failureResponse) in
+            onFailure?(OstError.init(fromApiResponse: failureResponse!))
         }
     }
 }

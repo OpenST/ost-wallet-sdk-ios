@@ -179,12 +179,32 @@ extension OstWalletSdk {
         passphrasePrefix: String,
         delegate: OstWorkflowDelegate) {
         
-        let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
-                                                       deviceAddressToRecover: recoverDeviceAddress,
-                                                       userPin: userPin,
-                                                       passphrasePrefix: passphrasePrefix,
-                                                       delegate: delegate)
-        recoverDeviceInitialize.perform()
+        let initiateDeviceRecoveryFlow = OstRecoverDevice(userId: userId,
+                                                          deviceAddressToRecover: recoverDeviceAddress,
+                                                          userPin: userPin,
+                                                          passphrasePrefix: passphrasePrefix,
+                                                          delegate: delegate)
+        initiateDeviceRecoveryFlow.perform()
+    }
+    
+    /// Abort device recovery.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - uPin: user pin.
+    ///   - password: application password provied by application server.
+    ///   - delegate: Callback for action complete or to perform respective actions.
+    public class func abortDeviceRecovery(
+        userId: String,
+        uPin: String,
+        password: String,
+        delegate: OstWorkflowDelegate) {
+        
+        let abortDeviceRecoveryFlow = OstAbortDeviceRecovery(userId: userId,
+                                                             uPin: uPin,
+                                                             password: password,
+                                                             delegate: delegate)
+        abortDeviceRecoveryFlow.perform()
     }
     
     /// Reset pin
