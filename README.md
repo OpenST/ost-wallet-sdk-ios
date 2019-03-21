@@ -177,7 +177,7 @@ OstSdk.addDeviceUsingMnemonics(
 )
 ```
 
-### Get QR Code To Add Device
+### Generate a QR Code
 
 A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on.Scanning this QR code with a authorized mobile device will result in the new device being authorized.<br/><br/>
 **Parameters**<br/>
@@ -191,8 +191,7 @@ OstSdk.getAddDeviceQRCode(
 
 ### OstPerform
 
-To perform operations based on QR data provided.
-Through QR, Add device and transaction operations can be performed.<br/><br/>
+QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be  used to process the information scanned off a QR code and act on it.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
@@ -206,9 +205,10 @@ OstSdk.perfrom(
     )
 ```
 
-### Reset Pin
+### Reset a User's PIN
 
-To update current Pin with new Pin.<br/><br/>
+The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
+<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
@@ -226,9 +226,9 @@ OstSdk.resetPin(
     )
 ```
 
-### Recover Device Initialize
+### Initialize Recovery
 
-To recover authorized device which could be misplaced or no more in use.<br/><br/>
+A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
@@ -248,8 +248,6 @@ OstSdk.recoverDeviceInitialize(
 ```
 
 ### Polling
-
-To poll provided entity.
 Polling can be used when any entity is in transition status and desired status update is needed.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
@@ -331,7 +329,7 @@ func flowInterrupted(
         )
 ```
 ```Swift
-/// Show paper wallet
+/// Show mnemonic phrase
 ///
 /// - Parameter mnemonics: array of Words.
 func showPaperWallet(mnemonics: [String])
@@ -363,7 +361,7 @@ func requestAcknowledged(
 
 ## Reference
 
-For reference you can refer our [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
+For a sample implementation, please see the Demo App: [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
 
 There are other references are listed below:
 
