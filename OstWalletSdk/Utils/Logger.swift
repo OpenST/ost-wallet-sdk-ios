@@ -16,9 +16,9 @@ class Logger {
 //        #if DEBUG
         debugPrint()
         debugPrint("************************ START *********************************")
-        debugPrint("function: \(function)")
-        debugPrint("\(message ?? "")")
-        debugPrint(parameterToPrint as AnyObject)
+        print("function: \(function)")
+        print("\(message ?? "")")
+        print(parameterToPrint as AnyObject)
         debugPrint("************************* END *******************************")
 //        #endif
     }
