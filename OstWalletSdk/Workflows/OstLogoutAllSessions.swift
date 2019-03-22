@@ -134,7 +134,6 @@ class OstLogoutAllSessions: OstWorkflowBase {
         }
         self.postRequestAcknowledged(entity: tokenHolder!)
         OstKeyManager(userId: self.userId).deleteAllSessions()
-        Logger.log(message: "Getting sessions after delete", parameterToPrint: try? OstKeyManager(userId: self.userId).getSessions() ?? "not found")
         pollingForLogoutAllSessions(entity: tokenHolder!)
     }
     

@@ -200,13 +200,11 @@ class OstAPIHelper {
     private class func getSyncedEntities(_ apiResponse: [String: Any?]) throws -> [OstBaseEntity] {
         let resultType = apiResponse["result_type"] as? String ?? ""
         let entityDataArray =  apiResponse[resultType] as? [[String: Any?]]
-        Logger.log(message: "", parameterToPrint: entityDataArray)
         if (entityDataArray == nil) {
             throw OstError.init("n_ah_gses_1", .entityNotAvailable)
         }
         
         let getItem: ((String, [String: Any?]) throws -> String) = { (identifier, entityData) -> String in
-            Logger.log(message: identifier, parameterToPrint: entityData)
             guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData, forKey: identifier) as Any?) else {
                 throw OstError("n_ah_gses_2", .invalidEntityType)
             }

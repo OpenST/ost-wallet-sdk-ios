@@ -13,14 +13,14 @@ import Alamofire
 
 class Logger {
     class func log(message: String? = nil, parameterToPrint: Any? = nil, function: String = #function) {
-//        #if DEBUG
+        #if DEBUG
         debugPrint()
         debugPrint("************************ START *********************************")
-        print("function: \(function)")
-        print("\(message ?? "")")
-        print(parameterToPrint as AnyObject)
+        debugPrint("function: \(function)")
+        debugPrint("\(message ?? "")")
+        debugPrint(parameterToPrint as AnyObject)
         debugPrint("************************* END *******************************")
-//        #endif
+        #endif
     }
 }
 
