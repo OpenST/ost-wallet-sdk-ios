@@ -484,13 +484,13 @@ private extension OstKeyManager {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         
         if var ethKeyMappingData:[String: Any] = userDeviceInfo[key] as? [String : Any] {
-            if (ethKeyMappingData[address.lowercased()] != nil) {
-                try deleteString(forKey: ethKeyMappingData["entityId"] as! String)
+            if let ethKeyMapping: [String: Any] = ethKeyMappingData[address.lowercased()] as? [String: Any] {
+                try deleteString(forKey: ethKeyMapping["entityId"] as! String)
                 ethKeyMappingData[address.lowercased()] = nil;
                 userDeviceInfo[key] = ethKeyMappingData
                 try setUserDeviceInfo(deviceInfo: userDeviceInfo)
             }
-        }                
+        }
     }
     
     /// Store mnemonics in the keychain for given ethereum address
