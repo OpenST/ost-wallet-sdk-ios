@@ -36,6 +36,15 @@ public class OstTokenHolder: OstBaseEntity {
             )
     }
     
+    /// Get token holder entity
+    ///
+    /// - Parameter id: Token holder entity id
+    /// - Returns: TokenHolder entity
+    /// - Throws: OstError
+    class func getById(_ id: String) throws -> OstTokenHolder? {
+        return try OstTokenHolderRepository.sharedTokenHolder.getById(id) as? OstTokenHolder
+    }
+    
     /// Get key identifier for id
     ///
     /// - Returns: Key identifier for id

@@ -19,6 +19,7 @@ enum ResultType: String {
     case transaction = "transaction"
     case rules = "rules"
     case devices = "devices"
+    case tokenHolder = "token_holder"
 }
 
 class OstAPIHelper {
@@ -124,6 +125,8 @@ class OstAPIHelper {
             try OstSession.storeEntity(entityData as! [String: Any?])
         case ResultType.transaction.rawValue:
             try OstTransaction.storeEntity(entityData as! [String: Any?])
+        case ResultType.tokenHolder.rawValue:
+            try OstTokenHolder.storeEntity(entityData as! [String: Any?])
         case ResultType.rules.rawValue:
             let rulesEntityData = entityData as! [[String: Any?]]
             for ruleEntityData in rulesEntityData {
@@ -176,6 +179,9 @@ class OstAPIHelper {
         case ResultType.transaction.rawValue:
             id = try getItem(OstTransaction.ENTITY_IDENTIFIER)
             return try OstTransaction.getById(id)!
+        case ResultType.tokenHolder.rawValue:
+            id = try getItem(OstTokenHolder.ENTITY_IDENTIFIER)
+            return try OstTokenHolder.getById(id)!
         default:
             throw OstError("n_ah_gse_3", .invalidEntityType)
         }
