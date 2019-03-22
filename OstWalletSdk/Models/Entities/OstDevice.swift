@@ -144,7 +144,7 @@ public extension OstDevice {
     /// Check if the device status is REVOKING
     var isStatusRevoking: Bool {
         if let status: String = self.status {
-            return (OstDevice.Status.REVOKING.rawValue == status)
+            return (OstDevice.Status.REVOKING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -152,7 +152,7 @@ public extension OstDevice {
     /// Check if the device status is REVOKED
     var isStatusRevoked: Bool {
         if let status: String = self.status {
-            return (OstDevice.Status.REVOKED.rawValue == status)
+            return (OstDevice.Status.REVOKED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -160,7 +160,7 @@ public extension OstDevice {
     /// Check if the device status is RECOVERING
     var isStatusRecovering: Bool {
         if let status: String = self.status {
-            return (OstDevice.Status.RECOVERING.rawValue == status)
+            return (OstDevice.Status.RECOVERING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }

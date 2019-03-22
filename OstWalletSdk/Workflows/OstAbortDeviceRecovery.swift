@@ -67,7 +67,7 @@ class OstAbortDeviceRecovery: OstWorkflowBase {
         group.enter()
         try OstAPIDevice(userId: self.userId)
             .getPendingRecovery(onSuccess: { (devices) in
-                
+                Logger.log(message: "devices count", parameterToPrint: devices.count)
                 let assignDevice: ((OstDevice) -> Void) = { device in
                     if device.isStatusRevoking {
                         self.revokingDevice = device
