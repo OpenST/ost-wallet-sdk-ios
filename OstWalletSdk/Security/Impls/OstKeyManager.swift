@@ -232,6 +232,15 @@ class OstKeyManager {
         return ethKeys.address!
     }
     
+    /// Delete all sessions for user
+    func deleteAllSessions() {
+        if let sessionAddresses: [String] = try? getSessions() {
+            for sessionAddress in sessionAddresses {
+                try? deleteSessionKey(sessionAddress: sessionAddress)
+            }
+        }
+    }
+    
     /// Get all the session addresses available in the device
     ///
     /// - Returns: Array containing session addresses

@@ -268,4 +268,19 @@ extension OstWalletSdk {
         
         executeTransactionFlow.perform()
     }
+    
+    /// Logout all sessions
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - delegate: Callback
+    public class func logoutAllSessions(
+        userId: String,
+        delegate: OstWorkflowDelegate
+        ) {
+        
+        let logoutAllSessionsFlow = OstLogoutAllSessions(userId: userId,
+                                                         delegate: delegate)
+        logoutAllSessionsFlow.perform()
+    }
 }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4BF8FE4A2243B26C00519779 /* OstAbortDeviceRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */; };
+		4BF8FE522244E45200519779 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */; };
+		4BF8FE542244E56300519779 /* OstAPITokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */; };
+		4BF8FE562244E5A200519779 /* OstLogoutPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE552244E5A200519779 /* OstLogoutPollingService.swift */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38BE2122413992006F8DA2 /* OstWalletSdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE2022413992006F8DA2 /* OstWalletSdkTests.swift */; };
 		EC38BE2322413992006F8DA2 /* OstWalletSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = EC38BE1522413992006F8DA2 /* OstWalletSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -248,6 +251,9 @@
 
 /* Begin PBXFileReference section */
 		4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceRecovery.swift; sourceTree = "<group>"; };
+		4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessions.swift; sourceTree = "<group>"; };
+		4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITokenHolder.swift; sourceTree = "<group>"; };
+		4BF8FE552244E5A200519779 /* OstLogoutPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLogoutPollingService.swift; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1522413992006F8DA2 /* OstWalletSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OstWalletSdk.h; sourceTree = "<group>"; };
 		EC38BE1622413992006F8DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -836,6 +842,7 @@
 				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
 				EC38BEC222413A96006F8DA2 /* OstPolling.swift */,
 				EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */,
+				4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -888,6 +895,7 @@
 				EC38BECA22413A96006F8DA2 /* OstUserPollingService.swift */,
 				EC38BECB22413A96006F8DA2 /* OstDevicePollingService.swift */,
 				EC38BECC22413A96006F8DA2 /* OstResetPinPollingService.swift */,
+				4BF8FE552244E5A200519779 /* OstLogoutPollingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -974,6 +982,7 @@
 				EC38BEF422413A96006F8DA2 /* OstAPISalt.swift */,
 				EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */,
 				EC38BEF622413A96006F8DA2 /* OstAPIChain.swift */,
+				4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1390,6 +1399,7 @@
 				EC38BF4522413A96006F8DA2 /* EthereumLogObject.swift in Sources */,
 				EC38BF4C22413A96006F8DA2 /* BytesConvertible.swift in Sources */,
 				EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */,
+				4BF8FE562244E5A200519779 /* OstLogoutPollingService.swift in Sources */,
 				EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */,
 				EC38BF2A22413A96006F8DA2 /* Date+Timestamp.swift in Sources */,
 				EC38BF5C22413A96006F8DA2 /* SolidityFunction.swift in Sources */,
@@ -1421,6 +1431,7 @@
 				EC38BFA722413A96006F8DA2 /* OstBaseMigration.swift in Sources */,
 				EC38BF9022413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift in Sources */,
 				EC38BF4922413A96006F8DA2 /* Bytes+TrimLeadingZeros.swift in Sources */,
+				4BF8FE522244E45200519779 /* OstLogoutAllSessions.swift in Sources */,
 				EC38BF1F22413A96006F8DA2 /* OstKeychainHelper.swift in Sources */,
 				EC38BF9B22413A96006F8DA2 /* OstSessionPollingService.swift in Sources */,
 				EC38BF3C22413A96006F8DA2 /* EthereumSyncStatusObject.swift in Sources */,
@@ -1434,6 +1445,7 @@
 				EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */,
 				EC38BF3722413A96006F8DA2 /* Types+RLPItemConvertible.swift in Sources */,
 				EC38BF8022413A96006F8DA2 /* OstAuthorizeDevice.swift in Sources */,
+				4BF8FE542244E56300519779 /* OstAPITokenHolder.swift in Sources */,
 				EC38BF5822413A96006F8DA2 /* Eth+Contract.swift in Sources */,
 				EC38BF3422413A96006F8DA2 /* RLPEncoder.swift in Sources */,
 				EC38BFAE22413A96006F8DA2 /* OstTokenDbQueries.swift in Sources */,

@@ -17,6 +17,12 @@ public class OstTokenHolder: OstBaseEntity {
     /// Parent entity identifier for user entity
     static let ENTITY_PARENT_IDENTIFIER = "user_id"
     
+    enum Status: String {
+        case ACTIVE = "ACTIVE"
+        case LOGGING_OUT = "LOGGING OUT"
+        case LOGGED_OUT = "LOGGED OUT"
+    }
+    
     /// Store OstTokenHolder entity data in the data base and returns the OstTokenHolder model object
     ///
     /// - Parameter entityData: Entity data dictionary
@@ -69,5 +75,32 @@ public extension OstTokenHolder {
     /// Get token holder execure rule call prefix
     var executeRuleCallPrefix: String? {
         return data["execute_rule_callprefix"] as? String ?? nil
+    }
+}
+
+public extension OstTokenHolder {
+    
+    /// Check whether token holder status is ACTIVE or not. returns true if status is ACTIVE.
+    var isStatusActive: Bool {
+        if let status: String = self.status {
+            return (OstTokenHolder.Status.ACTIVE.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check whether token holder status is LOGGING OUT or not. returns true if status is LOGGING OUT.
+    var isStatusLoggingOut: Bool {
+        if let status: String = self.status {
+            return (OstTokenHolder.Status.LOGGING_OUT.rawValue == status)
+        }
+        return false
+    }
+    
+    /// Check whether token holder status is LOGGED OUT or not. returns true if status is LOGGED OUT.
+    var isStatusLoggedOut: Bool {
+        if let status: String = self.status {
+            return (OstTokenHolder.Status.LOGGED_OUT.rawValue == status)
+        }
+        return false
     }
 }

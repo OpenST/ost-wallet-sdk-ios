@@ -26,7 +26,8 @@ public enum OstWorkflowType {
     recoverDevice,
     abortDeviceRecovery,
     revokeDeviceWithQRCode,
-    resetPin
+    resetPin,
+    logoutAllSessions
 }
 
 public class OstWorkflowContext {    
