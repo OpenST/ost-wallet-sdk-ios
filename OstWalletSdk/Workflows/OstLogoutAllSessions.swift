@@ -129,6 +129,7 @@ class OstLogoutAllSessions: OstWorkflowBase {
             })
         group.wait()
         if (nil != err) {
+            try? fetchDeviceManager()
             throw err!
         }
         self.postRequestAcknowledged(entity: tokenHolder!)
