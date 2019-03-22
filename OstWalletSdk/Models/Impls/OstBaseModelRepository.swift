@@ -50,7 +50,9 @@ class OstBaseModelRepository {
     ///   - isSynchronous: Indicated if its a synchronous task
     /// - Returns: OstBaseEntity object
     /// - Throws: OSTError
-    final func insertOrUpdate(_ entityData: [String: Any?], forIdentifierKey identifier: String, isSynchronous:Bool = false) throws {
+    final func insertOrUpdate(_ entityData: [String: Any?],
+                              forIdentifierKey identifier: String,
+                              isSynchronous: Bool = false) throws {
         // Commenting the below code. The entities will always be written in DB
         
         //        // Get the primary id value of the entity

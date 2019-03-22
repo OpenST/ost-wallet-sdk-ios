@@ -132,6 +132,11 @@ class OstAPIHelper {
             for ruleEntityData in rulesEntityData {
                 try OstRule.storeEntity(ruleEntityData)
             }
+        case ResultType.devices.rawValue:
+            let devicesEntityData = entityData as! [[String: Any?]]
+            for deviceEntityData in devicesEntityData {
+                try OstDevice.storeEntity(deviceEntityData)
+            }
         default:
             return
         }
