@@ -1,11 +1,12 @@
-# ost-Wallet-sdk-iOS
+# OST Wallet SDK iOS
 
 ## Introduction
 
-Wallet SDK is a mobile application development SDK that enables developers to integrate the  functionality of a non-custodial crypto-wallet into consumer applications. The functionality
-- Safely generate and store keys on their user's  mobile device
-- Sign ethereum transactions and data as defined by contracts using EIP-1077
-- Enable their user's to recover access to funds in case the user loses their authorized device
+Wallet SDK is a mobile application development SDK that enables developers to integrate the functionality of a non-custodial crypto-wallet into consumer applications. The SDK:
+
+- Safely generates and stores keys on the user's mobile device
+- Signs ethereum transactions and data as defined by contracts using EIP-1077
+- Enables users to recover access to their Brand Tokens in case the user loses their authorized device</br>
 
 
 
@@ -27,7 +28,7 @@ github "ostdotcom/ost-wallet-sdk-ios"
 - Run `carthage update --platform iOS`
 - A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is
 - Open application target, under `General` tab, drag the built `OstSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
-- On your application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
+- On the application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
 
 ```sh
 /usr/local/bin/carthage copy-frameworks
@@ -46,13 +47,13 @@ $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
 $(SRCROOT)/Carthage/Build/iOS/OstSdk.framework
 ```
 
-## OstSdk APIs
+## OST SDK APIs
 
 
 ### Initialize the SDK
 
-To get started with the SDK, you must first initialize SDK by calling _initialize()_ api.
-It initializes all the required instances and run migrations of db.
+The SDK can be initialized by calling the `initialize()` API which
+initializes all the required instances and runs migrations of local databases.
 
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -65,10 +66,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-### Setup the device
+### Set up the device
 
-After initialization, the setupDevice API should be called every time the app launches.
-It ensures that the current device is `registered` state before calling OST Platform APIs.<br/><br/>
+The `setupDevice` API should be called each time the application is launched to confirm that the current device is in the `registered` state and therefore able to call the OST Platform APIs.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by appicationn server_<br/>
@@ -84,9 +84,7 @@ OstSdk.setupDevice(
 
 ### Activate the user
 
-It authorizes the registered device and activates the user. User activation refers to the deployment of smart-contracts that form the user's Brand Token Wallet.
-
-A user can start engaging with a Brand Token economy once they have been activated.<br/><br/>
+User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
@@ -109,7 +107,7 @@ OstSdk.activateUser(
 ### Authorize session
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user.
 
-The device manager, which controls the tokens authorizes sessions. <br/><br/>
+The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
@@ -126,9 +124,7 @@ OstSdk.addSession(
 ```
 
 ### Execute Transaction
-A transactions where Brand Tokens are transferred from a user to another actor in the Brand Token economy are signed using `sessionKey` if there is an active session. In the absense of an active session, a new session is authorized.
-
-To execute Rule.<br/><br/>
+A transaction where Brand Tokens are transferred from a user to another actor within the Brand Token economy are signed using `sessionKey` if there is an active session. In the absence of an active session, a new session is authorized.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
@@ -161,7 +157,7 @@ OstSdk.getPaperWallet(
     )
 ```
 
-### Add Device Using Mnemonics
+### Add a device using mnemonics
 
 A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.<br/><br/>
 **Parameters**<br/>
@@ -189,7 +185,7 @@ OstSdk.getAddDeviceQRCode(
     ) throws -> CIImage?
 ```
 
-### OstPerform
+### Perform QR action
 
 QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be  used to process the information scanned off a QR code and act on it.<br/><br/>
 **Parameters**<br/>
