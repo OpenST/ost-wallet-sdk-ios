@@ -92,7 +92,7 @@ public extension OstTokenHolder {
     /// Check whether token holder status is ACTIVE or not. returns true if status is ACTIVE.
     var isStatusActive: Bool {
         if let status: String = self.status {
-            return (OstTokenHolder.Status.ACTIVE.rawValue == status)
+            return (OstTokenHolder.Status.ACTIVE.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -100,7 +100,7 @@ public extension OstTokenHolder {
     /// Check whether token holder status is LOGGING OUT or not. returns true if status is LOGGING OUT.
     var isStatusLoggingOut: Bool {
         if let status: String = self.status {
-            return (OstTokenHolder.Status.LOGGING_OUT.rawValue == status)
+            return (OstTokenHolder.Status.LOGGING_OUT.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -108,7 +108,7 @@ public extension OstTokenHolder {
     /// Check whether token holder status is LOGGED OUT or not. returns true if status is LOGGED OUT.
     var isStatusLoggedOut: Bool {
         if let status: String = self.status {
-            return (OstTokenHolder.Status.LOGGED_OUT.rawValue == status)
+            return (OstTokenHolder.Status.LOGGED_OUT.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }

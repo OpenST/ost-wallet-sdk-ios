@@ -94,14 +94,14 @@ public extension OstTransaction {
 public extension OstTransaction {
     var isStatusSuccess: Bool {
         if let status: String = self.status {
-            return (OstTransaction.Status.SUCCESS.rawValue == status)
+            return (OstTransaction.Status.SUCCESS.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
     
     var isStatusFailed: Bool {
         if let status: String = self.status {
-            return (OstTransaction.Status.FAILED.rawValue == status)
+            return (OstTransaction.Status.FAILED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
