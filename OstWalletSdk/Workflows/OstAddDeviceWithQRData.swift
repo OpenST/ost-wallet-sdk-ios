@@ -20,7 +20,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         return deviceAddress
     }
     
-    static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
+    static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .userInitiated)
     private let deviceAddress: String
     
     private var deviceToAdd: OstDevice? = nil

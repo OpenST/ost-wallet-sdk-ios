@@ -11,7 +11,7 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    static private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    static private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .userInitiated)
     
     /// Get workflow Queue
     ///

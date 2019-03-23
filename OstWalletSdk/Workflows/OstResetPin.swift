@@ -11,7 +11,8 @@
 import Foundation
 
 class OstResetPin: OstWorkflowBase {
-    static private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .background)
+    static private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .userInitiated)
+    
     private let workflowTransactionCountForPolling = 1
     private let pinManager: OstPinManager
     
@@ -117,6 +118,7 @@ class OstResetPin: OstWorkflowBase {
         if (err != nil) {
             throw err!
         }
+        try? self.pinManager.clearPinHash()
         return recoveryOwnerEntity!
     }
     

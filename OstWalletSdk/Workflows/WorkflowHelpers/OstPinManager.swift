@@ -128,6 +128,13 @@ class OstPinManager {
         }        
     }
     
+    /// Clear the stored pin hash
+    ///
+    /// - Throws: OstError
+    func clearPinHash() throws {
+        try OstKeyManager(userId: self.userId).deletePinHash()
+    }
+
     /// Get signed data for pin reset
     ///
     /// - Parameter newRecoveryOwnerAddress: New recovery owner address

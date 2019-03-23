@@ -13,9 +13,9 @@ import EthereumKit
 
 struct OstConstants {
     
-    static let OST_RECOVERY_PIN_SCRYPT_N: Int = 14 // power of 2
+    static let OST_RECOVERY_PIN_SCRYPT_N: Int = 20 // power of 2
     static let OST_RECOVERY_PIN_SCRYPT_P: Int = 1
-    static let OST_RECOVERY_PIN_SCRYPT_R: Int = 8
+    static let OST_RECOVERY_PIN_SCRYPT_R: Int = 1
     static let OST_RECOVERY_PIN_SCRYPT_DESIRED_SIZE_BYTES: Int = 32
     
     static let OST_CONTENT_TYPE = "application/x-www-form-urlencoded"
