@@ -136,7 +136,7 @@ class OstLogoutAllSessions: OstWorkflowBase {
             throw err!
         }
         self.postRequestAcknowledged(entity: tokenHolder!)
-//        OstKeyManager(userId: self.userId).deleteAllSessions()
+        OstKeyManager(userId: self.userId).deleteAllSessions()
         pollingForLogoutAllSessions(entity: tokenHolder!)
     }
     
