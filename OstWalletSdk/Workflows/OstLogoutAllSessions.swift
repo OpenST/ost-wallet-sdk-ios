@@ -26,7 +26,7 @@ class OstLogoutAllSessions: OstWorkflowBase {
     override func getWorkflowQueue() -> DispatchQueue {
         return OstLogoutAllSessions.ostLogoutAllSessionsQueue
     }
-    
+
     /// process
     ///
     /// - Throws: OstError

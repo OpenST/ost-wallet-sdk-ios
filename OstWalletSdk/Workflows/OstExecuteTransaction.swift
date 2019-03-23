@@ -142,7 +142,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
                                 OstExecuteTransactionType.Pay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_2", OstErrorText.invalidRuleName)
+            throw OstError("w_et_vp_2", OstErrorText.rulesNotFound)
         }
         
         let filteredAddresses = toAddresses.filter({$0 != ""})

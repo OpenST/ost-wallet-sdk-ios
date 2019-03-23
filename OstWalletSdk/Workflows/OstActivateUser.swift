@@ -66,7 +66,7 @@ class OstActivateUser: OstWorkflowBase {
             throw OstError("w_au_vp_1", .userAlreadyActivated)
         }
         if (self.currentDevice?.isStatusAuthorized)! {
-            throw OstError("w_au_vp_2", .deviceAlreadyAuthorized)
+            throw OstError("w_au_vp_2", .deviceAuthorized)
         }
         
         if  0 > self.expireAfter {
