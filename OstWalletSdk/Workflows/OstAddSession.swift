@@ -12,7 +12,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     
-    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     

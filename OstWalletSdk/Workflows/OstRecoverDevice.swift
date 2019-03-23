@@ -11,7 +11,7 @@
 import Foundation
 
 class OstRecoverDevice: OstWorkflowBase {
-    static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRecover: String
     

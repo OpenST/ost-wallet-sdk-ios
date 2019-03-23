@@ -11,7 +11,7 @@
 import Foundation
 
 class OstRevokeBase {
-    private let ostRevokeBaseRetryQueue = DispatchQueue(label: "ostRevokeBaseRetryQueue", qos: .background)
+    private let ostRevokeBaseRetryQueue = DispatchQueue(label: "ostRevokeBaseRetryQueue", qos: .userInitiated)
     private let nullAddress = "0x0000000000000000000000000000000000000000"
     private let generateSignatureCallback: ((String) -> (String?, String?))
     
