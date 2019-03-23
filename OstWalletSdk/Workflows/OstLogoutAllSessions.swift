@@ -112,7 +112,10 @@ class OstLogoutAllSessions: OstWorkflowBase {
         return try! OstUtils.toJSONString(callData)!
     }
     
-    
+    /// Logout all sessions
+    ///
+    /// - Parameter params: Logout request parameters
+    /// - Throws: OstError
     private func logoutAllSessions(params: [String: Any]) throws {
         var err: OstError? = nil
         var tokenHolder: OstTokenHolder? = nil
@@ -133,7 +136,7 @@ class OstLogoutAllSessions: OstWorkflowBase {
             throw err!
         }
         self.postRequestAcknowledged(entity: tokenHolder!)
-        OstKeyManager(userId: self.userId).deleteAllSessions()
+//        OstKeyManager(userId: self.userId).deleteAllSessions()
         pollingForLogoutAllSessions(entity: tokenHolder!)
     }
     
