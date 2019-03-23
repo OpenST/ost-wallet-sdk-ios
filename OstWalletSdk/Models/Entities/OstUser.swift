@@ -154,7 +154,7 @@ public extension OstUser {
     /// Check whether user status is CREATED or not. returns true if status is CREATED.
     var isStatusCreated: Bool {
         if let status: String = self.status {
-            return (OstUser.Status.CREATED.rawValue == status)
+            return (OstUser.Status.CREATED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -162,7 +162,7 @@ public extension OstUser {
     /// Check whether user status is ACTIVATED or not. returns true if status is ACTIVATED.
     var isStatusActivated: Bool {
         if let status: String = self.status {
-            return (OstUser.Status.ACTIVATED.rawValue == status)
+            return (OstUser.Status.ACTIVATED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -170,7 +170,7 @@ public extension OstUser {
     /// Check whether user status is ACTIVATING or not. returns true if status is ACTIVATING.
     var isStatusActivating: Bool {
         if let status: String = self.status {
-            return (OstUser.Status.ACTIVATING.rawValue == status)
+            return (OstUser.Status.ACTIVATING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }

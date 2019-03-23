@@ -66,9 +66,8 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     override func process() throws {
-        if (self.currentDevice == nil ||
-            self.currentDevice!.isStatusRevoked ||
-            self.currentDevice!.isStatusRevoking) {
+        if (self.currentDevice == nil
+            || self.currentDevice!.isStatusRevoked) {
             self.createAndRegisterDevice()
             return
         }

@@ -144,6 +144,7 @@ public enum OstErrorText: String {
     case btDecimalNotFound = "Decimal value not found"
     case keyNotFound = "Key not found"
     case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
+    case insufficientData = "Insufficient data"
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"

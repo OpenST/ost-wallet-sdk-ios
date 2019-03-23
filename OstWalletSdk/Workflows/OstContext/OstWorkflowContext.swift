@@ -24,8 +24,10 @@ public enum OstWorkflowType {
     addDeviceWithMnemonics,
     polling,
     recoverDevice,
-    abortRecoverDevice,
-    resetPin
+    abortDeviceRecovery,
+    revokeDeviceWithQRCode,
+    resetPin,
+    logoutAllSessions
 }
 
 public class OstWorkflowContext {    

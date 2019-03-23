@@ -179,12 +179,32 @@ extension OstWalletSdk {
         passphrasePrefix: String,
         delegate: OstWorkflowDelegate) {
         
-        let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
-                                                       deviceAddressToRecover: recoverDeviceAddress,
-                                                       userPin: userPin,
-                                                       passphrasePrefix: passphrasePrefix,
-                                                       delegate: delegate)
-        recoverDeviceInitialize.perform()
+        let initiateDeviceRecoveryFlow = OstRecoverDevice(userId: userId,
+                                                          deviceAddressToRecover: recoverDeviceAddress,
+                                                          userPin: userPin,
+                                                          passphrasePrefix: passphrasePrefix,
+                                                          delegate: delegate)
+        initiateDeviceRecoveryFlow.perform()
+    }
+    
+    /// Abort device recovery.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - uPin: user pin.
+    ///   - password: application password provied by application server.
+    ///   - delegate: Callback for action complete or to perform respective actions.
+    public class func abortDeviceRecovery(
+        userId: String,
+        userPin: String,
+        passphrasePrefix: String,
+        delegate: OstWorkflowDelegate) {
+        
+        let abortDeviceRecoveryFlow = OstAbortDeviceRecovery(userId: userId,
+                                                             userPin: userPin,
+                                                             passphrasePrefix: passphrasePrefix,
+                                                             delegate: delegate)
+        abortDeviceRecoveryFlow.perform()
     }
     
     /// Reset pin
@@ -247,5 +267,20 @@ extension OstWalletSdk {
             delegate: delegate)
         
         executeTransactionFlow.perform()
+    }
+    
+    /// Logout all sessions
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - delegate: Callback
+    public class func logoutAllSessions(
+        userId: String,
+        delegate: OstWorkflowDelegate
+        ) {
+        
+        let logoutAllSessionsFlow = OstLogoutAllSessions(userId: userId,
+                                                         delegate: delegate)
+        logoutAllSessionsFlow.perform()
     }
 }

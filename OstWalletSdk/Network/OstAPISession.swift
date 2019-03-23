@@ -11,7 +11,7 @@
 import Foundation
 
 class OstAPISession: OstAPIBase {
-    
+    private static let syncDeleteSessionsQueue = DispatchQueue(label: "com.ost.SyncDeleteSessionQueue", qos: .background)
     private let sessionApiResourceBase: String
     
     /// Initializer
@@ -29,7 +29,10 @@ class OstAPISession: OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
-    func getSession(sessionAddress: String, onSuccess: ((OstSession) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
+    func getSession(sessionAddress: String,
+                    onSuccess: ((OstSession) -> Void)?,
+                    onFailure: ((OstError) -> Void)?) throws {
+        
         resourceURL = sessionApiResourceBase + "/" + sessionAddress
         var params: [String: Any] = [:]
 
@@ -47,9 +50,33 @@ class OstAPISession: OstAPIBase {
                 }
             },
             onFailure: { (failureResponse) in
-                onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
+                let apiError = OstApiError.init(fromApiResponse: failureResponse!)
+                if apiError.isNotFound() {
+                    self.deleteSession(sessionAddress)
+                }
+                onFailure?(apiError)
             }
         )
+    }
+    
+    /// Delete sessions from keymanager
+    ///
+    /// - Parameter address: Session address to delete
+    private func deleteSession(_ address: String) {
+        let sessionQueue = DispatchQueue(label: "deleteSessionQueue", qos: .background)
+        sessionQueue.async {
+            self.getSyncQueueForDeleteSessions().sync {
+                let keyManager = OstKeyManager(userId: self.userId)
+                try? keyManager.deleteSessionKey(sessionAddress: address)
+            }
+        }
+    }
+    
+    /// Get queue for delete session
+    ///
+    /// - Returns: DispatchQueue
+    private func getSyncQueueForDeleteSessions() -> DispatchQueue {
+        return OstAPISession.syncDeleteSessionsQueue
     }
     
     /// Authorize session. Make an API call and store the result in the database
