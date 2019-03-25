@@ -51,12 +51,30 @@ class OstAPISession: OstAPIBase {
             },
             onFailure: { (failureResponse) in
                 let apiError = OstApiError.init(fromApiResponse: failureResponse!)
-                if apiError.isNotFound() {
+                if self.needToDeleteSession(apiError: apiError) {
                     self.deleteSession(sessionAddress)
                 }
                 onFailure?(apiError)
+        })
+    }
+    
+    /// Determine whether session should be deleted or not.
+    ///
+    /// - Parameter apiError: APIError
+    private func needToDeleteSession(apiError: OstApiError) -> Bool {
+        if let errInfo = apiError.errorInfo,
+            let err = errInfo["err"] as? [String: Any?],
+            let errorData = err["error_data"] as? [[String: Any]] {
+            
+            for data in errorData {
+                if let parameter: String = data["parameter"] as? String,
+                    "session_address".caseInsensitiveCompare(parameter) == .orderedSame {
+                    
+                    return true
+                }
             }
-        )
+        }
+        return false
     }
     
     /// Delete sessions from keymanager
