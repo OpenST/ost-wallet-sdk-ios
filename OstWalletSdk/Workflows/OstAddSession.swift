@@ -119,7 +119,7 @@ class OstAddSession: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .addSession)
+        return OstWorkflowContext(workflowType: .ADD_SESSISON)
     }
     
     /// Get context entity

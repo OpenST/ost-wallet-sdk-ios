@@ -145,13 +145,13 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Parameter executeTxPayloadParams: ExecuteTxPayloadParams
     private func verifyDataForExecuteTransaction(_ executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams) {
-        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
+        let workflowContext = OstWorkflowContext(workflowType: .EXECUTE_TRANSACTION);
         
         let verifyData: [String: Any] = [
-            "ruleName": executeTxPayloadParams.ruleName,
-            "addresses": executeTxPayloadParams.addresses,
+            "rule_name": executeTxPayloadParams.ruleName,
+            "token_holder_addresses": executeTxPayloadParams.addresses,
             "amounts": executeTxPayloadParams.amounts,
-            "tokenId": executeTxPayloadParams.tokenId
+            "token_id": executeTxPayloadParams.tokenId
         ]
 
         let contextEntity: OstContextEntity = OstContextEntity(entity: verifyData, entityType: .dictionary)
@@ -177,6 +177,6 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .scanQRCode)
+        return OstWorkflowContext(workflowType: .PERFORM_QR_ACTION)
     }
 }

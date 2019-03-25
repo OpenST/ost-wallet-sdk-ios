@@ -130,7 +130,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .setupDevice)
+        return OstWorkflowContext(workflowType: .SETUP_DEVICE)
     }
     
     /// Get context entity

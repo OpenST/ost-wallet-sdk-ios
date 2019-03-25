@@ -132,7 +132,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .addDevice)
+        return OstWorkflowContext(workflowType: .ADD_DEVICE_WITH_MNEMONICS)
     }
     
     /// Get context entity

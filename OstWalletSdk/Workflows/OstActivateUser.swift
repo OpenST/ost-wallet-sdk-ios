@@ -199,7 +199,7 @@ class OstActivateUser: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .activateUser)
+        return OstWorkflowContext(workflowType: .ACTIVATE_USER)
     }
     
     /// Get context entity

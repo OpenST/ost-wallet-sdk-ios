@@ -58,7 +58,7 @@ class OstGetPaperWallet: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .getPaperWallet)
+        return OstWorkflowContext(workflowType: .GET_DEVICE_MNEMONICS)
     }
     
     /// Get context entity

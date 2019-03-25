@@ -150,7 +150,7 @@ class OstResetPin: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .resetPin)
+        return OstWorkflowContext(workflowType: .RESET_PIN)
     }
     
     /// Get context entity
