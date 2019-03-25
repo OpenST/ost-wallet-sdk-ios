@@ -22,7 +22,7 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios"
+github "ostdotcom/ost-wallet-sdk-ios" "version"
 ```
 
 - Run `carthage update --platform iOS`
