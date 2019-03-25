@@ -130,7 +130,7 @@ class OstPolling: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .POLLING)
+        return OstWorkflowContext(workflowType: .polling)
     }
     
     /// Get context entity

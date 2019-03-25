@@ -105,7 +105,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Parameter device: OstDevice entity.
     private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .ADD_DEVICE_WITH_QR_CODE);
+        let workflowContext = OstWorkflowContext(workflowType: .addDeviceWithQRCode);
         let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToAdd!, entityType: .device)
         DispatchQueue.main.async {
             self.delegate.verifyData(workflowContext: workflowContext,
@@ -164,7 +164,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .ADD_DEVICE_WITH_QR_CODE)
+        return OstWorkflowContext(workflowType: .addDeviceWithQRCode)
     }
     
     /// Get context entity

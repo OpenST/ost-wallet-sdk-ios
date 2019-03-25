@@ -108,7 +108,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Parameter device: OstDevice entity.
     private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .REVOKE_DEVICE_WITH_QR_CODE);
+        let workflowContext = OstWorkflowContext(workflowType: .revokeDeviceWithQRCode);
         let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToRevoke!, entityType: .device)
         DispatchQueue.main.async {
             self.delegate.verifyData(workflowContext: workflowContext,
@@ -168,7 +168,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .REVOKE_DEVICE_WITH_QR_CODE)
+        return OstWorkflowContext(workflowType: .revokeDeviceWithQRCode)
     }
 
     /// Get context entity

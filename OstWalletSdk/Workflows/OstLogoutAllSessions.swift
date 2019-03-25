@@ -165,7 +165,7 @@ class OstLogoutAllSessions: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .LOGOUT_ALL_SESSIONS)
+        return OstWorkflowContext(workflowType: .logoutAllSessions)
     }
     
     /// Get context entity

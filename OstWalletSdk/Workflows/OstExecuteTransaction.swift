@@ -322,7 +322,7 @@ class OstExecuteTransaction: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .EXECUTE_TRANSACTION)
+        return OstWorkflowContext(workflowType: .executeTransaction)
     }
     
     /// Get context entity
