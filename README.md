@@ -239,7 +239,7 @@ OstSdk.recoverDeviceInitialize(
     recoverDeviceAddress: String,
     userPin: String,
     passphrasePrefix: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
