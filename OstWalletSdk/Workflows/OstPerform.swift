@@ -177,6 +177,6 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .scanQRCode)
+        return OstWorkflowContext(workflowType: .performQRAction)
     }
 }
