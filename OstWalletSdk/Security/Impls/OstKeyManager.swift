@@ -378,7 +378,7 @@ fileprivate extension OstKeyManager {
             }
         }
         if (pinHashData == nil) {
-            pinHashData = OstUtils.toEncodedData(pinHash.data(using: .utf8)!)
+            pinHashData = OstUtils.toEncodedData(pinHash)
         }
         
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
