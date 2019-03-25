@@ -90,18 +90,7 @@ public extension OstDevice {
     public var userId: String? {
         return data["user_id"] as? String
     }
-    
-    /// Get device name
-    public var deviceName: String? {
-        return data["device_name"] as? String
-    }
-    
-    /// Get device uuid
-    public var deviceUUID: String? {
-        return data["device_uuid"] as? String
 
-    }
-    
     public var linkedAddress: String? {
         return data["linked_address"] as? String
     }
