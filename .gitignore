@@ -6,7 +6,7 @@ Cartfile.resolved
 
 # Pod
 Pods/
-#*.xcworkspace
+*.xcworkspace
 *.xcuserstate
 *.xcconfig
 *.xcbkptlist
