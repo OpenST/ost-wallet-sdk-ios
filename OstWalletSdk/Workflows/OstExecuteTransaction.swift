@@ -54,16 +54,12 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let addresses: [String] = payload[OstExecuteTransaction.PAYLOAD_ADDRESSES_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_2", .invalidQRCode)
         }
-        for address in addresses {
-            if !address.isValidAddress {
-                throw OstError("w_et_getpfqrp_3", .invalidQRCode)
-            }
-        }
+       
         guard let amounts: [String] = payload[OstExecuteTransaction.PAYLOAD_AMOUNTS_KEY] as? [String] else {
-            throw OstError("w_et_getpfqrp_4", .invalidQRCode)
+            throw OstError("w_et_getpfqrp_3", .invalidQRCode)
         }
         guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
-            throw OstError("w_et_getpfqrp_5", .invalidQRCode)
+            throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         
         return (ruleName, addresses, amounts, tokenId)
@@ -147,12 +143,18 @@ class OstExecuteTransaction: OstWorkflowBase {
         let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
                                 OstExecuteTransactionType.Pay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_2", OstErrorText.rulesNotFound)
+            throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
         }
         
         let filteredAddresses = toAddresses.filter({$0 != ""})
         if (amounts.count != filteredAddresses.count) {
-            throw OstError("w_et_vp_3", .invalidAddressToTransfer)
+            throw OstError("w_et_vp_2", .invalidAddressToTransfer)
+        }
+        
+        for filteredAddress in filteredAddresses {
+            if !filteredAddress.isValidAddress {
+                throw OstError("w_et_vp_3", .invalidAddressToTransfer)
+            }
         }
     }
     

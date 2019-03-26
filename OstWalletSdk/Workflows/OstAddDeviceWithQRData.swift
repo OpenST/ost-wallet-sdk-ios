@@ -17,7 +17,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         guard let deviceAddress: String = payload[OstAddDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
             throw OstError("w_adwqrd_gadpfqrp_1", .invalidQRCode)
         }
-        if !deviceAddress.isValidAddress {
+        if deviceAddress.isEmpty {
             throw OstError("w_adwqrd_gadpfqrp_2", .invalidQRCode)
         }
         return deviceAddress
@@ -59,7 +59,11 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         try self.workFlowValidator!.isDeviceAuthorized()
         
         if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
+            throw OstError("w_adwqrd_fd_1", OstErrorText.processSameDevice)
+        }
+        
+        if !self.deviceAddress.isValidAddress {
+            throw OstError("w_adwqrd_fd_2", .wrongDeviceAddress)
         }
     }
     
