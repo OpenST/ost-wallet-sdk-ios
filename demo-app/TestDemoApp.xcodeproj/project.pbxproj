@@ -75,6 +75,7 @@
 		4BF8FF0C224A0E1A00519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4BF8FF0E224A0E2400519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
 		4BF8FF0F224A0E2400519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
 		4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */; };
 		B14B5880B5BEDB56EFA4ED34 /* Pods_TestDemoAppDevelopment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7978E2C0A0A980201CE76E7A /* Pods_TestDemoAppDevelopment.framework */; };
 		C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */; };
@@ -320,6 +321,7 @@
 		4BF8FEE822491F9200519779 /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Development-Info.plist"; sourceTree = "<group>"; };
 		4BF8FEE922491F9200519779 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
 		4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8FF17224A5D6E00519779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppStaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -470,6 +472,7 @@
 		4BF8FDE92240FD1300519779 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */,
 			);
 			path = Base.lproj;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 				4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */,
 				4BF8FE202240FD1400519779 /* LICENSE in Resources */,
 				4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */,
+				4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */,
 				4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */,
 				4BF8FEF022491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEEA22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -1434,6 +1438,17 @@
 			targetProxy = 4BF8FDD82240FA7700519779 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4BF8FF17224A5D6E00519779 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4BF8FDDE2240FA7700519779 /* Debug */ = {
