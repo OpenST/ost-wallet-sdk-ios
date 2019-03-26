@@ -122,4 +122,9 @@ extension String {
         }
         return self
     }
+    
+    public var isValidAddress: Bool {
+        let addressRegex = "^(0x)[0-9a-fA-F]{40}$"
+        return self.isMatch(addressRegex)
+    }
 }

@@ -58,6 +58,9 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
 
+        if !self.deviceAddressToRevoke.isValidAddress {
+            throw OstError("w_adwqrd_fd_1", OstErrorText.wrongDeviceAddress)
+        }
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
             throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
         }

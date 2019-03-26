@@ -43,7 +43,7 @@ class OstPinManager {
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
             throw OstError.init(
                 "w_wh_pm_vpl_1",
-                "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }

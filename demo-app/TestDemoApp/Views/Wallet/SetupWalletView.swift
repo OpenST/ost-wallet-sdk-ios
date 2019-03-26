@@ -23,9 +23,6 @@ class SetupWalletView: BaseWalletWorkflowView {
   // MARK: - Action Handling
   // Add the button handlers
   @objc override func didTapNext(sender: Any) {
-    if ( !validatePinNumber() ) {
-      return;
-    }
     
     let currentUser = CurrentUser.getInstance();
     
@@ -34,7 +31,7 @@ class SetupWalletView: BaseWalletWorkflowView {
     //Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
     
     OstWalletSdk.activateUser(userId: currentUser.ostUserId!,
-                        userPin: pinNumberTextField.text!,
+                        userPin: pinNumberTextField.text ?? "",
                         passphrasePrefix: currentUser.userPinSalt!,
                         spendingLimitInWei: spendingLimitInWei,
                         expireAfterInSec: TimeInterval(Double(2*60*60)),
@@ -196,12 +193,7 @@ extension SetupWalletView: UITextFieldDelegate {
   // Add basic Mobile Number field validation in the textFieldShouldReturn delegate function
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder();
-    
-    // TextField
-    if (textField == pinNumberTextField && pinNumberTextField.text != nil ) {
-      _ = validatePinNumber();
-    }
-    
+        
     return false
   }
 }

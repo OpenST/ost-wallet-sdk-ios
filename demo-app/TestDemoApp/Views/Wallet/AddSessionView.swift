@@ -15,14 +15,13 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     @objc override func didTapNext(sender: Any) {
         let currentUser = CurrentUser.getInstance();
         //TODO: add session
-        if (validateSpendingLimit()) {
+
             super.didTapNext(sender: sender);
             let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
             OstWalletSdk.addSession(userId: currentUser.ostUserId!,
-                              spendingLimitInWei: self.spendingLimitTestField.text!,
-                              expireAfterInSec: Double(expireAfter),
-                              delegate: self.sdkInteract)
-        }
+                                    spendingLimitInWei: self.spendingLimitTestField.text ?? "",
+                                    expireAfterInSec: Double(expireAfter),
+                                    delegate: self.sdkInteract)
     }
   
     // Mark - Expires After Data
@@ -180,16 +179,6 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     
     @objc override func keyboardWillHide(notification: NSNotification) {
         self.contentInset = UIEdgeInsets.zero;
-    }
-    
-    func validateSpendingLimit() -> Bool {
-        if (spendingLimitTestField.text!.count < 4) {
-            spendingLimitTestFieldController!.setErrorText("Spending limit should be greater than 999",
-                                                     errorAccessibilityValue: nil);
-            return false;
-        }
-        spendingLimitTestFieldController!.setErrorText(nil,errorAccessibilityValue: nil);
-        return true;
     }
     
     var isShowingActionSheet = false;

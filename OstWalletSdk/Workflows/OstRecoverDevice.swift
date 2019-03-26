@@ -55,7 +55,9 @@ class OstRecoverDevice: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        
+        if !self.deviceAddressToRecover.isValidAddress {
+            throw OstError.init("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
+        }
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceRegistered()
     }

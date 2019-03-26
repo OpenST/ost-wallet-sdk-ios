@@ -49,6 +49,13 @@ class UserDetailsView: BaseWalletWorkflowView {
         return textField;
     }()
     
+    let recoveryOwnerAddressTF: MDCTextField = {
+        let textField = MDCTextField();
+        textField.translatesAutoresizingMaskIntoConstraints = false;
+        textField.placeholderLabel.text = "Recovery Owner Address";
+        return textField;
+    }()
+    
     let deviceManagerTF: MDCTextField = {
         let textField = MDCTextField();
         textField.translatesAutoresizingMaskIntoConstraints = false;
@@ -70,10 +77,10 @@ class UserDetailsView: BaseWalletWorkflowView {
         return textField;
     }()
     
-    let deviceNameTF: MDCTextField = {
+    let kitEndPointTF: MDCTextField = {
         let textField = MDCTextField();
         textField.translatesAutoresizingMaskIntoConstraints = false;
-        textField.placeholderLabel.text = "Device Name";
+        textField.placeholderLabel.text = "Kit End Point";
         return textField;
     }()
 
@@ -88,7 +95,8 @@ class UserDetailsView: BaseWalletWorkflowView {
     var textFields:[MDCTextField] = [];
     
     override func addSubViews() {
-        textFields = [userIdTF, userStatusTF, tokenIdTF, tokenHolderTF, deviceManagerTF, recoveryAddressTF, deviceAddressTF, deviceNameTF, deviceStatusTF];
+        textFields = [kitEndPointTF,userIdTF, userStatusTF, tokenIdTF, tokenHolderTF, deviceManagerTF,
+                      recoveryAddressTF, recoveryOwnerAddressTF, deviceAddressTF, deviceStatusTF];
         for textField in textFields {
             self.addSubview(textField);
             let placeHolderText = textField.placeholder;
@@ -180,13 +188,14 @@ class UserDetailsView: BaseWalletWorkflowView {
             let ostUser = try OstWalletSdk.getUser(currentUser.ostUserId!)
             let ostCurrentDevice = ostUser!.getCurrentDevice()
             
+            kitEndPointTF.text = OstWalletSdk.getApiEndPoint()
             userIdTF.text = ostUser?.id;
             userStatusTF.text = ostUser?.status;
             tokenIdTF.text = ostUser?.tokenId;
             tokenHolderTF.text = ostUser?.tokenHolderAddress ?? "NA";
             deviceManagerTF.text = ostUser?.deviceManagerAddress ?? "NA";
             recoveryAddressTF.text = ostUser?.recoveryAddress ?? "NA";
-            
+            recoveryOwnerAddressTF.text = ostUser?.recoveryOwnerAddress ?? "NA"
             deviceAddressTF.text = ostCurrentDevice?.address;
             deviceStatusTF.text = ostCurrentDevice?.status;
             
