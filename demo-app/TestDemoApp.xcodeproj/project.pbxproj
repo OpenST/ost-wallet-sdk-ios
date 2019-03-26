@@ -1,0 +1,1878 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
+		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
+		4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
+		4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDD02240FA7700519779 /* TestDemoAppTests.swift */; };
+		4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDDB2240FA7700519779 /* TestDemoAppUITests.swift */; };
+		4BF8FE182240FD1400519779 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */; };
+		4BF8FE1C2240FD1400519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF22240FD1300519779 /* Assets.xcassets */; };
+		4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */; };
+		4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF52240FD1300519779 /* Main.storyboard */; };
+		4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF72240FD1300519779 /* UIColorExtension.swift */; };
+		4BF8FE202240FD1400519779 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF82240FD1300519779 /* LICENSE */; };
+		4BF8FE212240FD1400519779 /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
+		4BF8FE222240FD1400519779 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFA2240FD1300519779 /* ColorTheme.swift */; };
+		4BF8FE232240FD1400519779 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFB2240FD1300519779 /* README.md */; };
+		4BF8FE242240FD1400519779 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
+		4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */; };
+		4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE012240FD1400519779 /* HomeViewController.swift */; };
+		4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE022240FD1400519779 /* UserActionsViewController.swift */; };
+		4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE052240FD1400519779 /* UserCell.swift */; };
+		4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
+		4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE092240FD1400519779 /* UserDetailsView.swift */; };
+		4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */; };
+		4BF8FE2E2240FD1400519779 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
+		4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
+		4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */; };
+		4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0F2240FD1400519779 /* AddSessionView.swift */; };
+		4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE102240FD1400519779 /* SetupWalletView.swift */; };
+		4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */; };
+		4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE122240FD1400519779 /* ShowQRView.swift */; };
+		4BF8FE352240FD1400519779 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */; };
+		4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
+		4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
+		4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
+		4BF8FE582244FA0E00519779 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
+		4BF8FEEA22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEEB22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEEC22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEED22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEEE22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEEF22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
+		4BF8FEF022491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF122491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF222491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF322491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF422491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF522491F9300519779 /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE822491F9200519779 /* Development-Info.plist */; };
+		4BF8FEF622491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FEF722491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FEF822491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FEF922491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FEFA22491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FEFB22491F9300519779 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE922491F9200519779 /* Staging-Info.plist */; };
+		4BF8FF05224A0DCC00519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
+		4BF8FF06224A0DCC00519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BF8FF08224A0E0C00519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
+		4BF8FF09224A0E0C00519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BF8FF0B224A0E1A00519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
+		4BF8FF0C224A0E1A00519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BF8FF0E224A0E2400519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
+		4BF8FF0F224A0E2400519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */; };
+		C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */; };
+		ECA501042248F98A00D84810 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
+		ECA501052248F98A00D84810 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
+		ECA501062248F98A00D84810 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFA2240FD1300519779 /* ColorTheme.swift */; };
+		ECA501072248F98A00D84810 /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
+		ECA501082248F98A00D84810 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE022240FD1400519779 /* UserActionsViewController.swift */; };
+		ECA501092248F98A00D84810 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE052240FD1400519779 /* UserCell.swift */; };
+		ECA5010A2248F98A00D84810 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE102240FD1400519779 /* SetupWalletView.swift */; };
+		ECA5010B2248F98A00D84810 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		ECA5010C2248F98A00D84810 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0F2240FD1400519779 /* AddSessionView.swift */; };
+		ECA5010D2248F98A00D84810 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		ECA5010E2248F98A00D84810 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE092240FD1400519779 /* UserDetailsView.swift */; };
+		ECA5010F2248F98A00D84810 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE012240FD1400519779 /* HomeViewController.swift */; };
+		ECA501102248F98A00D84810 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */; };
+		ECA501112248F98A00D84810 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */; };
+		ECA501122248F98A00D84810 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF72240FD1300519779 /* UIColorExtension.swift */; };
+		ECA501132248F98A00D84810 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		ECA501142248F98A00D84810 /* AbortRevocerDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */; };
+		ECA501152248F98A00D84810 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */; };
+		ECA501162248F98A00D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
+		ECA501172248F98A00D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
+		ECA501182248F98A00D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
+		ECA501192248F98A00D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
+		ECA5011A2248F98A00D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		ECA5011B2248F98A00D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
+		ECA5011C2248F98A00D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
+		ECA5011D2248F98A00D84810 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */; };
+		ECA5011E2248F98A00D84810 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		ECA5011F2248F98A00D84810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
+		ECA501202248F98A00D84810 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE122240FD1400519779 /* ShowQRView.swift */; };
+		ECA501212248F98A00D84810 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */; };
+		ECA501222248F98A00D84810 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		ECA501232248F98A00D84810 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */; };
+		ECA501262248F98A00D84810 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		ECA501282248F98A00D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
+		ECA501292248F98A00D84810 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF82240FD1300519779 /* LICENSE */; };
+		ECA5012A2248F98A00D84810 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
+		ECA5012B2248F98A00D84810 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF52240FD1300519779 /* Main.storyboard */; };
+		ECA5012C2248F98A00D84810 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFB2240FD1300519779 /* README.md */; };
+		ECA5012D2248F98A00D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF22240FD1300519779 /* Assets.xcassets */; };
+		ECA501382248F9A500D84810 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
+		ECA501392248F9A500D84810 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
+		ECA5013A2248F9A500D84810 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFA2240FD1300519779 /* ColorTheme.swift */; };
+		ECA5013B2248F9A500D84810 /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
+		ECA5013C2248F9A500D84810 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE022240FD1400519779 /* UserActionsViewController.swift */; };
+		ECA5013D2248F9A500D84810 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE052240FD1400519779 /* UserCell.swift */; };
+		ECA5013E2248F9A500D84810 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE102240FD1400519779 /* SetupWalletView.swift */; };
+		ECA5013F2248F9A500D84810 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		ECA501402248F9A500D84810 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0F2240FD1400519779 /* AddSessionView.swift */; };
+		ECA501412248F9A500D84810 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		ECA501422248F9A500D84810 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE092240FD1400519779 /* UserDetailsView.swift */; };
+		ECA501432248F9A500D84810 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE012240FD1400519779 /* HomeViewController.swift */; };
+		ECA501442248F9A500D84810 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */; };
+		ECA501452248F9A500D84810 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */; };
+		ECA501462248F9A500D84810 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF72240FD1300519779 /* UIColorExtension.swift */; };
+		ECA501472248F9A500D84810 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		ECA501482248F9A500D84810 /* AbortRevocerDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */; };
+		ECA501492248F9A500D84810 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */; };
+		ECA5014A2248F9A500D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
+		ECA5014B2248F9A500D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
+		ECA5014C2248F9A500D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
+		ECA5014D2248F9A500D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
+		ECA5014E2248F9A500D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		ECA5014F2248F9A500D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
+		ECA501502248F9A500D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
+		ECA501512248F9A500D84810 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */; };
+		ECA501522248F9A500D84810 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		ECA501532248F9A500D84810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
+		ECA501542248F9A500D84810 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE122240FD1400519779 /* ShowQRView.swift */; };
+		ECA501552248F9A500D84810 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */; };
+		ECA501562248F9A500D84810 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		ECA501572248F9A500D84810 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */; };
+		ECA5015A2248F9A500D84810 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		ECA5015C2248F9A500D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
+		ECA5015D2248F9A500D84810 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF82240FD1300519779 /* LICENSE */; };
+		ECA5015E2248F9A500D84810 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
+		ECA5015F2248F9A500D84810 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF52240FD1300519779 /* Main.storyboard */; };
+		ECA501602248F9A500D84810 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFB2240FD1300519779 /* README.md */; };
+		ECA501612248F9A500D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF22240FD1300519779 /* Assets.xcassets */; };
+		ECA5016C2248F9F300D84810 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
+		ECA5016D2248F9F300D84810 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
+		ECA5016E2248F9F300D84810 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFA2240FD1300519779 /* ColorTheme.swift */; };
+		ECA5016F2248F9F300D84810 /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
+		ECA501702248F9F300D84810 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE022240FD1400519779 /* UserActionsViewController.swift */; };
+		ECA501712248F9F300D84810 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE052240FD1400519779 /* UserCell.swift */; };
+		ECA501722248F9F300D84810 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE102240FD1400519779 /* SetupWalletView.swift */; };
+		ECA501732248F9F300D84810 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		ECA501742248F9F300D84810 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0F2240FD1400519779 /* AddSessionView.swift */; };
+		ECA501752248F9F300D84810 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		ECA501762248F9F300D84810 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE092240FD1400519779 /* UserDetailsView.swift */; };
+		ECA501772248F9F300D84810 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE012240FD1400519779 /* HomeViewController.swift */; };
+		ECA501782248F9F300D84810 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */; };
+		ECA501792248F9F300D84810 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */; };
+		ECA5017A2248F9F300D84810 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF72240FD1300519779 /* UIColorExtension.swift */; };
+		ECA5017B2248F9F300D84810 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		ECA5017C2248F9F300D84810 /* AbortRevocerDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */; };
+		ECA5017D2248F9F300D84810 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */; };
+		ECA5017E2248F9F300D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
+		ECA5017F2248F9F300D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
+		ECA501802248F9F300D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
+		ECA501812248F9F300D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
+		ECA501822248F9F300D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		ECA501832248F9F300D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
+		ECA501842248F9F300D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
+		ECA501852248F9F300D84810 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */; };
+		ECA501862248F9F300D84810 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		ECA501872248F9F300D84810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
+		ECA501882248F9F300D84810 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE122240FD1400519779 /* ShowQRView.swift */; };
+		ECA501892248F9F300D84810 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */; };
+		ECA5018A2248F9F300D84810 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		ECA5018B2248F9F300D84810 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */; };
+		ECA5018E2248F9F300D84810 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		ECA501902248F9F300D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
+		ECA501912248F9F300D84810 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF82240FD1300519779 /* LICENSE */; };
+		ECA501922248F9F300D84810 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
+		ECA501932248F9F300D84810 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF52240FD1300519779 /* Main.storyboard */; };
+		ECA501942248F9F300D84810 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFB2240FD1300519779 /* README.md */; };
+		ECA501952248F9F300D84810 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF22240FD1300519779 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4BF8FDCD2240FA7700519779 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BF8FDB02240FA7600519779 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4BF8FDB72240FA7600519779;
+			remoteInfo = TestDemoApp;
+		};
+		4BF8FDD82240FA7700519779 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4BF8FDB02240FA7600519779 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4BF8FDB72240FA7600519779;
+			remoteInfo = TestDemoApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4BF8FF07224A0DCD00519779 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BF8FF06224A0DCC00519779 /* OstWalletSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FF0A224A0E0C00519779 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BF8FF09224A0E0C00519779 /* OstWalletSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FF0D224A0E1A00519779 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BF8FF0C224A0E1A00519779 /* OstWalletSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FF10224A0E2400519779 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BF8FF0F224A0E2400519779 /* OstWalletSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4BF8FDBD2240FA7600519779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4BF8FDC22240FA7700519779 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4BF8FDC72240FA7700519779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BF8FDCC2240FA7700519779 /* TestDemoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDemoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8FDD02240FA7700519779 /* TestDemoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDemoAppTests.swift; sourceTree = "<group>"; };
+		4BF8FDD22240FA7700519779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BF8FDD72240FA7700519779 /* TestDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8FDDB2240FA7700519779 /* TestDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDemoAppUITests.swift; sourceTree = "<group>"; };
+		4BF8FDDD2240FA7700519779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BF8FDED2240FD1300519779 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		4BF8FDEE2240FD1300519779 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		4BF8FDEF2240FD1300519779 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
+		4BF8FDF22240FD1300519779 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCustomLayout.swift; sourceTree = "<group>"; };
+		4BF8FDF52240FD1300519779 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4BF8FDF72240FD1300519779 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		4BF8FDF82240FD1300519779 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4BF8FDF92240FD1300519779 /* IconGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconGenerator.swift; sourceTree = "<group>"; };
+		4BF8FDFA2240FD1300519779 /* ColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		4BF8FDFB2240FD1300519779 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4BF8FDFC2240FD1300519779 /* JdenticonSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JdenticonSwift.h; sourceTree = "<group>"; };
+		4BF8FDFD2240FD1300519779 /* Shapes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
+		4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContextExtension.swift; sourceTree = "<group>"; };
+		4BF8FE002240FD1400519779 /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		4BF8FE012240FD1400519779 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		4BF8FE022240FD1400519779 /* UserActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActionsViewController.swift; sourceTree = "<group>"; };
+		4BF8FE032240FD1400519779 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4BF8FE052240FD1400519779 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		4BF8FE082240FD1400519779 /* ResetPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPinView.swift; sourceTree = "<group>"; };
+		4BF8FE092240FD1400519779 /* UserDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
+		4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbortRevocerDeviceView.swift; sourceTree = "<group>"; };
+		4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletWorkflowView.swift; sourceTree = "<group>"; };
+		4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverDeviceView.swift; sourceTree = "<group>"; };
+		4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRInfoLabel.swift; sourceTree = "<group>"; };
+		4BF8FE0F2240FD1400519779 /* AddSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSessionView.swift; sourceTree = "<group>"; };
+		4BF8FE102240FD1400519779 /* SetupWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupWalletView.swift; sourceTree = "<group>"; };
+		4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
+		4BF8FE122240FD1400519779 /* ShowQRView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowQRView.swift; sourceTree = "<group>"; };
+		4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanQRCodeView.swift; sourceTree = "<group>"; };
+		4BF8FE142240FD1400519779 /* PaperWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperWalletView.swift; sourceTree = "<group>"; };
+		4BF8FE152240FD1400519779 /* BaseWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletView.swift; sourceTree = "<group>"; };
+		4BF8FE162240FD1400519779 /* ApplicationScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationScheme.swift; sourceTree = "<group>"; };
+		4BF8FE3A2240FF0900519779 /* OstSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstSdk.framework; path = Carthage/Build/iOS/OstSdk.framework; sourceTree = "<group>"; };
+		4BF8FE3C2241004600519779 /* OstWalletSdk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OstWalletSdk.plist; sourceTree = "<group>"; };
+		4BF8FE40224143C900519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstWalletSdk.framework; path = Carthage/Build/iOS/OstWalletSdk.framework; sourceTree = "<group>"; };
+		4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessions.swift; sourceTree = "<group>"; };
+		4BF8FEE722491F9200519779 /* Testnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Testnet-Info.plist"; sourceTree = "<group>"; };
+		4BF8FEE822491F9200519779 /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Development-Info.plist"; sourceTree = "<group>"; };
+		4BF8FEE922491F9200519779 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
+		4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
+		55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		8DD78CEFFF49BC3F2F78300E /* Pods-TestDemoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9414360E554341F818416A89 /* Pods_TestDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppUITests/Pods-TestDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		ECA501332248F98A00D84810 /* TestDemoAppStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECA501672248F9A500D84810 /* TestDemoAppDevelopment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppDevelopment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECA5019B2248F9F300D84810 /* TestDemoAppTestnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppTestnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F904DB8F6D28F79D1180FC74 /* Pods-TestDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppUITests/Pods-TestDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4BF8FDB52240FA7600519779 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */,
+				4BF8FF08224A0E0C00519779 /* OstWalletSdk.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDC92240FA7700519779 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDD42240FA7700519779 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA501242248F98A00D84810 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA501262248F98A00D84810 /* Pods_TestDemoApp.framework in Frameworks */,
+				4BF8FF0B224A0E1A00519779 /* OstWalletSdk.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA501582248F9A500D84810 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FF05224A0DCC00519779 /* OstWalletSdk.framework in Frameworks */,
+				ECA5015A2248F9A500D84810 /* Pods_TestDemoApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA5018C2248F9F300D84810 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FF0E224A0E2400519779 /* OstWalletSdk.framework in Frameworks */,
+				ECA5018E2248F9F300D84810 /* Pods_TestDemoApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4BF8FDAF2240FA7600519779 = {
+			isa = PBXGroup;
+			children = (
+				4BF8FEE822491F9200519779 /* Development-Info.plist */,
+				4BF8FEE922491F9200519779 /* Staging-Info.plist */,
+				4BF8FEE722491F9200519779 /* Testnet-Info.plist */,
+				4BF8FDBA2240FA7600519779 /* TestDemoApp */,
+				4BF8FDCF2240FA7700519779 /* TestDemoAppTests */,
+				4BF8FDDA2240FA7700519779 /* TestDemoAppUITests */,
+				4BF8FDB92240FA7600519779 /* Products */,
+				CA15A6D66D10D87C383C927C /* Pods */,
+				DB91270CD9213E4763882444 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4BF8FDB92240FA7600519779 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDB82240FA7600519779 /* TestDemoApp.app */,
+				4BF8FDCC2240FA7700519779 /* TestDemoAppTests.xctest */,
+				4BF8FDD72240FA7700519779 /* TestDemoAppUITests.xctest */,
+				ECA501332248F98A00D84810 /* TestDemoAppStaging.app */,
+				ECA501672248F9A500D84810 /* TestDemoAppDevelopment.app */,
+				ECA5019B2248F9F300D84810 /* TestDemoAppTestnet.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4BF8FDBA2240FA7600519779 /* TestDemoApp */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE3C2241004600519779 /* OstWalletSdk.plist */,
+				4BF8FE162240FD1400519779 /* ApplicationScheme.swift */,
+				4BF8FDF22240FD1300519779 /* Assets.xcassets */,
+				4BF8FDE92240FD1300519779 /* Base.lproj */,
+				4BF8FE042240FD1400519779 /* Cells */,
+				4BF8FDF62240FD1300519779 /* Jdenticon */,
+				4BF8FDF32240FD1300519779 /* Layouts */,
+				4BF8FDF52240FD1300519779 /* Main.storyboard */,
+				4BF8FDEC2240FD1300519779 /* Models */,
+				4BF8FDF02240FD1300519779 /* OstSdkInteract */,
+				4BF8FDFF2240FD1400519779 /* ViewControllers */,
+				4BF8FE062240FD1400519779 /* Views */,
+				4BF8FDBB2240FA7600519779 /* AppDelegate.swift */,
+				4BF8FDBD2240FA7600519779 /* ViewController.swift */,
+				4BF8FDC22240FA7700519779 /* Assets.xcassets */,
+				4BF8FDC72240FA7700519779 /* Info.plist */,
+			);
+			path = TestDemoApp;
+			sourceTree = "<group>";
+		};
+		4BF8FDCF2240FA7700519779 /* TestDemoAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDD02240FA7700519779 /* TestDemoAppTests.swift */,
+				4BF8FDD22240FA7700519779 /* Info.plist */,
+			);
+			path = TestDemoAppTests;
+			sourceTree = "<group>";
+		};
+		4BF8FDDA2240FA7700519779 /* TestDemoAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDDB2240FA7700519779 /* TestDemoAppUITests.swift */,
+				4BF8FDDD2240FA7700519779 /* Info.plist */,
+			);
+			path = TestDemoAppUITests;
+			sourceTree = "<group>";
+		};
+		4BF8FDE92240FD1300519779 /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		4BF8FDEC2240FD1300519779 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDED2240FD1300519779 /* Users.swift */,
+				4BF8FDEE2240FD1300519779 /* CurrentUser.swift */,
+				4BF8FDEF2240FD1300519779 /* BaseModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4BF8FDF02240FD1300519779 /* OstSdkInteract */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDF12240FD1300519779 /* OstSdkInteract.swift */,
+			);
+			path = OstSdkInteract;
+			sourceTree = "<group>";
+		};
+		4BF8FDF32240FD1300519779 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
+		4BF8FDF62240FD1300519779 /* Jdenticon */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FDF72240FD1300519779 /* UIColorExtension.swift */,
+				4BF8FDF82240FD1300519779 /* LICENSE */,
+				4BF8FDF92240FD1300519779 /* IconGenerator.swift */,
+				4BF8FDFA2240FD1300519779 /* ColorTheme.swift */,
+				4BF8FDFB2240FD1300519779 /* README.md */,
+				4BF8FDFC2240FD1300519779 /* JdenticonSwift.h */,
+				4BF8FDFD2240FD1300519779 /* Shapes.swift */,
+				4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */,
+			);
+			path = Jdenticon;
+			sourceTree = "<group>";
+		};
+		4BF8FDFF2240FD1400519779 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE002240FD1400519779 /* WalletViewController.swift */,
+				4BF8FE012240FD1400519779 /* HomeViewController.swift */,
+				4BF8FE022240FD1400519779 /* UserActionsViewController.swift */,
+				4BF8FE032240FD1400519779 /* LoginViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4BF8FE042240FD1400519779 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE052240FD1400519779 /* UserCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4BF8FE062240FD1400519779 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE072240FD1400519779 /* Wallet */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4BF8FE072240FD1400519779 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE082240FD1400519779 /* ResetPinView.swift */,
+				4BF8FE092240FD1400519779 /* UserDetailsView.swift */,
+				4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */,
+				4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */,
+				4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */,
+				4BF8FE0D2240FD1400519779 /* subViews */,
+				4BF8FE0F2240FD1400519779 /* AddSessionView.swift */,
+				4BF8FE102240FD1400519779 /* SetupWalletView.swift */,
+				4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */,
+				4BF8FE122240FD1400519779 /* ShowQRView.swift */,
+				4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */,
+				4BF8FE142240FD1400519779 /* PaperWalletView.swift */,
+				4BF8FE152240FD1400519779 /* BaseWalletView.swift */,
+				4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		4BF8FE0D2240FD1400519779 /* subViews */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */,
+			);
+			path = subViews;
+			sourceTree = "<group>";
+		};
+		CA15A6D66D10D87C383C927C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */,
+				529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */,
+				8DD78CEFFF49BC3F2F78300E /* Pods-TestDemoAppTests.debug.xcconfig */,
+				5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */,
+				BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */,
+				F904DB8F6D28F79D1180FC74 /* Pods-TestDemoAppUITests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DB91270CD9213E4763882444 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */,
+				4BF8FE40224143C900519779 /* OstWalletSdk.framework */,
+				4BF8FE3A2240FF0900519779 /* OstSdk.framework */,
+				9414360E554341F818416A89 /* Pods_TestDemoApp.framework */,
+				4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */,
+				55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4BF8FDB72240FA7600519779 /* TestDemoApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BF8FDE02240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoApp" */;
+			buildPhases = (
+				9DCFAA2F1547AB9682267496 /* [CP] Check Pods Manifest.lock */,
+				4BF8FDB42240FA7600519779 /* Sources */,
+				4BF8FDB52240FA7600519779 /* Frameworks */,
+				4BF8FDB62240FA7600519779 /* Resources */,
+				C7DD69526F5260DE45778FC0 /* [CP] Embed Pods Frameworks */,
+				4BF8FE392240FD3C00519779 /* ShellScript */,
+				4BF8FF0A224A0E0C00519779 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDemoApp;
+			productName = TestDemoApp;
+			productReference = 4BF8FDB82240FA7600519779 /* TestDemoApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4BF8FDCB2240FA7700519779 /* TestDemoAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BF8FDE32240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoAppTests" */;
+			buildPhases = (
+				0A0658F8AEDF85A44C8937DC /* [CP] Check Pods Manifest.lock */,
+				4BF8FDC82240FA7700519779 /* Sources */,
+				4BF8FDC92240FA7700519779 /* Frameworks */,
+				4BF8FDCA2240FA7700519779 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4BF8FDCE2240FA7700519779 /* PBXTargetDependency */,
+			);
+			name = TestDemoAppTests;
+			productName = TestDemoAppTests;
+			productReference = 4BF8FDCC2240FA7700519779 /* TestDemoAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4BF8FDD62240FA7700519779 /* TestDemoAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BF8FDE62240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoAppUITests" */;
+			buildPhases = (
+				8351EFC282F628DD81F319F8 /* [CP] Check Pods Manifest.lock */,
+				4BF8FDD32240FA7700519779 /* Sources */,
+				4BF8FDD42240FA7700519779 /* Frameworks */,
+				4BF8FDD52240FA7700519779 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4BF8FDD92240FA7700519779 /* PBXTargetDependency */,
+			);
+			name = TestDemoAppUITests;
+			productName = TestDemoAppUITests;
+			productReference = 4BF8FDD72240FA7700519779 /* TestDemoAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		ECA501012248F98A00D84810 /* TestDemoAppStaging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECA501302248F98A00D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppStaging" */;
+			buildPhases = (
+				ECA501022248F98A00D84810 /* [CP] Check Pods Manifest.lock */,
+				ECA501032248F98A00D84810 /* Sources */,
+				ECA501242248F98A00D84810 /* Frameworks */,
+				ECA501272248F98A00D84810 /* Resources */,
+				ECA5012E2248F98A00D84810 /* [CP] Embed Pods Frameworks */,
+				ECA5012F2248F98A00D84810 /* ShellScript */,
+				4BF8FF0D224A0E1A00519779 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDemoAppStaging;
+			productName = TestDemoApp;
+			productReference = ECA501332248F98A00D84810 /* TestDemoAppStaging.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ECA501352248F9A500D84810 /* TestDemoAppDevelopment */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECA501642248F9A500D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppDevelopment" */;
+			buildPhases = (
+				ECA501362248F9A500D84810 /* [CP] Check Pods Manifest.lock */,
+				ECA501372248F9A500D84810 /* Sources */,
+				ECA501582248F9A500D84810 /* Frameworks */,
+				ECA5015B2248F9A500D84810 /* Resources */,
+				ECA501622248F9A500D84810 /* [CP] Embed Pods Frameworks */,
+				ECA501632248F9A500D84810 /* ShellScript */,
+				4BF8FF07224A0DCD00519779 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDemoAppDevelopment;
+			productName = TestDemoApp;
+			productReference = ECA501672248F9A500D84810 /* TestDemoAppDevelopment.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ECA501692248F9F300D84810 /* TestDemoAppTestnet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECA501982248F9F300D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppTestnet" */;
+			buildPhases = (
+				ECA5016A2248F9F300D84810 /* [CP] Check Pods Manifest.lock */,
+				ECA5016B2248F9F300D84810 /* Sources */,
+				ECA5018C2248F9F300D84810 /* Frameworks */,
+				ECA5018F2248F9F300D84810 /* Resources */,
+				ECA501962248F9F300D84810 /* [CP] Embed Pods Frameworks */,
+				ECA501972248F9F300D84810 /* ShellScript */,
+				4BF8FF10224A0E2400519779 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDemoAppTestnet;
+			productName = TestDemoApp;
+			productReference = ECA5019B2248F9F300D84810 /* TestDemoAppTestnet.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4BF8FDB02240FA7600519779 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "aniket ayachit";
+				TargetAttributes = {
+					4BF8FDB72240FA7600519779 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					4BF8FDCB2240FA7700519779 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 4BF8FDB72240FA7600519779;
+					};
+					4BF8FDD62240FA7700519779 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 4BF8FDB72240FA7600519779;
+					};
+				};
+			};
+			buildConfigurationList = 4BF8FDB32240FA7600519779 /* Build configuration list for PBXProject "TestDemoApp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4BF8FDAF2240FA7600519779;
+			productRefGroup = 4BF8FDB92240FA7600519779 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4BF8FDB72240FA7600519779 /* TestDemoApp */,
+				ECA501012248F98A00D84810 /* TestDemoAppStaging */,
+				ECA501352248F9A500D84810 /* TestDemoAppDevelopment */,
+				ECA501692248F9F300D84810 /* TestDemoAppTestnet */,
+				4BF8FDCB2240FA7700519779 /* TestDemoAppTests */,
+				4BF8FDD62240FA7700519779 /* TestDemoAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4BF8FDB62240FA7600519779 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */,
+				4BF8FE202240FD1400519779 /* LICENSE in Resources */,
+				4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */,
+				4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */,
+				4BF8FEF022491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEEA22491F9300519779 /* Testnet-Info.plist in Resources */,
+				4BF8FEF622491F9300519779 /* Staging-Info.plist in Resources */,
+				4BF8FE232240FD1400519779 /* README.md in Resources */,
+				4BF8FE1C2240FD1400519779 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDCA2240FA7700519779 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FEFA22491F9300519779 /* Staging-Info.plist in Resources */,
+				4BF8FEF422491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEEE22491F9300519779 /* Testnet-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDD52240FA7700519779 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FEFB22491F9300519779 /* Staging-Info.plist in Resources */,
+				4BF8FEF522491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEEF22491F9300519779 /* Testnet-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA501272248F98A00D84810 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA501282248F98A00D84810 /* Assets.xcassets in Resources */,
+				ECA501292248F98A00D84810 /* LICENSE in Resources */,
+				ECA5012A2248F98A00D84810 /* OstWalletSdk.plist in Resources */,
+				ECA5012B2248F98A00D84810 /* Main.storyboard in Resources */,
+				4BF8FEF122491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEEB22491F9300519779 /* Testnet-Info.plist in Resources */,
+				4BF8FEF722491F9300519779 /* Staging-Info.plist in Resources */,
+				ECA5012C2248F98A00D84810 /* README.md in Resources */,
+				ECA5012D2248F98A00D84810 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA5015B2248F9A500D84810 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA5015C2248F9A500D84810 /* Assets.xcassets in Resources */,
+				ECA5015D2248F9A500D84810 /* LICENSE in Resources */,
+				ECA5015E2248F9A500D84810 /* OstWalletSdk.plist in Resources */,
+				ECA5015F2248F9A500D84810 /* Main.storyboard in Resources */,
+				4BF8FEF222491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEEC22491F9300519779 /* Testnet-Info.plist in Resources */,
+				4BF8FEF822491F9300519779 /* Staging-Info.plist in Resources */,
+				ECA501602248F9A500D84810 /* README.md in Resources */,
+				ECA501612248F9A500D84810 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA5018F2248F9F300D84810 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA501902248F9F300D84810 /* Assets.xcassets in Resources */,
+				ECA501912248F9F300D84810 /* LICENSE in Resources */,
+				ECA501922248F9F300D84810 /* OstWalletSdk.plist in Resources */,
+				ECA501932248F9F300D84810 /* Main.storyboard in Resources */,
+				4BF8FEF322491F9300519779 /* Development-Info.plist in Resources */,
+				4BF8FEED22491F9300519779 /* Testnet-Info.plist in Resources */,
+				4BF8FEF922491F9300519779 /* Staging-Info.plist in Resources */,
+				ECA501942248F9F300D84810 /* README.md in Resources */,
+				ECA501952248F9F300D84810 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0A0658F8AEDF85A44C8937DC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4BF8FE392240FD3C00519779 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		8351EFC282F628DD81F319F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoAppUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9DCFAA2F1547AB9682267496 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7DD69526F5260DE45778FC0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA501022248F98A00D84810 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA5012E2248F98A00D84810 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA5012F2248F98A00D84810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		ECA501362248F9A500D84810 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA501622248F9A500D84810 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA501632248F9A500D84810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				./../Carthage/Build/iOS/BigInt.framework,
+				./../Carthage/Build/iOS/CryptoEthereumSwift.framework,
+				./../Carthage/Build/iOS/CryptoSwift.framework,
+				./../Carthage/Build/iOS/EthereumKit.framework,
+				./../Carthage/Build/iOS/FMDB.framework,
+				./../Carthage/Build/iOS/SipHash.framework,
+				./../Carthage/Build/iOS/Alamofire.framework,
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		ECA5016A2248F9F300D84810 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA501962248F9F300D84810 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA501972248F9F300D84810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4BF8FDB42240FA7600519779 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FE2E2240FD1400519779 /* BaseWalletWorkflowView.swift in Sources */,
+				4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */,
+				4BF8FE222240FD1400519779 /* ColorTheme.swift in Sources */,
+				4BF8FE212240FD1400519779 /* IconGenerator.swift in Sources */,
+				4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */,
+				4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */,
+				4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */,
+				4BF8FE182240FD1400519779 /* Users.swift in Sources */,
+				4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */,
+				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
+				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
+				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
+				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
+				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
+				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
+				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
+				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
+				4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */,
+				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
+				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
+				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
+				4BF8FE582244FA0E00519779 /* OstLogoutAllSessions.swift in Sources */,
+				4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */,
+				4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */,
+				4BF8FE242240FD1400519779 /* Shapes.swift in Sources */,
+				4BF8FE352240FD1400519779 /* ScanQRCodeView.swift in Sources */,
+				4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */,
+				4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */,
+				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
+				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
+				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
+				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDC82240FA7700519779 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF8FDD32240FA7700519779 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA501032248F98A00D84810 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA501042248F98A00D84810 /* BaseWalletWorkflowView.swift in Sources */,
+				ECA501052248F98A00D84810 /* ViewController.swift in Sources */,
+				ECA501062248F98A00D84810 /* ColorTheme.swift in Sources */,
+				ECA501072248F98A00D84810 /* IconGenerator.swift in Sources */,
+				ECA501082248F98A00D84810 /* UserActionsViewController.swift in Sources */,
+				ECA501092248F98A00D84810 /* UserCell.swift in Sources */,
+				ECA5010A2248F98A00D84810 /* SetupWalletView.swift in Sources */,
+				ECA5010B2248F98A00D84810 /* Users.swift in Sources */,
+				ECA5010C2248F98A00D84810 /* AddSessionView.swift in Sources */,
+				ECA5010D2248F98A00D84810 /* WalletViewController.swift in Sources */,
+				ECA5010E2248F98A00D84810 /* UserDetailsView.swift in Sources */,
+				ECA5010F2248F98A00D84810 /* HomeViewController.swift in Sources */,
+				ECA501102248F98A00D84810 /* HomeCustomLayout.swift in Sources */,
+				ECA501112248F98A00D84810 /* QRInfoLabel.swift in Sources */,
+				ECA501122248F98A00D84810 /* UIColorExtension.swift in Sources */,
+				ECA501132248F98A00D84810 /* CurrentUser.swift in Sources */,
+				ECA501142248F98A00D84810 /* AbortRevocerDeviceView.swift in Sources */,
+				ECA501152248F98A00D84810 /* OstSdkInteract.swift in Sources */,
+				ECA501162248F98A00D84810 /* ApplicationScheme.swift in Sources */,
+				ECA501172248F98A00D84810 /* RecoverDeviceView.swift in Sources */,
+				ECA501182248F98A00D84810 /* ResetPinView.swift in Sources */,
+				ECA501192248F98A00D84810 /* OstLogoutAllSessions.swift in Sources */,
+				ECA5011A2248F98A00D84810 /* BaseWalletView.swift in Sources */,
+				ECA5011B2248F98A00D84810 /* PaperWalletView.swift in Sources */,
+				ECA5011C2248F98A00D84810 /* Shapes.swift in Sources */,
+				ECA5011D2248F98A00D84810 /* ScanQRCodeView.swift in Sources */,
+				ECA5011E2248F98A00D84810 /* LoginViewController.swift in Sources */,
+				ECA5011F2248F98A00D84810 /* AppDelegate.swift in Sources */,
+				ECA501202248F98A00D84810 /* ShowQRView.swift in Sources */,
+				ECA501212248F98A00D84810 /* AddDeviceWithMnemonics.swift in Sources */,
+				ECA501222248F98A00D84810 /* BaseModel.swift in Sources */,
+				ECA501232248F98A00D84810 /* CGContextExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA501372248F9A500D84810 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA501382248F9A500D84810 /* BaseWalletWorkflowView.swift in Sources */,
+				ECA501392248F9A500D84810 /* ViewController.swift in Sources */,
+				ECA5013A2248F9A500D84810 /* ColorTheme.swift in Sources */,
+				ECA5013B2248F9A500D84810 /* IconGenerator.swift in Sources */,
+				ECA5013C2248F9A500D84810 /* UserActionsViewController.swift in Sources */,
+				ECA5013D2248F9A500D84810 /* UserCell.swift in Sources */,
+				ECA5013E2248F9A500D84810 /* SetupWalletView.swift in Sources */,
+				ECA5013F2248F9A500D84810 /* Users.swift in Sources */,
+				ECA501402248F9A500D84810 /* AddSessionView.swift in Sources */,
+				ECA501412248F9A500D84810 /* WalletViewController.swift in Sources */,
+				ECA501422248F9A500D84810 /* UserDetailsView.swift in Sources */,
+				ECA501432248F9A500D84810 /* HomeViewController.swift in Sources */,
+				ECA501442248F9A500D84810 /* HomeCustomLayout.swift in Sources */,
+				ECA501452248F9A500D84810 /* QRInfoLabel.swift in Sources */,
+				ECA501462248F9A500D84810 /* UIColorExtension.swift in Sources */,
+				ECA501472248F9A500D84810 /* CurrentUser.swift in Sources */,
+				ECA501482248F9A500D84810 /* AbortRevocerDeviceView.swift in Sources */,
+				ECA501492248F9A500D84810 /* OstSdkInteract.swift in Sources */,
+				ECA5014A2248F9A500D84810 /* ApplicationScheme.swift in Sources */,
+				ECA5014B2248F9A500D84810 /* RecoverDeviceView.swift in Sources */,
+				ECA5014C2248F9A500D84810 /* ResetPinView.swift in Sources */,
+				ECA5014D2248F9A500D84810 /* OstLogoutAllSessions.swift in Sources */,
+				ECA5014E2248F9A500D84810 /* BaseWalletView.swift in Sources */,
+				ECA5014F2248F9A500D84810 /* PaperWalletView.swift in Sources */,
+				ECA501502248F9A500D84810 /* Shapes.swift in Sources */,
+				ECA501512248F9A500D84810 /* ScanQRCodeView.swift in Sources */,
+				ECA501522248F9A500D84810 /* LoginViewController.swift in Sources */,
+				ECA501532248F9A500D84810 /* AppDelegate.swift in Sources */,
+				ECA501542248F9A500D84810 /* ShowQRView.swift in Sources */,
+				ECA501552248F9A500D84810 /* AddDeviceWithMnemonics.swift in Sources */,
+				ECA501562248F9A500D84810 /* BaseModel.swift in Sources */,
+				ECA501572248F9A500D84810 /* CGContextExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA5016B2248F9F300D84810 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA5016C2248F9F300D84810 /* BaseWalletWorkflowView.swift in Sources */,
+				ECA5016D2248F9F300D84810 /* ViewController.swift in Sources */,
+				ECA5016E2248F9F300D84810 /* ColorTheme.swift in Sources */,
+				ECA5016F2248F9F300D84810 /* IconGenerator.swift in Sources */,
+				ECA501702248F9F300D84810 /* UserActionsViewController.swift in Sources */,
+				ECA501712248F9F300D84810 /* UserCell.swift in Sources */,
+				ECA501722248F9F300D84810 /* SetupWalletView.swift in Sources */,
+				ECA501732248F9F300D84810 /* Users.swift in Sources */,
+				ECA501742248F9F300D84810 /* AddSessionView.swift in Sources */,
+				ECA501752248F9F300D84810 /* WalletViewController.swift in Sources */,
+				ECA501762248F9F300D84810 /* UserDetailsView.swift in Sources */,
+				ECA501772248F9F300D84810 /* HomeViewController.swift in Sources */,
+				ECA501782248F9F300D84810 /* HomeCustomLayout.swift in Sources */,
+				ECA501792248F9F300D84810 /* QRInfoLabel.swift in Sources */,
+				ECA5017A2248F9F300D84810 /* UIColorExtension.swift in Sources */,
+				ECA5017B2248F9F300D84810 /* CurrentUser.swift in Sources */,
+				ECA5017C2248F9F300D84810 /* AbortRevocerDeviceView.swift in Sources */,
+				ECA5017D2248F9F300D84810 /* OstSdkInteract.swift in Sources */,
+				ECA5017E2248F9F300D84810 /* ApplicationScheme.swift in Sources */,
+				ECA5017F2248F9F300D84810 /* RecoverDeviceView.swift in Sources */,
+				ECA501802248F9F300D84810 /* ResetPinView.swift in Sources */,
+				ECA501812248F9F300D84810 /* OstLogoutAllSessions.swift in Sources */,
+				ECA501822248F9F300D84810 /* BaseWalletView.swift in Sources */,
+				ECA501832248F9F300D84810 /* PaperWalletView.swift in Sources */,
+				ECA501842248F9F300D84810 /* Shapes.swift in Sources */,
+				ECA501852248F9F300D84810 /* ScanQRCodeView.swift in Sources */,
+				ECA501862248F9F300D84810 /* LoginViewController.swift in Sources */,
+				ECA501872248F9F300D84810 /* AppDelegate.swift in Sources */,
+				ECA501882248F9F300D84810 /* ShowQRView.swift in Sources */,
+				ECA501892248F9F300D84810 /* AddDeviceWithMnemonics.swift in Sources */,
+				ECA5018A2248F9F300D84810 /* BaseModel.swift in Sources */,
+				ECA5018B2248F9F300D84810 /* CGContextExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4BF8FDCE2240FA7700519779 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4BF8FDB72240FA7600519779 /* TestDemoApp */;
+			targetProxy = 4BF8FDCD2240FA7700519779 /* PBXContainerItemProxy */;
+		};
+		4BF8FDD92240FA7700519779 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4BF8FDB72240FA7600519779 /* TestDemoApp */;
+			targetProxy = 4BF8FDD82240FA7700519779 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4BF8FDDE2240FA7700519779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4BF8FDDF2240FA7700519779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4BF8FDE12240FA7700519779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = TestDemoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4BF8FDE22240FA7700519779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = TestDemoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4BF8FDE42240FA7700519779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8DD78CEFFF49BC3F2F78300E /* Pods-TestDemoAppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = TestDemoAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.TestDemoAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestDemoApp.app/TestDemoApp";
+			};
+			name = Debug;
+		};
+		4BF8FDE52240FA7700519779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = TestDemoAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.TestDemoAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestDemoApp.app/TestDemoApp";
+			};
+			name = Release;
+		};
+		4BF8FDE72240FA7700519779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = TestDemoAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.TestDemoAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TestDemoApp;
+			};
+			name = Debug;
+		};
+		4BF8FDE82240FA7700519779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F904DB8F6D28F79D1180FC74 /* Pods-TestDemoAppUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				INFOPLIST_FILE = TestDemoAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pepo.TestDemoAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TestDemoApp;
+			};
+			name = Release;
+		};
+		ECA501312248F98A00D84810 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Staging-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappstaging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ECA501322248F98A00D84810 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Staging-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappstaging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ECA501652248F9A500D84810 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Development-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ECA501662248F9A500D84810 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Development-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ECA501992248F9F300D84810 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Testnet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapptestnet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ECA5019A2248F9F300D84810 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N83K86W6P4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "Testnet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapptestnet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4BF8FDB32240FA7600519779 /* Build configuration list for PBXProject "TestDemoApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BF8FDDE2240FA7700519779 /* Debug */,
+				4BF8FDDF2240FA7700519779 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BF8FDE02240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BF8FDE12240FA7700519779 /* Debug */,
+				4BF8FDE22240FA7700519779 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BF8FDE32240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BF8FDE42240FA7700519779 /* Debug */,
+				4BF8FDE52240FA7700519779 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BF8FDE62240FA7700519779 /* Build configuration list for PBXNativeTarget "TestDemoAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BF8FDE72240FA7700519779 /* Debug */,
+				4BF8FDE82240FA7700519779 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ECA501302248F98A00D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppStaging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECA501312248F98A00D84810 /* Debug */,
+				ECA501322248F98A00D84810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ECA501642248F9A500D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppDevelopment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECA501652248F9A500D84810 /* Debug */,
+				ECA501662248F9A500D84810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ECA501982248F9F300D84810 /* Build configuration list for PBXNativeTarget "TestDemoAppTestnet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECA501992248F9F300D84810 /* Debug */,
+				ECA5019A2248F9F300D84810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4BF8FDB02240FA7600519779 /* Project object */;
+}
