@@ -54,11 +54,16 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let addresses: [String] = payload[OstExecuteTransaction.PAYLOAD_ADDRESSES_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_2", .invalidQRCode)
         }
+        for address in addresses {
+            if !address.isValidAddress {
+                throw OstError("w_et_getpfqrp_3", .invalidQRCode)
+            }
+        }
         guard let amounts: [String] = payload[OstExecuteTransaction.PAYLOAD_AMOUNTS_KEY] as? [String] else {
-            throw OstError("w_et_getpfqrp_3", .invalidQRCode)
+            throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         guard let tokenId: String = OstUtils.toString(payload[OstExecuteTransaction.PAYLOAD_TOKEN_ID_KEY] as Any?) else {
-            throw OstError("w_et_getpfqrp_4", .invalidQRCode)
+            throw OstError("w_et_getpfqrp_5", .invalidQRCode)
         }
         
         return (ruleName, addresses, amounts, tokenId)

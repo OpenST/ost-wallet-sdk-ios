@@ -17,7 +17,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         guard let deviceAddress: String = payload[OstRevokeDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
             throw OstError("w_rd_gadpfqrp_1", .invalidQRCode)
         }
-        if deviceAddress.isEmpty {
+        if !deviceAddress.isValidAddress {
             throw OstError("w_rd_gadpfqrp_2", .invalidQRCode)
         }
         return deviceAddress
