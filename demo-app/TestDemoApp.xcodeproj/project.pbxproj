@@ -871,13 +871,13 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				./../Carthage/Build/iOS/BigInt.framework,
+				./../Carthage/Build/iOS/CryptoEthereumSwift.framework,
+				./../Carthage/Build/iOS/CryptoSwift.framework,
+				./../Carthage/Build/iOS/EthereumKit.framework,
+				./../Carthage/Build/iOS/FMDB.framework,
+				./../Carthage/Build/iOS/SipHash.framework,
+				./../Carthage/Build/iOS/Alamofire.framework,
 			);
 			outputFileListPaths = (
 			);
@@ -1037,13 +1037,13 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				./../Carthage/Build/iOS/BigInt.framework,
+				./../Carthage/Build/iOS/CryptoEthereumSwift.framework,
+				./../Carthage/Build/iOS/CryptoSwift.framework,
+				./../Carthage/Build/iOS/EthereumKit.framework,
+				./../Carthage/Build/iOS/FMDB.framework,
+				./../Carthage/Build/iOS/SipHash.framework,
+				./../Carthage/Build/iOS/Alamofire.framework,
 			);
 			outputFileListPaths = (
 			);
@@ -1205,13 +1205,13 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/BigInt.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoEthereumSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SipHash.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				./../Carthage/Build/iOS/BigInt.framework,
+				./../Carthage/Build/iOS/CryptoEthereumSwift.framework,
+				./../Carthage/Build/iOS/CryptoSwift.framework,
+				./../Carthage/Build/iOS/EthereumKit.framework,
+				./../Carthage/Build/iOS/FMDB.framework,
+				./../Carthage/Build/iOS/SipHash.framework,
+				./../Carthage/Build/iOS/Alamofire.framework,
 			);
 			outputFileListPaths = (
 			);

@@ -350,6 +350,8 @@ class LoginViewController: UIViewController {
     MDCContainedButtonThemer.applyScheme(appScheme.buttonScheme, to: nextButton);
     MDCTextButtonThemer.applyScheme(appScheme.buttonScheme, to: toggleModeButton);
     
+    
+    print(OstWalletSdk.testClass())
   }
 
   // MARK: - Gesture Handling
