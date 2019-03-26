@@ -243,6 +243,23 @@ OstWalletSdk.initiateDeviceRecovery(
     )
 ```
 
+###  Abort Device Recovery
+
+To abort initiated device recovery.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_userPin: Users Pin_<br/>
+&nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstWalletSdk.abortDeviceRecovery(
+    userId: String,
+    userPin: String,
+    passphrasePrefix: String,
+    delegate: OstWorkflowDelegate)
+```
+
 ## Workflow Callbacks
 
 ```Swift

@@ -11,7 +11,7 @@
 import Foundation
 
 class OstActivateUser: OstWorkflowBase {
-    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
     private var expireAfter: TimeInterval
@@ -66,7 +66,7 @@ class OstActivateUser: OstWorkflowBase {
             throw OstError("w_au_vp_1", .userAlreadyActivated)
         }
         if (self.currentDevice?.isStatusAuthorized)! {
-            throw OstError("w_au_vp_2", .deviceAlreadyAuthorized)
+            throw OstError("w_au_vp_2", .deviceAuthorized)
         }
         
         if  0 > self.expireAfter {

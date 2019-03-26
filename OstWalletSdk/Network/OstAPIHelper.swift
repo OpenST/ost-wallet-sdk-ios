@@ -18,6 +18,8 @@ enum ResultType: String {
     case session = "session"
     case transaction = "transaction"
     case rules = "rules"
+    case devices = "devices"
+    case tokenHolder = "token_holder"
 }
 
 class OstAPIHelper {
@@ -80,6 +82,24 @@ class OstAPIHelper {
         }
     }
     
+    /// Sync the entities data with API response
+    ///
+    /// - Parameter apiResponse: API response data
+    /// - Returns: Entity array
+    /// - Throws: OSTError
+    class func syncEntitiesWithAPIResponse(apiResponse: [String: Any?]?) throws -> [OstBaseEntity] {
+        if (apiResponse != nil) {
+            do {
+                try storeApiResponse(apiResponse!)
+                return try getSyncedEntities(apiResponse!)
+            }catch {
+                throw OstError.init("n_ah_seswar_1", .entityNotAvailable)
+            }
+        }else {
+            throw OstError.init("n_ah_seswar_2", .invalidAPIResponse)
+        }
+    }
+    
     /// Store the entities in the database from the API response
     ///
     /// - Parameter apiResponse: API response data
@@ -105,10 +125,17 @@ class OstAPIHelper {
             try OstSession.storeEntity(entityData as! [String: Any?])
         case ResultType.transaction.rawValue:
             try OstTransaction.storeEntity(entityData as! [String: Any?])
+        case ResultType.tokenHolder.rawValue:
+            try OstTokenHolder.storeEntity(entityData as! [String: Any?])
         case ResultType.rules.rawValue:
             let rulesEntityData = entityData as! [[String: Any?]]
             for ruleEntityData in rulesEntityData {
                 try OstRule.storeEntity(ruleEntityData)
+            }
+        case ResultType.devices.rawValue:
+            let devicesEntityData = entityData as! [[String: Any?]]
+            for deviceEntityData in devicesEntityData {
+                try OstDevice.storeEntity(deviceEntityData)
             }
         default:
             return
@@ -157,8 +184,46 @@ class OstAPIHelper {
         case ResultType.transaction.rawValue:
             id = try getItem(OstTransaction.ENTITY_IDENTIFIER)
             return try OstTransaction.getById(id)!
+        case ResultType.tokenHolder.rawValue:
+            id = try getItem(OstTokenHolder.ENTITY_IDENTIFIER)
+            return try OstTokenHolder.getById(id)!
         default:
             throw OstError("n_ah_gse_3", .invalidEntityType)
         }
+    }
+    
+    /// Get entity array from database
+    ///
+    /// - Parameter apiResponse: API response
+    /// - Returns: Entity array
+    /// - Throws: OstError
+    private class func getSyncedEntities(_ apiResponse: [String: Any?]) throws -> [OstBaseEntity] {
+        let resultType = apiResponse["result_type"] as? String ?? ""
+        let entityDataArray =  apiResponse[resultType] as? [[String: Any?]]
+        if (entityDataArray == nil) {
+            throw OstError.init("n_ah_gses_1", .entityNotAvailable)
+        }
+        
+        let getItem: ((String, [String: Any?]) throws -> String) = { (identifier, entityData) -> String in
+            guard let id = OstUtils.toString(OstBaseEntity.getItem(fromEntity: entityData, forKey: identifier) as Any?) else {
+                throw OstError("n_ah_gses_2", .invalidEntityType)
+            }
+            return id
+        }
+        
+        var id: String
+        var resultArray = [OstBaseEntity]()
+        switch resultType {
+        case ResultType.devices.rawValue:
+            for entityData in entityDataArray!{
+                id = try getItem(OstDevice.ENTITY_IDENTIFIER, entityData)
+                let deviceObj = try OstDevice.getById(id)!
+                resultArray.append(deviceObj)
+            }
+        default:
+            throw OstError("n_ah_gses_3", .invalidEntityType)
+        }
+        
+        return resultArray
     }
 }

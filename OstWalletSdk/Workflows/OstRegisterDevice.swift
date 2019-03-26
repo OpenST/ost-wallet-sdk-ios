@@ -66,9 +66,8 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     override func process() throws {
-        if (self.currentDevice == nil ||
-            self.currentDevice!.isStatusRevoked ||
-            self.currentDevice!.isStatusRevoking) {
+        if (self.currentDevice == nil
+            || self.currentDevice!.isStatusRevoked) {
             self.createAndRegisterDevice()
             return
         }
@@ -104,8 +103,6 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
             var apiParam: [String: Any] = [:]
             apiParam["address"] = deviceAddress
             apiParam["api_signer_address"] = apiAddress
-            apiParam["device_uuid"] = self.getDeviceUUID() ?? ""
-            apiParam["device_name"] = self.getDeviceName()
             apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
             apiParam["status"] = OstUser.Status.CREATED.rawValue
             
@@ -118,20 +115,6 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
         }catch let error {
             self.postError(error)
         }
-    }
-    
-    /// Get device UUID
-    ///
-    /// - Returns: Deice UUID is present. else nil.
-    private func getDeviceUUID() -> String? {
-        return UIDevice.current.identifierForVendor?.uuidString
-    }
-    
-    /// Get device name.
-    ///
-    /// - Returns: Name of device.
-    private func getDeviceName() -> String {
-        return UIDevice.current.name
     }
     
     /// Delegate resiger device to application.

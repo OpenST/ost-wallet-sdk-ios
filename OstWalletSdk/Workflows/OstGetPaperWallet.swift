@@ -11,7 +11,7 @@
 import Foundation
 
 class OstGetPaperWallet: OstWorkflowBase {
-    static private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .background)
+    static private let ostGetPaperWalletQueue = DispatchQueue(label: "com.ost.sdk.OstGetPaperWallet", qos: .userInitiated)
     
     /// Get workflow Queue
     ///
@@ -58,7 +58,7 @@ class OstGetPaperWallet: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .getPaperWallet)
+        return OstWorkflowContext(workflowType: .getDeviceMnemonics)
     }
     
     /// Get context entity

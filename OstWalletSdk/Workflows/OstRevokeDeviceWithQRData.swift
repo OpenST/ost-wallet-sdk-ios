@@ -23,7 +23,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         return deviceAddress
     }
 
-    static private let ostRevokeDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRevokeDevice", qos: .background)
+    static private let ostRevokeDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRevokeDevice", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRevoke: String
 
@@ -58,6 +58,9 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
 
+        if !self.deviceAddressToRevoke.isValidAddress {
+            throw OstError("w_adwqrd_fd_1", OstErrorText.wrongDeviceAddress)
+        }
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
             throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
         }
@@ -108,7 +111,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Parameter device: OstDevice entity.
     private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .addDeviceWithQRCode);
+        let workflowContext = OstWorkflowContext(workflowType: .revokeDeviceWithQRCode);
         let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToRevoke!, entityType: .device)
         DispatchQueue.main.async {
             self.delegate.verifyData(workflowContext: workflowContext,
@@ -168,7 +171,7 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .abortRecoverDevice)
+        return OstWorkflowContext(workflowType: .revokeDeviceWithQRCode)
     }
 
     /// Get context entity

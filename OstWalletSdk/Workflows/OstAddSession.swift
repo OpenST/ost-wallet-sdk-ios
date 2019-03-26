@@ -12,7 +12,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     
-    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     
@@ -51,6 +51,11 @@ class OstAddSession: OstWorkflowBase {
         try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         if (TimeInterval(0) > self.expireAfter) {
             throw OstError("w_as_vp_1", .invalidExpirationTimeStamp)
+        }
+        
+        if spendingLimit.isEmpty ||
+            (BigInt(spendingLimit) == nil) {
+            throw OstError("w_as_vp_1", .invalidSpendingLimit)
         }
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()

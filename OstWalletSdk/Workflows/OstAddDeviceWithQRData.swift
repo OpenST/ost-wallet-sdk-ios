@@ -17,10 +17,13 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         guard let deviceAddress: String = payload[OstAddDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
             throw OstError("w_adwqrd_gadpfqrp_1", .invalidQRCode)
         }
+        if deviceAddress.isEmpty {
+            throw OstError("w_adwqrd_gadpfqrp_2", .invalidQRCode)
+        }
         return deviceAddress
     }
     
-    static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .background)
+    static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .userInitiated)
     private let deviceAddress: String
     
     private var deviceToAdd: OstDevice? = nil
@@ -54,6 +57,10 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
+        
+        if !self.deviceAddress.isValidAddress {
+            throw OstError("w_adwqrd_fd_1", .wrongDeviceAddress)
+        }
         
         if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
             throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
@@ -105,7 +112,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Parameter device: OstDevice entity.
     private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .addDeviceWithQRCode);
+        let workflowContext = OstWorkflowContext(workflowType: .authorizeDeviceWithQRCode);
         let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToAdd!, entityType: .device)
         DispatchQueue.main.async {
             self.delegate.verifyData(workflowContext: workflowContext,
@@ -164,7 +171,7 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .addDeviceWithQRCode)
+        return OstWorkflowContext(workflowType: .authorizeDeviceWithQRCode)
     }
     
     /// Get context entity

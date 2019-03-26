@@ -43,7 +43,7 @@ class OstPinManager {
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
             throw OstError.init(
                 "w_wh_pm_vpl_1",
-                "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }
@@ -128,6 +128,13 @@ class OstPinManager {
         }        
     }
     
+    /// Clear the stored pin hash
+    ///
+    /// - Throws: OstError
+    func clearPinHash() throws {
+        try OstKeyManager(userId: self.userId).deletePinHash()
+    }
+
     /// Get signed data for pin reset
     ///
     /// - Parameter newRecoveryOwnerAddress: New recovery owner address
@@ -237,13 +244,16 @@ class OstPinManager {
         return signedData
     }
     
-    ///TODO: Rethink about implementation
-    /// Get signed data for abort recover device
+    /// Get abort device recovery signed data.
     ///
-    /// - Parameter deviceAddressToRecover: Device address that needs to be recovered
-    /// - Returns: SignedData
+    /// - Parameters:
+    ///   - recoveringDevice: Recovering device
+    ///   - revokingDevice: Revoking device
+    /// - Returns: Signed data
     /// - Throws: OstError
-    func signAbortRecoverDeviceData(deviceAddressToRecover: String) throws -> OstKeyManager.SignedData {
+    func signAbortRecoverDeviceData(recoveringDevice: OstDevice,
+                                    revokingDevice: OstDevice) throws -> OstKeyManager.SignedData {
+        
         try validatePin()
         guard let user = try OstUser.getById(self.userId) else {
             throw OstError("w_wh_pm_srdd_1", .userEntityNotFound)
@@ -254,26 +264,26 @@ class OstPinManager {
         guard let recoveryAddress = user.recoveryAddress else {
             throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
         }
-        guard let device = try OstDevice.getById(deviceAddressToRecover) else {
-            throw OstError("w_wh_pm_srdd_4", .deviceNotFound)
+        
+        if !recoveringDevice.isStatusRecovering {
+            throw OstError("w_wh_pm_srdd_4", .deviceNotRecovering)
         }
-        guard let linkedAddress = device.linkedAddress else {
-            throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
+        
+        if !revokingDevice.isStatusRevoking {
+            throw OstError("w_wh_pm_srdd_5", .deviceNotRevoking)
         }
-        if (!device.isStatusAuthorized) {
-            throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
+        
+        guard let linkedAddress = revokingDevice.linkedAddress else {
+            throw OstError("w_wh_pm_srdd_6", .linkedAddressNotFound)
         }
-        guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError("w_wh_pm_srdd_6", .deviceNotFound)
-        }
-       
+        
         let typedData = TypedDataForRecovery
             .getAbortRecoveryTypedData(
                 verifyingContract: recoveryAddress,
                 prevOwner: linkedAddress,
-                oldOwner: deviceAddressToRecover,
-                newOwner: currentDevice.address!
-            )
+                oldOwner: revokingDevice.address!,
+                newOwner: recoveringDevice.address!
+        )
         
         let eip712: EIP712 =  EIP712(types: typedData["types"] as! [String: Any],
                                      primaryType: typedData["primaryType"] as! String,

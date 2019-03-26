@@ -54,8 +54,7 @@ class OstAuthorizeSession: OstAuthorizeBase {
     /// - Returns: Encoed abi hex value
     /// - Throws: OstError
     override func getEncodedABI() throws -> String {
-        let encodedABIHex = try TokenHolder().getAddSessionExecutableData(abiMethodName: self.abiMethodNameForAuthorizeSession,
-                                                                          sessionAddress: self.addressToAdd,
+        let encodedABIHex = try TokenHolder().getAddSessionExecutableData(sessionAddress: self.addressToAdd,
                                                                           expirationHeight: self.expirationHeight,
                                                                           spendingLimit: self.spendingLimit)
         return encodedABIHex

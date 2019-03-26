@@ -232,6 +232,15 @@ class OstKeyManager {
         return ethKeys.address!
     }
     
+    /// Delete all sessions for user
+    func deleteAllSessions() {
+        if let sessionAddresses: [String] = try? getSessions() {
+            for sessionAddress in sessionAddresses {
+                try? deleteSessionKey(sessionAddress: sessionAddress)
+            }
+        }
+    }
+    
     /// Get all the session addresses available in the device
     ///
     /// - Returns: Array containing session addresses
@@ -271,29 +280,192 @@ class OstKeyManager {
     }
 
 
+    /// Verify pin. This will first check the pin hash, if it does not match
+    /// then it will generate the recovery owner address and match it.
+    ///
+    /// - Parameters:
+    ///   - passphrasePrefix: Application Passphrase prefix
+    ///   - userPin: User pin
+    ///   - salt: Salt
+    ///   - recoveryOwnerAddress: Recovery owner address
+    /// - Returns: `true` if verified otherwise `false`
     func verifyPin(
         passphrasePrefix: String,
         userPin: String,
         salt: String,
         recoveryOwnerAddress: String) -> Bool {
     
-        var isValid = true
+        var isValid = self.validatePinHash(
+            passphrasePrefix: passphrasePrefix,
+            userPin: userPin,
+            salt: salt,
+            recoveryOwnerAddress: recoveryOwnerAddress
+        )
 
-        do {
-            let generatedAddress = try self.getRecoveryOwnerAddressFrom(
-                passphrasePrefix: passphrasePrefix,
-                userPin: userPin,
-                salt: salt
-            )
+        if !isValid {
+            do {
+                let generatedAddress = try self.getRecoveryOwnerAddressFrom(
+                    passphrasePrefix: passphrasePrefix,
+                    userPin: userPin,
+                    salt: salt
+                )
                 
-            isValid = recoveryOwnerAddress.caseInsensitiveCompare(generatedAddress) ==  .orderedSame
+                isValid = recoveryOwnerAddress.caseInsensitiveCompare(generatedAddress) ==  .orderedSame
+                
+                // Store the pin hash in the keychain, so that the next validation will be faster
+                if isValid {
+                    try? self.storePinHash(
+                        passphrasePrefix: passphrasePrefix,
+                        userPin: userPin,
+                        salt: salt,
+                        recoveryOwnerAddress: recoveryOwnerAddress
+                    )
+                }
+                
+            } catch {
+                isValid = false
+            }
+        }
 
+        return isValid
+    }
+    
+    /// Delete stored pin hash
+    ///
+    /// - Throws: OstError
+    func deletePinHash() throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        userDeviceInfo[RECOVERY_PIN_HASH] = nil
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+    }
+    
+}
+
+// MARK: - Pin hash related functions
+fileprivate extension OstKeyManager {
+
+    /// Generate pin hash from given parameters
+    ///
+    /// - Parameters:
+    ///   - passphrasePrefix: Application Passphrase prefix
+    ///   - userPin: User pin
+    ///   - salt: Salt
+    ///   - recoveryOwnerAddress: Recovery owner address
+    /// - Returns: Pin hash
+    func generatePinHash(
+        passphrasePrefix: String,
+        userPin: String,
+        salt: String,
+        recoveryOwnerAddress: String) -> String {
+        
+        let rawString = "\(self.userId)\(passphrasePrefix)\(userPin)\(salt)\(recoveryOwnerAddress.lowercased())"
+        let pinHash = rawString.sha3(.keccak256)
+        return pinHash
+    }
+    
+    /// Store pin hash
+    ///
+    /// - Parameter pinHash: Pin hash
+    /// - Throws: OstError
+    func storePinHash(_ pinHash: String) throws {
+        var pinHashData: Data? = nil
+        if #available(iOS 10.3, *) {
+            if Device.hasSecureEnclave {
+                let enclaveHelperObj = OstSecureEnclaveHelper(tag: self.secureEnclaveIdentifier)
+                if let privateKey: SecKey = try enclaveHelperObj.getPrivateKey() {
+                    pinHashData = try enclaveHelperObj.encrypt(data: pinHash.data(using: .utf8)!, withPrivateKey: privateKey)
+                }
+            }
+        }
+        if (pinHashData == nil) {
+            pinHashData = OstUtils.toEncodedData(pinHash)
+        }
+        
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        userDeviceInfo[RECOVERY_PIN_HASH] = pinHashData
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
+    }
+    
+    /// Generate the pin hash from given parameters and store them in the keychain
+    ///
+    /// - Parameters:
+    ///   - passphrasePrefix: Application Passphrase prefix
+    ///   - userPin: User pin
+    ///   - salt: Salt
+    ///   - recoveryOwnerAddress: Recovery owner address
+    /// - Throws: OstError
+    func storePinHash(
+        passphrasePrefix: String,
+        userPin: String,
+        salt: String,
+        recoveryOwnerAddress: String) throws{
+        
+        let generatedPinHash = self.generatePinHash(
+            passphrasePrefix: passphrasePrefix,
+            userPin: userPin,
+            salt: salt,
+            recoveryOwnerAddress: recoveryOwnerAddress
+        )
+        
+        try self.storePinHash(generatedPinHash)
+    }
+    
+    /// Get stored pin hash
+    ///
+    /// - Returns: Pin hash
+    /// - Throws: OstError
+    func getPinHash() throws -> String {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        guard let pinData = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
+            throw OstError("o_s_i_km_gph_1", OstErrorText.recoveryPinNotFoundInKeyManager)
+        }
+        if Device.hasSecureEnclave {
+            if #available(iOS 10.3, *) {
+                let enclaveHelperObj = OstSecureEnclaveHelper(tag: self.secureEnclaveIdentifier)
+                if let privateKey: SecKey = enclaveHelperObj.getPrivateKeyFromKeychain() {
+                    let dData = try enclaveHelperObj.decrypt(data: pinData, withPrivateKey: privateKey)
+                    let pinHash: String = String(data: dData, encoding: .utf8)!
+                    return pinHash
+                }
+                throw OstError.init("s_i_km_gph_1", .noPrivateKeyFound)
+            }
+        }else {
+            return OstUtils.toDecodedValue(pinData) as! String
+        }
+        throw OstError("o_s_i_km_gph_2", OstErrorText.recoveryPinNotFoundInKeyManager)
+    }
+    
+    /// Validate pin hash
+    ///
+    /// - Parameters:
+    ///   - passphrasePrefix: Application Passphrase prefix
+    ///   - userPin: User pin
+    ///   - salt: Salt
+    ///   - recoveryOwnerAddress: Recovery owner address
+    /// - Returns: `true` if valid otherwise `false`
+    func validatePinHash(
+        passphrasePrefix: String,
+        userPin: String,
+        salt: String,
+        recoveryOwnerAddress: String) -> Bool {
+        
+        var isValid = true;
+        let generatedPinHash = self.generatePinHash(
+            passphrasePrefix: passphrasePrefix,
+            userPin: userPin,
+            salt: salt,
+            recoveryOwnerAddress: recoveryOwnerAddress
+        )
+        
+        do {
+            let storedPinHash = try self.getPinHash()
+            isValid = generatedPinHash.elementsEqual(storedPinHash)
         } catch {
-           isValid = false
+            isValid = false
         }
         return isValid
-    
     }
+    
 }
 
 // MARK: - MetaMapping getters and setters
@@ -475,13 +647,13 @@ private extension OstKeyManager {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         
         if var ethKeyMappingData:[String: Any] = userDeviceInfo[key] as? [String : Any] {
-            if (ethKeyMappingData[address.lowercased()] != nil) {
-                try deleteString(forKey: ethKeyMappingData["entityId"] as! String)
+            if let ethKeyMapping: [String: Any] = ethKeyMappingData[address.lowercased()] as? [String: Any] {
+                try deleteString(forKey: ethKeyMapping["entityId"] as! String)
                 ethKeyMappingData[address.lowercased()] = nil;
                 userDeviceInfo[key] = ethKeyMappingData
                 try setUserDeviceInfo(deviceInfo: userDeviceInfo)
             }
-        }                
+        }
     }
     
     /// Store mnemonics in the keychain for given ethereum address

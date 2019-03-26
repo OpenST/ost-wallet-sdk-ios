@@ -59,7 +59,7 @@ public extension OstRecoveryOwnerEntity {
     /// Check whether status is AUTHORIZATION_FAILED or not. returns true if status is AUTHORIZATION_FAILED.
     var isStatusAuthorizationFailed: Bool {
         if let status: String = self.status {
-            return (OstRecoveryOwnerEntity.Status.AUTHORIZATION_FAILED.rawValue == status)
+            return (OstRecoveryOwnerEntity.Status.AUTHORIZATION_FAILED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -67,7 +67,7 @@ public extension OstRecoveryOwnerEntity {
     /// Check whether status is AUTHORIZING or not. returns true if status is AUTHORIZING.
     var isStatusAuthorizing: Bool {
         if let status: String = self.status {
-            return (OstRecoveryOwnerEntity.Status.AUTHORIZING.rawValue == status)
+            return (OstRecoveryOwnerEntity.Status.AUTHORIZING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -75,7 +75,7 @@ public extension OstRecoveryOwnerEntity {
     /// Check whether status is AUTHORIZED or not. returns true if status is AUTHORIZED.
     var isStatusAuthorized: Bool {
         if let status: String = self.status {
-            return (OstRecoveryOwnerEntity.Status.AUTHORIZED.rawValue == status)
+            return (OstRecoveryOwnerEntity.Status.AUTHORIZED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -83,7 +83,7 @@ public extension OstRecoveryOwnerEntity {
     /// Check whether status is REVOKING or not. returns true if status is REVOKING.
     var isStatusRevoking: Bool {
         if let status: String = self.status {
-            return (OstRecoveryOwnerEntity.Status.REVOKING.rawValue == status)
+            return (OstRecoveryOwnerEntity.Status.REVOKING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -91,7 +91,7 @@ public extension OstRecoveryOwnerEntity {
     /// Check whether status is REVOKED or not. returns true if status is REVOKED.
     var isStatusRevoked: Bool {
         if let status: String = self.status {
-            return (OstRecoveryOwnerEntity.Status.REVOKED.rawValue == status)
+            return (OstRecoveryOwnerEntity.Status.REVOKED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
