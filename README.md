@@ -5,7 +5,7 @@
 Wallet SDK is a mobile application development SDK that enables developers to integrate the functionality of a non-custodial crypto-wallet into consumer applications. The SDK:
 
 - Safely generates and stores keys on the user's mobile device
-- Signs ethereum transactions and data as defined by contracts using EIP-1077
+- Signs Ethereum transactions and data as defined by contracts using EIP-1077
 - Enables users to recover access to their Brand Tokens in case the user loses their authorized device</br>
 
 
@@ -44,11 +44,40 @@ $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
 $(SRCROOT)/Carthage/Build/iOS/FMDB.framework
 $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
-$(SRCROOT)/Carthage/Build/iOS/OstSdk.framework
+$(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 ```
 
-## OST Wallet SDK APIs
+- Create `OstWalletSdk.plist` file. Following is the default configurations.
 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0">
+ <dict>
+ <key>BlockGenerationTime</key>
+ <integer>3</integer>
+ <key>PricePointTokenSymbol</key>
+ <string>OST</string>
+ <key>PricePointCurrencySymbol</key>
+ <string>USD</string>
+ <key>RequestTimeoutDuration</key>
+ <integer>30</integer>
+ <key>PinMaxRetryCount</key>
+ <integer>3</integer>
+ <key>SessionBufferTime</key>
+ <integer>3600</integer>
+ </dict>
+ </plist>
+ ```
+ - _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
+- _PricePointTokenSymbol_: This is the symbol of base currency. So it's value will be OST.
+- _PricePointCurrencySymbol_: It is the symbol of quote currency used in price conversion.
+- _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
+- _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
+- _SessionBufferTime_: Buffer expiration time for session keys in seconds.
+
+## OST Wallet SDK APIs
+To use Ost wallet sdk use `import OstWalletSdk`
 
 ### Initialize the SDK
 
@@ -70,8 +99,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 The `setupDevice` API should be called each time the application is launched to confirm that the current device is in the `registered` state and therefore able to call the OST Platform APIs.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
-&nbsp;_tokenId: Token id provided by appicationn server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_tokenId: Token id provided by application server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
@@ -86,7 +115,7 @@ OstWalletSdk.setupDevice(
 
 User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
@@ -109,7 +138,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
 
 The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
@@ -126,7 +155,7 @@ OstWalletSdk.addSession(
 ### Execute Transaction
 A transaction where Brand Tokens are transferred from a user to another actor within the Brand Token economy are signed using `sessionKey` if there is an active session. In the absence of an active session, a new session is authorized.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_transactionType: OstExecuteTransactionType value_<br/>
@@ -147,7 +176,7 @@ OstWalletSdk.executeTransaction(
 The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
  <br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
@@ -161,7 +190,7 @@ OstWalletSdk.getDeviceMnemonics(
 
 A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_mnemonics: Array of mnemonics_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -177,7 +206,7 @@ OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
 
 A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on.Scanning this QR code with a authorized mobile device will result in the new device being authorized.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 
 ```Swift
 OstWalletSdk.getAddDeviceQRCode(
@@ -189,7 +218,7 @@ OstWalletSdk.getAddDeviceQRCode(
 
 QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be  used to process the information scanned off a QR code and act on it.<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -206,7 +235,7 @@ OstWalletSdk. performQRAction(
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
 <br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_oldUserPin: Users old Pin_<br/>
 &nbsp;_newUserPin: Users new Pin_<br/>
@@ -226,7 +255,7 @@ OstWalletSdk.resetPin(
 
 A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .<br/><br/>
 **Parameters**<br/>
-&nbsp;_userId: OstKit user id provided by application server_<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
 &nbsp;_userPin: Users Pin_<br/>
