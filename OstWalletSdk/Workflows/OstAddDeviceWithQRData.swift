@@ -58,12 +58,12 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
         
-        if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_adwqrd_fd_1", OstErrorText.processSameDevice)
+        if !self.deviceAddress.isValidAddress {
+            throw OstError("w_adwqrd_fd_1", .wrongDeviceAddress)
         }
         
-        if !self.deviceAddress.isValidAddress {
-            throw OstError("w_adwqrd_fd_2", .wrongDeviceAddress)
+        if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
+            throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
         }
     }
     
