@@ -27,7 +27,7 @@ github "ostdotcom/ost-wallet-sdk-ios" "version"
 
 - Run `carthage update --platform iOS`
 - A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is
-- Open application target, under `General` tab, drag the built `OstSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
+- Open application target, under `General` tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
 - On the application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command
 
 ```sh
@@ -47,7 +47,7 @@ $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
 $(SRCROOT)/Carthage/Build/iOS/OstSdk.framework
 ```
 
-## OST SDK APIs
+## OST Wallet SDK APIs
 
 
 ### Initialize the SDK
@@ -58,7 +58,7 @@ initializes all the required instances and runs migrations of local databases.
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     do {
-        try OstSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+        try OstWalletSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
      } catch let ostError {
 
      }
@@ -75,10 +75,10 @@ The `setupDevice` API should be called each time the application is launched to 
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.setupDevice(
+OstWalletSdk.setupDevice(
     userId: String,
     tokenId: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```    
 
@@ -94,13 +94,13 @@ User activation refers to the deployment of smart-contracts that form the user's
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.activateUser(
+OstWalletSdk.activateUser(
     userId: String,
     userPin: String,
     passphrasePrefix: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -115,11 +115,11 @@ The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.addSession(
+OstWalletSdk.addSession(
     userId: String,
     spendingLimitInWei: String,
     expireAfterInSec: TimeInterval,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -133,12 +133,12 @@ A transaction where Brand Tokens are transferred from a user to another actor wi
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.executeTransaction(
+OstWalletSdk.executeTransaction(
     userId: String,
     tokenHolderAddresses: [String],
     amounts: [String],
     transactionType: OstExecuteTransactionType,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -151,9 +151,9 @@ The mnemonic phrase represents a human-readable way to authorize a new device. T
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.getPaperWallet(
+OstWalletSdk.getDeviceMnemonics(
     userId: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -166,10 +166,10 @@ A user that has stored their mnemonic phrase can enter it into an appropriate us
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.addDeviceUsingMnemonics(
+OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
     userId: String,
     mnemonics: [String],
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
 )
 ```
 
@@ -180,7 +180,7 @@ A developer can use this method to generate a QR code that displays the informat
 &nbsp;_userId: OstKit user id provided by application server_<br/>
 
 ```Swift
-OstSdk.getAddDeviceQRCode(
+OstWalletSdk.getAddDeviceQRCode(
     userId: String
     ) throws -> CIImage?
 ```
@@ -194,10 +194,10 @@ QR codes can be used to encode transaction data for authorizing devices, making 
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.perfrom(
+OstWalletSdk. performQRAction(
     userId: String,
     payload: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -213,12 +213,12 @@ The user's PIN is set when activating the user. This method supports re-setting 
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstSdk.resetPin(
+OstWalletSdk.resetPin(
     userId: String,
     passphrasePrefix: String,
     oldUserPin: String,
     newUserPin: String,
-    delegate: OstWorkFlowCallbackDelegate
+    delegate: OstWorkflowDelegate
     )
 ```
 
@@ -234,7 +234,7 @@ A user can control their Brand Tokens using their authorized devices. If they lo
 
 
 ```Swift
-OstSdk.recoverDeviceInitialize(
+OstWalletSdk.initiateDeviceRecovery(
     userId: String,
     recoverDeviceAddress: String,
     userPin: String,
@@ -357,7 +357,7 @@ func requestAcknowledged(
 
 ## Reference
 
-For a sample implementation, please see the Demo App: [Demo-App](https://github.com/ostdotcom/ost-client-ios-sdk/tree/develop/Demo-App/Demo-App)
+For a sample implementation, please see the Demo App: [ios-demo-app](https://github.com/ostdotcom/ios-demo-app/tree/develop)
 
 There are other references are listed below:
 
@@ -365,4 +365,4 @@ There are other references are listed below:
 
 - [OstContextEntity](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstContextEntity.swift)
 
-- [OstError](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Utils/OstError.swift)
+- [OstError](https://github.com/ostdotcom/ost-wallet-sdk-ios/tree/develop/OstWalletSdk/Errors)
