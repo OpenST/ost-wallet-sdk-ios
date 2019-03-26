@@ -55,7 +55,7 @@ class OstAddSession: OstWorkflowBase {
         
         if spendingLimit.isEmpty ||
             (BigInt(spendingLimit) == nil) {
-            throw OstError("w_as_vp_1", .invalidExpirationTimeStamp)
+            throw OstError("w_as_vp_1", .invalidSpendingLimit)
         }
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()

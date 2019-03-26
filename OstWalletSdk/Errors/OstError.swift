@@ -142,6 +142,7 @@ public enum OstErrorText: String {
     case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
     case insufficientData = "Insufficient data"
     case invalidSpendingLimit = "Spending limit provied is invalid. Spending limit is in wei and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
+    
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
     case apiSignatureGenerationFailed = "Api Signature generation failed."
