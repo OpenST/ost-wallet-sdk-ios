@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1658C4ADFB168F4A6C360165 /* Pods_TestDemoAppStaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -75,7 +76,9 @@
 		4BF8FF0E224A0E2400519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
 		4BF8FF0F224A0E2400519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */; };
+		B14B5880B5BEDB56EFA4ED34 /* Pods_TestDemoAppDevelopment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7978E2C0A0A980201CE76E7A /* Pods_TestDemoAppDevelopment.framework */; };
 		C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */; };
+		CC42F624B3E8E898BA929DAC /* Pods_TestDemoAppTestnet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E2C3BE01D9BCEC83F2A55F /* Pods_TestDemoAppTestnet.framework */; };
 		ECA501042248F98A00D84810 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
 		ECA501052248F98A00D84810 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
 		ECA501062248F98A00D84810 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFA2240FD1300519779 /* ColorTheme.swift */; };
@@ -261,6 +264,8 @@
 
 /* Begin PBXFileReference section */
 		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
+		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -315,16 +320,23 @@
 		4BF8FEE822491F9200519779 /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Development-Info.plist"; sourceTree = "<group>"; };
 		4BF8FEE922491F9200519779 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
 		4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppStaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		7978E2C0A0A980201CE76E7A /* Pods_TestDemoAppDevelopment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppDevelopment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E2C3BE01D9BCEC83F2A55F /* Pods_TestDemoAppTestnet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTestnet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682D46B806542778C399400 /* Pods-TestDemoAppDevelopment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppDevelopment.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment.debug.xcconfig"; sourceTree = "<group>"; };
 		8DD78CEFFF49BC3F2F78300E /* Pods-TestDemoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9414360E554341F818416A89 /* Pods_TestDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A8C3D1ED10D665A21F19609 /* Pods-TestDemoAppStaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.release.xcconfig"; sourceTree = "<group>"; };
+		BCDFE4028326678854C86704 /* Pods-TestDemoAppDevelopment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppDevelopment.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment.release.xcconfig"; sourceTree = "<group>"; };
 		BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppUITests/Pods-TestDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		ECA501332248F98A00D84810 /* TestDemoAppStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA501672248F9A500D84810 /* TestDemoAppDevelopment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppDevelopment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA5019B2248F9F300D84810 /* TestDemoAppTestnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoAppTestnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F904DB8F6D28F79D1180FC74 /* Pods-TestDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppUITests/Pods-TestDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FB78047C60C57845C2350C5C /* Pods-TestDemoAppTestnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +371,7 @@
 			files = (
 				ECA501262248F98A00D84810 /* Pods_TestDemoApp.framework in Frameworks */,
 				4BF8FF0B224A0E1A00519779 /* OstWalletSdk.framework in Frameworks */,
+				1658C4ADFB168F4A6C360165 /* Pods_TestDemoAppStaging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +381,7 @@
 			files = (
 				4BF8FF05224A0DCC00519779 /* OstWalletSdk.framework in Frameworks */,
 				ECA5015A2248F9A500D84810 /* Pods_TestDemoApp.framework in Frameworks */,
+				B14B5880B5BEDB56EFA4ED34 /* Pods_TestDemoAppDevelopment.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +391,7 @@
 			files = (
 				4BF8FF0E224A0E2400519779 /* OstWalletSdk.framework in Frameworks */,
 				ECA5018E2248F9F300D84810 /* Pods_TestDemoApp.framework in Frameworks */,
+				CC42F624B3E8E898BA929DAC /* Pods_TestDemoAppTestnet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +580,12 @@
 				5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */,
 				BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */,
 				F904DB8F6D28F79D1180FC74 /* Pods-TestDemoAppUITests.release.xcconfig */,
+				8682D46B806542778C399400 /* Pods-TestDemoAppDevelopment.debug.xcconfig */,
+				BCDFE4028326678854C86704 /* Pods-TestDemoAppDevelopment.release.xcconfig */,
+				20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */,
+				9A8C3D1ED10D665A21F19609 /* Pods-TestDemoAppStaging.release.xcconfig */,
+				FB78047C60C57845C2350C5C /* Pods-TestDemoAppTestnet.debug.xcconfig */,
+				24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -578,6 +599,9 @@
 				9414360E554341F818416A89 /* Pods_TestDemoApp.framework */,
 				4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */,
 				55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */,
+				7978E2C0A0A980201CE76E7A /* Pods_TestDemoAppDevelopment.framework */,
+				512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */,
+				84E2C3BE01D9BCEC83F2A55F /* Pods_TestDemoAppTestnet.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -984,7 +1008,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoAppStaging-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -999,7 +1023,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -1026,7 +1050,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECA5012F2248F98A00D84810 /* ShellScript */ = {
@@ -1068,7 +1092,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoAppDevelopment-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1083,7 +1107,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -1110,7 +1134,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECA501632248F9A500D84810 /* ShellScript */ = {
@@ -1152,7 +1176,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TestDemoApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TestDemoAppTestnet-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1167,7 +1191,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -1194,7 +1218,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECA501972248F9F300D84810 /* ShellScript */ = {
@@ -1664,7 +1688,7 @@
 		};
 		ECA501312248F98A00D84810 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			baseConfigurationReference = 20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1688,7 +1712,7 @@
 		};
 		ECA501322248F98A00D84810 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			baseConfigurationReference = 9A8C3D1ED10D665A21F19609 /* Pods-TestDemoAppStaging.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1712,7 +1736,7 @@
 		};
 		ECA501652248F9A500D84810 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			baseConfigurationReference = 8682D46B806542778C399400 /* Pods-TestDemoAppDevelopment.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1736,7 +1760,7 @@
 		};
 		ECA501662248F9A500D84810 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			baseConfigurationReference = BCDFE4028326678854C86704 /* Pods-TestDemoAppDevelopment.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1760,7 +1784,7 @@
 		};
 		ECA501992248F9F300D84810 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
+			baseConfigurationReference = FB78047C60C57845C2350C5C /* Pods-TestDemoAppTestnet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1784,7 +1808,7 @@
 		};
 		ECA5019A2248F9F300D84810 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
+			baseConfigurationReference = 24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

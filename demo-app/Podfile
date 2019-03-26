@@ -1,9 +1,19 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
+def shared_pods
+
+	pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios', :branch => 'google-io-codelabs-2018'
+	pod 'Alamofire', '4.8.1'
+	pod 'CryptoSwift'
+	pod 'IQKeyboardManagerSwift'
+end
+
 target 'TestDemoApp' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+
+shared_pods
 
   # Pods for TestDemoApp
 
@@ -17,9 +27,34 @@ target 'TestDemoApp' do
     # Pods for testing
   end
 
-pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios', :branch => 'google-io-codelabs-2018'
-  pod 'Alamofire', '4.8.1'
-pod 'CryptoSwift'
-  pod 'IQKeyboardManagerSwift'
+end
+
+target 'TestDemoAppDevelopment' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+shared_pods
+
+  # Pods for TestDemoAppDevelopment
+
+end
+
+target 'TestDemoAppStaging' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+shared_pods
+
+  # Pods for TestDemoAppStaging
+
+end
+
+target 'TestDemoAppTestnet' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+shared_pods
+
+  # Pods for TestDemoAppTestnet
 
 end
