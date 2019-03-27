@@ -64,10 +64,12 @@ class BaseWalletWorkflowView: BaseWalletView {
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
             let error = eventData["ostError"] as! OstError;
-            addToLog(log: "Error.localizedDescription:" + error.localizedDescription);
-            addToLog(log: "Error.message:" + error.errorMessage);
-            addToLog(log: "Error.messageTextCode:" + error.messageTextCode.rawValue);
-            addToLog(log: "Error.internalCode:" + error.internalCode);
+            addToLog(log: "\nError.isApiError: \(error.isApiError)");
+            addToLog(log: "\nError.localizedDescription: \(error.localizedDescription)");
+            addToLog(log: "\nError.message: \(error.errorMessage)");
+            addToLog(log: "\nError.messageTextCode: \(error.messageTextCode.rawValue)");
+            addToLog(log: "\nError.internalCode: \(error.internalCode)");
+            addToLog(log: "\nError.errorInfo:\n \(String(describing: error.errorInfo))");
 
             self.nextButton.isHidden = false;
             self.cancelButton.isHidden = false;
