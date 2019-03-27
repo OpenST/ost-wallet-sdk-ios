@@ -204,7 +204,7 @@ OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
 
 ### Generate a QR Code
 
-A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on.Scanning this QR code with a authorized mobile device will result in the new device being authorized.<br/><br/>
+A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on. Scanning this QR code with an authorized mobile device will result in the new device being authorized.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 
@@ -216,14 +216,14 @@ OstWalletSdk.getAddDeviceQRCode(
 
 ### Perform QR action
 
-QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be  used to process the information scanned off a QR code and act on it.<br/><br/>
+QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc. This method can be used to process the information scanned off a QR code and act on it.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_payload: Json string of payload is scanned by QR-Code._<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstWalletSdk. performQRAction(
+OstWalletSdk.performQRAction(
     userId: String,
     payload: String,
     delegate: OstWorkflowDelegate
@@ -386,7 +386,7 @@ func requestAcknowledged(
 
 ## Reference
 
-For a sample implementation, please see the Demo App: [ios-demo-app](https://github.com/ostdotcom/ios-demo-app/tree/develop)
+For a sample implementation, please see the [Demo App](https://github.com/ostdotcom/ios-demo-app/tree/develop)
 
 There are other references are listed below:
 
