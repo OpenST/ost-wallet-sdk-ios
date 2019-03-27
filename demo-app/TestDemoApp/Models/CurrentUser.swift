@@ -138,6 +138,7 @@ class CurrentUser: BaseModel {
         onComplete(true);
       } else {
         print("Received", eventType);
+        onComplete(false);
       }
     }
     

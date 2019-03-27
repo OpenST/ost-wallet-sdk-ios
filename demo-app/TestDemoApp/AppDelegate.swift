@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         do {
-            try OstWalletSdk.initialize(apiEndPoint: BaseModel.KIT_API_ENDPOINT);
+            try OstWalletSdk.initialize(apiEndPoint: BaseModel.OST_PLATFORM_API_ENDPOINT);
             //Logger.log(message: "OstSdk has been initialized.");
         } catch let ostError {
             //Logger.log(message: "Failed to initialize OstSdk", parameterToPrint: ostError as! OstError);
