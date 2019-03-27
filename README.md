@@ -97,7 +97,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ### Set up the device
 
-The `setupDevice` API should be called each time the application is launched to confirm that the current device is in the `registered` state and therefore able to call the OST Platform APIs.<br/><br/>
+This workflow needs userId and tokenId so setupDevice should be called after your app login or signup is successfull. Using the mapping between userId in OST Platform and your app user, you have access to userId and tokenId.
+
+If the user is logged in, then setupDevice should be called everytime the app launches, this ensures that the current device is registered before communicating with OST KIT server.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by application server_<br/>
