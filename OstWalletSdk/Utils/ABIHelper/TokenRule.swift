@@ -11,7 +11,6 @@
 import Foundation
 
 class TokenRule: ABIHelperBase {
-    static let EXECUTE_RULE_CALLPREFIX = "0x59793b00"
     private let ABI_NAME = "TokenRules.abi"
     
     func getDirectTransfersExecutableData(abiMethodName: String, tokenHolderAddresses: [String], amounts: [String]) throws -> String {

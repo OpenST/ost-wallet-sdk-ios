@@ -13,6 +13,13 @@
 		00E75E54224A9F55003AFDE4 /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
 		1658C4ADFB168F4A6C360165 /* Pods_TestDemoAppStaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		4BCC1B4B224B56F1008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BCC1B4C224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BCC1B4D224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
+		4BCC1B50224B80E2008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
+		4BCC1B51224B80E2008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
+		4BCC1B52224B80E3008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
 		4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
@@ -52,7 +59,6 @@
 		4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
 		4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
-		4BF8FE582244FA0E00519779 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
 		4BF8FEEA22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
 		4BF8FEEB22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
 		4BF8FEEC22491F9300519779 /* Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FEE722491F9200519779 /* Testnet-Info.plist */; };
@@ -105,7 +111,6 @@
 		ECA501162248F98A00D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
 		ECA501172248F98A00D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
 		ECA501182248F98A00D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
-		ECA501192248F98A00D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
 		ECA5011A2248F98A00D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		ECA5011B2248F98A00D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
 		ECA5011C2248F98A00D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
@@ -144,7 +149,6 @@
 		ECA5014A2248F9A500D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
 		ECA5014B2248F9A500D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
 		ECA5014C2248F9A500D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
-		ECA5014D2248F9A500D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
 		ECA5014E2248F9A500D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		ECA5014F2248F9A500D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
 		ECA501502248F9A500D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
@@ -183,7 +187,6 @@
 		ECA5017E2248F9F300D84810 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
 		ECA5017F2248F9F300D84810 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
 		ECA501802248F9F300D84810 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
-		ECA501812248F9F300D84810 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */; };
 		ECA501822248F9F300D84810 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		ECA501832248F9F300D84810 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
 		ECA501842248F9F300D84810 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
@@ -273,6 +276,7 @@
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BF8FDBD2240FA7600519779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -321,7 +325,6 @@
 		4BF8FE3A2240FF0900519779 /* OstSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstSdk.framework; path = Carthage/Build/iOS/OstSdk.framework; sourceTree = "<group>"; };
 		4BF8FE3C2241004600519779 /* OstWalletSdk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OstWalletSdk.plist; sourceTree = "<group>"; };
 		4BF8FE40224143C900519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstWalletSdk.framework; path = Carthage/Build/iOS/OstWalletSdk.framework; sourceTree = "<group>"; };
-		4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FEE722491F9200519779 /* Testnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Testnet-Info.plist"; sourceTree = "<group>"; };
 		4BF8FEE822491F9200519779 /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Development-Info.plist"; sourceTree = "<group>"; };
 		4BF8FEE922491F9200519779 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
@@ -553,6 +556,7 @@
 		4BF8FE072240FD1400519779 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */,
 				4BF8FE082240FD1400519779 /* ResetPinView.swift */,
 				4BF8FE092240FD1400519779 /* UserDetailsView.swift */,
 				4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */,
@@ -566,7 +570,6 @@
 				4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */,
 				4BF8FE142240FD1400519779 /* PaperWalletView.swift */,
 				4BF8FE152240FD1400519779 /* BaseWalletView.swift */,
-				4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */,
 				00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */,
 			);
 			path = Wallet;
@@ -831,6 +834,7 @@
 				ECA501282248F98A00D84810 /* Assets.xcassets in Resources */,
 				ECA501292248F98A00D84810 /* LICENSE in Resources */,
 				ECA5012A2248F98A00D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4B224B56F1008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA5012B2248F98A00D84810 /* Main.storyboard in Resources */,
 				4BF8FEF122491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEEB22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -847,6 +851,7 @@
 				ECA5015C2248F9A500D84810 /* Assets.xcassets in Resources */,
 				ECA5015D2248F9A500D84810 /* LICENSE in Resources */,
 				ECA5015E2248F9A500D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4C224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA5015F2248F9A500D84810 /* Main.storyboard in Resources */,
 				4BF8FEF222491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEEC22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -863,6 +868,7 @@
 				ECA501902248F9F300D84810 /* Assets.xcassets in Resources */,
 				ECA501912248F9F300D84810 /* LICENSE in Resources */,
 				ECA501922248F9F300D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4D224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA501932248F9F300D84810 /* Main.storyboard in Resources */,
 				4BF8FEF322491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEED22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -1274,6 +1280,7 @@
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
+				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
@@ -1284,7 +1291,6 @@
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
 				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
-				4BF8FE582244FA0E00519779 /* OstLogoutAllSessions.swift in Sources */,
 				4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */,
 				4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */,
 				4BF8FE242240FD1400519779 /* Shapes.swift in Sources */,
@@ -1330,6 +1336,7 @@
 				ECA5010D2248F98A00D84810 /* WalletViewController.swift in Sources */,
 				ECA5010E2248F98A00D84810 /* UserDetailsView.swift in Sources */,
 				ECA5010F2248F98A00D84810 /* HomeViewController.swift in Sources */,
+				4BCC1B50224B80E2008B58A1 /* LogoutAllSessions.swift in Sources */,
 				ECA501102248F98A00D84810 /* HomeCustomLayout.swift in Sources */,
 				ECA501112248F98A00D84810 /* QRInfoLabel.swift in Sources */,
 				ECA501122248F98A00D84810 /* UIColorExtension.swift in Sources */,
@@ -1340,7 +1347,6 @@
 				ECA501162248F98A00D84810 /* ApplicationScheme.swift in Sources */,
 				ECA501172248F98A00D84810 /* RecoverDeviceView.swift in Sources */,
 				ECA501182248F98A00D84810 /* ResetPinView.swift in Sources */,
-				ECA501192248F98A00D84810 /* OstLogoutAllSessions.swift in Sources */,
 				ECA5011A2248F98A00D84810 /* BaseWalletView.swift in Sources */,
 				ECA5011B2248F98A00D84810 /* PaperWalletView.swift in Sources */,
 				ECA5011C2248F98A00D84810 /* Shapes.swift in Sources */,
@@ -1370,6 +1376,7 @@
 				ECA501412248F9A500D84810 /* WalletViewController.swift in Sources */,
 				ECA501422248F9A500D84810 /* UserDetailsView.swift in Sources */,
 				ECA501432248F9A500D84810 /* HomeViewController.swift in Sources */,
+				4BCC1B51224B80E2008B58A1 /* LogoutAllSessions.swift in Sources */,
 				ECA501442248F9A500D84810 /* HomeCustomLayout.swift in Sources */,
 				ECA501452248F9A500D84810 /* QRInfoLabel.swift in Sources */,
 				ECA501462248F9A500D84810 /* UIColorExtension.swift in Sources */,
@@ -1380,7 +1387,6 @@
 				ECA5014A2248F9A500D84810 /* ApplicationScheme.swift in Sources */,
 				ECA5014B2248F9A500D84810 /* RecoverDeviceView.swift in Sources */,
 				ECA5014C2248F9A500D84810 /* ResetPinView.swift in Sources */,
-				ECA5014D2248F9A500D84810 /* OstLogoutAllSessions.swift in Sources */,
 				ECA5014E2248F9A500D84810 /* BaseWalletView.swift in Sources */,
 				ECA5014F2248F9A500D84810 /* PaperWalletView.swift in Sources */,
 				ECA501502248F9A500D84810 /* Shapes.swift in Sources */,
@@ -1410,6 +1416,7 @@
 				ECA501742248F9F300D84810 /* AddSessionView.swift in Sources */,
 				ECA501752248F9F300D84810 /* WalletViewController.swift in Sources */,
 				ECA501762248F9F300D84810 /* UserDetailsView.swift in Sources */,
+				4BCC1B52224B80E3008B58A1 /* LogoutAllSessions.swift in Sources */,
 				ECA501772248F9F300D84810 /* HomeViewController.swift in Sources */,
 				ECA501782248F9F300D84810 /* HomeCustomLayout.swift in Sources */,
 				ECA501792248F9F300D84810 /* QRInfoLabel.swift in Sources */,
@@ -1420,7 +1427,6 @@
 				ECA5017E2248F9F300D84810 /* ApplicationScheme.swift in Sources */,
 				ECA5017F2248F9F300D84810 /* RecoverDeviceView.swift in Sources */,
 				ECA501802248F9F300D84810 /* ResetPinView.swift in Sources */,
-				ECA501812248F9F300D84810 /* OstLogoutAllSessions.swift in Sources */,
 				ECA501822248F9F300D84810 /* BaseWalletView.swift in Sources */,
 				ECA501832248F9F300D84810 /* PaperWalletView.swift in Sources */,
 				ECA501842248F9F300D84810 /* Shapes.swift in Sources */,

@@ -62,10 +62,12 @@ class OstActivateUser: OstWorkflowBase {
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePassphrasePrefixLength()
         
-        if (self.currentUser?.isStatusActivated)! {
+        //Current user validation is done in super
+        if self.currentUser!.isStatusActivated {
             throw OstError("w_au_vp_1", .userAlreadyActivated)
         }
-        if (self.currentDevice?.isStatusAuthorized)! {
+        //Current device validation is done in super
+        if self.currentDevice!.isStatusAuthorized {
             throw OstError("w_au_vp_2", .deviceAuthorized)
         }
         

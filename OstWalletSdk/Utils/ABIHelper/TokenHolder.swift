@@ -13,6 +13,8 @@ import Foundation
 class TokenHolder: ABIHelperBase {
     private let ABI_NAME = "TokenHolder.abi"
     
+    private let executeRuleString = "executeRule(address,bytes,uint256,bytes32,bytes32,uint8)"
+    
     private let abiMethodNameForAuthorizeSession = "authorizeSession"
     private let abiMethodNameForLogout = "logout"
 
@@ -65,5 +67,10 @@ class TokenHolder: ABIHelperBase {
         }
         
         return ethereumData!.hex()
+    }
+    
+    func getCallPrefix() throws -> String? {
+        let soliditySha3 = try SoliditySha3.getHash(self.executeRuleString)
+        return soliditySha3.substr(0, 10)
     }
 }

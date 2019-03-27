@@ -1,10 +1,12 @@
-//
-//  SendTokensToUserView.swift
-//  Demo-App
-//
-//  Created by Rachin Kapoor on 23/02/19.
-//  Copyright © 2019 aniket ayachit. All rights reserved.
-//
+/*
+ Copyright © 2019 OST.com Inc
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ */
 
 import UIKit
 import OstWalletSdk
@@ -39,7 +41,7 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
             txMeta["type"] = "user_to_user";
             txMeta["name"] = "known_user";
             //Let's build some json. Not the best way do it, but, works here.
-            txMeta["details"] = "{ description: 'Sending to " + toUser!.displayName! + "' }";
+            txMeta["details"] = "Sending to \(toUser!.displayName!)";
         } else {
             //Don't Populate type, if you are not sure.
             txMeta["name"] = "unknown_user";
@@ -49,7 +51,7 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
             if ( nil != toUserName.text && toUserName.text!.count > 1 ) {
                 customDescription = toUserName.text!;
             }
-            txMeta["details"] = "{ description: 'Sending to " + customDescription + "' }"
+            txMeta["details"] = "Sending to \(customDescription)"
         }
         
         var ruleType:OstExecuteTransactionType;
@@ -404,7 +406,7 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
             toUserName.clearButtonMode = UITextField.ViewMode.never
             receiverAddress.clearButtonMode = UITextField.ViewMode.never
         } else {
-            toUserName.placeholderLabel.text = "Description"
+            toUserName.placeholderLabel.text = "Mata-details-value"
             toUserName.text = "Token transfer to known addess."
         }
     }

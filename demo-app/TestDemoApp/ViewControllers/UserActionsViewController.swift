@@ -1,10 +1,12 @@
-//
-//  UserActionsViewController.swift
-//  Demo-App
-//
-//  Created by Rachin Kapoor on 23/02/19.
-//  Copyright © 2019 aniket ayachit. All rights reserved.
-//
+/*
+ Copyright © 2019 OST.com Inc
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ */
 
 import UIKit
 import MaterialComponents
@@ -146,7 +148,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     //Add back sendTransaction later on.
     //Final Ordering.
     dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, transactionsView,
-                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice];
+                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice, logoutAllSessions];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
