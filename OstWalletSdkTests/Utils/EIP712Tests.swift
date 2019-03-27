@@ -90,17 +90,6 @@ class EIP712Tests: XCTestCase {
         XCTAssertEqual(try eip712?.getEIP712Hash(), expectedEIP712SignedHash)
     }
     
-    func testABIEncodeParamForString() throws {
-       
-        let val = SolidityWrappedValue(value: "Aniket", type: SolidityType.string)
-        let str = try ABI.encodeParameter(val)
-        print(str)
-        
-      XCTAssertEqual(str, "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000006416e696b65740000000000000000000000000000000000000000000000000000")
-        
-//        XCTAssertEqual(try ABI.encodeParameter(type: SolidityType.string, value: val.value), "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000006416e696b65740000000000000000000000000000000000000000000000000000")
-    }
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

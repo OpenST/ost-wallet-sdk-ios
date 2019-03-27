@@ -14,7 +14,7 @@ import XCTest
 class OstBaseEntityTests: XCTestCase {
     
     
-    var jsonObject: [String: Any] = ["id":"123","parent_id":"1","status":"active","uts": "12324","name": "Aniket"]
+    var jsonObject: [String: Any] = ["id":"123","parent_id":"1","status":"active","uts": "12324","name": "alice"]
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
