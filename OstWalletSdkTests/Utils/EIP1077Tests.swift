@@ -61,7 +61,7 @@ class EIP1077Tests: XCTestCase {
     
     func testCallPrefix() throws {
 
-        let string = "executeRule(address,bytes,uint256,uint8,bytes32,bytes32)"
+        let string = "executeRule(address,bytes,uint256,bytes32,bytes32,uint8)"
         let soliditySha3 = try SoliditySha3.getHash(string)
         XCTAssertEqual(soliditySha3.substr(0, 10), "0x59793b00")
     }
