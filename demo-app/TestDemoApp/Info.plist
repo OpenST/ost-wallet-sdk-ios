@@ -20,8 +20,12 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>KIT_API_ENDPOINT</key>
+	<string>https://localhost:3000/</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MAPPY_APP_SERVER_URL</key>
+	<string>https://localhost:8080/</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Applications uses camera to scan QR-Code</string>
 	<key>UILaunchStoryboardName</key>
@@ -45,9 +49,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MAPPY_APP_SERVER_URL</key>
-	<string>https://localhost:8080/</string>
-	<key>KIT_API_ENDPOINT</key>
-	<string>https://localhost:3000/</string>
 </dict>
 </plist>
