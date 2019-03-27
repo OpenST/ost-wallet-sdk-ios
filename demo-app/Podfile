@@ -29,32 +29,3 @@ shared_pods
 
 end
 
-target 'TestDemoAppDevelopment' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-shared_pods
-
-  # Pods for TestDemoAppDevelopment
-
-end
-
-target 'TestDemoAppStaging' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-shared_pods
-
-  # Pods for TestDemoAppStaging
-
-end
-
-target 'TestDemoAppTestnet' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-shared_pods
-
-  # Pods for TestDemoAppTestnet
-
-end
