@@ -13,6 +13,9 @@
 		00E75E54224A9F55003AFDE4 /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
 		1658C4ADFB168F4A6C360165 /* Pods_TestDemoAppStaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		4BCC1B4B224B56F1008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BCC1B4C224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BCC1B4D224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
 		4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
@@ -831,6 +834,7 @@
 				ECA501282248F98A00D84810 /* Assets.xcassets in Resources */,
 				ECA501292248F98A00D84810 /* LICENSE in Resources */,
 				ECA5012A2248F98A00D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4B224B56F1008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA5012B2248F98A00D84810 /* Main.storyboard in Resources */,
 				4BF8FEF122491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEEB22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -847,6 +851,7 @@
 				ECA5015C2248F9A500D84810 /* Assets.xcassets in Resources */,
 				ECA5015D2248F9A500D84810 /* LICENSE in Resources */,
 				ECA5015E2248F9A500D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4C224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA5015F2248F9A500D84810 /* Main.storyboard in Resources */,
 				4BF8FEF222491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEEC22491F9300519779 /* Testnet-Info.plist in Resources */,
@@ -863,6 +868,7 @@
 				ECA501902248F9F300D84810 /* Assets.xcassets in Resources */,
 				ECA501912248F9F300D84810 /* LICENSE in Resources */,
 				ECA501922248F9F300D84810 /* OstWalletSdk.plist in Resources */,
+				4BCC1B4D224B56F2008B58A1 /* LaunchScreen.storyboard in Resources */,
 				ECA501932248F9F300D84810 /* Main.storyboard in Resources */,
 				4BF8FEF322491F9300519779 /* Development-Info.plist in Resources */,
 				4BF8FEED22491F9300519779 /* Testnet-Info.plist in Resources */,

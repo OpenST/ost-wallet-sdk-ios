@@ -243,7 +243,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         transaction.to = self.rule!.address!
         transaction.data = self.calldata!
         transaction.nonce = OstUtils.toString(self.activeSession!.nonce)!
-        transaction.txnCallPrefix = TokenRule.EXECUTE_RULE_CALLPREFIX
+        transaction.txnCallPrefix = try TokenHolder().getCallPrefix()!
         
         self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
         self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
