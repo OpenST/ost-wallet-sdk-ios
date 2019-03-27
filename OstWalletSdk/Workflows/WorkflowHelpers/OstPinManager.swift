@@ -201,7 +201,7 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
         }
         guard let device = try OstDevice.getById(deviceAddressToRecover) else {
-            throw OstError("w_wh_pm_srdd_4", .deviceNotFound)
+            throw OstError("w_wh_pm_srdd_4", .deviceNotSet)
         }
         guard let linkedAddress = device.linkedAddress else {
             throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
@@ -210,7 +210,7 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
         }
         guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError("w_wh_pm_srdd_6", .deviceNotFound)
+            throw OstError("w_wh_pm_srdd_6", .deviceNotSet)
         }
         if (!currentDevice.isStatusRegistered) {
             throw OstError("w_wh_pm_srdd_7", .deviceNotRegistered)

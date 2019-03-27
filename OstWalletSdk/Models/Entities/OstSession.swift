@@ -194,7 +194,7 @@ extension OstSession {
     
     func signTransaction(_ transactionHash: String) throws -> String {
         guard let _ = try OstUser.getById(self.userId!)!.getCurrentDevice() else {
-            throw OstError.init("m_e_s_st_1", .deviceNotFound)            
+            throw OstError.init("m_e_s_st_1", .deviceNotSet)            
         }
         
         return try OstKeyManager(userId: self.userId!).signWithSessionKey(transactionHash, withAddress: self.address!)

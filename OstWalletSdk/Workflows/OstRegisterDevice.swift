@@ -160,7 +160,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
                 return
             }
             guard let currentDevice = user.getCurrentDevice() else {
-                self.postError(OstError("w_rd_s_2", .deviceNotFound))
+                self.postError(OstError("w_rd_s_2", .deviceNotSet))
                 return
             }
             do {

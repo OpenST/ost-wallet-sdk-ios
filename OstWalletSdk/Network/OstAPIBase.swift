@@ -13,6 +13,8 @@ import Alamofire
 
 /// Base class for all API calls
 class OstAPIBase {
+    
+    private static let syncDeleteUnauthorizedUser = DispatchQueue(label: "syncDeleteUnauthorizedUser", qos: .background)
     /// URL endpoint
     static var baseURL: String = "";
     
@@ -102,9 +104,34 @@ class OstAPIBase {
                 self.manager.session.configuration.urlCache?.removeAllCachedResponses()
             }else {
                 let failureResponse = OstAPIErrorHandler.getErrorResponse(httpResponse);
+                self.processIfUserUnauthorized(failureResponse: failureResponse)
                 onFailure(failureResponse)
             }
         }
+    }
+    
+    /// Verify whether user is unauthorized or not. If yes delete device key and api key
+    ///
+    /// - Parameter failureResponse: Http api response
+    private func processIfUserUnauthorized(failureResponse: [String: Any]) {
+        self.getSyncQueueForVerifyUnauthorization().sync {
+            let apiError = OstApiError(fromApiResponse: failureResponse)
+            if apiError.isApiSignerUnauthorized() {
+                if let user = try? OstUser.getById(self.userId),
+                    let device = user?.getCurrentDevice() {
+                    if !device.isStatusCreated {
+                        try? OstKeyManager(userId: self.userId).clearUserDeviceInfo()
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Get queue for delete session
+    ///
+    /// - Returns: DispatchQueue
+    private func getSyncQueueForVerifyUnauthorization() -> DispatchQueue {
+        return OstAPIBase.syncDeleteUnauthorizedUser
     }
     
     /// Performs HTTP Get
@@ -114,8 +141,8 @@ class OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     func get(params: [String: AnyObject]? = nil,
-                  onSuccess:@escaping (([String: Any]?) -> Void),
-                  onFailure:@escaping (([String: Any]?) -> Void)) {
+             onSuccess:@escaping (([String: Any]?) -> Void),
+             onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .get,
                      params: params,
                      onSuccess: onSuccess,
@@ -129,14 +156,14 @@ class OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     func post(params: [String: AnyObject]? = nil,
-                   onSuccess:@escaping (([String: Any]?) -> Void),
-                   onFailure:@escaping (([String: Any]?) -> Void)) {
+              onSuccess:@escaping (([String: Any]?) -> Void),
+              onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .post,
                      params: params,
                      onSuccess: onSuccess,
                      onFailure: onFailure)
     }
-
+    
     /// Check if the response is successful
     ///
     /// - Parameter response: API response object

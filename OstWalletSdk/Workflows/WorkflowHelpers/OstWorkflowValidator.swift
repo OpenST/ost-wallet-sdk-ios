@@ -33,8 +33,11 @@ class OstWorkflowValidator {
     /// - Parameter input: Input string
     /// - Throws: OstError
     func isValidNumber(input: String) throws{
+        if input.isEmpty {
+           throw OstError("w_wfv_ivn_1", .invalidNumber)
+        }
         guard let _ = BigInt(input) else {
-            throw OstError("w_wfv_ivn_1", .invalidNumber)
+            throw OstError("w_wfv_ivn_2", .invalidNumber)
         }        
     }
     
@@ -108,7 +111,7 @@ class OstWorkflowValidator {
     /// - Throws: OstError
     private func getCurrentUserDevice() throws -> OstCurrentDevice{
         guard let currentDevice = self.currentUser!.getCurrentDevice() else {
-            throw OstError("w_wv_gcud_1", .deviceNotFound);
+            throw OstError("w_wv_gcud_1", .deviceNotSet);
         }
         return currentDevice
     }

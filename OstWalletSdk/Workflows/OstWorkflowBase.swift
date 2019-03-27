@@ -85,7 +85,7 @@ class OstWorkflowBase: OstPinAcceptDelegate {
             throw OstError("w_wb_vp_1", .userNotFound)
         }
         if(nil == self.currentDevice) {
-            throw OstError("w_wb_vp_2", .deviceNotFound)
+            throw OstError("w_wb_vp_2", .deviceNotSet)
         }
         try self.workFlowValidator!.isAPIKeyAvailable()
         try self.workFlowValidator!.isTokenAvailable()

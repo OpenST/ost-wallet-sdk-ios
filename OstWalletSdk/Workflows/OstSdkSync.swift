@@ -106,7 +106,8 @@ class OstSdkSync {
         
         if (user != nil &&
             user!.tokenHolderAddress != nil &&
-            user!.deviceManagerAddress != nil) {
+            user!.deviceManagerAddress != nil &&
+            !user!.isStatusActivating) {
             return false
         }
         return true
@@ -173,7 +174,11 @@ class OstSdkSync {
         }
        
         let currentDevice = user!.getCurrentDevice()
-        if (currentDevice != nil && !currentDevice!.isStatusRegistered) {
+        if (currentDevice != nil &&
+            !(currentDevice!.isStatusAuthorizing ||
+                currentDevice!.isStatusRevoking ||
+                currentDevice!.isStatusRegistered)
+            ) {
             return false
         }
         

@@ -108,6 +108,10 @@ class OstKeyManager {
         self.secureEnclaveIdentifier = OstKeyManager.getSecureEnclaveKey(forUserId: userId)
     }
     
+    func clearUserDeviceInfo() throws {
+        try setUserDeviceInfo(deviceInfo: [ : ])
+    }
+    
     //MARK: - API key
 
     /// Function to create API address and key.

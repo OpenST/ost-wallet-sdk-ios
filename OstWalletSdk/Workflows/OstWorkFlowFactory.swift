@@ -150,7 +150,7 @@ extension OstWalletSdk {
             throw OstError("w_wff_gadqc_2", .userNotActivated)
         }
         guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError("w_wff_gadqc_3", .deviceNotset)
+            throw OstError("w_wff_gadqc_3", .deviceNotSet)
         }
         
         if !currentDevice.isStatusRegistered {
