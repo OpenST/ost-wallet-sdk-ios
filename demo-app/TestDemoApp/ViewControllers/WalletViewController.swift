@@ -27,6 +27,7 @@ class WalletViewController: UIViewController {
     case SETUP_WALLET
     case ADD_DEVICE_WITH_MNEMONICS
     case NEW_SESSION
+    case EXECUTE_TRANSACTION
     case QR_CODE
     case PAPER_WALLET
     case SHOW_QR_CODE
@@ -36,6 +37,8 @@ class WalletViewController: UIViewController {
     case SHOW_USER_DETAILS
     case LOGOUT_ALL_SESSIONS
   }
+    
+  public var toUser:User? = nil
   
   var isLoginMode:Bool = true;
   //Default View Mode.
@@ -146,6 +149,11 @@ class WalletViewController: UIViewController {
     case ViewMode.LOGOUT_ALL_SESSIONS:
         self.title = "Logout All Sessions"
         return OstLogoutAllSessions()
+    case ViewMode.EXECUTE_TRANSACTION:
+        self.title = "Execute Transaction"
+        let view =  SendTokensToUserView()
+        view.setToUser(toUser: toUser);
+        return view
     }
   }
   

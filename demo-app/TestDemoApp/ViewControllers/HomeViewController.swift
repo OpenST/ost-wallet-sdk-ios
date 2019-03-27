@@ -150,6 +150,15 @@ class HomeViewController: UICollectionViewController {
     cell.descriptionLabel.text = user.description;
     return cell
   }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let user:User = self.users[indexPath.row];
+        let walletController = WalletViewController(nibName: nil, bundle: nil)
+        walletController.showHeaderBackItem = true;
+        walletController.toUser = user;
+        walletController.viewMode = WalletViewController.ViewMode.EXECUTE_TRANSACTION;
+        self.present(walletController, animated: true, completion: nil);
+    }
 }
 
 //MARK: - UIScrollViewDelegate

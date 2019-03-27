@@ -129,17 +129,16 @@ class User {
     if (_imageSize.count < 1) {
       _imageSize.append(600);
     }
-    self.userImage = User.generateImage(imageSeed:(mobileNumber+username), size: User.imageSize);
+    self.userImage = User.generateImage(imageSeed:(id), size: User.imageSize);
     
   }
   
   
   static func generateImage(imageSeed:String, size:CGFloat) -> CGImage {
     
-    let imagHash = Data(imageSeed.sha1().utf8);
-    print("imageSeed", imageSeed, "size", size);
+    let imagHash = imageSeed.sha1().data(using: .ascii);
     
-    let generator = IconGenerator(size: size, hash: imagHash);
+    let generator = IconGenerator(size: size, hash: imagHash!);
     return generator.render()!;
   }
   

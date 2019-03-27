@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
+		00E75E52224A9E8D003AFDE4 /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
+		00E75E53224A9F54003AFDE4 /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
+		00E75E54224A9F55003AFDE4 /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
 		1658C4ADFB168F4A6C360165 /* Pods_TestDemoAppStaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
@@ -264,6 +268,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTokensToUserView.swift; sourceTree = "<group>"; };
 		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
@@ -562,6 +567,7 @@
 				4BF8FE142240FD1400519779 /* PaperWalletView.swift */,
 				4BF8FE152240FD1400519779 /* BaseWalletView.swift */,
 				4BF8FE572244FA0E00519779 /* OstLogoutAllSessions.swift */,
+				00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1273,6 +1279,7 @@
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
+				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
 				4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */,
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
@@ -1328,6 +1335,7 @@
 				ECA501122248F98A00D84810 /* UIColorExtension.swift in Sources */,
 				ECA501132248F98A00D84810 /* CurrentUser.swift in Sources */,
 				ECA501142248F98A00D84810 /* AbortRevocerDeviceView.swift in Sources */,
+				00E75E53224A9F54003AFDE4 /* SendTokensToUserView.swift in Sources */,
 				ECA501152248F98A00D84810 /* OstSdkInteract.swift in Sources */,
 				ECA501162248F98A00D84810 /* ApplicationScheme.swift in Sources */,
 				ECA501172248F98A00D84810 /* RecoverDeviceView.swift in Sources */,
@@ -1367,6 +1375,7 @@
 				ECA501462248F9A500D84810 /* UIColorExtension.swift in Sources */,
 				ECA501472248F9A500D84810 /* CurrentUser.swift in Sources */,
 				ECA501482248F9A500D84810 /* AbortRevocerDeviceView.swift in Sources */,
+				00E75E54224A9F55003AFDE4 /* SendTokensToUserView.swift in Sources */,
 				ECA501492248F9A500D84810 /* OstSdkInteract.swift in Sources */,
 				ECA5014A2248F9A500D84810 /* ApplicationScheme.swift in Sources */,
 				ECA5014B2248F9A500D84810 /* RecoverDeviceView.swift in Sources */,
@@ -1389,6 +1398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00E75E52224A9E8D003AFDE4 /* SendTokensToUserView.swift in Sources */,
 				ECA5016C2248F9F300D84810 /* BaseWalletWorkflowView.swift in Sources */,
 				ECA5016D2248F9F300D84810 /* ViewController.swift in Sources */,
 				ECA5016E2248F9F300D84810 /* ColorTheme.swift in Sources */,
