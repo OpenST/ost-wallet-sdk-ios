@@ -13,8 +13,6 @@ import Alamofire
 
 /// Base class for all API calls
 class OstAPIBase {
-    
-    private static let syncDeleteUnauthorizedUser = DispatchQueue(label: "syncDeleteUnauthorizedUser", qos: .background)
     /// URL endpoint
     static var baseURL: String = "";
     
@@ -114,8 +112,7 @@ class OstAPIBase {
     ///
     /// - Parameter failureResponse: Http api response
     private func processIfUserUnauthorized(failureResponse: [String: Any]) {
-        self.getSyncQueueForVerifyUnauthorization().sync {
-            let apiError = OstApiError(fromApiResponse: failureResponse)
+        let apiError = OstApiError(fromApiResponse: failureResponse)
             if apiError.isApiSignerUnauthorized() {
                 if let user = try? OstUser.getById(self.userId),
                     let device = user?.getCurrentDevice() {
@@ -124,16 +121,7 @@ class OstAPIBase {
                     }
                 }
             }
-        }
     }
-    
-    /// Get queue for delete session
-    ///
-    /// - Returns: DispatchQueue
-    private func getSyncQueueForVerifyUnauthorization() -> DispatchQueue {
-        return OstAPIBase.syncDeleteUnauthorizedUser
-    }
-    
     /// Performs HTTP Get
     ///
     /// - Parameters:

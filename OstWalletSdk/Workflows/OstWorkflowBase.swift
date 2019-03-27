@@ -171,6 +171,14 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     ///   - userPin: User pin.
     ///   - passphrasePrefix: Application server given passphrase prefix.
     func pinEntered(_ userPin: String, passphrasePrefix: String) {
+        
+        do {
+            try self.validateParams()
+        }catch let error{
+            self.postError(error)
+            return
+        }
+        
         self.enterPinCount += 1
         let queue: DispatchQueue = getWorkflowQueue()
         queue.async {
@@ -182,6 +190,7 @@ class OstWorkflowBase: OstPinAcceptDelegate {
                 DispatchQueue.main.async {
                     self.delegate.pinValidated(self.userId)
                 }
+                
                 self.proceedWorkflowAfterAuthenticateUser()
             } catch {
                 self.userAuthenticationFailed()
