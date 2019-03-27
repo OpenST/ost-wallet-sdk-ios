@@ -58,7 +58,6 @@ class OstActivateUser: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         
-        try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePassphrasePrefixLength()
         
@@ -76,10 +75,16 @@ class OstActivateUser: OstWorkflowBase {
                                 "Expiration time should be greater than 0")
         }
         
+        do {
+            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+        }catch {
+            throw OstError("w_au_vp_4", .invalidSpendingLimit)
+        }
+        
         if (!self.currentDevice!.isStatusRegistered &&
             (self.currentDevice!.isStatusRevoking ||
                 self.currentDevice!.isStatusRevoked )) {
-            throw OstError("w_au_vp_4", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_vp_5", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
         }
     }
     
