@@ -148,7 +148,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     //Add back sendTransaction later on.
     //Final Ordering.
     dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, transactionsView,
-                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice];
+                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice, logoutAllSessions];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);

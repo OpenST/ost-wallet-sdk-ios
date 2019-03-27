@@ -142,7 +142,7 @@ class WalletViewController: UIViewController {
         return AbortRevocerDeviceView()
     case ViewMode.LOGOUT_ALL_SESSIONS:
         self.title = "Logout All Sessions"
-        return OstLogoutAllSessions()
+        return LogoutAllSessions()
     case ViewMode.EXECUTE_TRANSACTION:
         self.title = "Execute Transaction"
         let view =  SendTokensToUserView()

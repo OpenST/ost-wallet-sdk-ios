@@ -100,9 +100,7 @@ class HomeViewController: UICollectionViewController {
     }
     
     if (self.shouldDisplayLogin) {
-      let loginViewController = LoginViewController(nibName: nil, bundle: nil)
-      self.present(loginViewController, animated: false, completion: nil)
-      self.shouldDisplayLogin = false
+        showLoginViewController()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -125,6 +123,12 @@ class HomeViewController: UICollectionViewController {
       })
     }
   }
+    
+    func showLoginViewController(animated: Bool = false) {
+        let loginViewController = LoginViewController(nibName: nil, bundle: nil)
+        self.present(loginViewController, animated: animated, completion: nil)
+        self.shouldDisplayLogin = false
+    }
   
   //MARK - Methods
   @objc func menuItemTapped(sender: Any) {
