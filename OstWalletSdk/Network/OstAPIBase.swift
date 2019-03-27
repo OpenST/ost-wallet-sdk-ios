@@ -88,7 +88,7 @@ class OstAPIBase {
             onFailure(noInternetResponse)
             return
         }
-//        Logger.log(message: "\(url)\(method)", parameterToPrint: params as Any)
+//        Logger.log(message: "\(method.rawValue): \(url)", parameterToPrint: params as Any)
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
