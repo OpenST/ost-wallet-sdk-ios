@@ -354,13 +354,8 @@ func flowInterrupted(
         )
 ```
 ```Swift
-/// Show mnemonic phrase
-///
-/// - Parameter mnemonics: array of Words.
-func showPaperWallet(mnemonics: [String])
-```
-```Swift
-/// Verify data which is scan from QR-Code
+
+/// Verify data which is scanned from QR-Code
 ///
 /// - Parameters:
 ///   - workflowContext: OstWorkflowContext
