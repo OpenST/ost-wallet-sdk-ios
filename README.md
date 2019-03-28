@@ -120,7 +120,7 @@ User activation refers to the deployment of smart-contracts that form the user's
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in Atto OST_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -129,7 +129,7 @@ OstWalletSdk.activateUser(
     userId: String,
     userPin: String,
     passphrasePrefix: String,
-    spendingLimitInWei: String,
+    spendingLimit: String,
     expireAfterInSec: TimeInterval,
     delegate: OstWorkflowDelegate
     )
@@ -141,14 +141,14 @@ A session is a period of time during which a sessionKey is authorized to sign tr
 The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_spendingLimitInWei: Spending limit in a transaction in WEI_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in Atto OST_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
 OstWalletSdk.addSession(
     userId: String,
-    spendingLimitInWei: String,
+    spendingLimit: String,
     expireAfterInSec: TimeInterval,
     delegate: OstWorkflowDelegate
     )
@@ -387,8 +387,8 @@ For a sample implementation, please see the [Demo App](https://github.com/ostdot
 
 There are other references are listed below:
 
-- [OstWorkflowContext](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstWorkflowContext.swift)
+- [OstWorkflowContext](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/develop/OstWalletSdk/Workflows/OstContext/OstContextEntity.swift)
 
-- [OstContextEntity](https://github.com/ostdotcom/ost-client-ios-sdk/blob/develop/OstSdk/Workflows/OstContext/OstContextEntity.swift)
+- [OstContextEntity](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/develop/OstWalletSdk/Workflows/OstContext/OstWorkflowContext.swift)
 
 - [OstError](https://github.com/ostdotcom/ost-wallet-sdk-ios/tree/develop/OstWalletSdk/Errors)
