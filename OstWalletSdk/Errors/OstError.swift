@@ -122,7 +122,7 @@ public enum OstErrorText: String {
     case maxUserValidatedCountReached = "The maximum number of 'authenticating with PIN' attempts has been reached. Please try again a bit later."
     case recoveryPinNotFoundInKeyManager = "recovery pin not found in key manager."
     case rulesNotFound = "Unable to recognize the Rule Name. Please inspect a valid rule name is passed. Ensure its not null and re-submit the request. Visit https://dev.ost.com/platform to know about rule details"
-    case invalidAmount = "Amount to do transaction is invalid. Please inspect the amount is not null and is a valid Wei value. Visit https://dev.ost.com/platform to know about Wei to BT conversion."
+    case invalidAmount = "Amount to do transaction is invalid. Please inspect the amount is not null and is a valid value. Visit https://dev.ost.com/platform to know details about the input datatype."
     case sessionNotFound = "The device doesn't has any active session. Please authorize a session before doing any transaction. Workflow details provided at https://dev.ost.com/platform/docs/sdk/references"
     case callDataFormationFailed = "Calldata formation for executing a transaction failed."
     case transactionFailed = "Transaction failed."
@@ -140,7 +140,7 @@ public enum OstErrorText: String {
     case keyNotFound = "Key not found"
     case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
     case insufficientData = "Insufficient data"
-    case invalidSpendingLimit = "Spending limit provided is invalid. Spending limit is in wei and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
+    case invalidSpendingLimit = "Spending limit provided is invalid. Spending limit should be in atto BT and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
