@@ -387,8 +387,8 @@ For a sample implementation, please see the [Demo App](https://github.com/ostdot
 
 There are other references are listed below:
 
-- [OstWorkflowContext](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/develop/OstWalletSdk/Workflows/OstContext/OstContextEntity.swift)
+- [OstWorkflowContext](OstWalletSdk/Workflows/OstContext/OstContextEntity.swift)
 
-- [OstContextEntity](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/develop/OstWalletSdk/Workflows/OstContext/OstWorkflowContext.swift)
+- [OstContextEntity](OstWalletSdk/Workflows/OstContext/OstWorkflowContext.swift)
 
-- [OstError](https://github.com/ostdotcom/ost-wallet-sdk-ios/tree/develop/OstWalletSdk/Errors)
+- [OstError](OstWalletSdk/Errors)
