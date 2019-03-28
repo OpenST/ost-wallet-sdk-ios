@@ -47,6 +47,13 @@ public class OstApiError: OstError {
         }
         return "BAD_REQUEST".caseInsensitiveCompare(errorCode) == .orderedSame
     }
+
+    func isNotFound() -> Bool {
+        guard let errorCode = getApiErrorCode() else {
+            return false
+        }
+        return "NOT_FOUND".caseInsensitiveCompare(errorCode) == .orderedSame
+    }
     
     public func isDeviceTimeOutOfSync() -> Bool{
         return isParameterIncludedInError(parameter: "api_request_timestamp");

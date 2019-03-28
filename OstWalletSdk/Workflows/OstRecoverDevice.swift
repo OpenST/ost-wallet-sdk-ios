@@ -11,7 +11,7 @@
 import Foundation
 
 class OstRecoverDevice: OstWorkflowBase {
-    static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .background)
+    static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRecover: String
     
@@ -55,7 +55,9 @@ class OstRecoverDevice: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        
+        if !self.deviceAddressToRecover.isValidAddress {
+            throw OstError.init("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
+        }
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceRegistered()
     }
@@ -126,7 +128,7 @@ class OstRecoverDevice: OstWorkflowBase {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .recoverDevice)
+        return OstWorkflowContext(workflowType: .initiateDeviceRecovery)
     }
     
     /// Get context entity

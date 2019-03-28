@@ -11,7 +11,7 @@
 import Foundation
 
 class OstActivateUser: OstWorkflowBase {
-    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .background)
+    static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
     private var expireAfter: TimeInterval
@@ -58,15 +58,16 @@ class OstActivateUser: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         
-        try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePassphrasePrefixLength()
         
-        if (self.currentUser?.isStatusActivated)! {
+        //Current user validation is done in super
+        if self.currentUser!.isStatusActivated {
             throw OstError("w_au_vp_1", .userAlreadyActivated)
         }
-        if (self.currentDevice?.isStatusAuthorized)! {
-            throw OstError("w_au_vp_2", .deviceAlreadyAuthorized)
+        //Current device validation is done in super
+        if self.currentDevice!.isStatusAuthorized {
+            throw OstError("w_au_vp_2", .deviceAuthorized)
         }
         
         if  0 > self.expireAfter {
@@ -74,10 +75,16 @@ class OstActivateUser: OstWorkflowBase {
                                 "Expiration time should be greater than 0")
         }
         
+        do {
+            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+        }catch {
+            throw OstError("w_au_vp_4", .invalidSpendingLimit)
+        }
+        
         if (!self.currentDevice!.isStatusRegistered &&
             (self.currentDevice!.isStatusRevoking ||
                 self.currentDevice!.isStatusRevoked )) {
-            throw OstError("w_au_vp_4", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_vp_5", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
         }
     }
     

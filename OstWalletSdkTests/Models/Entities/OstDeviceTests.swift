@@ -46,7 +46,6 @@ class OstDeviceTests: XCTestCase {
         XCTAssertNotNil(try OstDevice.storeEntity(JSONObject), "Entity should not be nil")
         let entity: OstDevice? = try OstDeviceRepository.sharedDevice.getById("0x12") as? OstDevice
         XCTAssertNotNil(entity, "entity should not be nil")
-        XCTAssertEqual(entity?.deviceName, JSONObject["device_name"] as? String, "address is not same")
     }
 
     func testPerformanceExample() {

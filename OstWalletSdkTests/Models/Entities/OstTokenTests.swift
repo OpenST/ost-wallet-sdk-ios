@@ -15,7 +15,7 @@
 //
 //    var JSONObject = [
 //        "id": "123a",
-//        "name": "aniket",
+//        "name": "alice",
 //        "symbol": "aaa",
 //        "conversion_factor": "",
 //        "total_supply": 123143535325431,

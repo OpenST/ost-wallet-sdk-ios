@@ -54,6 +54,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         guard let addresses: [String] = payload[OstExecuteTransaction.PAYLOAD_ADDRESSES_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_2", .invalidQRCode)
         }
+       
         guard let amounts: [String] = payload[OstExecuteTransaction.PAYLOAD_AMOUNTS_KEY] as? [String] else {
             throw OstError("w_et_getpfqrp_3", .invalidQRCode)
         }
@@ -142,12 +143,18 @@ class OstExecuteTransaction: OstWorkflowBase {
         let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
                                 OstExecuteTransactionType.Pay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_2", OstErrorText.invalidRuleName)
+            throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
         }
         
         let filteredAddresses = toAddresses.filter({$0 != ""})
         if (amounts.count != filteredAddresses.count) {
-            throw OstError("w_et_vp_3", .invalidAddressToTransfer)
+            throw OstError("w_et_vp_2", .invalidAddressToTransfer)
+        }
+        
+        for filteredAddress in filteredAddresses {
+            if !filteredAddress.isValidAddress {
+                throw OstError("w_et_vp_3", .invalidAddressToTransfer)
+            }
         }
     }
     
@@ -209,19 +216,21 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
     }
     
-    //TODO: - get addresses for KeyManager and get session from db.
-    // validate and
-    /// Get active session from db.
+    /// Get session addresses from keymanager and fetch session data from db.
     private func getActiveSession() throws -> OstSession? {
         var ostSession: OstSession?  = nil
-        if let activeSessions: [OstSession] = try OstSessionRepository.sharedSession.getActiveSessionsFor(parentId: self.userId) {
-            for session in activeSessions {
+        let keyManager = OstKeyManager(userId: self.userId)
+        let sessionAddresses = try keyManager.getSessions()
+        for sessionAddress in sessionAddresses {
+            if let session: OstSession = try OstSession.getById(sessionAddress) {
                 if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
                     let spendingLimit = BigInt(session.spendingLimit ?? "0")
                     if spendingLimit >= self.transactionValueInWei! {
                         ostSession = session
                         break
                     }
+                }else {
+                    try? keyManager.deleteSessionKey(sessionAddress: sessionAddress)
                 }
             }
         }
@@ -234,7 +243,7 @@ class OstExecuteTransaction: OstWorkflowBase {
         transaction.to = self.rule!.address!
         transaction.data = self.calldata!
         transaction.nonce = OstUtils.toString(self.activeSession!.nonce)!
-        transaction.txnCallPrefix = TokenRule.EXECUTE_RULE_CALLPREFIX
+        transaction.txnCallPrefix = try TokenHolder().getCallPrefix()!
         
         self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
         self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
@@ -261,7 +270,8 @@ class OstExecuteTransaction: OstWorkflowBase {
                         self.postRequestAcknowledged(entity: ostTransaction)
                         self.pollingForTransaction(transaction: ostTransaction)
                 }) { (error) in
-                    self.fetchSession(error: error)
+                    self.fetchAllSessions()
+                    self.postError(error)
             }
         }catch let error {
             self.fetchSession(error: error as! OstError)
@@ -281,6 +291,20 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
     }
     
+    /// Fetch all sessions from server
+    private func fetchAllSessions() {
+        let fetchSessionQueue = DispatchQueue.init(label: "com.ost.fetchSessionQueue", qos: .background)
+        fetchSessionQueue.async {
+            let keyManager = OstKeyManager(userId: self.userId)
+            let sessoionAPI = OstAPISession(userId: self.userId)
+            if let sessions = try? keyManager.getSessions() {
+                for session in sessions {
+                    try? sessoionAPI.getSession(sessionAddress: session, onSuccess: nil, onFailure: nil)
+                }
+            }
+        }
+    }
+    
     /// Polling for checking transaction status
     private func pollingForTransaction(transaction: OstTransaction) {
         let successCallback: ((OstTransaction) -> Void) = { ostSession in
@@ -291,7 +315,6 @@ class OstExecuteTransaction: OstWorkflowBase {
             self.fetchSession(error: error)            
         }
         // Logger.log(message: "test starting polling for userId: \(self.userId) at \(Date.timestamp())")
-        
         
         OstTransactionPollingService(userId: self.userId,
                                      transaciotnId: transaction.id,
@@ -384,9 +407,9 @@ extension OstExecuteTransaction {
         )
     }
     
-    /// Get currency value in Wei
+    /// Get currency value
     ///
-    /// - Returns: Currency in wei
+    /// - Returns: Currency value
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
         guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {

@@ -113,7 +113,7 @@ public extension OstSession {
     /// Check if the session is created
     var isStatusCreated: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.CREATED.rawValue == status)
+            return (OstSession.Status.CREATED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -121,7 +121,7 @@ public extension OstSession {
     /// Check if the session is initializing
     var isStatusInitializing: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.INITIALIZING.rawValue == status)
+            return (OstSession.Status.INITIALIZING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -129,7 +129,7 @@ public extension OstSession {
     /// Check if the session is authorizing
     var isStatusAuthorizing: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.AUTHORIZING.rawValue == status)
+            return (OstSession.Status.AUTHORIZING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -137,7 +137,7 @@ public extension OstSession {
     /// Check if the session is authorized
     var isStatusAuthorized: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.AUTHORIZED.rawValue == status)
+            return (OstSession.Status.AUTHORIZED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -145,7 +145,7 @@ public extension OstSession {
     /// Check if the session is revoking
     var isStatusRevoking: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.REVOKING.rawValue == status)
+            return (OstSession.Status.REVOKING.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -153,7 +153,7 @@ public extension OstSession {
     /// Check if the session is revoked
     var isStatusRevoked: Bool {
         if let status: String = self.status {
-            return (OstSession.Status.REVOKED.rawValue == status)
+            return (OstSession.Status.REVOKED.rawValue.caseInsensitiveCompare(status) == .orderedSame)
         }
         return false
     }
@@ -194,7 +194,7 @@ extension OstSession {
     
     func signTransaction(_ transactionHash: String) throws -> String {
         guard let _ = try OstUser.getById(self.userId!)!.getCurrentDevice() else {
-            throw OstError.init("m_e_s_st_1", .deviceNotFound)            
+            throw OstError.init("m_e_s_st_1", .deviceNotSet)            
         }
         
         return try OstKeyManager(userId: self.userId!).signWithSessionKey(transactionHash, withAddress: self.address!)

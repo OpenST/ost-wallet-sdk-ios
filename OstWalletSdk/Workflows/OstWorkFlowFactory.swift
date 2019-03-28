@@ -41,14 +41,14 @@ extension OstWalletSdk {
     ///   - userId: Ost user identifier.
     ///   - userPin: User secret pin.
     ///   - passphrasePrefix: App-server secret for user.
-    ///   - spendingLimitInWei: Max amount that user can spend per transaction.
+    ///   - spendingLimit: Max amount that user can spend per transaction
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
         userPin: String,
         passphrasePrefix: String,
-        spendingLimitInWei: String,
+        spendingLimit: String,
         expireAfterInSec: TimeInterval,
         delegate: OstWorkflowDelegate) {
         
@@ -56,7 +56,7 @@ extension OstWalletSdk {
             userId: userId,
             userPin: userPin,
             passphrasePrefix: passphrasePrefix,
-            spendingLimit: spendingLimitInWei,
+            spendingLimit: spendingLimit,
             expireAfter: expireAfterInSec,
             delegate: delegate)
         
@@ -85,18 +85,18 @@ extension OstWalletSdk {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - spendingLimitInWei: Amount user can spend in a transaction.
+    ///   - spendingLimit: Amount user can spend in a transaction
     ///   - expireAfterInSec: Seconds after which the session key should expire.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func addSession(
         userId: String,
-        spendingLimitInWei: String,
+        spendingLimit: String,
         expireAfterInSec: TimeInterval,
         delegate: OstWorkflowDelegate) {
         
         let ostAddSession = OstAddSession(
             userId: userId,
-            spendingLimit: spendingLimitInWei,
+            spendingLimit: spendingLimit,
             expireAfter: expireAfterInSec,
             delegate: delegate)
         
@@ -150,7 +150,7 @@ extension OstWalletSdk {
             throw OstError("w_wff_gadqc_2", .userNotActivated)
         }
         guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError("w_wff_gadqc_3", .deviceNotset)
+            throw OstError("w_wff_gadqc_3", .deviceNotSet)
         }
         
         if !currentDevice.isStatusRegistered {
@@ -179,12 +179,32 @@ extension OstWalletSdk {
         passphrasePrefix: String,
         delegate: OstWorkflowDelegate) {
         
-        let recoverDeviceInitialize = OstRecoverDevice(userId: userId,
-                                                       deviceAddressToRecover: recoverDeviceAddress,
-                                                       userPin: userPin,
-                                                       passphrasePrefix: passphrasePrefix,
-                                                       delegate: delegate)
-        recoverDeviceInitialize.perform()
+        let initiateDeviceRecoveryFlow = OstRecoverDevice(userId: userId,
+                                                          deviceAddressToRecover: recoverDeviceAddress,
+                                                          userPin: userPin,
+                                                          passphrasePrefix: passphrasePrefix,
+                                                          delegate: delegate)
+        initiateDeviceRecoveryFlow.perform()
+    }
+    
+    /// Abort device recovery.
+    ///
+    /// - Parameters:
+    ///   - userId: Kit user id.
+    ///   - uPin: user pin.
+    ///   - password: application password provied by application server.
+    ///   - delegate: Callback for action complete or to perform respective actions.
+    public class func abortDeviceRecovery(
+        userId: String,
+        userPin: String,
+        passphrasePrefix: String,
+        delegate: OstWorkflowDelegate) {
+        
+        let abortDeviceRecoveryFlow = OstAbortDeviceRecovery(userId: userId,
+                                                             userPin: userPin,
+                                                             passphrasePrefix: passphrasePrefix,
+                                                             delegate: delegate)
+        abortDeviceRecoveryFlow.perform()
     }
     
     /// Reset pin
@@ -247,5 +267,20 @@ extension OstWalletSdk {
             delegate: delegate)
         
         executeTransactionFlow.perform()
+    }
+    
+    /// Logout all sessions
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - delegate: Callback
+    public class func logoutAllSessions(
+        userId: String,
+        delegate: OstWorkflowDelegate
+        ) {
+        
+        let logoutAllSessionsFlow = OstLogoutAllSessions(userId: userId,
+                                                         delegate: delegate)
+        logoutAllSessionsFlow.perform()
     }
 }

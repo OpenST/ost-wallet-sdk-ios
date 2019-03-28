@@ -12,7 +12,7 @@ import Foundation
 
 class OstAddSession: OstWorkflowBase {
     
-    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .background)
+    static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     
@@ -22,7 +22,7 @@ class OstAddSession: OstWorkflowBase {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - spendingLimit: Spending limit for transaction in Wei
+    ///   - spendingLimit: Spending limit for transaction
     ///   - expireAfter: Relative time
     ///   - delegate: Callback
     init(userId: String,
@@ -47,11 +47,16 @@ class OstAddSession: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        
-        try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
-        if (TimeInterval(0) > self.expireAfter) {
-            throw OstError("w_as_vp_1", .invalidExpirationTimeStamp)
+        do {
+            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+        }catch {
+            throw OstError("w_as_vp_1", .invalidSpendingLimit)
         }
+        
+        if (TimeInterval(0) > self.expireAfter) {
+            throw OstError("w_as_vp_2", .invalidExpirationTimeStamp)
+        }
+        
         try self.workFlowValidator!.isUserActivated()
         try self.workFlowValidator!.isDeviceAuthorized()
     }

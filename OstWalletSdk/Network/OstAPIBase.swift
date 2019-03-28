@@ -89,17 +89,12 @@ class OstAPIBase {
             return
         }
         
-         // Logger.log(message: "url", parameterToPrint: url)
-         // Logger.log(message: "params", parameterToPrint: params as Any)
-        
+//        Logger.log(message: "\(method.rawValue): \(url)", parameterToPrint: params as Any)
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
-        
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
         dataRequest!.responseJSON { (httpResponse) in
-             // Logger.log(message: "httpResponse.relativePath", parameterToPrint: httpResponse.response?.url?.relativePath);
-             // Logger.log(message: "httpResponse.result.value", parameterToPrint: httpResponse.result.value);
-            
+//            Logger.log(message: "\(method.rawValue): \(httpResponse.response?.url?.relativePath)", parameterToPrint: httpResponse.result.value);
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]
@@ -107,11 +102,26 @@ class OstAPIBase {
                 self.manager.session.configuration.urlCache?.removeAllCachedResponses()
             }else {
                 let failureResponse = OstAPIErrorHandler.getErrorResponse(httpResponse);
+                self.processIfUserUnauthorized(failureResponse: failureResponse)
                 onFailure(failureResponse)
             }
         }
     }
     
+    /// Verify whether user is unauthorized or not. If yes delete device key and api key
+    ///
+    /// - Parameter failureResponse: Http api response
+    private func processIfUserUnauthorized(failureResponse: [String: Any]) {
+        let apiError = OstApiError(fromApiResponse: failureResponse)
+            if apiError.isApiSignerUnauthorized() {
+                if let user = try? OstUser.getById(self.userId),
+                    let device = user?.getCurrentDevice() {
+                    if !device.isStatusCreated {
+                        try? OstKeyManager(userId: self.userId).clearUserDeviceInfo()
+                    }
+                }
+            }
+    }
     /// Performs HTTP Get
     ///
     /// - Parameters:
@@ -119,8 +129,8 @@ class OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     func get(params: [String: AnyObject]? = nil,
-                  onSuccess:@escaping (([String: Any]?) -> Void),
-                  onFailure:@escaping (([String: Any]?) -> Void)) {
+             onSuccess:@escaping (([String: Any]?) -> Void),
+             onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .get,
                      params: params,
                      onSuccess: onSuccess,
@@ -134,14 +144,14 @@ class OstAPIBase {
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     func post(params: [String: AnyObject]? = nil,
-                   onSuccess:@escaping (([String: Any]?) -> Void),
-                   onFailure:@escaping (([String: Any]?) -> Void)) {
+              onSuccess:@escaping (([String: Any]?) -> Void),
+              onFailure:@escaping (([String: Any]?) -> Void)) {
         self.request(method: .post,
                      params: params,
                      onSuccess: onSuccess,
                      onFailure: onFailure)
     }
-
+    
     /// Check if the response is successful
     ///
     /// - Parameter response: API response object

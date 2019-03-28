@@ -102,7 +102,7 @@ extension String {
     }
     
     var encodedString: String {
-        let allowedCharacterSet = (CharacterSet(charactersIn: "`@#$%^&+={}[]:;\"<>,?/|\\ ").inverted)
+        let allowedCharacterSet = (CharacterSet(charactersIn: "`@#$%^&+={}[]:;/\"<>,?|\\ '!()*").inverted)
         if let escapedString = self.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) {
             return escapedString.replaceCharacter("%20", with: "+")
         }
@@ -121,5 +121,10 @@ extension String {
             return unescapedString
         }
         return self
+    }
+    
+    public var isValidAddress: Bool {
+        let addressRegex = "^(0x)[0-9a-fA-F]{40}$"
+        return self.isMatch(addressRegex)
     }
 }
