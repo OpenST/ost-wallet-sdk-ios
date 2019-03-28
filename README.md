@@ -120,7 +120,7 @@ User activation refers to the deployment of smart-contracts that form the user's
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in atto Brand Token_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in atto BT_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -141,7 +141,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
 The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in atto Brand Token_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in atto BT_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
