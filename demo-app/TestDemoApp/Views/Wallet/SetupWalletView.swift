@@ -28,7 +28,7 @@ class SetupWalletView: BaseWalletWorkflowView {
     
     let currentUser = CurrentUser.getInstance();
     
-    // Always convert the token into Atto OST.
+    // Always convert the token into Atto BT.
     let spendingLimitInAttoOST = String( "1000000000000000000000000" )    
     OstWalletSdk.activateUser(userId: currentUser.ostUserId!,
                               userPin: pinNumberTextField.text ?? "",
