@@ -41,14 +41,14 @@ extension OstWalletSdk {
     ///   - userId: Ost user identifier.
     ///   - userPin: User secret pin.
     ///   - passphrasePrefix: App-server secret for user.
-    ///   - spendingLimitInWei: Max amount that user can spend per transaction.
+    ///   - spendingLimit: Max amount that user can spend per transaction
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
     public class func activateUser(
         userId: String,
         userPin: String,
         passphrasePrefix: String,
-        spendingLimitInWei: String,
+        spendingLimit: String,
         expireAfterInSec: TimeInterval,
         delegate: OstWorkflowDelegate) {
         
@@ -56,7 +56,7 @@ extension OstWalletSdk {
             userId: userId,
             userPin: userPin,
             passphrasePrefix: passphrasePrefix,
-            spendingLimit: spendingLimitInWei,
+            spendingLimit: spendingLimit,
             expireAfter: expireAfterInSec,
             delegate: delegate)
         
@@ -85,18 +85,18 @@ extension OstWalletSdk {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - spendingLimitInWei: Amount user can spend in a transaction.
+    ///   - spendingLimit: Amount user can spend in a transaction
     ///   - expireAfterInSec: Seconds after which the session key should expire.
     ///   - delegate: Callback for action complete or to perform respective action
     public class func addSession(
         userId: String,
-        spendingLimitInWei: String,
+        spendingLimit: String,
         expireAfterInSec: TimeInterval,
         delegate: OstWorkflowDelegate) {
         
         let ostAddSession = OstAddSession(
             userId: userId,
-            spendingLimit: spendingLimitInWei,
+            spendingLimit: spendingLimit,
             expireAfter: expireAfterInSec,
             delegate: delegate)
         

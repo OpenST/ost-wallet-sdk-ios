@@ -407,9 +407,9 @@ extension OstExecuteTransaction {
         )
     }
     
-    /// Get currency value in Wei
+    /// Get currency value
     ///
-    /// - Returns: Currency in wei
+    /// - Returns: Currency value
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
         guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {

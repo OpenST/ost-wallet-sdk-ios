@@ -23,7 +23,7 @@ class TokenHolder: ABIHelperBase {
     /// - Parameters:
     ///   - sessionAddress: Session address
     ///   - expirationHeight: Expiration height in sesconds
-    ///   - spendingLimit: Spending limit in wei
+    ///   - spendingLimit: Spending limit
     /// - Returns: Encoded ABI hex string
     /// - Throws: OstError
     func getAddSessionExecutableData(sessionAddress: String,
