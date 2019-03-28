@@ -22,7 +22,7 @@ class OstAddSession: OstWorkflowBase {
     ///
     /// - Parameters:
     ///   - userId: User id
-    ///   - spendingLimit: Spending limit for transaction in Wei
+    ///   - spendingLimit: Spending limit for transaction
     ///   - expireAfter: Relative time
     ///   - delegate: Callback
     init(userId: String,

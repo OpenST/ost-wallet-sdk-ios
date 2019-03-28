@@ -28,7 +28,7 @@ class OstSessionHelper: OstWorkflowHelperBase {
     /// - Parameters:
     ///   - userId: User Id
     ///   - expiresAfter: Relative time
-    ///   - spendingLimit: Spending limit in a Wei
+    ///   - spendingLimit: Spending limit
     init(userId: String,
          expiresAfter: TimeInterval,
          spendingLimit: String) {

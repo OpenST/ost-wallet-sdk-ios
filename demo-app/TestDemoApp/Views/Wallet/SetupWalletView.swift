@@ -28,16 +28,14 @@ class SetupWalletView: BaseWalletWorkflowView {
     
     let currentUser = CurrentUser.getInstance();
     
-    // Always convert the token into Wei Untis.
-    let spendingLimitInWei = String( "1000000000000000000000000" )
-    //Logger.log(message: "spendingLimitInWei", parameterToPrint: spendingLimitInWei);
-    
+    // Always convert the token into Atto OST.
+    let spendingLimitInAttoOST = String( "1000000000000000000000000" )    
     OstWalletSdk.activateUser(userId: currentUser.ostUserId!,
-                        userPin: pinNumberTextField.text ?? "",
-                        passphrasePrefix: currentUser.userPinSalt!,
-                        spendingLimitInWei: spendingLimitInWei,
-                        expireAfterInSec: TimeInterval(Double(2*60*60)),
-                        delegate: self.sdkInteract);
+                              userPin: pinNumberTextField.text ?? "",
+                              passphrasePrefix: currentUser.userPinSalt!,
+                              spendingLimit: spendingLimitInAttoOST,
+                              expireAfterInSec: TimeInterval(Double(2*60*60)),
+                              delegate: self.sdkInteract);
     
     //Call super to update UI and log stuff.
     super.didTapNext(sender: sender);
