@@ -254,7 +254,16 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         self.cancelButton.isHidden = false;
         self.scanAgainButton.isHidden = true;
         self.qrInfoLabel.isHidden = false;
-        self.qrInfoLabel.showDeviceInfo(ostDevice: ostDevice);
+        self.qrInfoLabel.showAuthorizeDeviceInfo(ostDevice: ostDevice);
+    }
+    
+    func showRevokeDeviceInfo(ostDevice:OstDevice) {
+        self.nextButton.isHidden = false;
+        self.cancelButton.isHidden = false;
+        self.scanAgainButton.isHidden = true;
+        self.qrInfoLabel.isHidden = false;
+        self.nextButton.setTitle("Revoke", for: .normal);
+        self.qrInfoLabel.showRevokeDeviceInfo(ostDevice: ostDevice);
     }
     
     func showExecuteTransactionInfo(data: String) {
@@ -343,11 +352,13 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         let ostContextEntity = eventData["ostContextEntity"] as! OstContextEntity;
         self.ostValidateDataProtocol = eventData["delegate"] as? OstValidateDataDelegate;
         if ( workflowContext.workflowType == .authorizeDeviceWithQRCode
-            || workflowContext.workflowType == .authorizeDeviceWithMnemonics
-            || workflowContext.workflowType == .revokeDeviceWithQRCode) {
+            || workflowContext.workflowType == .authorizeDeviceWithMnemonics) {
             
             let device = ostContextEntity.entity as! OstDevice;
             showAuthorizeDeviceInfo(ostDevice: device);
+        } else if (workflowContext.workflowType == .revokeDeviceWithQRCode) {
+            let device = ostContextEntity.entity as! OstDevice;
+            showRevokeDeviceInfo(ostDevice: device)
         } else if ( workflowContext.workflowType == .executeTransaction ) {
             //To-Do: Show transaction info.
             let entity = ostContextEntity.entity as! [String: Any]
