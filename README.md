@@ -120,7 +120,7 @@ User activation refers to the deployment of smart-contracts that form the user's
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_pin: User Pin_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in Atto OST_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in atto OST_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -141,7 +141,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
 The device manager, which controls the tokens, authorizes sessions. <br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_spendingLimit: Spending limit in a transaction in Atto OST_<br/>
+&nbsp;_spendingLimit: Spending limit in a transaction in atto OST_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
@@ -160,7 +160,7 @@ A transaction where Brand Tokens are transferred from a user to another actor wi
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
-&nbsp;_transactionType: OstExecuteTransactionType value_<br/>
+&nbsp;_transactionType: [OstExecuteTransactionType value](OstWalletSdk/Workflows/OstExecuteTransaction.swift#L14)_<br/>
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
