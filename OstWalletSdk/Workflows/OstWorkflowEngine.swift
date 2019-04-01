@@ -209,7 +209,7 @@ extension OstWorkflowEngine {
             }
             else {
                 //Unknown Error. Post Something went wrong.
-                let ostError:OstError = OstError("w_wb_pe_1", OstErrorText.sdkError)
+                let ostError:OstError = OstError("w_we_pe_1", OstErrorText.sdkError)
                 self.delegate.flowInterrupted(workflowContext: errorWorkflowContext, error: ostError )
             }
         }
