@@ -22,7 +22,7 @@ class OstWorkflowValidator {
     }
     
     /// Initializer
-    init(withUserId userId: String) throws {
+    init(withUserId userId: String) {
         self.userId = userId
     }
     

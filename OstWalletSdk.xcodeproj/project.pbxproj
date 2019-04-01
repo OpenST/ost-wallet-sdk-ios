@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BCC1B552251FB01008B58A1 /* OstWorkflowStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */; };
+		4BCC1B5822522776008B58A1 /* OstWorkflowEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */; };
 		4BF8FE4A2243B26C00519779 /* OstAbortDeviceRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */; };
 		4BF8FE522244E45200519779 /* OstLogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */; };
 		4BF8FE542244E56300519779 /* OstAPITokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */; };
@@ -249,6 +251,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowStateManager.swift; sourceTree = "<group>"; };
+		4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowEngine.swift; sourceTree = "<group>"; };
 		4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceRecovery.swift; sourceTree = "<group>"; };
 		4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAPITokenHolder.swift; sourceTree = "<group>"; };
@@ -824,9 +828,11 @@
 				EC38BEC622413A96006F8DA2 /* Services */,
 				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
 				EC38BEC322413A96006F8DA2 /* OstRevoke */,
+				EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */,
+				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
-				EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */,
+				4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */,
 				EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */,
 				EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */,
 				EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */,
@@ -1336,6 +1342,7 @@
 				EC38BF1A22413A96006F8DA2 /* OstMnemonicsKeyManager.swift in Sources */,
 				EC38BF6722413A96006F8DA2 /* ABIConvertible.swift in Sources */,
 				EC38BF6522413A96006F8DA2 /* ABI.swift in Sources */,
+				4BCC1B5822522776008B58A1 /* OstWorkflowEngine.swift in Sources */,
 				EC38BF7D22413A96006F8DA2 /* TypedDataForRecovery.swift in Sources */,
 				EC38BF5022413A96006F8DA2 /* BigUInt+BytesConvertible.swift in Sources */,
 				EC38BF8122413A96006F8DA2 /* OstAuthorizeBase.swift in Sources */,
@@ -1481,6 +1488,7 @@
 				EC38BFA422413A96006F8DA2 /* OstValidateDataDelegate.swift in Sources */,
 				EC38BF8A22413A96006F8DA2 /* OstActivateUser.swift in Sources */,
 				EC38BF4322413A96006F8DA2 /* EthereumQuantityTag.swift in Sources */,
+				4BCC1B552251FB01008B58A1 /* OstWorkflowStateManager.swift in Sources */,
 				EC38BF4D22413A96006F8DA2 /* String+Conversion.swift in Sources */,
 				EC38BF6222413A96006F8DA2 /* SolidityType.swift in Sources */,
 				4BF8FE4A2243B26C00519779 /* OstAbortDeviceRecovery.swift in Sources */,

@@ -48,7 +48,7 @@ class OstWorkflowBase: OstPinAcceptDelegate {
             queue.sync {
                 do {
                     try self.beforeProcess()
-                    self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
+                    self.workFlowValidator = OstWorkflowValidator(withUserId: self.userId)
                     
                     try self.validateParams()
                     try self.process()

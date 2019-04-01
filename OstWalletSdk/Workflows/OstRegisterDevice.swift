@@ -10,7 +10,10 @@
 
 import Foundation
 
-class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
+class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
+    
+    static let DEVICE_REGISTERED = "DEVICE_REGISTERED"
+    
     static private let ostRegisterDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRegisterDevice", qos: .background)
     private let tokenId: String
     private var forceSync: Bool
@@ -39,6 +42,16 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
         return OstRegisterDevice.ostRegisterDeviceQueue
     }
     
+    /// Get workflow states in order
+    ///
+    /// - Returns: Workflow states
+    override func getInBetweenOrderedStates() -> [String] {
+        var orderedStates = [String]()
+        orderedStates.append(OstRegisterDevice.DEVICE_REGISTERED)
+        
+        return orderedStates
+    }
+    
     /// Perform any tasks that are prerequisite for the workflow,
     /// this is called before validateParams() and process()
     ///
@@ -60,15 +73,32 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
         if (self.tokenId.isEmpty) {
             throw OstError.init("w_rd_2", .invalidTokenId)
         }
+        
+        try self.processNext()
     }
     
-    /// process workflow.
+    /// Process workflow
     ///
     /// - Throws: OstError
     override func process() throws {
+        
+        switch self.workflowStateManager.getCurrentState() {
+        case OstRegisterDevice.DEVICE_REGISTERED:
+            self.forceSync = true
+            sync()
+            
+        default:
+            try super.process()
+        }
+    }
+    
+    /// Register device on params validated
+    ///
+    /// - Throws: OstError
+    override func onParamsValidated() throws {
         if (self.currentDevice == nil
             || self.currentDevice!.isStatusRevoked) {
-            self.createAndRegisterDevice()
+            try self.createAndRegisterDevice()
             return
         }
         
@@ -76,7 +106,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
             self.registerDevice(self.currentDevice!.data)
             return
         }
-        self.sync()
+        try self.processNext()
     }
     
     /// Creates user if user is not persent.
@@ -94,27 +124,26 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     }
     
     /// Creates device keys and api key. Send parmeters required for register device to application.
-    private func createAndRegisterDevice() {
-        do {
-            let keyManager = OstKeyManager(userId: self.userId)
-            let deviceAddress = try keyManager.createDeviceKey()
-            let apiAddress = try keyManager.createAPIKey()
-            
-            var apiParam: [String: Any] = [:]
-            apiParam["address"] = deviceAddress
-            apiParam["api_signer_address"] = apiAddress
-            apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
-            apiParam["status"] = OstUser.Status.CREATED.rawValue
-            
-            apiParam["user_id"] = self.userId
-            _ = try OstCurrentDevice.storeEntity(apiParam)
-            
-            apiParam["user_id"] = nil
-            
-            self.registerDevice(apiParam)
-        }catch let error {
-            self.postError(error)
-        }
+    ///
+    /// - Throws: OstError
+    private func createAndRegisterDevice() throws {
+        
+        let keyManager = OstKeyManager(userId: self.userId)
+        let deviceAddress = try keyManager.createDeviceKey()
+        let apiAddress = try keyManager.createAPIKey()
+        
+        var apiParam: [String: Any] = [:]
+        apiParam["address"] = deviceAddress
+        apiParam["api_signer_address"] = apiAddress
+        apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
+        apiParam["status"] = OstUser.Status.CREATED.rawValue
+        
+        apiParam["user_id"] = self.userId
+        _ = try OstCurrentDevice.storeEntity(apiParam)
+        
+        apiParam["user_id"] = nil
+        
+        self.registerDevice(apiParam)
     }
     
     /// Delegate resiger device to application.
@@ -145,11 +174,7 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
     ///
     /// - Parameter apiResponse: API response from server.
     public func deviceRegistered(_ apiResponse: [String : Any]) {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.forceSync = true
-            self.sync()
-        }
+        self.performNext(withObject: apiResponse)
     }
     
     /// Sync required entities.
@@ -164,8 +189,8 @@ class OstRegisterDevice: OstWorkflowBase, OstDeviceRegisteredDelegate {
                 return
             }
             do {
-                let device:OstDevice = try OstDevice.getById(currentDevice.address!)!;
-                self.postWorkflowComplete(entity: device);
+                let device:OstDevice = try OstDevice.getById(currentDevice.address!)!
+                self.postWorkflowComplete(entity: device)
             } catch let err {
                 self.postError(err as! OstError);
             }
