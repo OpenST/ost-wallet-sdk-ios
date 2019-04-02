@@ -15,9 +15,6 @@ class OstWorkflowStateManager {
     static let INITIAL = "INITIAL";
     static let PARAMS_VALIDATED = "PARAMS_VALIDATED";
     static let DEVICE_VALIDATED = "DEVICE_VALIDATED";
-    static let PIN_AUTHENTICATION_REQUIRED = "PIN_AUTHENTICATION_REQUIRED";
-    static let PIN_INFO_RECEIVED = "PIN_INFO_RECEIVED";
-    static let AUTHENTICATED = "AUTHENTICATED";
     static let CANCELLED = "CANCELLED";
     static let COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR";
     static let COMPLETED = "COMPLETED";

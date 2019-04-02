@@ -35,13 +35,6 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// Get workflow Queue
-    ///
-    /// - Returns: DispatchQueue
-    override func getWorkflowQueue() -> DispatchQueue {
-        return OstRegisterDevice.ostRegisterDeviceQueue
-    }
-    
     /// Get workflow states in order
     ///
     /// - Returns: Workflow states
@@ -52,14 +45,11 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         return orderedStates
     }
     
-    /// Perform any tasks that are prerequisite for the workflow,
-    /// this is called before validateParams() and process()
+    /// Get workflow Queue
     ///
-    /// - Throws: OstError
-    override func beforeProcess() throws {
-        //init user and token
-        try self.initToken()
-        try self.initUser()
+    /// - Returns: DispatchQueue
+    override func getWorkflowQueue() -> DispatchQueue {
+        return OstRegisterDevice.ostRegisterDeviceQueue
     }
     
     /// Valdiate parameters.
@@ -73,15 +63,19 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         if (self.tokenId.isEmpty) {
             throw OstError.init("w_rd_2", .invalidTokenId)
         }
-        
-        try self.processNext()
     }
-    
+
+    /// Perform user device validation
+    ///
+    /// - Throws: OstError
+    override func performUserDeviceValidation() throws {
+        //Exceptional case.
+    }
+     
     /// Process workflow
     ///
     /// - Throws: OstError
     override func process() throws {
-        
         switch self.workflowStateManager.getCurrentState() {
         case OstRegisterDevice.DEVICE_REGISTERED:
             self.forceSync = true
@@ -96,6 +90,9 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     override func onDeviceValidated() throws {
+        try self.initToken()
+        try self.initUser()
+        
         if (self.currentDevice == nil
             || self.currentDevice!.isStatusRevoked) {
             try self.createAndRegisterDevice()

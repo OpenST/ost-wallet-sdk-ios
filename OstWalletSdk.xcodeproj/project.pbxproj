@@ -835,6 +835,7 @@
 				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
 				4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */,
+				F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */,
 				EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */,
 				EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */,
 				EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */,
@@ -848,7 +849,6 @@
 				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
 				EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */,
 				4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */,
-				F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";

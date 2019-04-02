@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstAddSession: OstWorkflowBase {
+class OstAddSession: OstUserAuthenticatorWorkflow {
     
     static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
     private let spendingLimit: String
@@ -48,7 +48,7 @@ class OstAddSession: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         do {
-            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+            try self.workFlowValidator.isValidNumber(input: self.spendingLimit)
         }catch {
             throw OstError("w_as_vp_1", .invalidSpendingLimit)
         }
@@ -56,34 +56,20 @@ class OstAddSession: OstWorkflowBase {
         if (TimeInterval(0) > self.expireAfter) {
             throw OstError("w_as_vp_2", .invalidExpirationTimeStamp)
         }
-        
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
-    }
-    
-    /// process workflow
-    ///
-    /// - Throws: OstError
-    override func process() throws {
-        authenticateUser()
-    }
-    
-    /// Proceed with workflow after user is authenticated.
-    override func proceedWorkflowAfterAuthenticateUser() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            do {
-                self.sessionData = try OstSessionHelper(userId: self.userId,
-                                                        expiresAfter: self.expireAfter,
-                                                        spendingLimit: self.spendingLimit).getSessionData()
-                self.authorizeSession()
-            }catch let error {
-                self.postError(error)
-            }
-            
-        }
     }
 
+    /// Proceed with workflow after user is authenticated.
+    override func onUserAuthenticated() {
+        do {
+            self.sessionData = try OstSessionHelper(userId: self.userId,
+                                                    expiresAfter: self.expireAfter,
+                                                    spendingLimit: self.spendingLimit).getSessionData()
+            self.authorizeSession()
+        }catch let error {
+            self.postError(error)
+        }
+    }
+    
     /// Authorize session
     private func authorizeSession() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
@@ -102,8 +88,9 @@ class OstAddSession: OstWorkflowBase {
         let onRequestAcknowledged: ((OstSession) -> Void) = { (ostSession) in
             self.postRequestAcknowledged(entity: ostSession)
         }
-
-        let onSuccess: ((OstSession) -> Void) = { (ostSession) in            self.postWorkflowComplete(entity: ostSession)
+        
+        let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+            self.postWorkflowComplete(entity: ostSession)
         }
         
         let onFailure: ((OstError) -> Void) = { (error) in
