@@ -71,6 +71,7 @@ class OstWorkflowEngine {
         
         orderedStates.append(OstWorkflowStateManager.INITIAL)
         orderedStates.append(OstWorkflowStateManager.PARAMS_VALIDATED)
+        orderedStates.append(OstWorkflowStateManager.DEVICE_VALIDATED)
         orderedStates.append(contentsOf: inBetweenStates)
         orderedStates.append(OstWorkflowStateManager.COMPLETED)
         orderedStates.append(OstWorkflowStateManager.CANCELLED)
@@ -82,14 +83,18 @@ class OstWorkflowEngine {
     func process() throws {
         switch self.workflowStateManager.getCurrentState() {
         case OstWorkflowStateManager.INITIAL:
-            try beforeProcess()
             try validateParams()
             
         case OstWorkflowStateManager.PARAMS_VALIDATED:
-            try onParamsValidated()
+            try performUserDeviceValidation()
+            try processNext()
+            
+        case OstWorkflowStateManager.DEVICE_VALIDATED:
+            try onDeviceValidated()
             
         case OstWorkflowStateManager.COMPLETED:
             onWorkflowComplete()
+            
         default:
             throw OstError("w_we_p_1", OstErrorText.unknown)
         }
@@ -134,14 +139,7 @@ class OstWorkflowEngine {
     ///
     /// - Throws: OstError
     func validateParams() throws {
-        if(nil == self.currentUser) {
-            throw OstError("w_we_vp_1", .userNotFound)
-        }
-        if(nil == self.currentDevice) {
-            throw OstError("w_we_vp_2", .deviceNotSet)
-        }
-        try self.workFlowValidator.isAPIKeyAvailable()
-        try self.workFlowValidator.isTokenAvailable()
+       try processNext()
     }
 
     //MARK: - Methods to override
@@ -179,12 +177,6 @@ class OstWorkflowEngine {
        return []
     }
     
-    /// Params validated
-    ///
-    /// - Throws: OstError
-    func onParamsValidated() throws {
-        try processNext()
-    }
     
     /// Workflow complete process
     func onWorkflowComplete() {
@@ -192,6 +184,27 @@ class OstWorkflowEngine {
         let contextEntity = OstContextEntity(entity: "", entityType: .string)
         postWorkflowComplete(workflowContext: workflowContext, contextEntity: contextEntity)
     }
+    
+    /// Perform user device validation
+    ///
+    /// - Throws: OstError
+    func performUserDeviceValidation() throws {
+        if(nil == self.currentUser) {
+            throw OstError("w_we_vp_1", .userNotFound)
+        }
+        if(nil == self.currentDevice) {
+            throw OstError("w_we_vp_2", .deviceNotSet)
+        }
+        try self.workFlowValidator.isAPIKeyAvailable()
+        try self.workFlowValidator.isTokenAvailable()
+        
+        try beforeProcess()
+    }
+    
+    /// On workflow validated
+    func onDeviceValidated() throws {
+        try processNext()
+    }   
 }
 
 

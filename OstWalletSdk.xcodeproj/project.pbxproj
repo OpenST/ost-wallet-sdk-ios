@@ -238,6 +238,7 @@
 		EC38C01B22413C94006F8DA2 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01422413C94006F8DA2 /* BigInt.framework */; };
 		EC38C01C22413C94006F8DA2 /* CryptoEthereumSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01522413C94006F8DA2 /* CryptoEthereumSwift.framework */; };
 		EC38C01D22413C94006F8DA2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01622413C94006F8DA2 /* Alamofire.framework */; };
+		F50361F3225342170043A8FA /* OstUserAuthenticatorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -486,6 +487,7 @@
 		EC38C01422413C94006F8DA2 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		EC38C01522413C94006F8DA2 /* CryptoEthereumSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoEthereumSwift.framework; path = Carthage/Build/iOS/CryptoEthereumSwift.framework; sourceTree = "<group>"; };
 		EC38C01622413C94006F8DA2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUserAuthenticatorWorkflow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -846,6 +848,7 @@
 				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
 				EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */,
 				4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */,
+				F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -1319,6 +1322,7 @@
 				EC38BF2222413A96006F8DA2 /* ABIHelperBase.swift in Sources */,
 				EC38BF5A22413A96006F8DA2 /* ABIObject.swift in Sources */,
 				EC38BFAC22413A96006F8DA2 /* OstTokenHolderDbQueries.swift in Sources */,
+				F50361F3225342170043A8FA /* OstUserAuthenticatorWorkflow.swift in Sources */,
 				EC38BFAF22413A96006F8DA2 /* OstDeviceDbQueries.swift in Sources */,
 				EC38BFCC22413A96006F8DA2 /* OstRuleModelRepository.swift in Sources */,
 				EC38BFCA22413A96006F8DA2 /* OstConfig.swift in Sources */,

@@ -95,7 +95,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// Register device on params validated
     ///
     /// - Throws: OstError
-    override func onParamsValidated() throws {
+    override func onDeviceValidated() throws {
         if (self.currentDevice == nil
             || self.currentDevice!.isStatusRevoked) {
             try self.createAndRegisterDevice()
@@ -106,6 +106,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
             self.registerDevice(self.currentDevice!.data)
             return
         }
+        
         try self.processNext()
     }
     
