@@ -112,11 +112,10 @@ class CurrentUser: BaseModel {
   }
   
   //
-  
+  var ostSdkInteract: OstSdkInteract? = nil
   func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
-    
-    let ostSdkInteract = OstSdkInteract();
-    ostSdkInteract.addEventListner { (eventData:[String : Any]) in
+    self.ostSdkInteract = OstSdkInteract()
+    self.ostSdkInteract!.addEventListner { (eventData:[String : Any]) in
       //self.onComplete = onComplete
       let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
       if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
@@ -126,13 +125,11 @@ class CurrentUser: BaseModel {
           let userDevice = ostContextEntity.entity as! OstDevice;
           self.currentDeviceAddress = userDevice.address;
           self.userDevice = userDevice;
-          do {
-            try self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
+         
+            self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
             print("onSuccess triggered for ", eventType);
             onSuccess(self.ostUser!, self.userDevice!);
-          } catch {
-            //We can't do anything.
-          }
+         
         }
         //Callback onComplete with true.
         onComplete(true);
@@ -145,7 +142,7 @@ class CurrentUser: BaseModel {
     OstWalletSdk.setupDevice(userId: self.ostUserId!,
                              tokenId: self.tokenId!,
                              forceSync:true,
-                             delegate: ostSdkInteract);
+                             delegate: self.ostSdkInteract!);
   }
 //
 //  func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {

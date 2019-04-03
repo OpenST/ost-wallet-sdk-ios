@@ -53,7 +53,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         switch self.workflowStateManager.getCurrentState() {
         case OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED:
             DispatchQueue.main.async {
-                self.delegate.getPin(self.userId, delegate: self)
+                self.delegate?.getPin(self.userId, delegate: self)
             }
             
         case OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED:
@@ -119,7 +119,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         do {
             try pinManager.validatePin()
             DispatchQueue.main.async {
-                self.delegate.pinValidated(self.userId)
+                self.delegate?.pinValidated(self.userId)
             }
             try self.processState(OstUserAuthenticatorWorkflow.AUTHENTICATED)
         } catch {

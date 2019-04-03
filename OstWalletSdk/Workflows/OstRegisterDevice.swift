@@ -149,7 +149,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Parameter deviceParams: Register device parameters.
     private func registerDevice(_ deviceParams: [String: Any]) {
         DispatchQueue.main.async {
-            self.delegate.registerDevice(deviceParams, delegate: self)
+            self.delegate?.registerDevice(deviceParams, delegate: self)
         }
     }
 

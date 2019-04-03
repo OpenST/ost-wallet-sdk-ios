@@ -10,7 +10,8 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowBase {
+class OstActivateUser: OstWorkflowEngine {
+    
     static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
@@ -61,37 +62,45 @@ class OstActivateUser: OstWorkflowBase {
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePassphrasePrefixLength()
         
-        //Current user validation is done in super
-        if self.currentUser!.isStatusActivated {
-            throw OstError("w_au_vp_1", .userAlreadyActivated)
-        }
-        //Current device validation is done in super
-        if self.currentDevice!.isStatusAuthorized {
-            throw OstError("w_au_vp_2", .deviceAuthorized)
-        }
-        
         if  0 > self.expireAfter {
-            throw OstError.init("w_au_vp_3",
+            throw OstError.init("w_au_vp_1",
                                 "Expiration time should be greater than 0")
         }
         
         do {
-            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+            try self.workFlowValidator.isValidNumber(input: self.spendingLimit)
         }catch {
-            throw OstError("w_au_vp_4", .invalidSpendingLimit)
-        }
-        
-        if (!self.currentDevice!.isStatusRegistered &&
-            (self.currentDevice!.isStatusRevoking ||
-                self.currentDevice!.isStatusRevoked )) {
-            throw OstError("w_au_vp_5", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_vp_2", .invalidSpendingLimit)
         }
     }
     
-    /// process
+    
+    /// Perfrom user device validation
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        //Current user validation is done in super
+        if self.currentUser!.isStatusActivated {
+            throw OstError("w_au_pudv_1", .userAlreadyActivated)
+        }
+        //Current device validation is done in super
+        if self.currentDevice!.isStatusAuthorized {
+            throw OstError("w_au_pudv_2", .deviceAuthorized)
+        }
+        
+        if (!self.currentDevice!.isStatusRegistered
+            && (self.currentDevice!.isStatusRevoking
+                || self.currentDevice!.isStatusRevoked)) {
+            throw OstError("w_au_pudv_3", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+        }
+    }
+    
+    /// Activate user on device validated
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         if (self.currentUser!.isStatusActivating) {
             self.pollingForActivatingUser(self.currentUser!)
             return
@@ -103,15 +112,14 @@ class OstActivateUser: OstWorkflowBase {
         }
         
         self.sessionData = try OstSessionHelper(
-                userId: self.userId,
-                expiresAfter: self.expireAfter,
-                spendingLimit: self.spendingLimit
+            userId: self.userId,
+            expiresAfter: self.expireAfter,
+            spendingLimit: self.spendingLimit
             ).getSessionData()
         
         try self.activateUser()
     }
-    
-    
+
     /// Activate user
     ///
     /// - Throws: OstError

@@ -15,12 +15,12 @@ class OstWorkflowStateManager {
     static let INITIAL = "INITIAL";
     static let PARAMS_VALIDATED = "PARAMS_VALIDATED";
     static let DEVICE_VALIDATED = "DEVICE_VALIDATED";
-    static let CANCELLED = "CANCELLED";
-    static let COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR";
-    static let COMPLETED = "COMPLETED";
     static let VERIFY_DATA = "VERIFY_DATA";
     static let DATA_VERIFIED = "DATA_VERIFIED";
     static let CALLBACK_LOST = "CALLBACK_LOST";
+    static let CANCELLED = "CANCELLED";
+    static let COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR";
+    static let COMPLETED = "COMPLETED";
     
     private var orderedStates = [String]()
     private var currentStateIndex: Int = 0
@@ -60,11 +60,9 @@ class OstWorkflowStateManager {
     ///   - state: WorkflowStateManager.State
     ///   - obj: State object
     /// - Throws: OstError
-    func setState(_ state: String, withObj obj: Any? = nil) throws {
-        guard let stateIndx = self.orderedStates.firstIndex(of: state) else {
-            throw OstError("w_wsm_ss_1", OstErrorText.unknown);
-        }
-        self.currentStateIndex = stateIndx
+    func setState(_ state: String, withObj obj: Any? = nil) {
+        let stateIndx = self.orderedStates.firstIndex(of: state)
+        self.currentStateIndex = stateIndx!
         self.stateObject = obj
     }
     

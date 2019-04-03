@@ -13,7 +13,7 @@ import Foundation
 
 /// OstWorkFlowCallback implemented by SDK user to perform prerequisites task.
 /// These tasks are assigned by SDK workflows with help of callbacks.
-public protocol OstWorkflowDelegate {
+public protocol OstWorkflowDelegate: AnyObject {
     
     /// Register device passed as parameter.
     ///

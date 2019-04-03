@@ -13,8 +13,8 @@ import Foundation
 class OstWorkflowEngine {
     
     let userId: String
-    let delegate: OstWorkflowDelegate
-    let workFlowValidator: OstWorkflowValidator
+    weak var delegate: OstWorkflowDelegate?
+    var workFlowValidator: OstWorkflowValidator
     let workflowStateManager: OstWorkflowStateManager
 
     var currentUser: OstUser? {
@@ -54,7 +54,7 @@ class OstWorkflowEngine {
             queue.sync {
                 do {
                     try self.process()
-                }catch {
+                }catch let error{
                     self.postError(error)
                 }
             }
@@ -88,6 +88,7 @@ class OstWorkflowEngine {
             
         case OstWorkflowStateManager.PARAMS_VALIDATED:
             try performUserDeviceValidation()
+            try onUserDeviceValidated()
             try processNext()
             
         case OstWorkflowStateManager.DEVICE_VALIDATED:
@@ -95,6 +96,10 @@ class OstWorkflowEngine {
             
         case OstWorkflowStateManager.COMPLETED:
             onWorkflowComplete()
+            
+        case OstWorkflowStateManager.CANCELLED:
+             let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
+            self.postError(ostError)
             
         default:
             throw OstError("w_we_p_1", OstErrorText.unknown)
@@ -113,7 +118,7 @@ class OstWorkflowEngine {
     ///
     /// - Parameter obj: Workflow state object
     func performState(_ state:String, withObject obj: Any? = nil) {
-        try? self.workflowStateManager.setState(state, withObj: obj)
+        self.workflowStateManager.setState(state, withObj: obj)
         perform();
     }
     
@@ -131,7 +136,7 @@ class OstWorkflowEngine {
     /// - Parameter obj: Workflow state object
     /// - Throws: OstError
     func processState(_ state: String, withObject obj: Any? = nil) throws {
-        try self.workflowStateManager.setState(state, withObj: obj)
+        self.workflowStateManager.setState(state, withObj: obj)
         try process();
     }
  
@@ -167,7 +172,6 @@ class OstWorkflowEngine {
         try beforeProcess()
     }
     
-    
     /// Perform any tasks that are prerequisite for the workflow,
     /// this is called before validateParams() and process()
     ///
@@ -184,6 +188,16 @@ class OstWorkflowEngine {
             ).perform()
         
         group.wait()
+    }
+    
+    /// On device validated
+    ///
+    /// - Throws: OstError
+    func onUserDeviceValidated() throws {
+        //This can be derived by sub-class.
+        //From here, sub-class can choose to 'jump' to other step by setting current-state = state-to-jump-to.
+        //Here, the sub-class can also throw error, which will terminate the workflow after calling
+        // postErrorInterupt.
     }
     
     /// On workflow validated
@@ -231,12 +245,12 @@ extension OstWorkflowEngine {
         let errorWorkflowContext: OstWorkflowContext = self.getWorkflowContext()
         DispatchQueue.main.async {
             if ( error is OstError ) {
-                self.delegate.flowInterrupted(workflowContext: errorWorkflowContext, error: error as! OstError);
+                self.delegate?.flowInterrupted(workflowContext: errorWorkflowContext, error: error as! OstError);
             }
             else {
                 //Unknown Error. Post Something went wrong.
                 let ostError:OstError = OstError("w_we_pe_1", OstErrorText.sdkError)
-                self.delegate.flowInterrupted(workflowContext: errorWorkflowContext, error: ostError )
+                self.delegate?.flowInterrupted(workflowContext: errorWorkflowContext, error: ostError )
             }
         }
     }
@@ -249,7 +263,7 @@ extension OstWorkflowEngine {
         let ackWorkflowContext: OstWorkflowContext = getWorkflowContext()
         let contextEntity: OstContextEntity = getContextEntity(for: entity)
         DispatchQueue.main.async {
-            self.delegate.requestAcknowledged(workflowContext: ackWorkflowContext, ostContextEntity: contextEntity)
+            self.delegate?.requestAcknowledged(workflowContext: ackWorkflowContext, ostContextEntity: contextEntity)
         }
     }
     
@@ -272,7 +286,7 @@ extension OstWorkflowEngine {
     func postWorkflowComplete(workflowContext: OstWorkflowContext,
                               contextEntity: OstContextEntity ) {
         DispatchQueue.main.async {
-            self.delegate.flowComplete(workflowContext: workflowContext, ostContextEntity: contextEntity)
+            self.delegate?.flowComplete(workflowContext: workflowContext, ostContextEntity: contextEntity)
         }
     }
     
@@ -280,7 +294,6 @@ extension OstWorkflowEngine {
     ///
     /// - Parameter cancelReason: reason to cancel.
     public func cancelFlow() {
-        let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
-        self.postError(ostError)
+        try? self.processState(OstWorkflowStateManager.CANCELLED)
     }
 }
