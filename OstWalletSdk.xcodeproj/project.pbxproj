@@ -134,7 +134,7 @@
 		EC38BF8E22413A96006F8DA2 /* OstSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */; };
 		EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */; };
 		EC38BF9022413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */; };
-		EC38BF9122413A96006F8DA2 /* OstGetPaperWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */; };
+		EC38BF9122413A96006F8DA2 /* OstGetDeviceMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBC22413A96006F8DA2 /* OstGetDeviceMnemonics.swift */; };
 		EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */; };
 		EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */; };
 		EC38BF9422413A96006F8DA2 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBF22413A96006F8DA2 /* OstPerform.swift */; };
@@ -383,7 +383,7 @@
 		EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionHelper.swift; sourceTree = "<group>"; };
 		EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstExecuteTransaction.swift; sourceTree = "<group>"; };
 		EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
-		EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstGetPaperWallet.swift; sourceTree = "<group>"; };
+		EC38BEBC22413A96006F8DA2 /* OstGetDeviceMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstGetDeviceMnemonics.swift; sourceTree = "<group>"; };
 		EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddSession.swift; sourceTree = "<group>"; };
 		EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
 		EC38BEBF22413A96006F8DA2 /* OstPerform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
@@ -847,7 +847,7 @@
 				EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */,
 				4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */,
 				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
-				EC38BEBC22413A96006F8DA2 /* OstGetPaperWallet.swift */,
+				EC38BEBC22413A96006F8DA2 /* OstGetDeviceMnemonics.swift */,
 				4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */,
 			);
 			path = Workflows;
@@ -1456,7 +1456,7 @@
 				EC38BFAA22413A96006F8DA2 /* OstTransactionDbQueries.swift in Sources */,
 				EC38BF4F22413A96006F8DA2 /* CharacterSet+Hex.swift in Sources */,
 				EC38BFC122413A96006F8DA2 /* OstAPIDeviceManager.swift in Sources */,
-				EC38BF9122413A96006F8DA2 /* OstGetPaperWallet.swift in Sources */,
+				EC38BF9122413A96006F8DA2 /* OstGetDeviceMnemonics.swift in Sources */,
 				EC38BFC922413A96006F8DA2 /* OstApiError.swift in Sources */,
 				EC38BF5422413A96006F8DA2 /* Values+GeneralHashable.swift in Sources */,
 				EC38BF2C22413A96006F8DA2 /* Logger.swift in Sources */,

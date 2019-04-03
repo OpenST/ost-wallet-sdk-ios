@@ -120,7 +120,7 @@ extension OstWalletSdk {
         performObj.perform()
     }
     
-    /// Get paper wallet of given user id.
+    /// Get device mnemonics of given user id.
     ///
     /// - Parameters:
     ///   - userId: User id
@@ -129,9 +129,9 @@ extension OstWalletSdk {
         userId: String,
         delegate: OstWorkflowDelegate) {
         
-        let paperWalletObj = OstGetPaperWallet(userId: userId,
-                                               delegate: delegate)
-        paperWalletObj.perform()
+        let deviceMnemonicsObj = OstGetDeviceMnemonics(userId: userId,
+                                                       delegate: delegate)
+        deviceMnemonicsObj.perform()
     }
     
     /// Get QR-Code to add device.

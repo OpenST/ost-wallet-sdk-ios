@@ -74,7 +74,6 @@ class OstActivateUser: OstWorkflowEngine {
         }
     }
     
-    
     /// Perfrom user device validation
     ///
     /// - Throws: OstError
@@ -108,7 +107,7 @@ class OstActivateUser: OstWorkflowEngine {
         
         self.recoveryAddress = self.pinManager?.getRecoveryOwnerAddress()
         if (nil == self.recoveryAddress) {
-            throw OstError.init("w_au_p_1", .recoveryAddressNotFound)
+            throw OstError.init("w_au_odv_1", .recoveryAddressNotFound)
         }
         
         self.sessionData = try OstSessionHelper(
