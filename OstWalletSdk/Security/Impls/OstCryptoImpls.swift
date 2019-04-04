@@ -14,6 +14,8 @@ import EthereumKit
 import SCrypt
 
 class OstCryptoImpls: OstCrypto {
+    
+    static let PASSPHRASE_SEED_COMPONENT_OSTSDK = "OstSdk"
 
     /// Get the data that will be used for private key generation
     ///
@@ -116,7 +118,9 @@ class OstCryptoImpls: OstCrypto {
     private func buildSeedPassword(userId:String,
                                    forKeyType keyType:KeyType) -> String {
         
-        let components = ["OstSdk", keyType.rawValue, userId];
+        let components = [OstCryptoImpls.PASSPHRASE_SEED_COMPONENT_OSTSDK,
+                          keyType.rawValue,
+                          userId]
         let strToHash = components.joined(separator: "-");
         return strToHash.sha3(.keccak256).addHexPrefix();
     }
