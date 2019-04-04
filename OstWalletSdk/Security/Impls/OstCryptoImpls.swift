@@ -57,9 +57,13 @@ class OstCryptoImpls: OstCrypto {
     ///   - forKeyType: KeyType for which ethereum key has to be generated.
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateOstWalletKeys(userId:String, forKeyType keyType:KeyType) throws  -> OstWalletKeys {
+    func generateOstWalletKeys(userId:String,
+                               forKeyType keyType:KeyType) throws  -> OstWalletKeys {
+        
         let mnemonics : [String] = Mnemonic.create()
-        return try generateEthereumKeys(userId: userId, withMnemonics: mnemonics, forKeyType: keyType);
+        return try generateEthereumKeys(userId: userId,
+                                        withMnemonics: mnemonics,
+                                        forKeyType: keyType);
     }
     
     /// Generate OST wallet keys with 12 words mnemonics
@@ -70,7 +74,10 @@ class OstCryptoImpls: OstCrypto {
     ///   - forKeyType: KeyType for which ethereum key has to be generated.
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateEthereumKeys(userId:String, withMnemonics mnemonics: [String], forKeyType keyType:KeyType) throws -> OstWalletKeys {
+    func generateEthereumKeys(userId:String,
+                              withMnemonics mnemonics: [String],
+                              forKeyType keyType:KeyType) throws -> OstWalletKeys {
+        
         let seedPassword = buildSeedPassword(userId: userId, forKeyType: keyType);
         
         let seed: Data
@@ -82,7 +89,10 @@ class OstCryptoImpls: OstCrypto {
         let wallet: Wallet
         do {
             // Wallet needs mandatory parameter network. We always pass .mainnet
-            wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: OstConstants.PRINT_DEBUG)
+            wallet = try Wallet(seed: seed,
+                                network: OstConstants.OST_WALLET_NETWORK,
+                                debugPrints: OstConstants.PRINT_DEBUG)
+            
         } catch {
             throw OstError.init("s_i_ci_gek_2", .walletGenerationFailed)
         }
@@ -103,7 +113,9 @@ class OstCryptoImpls: OstCrypto {
     ///   - userId: userId for whom the ethereum key has to be generated.
     ///   - forKeyType: KeyType for which ethereum key has to be generated.
     /// - Returns: String
-    private func buildSeedPassword(userId:String, forKeyType keyType:KeyType) -> String {
+    private func buildSeedPassword(userId:String,
+                                   forKeyType keyType:KeyType) -> String {
+        
         let components = ["OstSdk", keyType.rawValue, userId];
         let strToHash = components.joined(separator: "-");
         return strToHash.sha3(.keccak256).addHexPrefix();

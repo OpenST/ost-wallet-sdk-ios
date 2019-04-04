@@ -39,7 +39,7 @@ struct OstWalletKeys {
     }
 }
 
-enum KeyType:String {
+enum KeyType: String {
     case api = "API"
     case device = "DEVICE"
     case session = "SESSION"
@@ -60,11 +60,17 @@ protocol OstCrypto {
     ///   - stringToCalculate: String to calculate the data
     /// - Returns: Data that can be used for OSTWalletKeys generation
     /// - Throws: OSTError
-    func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data
+    func genSCryptKey(salt: Data,
+                      n:Int,
+                      r:Int,
+                      p: Int,
+                      size: Int,
+                      stringToCalculate: String) throws -> Data
     
     /// Generate OST wallet keys
     ///
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateOstWalletKeys(userId:String, forKeyType:KeyType) throws -> OstWalletKeys
+    func generateOstWalletKeys(userId:String,
+                               forKeyType:KeyType) throws -> OstWalletKeys
 }
