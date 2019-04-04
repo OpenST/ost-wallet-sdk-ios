@@ -14,8 +14,8 @@ protocol OstDataDefinitionWorkflow {
     
     func validateApiDependentParams() throws
     
-//    func getDataDefinitionContextEntity() -> OstContextEntity
-//    func getDataDefinitionWorkflowContext() -> OstWorkflowContext
+    func getDataDefinitionContextEntity() -> OstContextEntity
+    func getDataDefinitionWorkflowContext() -> OstWorkflowContext
     
     func startDataDefinitionFlow()
 }

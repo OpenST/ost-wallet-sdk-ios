@@ -67,9 +67,9 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
             
         case OstWorkflowStateManager.VERIFY_DATA:
             try processNext()
-
-//            let contextEntity = self.dataDefinationWorkflow!.getContextEntity()
-//            let workflowContext = self.dataDefinationWorkflow!.getWorkflowContext()
+            
+            let contextEntity = self.dataDefinationWorkflow!.getDataDefinitionContextEntity()
+            let workflowContext = self.dataDefinationWorkflow!.getDataDefinitionWorkflowContext()
             
         default:
             try super.process()

@@ -11,25 +11,6 @@
 import Foundation
 
 class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWorkflow {
-//    func getDataDefinitionContextEntity() -> OstContextEntity {
-//        return self.getContextEntity(for: self.deviceToAdd!)
-//    }
-//
-//    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
-//        return nil
-//    }
-//
-   
-    func validateApiDependentParams() throws {
-        try self.fetchDevice()
-    }
-    
-    func startDataDefinitionFlow() {
-        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
-    }
-    
-    
-    
     static private let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
     
     class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
@@ -93,6 +74,10 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     ///
     /// - Throws: OstError
     func fetchDevice() throws {
+        if nil != self.deviceToAdd {
+            return
+        }
+        
         var error: OstError? = nil
         let group = DispatchGroup()
         group.enter()
@@ -189,5 +174,23 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     /// - Returns: OstContextEntity
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .device)
+    }
+    
+    //MARK: - OstDataDefinitionWorkflow Delegate
+    
+    func getDataDefinitionContextEntity() -> OstContextEntity {
+        return self.getContextEntity(for: self.deviceToAdd!)
+    }
+    
+    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
+        return self.getWorkflowContext()
+    }
+
+    func validateApiDependentParams() throws {
+        try self.fetchDevice()
+    }
+    
+    func startDataDefinitionFlow() {
+        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
     }
 }
