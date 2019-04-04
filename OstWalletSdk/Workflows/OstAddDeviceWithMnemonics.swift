@@ -11,7 +11,8 @@
 import Foundation
 import UIKit
 
-class OstAddDeviceWithMnemonics: OstWorkflowBase {
+class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
+    
     static private let ostAddDeviceWithMnemonicsQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithMnemonics", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
@@ -29,7 +30,7 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
         super.init(userId: userId, delegate: delegate)
     }
-
+    
     /// Get workflow Queue
     ///
     /// - Returns: DispatchQueue
@@ -49,17 +50,22 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         
         if (self.currentDevice!.isStatusAuthorized) {
             throw OstError("w_adwm_p_2", .deviceAuthorized)
-        }
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceRegistered()
+        } 
     }
     
-    /// process workflow.
+    /// Validate device as per workflow
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func validateDeviceForWorkflow() throws{
+        try self.workFlowValidator.isDeviceRegistered()
+    }
+    
+    /// Fetch device after device validated
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         try fetchDevice()
-        self.authenticateUser()
+        try super.onDeviceValidated()
     }
     
     /// Fetch device to validate mnemonics
@@ -76,14 +82,14 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
                 onSuccess: { (ostDevice) in
                     deviceFromMnemonics = ostDevice
                     group.leave()
-        }) { (ostError) in
-            error = ostError
-            group.leave()
+            }) { (ostError) in
+                error = ostError
+                group.leave()
         }
         group.wait()
         
         if (nil != error) {
-             throw error!
+            throw error!
         }
         if (!deviceFromMnemonics!.isStatusAuthorized) {
             throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
@@ -92,40 +98,37 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
             throw OstError("w_adwm_fd_2", OstErrorText.differentOwnerDevice)
         }
     }
-
-    /// Proceed with workflow after user is authenticated.
-    override func proceedWorkflowAfterAuthenticateUser() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-                do {
-                    let signature = try self.mnemonicsManager.sign(signingHash)
-                    return (signature, self.mnemonicsManager.address)
-                }catch {
-                    return (nil, nil)
-                }
+    
+    /// Authorize device after user authenticated.
+    override func onUserAuthenticated() {
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let signature = try self.mnemonicsManager.sign(signingHash)
+                return (signature, self.mnemonicsManager.address)
+            }catch {
+                return (nil, nil)
             }
-            
-            let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postWorkflowComplete(entity: ostDevice)
-            }
-            
-            let onFailure: ((OstError) -> Void) = { (error) in
-                self.postError(error)
-            }
-            
-            let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postRequestAcknowledged(entity: ostDevice)
-            }
-            
-            //Get device for address generated from mnemonics.
-            OstAuthorizeDevice(userId: self.userId,
-                               deviceAddressToAdd: self.currentDevice!.address!,
-                               generateSignatureCallback: generateSignatureCallback,
-                               onRequestAcknowledged: onRequestAcknowledged,
-                               onSuccess: onSuccess,
-                               onFailure: onFailure).perform()
         }
+        
+        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postWorkflowComplete(entity: ostDevice)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postRequestAcknowledged(entity: ostDevice)
+        }
+        
+        //Get device for address generated from mnemonics.
+        OstAuthorizeDevice(userId: self.userId,
+                           deviceAddressToAdd: self.currentDevice!.address!,
+                           generateSignatureCallback: generateSignatureCallback,
+                           onRequestAcknowledged: onRequestAcknowledged,
+                           onSuccess: onSuccess,
+                           onFailure: onFailure).perform()
     }
     
     /// Get current workflow context
