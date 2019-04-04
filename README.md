@@ -76,6 +76,13 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 
+To use FaceID on devices that support it, please add 
+```
+NSFaceIDUsageDescription
+```
+- NSFaceIDUsageDescription: A description of where FaceID may be used
+
+
 ## OST Wallet SDK APIs
 To use Ost wallet sdk use `import OstWalletSdk`
 
