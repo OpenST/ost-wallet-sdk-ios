@@ -10,7 +10,26 @@
 
 import Foundation
 
-class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
+class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWorkflow {
+//    func getDataDefinitionContextEntity() -> OstContextEntity {
+//        return self.getContextEntity(for: self.deviceToAdd!)
+//    }
+//
+//    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
+//        return nil
+//    }
+//
+   
+    func validateApiDependentParams() throws {
+        try self.fetchDevice()
+    }
+    
+    func startDataDefinitionFlow() {
+        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
+    }
+    
+    
+    
     static private let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
     
     class func getAddDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
@@ -55,9 +74,6 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     override func validateParams() throws {
         try super.validateParams()
         
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
-        
         if !self.deviceAddress.isValidAddress {
             throw OstError("w_adwqrd_fd_1", .wrongDeviceAddress)
         }
@@ -67,18 +83,16 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         }
     }
     
-    /// process workflow
-    ///
-    /// - Throws: OstError
-    override func process() throws {
-        try self.fetchDevice()
-        verifyData()
+    override func onDeviceValidated() throws {
+        
+        try super.onDeviceValidated()
     }
+
     
     /// Fetch device to validate mnemonics
     ///
     /// - Throws: OstError
-    private func fetchDevice() throws {
+    func fetchDevice() throws {
         var error: OstError? = nil
         let group = DispatchGroup()
         group.enter()
@@ -111,60 +125,56 @@ class OstAddDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     /// verify device from user.
     ///
     /// - Parameter device: OstDevice entity.
-    private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .authorizeDeviceWithQRCode);
-        let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToAdd!, entityType: .device)
-        DispatchQueue.main.async {
-            self.delegate.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
-        }
-    }
+//    private func verifyData() {
+//        let workflowContext = OstWorkflowContext(workflowType: .authorizeDeviceWithQRCode);
+//        let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToAdd!, entityType: .device)
+//        DispatchQueue.main.async {
+//            self.delegate.verifyData(workflowContext: workflowContext,
+//                                     ostContextEntity: contextEntity,
+//                                     delegate: self)
+//        }
+//    }
+//
+//    /// Callback from user about data verified to continue.
+//    public func dataVerified() {
+//        let queue: DispatchQueue = getWorkflowQueue()
+//        queue.async {
+//            self.authenticateUser();
+//        }
+//    }
     
-    /// Callback from user about data verified to continue.
-    public func dataVerified() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.authenticateUser();
-        }
-    }
-    
-    /// Proceed with workflow after user is authenticated.
-    override func proceedWorkflowAfterAuthenticateUser() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-                do {
-                    let keychainManager = OstKeyManager(userId: self.userId)
-                    if let deviceAddress = keychainManager.getDeviceAddress() {
-                        let signature = try keychainManager.signWithDeviceKey(signingHash)
-                        return (signature, deviceAddress)
-                    }
-                    throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);
-                }catch {
-                    return (nil, nil)
+    override func onUserAuthenticated() {
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                if let deviceAddress = keychainManager.getDeviceAddress() {
+                    let signature = try keychainManager.signWithDeviceKey(signingHash)
+                    return (signature, deviceAddress)
                 }
+                throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);
+            }catch {
+                return (nil, nil)
             }
-            
-            let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postWorkflowComplete(entity: ostDevice)
-            }
-            
-            let onFailure: ((OstError) -> Void) = { (error) in
-                self.postError(error)
-            }
-            
-            let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postRequestAcknowledged(entity: ostDevice)
-            }
-            
-            OstAuthorizeDevice(userId: self.userId,
-                               deviceAddressToAdd: self.deviceAddress,
-                               generateSignatureCallback: generateSignatureCallback,
-                               onRequestAcknowledged: onRequestAcknowledged,
-                               onSuccess: onSuccess,
-                               onFailure: onFailure).perform()
         }
+        
+        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postWorkflowComplete(entity: ostDevice)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postRequestAcknowledged(entity: ostDevice)
+        }
+        
+        OstAuthorizeDevice(userId: self.userId,
+                           deviceAddressToAdd: self.deviceAddress,
+                           generateSignatureCallback: generateSignatureCallback,
+                           onRequestAcknowledged: onRequestAcknowledged,
+                           onSuccess: onSuccess,
+                           onFailure: onFailure).perform()
     }
     
     /// Get current workflow context
