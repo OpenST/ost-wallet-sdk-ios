@@ -40,6 +40,9 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         super.init(userId: userId, delegate: delegate)
     }
     
+    /// Get in betweeen ordered states
+    ///
+    /// - Returns: States array
     override func getInBetweenOrderedStates() -> [String] {
         var orderedStates = [String]()
         
@@ -66,10 +69,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
             try processNext()
             
         case OstWorkflowStateManager.VERIFY_DATA:
-            try processNext()
-            
-            let contextEntity = self.dataDefinationWorkflow!.getDataDefinitionContextEntity()
-            let workflowContext = self.dataDefinationWorkflow!.getDataDefinitionWorkflowContext()
+            verifyDataFromUser()
             
         default:
             try super.process()
@@ -122,6 +122,10 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         self.dataDefinationWorkflow = try getWorkFlowObject()
     }
     
+    /// Get workflow object for provided
+    ///
+    /// - Returns: OstDataDefinitionWorkflow
+    /// - Throws: OstError
     private func getWorkFlowObject() throws -> OstDataDefinitionWorkflow {
         
         switch self.dataDefination! {
@@ -131,62 +135,27 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                           deviceAddress: deviceAddress,
                                           delegate: self.delegate!)
             
-//        case OstQRCodeDataDefination.TRANSACTION.rawValue:
-//            return
-//        case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
-//            return
         default:
             throw OstError("w_p_gwfo_1", OstErrorText.invalidQRCode);
         }
     }
-    
-    /// process workflow.
-    ///
-    /// - Throws: OstError
-//    override func process() throws {
-//        try parseQRCodeString()
-//        try self.startSubWorkflow();
-//    }
 
-    /// Parse QR-Code data
-    ///
-    /// - Throws: OstError
-    private func parseQRCodeString() throws {
-       
-        let jsonObj:[String:Any?]?;
-        do {
-            jsonObj = try OstUtils.toJSONObject(self.payloadString!) as? [String : Any?];
-        } catch {
-            throw OstError("w_p_pqrcs_1", OstErrorText.invalidQRCode);
-        }
+    /// Verify QR-Code data from user
+    func verifyDataFromUser() {
         
-        if ( nil == jsonObj) {
-            throw OstError("w_p_pqrcs_2", OstErrorText.invalidQRCode);
-        }
-        //Make sure data defination is present and is correct data-defination.
-        guard let dataDefination = (jsonObj!["dd"] as? String)?.uppercased() else {
-            throw OstError("w_p_pqrcs_3", OstErrorText.invalidQRCode);
-        }
+        let contextEntity = self.dataDefinationWorkflow!.getDataDefinitionContextEntity()
+        let workflowContext = self.dataDefinationWorkflow!.getDataDefinitionWorkflowContext()
         
-        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
-                                         OstQRCodeDataDefination.TRANSACTION.rawValue,
-                                         OstQRCodeDataDefination.REVOKE_DEVICE.rawValue];
-        
-        if ( validDefinations.contains(dataDefination) ) {
-            self.dataDefination = dataDefination;
-        } else {
-            throw OstError("w_p_pqrcs_4", OstErrorText.invalidQRCode);
+        DispatchQueue.main.async {
+            self.delegate?.verifyData(workflowContext: workflowContext,
+                                      ostContextEntity: contextEntity,
+                                      delegate: self)
         }
-        
-        //Make sure payload data is present.
-        guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
-            throw OstError("w_p_pqrcs_5", OstErrorText.invalidQRCode);
-        }
-        self.payloadData = payloadData;
-        
-        if let payloadMeta = jsonObj!["m"] as? [String: Any?] {
-            self.meta = payloadMeta
-        }
+    }
+    
+    /// Callback on user verified QR-Code data
+    public func dataVerified() {
+        self.dataDefinationWorkflow!.startDataDefinitionFlow()
     }
 
     /// Delegate process to respective workflow
@@ -240,16 +209,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         }
     }
     
-    public func dataVerified() {
-        
-        let transactionMeta: [String: String] = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
-        OstExecuteTransaction(userId: self.userId,
-                              ruleName: self.executeTxPayloadParams!.ruleName,
-                              toAddresses: self.executeTxPayloadParams!.addresses,
-                              amounts: self.executeTxPayloadParams!.amounts,
-                              transactionMeta: transactionMeta,
-                              delegate: self.delegate!).perform()
-    }
+    
 
     /// Get current workflow context
     ///

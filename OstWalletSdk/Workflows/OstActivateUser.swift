@@ -25,7 +25,7 @@ class OstActivateUser: OstWorkflowEngine {
     /// - Parameters:
     ///   - userId: User id
     ///   - userPin: User pin
-    ///   - passphrasePrefix: Passphrase prefix provied by application server
+    ///   - passphrasePrefix: Passphrase prefix provided by application server
     ///   - spendingLimit: Maximum spending limit of transaction
     ///   - expireAfter: Relative time
     ///   - delegate: Callback

@@ -64,12 +64,6 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         }
     }
     
-    override func onDeviceValidated() throws {
-        
-        try super.onDeviceValidated()
-    }
-
-    
     /// Fetch device to validate mnemonics
     ///
     /// - Throws: OstError
@@ -107,27 +101,7 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         }
     }
     
-    /// verify device from user.
-    ///
-    /// - Parameter device: OstDevice entity.
-//    private func verifyData() {
-//        let workflowContext = OstWorkflowContext(workflowType: .authorizeDeviceWithQRCode);
-//        let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToAdd!, entityType: .device)
-//        DispatchQueue.main.async {
-//            self.delegate.verifyData(workflowContext: workflowContext,
-//                                     ostContextEntity: contextEntity,
-//                                     delegate: self)
-//        }
-//    }
-//
-//    /// Callback from user about data verified to continue.
-//    public func dataVerified() {
-//        let queue: DispatchQueue = getWorkflowQueue()
-//        queue.async {
-//            self.authenticateUser();
-//        }
-//    }
-    
+    /// Authorize device after user authenticated.
     override func onUserAuthenticated() {
         let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
             do {
@@ -178,18 +152,28 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     
     //MARK: - OstDataDefinitionWorkflow Delegate
     
+    /// Get context entity for provided data defination
+    ///
+    /// - Returns: OstContextEntity
     func getDataDefinitionContextEntity() -> OstContextEntity {
         return self.getContextEntity(for: self.deviceToAdd!)
     }
     
+    /// Get workflow context for provided data defination.
+    ///
+    /// - Returns: OstWorkflowContext
     func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
         return self.getWorkflowContext()
     }
 
+    /// Validate data defination dependent parameters.
+    ///
+    /// - Throws: OstError
     func validateApiDependentParams() throws {
         try self.fetchDevice()
     }
     
+    /// Start data defination flow
     func startDataDefinitionFlow() {
         performState(OstWorkflowStateManager.DEVICE_VALIDATED)
     }

@@ -170,7 +170,7 @@ extension OstWalletSdk {
     ///   - userId: User id.
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
     ///   - userPin: User pin.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func initiateDeviceRecovery(
         userId: String,
@@ -192,7 +192,7 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: Kit user id.
     ///   - uPin: user pin.
-    ///   - password: application password provied by application server.
+    ///   - password: application password provided by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func abortDeviceRecovery(
         userId: String,
@@ -211,7 +211,7 @@ extension OstWalletSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - oldUserPin: Old user pin.
     ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
