@@ -29,7 +29,6 @@ struct OstConstants {
     static let OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH = 4;
     
     static let OST_WALLET_NETWORK: Network = .mainnet
-    static let OST_WALLET_SEED_PASSPHRASE: String = ""
     
     static let PRINT_DEBUG = false                
     
