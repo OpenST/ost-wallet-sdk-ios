@@ -80,7 +80,8 @@ class OstCryptoImpls: OstCrypto {
                               withMnemonics mnemonics: [String],
                               forKeyType keyType:KeyType) throws -> OstWalletKeys {
         
-        let seedPassword = buildSeedPassword(userId: userId, forKeyType: keyType);
+        let seedPassword = OstConfig.shouldUseSeedPassword() ?
+            buildSeedPassword(userId: userId, forKeyType: keyType) : "";
         
         let seed: Data
         do {
