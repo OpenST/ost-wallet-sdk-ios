@@ -63,6 +63,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
             }
             
         case OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED:
+            try self.performUserDeviceValidation()
             try onPinInfoReceived()
             
         case OstUserAuthenticatorWorkflow.AUTHENTICATED:
@@ -94,17 +95,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     ///   - userPin: User pin.
     ///   - passphrasePrefix: Application server given passphrase prefix.
     func pinEntered(_ userPin: String, passphrasePrefix: String) {
-        //TODO: fix this.
-        // Confirm whether user is actived. check whether
-        do {
-            try self.performUserDeviceValidation()
-        }catch let error{
-            self.postError(error)
-            return
-        }
-        
         let userPassphrase = OstUserPassphrase(userPin: userPin, passphrasePrefix: passphrasePrefix)
-        
         self.performState(OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED, withObject: userPassphrase)
     }
     
