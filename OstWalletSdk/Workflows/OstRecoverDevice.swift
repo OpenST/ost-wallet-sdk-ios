@@ -10,17 +10,16 @@
 
 import Foundation
 
-class OstRecoverDevice: OstWorkflowBase {
+class OstRecoverDevice: OstWorkflowEngine {
     static private let ostRecoverDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRecoverDevice", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRecover: String
+    private let pinManager: OstPinManager
     
     private var deviceToRecover: OstDevice? = nil
     private var signature: String? = nil
     private var signer: String? = nil
-    
-    private var pinManager: OstPinManager? = nil;
-    
+
     /// Initialize
     ///
     /// - Parameters:
@@ -36,11 +35,11 @@ class OstRecoverDevice: OstWorkflowBase {
          delegate: OstWorkflowDelegate) {
         
         self.deviceAddressToRecover = deviceAddressToRecover
-        super.init(userId: userId, delegate: delegate)
-        
-        self.pinManager = OstPinManager(userId: self.userId,
+        self.pinManager = OstPinManager(userId: userId,
                                         passphrasePrefix: passphrasePrefix,
                                         userPin: userPin)
+        
+         super.init(userId: userId, delegate: delegate)
     }
     
     /// Get workflow Queue
@@ -58,14 +57,24 @@ class OstRecoverDevice: OstWorkflowBase {
         if !self.deviceAddressToRecover.isValidAddress {
             throw OstError.init("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
         }
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceRegistered()
+        try self.pinManager.validatePin()
+        try self.pinManager.validatePassphrasePrefixLength()
     }
     
-    /// process
+    /// Validate user and device
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        try self.workFlowValidator.isUserActivated()
+        try self.workFlowValidator.isDeviceRegistered()
+    }
+    
+    /// Initiate device recovery
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
         if (nil == self.deviceToRecover) {
             try self.fetchDevice()
@@ -74,13 +83,14 @@ class OstRecoverDevice: OstWorkflowBase {
             throw OstError("w_rd_p_1", OstErrorText.deviceNotAuthorized)
         }
         
-        let signedData = try self.pinManager?
+        let signedData = try self.pinManager
             .signRecoverDeviceData(deviceAddressToRecover: self.deviceAddressToRecover)
-        self.signer = signedData?.address
-        self.signature = signedData?.signature
-        try self.recoverDevice()
+        
+        self.signer = signedData.address
+        self.signature = signedData.signature
+        try self.initiateDeviceRecovery()
     }
-    
+   
     /// Fetch device from OST platform
     ///
     /// - Throws: OstError
@@ -106,7 +116,7 @@ class OstRecoverDevice: OstWorkflowBase {
     /// Recover device api call
     ///
     /// - Throws: OstError
-    private func recoverDevice() throws {
+    private func initiateDeviceRecovery() throws {
         var params: [String: Any] = [:]
         params["old_linked_address"] = self.deviceToRecover!.linkedAddress!
         params["old_device_address"] = self.deviceToRecover!.address!
