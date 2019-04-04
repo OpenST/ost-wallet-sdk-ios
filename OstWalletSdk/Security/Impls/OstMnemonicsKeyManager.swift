@@ -78,7 +78,11 @@ class OstMnemonicsKeyManager {
     /// - Throws: OstError
     private func createWallet() throws -> OstWalletKeys? {
         do {
-            let ostWalletKeys: OstWalletKeys = try OstCryptoImpls().generateEthereumKeys(userId:userId, withMnemonics: mnemonics, forKeyType: .device);
+            let ostWalletKeys: OstWalletKeys = try OstCryptoImpls()
+                .generateEthereumKeys(userId: self.userId,
+                                      withMnemonics: mnemonics,
+                                      forKeyType: .device)
+            
             self.ethereumAddress = ostWalletKeys.address
             return ostWalletKeys
         } catch {

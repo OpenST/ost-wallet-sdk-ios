@@ -120,7 +120,10 @@ class OstKeyManager {
     /// - Returns: API address
     /// - Throws: Exceptions that occurs while creating and storing the keys
     func createAPIKey() throws -> String {
-        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys(userId: userId, forKeyType: .api)
+        let ethKeys: OstWalletKeys = try OstCryptoImpls()
+            .generateOstWalletKeys(userId: self.userId,
+                                   forKeyType: .api)
+        
         if (ethKeys.privateKey == nil || ethKeys.address == nil) {
             throw OstError("s_i_km_cak_1", .generatePrivateKeyFail)
         }
@@ -166,7 +169,10 @@ class OstKeyManager {
     /// - Returns: Device address
     /// - Throws: Exceptions that occurs while storing the address or key in the keychain
     func createDeviceKey() throws -> String {
-        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys(userId: userId, forKeyType: .device)
+        let ethKeys: OstWalletKeys = try OstCryptoImpls()
+            .generateOstWalletKeys(userId: self.userId,
+                                   forKeyType: .device)
+        
         if (ethKeys.privateKey == nil || ethKeys.address == nil) {
             throw OstError("s_i_km_cdk_1", .generatePrivateKeyFail)
         }
@@ -228,7 +234,10 @@ class OstKeyManager {
     /// - Returns: Device address
     /// - Throws: Exceptions that occurs while storing the address or key in the keychain
     func createSessionKey() throws -> String {
-        let ethKeys: OstWalletKeys = try OstCryptoImpls().generateOstWalletKeys(userId: userId, forKeyType: .session)
+        let ethKeys: OstWalletKeys = try OstCryptoImpls()
+            .generateOstWalletKeys(userId: self.userId,
+                                   forKeyType: .session)
+        
         if (ethKeys.privateKey == nil || ethKeys.address == nil) {
             throw OstError("s_i_km_csk_1", .generatePrivateKeyFail)
         }
@@ -836,7 +845,11 @@ extension OstKeyManager {
     /// - Returns: Signed message
     /// - Throws: OstError
     func signWithExternalDevice(_ tx: String, withMnemonics mnemonics: [String]) throws -> String {
-        let ostWalletKeys = try OstCryptoImpls().generateEthereumKeys(userId: userId, withMnemonics: mnemonics, forKeyType: .device);
+        let ostWalletKeys = try OstCryptoImpls()
+            .generateEthereumKeys(userId: self.userId,
+                                  withMnemonics: mnemonics,
+                                  forKeyType: .device)
+        
         if (ostWalletKeys.address == nil || ostWalletKeys.privateKey == nil) {
             throw OstError("s_i_km_swm_1", .walletGenerationFailed)
         }
