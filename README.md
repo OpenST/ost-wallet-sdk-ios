@@ -77,6 +77,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
+- _UseSeedPassword_: Uses password to generate seed from mnemonics.
 
 To use FaceID on devices that support it, please add 
 ```
