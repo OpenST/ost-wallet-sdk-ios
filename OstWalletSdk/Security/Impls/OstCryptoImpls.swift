@@ -14,6 +14,8 @@ import EthereumKit
 import SCrypt
 
 class OstCryptoImpls: OstCrypto {
+    
+    static let PASSPHRASE_SEED_COMPONENT_OSTSDK = "OstSdk"
 
     /// Get the data that will be used for private key generation
     ///
@@ -52,29 +54,48 @@ class OstCryptoImpls: OstCrypto {
     
     /// Generate OST wallet keys
     ///
+    /// - Parameters:
+    ///   - userId: userId for whom the ethereum key has to be generated.
+    ///   - forKeyType: KeyType for which ethereum key has to be generated.
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateOstWalletKeys() throws  -> OstWalletKeys {
+    func generateOstWalletKeys(userId:String,
+                               forKeyType keyType:KeyType) throws  -> OstWalletKeys {
+        
         let mnemonics : [String] = Mnemonic.create()
-        return try generateEthereumKeys(withMnemonics: mnemonics)
+        return try generateEthereumKeys(userId: userId,
+                                        withMnemonics: mnemonics,
+                                        forKeyType: keyType);
     }
     
     /// Generate OST wallet keys with 12 words mnemonics
     ///
-    /// - Parameter mnemonics: 12 words menemonics
+    /// - Parameters:
+    ///   - userId: userId for whom the ethereum key has to be generated.
+    ///   - mnemonics: 12 words menemonics
+    ///   - forKeyType: KeyType for which ethereum key has to be generated.
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateEthereumKeys(withMnemonics mnemonics: [String]) throws -> OstWalletKeys {
+    func generateEthereumKeys(userId:String,
+                              withMnemonics mnemonics: [String],
+                              forKeyType keyType:KeyType) throws -> OstWalletKeys {
+        
+        let seedPassword = OstConfig.shouldUseSeedPassword() ?
+            buildSeedPassword(userId: userId, forKeyType: keyType) : "";
+        
         let seed: Data
         do {
-            seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: OstConstants.OST_WALLET_SEED_PASSPHRASE)
+            seed = try Mnemonic.createSeed(mnemonic: mnemonics, withPassphrase: seedPassword)
         } catch {
             throw OstError.init("s_i_ci_gek_1", .seedCreationFailed)
         }
         let wallet: Wallet
         do {
             // Wallet needs mandatory parameter network. We always pass .mainnet
-            wallet = try Wallet(seed: seed, network: OstConstants.OST_WALLET_NETWORK, debugPrints: OstConstants.PRINT_DEBUG)
+            wallet = try Wallet(seed: seed,
+                                network: OstConstants.OST_WALLET_NETWORK,
+                                debugPrints: OstConstants.PRINT_DEBUG)
+            
         } catch {
             throw OstError.init("s_i_ci_gek_2", .walletGenerationFailed)
         }
@@ -87,7 +108,23 @@ class OstCryptoImpls: OstCrypto {
                              publicKey: publicKey.toHexString(),
                              address: address,
                              mnemonics: mnemonics)
-    }        
+    }
+    
+    /// Build deterministic seed password
+    ///
+    /// - Parameters:
+    ///   - userId: userId for whom the ethereum key has to be generated.
+    ///   - forKeyType: KeyType for which ethereum key has to be generated.
+    /// - Returns: String
+    private func buildSeedPassword(userId:String,
+                                   forKeyType keyType:KeyType) -> String {
+        
+        let components = [OstCryptoImpls.PASSPHRASE_SEED_COMPONENT_OSTSDK,
+                          keyType.rawValue,
+                          userId]
+        let strToHash = components.joined(separator: "-");
+        return strToHash.sha3(.keccak256).addHexPrefix();
+    }
     
     /// Generate recovery passphrase
     ///
