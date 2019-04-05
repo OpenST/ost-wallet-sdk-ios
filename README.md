@@ -22,7 +22,7 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" "version"
+github "ostdotcom/ost-wallet-sdk-ios" == 2.0.1
 ```
 
 - Run `carthage update --platform iOS`
@@ -66,6 +66,8 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
  <integer>3</integer>
  <key>SessionBufferTime</key>
  <integer>3600</integer>
+ <key>UseSeedPassword</key>
+ <true/>
  </dict>
  </plist>
  ```
@@ -75,6 +77,11 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
+- _UseSeedPassword_: Uses mnemonics and password to generate seed.
+
+## Enable FaceID Authentication
+To authenticate user using FaceID on devices that support it, please add [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsfaceidusagedescription) to your application's `Info.plist`.
+
 
 ## OST Wallet SDK APIs
 To use Ost wallet sdk use `import OstWalletSdk`
@@ -87,7 +94,7 @@ initializes all the required instances and runs migrations of local databases.
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     do {
-        try OstWalletSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+        try OstWalletSdk.initialize(apiEndPoint: <OST_PLATFORM_API_ENDPOINT>)
      } catch let ostError {
 
      }
@@ -99,7 +106,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 The `setupDevice` API should be called after user login or signup is successful.
 
-Once the user is logged in, then `setupDevice` should be called every time the app launches, this ensures that the current device is registered before communicating with OST KIT server.<br/><br/>
+Once the user is logged in, then `setupDevice` should be called every time the app launches, this ensures that the current device is registered before communicating with OST Platform server.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by application server_<br/>
