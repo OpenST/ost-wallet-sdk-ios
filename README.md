@@ -22,7 +22,7 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" "version"
+github "ostdotcom/ost-wallet-sdk-ios" == 2.0.1
 ```
 
 - Run `carthage update --platform iOS`
@@ -79,11 +79,8 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 - _UseSeedPassword_: Uses mnemonics and password to generate seed.
 
-To authenticate user using FaceID on devices that support it, please add
-```
-NSFaceIDUsageDescription
-```
-- NSFaceIDUsageDescription: A description of where FaceID may be used
+## Enable FaceID Authentication
+To authenticate user using FaceID on devices that support it, please add [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsfaceidusagedescription) to your application's `Info.plist`.
 
 
 ## OST Wallet SDK APIs
