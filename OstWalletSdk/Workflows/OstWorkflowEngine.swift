@@ -201,6 +201,8 @@ class OstWorkflowEngine {
     }
     
     /// On workflow validated
+    ///
+    /// - Throws: OstError
     func onDeviceValidated() throws {
         try processNext()
     }

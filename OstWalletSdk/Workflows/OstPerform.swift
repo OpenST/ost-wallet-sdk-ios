@@ -71,6 +71,9 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         case OstWorkflowStateManager.VERIFY_DATA:
             verifyDataFromUser()
             
+        case OstWorkflowStateManager.DATA_VERIFIED:
+            self.dataDefinationWorkflow!.startDataDefinitionFlow()
+            
         default:
             try super.process()
         }
@@ -141,6 +144,20 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                              deviceAddressToRevoke: deviceAddress,
                                              delegate: self.delegate!)
             
+        case OstQRCodeDataDefination.TRANSACTION.rawValue:
+             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
+             if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
+                 throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
+             }
+             self.executeTxPayloadParams = executeTxPayloadParams
+            
+            return OstExecuteTransaction(userId: self.userId,
+                                         ruleName: executeTxPayloadParams.ruleName,
+                                         toAddresses: executeTxPayloadParams.addresses,
+                                         amounts: executeTxPayloadParams.amounts,
+                                         transactionMeta: self.meta as! [String : String],
+                                         delegate: self.delegate!)
+            
         default:
             throw OstError("w_p_gwfo_1", OstErrorText.invalidQRCode);
         }
@@ -161,61 +178,8 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
     
     /// Callback on user verified QR-Code data
     public func dataVerified() {
-        self.dataDefinationWorkflow!.startDataDefinitionFlow()
+        performState(OstWorkflowStateManager.DATA_VERIFIED)
     }
-
-    /// Delegate process to respective workflow
-    ///
-    /// - Throws: OstError
-    private func startSubWorkflow() throws {
-        switch self.dataDefination {
-        case OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue:
-            let deviceAddress = try OstAddDeviceWithQRData.getAddDeviceParamsFromQRPayload(self.payloadData!)
-            OstAddDeviceWithQRData(userId: self.userId,
-                                   deviceAddress: deviceAddress,
-                                   delegate: self.delegate!).perform()
-            
-        case OstQRCodeDataDefination.TRANSACTION.rawValue:
-            let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
-            if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
-                throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
-            }
-            self.executeTxPayloadParams = executeTxPayloadParams
-            verifyDataForExecuteTransaction(executeTxPayloadParams)
-            
-        case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
-            let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
-            OstRevokeDeviceWithQRData(userId: self.userId,
-                                      deviceAddressToRevoke: deviceAddress,
-                                      delegate: self.delegate!).perform()
-            
-        default:
-            throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
-        }
-    }
-    
-    /// Verify data from user about transaction through QR-Code
-    ///
-    /// - Parameter executeTxPayloadParams: ExecuteTxPayloadParams
-    private func verifyDataForExecuteTransaction(_ executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams) {
-        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
-        
-        let verifyData: [String: Any] = [
-            "rule_name": executeTxPayloadParams.ruleName,
-            "token_holder_addresses": executeTxPayloadParams.addresses,
-            "amounts": executeTxPayloadParams.amounts,
-            "token_id": executeTxPayloadParams.tokenId
-        ]
-
-        let contextEntity: OstContextEntity = OstContextEntity(entity: verifyData, entityType: .dictionary)
-        DispatchQueue.main.async {
-            self.delegate?.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
-        }
-    }
-    
-    
 
     /// Get current workflow context
     ///

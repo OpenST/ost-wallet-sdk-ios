@@ -16,8 +16,8 @@ public enum OstExecuteTransactionType: String {
     case Pay = "Pricer"
 }
 
-class OstExecuteTransaction: OstWorkflowBase {
-
+class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
+    
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
@@ -137,11 +137,10 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
-        
+      
         let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
                                 OstExecuteTransactionType.Pay.rawValue.uppercased()]
+        
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
             throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
         }
@@ -158,10 +157,20 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
     }
     
-    /// process
+    /// Perform user device validation
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        try self.workFlowValidator.isUserActivated()
+        try self.workFlowValidator.isDeviceAuthorized()
+    }
+    
+    /// Execute transaction
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         self.rule = try getRuleIfPresent()
         if (nil == self.rule) {
             try fetchTokenRules()
@@ -182,7 +191,7 @@ class OstExecuteTransaction: OstWorkflowBase {
             return
         }
     }
-    
+ 
     /// Get appropriate rule from datatabase
     ///
     /// - Throws: OstError
@@ -337,6 +346,41 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// - Returns: OstContextEntity
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .transaction)
+    }
+    
+    //MARK: - OstDataDefinitionWorkflow Delegate
+    
+    /// Validate data defination dependent parameters.
+    ///
+    /// - Throws: OstError
+    func validateApiDependentParams() throws {
+        // Nothing to validate
+    }
+    
+    /// Get context entity for provided data defination
+    ///
+    /// - Returns: OstContextEntity
+    func getDataDefinitionContextEntity() -> OstContextEntity {
+        let verifyData: [String: Any] = [
+            "rule_name": self.ruleName,
+            "token_holder_addresses": self.toAddresses,
+            "amounts": self.amounts,
+            "token_id": self.currentUser!.tokenId!
+        ]
+        
+        return OstContextEntity(entity: verifyData, entityType: .dictionary)
+    }
+    
+    /// Get workflow context for provided data defination.
+    ///
+    /// - Returns: OstWorkflowContext
+    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
+        return getWorkflowContext()
+    }
+    
+    /// Start data defination flow
+    func startDataDefinitionFlow() {
+        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
     }
 }
 
