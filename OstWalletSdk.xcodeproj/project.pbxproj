@@ -845,10 +845,10 @@
 				EC38BEBF22413A96006F8DA2 /* OstPerform.swift */,
 				EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */,
 				EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */,
+				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
 				EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */,
 				EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */,
 				4BF8FE492243B26C00519779 /* OstAbortDeviceRecovery.swift */,
-				EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */,
 				EC38BEBC22413A96006F8DA2 /* OstGetDeviceMnemonics.swift */,
 				4BF8FE512244E45100519779 /* OstLogoutAllSessions.swift */,
 			);

@@ -105,7 +105,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         }
         self.dataDefination = dataDefination;
         
-        guard let _ = (jsonObj!["ddv"] as? String)?.uppercased() else {
+        guard let _ = OstUtils.toString(jsonObj!["ddv"] as Any?)?.uppercased() else {
             throw OstError("w_p_pqrcs_4", OstErrorText.invalidQRCode);
         }
         
@@ -134,6 +134,12 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
             return OstAddDeviceWithQRData(userId: self.userId,
                                           deviceAddress: deviceAddress,
                                           delegate: self.delegate!)
+            
+        case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
+            let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
+            return OstRevokeDeviceWithQRData(userId: self.userId,
+                                             deviceAddressToRevoke: deviceAddress,
+                                             delegate: self.delegate!)
             
         default:
             throw OstError("w_p_gwfo_1", OstErrorText.invalidQRCode);

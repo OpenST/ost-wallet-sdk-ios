@@ -10,9 +10,15 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 import Foundation
 
-class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
+class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWorkflow {
+
     static private let PAYLOAD_DEVICE_ADDRESS_KEY = "da"
 
+    /// Get revoke device parameters from QR-Code payload.
+    ///
+    /// - Parameter payload: QR-Code parameter
+    /// - Returns: String
+    /// - Throws: OstError
     class func getRevokeDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
         guard let deviceAddress: String = payload[OstRevokeDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
             throw OstError("w_rd_gadpfqrp_1", .invalidQRCode)
@@ -55,8 +61,6 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
 
         if !self.deviceAddressToRevoke.isValidAddress {
             throw OstError("w_adwqrd_fd_1", OstErrorText.wrongDeviceAddress)
@@ -66,37 +70,34 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         }
     }
 
-    /// Process
-    ///
-    /// - Throws: OstError
-    override func process() throws {
-        try fetchDevice()
-        verifyData()
+    /// On workflow validated
+    override func onDeviceValidated() throws {
+        try self.fetchDevice()
+        try super.onDeviceValidated()
     }
 
     /// Fetch device to validate mnemonics
     ///
     /// - Throws: OstError
     private func fetchDevice() throws {
-        var error: OstError? = nil
-        let group = DispatchGroup()
-        group.enter()
-        try OstAPIDevice(userId: userId)
-            .getDevice(deviceAddress: self.deviceAddressToRevoke,
-                       onSuccess: { (ostDevice) in
-                        self.deviceToRevoke = ostDevice
-                        group.leave()
-            }) { (ostError) in
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-
-        if (nil != error) {
-            throw error!
-        }
-        if (nil == self.deviceToRevoke?.linkedAddress) {
-            throw OstError("w_rd_fd_1", OstErrorText.linkedAddressNotFound)
+        if nil == self.deviceToRevoke {
+            var error: OstError? = nil
+            let group = DispatchGroup()
+            group.enter()
+            try OstAPIDevice(userId: userId)
+                .getDevice(deviceAddress: self.deviceAddressToRevoke,
+                           onSuccess: { (ostDevice) in
+                            self.deviceToRevoke = ostDevice
+                            group.leave()
+                }) { (ostError) in
+                    error = ostError
+                    group.leave()
+            }
+            group.wait()
+            
+            if (nil != error) {
+                throw error!
+            }
         }
         
         if (!self.deviceToRevoke!.isStatusAuthorized) {
@@ -105,66 +106,45 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
         if (self.deviceToRevoke!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
             throw OstError("w_rd_fd_3", OstErrorText.differentOwnerDevice)
         }
-    }
-
-    /// verify device from user.
-    ///
-    /// - Parameter device: OstDevice entity.
-    private func verifyData() {
-        let workflowContext = OstWorkflowContext(workflowType: .revokeDeviceWithQRCode);
-        let contextEntity: OstContextEntity = OstContextEntity(entity: self.deviceToRevoke!, entityType: .device)
-        DispatchQueue.main.async {
-            self.delegate.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
+        if (nil == self.deviceToRevoke?.linkedAddress) {
+            throw OstError("w_rd_fd_1", OstErrorText.linkedAddressNotFound)
         }
     }
 
-    /// Callback from user about data verified to continue.
-    public func dataVerified() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            self.authenticateUser();
-        }
-    }
-
-    /// proceed workflow after user authentication
-    override func proceedWorkflowAfterAuthenticateUser() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-                do {
-                    let keychainManager = OstKeyManager(userId: self.userId)
-                    if let deviceAddress = keychainManager.getDeviceAddress() {
-                        let signature = try keychainManager.signWithDeviceKey(signingHash)
-                        return (signature, deviceAddress)
-                    }
-                    throw OstError("w_rd_pwfaau_1", .apiSignatureGenerationFailed);
-                }catch {
-                    return (nil, nil)
+    /// Revoke device workflow after user authenticated.
+    override func onUserAuthenticated() {
+        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+            do {
+                let keychainManager = OstKeyManager(userId: self.userId)
+                if let deviceAddress = keychainManager.getDeviceAddress() {
+                    let signature = try keychainManager.signWithDeviceKey(signingHash)
+                    return (signature, deviceAddress)
                 }
+                throw OstError("w_rd_pwfaau_1", .apiSignatureGenerationFailed);
+            }catch {
+                return (nil, nil)
             }
-
-            let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postWorkflowComplete(entity: ostDevice)
-            }
-
-            let onFailure: ((OstError) -> Void) = { (error) in
-                self.postError(error)
-            }
-
-            let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postRequestAcknowledged(entity: ostDevice)
-            }
-
-            OstRevokeDevice(userId: self.userId,
-                            linkedAddress: self.deviceToRevoke!.linkedAddress!,
-                            deviceAddressToRevoke: self.deviceToRevoke!.address!,
-                            generateSignatureCallback: generateSignatureCallback,
-                            onRequestAcknowledged: onRequestAcknowledged,
-                            onSuccess: onSuccess,
-                            onFailure: onFailure).perform()
         }
+        
+        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postWorkflowComplete(entity: ostDevice)
+        }
+        
+        let onFailure: ((OstError) -> Void) = { (error) in
+            self.postError(error)
+        }
+        
+        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+            self.postRequestAcknowledged(entity: ostDevice)
+        }
+        
+        OstRevokeDevice(userId: self.userId,
+                        linkedAddress: self.deviceToRevoke!.linkedAddress!,
+                        deviceAddressToRevoke: self.deviceToRevoke!.address!,
+                        generateSignatureCallback: generateSignatureCallback,
+                        onRequestAcknowledged: onRequestAcknowledged,
+                        onSuccess: onSuccess,
+                        onFailure: onFailure).perform()
     }
 
     /// Get current workflow context
@@ -180,4 +160,33 @@ class OstRevokeDeviceWithQRData: OstWorkflowBase, OstValidateDataDelegate {
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .device)
     }
+    
+    //MARK: - OstDataDefinitionWorkflow Delegate
+    
+    /// Validate data defination dependent parameters.
+    ///
+    /// - Throws: OstError
+    func validateApiDependentParams() throws {
+         try self.fetchDevice()
+    }
+    
+    /// Get context entity for provided data defination
+    ///
+    /// - Returns: OstContextEntity
+    func getDataDefinitionContextEntity() -> OstContextEntity {
+        return self.getContextEntity(for: self.deviceToRevoke!)
+    }
+    
+    /// Get workflow context for provided data defination.
+    ///
+    /// - Returns: OstWorkflowContext
+    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
+        return self.getWorkflowContext()
+    }
+    
+    /// Start data defination flow
+    func startDataDefinitionFlow() {
+        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
+    }
 }
+

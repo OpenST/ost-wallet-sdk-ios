@@ -68,34 +68,32 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     ///
     /// - Throws: OstError
     func fetchDevice() throws {
-        if nil != self.deviceToAdd {
-            return
+        if nil == self.deviceToAdd {
+            var error: OstError? = nil
+            let group = DispatchGroup()
+            group.enter()
+            try OstAPIDevice(userId: userId)
+                .getDevice(deviceAddress: self.deviceAddress,
+                           onSuccess: { (ostDevice) in
+                            self.deviceToAdd = ostDevice
+                            group.leave()
+                }) { (ostError) in
+                    error = ostError
+                    group.leave()
+            }
+            group.wait()
+            
+            if (nil != error) {
+                throw error!
+            }
         }
         
-        var error: OstError? = nil
-        let group = DispatchGroup()
-        group.enter()
-        try OstAPIDevice(userId: userId)
-            .getDevice(deviceAddress: self.deviceAddress,
-                       onSuccess: { (ostDevice) in
-                        self.deviceToAdd = ostDevice
-                        group.leave()
-            }) { (ostError) in
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-        
-        if (nil != error) {
-            throw error!
-        }
         if (self.deviceToAdd!.isStatusAuthorized) {
             throw OstError("w_adwqrd_fd_1", OstErrorText.deviceAuthorized)
         }
         if (!self.deviceToAdd!.isStatusRegistered) {
             throw OstError("w_adwqrd_fd_1", OstErrorText.deviceNotRegistered)
         }
-        
         if (self.deviceToAdd!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
             throw OstError("w_adwqrd_fd_2", OstErrorText.differentOwnerDevice)
         }
