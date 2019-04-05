@@ -97,7 +97,7 @@ initializes all the required instances and runs migrations of local databases.
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     do {
-        try OstWalletSdk.initialize(apiEndPoint: <KIT_API_ENDPOINT>)
+        try OstWalletSdk.initialize(apiEndPoint: <OST_PLATFORM_API_ENDPOINT>)
      } catch let ostError {
 
      }
@@ -109,7 +109,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 The `setupDevice` API should be called after user login or signup is successful.
 
-Once the user is logged in, then `setupDevice` should be called every time the app launches, this ensures that the current device is registered before communicating with OST KIT server.<br/><br/>
+Once the user is logged in, then `setupDevice` should be called every time the app launches, this ensures that the current device is registered before communicating with OST Platform server.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenId: Token id provided by application server_<br/>
