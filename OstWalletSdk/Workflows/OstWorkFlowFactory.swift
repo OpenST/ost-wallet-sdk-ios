@@ -190,9 +190,9 @@ extension OstWalletSdk {
     /// Abort device recovery.
     ///
     /// - Parameters:
-    ///   - userId: Kit user id.
-    ///   - uPin: user pin.
-    ///   - password: application password provied by application server.
+    ///   - userId: User id.
+    ///   - uPin: User pin.
+    ///   - password: Application password provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func abortDeviceRecovery(
         userId: String,

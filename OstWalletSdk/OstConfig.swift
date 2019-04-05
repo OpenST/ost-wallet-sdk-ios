@@ -29,6 +29,8 @@ import Foundation
  <integer>3</integer>
  <key>SessionBufferTime</key>
  <integer>3600</integer>
+ <key>UseSeedPassword</key>
+ <true/>
  </dict>
  </plist>
  */
@@ -42,6 +44,7 @@ class OstConfig {
     private static var requestTimeoutDuration: Int?
     private static var pinMaxRetryCount: Int?
     private static var sessionBufferTime: Double?
+    private static var useSeedPassword: Bool = true
     
     class func loadConfig() throws {
         do {
@@ -87,6 +90,12 @@ class OstConfig {
                 ) as! Double
             sessionBufferTime = bufferTime
             
+            useSeedPassword = try OstBundle
+                .getApplicationPlistContent(
+                    for: "UseSeedPassword",
+                    fromFile: plistFileName
+                ) as! Bool
+            
         } catch {
             throw OstError("oc_lc_1", .failedToReadOstSdkPlist)
         }
@@ -115,4 +124,9 @@ class OstConfig {
     class func getSessionBufferTime() -> Double {
         return sessionBufferTime!
     }
+    
+    class func shouldUseSeedPassword() -> Bool {
+        return useSeedPassword
+    }
+    
 }

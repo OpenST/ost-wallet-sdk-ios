@@ -39,6 +39,14 @@ struct OstWalletKeys {
     }
 }
 
+enum KeyType: String {
+    case api = "API"
+    case device = "DEVICE"
+    case session = "SESSION"
+    case recovery = "RECOVERY"
+}
+
+
 protocol OstCrypto {
     
     /// Get the data that will be used for private key generation
@@ -52,11 +60,17 @@ protocol OstCrypto {
     ///   - stringToCalculate: String to calculate the data
     /// - Returns: Data that can be used for OSTWalletKeys generation
     /// - Throws: OSTError
-    func genSCryptKey(salt: Data, n:Int, r:Int, p: Int, size: Int, stringToCalculate: String) throws -> Data
+    func genSCryptKey(salt: Data,
+                      n:Int,
+                      r:Int,
+                      p: Int,
+                      size: Int,
+                      stringToCalculate: String) throws -> Data
     
     /// Generate OST wallet keys
     ///
     /// - Returns: OstWalletKeys object
     /// - Throws: OSTError
-    func generateOstWalletKeys() throws -> OstWalletKeys
+    func generateOstWalletKeys(userId:String,
+                               forKeyType:KeyType) throws -> OstWalletKeys
 }

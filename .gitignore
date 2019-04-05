@@ -1,8 +1,7 @@
-Carthage/
-Cartfile.resolved
-
-.DS_Store
+#Hidden files
 *.DS_Store
+.DS_Store
+
 
 # Pod
 Pods/
@@ -11,3 +10,10 @@ Pods/
 *.xcconfig
 *.xcbkptlist
 xcuserdata/
+
+#Demo-App
+demo-app/TestDemoApp/Info.plist
+
+#Carthage
+Carthage/
+
