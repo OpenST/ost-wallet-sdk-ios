@@ -44,7 +44,7 @@ class OstConfig {
     private static var requestTimeoutDuration: Int?
     private static var pinMaxRetryCount: Int?
     private static var sessionBufferTime: Double?
-    private static var useSeedPassword: Bool = true
+    private static var useSeedPassword: Bool = false
     
     class func loadConfig() throws {
         do {
