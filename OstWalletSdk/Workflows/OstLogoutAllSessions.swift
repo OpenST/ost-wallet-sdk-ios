@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstLogoutAllSessions: OstWorkflowBase {
+class OstLogoutAllSessions: OstWorkflowEngine {
     static private let ostLogoutAllSessionsQueue = DispatchQueue(label: "com.ost.sdk.OstLogoutAllSessions", qos: .background)
     private let workflowTransactionCount = 1
     private let nullAddress = "0x0000000000000000000000000000000000000000"
@@ -26,11 +26,21 @@ class OstLogoutAllSessions: OstWorkflowBase {
     override func getWorkflowQueue() -> DispatchQueue {
         return OstLogoutAllSessions.ostLogoutAllSessionsQueue
     }
-
-    /// process
+    
+    /// Validate user and device
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        try self.workFlowValidator.isUserActivated()
+        try self.workFlowValidator.isDeviceAuthorized()
+    }
+
+    /// Logout all sessions after device validated.
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         try fetchDeviceManager()
         
         let encodedABIHex = try TokenHolder().getLogoutExecutableData()

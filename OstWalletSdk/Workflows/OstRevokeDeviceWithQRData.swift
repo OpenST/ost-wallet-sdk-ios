@@ -21,10 +21,10 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     /// - Throws: OstError
     class func getRevokeDeviceParamsFromQRPayload(_ payload: [String: Any?]) throws -> String {
         guard let deviceAddress: String = payload[OstRevokeDeviceWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] as? String else {
-            throw OstError("w_rd_gadpfqrp_1", .invalidQRCode)
+            throw OstError("w_rdwqrd_gadpfqrp_1", .invalidQRCode)
         }
         if deviceAddress.isEmpty {
-            throw OstError("w_rd_gadpfqrp_2", .invalidQRCode)
+            throw OstError("w_rdwqrd_gadpfqrp_2", .invalidQRCode)
         }
         return deviceAddress
     }
@@ -63,10 +63,10 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         try super.validateParams()
 
         if !self.deviceAddressToRevoke.isValidAddress {
-            throw OstError("w_adwqrd_fd_1", OstErrorText.wrongDeviceAddress)
+            throw OstError("w_rdwqrd_fd_1", OstErrorText.wrongDeviceAddress)
         }
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_adwqrd_fd_2", OstErrorText.processSameDevice)
+            throw OstError("w_rdwqrd_fd_2", OstErrorText.processSameDevice)
         }
     }
 
@@ -101,13 +101,13 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         }
         
         if (!self.deviceToRevoke!.isStatusAuthorized) {
-            throw OstError("w_rd_fd_2", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_rdwqrd_fd_1", OstErrorText.deviceNotAuthorized)
         }
         if (self.deviceToRevoke!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_rd_fd_3", OstErrorText.differentOwnerDevice)
+            throw OstError("w_rdwqrd_fd_2", OstErrorText.differentOwnerDevice)
         }
         if (nil == self.deviceToRevoke?.linkedAddress) {
-            throw OstError("w_rd_fd_1", OstErrorText.linkedAddressNotFound)
+            throw OstError("w_rdwqrd_fd_3", OstErrorText.linkedAddressNotFound)
         }
     }
 
@@ -168,6 +168,9 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     /// - Throws: OstError
     func validateApiDependentParams() throws {
          try self.fetchDevice()
+        if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
+            throw OstError("w_rdwqrd_vadp_1", OstErrorText.processSameDevice)
+        }
     }
     
     /// Get context entity for provided data defination

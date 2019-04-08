@@ -200,7 +200,7 @@ class OstWorkflowEngine {
         // postErrorInterupt.
     }
     
-    /// On workflow validated
+    /// On device validated
     ///
     /// - Throws: OstError
     func onDeviceValidated() throws {
