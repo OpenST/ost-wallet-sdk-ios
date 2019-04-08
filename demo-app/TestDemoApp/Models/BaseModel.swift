@@ -13,10 +13,12 @@ import Alamofire
 
 class BaseModel {
     
-    static let MAPPY_APP_SERVER_URL = Bundle.main.infoDictionary!["MAPPY_APP_SERVER_URL"] as! String
-    static let OST_PLATFORM_API_ENDPOINT = Bundle.main.infoDictionary!["OST_PLATFORM_API_ENDPOINT"] as! String
+//    static let MAPPY_APP_SERVER_URL = Bundle.main.infoDictionary!["MAPPY_APP_SERVER_URL"] as! String
+//    static let OST_PLATFORM_API_ENDPOINT = Bundle.main.infoDictionary!["OST_PLATFORM_API_ENDPOINT"] as! String
     
-  static let TOKEN_ID = "58";
+    static let MAPPY_APP_SERVER_URL = ServerURLs.MAPPY_APP_SERVER_URL
+    static let OST_PLATFORM_API_ENDPOINT = ServerURLs.OST_PLATFORM_API_ENDPOINT
+
   func post(resource:String, params: [String: AnyObject]?,
             onSuccess: (([String: Any]?) -> Void)?,
             onFailure: (([String: Any]?) -> Void)?) {
