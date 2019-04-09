@@ -68,7 +68,7 @@ class OstActivateUser: OstWorkflowEngine {
         }
         
         do {
-            try self.workFlowValidator.isValidNumber(input: self.spendingLimit)
+            try isValidNumber(input: self.spendingLimit)
         }catch {
             throw OstError("w_au_vp_2", .invalidSpendingLimit)
         }

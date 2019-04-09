@@ -57,7 +57,7 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
     ///
     /// - Throws: OstError
     override func validateDeviceForWorkflow() throws{
-        try self.workFlowValidator.isDeviceRegistered()
+        try isDeviceRegistered()
     }
     
     /// Fetch device after device validated

@@ -166,8 +166,8 @@ class OstWorkflowEngine {
         if(nil == self.currentDevice) {
             throw OstError("w_we_vp_2", .deviceNotSet)
         }
-        try self.workFlowValidator.isAPIKeyAvailable()
-        try self.workFlowValidator.isTokenAvailable()
+        try isAPIKeyAvailable()
+        try isTokenAvailable()
         
         try beforeProcess()
     }

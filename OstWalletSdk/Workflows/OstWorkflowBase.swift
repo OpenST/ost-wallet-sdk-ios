@@ -24,7 +24,6 @@ class OstWorkflowBase: OstPinAcceptDelegate {
     var currentDevice: OstCurrentDevice? {
         return self.currentUser?.getCurrentDevice()
     }
-    var workFlowValidator: OstWorkflowValidator? = nil
     
     private var enterPinCount = 0
     
@@ -48,8 +47,6 @@ class OstWorkflowBase: OstPinAcceptDelegate {
             queue.sync {
                 do {
                     try self.beforeProcess()
-                    self.workFlowValidator = OstWorkflowValidator(withUserId: self.userId)
-                    
                     try self.validateParams()
                     try self.process()
                 }catch let error {
@@ -87,8 +84,8 @@ class OstWorkflowBase: OstPinAcceptDelegate {
         if(nil == self.currentDevice) {
             throw OstError("w_wb_vp_2", .deviceNotSet)
         }
-        try self.workFlowValidator!.isAPIKeyAvailable()
-        try self.workFlowValidator!.isTokenAvailable()
+        //try self.workFlowValidator!.isAPIKeyAvailable()
+        //try self.workFlowValidator!.isTokenAvailable()
     }
     
     /// Send callback to application if error occured in workflow.
@@ -152,17 +149,6 @@ class OstWorkflowBase: OstPinAcceptDelegate {
                 }
             }
         }
-    }
-    
-    /// Get OstWorkflowValidator object.
-    ///
-    /// - Returns: OstWorkflowValidator
-    /// - Throws: OstError
-    func getWorkflowValidator() throws -> OstWorkflowValidator {
-        if (self.workFlowValidator == nil) {
-            self.workFlowValidator = try OstWorkflowValidator(withUserId: self.userId)
-        }
-        return self.workFlowValidator!
     }
     
     /// Accept pin from user and validate.

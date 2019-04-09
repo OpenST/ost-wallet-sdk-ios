@@ -26,7 +26,7 @@ class OstGetDeviceMnemonics: OstUserAuthenticatorWorkflow {
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
-        try self.workFlowValidator.isUserActivated()
+        try isUserActivated()
     }
     
     /// Get device mnemonics after user authenticated

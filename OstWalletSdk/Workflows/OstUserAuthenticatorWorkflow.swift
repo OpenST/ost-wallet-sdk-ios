@@ -41,7 +41,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     /// - Throws: OstError
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
-        try self.workFlowValidator.isUserActivated()
+        try isUserActivated()
         try validateDeviceForWorkflow()
     }
     
@@ -49,7 +49,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     ///
     /// - Throws: OstError
     func validateDeviceForWorkflow() throws{
-        try self.workFlowValidator.isDeviceAuthorized()
+        try isDeviceAuthorized()
     }
     
     /// Process

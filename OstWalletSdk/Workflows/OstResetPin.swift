@@ -59,7 +59,7 @@ class OstResetPin: OstWorkflowEngine {
     /// - Throws: OstError
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
-        try self.workFlowValidator.isUserActivated()
+        try isUserActivated()
     }
     
     

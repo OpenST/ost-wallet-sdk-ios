@@ -167,10 +167,10 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     ///
     /// - Throws: OstError
     func validateApiDependentParams() throws {
-         try self.fetchDevice()
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
             throw OstError("w_rdwqrd_vadp_1", OstErrorText.processSameDevice)
         }
+        try self.fetchDevice()
     }
     
     /// Get context entity for provided data defination

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
 		4BCC1B552251FB01008B58A1 /* OstWorkflowStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */; };
 		4BCC1B5822522776008B58A1 /* OstWorkflowEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */; };
 		4BCC1B5D2256076B008B58A1 /* OstDataDefinitionWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B5C2256076B008B58A1 /* OstDataDefinitionWorkflow.swift */; };
@@ -253,6 +254,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstWorkflowEngine+Validator.swift"; sourceTree = "<group>"; };
 		4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowStateManager.swift; sourceTree = "<group>"; };
 		4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowEngine.swift; sourceTree = "<group>"; };
 		4BCC1B5C2256076B008B58A1 /* OstDataDefinitionWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDataDefinitionWorkflow.swift; sourceTree = "<group>"; };
@@ -833,10 +835,11 @@
 				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
 				EC38BEC322413A96006F8DA2 /* OstRevoke */,
 				EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */,
-				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
+				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
 				4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */,
+				4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */,
 				F50361F2225342170043A8FA /* OstUserAuthenticatorWorkflow.swift */,
 				EC38BECD22413A96006F8DA2 /* OstRegisterDevice.swift */,
 				EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */,
@@ -877,8 +880,8 @@
 		EC38BEB522413A96006F8DA2 /* WorkflowHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				EC38BEB622413A96006F8DA2 /* OstPinManager.swift */,
 				EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */,
+				EC38BEB622413A96006F8DA2 /* OstPinManager.swift */,
 				EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */,
 				EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */,
 			);
@@ -1339,6 +1342,7 @@
 				EC38BF9E22413A96006F8DA2 /* OstDevicePollingService.swift in Sources */,
 				EC38BF8E22413A96006F8DA2 /* OstSessionHelper.swift in Sources */,
 				EC38BFCB22413A96006F8DA2 /* OstTokenRepository.swift in Sources */,
+				4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */,
 				EC38BFB022413A96006F8DA2 /* OstDeviceManagerDbQueries.swift in Sources */,
 				EC38BF6422413A96006F8DA2 /* SolidityWrappedValue.swift in Sources */,
 				EC38BF7B22413A96006F8DA2 /* Extension+OstQRCode.swift in Sources */,

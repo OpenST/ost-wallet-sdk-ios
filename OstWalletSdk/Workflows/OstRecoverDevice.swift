@@ -67,8 +67,8 @@ class OstRecoverDevice: OstWorkflowEngine {
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
-        try self.workFlowValidator.isUserActivated()
-        try self.workFlowValidator.isDeviceRegistered()
+        try isUserActivated()
+        try isDeviceRegistered()
     }
     
     /// Initiate device recovery

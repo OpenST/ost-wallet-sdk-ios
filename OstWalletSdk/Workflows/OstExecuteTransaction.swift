@@ -163,8 +163,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
-        try self.workFlowValidator.isUserActivated()
-        try self.workFlowValidator.isDeviceAuthorized()
+        try isUserActivated()
+        try isDeviceAuthorized()
     }
     
     /// Execute transaction
