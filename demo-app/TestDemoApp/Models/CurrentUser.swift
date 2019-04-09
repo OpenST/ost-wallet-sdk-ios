@@ -31,6 +31,8 @@ class CurrentUser: BaseModel {
     var userDevice: OstDevice?;
     var ostUser: OstUser?;
     var currentDeviceAddress: String?
+    var userName: String = "N/A"
+    var phoneNumber: String = "N/A"
   
   override init() {
     self.tokenId = nil;
@@ -48,8 +50,14 @@ class CurrentUser: BaseModel {
     self.userPinSalt = nil;
   }
     
-  func signUp(username:String , phonenumber:String, userDescription:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
-    if( username.count < 4 || phonenumber.count < 10) {
+  func signUp(username:String ,
+              phonenumber:String,
+              userDescription:String,
+              onSuccess: @escaping ((OstUser, OstDevice) -> Void),
+              onComplete:@escaping ((Bool)->Void) ) {
+    
+    if( username.count < 4
+        || phonenumber.count < 10) {
         onComplete(false);
         return;
     }
@@ -60,7 +68,12 @@ class CurrentUser: BaseModel {
     params["description"] = userDescription;
     params["create_ost_user"] = "true";
     
-    self.post(resource: "/users", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.post(resource: "/users",
+              params: params as [String : AnyObject],
+              onSuccess: { (appApiResponse: [String : Any]?) in
+                
+        self.userName = username
+        self.phoneNumber = phonenumber
       self.appUserId = appApiResponse!["app_user_id"] as? String;
       self.ostUserId = appApiResponse!["user_id"] as? String;
       self.tokenId = appApiResponse!["token_id"] as? String;
@@ -72,8 +85,14 @@ class CurrentUser: BaseModel {
     }
   }
   
-  func login(username:String , phonenumber:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
-    if( username.count < 4 || phonenumber.count < 10) {
+  func login(username:String ,
+             phonenumber:String,
+             onSuccess: @escaping ((OstUser, OstDevice) -> Void),
+             onComplete:@escaping ((Bool)->Void) ) {
+    
+    if( username.count < 4
+        || phonenumber.count < 10) {
+        
       onComplete(false);
       return;
     }
@@ -82,7 +101,12 @@ class CurrentUser: BaseModel {
     params["username"] = username;
     params["mobile_number"] = phonenumber;
     
-    self.post(resource: "/users/validate", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.post(resource: "/users/validate",
+              params: params as [String : AnyObject],
+              onSuccess: { (appApiResponse: [String : Any]?) in
+                
+        self.userName = username
+        self.phoneNumber = phonenumber
         self.appUserId = appApiResponse!["app_user_id"] as? String;
         self.ostUserId = appApiResponse!["user_id"] as? String;
         self.tokenId = appApiResponse!["token_id"] as? String;
@@ -94,11 +118,15 @@ class CurrentUser: BaseModel {
     })
   }
   
-  func getOstUser(appUserId:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
+  func getOstUser(appUserId:String,
+                  onSuccess: @escaping ((OstUser, OstDevice) -> Void),
+                  onComplete:@escaping ((Bool)->Void)) {
     
     let params: [String: Any] = [:];
     
-    self.get(resource: "/users/\(appUserId)/ost-users", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.get(resource: "/users/\(appUserId)/ost-users",
+             params: params as [String : AnyObject],
+             onSuccess: { (appApiResponse: [String : Any]?) in
 
       self.appUserId = appApiResponse!["app_user_id"] as? String;
       self.ostUserId = appApiResponse!["user_id"] as? String;
