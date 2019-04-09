@@ -176,7 +176,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             try fetchTokenRules()
             self.rule = try getRuleIfPresent()
             if (nil == self.rule) {
-                throw OstError("w_et_p_1", .rulesNotFound)
+                throw OstError("w_et_odv_1", .rulesNotFound)
             }
         }
         
@@ -188,7 +188,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             try self.processForDirectTransfer()
             
         default:
-            return
+            throw OstError("w_et_odv_1", OstErrorText.rulesNotFound)
         }
     }
  
