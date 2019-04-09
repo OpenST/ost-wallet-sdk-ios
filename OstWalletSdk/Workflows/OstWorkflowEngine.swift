@@ -96,11 +96,11 @@ class OstWorkflowEngine {
             onWorkflowComplete()
             
         case OstWorkflowStateManager.CANCELLED:
-             let ostError:OstError = OstError("w_wb_cf_1", OstErrorText.userCanceled)
+             let ostError:OstError = OstError("w_we_p_1", OstErrorText.userCanceled)
             self.postError(ostError)
             
         default:
-            throw OstError("w_we_p_1", OstErrorText.unknown)
+            throw OstError("w_we_p_2", OstErrorText.unknown)
         }
     }
     
