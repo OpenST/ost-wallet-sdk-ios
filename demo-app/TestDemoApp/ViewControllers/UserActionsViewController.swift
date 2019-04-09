@@ -33,6 +33,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     case showUserDetails = "showUserDetails"
     case logoutAllSessions = "logoutAllSessions"
     case transactions = "transactions"
+    case logout = "logout"
   }
   
   var dataItems:[[String:String]]?
@@ -53,6 +54,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     var showUserDetails: [String: String] = [:]
     var transactionsView: [String: String] = [:]
     var logoutAllSessions: [String: String] = [:]
+    var logout: [String: String] = [:]
     
     
     showUserDetails[ACTION_TYPE] = ACTIONS.showUserDetails.rawValue;
@@ -92,6 +94,11 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     
     logoutAllSessions[ACTION_TYPE] = ACTIONS.logoutAllSessions.rawValue
     logoutAllSessions[ACTION_TEXT] = "Logout All Sessions"
+    logoutAllSessions[ACTION_DETAILS] = "Logout from server and device"
+    
+    logout[ACTION_TYPE] = ACTIONS.logout.rawValue
+    logout [ACTION_TEXT] = "Logout application"
+    logout[ACTION_DETAILS] = "Logout from device only"
     
     if ( userDevice.isStatusAuthorizing ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
@@ -101,7 +108,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Authorize this device by providing Mnemonics.";
-        logoutAllSessions[ACTION_DETAILS] = "Logout from device"
+        
         transactionsView[ACTION_DETAILS] = "Likely to fail as device is authorizing.";
     } else if ( userDevice.isStatusAuthorized ) {
         addSession[ACTION_DETAILS] = "Create session a new session.";
@@ -111,7 +118,6 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         abortRecoverDevice[ACTION_DETAILS] = "Likely to fail as device is authorized.";
         showAddDeviceWithMnemonics[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
         showAddDeviceCode[ACTION_DETAILS] = "Likely to fail as device is already authorized.";
-        logoutAllSessions[ACTION_DETAILS] = "Logout from device"
         transactionsView[ACTION_DETAILS] = "Likely to succeed if authorized session is available.";
     } else if ( userDevice.isStatusRegistered ) {
         addSession[ACTION_DETAILS] = "Likely to fail as device is not authorized";
@@ -148,7 +154,8 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
     //Add back sendTransaction later on.
     //Final Ordering.
     dataItems = [showUserDetails, setupWallet, paperWallet, addSession, scanQRCode, transactionsView,
-                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice, logoutAllSessions];
+                 showAddDeviceCode, showAddDeviceWithMnemonics, resetPin, recoverDevice,abortRecoverDevice,
+                 logoutAllSessions, logout];
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated);
@@ -336,6 +343,12 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
             let walletController = WalletViewController(nibName: nil, bundle: nil);
             walletController.viewMode = WalletViewController.ViewMode.EXECUTE_TRANSACTION;
             self.present(walletController, animated: true, completion: nil);
+        }
+        
+        else if ( actionType.caseInsensitiveCompare(ACTIONS.logout.rawValue) == .orderedSame ) {
+            let rootViewController: HomeViewController = UIApplication.shared.keyWindow?.rootViewController as! HomeViewController
+            rootViewController.dismiss(animated: false, completion: nil)
+            rootViewController.showLoginViewController(animated: true)
         }
     }
     
