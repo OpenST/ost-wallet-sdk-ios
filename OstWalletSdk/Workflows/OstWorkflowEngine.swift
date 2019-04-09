@@ -14,7 +14,6 @@ class OstWorkflowEngine {
     
     let userId: String
     weak var delegate: OstWorkflowDelegate?
-    var workFlowValidator: OstWorkflowValidator
     let workflowStateManager: OstWorkflowStateManager
 
     var currentUser: OstUser? {
@@ -38,27 +37,11 @@ class OstWorkflowEngine {
         
         self.userId = userId
         self.delegate = delegate
-        self.workFlowValidator = OstWorkflowValidator(withUserId: self.userId)
         self.workflowStateManager = OstWorkflowStateManager()
         
         self.workflowStateManager.setOrderedStates(
             getOrderedStates()
         )
-    }
-    
-    /// Perform
-    func perform() {
-        let asyncQueue: DispatchQueue = DispatchQueue(label: "asyncThread")
-        asyncQueue.async {
-            let queue: DispatchQueue = self.getWorkflowQueue()
-            queue.sync {
-                do {
-                    try self.process()
-                }catch let error{
-                    self.postError(error)
-                }
-            }
-        }
     }
     
     /// Get workflow states in order
@@ -77,6 +60,21 @@ class OstWorkflowEngine {
         orderedStates.append(OstWorkflowStateManager.CANCELLED)
         
         return orderedStates
+    }
+    
+    /// Perform
+    func perform() {
+        let asyncQueue: DispatchQueue = DispatchQueue(label: "asyncThread")
+        asyncQueue.async {
+            let queue: DispatchQueue = self.getWorkflowQueue()
+            queue.sync {
+                do {
+                    try self.process()
+                }catch let error{
+                    self.postError(error)
+                }
+            }
+        }
     }
     
     /// Process
@@ -106,42 +104,8 @@ class OstWorkflowEngine {
         }
     }
     
-    /// Perfom next state
-    ///
-    /// - Parameter obj: Workflow state object
-    func performNext(withObject obj: Any? = nil) {
-        self.workflowStateManager.setNextState(withObject: obj)
-        perform();
-    }
-    
-    /// Perfom next state
-    ///
-    /// - Parameter obj: Workflow state object
-    func performState(_ state:String, withObject obj: Any? = nil) {
-        self.workflowStateManager.setState(state, withObj: obj)
-        perform();
-    }
-    
-    /// Process next state
-    ///
-    /// - Parameter obj: Workflow state object
-    /// - Throws: OstError
-    func processNext(withObject obj: Any? = nil) throws {
-        self.workflowStateManager.setNextState(withObject: obj)
-        try process();
-    }
-    
-    /// Process next state
-    ///
-    /// - Parameter obj: Workflow state object
-    /// - Throws: OstError
-    func processState(_ state: String, withObject obj: Any? = nil) throws {
-        self.workflowStateManager.setState(state, withObj: obj)
-        try process();
-    }
- 
     //MARK: - Methods to override
-
+    
     ///Get inbeween states for workflow
     ///
     /// - Returns: Workflow states
@@ -155,7 +119,7 @@ class OstWorkflowEngine {
     func validateParams() throws {
         //Common checks not present.
     }
-    
+
     /// Perform user device validation
     ///
     /// - Throws: OstError
@@ -169,14 +133,14 @@ class OstWorkflowEngine {
         try isAPIKeyAvailable()
         try isTokenAvailable()
         
-        try beforeProcess()
+        try ensureEntities()
     }
     
     /// Perform any tasks that are prerequisite for the workflow,
     /// this is called before validateParams() and process()
     ///
     /// - Throws: OstError
-    func beforeProcess() throws {
+    func ensureEntities() throws {
         let group = DispatchGroup()
         group.enter()
         OstSdkSync(
@@ -190,7 +154,7 @@ class OstWorkflowEngine {
         group.wait()
     }
     
-    /// On device validated
+    /// On user and device validated
     ///
     /// - Throws: OstError
     func onUserDeviceValidated() throws {
@@ -233,6 +197,42 @@ class OstWorkflowEngine {
     /// - Returns: OstContextEntity
     func getContextEntity(for entity: Any) -> OstContextEntity {
         fatalError("getContextEntity not override.")
+    }
+    
+    // MARK: - States
+    
+    /// Perfom next state
+    ///
+    /// - Parameter obj: Workflow state object
+    func performNext(withObject obj: Any? = nil) {
+        self.workflowStateManager.setNextState(withObject: obj)
+        perform();
+    }
+    
+    /// Perfom next state
+    ///
+    /// - Parameter obj: Workflow state object
+    func performState(_ state:String, withObject obj: Any? = nil) {
+        self.workflowStateManager.setState(state, withObj: obj)
+        perform();
+    }
+    
+    /// Process next state
+    ///
+    /// - Parameter obj: Workflow state object
+    /// - Throws: OstError
+    func processNext(withObject obj: Any? = nil) throws {
+        self.workflowStateManager.setNextState(withObject: obj)
+        try process();
+    }
+    
+    /// Process next state
+    ///
+    /// - Parameter obj: Workflow state object
+    /// - Throws: OstError
+    func processState(_ state: String, withObject obj: Any? = nil) throws {
+        self.workflowStateManager.setState(state, withObj: obj)
+        try process();
     }
 }
 

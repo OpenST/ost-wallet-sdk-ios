@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
+		4BB35BA9225C81FA004E8569 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */; };
 		4BCC1B552251FB01008B58A1 /* OstWorkflowStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */; };
 		4BCC1B5822522776008B58A1 /* OstWorkflowEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */; };
 		4BCC1B5D2256076B008B58A1 /* OstDataDefinitionWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B5C2256076B008B58A1 /* OstDataDefinitionWorkflow.swift */; };
@@ -124,15 +125,12 @@
 		EC38BF8222413A96006F8DA2 /* OstAuthorizeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAB22413A96006F8DA2 /* OstAuthorizeSession.swift */; };
 		EC38BF8322413A96006F8DA2 /* OstResetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */; };
 		EC38BF8422413A96006F8DA2 /* OstAddDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */; };
-		EC38BF8522413A96006F8DA2 /* OstWorkflowBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */; };
 		EC38BF8622413A96006F8DA2 /* OstRecoverDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */; };
 		EC38BF8722413A96006F8DA2 /* OstWorkFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */; };
 		EC38BF8822413A96006F8DA2 /* OstContextEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB222413A96006F8DA2 /* OstContextEntity.swift */; };
 		EC38BF8922413A96006F8DA2 /* OstWorkflowContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB322413A96006F8DA2 /* OstWorkflowContext.swift */; };
 		EC38BF8A22413A96006F8DA2 /* OstActivateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */; };
 		EC38BF8B22413A96006F8DA2 /* OstPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB622413A96006F8DA2 /* OstPinManager.swift */; };
-		EC38BF8C22413A96006F8DA2 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */; };
-		EC38BF8D22413A96006F8DA2 /* OstWorkflowValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */; };
 		EC38BF8E22413A96006F8DA2 /* OstSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */; };
 		EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */; };
 		EC38BF9022413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */; };
@@ -255,6 +253,7 @@
 
 /* Begin PBXFileReference section */
 		4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstWorkflowEngine+Validator.swift"; sourceTree = "<group>"; };
+		4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowHelperBase.swift; sourceTree = "<group>"; };
 		4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowStateManager.swift; sourceTree = "<group>"; };
 		4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowEngine.swift; sourceTree = "<group>"; };
 		4BCC1B5C2256076B008B58A1 /* OstDataDefinitionWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDataDefinitionWorkflow.swift; sourceTree = "<group>"; };
@@ -375,15 +374,12 @@
 		EC38BEAB22413A96006F8DA2 /* OstAuthorizeSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAuthorizeSession.swift; sourceTree = "<group>"; };
 		EC38BEAC22413A96006F8DA2 /* OstResetPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstResetPin.swift; sourceTree = "<group>"; };
 		EC38BEAD22413A96006F8DA2 /* OstAddDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithQRData.swift; sourceTree = "<group>"; };
-		EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowBase.swift; sourceTree = "<group>"; };
 		EC38BEAF22413A96006F8DA2 /* OstRecoverDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRecoverDevice.swift; sourceTree = "<group>"; };
 		EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkFlowFactory.swift; sourceTree = "<group>"; };
 		EC38BEB222413A96006F8DA2 /* OstContextEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstContextEntity.swift; sourceTree = "<group>"; };
 		EC38BEB322413A96006F8DA2 /* OstWorkflowContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowContext.swift; sourceTree = "<group>"; };
 		EC38BEB422413A96006F8DA2 /* OstActivateUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstActivateUser.swift; sourceTree = "<group>"; };
 		EC38BEB622413A96006F8DA2 /* OstPinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinManager.swift; sourceTree = "<group>"; };
-		EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowHelperBase.swift; sourceTree = "<group>"; };
-		EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowValidator.swift; sourceTree = "<group>"; };
 		EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionHelper.swift; sourceTree = "<group>"; };
 		EC38BEBA22413A96006F8DA2 /* OstExecuteTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstExecuteTransaction.swift; sourceTree = "<group>"; };
 		EC38BEBB22413A96006F8DA2 /* OstAddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
@@ -834,7 +830,6 @@
 				EC38BEC622413A96006F8DA2 /* Services */,
 				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
 				EC38BEC322413A96006F8DA2 /* OstRevoke */,
-				EC38BEAE22413A96006F8DA2 /* OstWorkflowBase.swift */,
 				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
 				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
@@ -880,9 +875,8 @@
 		EC38BEB522413A96006F8DA2 /* WorkflowHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				EC38BEB722413A96006F8DA2 /* OstWorkflowHelperBase.swift */,
+				4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */,
 				EC38BEB622413A96006F8DA2 /* OstPinManager.swift */,
-				EC38BEB822413A96006F8DA2 /* OstWorkflowValidator.swift */,
 				EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */,
 			);
 			path = WorkflowHelpers;
@@ -1412,7 +1406,6 @@
 				EC38BF6E22413A96006F8DA2 /* EIP1077.swift in Sources */,
 				EC38BFC822413A96006F8DA2 /* OstError.swift in Sources */,
 				EC38BF4622413A96006F8DA2 /* String+BytesConvertible.swift in Sources */,
-				EC38BF8522413A96006F8DA2 /* OstWorkflowBase.swift in Sources */,
 				EC38BF8822413A96006F8DA2 /* OstContextEntity.swift in Sources */,
 				EC38BF7F22413A96006F8DA2 /* OstUtils.swift in Sources */,
 				EC38BF9522413A96006F8DA2 /* OstSdkSync.swift in Sources */,
@@ -1433,6 +1426,7 @@
 				EC38BF3322413A96006F8DA2 /* RLPItem.swift in Sources */,
 				EC38BF3222413A96006F8DA2 /* Web3.swift in Sources */,
 				EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */,
+				4BB35BA9225C81FA004E8569 /* OstWorkflowHelperBase.swift in Sources */,
 				EC38BF5122413A96006F8DA2 /* Bytes+UInt.swift in Sources */,
 				EC38BF3D22413A96006F8DA2 /* EthereumValueConvertible.swift in Sources */,
 				EC38BF4522413A96006F8DA2 /* EthereumLogObject.swift in Sources */,
@@ -1478,7 +1472,6 @@
 				EC38BFBC22413A96006F8DA2 /* OstAPIErrorHandler.swift in Sources */,
 				EC38BFC222413A96006F8DA2 /* OstAPIChain.swift in Sources */,
 				EC38BF2822413A96006F8DA2 /* SoliditySha3.swift in Sources */,
-				EC38BF8D22413A96006F8DA2 /* OstWorkflowValidator.swift in Sources */,
 				EC38BF6C22413A96006F8DA2 /* Dictionary+Conversion.swift in Sources */,
 				EC38BFBA22413A96006F8DA2 /* OstAPIDevice.swift in Sources */,
 				EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */,
@@ -1505,7 +1498,6 @@
 				EC38BF6222413A96006F8DA2 /* SolidityType.swift in Sources */,
 				4BF8FE4A2243B26C00519779 /* OstAbortDeviceRecovery.swift in Sources */,
 				EC38BF4A22413A96006F8DA2 /* Bytes+SecureRandom.swift in Sources */,
-				EC38BF8C22413A96006F8DA2 /* OstWorkflowHelperBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
