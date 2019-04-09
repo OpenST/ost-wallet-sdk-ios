@@ -67,7 +67,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
  <key>SessionBufferTime</key>
  <integer>3600</integer>
  <key>UseSeedPassword</key>
- <true/>
+ <false/>
  </dict>
  </plist>
  ```
