@@ -89,7 +89,7 @@ class OstBundle {
             return contents
         }
         throw OstError("u_b_gfc_1",
-                            msg: "File not found: \(fileName)")
+                        msg: "File \(fileName).\(fileExtension) not found in bundle \(bundle).")
     }
     
     /// Get permission description
@@ -102,9 +102,9 @@ class OstBundle {
     /// - Returns: Description Text
     /// - Throws: OstError
     fileprivate func getDescription(for key: String,
-                                              fromFile fileName: String,
-                                              withExtension fileExtension: String,
-                                              inBundle bundle: Bundle) throws -> AnyObject {
+                                    fromFile fileName: String,
+                                    withExtension fileExtension: String,
+                                    inBundle bundle: Bundle) throws -> AnyObject {
         
         let plistPath: String? = bundle.path(forResource: fileName, ofType: fileExtension)!
         let plistXML = FileManager.default.contents(atPath: plistPath!)!
@@ -116,7 +116,7 @@ class OstBundle {
                           format: &propertyListForamt) as! [String : AnyObject]
         
         guard let description = plistData[key] else {
-            throw OstError("u_b_gpd_1", OstErrorText.keyNotFound)
+            throw OstError("u_b_gpd_1", msg: "Failed to read \(key) from \(fileName).\(fileExtension)")
         }
         return description
     }

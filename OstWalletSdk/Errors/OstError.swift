@@ -138,7 +138,6 @@ public enum OstErrorText: String {
     case conversionFactorNotFound = "Conversion factor not present."
     case btDecimalNotFound = "Decimal value not found"
     case keyNotFound = "Key not found"
-    case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
     case insufficientData = "Insufficient data"
     case invalidSpendingLimit = "Spending limit provided is invalid. Spending limit should be in atto BT and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
     case unknown = "Unknown error"
