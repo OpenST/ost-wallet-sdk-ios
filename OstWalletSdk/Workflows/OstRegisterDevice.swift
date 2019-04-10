@@ -57,11 +57,11 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Throws: OstError
     override func validateParams() throws {
         if (self.userId.isEmpty) {
-            throw OstError.init("w_rd_1", .invalidUserId)
+            throw OstError("w_rd_1", .invalidUserId)
         }
         
         if (self.tokenId.isEmpty) {
-            throw OstError.init("w_rd_2", .invalidTokenId)
+            throw OstError("w_rd_2", .invalidTokenId)
         }
     }
 

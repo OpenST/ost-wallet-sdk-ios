@@ -42,7 +42,7 @@ public class OstBaseEntity: NSObject {
         // Check if the id in entity data is valid.
         let isValid = isIdValid(entityData)
         if (!isValid) {
-            throw OstError.init("m_e_be_ved_1", .invalidId)
+            throw OstError("m_e_be_ved_1", .invalidId)
         }
         // Add more validation code here.
     }

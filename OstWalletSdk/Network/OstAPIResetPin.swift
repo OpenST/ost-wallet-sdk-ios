@@ -51,7 +51,7 @@ class OstAPIResetPin: OstAPIBase {
                         onFailure?(error as! OstError)
                     }
                 }else {
-                    onFailure?(OstError.init("n_arp_cro_1", .resetPinFailed))
+                    onFailure?(OstError("n_arp_cro_1", .resetPinFailed))
                 }
             },
             onFailure: { (failureResponse) in
@@ -89,7 +89,7 @@ class OstAPIResetPin: OstAPIBase {
                         onFailure?(error as! OstError)
                     }
                 }else {
-                    onFailure?(OstError.init("n_arp_grw_1", .failedFetchRecoveryOwnerAddress))
+                    onFailure?(OstError("n_arp_grw_1", .failedFetchRecoveryOwnerAddress))
                 }
             },
              onFailure: { (failureResponse) in

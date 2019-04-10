@@ -32,7 +32,8 @@ class TokenHolder: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.abiMethodNameForAuthorizeSession)
         if (abiObject == nil) {
-            throw OstError("u_ah_th_gased_1", "ABI for \(self.abiMethodNameForAuthorizeSession) is not available.")
+            throw OstError("u_ah_th_gased_1",
+                           msg: "ABI for \(self.abiMethodNameForAuthorizeSession) is not available.")
         }
         
         let sessionAddressTobeAdded = try EthereumAddress(hex:sessionAddress, eip55: false)
@@ -55,7 +56,8 @@ class TokenHolder: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.abiMethodNameForLogout)
         if (abiObject == nil) {
-            throw OstError("u_ah_th_gased_1", "ABI for \(self.abiMethodNameForLogout) is not available.")
+            throw OstError("u_ah_th_gased_1",
+                           msg: "ABI for \(self.abiMethodNameForLogout) is not available.")
         }
         
         let solidityHander = OstSolidityHandler()

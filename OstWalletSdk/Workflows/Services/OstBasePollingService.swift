@@ -103,7 +103,7 @@ class OstBasePollingService {
                 }
             }
         }else {
-            self.failureCallback?(OstError.init("w_s_bps_gead_1", .requestTimedOut))
+            self.failureCallback?(OstError("w_s_bps_gead_1", .requestTimedOut))
         }
     }
     

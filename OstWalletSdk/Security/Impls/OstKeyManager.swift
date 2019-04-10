@@ -440,7 +440,7 @@ fileprivate extension OstKeyManager {
                     let pinHash: String = String(data: dData, encoding: .utf8)!
                     return pinHash
                 }
-                throw OstError.init("s_i_km_gph_1", .noPrivateKeyFound)
+                throw OstError("s_i_km_gph_1", .noPrivateKeyFound)
             }
         }else {
             return OstUtils.toDecodedValue(pinData) as! String
@@ -684,7 +684,7 @@ private extension OstKeyManager {
             try setMnemonicsMetaMapping(ethMetaMapping)
             return
         }
-        throw OstError.init("s_i_km_sm_1", .mnemonicsNotStored)
+        throw OstError("s_i_km_sm_1", .mnemonicsNotStored)
     }
     
     /// Store etheruem key in the keychain
@@ -780,7 +780,7 @@ private extension OstKeyManager {
                         return jsonString
                     } else {
                         // Logger.log(message: "Private key not found.")
-                        throw OstError.init("s_i_km_gs_1", .noPrivateKeyFound)
+                        throw OstError("s_i_km_gs_1", .noPrivateKeyFound)
                     }
                 }
             }else {
@@ -808,7 +808,7 @@ extension OstKeyManager {
     /// - Throws: OstError
     func signWithAPIKey(message: String) throws -> String {
         guard let apiPrivateKey = try self.getAPIKey() else{
-            throw OstError.init("s_i_km_swpk_1", .noPrivateKeyFound)
+            throw OstError("s_i_km_swpk_1", .noPrivateKeyFound)
         }
         return try sign(message, withPrivatekey: apiPrivateKey)
     }
@@ -820,7 +820,7 @@ extension OstKeyManager {
     /// - Throws: OstError
     func signWithDeviceKey(_ tx: String) throws -> String {
         guard let devicePrivateKey = try self.getDeviceKey() else{
-            throw OstError.init("s_i_km_swdk_1", .noPrivateKeyFound)
+            throw OstError("s_i_km_swdk_1", .noPrivateKeyFound)
         }
         return try signTx(tx, withPrivatekey: devicePrivateKey)
     }
@@ -832,7 +832,7 @@ extension OstKeyManager {
     /// - Throws: OstError
     func signWithSessionKey(_ tx: String, withAddress address: String) throws -> String {
         guard let sessionPrivateKey = try self.getSessionKey(forAddress: address) else{
-            throw OstError.init("s_i_km_swsk_1", .noPrivateKeyFound)
+            throw OstError("s_i_km_swsk_1", .noPrivateKeyFound)
         }
         return try signTx(tx, withPrivatekey: sessionPrivateKey)
     }
@@ -892,7 +892,7 @@ extension OstKeyManager {
         do {
             singedData = try wallet.personalSign(message: message)
         } catch {
-            throw OstError.init("s_i_km_s_1", .signTxFailed)
+            throw OstError("s_i_km_s_1", .signTxFailed)
         }
         return singedData.addHexPrefix()
     }
@@ -911,7 +911,7 @@ extension OstKeyManager {
         do {
             singedData = try priKey.sign(hash: Data(hex: tx))
         } catch {
-            throw OstError.init("s_i_km_stx_1", .signTxFailed)
+            throw OstError("s_i_km_stx_1", .signTxFailed)
         }
         singedData[64] += 27
         let singedTx = singedData.toHexString().addHexPrefix();

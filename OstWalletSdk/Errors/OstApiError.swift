@@ -18,8 +18,8 @@ public class OstApiError: OstError {
         self.isApiError = true
     }
     
-    override init(_ code: String, _ errorMessage: String) {
-        super.init(code, errorMessage)
+    override init(_ code: String, msg errorMessage: String) {
+        super.init(code, msg: errorMessage)
         self.isApiError = true
     }
     

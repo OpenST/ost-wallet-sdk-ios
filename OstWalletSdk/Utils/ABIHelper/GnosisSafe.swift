@@ -31,7 +31,7 @@ class GnosisSafe: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.ADD_OWNER_ABI_METHOD_NAME)
         if (abiObject == nil) {
-            throw OstError("u_ah_gs_gaowted_1", "ABI for \(self.ADD_OWNER_ABI_METHOD_NAME) is not available.")
+            throw OstError("u_ah_gs_gaowted_1", msg: "ABI for \(self.ADD_OWNER_ABI_METHOD_NAME) is not available.")
         }
         
         let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
@@ -61,7 +61,8 @@ class GnosisSafe: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.REVOKE_DEVICE_ABI_METHOD_NAME)
         if (abiObject == nil) {
-            throw OstError("u_ah_gs_grdwted_1", "ABI for \(self.REVOKE_DEVICE_ABI_METHOD_NAME) is not available.")
+            throw OstError("u_ah_gs_grdwted_1",
+                           msg: "ABI for \(self.REVOKE_DEVICE_ABI_METHOD_NAME) is not available.")
         }
         
         let prevOwnerAddress = try EthereumAddress(hex:prevOwner, eip55: false)

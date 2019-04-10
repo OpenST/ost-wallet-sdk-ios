@@ -41,9 +41,9 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePinLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vpl_1",
-                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                msg: "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }
@@ -52,9 +52,9 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePassphrasePrefixLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.passphrasePrefix.count {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vpwdl_1",
-                "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
+                msg: "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
             )
         }
     }
@@ -313,9 +313,9 @@ class OstPinManager {
         try self.fetchSalt()
         
         if self.salt!.count == 0 {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vsl_1",
-                "Invalid salt"
+                msg: "Invalid salt"
             )
         }
     }
@@ -325,9 +325,9 @@ class OstPinManager {
     /// - Throws: OstError
     private func validateNewPinLength() throws {
         if (self.newUserPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_v_1",
-                "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                msg: "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }

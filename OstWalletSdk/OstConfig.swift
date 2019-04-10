@@ -101,6 +101,7 @@ class OstConfig {
         }
     }
 
+    //MARK: - Getter
     class func getBlockGenerationTime() -> Int {
         return blockGenerationTime!
     }

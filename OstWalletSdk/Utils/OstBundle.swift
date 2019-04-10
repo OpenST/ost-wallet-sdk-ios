@@ -88,7 +88,8 @@ class OstBundle {
             let contents = try String(contentsOfFile: filepath)
             return contents
         }
-        throw OstError.init("u_b_gfc_1", "File not found: \(fileName)")
+        throw OstError("u_b_gfc_1",
+                            msg: "File not found: \(fileName)")
     }
     
     /// Get permission description

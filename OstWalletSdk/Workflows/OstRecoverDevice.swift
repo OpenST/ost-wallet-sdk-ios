@@ -55,7 +55,7 @@ class OstRecoverDevice: OstWorkflowEngine {
     override func validateParams() throws {
         try super.validateParams()
         if !self.deviceAddressToRecover.isValidAddress {
-            throw OstError.init("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
+            throw OstError("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
         }
         try self.pinManager.validatePin()
         try self.pinManager.validatePassphrasePrefixLength()

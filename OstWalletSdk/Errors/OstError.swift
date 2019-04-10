@@ -30,7 +30,7 @@ public class OstError: Error {
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
-    init(_ code: String, _ errorMessage: String) {
+    init(_ code: String, msg errorMessage: String) {
         self.internalCode = code
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
