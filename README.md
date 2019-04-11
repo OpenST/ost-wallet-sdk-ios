@@ -16,7 +16,7 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Swift version: 4.2
 
 ## Dependencies
-We use open-source code from the projects listed below.The setup section below provides instructions on adding the packages to your code. 
+We use open-source code from the projects listed below. The `Setup` section below provides instructions on adding the packages to your code. 
 - [Alamofire](https://github.com/Alamofire/Alamofire)
 - [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
 - [EthereumKit](https://github.com/D-Technologies/EthereumKit)
