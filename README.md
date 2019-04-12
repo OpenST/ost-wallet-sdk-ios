@@ -87,6 +87,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 - _UseSeedPassword_: Uses mnemonics and password to generate seed.
+
 **Please remember to add these configurations. Failing to do so may cause the application to crash **
 
 ## Enable FaceID Authentication
