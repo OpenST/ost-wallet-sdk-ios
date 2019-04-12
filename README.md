@@ -88,7 +88,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 - _UseSeedPassword_: Uses mnemonics and password to generate seed.
 
-**Please remember to add these configurations. Failing to do so may cause the application to crash **
+**Please remember to add these configurations. Failing to do so may cause the application to crash**
 
 ## Enable FaceID Authentication
 To authenticate user using FaceID on devices that support it, please add [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsfaceidusagedescription) to your application's `Info.plist`.
