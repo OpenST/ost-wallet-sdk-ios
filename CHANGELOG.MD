@@ -1,5 +1,11 @@
 # OST Wallet SDK Changelog
 
+## Version 2.0.2
+
+### Changes:
+* Add Dependencies to the Readme
+* Update the recommended configurations
+
 ## Version 2.0.1
 
 ### Changes:
