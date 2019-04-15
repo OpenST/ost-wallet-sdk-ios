@@ -42,14 +42,13 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         try isUserActivated()
-        try validateDeviceForWorkflow()
     }
     
-    /// Validate device as per workflow
+    /// Check for current device authorization
     ///
-    /// - Throws: OstError
-    func validateDeviceForWorkflow() throws{
-        try isDeviceAuthorized()
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
     }
     
     /// Process

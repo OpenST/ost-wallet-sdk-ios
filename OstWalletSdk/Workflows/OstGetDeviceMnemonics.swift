@@ -25,7 +25,6 @@ class OstGetDeviceMnemonics: OstUserAuthenticatorWorkflow {
     /// - Throws: OstError
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
-        
         try isUserActivated()
     }
     

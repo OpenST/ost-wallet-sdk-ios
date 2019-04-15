@@ -98,6 +98,13 @@ class OstActivateUser: OstWorkflowEngine {
         }
     }
     
+    /// Check for current device authorization
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
     /// Activate user on device validated
     ///
     /// - Throws: OstError

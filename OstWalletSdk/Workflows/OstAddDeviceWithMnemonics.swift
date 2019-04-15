@@ -54,11 +54,11 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
         } 
     }
     
-    /// Validate device as per workflow
+    /// Check for current device authorization
     ///
-    /// - Throws: OstError
-    override func validateDeviceForWorkflow() throws{
-        try isDeviceRegistered()
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
     }
     
     /// Fetch device after device validated

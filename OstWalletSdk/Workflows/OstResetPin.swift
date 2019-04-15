@@ -64,6 +64,12 @@ class OstResetPin: OstWorkflowEngine {
         try isUserActivated()
     }
     
+    /// Check for current device authorization
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
     
     /// Reset pin after device validated.
     ///

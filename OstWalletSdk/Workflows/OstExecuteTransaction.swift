@@ -157,16 +157,6 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         }
     }
     
-    /// Perform user device validation
-    ///
-    /// - Throws: OstError
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        try isUserActivated()
-        try isDeviceAuthorized()
-    }
-    
     /// Execute transaction
     ///
     /// - Throws: OstError
