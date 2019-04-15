@@ -113,32 +113,10 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     
     /// Authorize device after user authenticated.
     override func onUserAuthenticated() throws {
-        try fetchDeviceManager()
+         _ = try syncDeviceManager()
         try revokeDevice()
     }
-    
-    /// Get device manager from server
-    ///
-    /// - Throws: OstError
-    func fetchDeviceManager() throws {
-        var error: OstError? = nil
-        let group: DispatchGroup = DispatchGroup()
-        group.enter()
-        try OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: { (_) in
-                    group.leave()
-            }) { (ostError) in
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-        
-        if (nil != error) {
-            throw error!
-        }
-    }
-    
+   
     /// Revoke device
     func revokeDevice() throws {
         let revokeDeviceWithQRSigner = OstKeyManagerGateway
@@ -155,7 +133,6 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
                             self.pollingForRevokeDevice()
             
         }) { (error) in
-            try? self.fetchDeviceManager()
             self.postError(error)
         }
     }
@@ -168,7 +145,6 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         
         let failureCallback:  ((OstError) -> Void) = { error in
             DispatchQueue.init(label: "retryQueue").async {
-                try? self.fetchDeviceManager()
                 self.postError(error)
             }
         }
@@ -181,43 +157,6 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
                                 successCallback: successCallback,
                                 failureCallback:failureCallback).perform()
     }
-
-    /// Revoke device workflow after user authenticated.
-//    override func onUserAuthenticated() throws {
-//        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-//            return (nil, nil)
-////            do {
-////                let keychainManager = OstKeyManager(userId: self.userId)
-////                if let deviceAddress = keychainManager.getDeviceAddress() {
-////                    let signature = try keychainManager.signWithDeviceKey(signingHash)
-////                    return (signature, deviceAddress)
-////                }
-////                throw OstError("w_rd_pwfaau_1", .apiSignatureGenerationFailed);
-////            }catch {
-////                return (nil, nil)
-////            }
-//        }
-//
-//        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-//            self.postWorkflowComplete(entity: ostDevice)
-//        }
-//
-//        let onFailure: ((OstError) -> Void) = { (error) in
-//            self.postError(error)
-//        }
-//
-//        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-//            self.postRequestAcknowledged(entity: ostDevice)
-//        }
-//
-//        OstRevokeDevice(userId: self.userId,
-//                        linkedAddress: self.deviceToRevoke!.linkedAddress!,
-//                        deviceAddressToRevoke: self.deviceToRevoke!.address!,
-//                        generateSignatureCallback: generateSignatureCallback,
-//                        onRequestAcknowledged: onRequestAcknowledged,
-//                        onSuccess: onSuccess,
-//                        onFailure: onFailure).perform()
-//    }
 
     /// Get current workflow context
     ///

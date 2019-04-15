@@ -102,30 +102,8 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
     
     /// Authorize device after user authenticated.
     override func onUserAuthenticated() throws {
-        try fetchDeviceManager()
+        _ = try syncDeviceManager()
         try authorizeDevice()
-    }
-    
-    /// Get device manager from server
-    ///
-    /// - Throws: OstError
-    func fetchDeviceManager() throws {
-        var error: OstError? = nil
-        let group: DispatchGroup = DispatchGroup()
-        group.enter()
-        try OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: { (_) in
-                    group.leave()
-            }) { (ostError) in
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-        
-        if (nil != error) {
-            throw error!
-        }
     }
     
     /// API request for authorize device

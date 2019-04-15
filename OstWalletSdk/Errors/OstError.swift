@@ -24,21 +24,21 @@ public class OstError: Error {
     public var errorInfo: [String: Any]? = nil
 
     init(_ code: String, _ messageTextCode: OstErrorText) {
-        self.internalCode = code
+        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(code)"
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode;
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
     init(_ code: String, msg errorMessage: String) {
-        self.internalCode = code
+        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(code)"
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
     }
     
     init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
-        self.internalCode = err["code"] as! String
+        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(err["code"] as! String)"
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response

@@ -15,7 +15,7 @@ class OstWorkflowEngine {
     let userId: String
     weak var delegate: OstWorkflowDelegate?
     let workflowStateManager: OstWorkflowStateManager
-
+    
     var currentUser: OstUser? {
         do {
             return try OstUser.getById(self.userId)
@@ -80,26 +80,32 @@ class OstWorkflowEngine {
     /// Process
     func process() throws {
         switch self.workflowStateManager.getCurrentState() {
-        case OstWorkflowStateManager.INITIAL:
+        case OstWorkflowStateManager.INITIAL: do {
             try validateParams()
             try processNext()
+            }
             
-        case OstWorkflowStateManager.PARAMS_VALIDATED:
+        case OstWorkflowStateManager.PARAMS_VALIDATED: do {
             try performUserDeviceValidation()
             try onUserDeviceValidated()
+            }
             
-        case OstWorkflowStateManager.DEVICE_VALIDATED:
+        case OstWorkflowStateManager.DEVICE_VALIDATED: do {
             try onDeviceValidated()
+            }
             
-        case OstWorkflowStateManager.COMPLETED:
+        case OstWorkflowStateManager.COMPLETED: do {
             onWorkflowComplete()
+            }
             
-        case OstWorkflowStateManager.CANCELLED:
-             let ostError:OstError = OstError("w_we_p_1", OstErrorText.userCanceled)
+        case OstWorkflowStateManager.CANCELLED: do {
+            let ostError:OstError = OstError("w_we_p_1", OstErrorText.userCanceled)
             self.postError(ostError)
+            }
             
-        default:
+        default: do {
             throw OstError("w_we_p_2", OstErrorText.unknown)
+            }
         }
     }
     
@@ -118,39 +124,34 @@ class OstWorkflowEngine {
     func validateParams() throws {
         //Common checks not present.
     }
-
+    
     /// Perform user device validation
     ///
     /// - Throws: OstError
     func performUserDeviceValidation() throws {
-        if(nil == self.currentUser) {
-            throw OstError("w_we_vp_1", .userNotFound)
-        }
-        if(nil == self.currentDevice) {
-            throw OstError("w_we_vp_2", .deviceNotSet)
-        }
-        try isAPIKeyAvailable()
-        try isTokenAvailable()
+        //Ensure sdk can make Api calls
+        try ensureApiCommunication()
         
-        try ensureEntities()
+        // Ensure we have OstUser complete entity.
+        try ensureUser()
+        
+        // Ensure we have OstToken complete entity.
+        try ensureToken()
+        
+        if shouldCheckCurrentDeviceAuthorization() {
+            //Ensure Device is Authorized.
+            try ensureDeviceAuthorized()
+            
+            //Ensures Device Manager is present as derived classes are likely going to need nonce.
+            try ensureDeviceManager()
+        }
     }
     
-    /// Perform any tasks that are prerequisite for the workflow,
-    /// this is called before validateParams() and process()
+    /// Check for current device authorization
     ///
-    /// - Throws: OstError
-    func ensureEntities() throws {
-        let group = DispatchGroup()
-        group.enter()
-        OstSdkSync(
-            userId: self.userId,
-            forceSync: false,
-            syncEntites: .User, .Token, .CurrentDevice, onCompletion: { (isFetched) in
-                group.leave()
-        }
-            ).perform()
-        
-        group.wait()
+    /// - Returns: `true` if check required, else `false`
+    func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return true
     }
     
     /// On user and device validated
@@ -243,7 +244,6 @@ extension OstWorkflowEngine {
     ///
     /// - Parameter error: OstError
     func postError(_ error: Error) {
-        
         let errorWorkflowContext: OstWorkflowContext = self.getWorkflowContext()
         DispatchQueue.main.async {
             if ( error is OstError ) {

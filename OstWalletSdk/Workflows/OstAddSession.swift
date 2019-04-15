@@ -61,33 +61,11 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
     
     /// Proceed with workflow after user is authenticated.
     override func onUserAuthenticated() throws {
-        try fetchDeviceManager()
+        _ = try syncDeviceManager()
         self.sessionData = try OstSessionHelper(userId: self.userId,
                                                 expiresAfter: self.expireAfter,
                                                 spendingLimit: self.spendingLimit).getSessionData()
         try self.authorizeSession()
-    }
-    
-    /// Get device manager from server
-    ///
-    /// - Throws: OstError
-    func fetchDeviceManager() throws {
-        var error: OstError? = nil
-        let group: DispatchGroup = DispatchGroup()
-        group.enter()
-        try OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: { (_) in
-                    group.leave()
-            }) { (ostError) in
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-        
-        if (nil != error) {
-            throw error!
-        }
     }
     
     /// Authorize session
