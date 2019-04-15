@@ -70,7 +70,9 @@ class OstPinManager {
     func validatePin() throws{
         try self.validate()
         let user = try self.fetchUser()
-        
+        if nil == user.recoveryOwnerAddress {
+            throw OstError("s_ecki_pm_vp_1", .recoveryOwnerAddressNotFound)
+        }
         let isValid = self.keyManagareDelegate
             .verifyPin(passphrasePrefix: self.passphrasePrefix,
                        userPin: self.userPin,
@@ -327,7 +329,9 @@ class OstPinManager {
     ///
     /// - Throws: OstError
     private func validateNewPinLength() throws {
-        if (self.newUserPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
+        if (self.newUserPin == nil
+            || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
+            
             throw OstError(
                 "w_wh_pm_v_1",
                 msg: "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"

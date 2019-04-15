@@ -89,12 +89,12 @@ class OstAPIBase {
             return
         }
         
-//        Logger.log(message: "\(method.rawValue): \(url)", parameterToPrint: params as Any)
+//        Logger.log(message: "Request:- \(method.rawValue):- \(url)", parameterToPrint: params as Any)
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
         // Status code in 200 range will be considered as correct response
 //        dataRequest?.validate(statusCode: 200..<300)
         dataRequest!.responseJSON { (httpResponse) in
-//            Logger.log(message: "\(method.rawValue): \(httpResponse.response?.url?.relativePath ?? "")", parameterToPrint: httpResponse.result.value);
+//            Logger.log(message: "Response:- \(method.rawValue):- \(httpResponse.response?.url?.relativePath ?? "")", parameterToPrint: httpResponse.result.value);
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
             if (httpResponse.result.isSuccess && isSuccess) {
                 let responseEntity = ((httpResponse.result.value as? [String : Any?])?["data"] ?? httpResponse.result.value) as? [String : Any]

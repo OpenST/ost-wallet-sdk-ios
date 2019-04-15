@@ -37,9 +37,7 @@ class OstResetPin: OstWorkflowEngine {
             userPin: oldUserPin,
             newUserPin: newUserPin
         )
-        
-        
-        
+
         super.init(userId: userId, delegate: delegate)
     }
     
