@@ -87,7 +87,6 @@ class OstWorkflowEngine {
         case OstWorkflowStateManager.PARAMS_VALIDATED:
             try performUserDeviceValidation()
             try onUserDeviceValidated()
-            try processNext()
             
         case OstWorkflowStateManager.DEVICE_VALIDATED:
             try onDeviceValidated()
@@ -162,6 +161,7 @@ class OstWorkflowEngine {
         //From here, sub-class can choose to 'jump' to other step by setting current-state = state-to-jump-to.
         //Here, the sub-class can also throw error, which will terminate the workflow after calling
         // postErrorInterupt.
+        try processNext()
     }
     
     /// On device validated

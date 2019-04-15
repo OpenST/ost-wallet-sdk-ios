@@ -65,6 +65,11 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         }
     }
     
+    override func onDeviceValidated() throws {
+        try fetchDevice()
+        try super.onDeviceValidated()
+    }
+    
     /// Fetch device to validate mnemonics
     ///
     /// - Throws: OstError
