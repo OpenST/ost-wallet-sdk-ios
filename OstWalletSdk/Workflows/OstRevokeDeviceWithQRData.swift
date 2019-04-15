@@ -110,42 +110,114 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
             throw OstError("w_rdwqrd_fd_3", OstErrorText.linkedAddressNotFound)
         }
     }
-
-    /// Revoke device workflow after user authenticated.
-    override func onUserAuthenticated() {
-        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-            do {
-                let keychainManager = OstKeyManager(userId: self.userId)
-                if let deviceAddress = keychainManager.getDeviceAddress() {
-                    let signature = try keychainManager.signWithDeviceKey(signingHash)
-                    return (signature, deviceAddress)
-                }
-                throw OstError("w_rd_pwfaau_1", .apiSignatureGenerationFailed);
-            }catch {
-                return (nil, nil)
-            }
+    
+    /// Authorize device after user authenticated.
+    override func onUserAuthenticated() throws {
+        try fetchDeviceManager()
+        try revokeDevice()
+    }
+    
+    /// Get device manager from server
+    ///
+    /// - Throws: OstError
+    func fetchDeviceManager() throws {
+        var error: OstError? = nil
+        let group: DispatchGroup = DispatchGroup()
+        group.enter()
+        try OstAPIDeviceManager(userId: self.userId)
+            .getDeviceManager(
+                onSuccess: { (_) in
+                    group.leave()
+            }) { (ostError) in
+                error = ostError
+                group.leave()
         }
+        group.wait()
         
-        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+        if (nil != error) {
+            throw error!
+        }
+    }
+    
+    /// Revoke device
+    func revokeDevice() throws {
+        let revokeDeviceWithQRSigner = OstKeyManagerGateway
+            .getOstRevokeDeviceSigner(userId: self.userId,
+                                      linkedAddress: self.deviceToRevoke!.linkedAddress!,
+                                      deviceAddressToRevoke: self.deviceToRevoke!.address!)
+        let revokeDeviceParams = try revokeDeviceWithQRSigner.getApiParams()
+        
+        try OstAPIDevice(userId: self.userId)
+            .revokeDevice(params: revokeDeviceParams,
+                          onSuccess: { (ostDevice) in
+                            
+                            self.postRequestAcknowledged(entity: ostDevice)
+                            self.pollingForRevokeDevice()
+            
+        }) { (error) in
+            try? self.fetchDeviceManager()
+            self.postError(error)
+        }
+    }
+    
+    /// Polling for device
+    func pollingForRevokeDevice() {
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
             self.postWorkflowComplete(entity: ostDevice)
         }
         
-        let onFailure: ((OstError) -> Void) = { (error) in
-            self.postError(error)
+        let failureCallback:  ((OstError) -> Void) = { error in
+            DispatchQueue.init(label: "retryQueue").async {
+                try? self.fetchDeviceManager()
+                self.postError(error)
+            }
         }
         
-        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-            self.postRequestAcknowledged(entity: ostDevice)
-        }
-        
-        OstRevokeDevice(userId: self.userId,
-                        linkedAddress: self.deviceToRevoke!.linkedAddress!,
-                        deviceAddressToRevoke: self.deviceToRevoke!.address!,
-                        generateSignatureCallback: generateSignatureCallback,
-                        onRequestAcknowledged: onRequestAcknowledged,
-                        onSuccess: onSuccess,
-                        onFailure: onFailure).perform()
+        OstDevicePollingService(userId: self.userId,
+                                deviceAddress: self.deviceAddressToRevoke,
+                                workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                successStatus: OstDevice.Status.REVOKED.rawValue,
+                                failureStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                successCallback: successCallback,
+                                failureCallback:failureCallback).perform()
     }
+
+    /// Revoke device workflow after user authenticated.
+//    override func onUserAuthenticated() throws {
+//        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+//            return (nil, nil)
+////            do {
+////                let keychainManager = OstKeyManager(userId: self.userId)
+////                if let deviceAddress = keychainManager.getDeviceAddress() {
+////                    let signature = try keychainManager.signWithDeviceKey(signingHash)
+////                    return (signature, deviceAddress)
+////                }
+////                throw OstError("w_rd_pwfaau_1", .apiSignatureGenerationFailed);
+////            }catch {
+////                return (nil, nil)
+////            }
+//        }
+//
+//        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+//            self.postWorkflowComplete(entity: ostDevice)
+//        }
+//
+//        let onFailure: ((OstError) -> Void) = { (error) in
+//            self.postError(error)
+//        }
+//
+//        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+//            self.postRequestAcknowledged(entity: ostDevice)
+//        }
+//
+//        OstRevokeDevice(userId: self.userId,
+//                        linkedAddress: self.deviceToRevoke!.linkedAddress!,
+//                        deviceAddressToRevoke: self.deviceToRevoke!.address!,
+//                        generateSignatureCallback: generateSignatureCallback,
+//                        onRequestAcknowledged: onRequestAcknowledged,
+//                        onSuccess: onSuccess,
+//                        onFailure: onFailure).perform()
+//    }
 
     /// Get current workflow context
     ///

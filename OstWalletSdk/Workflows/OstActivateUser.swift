@@ -41,9 +41,10 @@ class OstActivateUser: OstWorkflowEngine {
         
         super.init(userId: userId, delegate: delegate)
         
-        self.pinManager = OstPinManager(userId: self.userId,
-                                        passphrasePrefix: passphrasePrefix,
-                                        userPin: userPin)
+        self.pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: self.userId,
+                              passphrasePrefix: passphrasePrefix,
+                              userPin: userPin)
     }
     
     /// Get workflow queue.

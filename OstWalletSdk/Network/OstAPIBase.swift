@@ -117,7 +117,9 @@ class OstAPIBase {
                 if let user = try? OstUser.getById(self.userId),
                     let device = user?.getCurrentDevice() {
                     if !device.isStatusCreated {
-                        try? OstKeyManager(userId: self.userId).clearUserDeviceInfo()
+                        try? OstKeyManagerGateway
+                            .getOstKeyManager(userId: self.userId)
+                            .clearUserDeviceInfo()
                     }
                 }
             }

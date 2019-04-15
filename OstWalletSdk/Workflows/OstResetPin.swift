@@ -30,12 +30,16 @@ class OstResetPin: OstWorkflowEngine {
          newUserPin: String,
          delegate: OstWorkflowDelegate) {
 
-        self.pinManager = OstPinManager(
-            userId: userId,
+        self.pinManager =
+            OstKeyManagerGateway.getOstPinManager(
+                userId: userId,
             passphrasePrefix: passphrasePrefix,
             userPin: oldUserPin,
             newUserPin: newUserPin
         )
+        
+        
+        
         super.init(userId: userId, delegate: delegate)
     }
     

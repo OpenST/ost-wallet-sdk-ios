@@ -75,7 +75,9 @@ extension OstWorkflowEngine {
     ///
     /// - Throws: OstError
     func isAPIKeyAvailable() throws {
-        guard let apiAddress = OstKeyManager(userId: self.currentUser!.id).getAPIAddress() else {
+        guard let apiAddress = OstKeyManagerGateway
+            .getOstKeyManager(userId: self.currentUser!.id)
+            .getAPIAddress() else {
             throw OstError("w_wfv_ialv_1", OstErrorText.apiAddressNotFound)
         }
         if (apiAddress.isEmpty) {

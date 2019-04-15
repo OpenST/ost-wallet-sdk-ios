@@ -24,6 +24,7 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     }
     
     static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .userInitiated)
+    private let workflowTransactionCountForPolling = 1
     private let deviceAddress: String
     
     private var deviceToAdd: OstDevice? = nil
@@ -100,39 +101,113 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     }
     
     /// Authorize device after user authenticated.
-    override func onUserAuthenticated() {
-        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-            do {
-                let keychainManager = OstKeyManager(userId: self.userId)
-                if let deviceAddress = keychainManager.getDeviceAddress() {
-                    let signature = try keychainManager.signWithDeviceKey(signingHash)
-                    return (signature, deviceAddress)
-                }
-                throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);
-            }catch {
-                return (nil, nil)
-            }
+    ///
+    /// - Throws: OstError
+    override func onUserAuthenticated() throws {
+        try fetchDeviceManager()
+        try authorizeDevice()
+    }
+    
+    /// Get device manager from server
+    ///
+    /// - Throws: OstError
+    func fetchDeviceManager() throws {
+        var error: OstError? = nil
+        let group: DispatchGroup = DispatchGroup()
+        group.enter()
+        try OstAPIDeviceManager(userId: self.userId)
+            .getDeviceManager(
+                onSuccess: { (_) in
+                    group.leave()
+            }) { (ostError) in
+                error = ostError
+                group.leave()
         }
+        group.wait()
         
-        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+        if (nil != error) {
+            throw error!
+        }
+    }
+    
+    /// API request for authorize device
+    ///
+    /// - Parameter params: API parameters for authorize device
+    /// - Throws: OstError
+    func authorizeDevice() throws {
+        
+        let authorizeDeviceMangerWithQRSigner = OstKeyManagerGateway
+            .getOstAuthorizeDeviceWithQRSigner(userId: self.userId,
+                                            deviceAddressToAdd: self.deviceAddress)
+        let authorizeDeviceParams = try authorizeDeviceMangerWithQRSigner.getApiParams()
+        
+        try OstAPIDevice(userId: self.userId)
+            .authorizeDevice(params: authorizeDeviceParams,
+                             onSuccess: { (ostDevice) in
+                                
+                                self.postRequestAcknowledged(entity: ostDevice)
+                                self.pollingForAuthorizeDevice()
+            }) { (error) in
+                self.postError(error)
+        }
+    }
+    
+    /// Polling for device
+    func pollingForAuthorizeDevice() {
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
             self.postWorkflowComplete(entity: ostDevice)
         }
         
-        let onFailure: ((OstError) -> Void) = { (error) in
-            self.postError(error)
+        let failureCallback:  ((OstError) -> Void) = { error in
+            DispatchQueue.init(label: "retryQueue").async {
+                self.postError(error)
+            }
         }
         
-        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-            self.postRequestAcknowledged(entity: ostDevice)
-        }
-        
-        OstAuthorizeDevice(userId: self.userId,
-                           deviceAddressToAdd: self.deviceAddress,
-                           generateSignatureCallback: generateSignatureCallback,
-                           onRequestAcknowledged: onRequestAcknowledged,
-                           onSuccess: onSuccess,
-                           onFailure: onFailure).perform()
+        OstDevicePollingService(userId: self.userId,
+                                deviceAddress: self.deviceAddress,
+                                workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                successStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                failureStatus: OstDevice.Status.REGISTERED.rawValue,
+                                successCallback: successCallback,
+                                failureCallback:failureCallback).perform()
     }
+    
+    /// Authorize device after user authenticated.
+//    override func onUserAuthenticated() throws {
+//        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
+//            return (nil, nil)
+////            do {
+////                let keyManager: OstKeyManager = OstKeyManager(userId: self.userId)
+////                if let deviceAddress = keyManager.getDeviceAddress() {
+////                    let signature = try keyManager.signWithDeviceKey(signingHash)
+////                    return (signature, deviceAddress)
+////                }
+////                throw OstError("w_adwqd_pwfaau_1", .apiSignatureGenerationFailed);
+////            }catch {
+////                return (nil, nil)
+////            }
+//        }
+//
+//        let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
+//            self.postWorkflowComplete(entity: ostDevice)
+//        }
+//
+//        let onFailure: ((OstError) -> Void) = { (error) in
+//            self.postError(error)
+//        }
+//
+//        let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
+//            self.postRequestAcknowledged(entity: ostDevice)
+//        }
+//
+//        OstAuthorizeDevice(userId: self.userId,
+//                           deviceAddressToAdd: self.deviceAddress,
+//                           generateSignatureCallback: generateSignatureCallback,
+//                           onRequestAcknowledged: onRequestAcknowledged,
+//                           onSuccess: onSuccess,
+//                           onFailure: onFailure).perform()
+//    }
     
     /// Get current workflow context
     ///

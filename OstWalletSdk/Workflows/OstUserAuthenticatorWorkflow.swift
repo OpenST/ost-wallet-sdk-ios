@@ -67,7 +67,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
             try onPinInfoReceived()
             
         case OstUserAuthenticatorWorkflow.AUTHENTICATED:
-            self.onUserAuthenticated()
+            try self.onUserAuthenticated()
             
         default:
             try super.process()
@@ -110,9 +110,10 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         
         self.enterPinCount += 1
         
-        let pinManager = OstPinManager(userId: self.userId,
-                                       passphrasePrefix: userPassphrase.passphrasePrefix,
-                                       userPin: userPassphrase.userPin)
+        let pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: self.userId,
+                              passphrasePrefix: userPassphrase.passphrasePrefix,
+                              userPin: userPassphrase.userPin)
         do {
             try pinManager.validatePin()
             DispatchQueue.main.async {
@@ -136,7 +137,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     //MARK: - Methods to override
     
     /// Proceed with workflow after user is authenticated.
-    func onUserAuthenticated() {
+    func onUserAuthenticated() throws {
         fatalError("processOperation is not override")
     }
 }

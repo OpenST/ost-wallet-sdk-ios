@@ -12,18 +12,18 @@ import Foundation
 
 class OstMnemonicsKeyManager {
 
-    private let mnemonics: [String]
+    let mnemonics: [String]
     private let userId: String
     private(set) var ethereumAddress: String? = nil
-
-    // MARK: - Initializers
     
     /// Class initializer
     ///
     /// - Parameters:
     ///   - mnemonics: 12 words mnemonics
     ///   - userId: User id whose keys will be managed.
-    init (withMnemonics mnemonics:[String], andUserId userId: String) {
+    init (withMnemonics mnemonics:[String],
+          andUserId userId: String) {
+        
         self.mnemonics = mnemonics
         self.userId = userId
     }
@@ -31,11 +31,7 @@ class OstMnemonicsKeyManager {
     /// Get address
     var address :  String? {
         if self.ethereumAddress == nil {
-            do {
-                _ = try createWallet()
-            } catch {
-                return nil
-            }
+            _ = createWallet()
         }
         return ethereumAddress
     }
@@ -48,35 +44,29 @@ class OstMnemonicsKeyManager {
         if (filteredWordsArray.isEmpty) {
             return false
         }
-        var isValid = true
-        do {
-            guard let ostWalletKeys: OstWalletKeys = try createWallet() else {
-                return false
-            }
-            if (ostWalletKeys.privateKey == nil || ostWalletKeys.address == nil) {
-                isValid = false
-            }
-        } catch {
-            isValid = false
-        }
-        return isValid
+        return isValidMnemonics()
     }
     
-    /// Sign with Mnemonics
+    /// Validate mnemonics
     ///
-    /// - Parameter tx: Transaction string
-    /// - Returns: Signed message
-    /// - Throws: OstError
-    func sign(_ tx: String) throws -> String {
-        let keyManager = OstKeyManager(userId: self.userId)
-        return try keyManager.signWithExternalDevice(tx, withMnemonics: self.mnemonics)
+    /// - Returns: Boolean
+    private func isValidMnemonics() -> Bool {
+        guard let ostWalletKeys: OstWalletKeys = createWallet() else {
+            return false
+        }
+        if (ostWalletKeys.privateKey == nil
+            || ostWalletKeys.address == nil) {
+            
+            return false
+        }
+        return true
     }
     
     /// Create OstWalletKey object
     ///
     /// - Returns: OstWalletKeys
     /// - Throws: OstError
-    private func createWallet() throws -> OstWalletKeys? {
+    private func createWallet() -> OstWalletKeys? {
         do {
             let ostWalletKeys: OstWalletKeys = try OstCryptoImpls()
                 .generateEthereumKeys(userId: self.userId,

@@ -80,8 +80,8 @@ struct EthMetaMapping {
 }
 
 /// Class for managing the ethereum keys.
-class OstKeyManager {
-    typealias SignedData = (address: String, signature: String)
+private class OstInternalKeyManager : OstKeyManagerDelegate {
+//    typealias SignedData = (address: String, signature: String)
     
     // MARK: - Instance varaibles
     
@@ -105,9 +105,12 @@ class OstKeyManager {
     init (userId: String) {
         self.userId = userId
         self.keychainHelper = OstKeychainHelper(service: SERVICE_NAME)
-        self.secureEnclaveIdentifier = OstKeyManager.getSecureEnclaveKey(forUserId: userId)
+        self.secureEnclaveIdentifier = OstInternalKeyManager.getSecureEnclaveKey(forUserId: userId)
     }
     
+    /// Clear user device ifor
+    ///
+    /// - Throws: OstError
     func clearUserDeviceInfo() throws {
         try setUserDeviceInfo(deviceInfo: [ : ])
     }
@@ -272,6 +275,14 @@ class OstKeyManager {
 
     //MARK: - Recovery
     
+    /// Get recovery owner address
+    ///
+    /// - Parameters:
+    ///   - passphrasePrefix: Passphrase prefix
+    ///   - userPin: User pin
+    ///   - salt: Salt used to create recovery owner address
+    /// - Returns: Recovery owner address
+    /// - Throws: OstError
     func getRecoveryOwnerAddressFrom(
         passphrasePrefix: String,
         userPin: String,
@@ -355,7 +366,7 @@ class OstKeyManager {
 }
 
 // MARK: - Pin hash related functions
-fileprivate extension OstKeyManager {
+private extension OstInternalKeyManager {
 
     /// Generate pin hash from given parameters
     ///
@@ -482,7 +493,7 @@ fileprivate extension OstKeyManager {
 }
 
 // MARK: - MetaMapping getters and setters
-fileprivate extension OstKeyManager {
+private extension OstInternalKeyManager {
     /// Set the eth meta mapping in the keychain
     ///
     /// - Parameter ethMetaMapping: EthMetaMapping object that needs to be stored in keychain
@@ -533,7 +544,7 @@ fileprivate extension OstKeyManager {
 }
 
 // MARK: - Lookup storage keys
-fileprivate extension OstKeyManager {
+private extension OstInternalKeyManager {
     /// Get the storage key for user device info
     ///
     /// - Parameter userId: User id for key formation
@@ -578,12 +589,12 @@ fileprivate extension OstKeyManager {
     ///
     /// - Returns: Storage key for user device info
     func getCurrentUserDeviceInfoStorageKey() -> String {
-        return OstKeyManager.getUserDeviceInfoStorageKey(forUserId: self.userId);
+        return OstInternalKeyManager.getUserDeviceInfoStorageKey(forUserId: self.userId);
     }
 }
 
 // MARK: - Private functions
-private extension OstKeyManager {
+private extension OstInternalKeyManager {
     /// Get the user device info for the current user
     ///
     /// - Returns: User device info dictionary
@@ -676,7 +687,7 @@ private extension OstKeyManager {
     ///   - address: Ethereum address
     /// - Throws: OSTError
     func storeMnemonics(_ mnemonics: [String], forAddress address: String) throws {
-        let entityId = OstKeyManager.getMnemonicsStorageKey(forAddress: address)
+        let entityId = OstInternalKeyManager.getMnemonicsStorageKey(forAddress: address)
         var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
         
         if let jsonString = try OstUtils.toJSONString(mnemonics) {
@@ -694,7 +705,7 @@ private extension OstKeyManager {
     ///   - address: Ethereum address
     /// - Throws: OSTError
     func storeEthereumKey(_ key: String, forAddress address: String) throws {
-        let entityId = OstKeyManager.getAddressStorageKey(forAddress: address)
+        let entityId = OstInternalKeyManager.getAddressStorageKey(forAddress: address)
         var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
         try storeString(key, ethMetaMapping: &ethMetaMapping)
         try setEthKeyMetaMapping(ethMetaMapping)
@@ -707,7 +718,7 @@ private extension OstKeyManager {
     ///   - address: Ethereum address
     /// - Throws: OSTError
     func storeSessionKey(_ key: String, forAddress address: String) throws {
-        let entityId = OstKeyManager.getAddressStorageKey(forAddress: address)
+        let entityId = OstInternalKeyManager.getAddressStorageKey(forAddress: address)
         var ethMetaMapping = EthMetaMapping(address: address, entityId: entityId, identifier: self.secureEnclaveIdentifier)
         try storeString(key, ethMetaMapping: &ethMetaMapping)
         try setSessionKeyMetaMapping(ethMetaMapping)
@@ -799,8 +810,8 @@ private extension OstKeyManager {
     }
 }
 
-/// Signing related methods
-extension OstKeyManager {
+//MARK: - Signing related methods
+private extension OstInternalKeyManager {
     /// Sign message with API private key
     ///
     /// - Parameter message: Message to sign
@@ -856,6 +867,15 @@ extension OstKeyManager {
         return try signTx(tx, withPrivatekey: ostWalletKeys.privateKey!)
     }
     
+    /// Sign data with recovery key
+    ///
+    /// - Parameters:
+    ///   - tx: Transaction string to sign
+    ///   - userPin: User pin
+    ///   - passphrasePrefix: Passphrase prefix
+    ///   - salt: Salt used to generate recovery key
+    /// - Returns: SignedData
+    /// - Throws: OstError
     func signWithRecoveryKey(
         tx:String,
         userPin: String,
@@ -964,3 +984,133 @@ enum Device {
         return isValidPolicy
     }
 }
+
+class OstKeyManagerGateway {
+    
+    /// Initialize
+    private init() {}
+    
+    /// Get API Signer
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: OstAPISigner
+    class func getOstApiSigner(userId: String) -> OstAPISigner {
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstAPISigner(userId: userId,
+                            keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get key manager
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: OstKeyManager
+    class func getOstKeyManager(userId: String) -> OstKeyManager {
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstKeyManager(userId: userId,
+                             keyManagareDelegate: keyManagerDelegate)
+    }
+    
+    /// Get pin manager
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - passphrasePrefix: Passphrase prefix
+    ///   - userPin: User pin
+    ///   - newUserPin: New user pin
+    /// - Returns: OstPinManager
+    class func getOstPinManager(userId: String,
+                                passphrasePrefix: String,
+                                userPin: String,
+                                newUserPin: String? = "") -> OstPinManager {
+        
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstPinManager(userId: userId,
+                             passphrasePrefix: passphrasePrefix,
+                             userPin: userPin,
+                             newUserPin: newUserPin,
+                             keyManagareDelegate: keyManagerDelegate)
+    }
+    
+    /// Get authorize session signer
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - sessionAddress: Session address
+    ///   - spendingLimit: Spending limit
+    ///   - expirationHeight: Expiration height(Absolute value)
+    /// - Returns: OstAuthorizeSessionSigner
+    class func getOstAuthorizeSessionSigner(userId: String,
+                                            sessionAddress: String,
+                                            spendingLimit: String,
+                                            expirationHeight: String) -> OstAuthorizeSessionSigner {
+        
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstAuthorizeSessionSigner(userId: userId,
+                                         sessionAddress: sessionAddress,
+                                         spendingLimit: spendingLimit,
+                                         expirationHeight: expirationHeight,
+                                         keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get authorize device with mnemonics signer
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - deviceAddressToAdd: Device address to authorize
+    ///   - mnemonicsManager: OstMnemonicsKeyManager
+    /// - Returns: OstAuthorizeDeviceWithMnemonicsSigner
+    class func getOstAuthorizeDeviceWithMnemonicsSigner(userId: String,
+                                                        deviceAddressToAdd: String,
+                                                        mnemonicsManager: OstMnemonicsKeyManager) -> OstAuthorizeDeviceWithMnemonicsSigner {
+        
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstAuthorizeDeviceWithMnemonicsSigner(userId: userId,
+                                                     deviceAddressToAdd: deviceAddressToAdd,
+                                                     mnemonicsManager: mnemonicsManager,
+                                                     keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get authorize device with QR-Code signer
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - deviceAddressToAdd: Device address to authorize
+    /// - Returns: OstAuthorizeDeviceWithQRSigner
+    class func getOstAuthorizeDeviceWithQRSigner(userId: String,
+                                                 deviceAddressToAdd: String) -> OstAuthorizeDeviceWithQRSigner {
+        
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstAuthorizeDeviceWithQRSigner(userId: userId,
+                                              address: deviceAddressToAdd,
+                                              keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get revoke device with signer
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - linkedAddress: Linked address
+    ///   - deviceAddressToRevoke: Device address to revoke
+    /// - Returns: OstRevokeDeviceSigner
+    class func getOstRevokeDeviceSigner(userId: String,
+                                        linkedAddress: String,
+                                        deviceAddressToRevoke: String) -> OstRevokeDeviceSigner {
+        
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstRevokeDeviceSigner(userId: userId,
+                                     linkedAddress: linkedAddress,
+                                     deviceAddressToRevoke: deviceAddressToRevoke,
+                                     keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get logout all session signer
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: OstLogoutAllSessionSigner
+    class func getOstLogoutAllSessionSigner(userId: String) -> OstLogoutAllSessionSigner {
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstLogoutAllSessionSigner(userId: userId,
+                                         keyManagerDelegate: keyManagerDelegate)
+    }
+}
+

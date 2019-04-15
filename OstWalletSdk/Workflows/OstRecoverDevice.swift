@@ -35,9 +35,10 @@ class OstRecoverDevice: OstWorkflowEngine {
          delegate: OstWorkflowDelegate) {
         
         self.deviceAddressToRecover = deviceAddressToRecover
-        self.pinManager = OstPinManager(userId: userId,
-                                        passphrasePrefix: passphrasePrefix,
-                                        userPin: userPin)
+        self.pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: userId,
+                              passphrasePrefix: passphrasePrefix,
+                              userPin: userPin)
         
          super.init(userId: userId, delegate: delegate)
     }

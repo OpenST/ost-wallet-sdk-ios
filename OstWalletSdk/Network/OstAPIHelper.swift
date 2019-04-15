@@ -57,13 +57,16 @@ class OstAPIHelper {
     ///   - userId:  UserId for which the API key will be used to sign the request url
     /// - Throws: OSTError
     class func sign(apiResource resource:String, andParams params: inout [String: Any], withUserId userId:String) throws {
-        try OstAPIHelper.addAPIParams(forUserId: userId, inParams: &params)
-        let signature =  try OstAPISigner(userId: userId).sign(resource: resource, params: params)
+        try OstAPIHelper.addAPIParams(forUserId: userId,
+                                      inParams: &params)
+        
+        let signature =  try OstKeyManagerGateway.getOstApiSigner(userId: userId)
+            .sign(resource: resource,
+                  params: params)
+
         params["api_signature"] = signature
     }
-    
-    
-    
+
     /// Sync the entity data with API response
     ///
     /// - Parameter apiResponse: API response data
@@ -115,28 +118,37 @@ class OstAPIHelper {
         switch resultType {
         case ResultType.token.rawValue:
             try OstToken.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.user.rawValue:
             try OstUser.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.device.rawValue:
             try OstDevice.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.deviceManager.rawValue:
             try OstDeviceManager.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.session.rawValue:
             try OstSession.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.transaction.rawValue:
             try OstTransaction.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.tokenHolder.rawValue:
             try OstTokenHolder.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.rules.rawValue:
             let rulesEntityData = entityData as! [[String: Any?]]
             for ruleEntityData in rulesEntityData {
                 try OstRule.storeEntity(ruleEntityData)
             }
+            
         case ResultType.devices.rawValue:
             let devicesEntityData = entityData as! [[String: Any?]]
             for deviceEntityData in devicesEntityData {
                 try OstDevice.storeEntity(deviceEntityData)
             }
+            
         default:
             return
         }

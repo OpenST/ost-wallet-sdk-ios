@@ -32,9 +32,10 @@ class OstAbortDeviceRecovery: OstWorkflowEngine {
          passphrasePrefix: String,
          delegate: OstWorkflowDelegate) {
         
-        self.pinManager = OstPinManager(userId: userId,
-                                        passphrasePrefix: passphrasePrefix,
-                                        userPin: userPin)
+        self.pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: userId,
+                              passphrasePrefix: passphrasePrefix,
+                              userPin: userPin)
         super.init(userId: userId, delegate: delegate)
         
     }

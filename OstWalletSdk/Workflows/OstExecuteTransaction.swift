@@ -228,7 +228,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     /// Get session addresses from keymanager and fetch session data from db.
     private func getActiveSession() throws -> OstSession? {
         var ostSession: OstSession?  = nil
-        let keyManager = OstKeyManager(userId: self.userId)
+        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
+        
         let sessionAddresses = try keyManager.getSessions()
         for sessionAddress in sessionAddresses {
             if let session: OstSession = try OstSession.getById(sessionAddress) {
@@ -304,9 +305,12 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private func fetchAllSessions() {
         let fetchSessionQueue = DispatchQueue.init(label: "com.ost.fetchSessionQueue", qos: .background)
         fetchSessionQueue.async {
-            let keyManager = OstKeyManager(userId: self.userId)
+
             let sessoionAPI = OstAPISession(userId: self.userId)
-            if let sessions = try? keyManager.getSessions() {
+            if let sessions = try? OstKeyManagerGateway
+                .getOstKeyManager(userId: self.userId)
+                .getSessions() {
+                
                 for session in sessions {
                     try? sessoionAPI.getSession(sessionAddress: session, onSuccess: nil, onFailure: nil)
                 }

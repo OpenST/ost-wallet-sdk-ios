@@ -14,25 +14,20 @@ import EthereumKit
 class OstAPISigner {
     
     /// User id associated with the API keys
-    var userId: String
+    private let userId: String
+    private let keyManagerDelegate: OstKeyManagerDelegate
     
-    /// API private key
-    private var apiKey: String? = nil
     
-    /// Get OstAPISigner object for the given user id
+    /// Initialize
     ///
-    /// - Parameter userId: User Id for which the API keys will be used for signing
-    /// - Returns: OstAPISigner object
-    class func getApiSigner(forUserId userId: String) -> OstAPISigner{
-        let apiSigner = OstAPISigner(userId: userId)
-        return apiSigner;
-    }
-    
-    /// Initializer
-    ///
-    /// - Parameter userId: User Id for which the API keys will be used for signing
-    init(userId: String) {
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - keyManagerDelegate: OstKeyManagerDelegate
+    init(userId: String,
+         keyManagerDelegate: OstKeyManagerDelegate) {
+        
         self.userId = userId
+        self.keyManagerDelegate = keyManagerDelegate
     }
     
     /// Sign the api url with the private key
@@ -45,8 +40,7 @@ class OstAPISigner {
     func sign(resource: String, params: [String: Any?]) throws -> String {
         let queryString: String = getQueryString(for: params)
         let message = "\(resource)?\(queryString)"
-        let keyManager = OstKeyManager(userId: self.userId);
-        return try keyManager.signWithAPIKey(message: message)
+        return try self.keyManagerDelegate.signWithAPIKey(message: message)
     }
     
     /// Build the query string from dictionary

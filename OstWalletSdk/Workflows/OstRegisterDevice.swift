@@ -126,7 +126,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Throws: OstError
     private func createAndRegisterDevice() throws {
         
-        let keyManager = OstKeyManager(userId: self.userId)
+        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
         let deviceAddress = try keyManager.createDeviceKey()
         let apiAddress = try keyManager.createAPIKey()
         

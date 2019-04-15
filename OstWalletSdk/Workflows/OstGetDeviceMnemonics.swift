@@ -30,20 +30,17 @@ class OstGetDeviceMnemonics: OstUserAuthenticatorWorkflow {
     }
     
     /// Get device mnemonics after user authenticated
-    override func onUserAuthenticated() {
-        do {
-            let keychainManager = OstKeyManager(userId: self.userId)
-            guard let mnemonics: [String] = try keychainManager.getDeviceMnemonics() else {
+    override func onUserAuthenticated() throws {
+        guard let mnemonics: [String] = try OstKeyManagerGateway
+            .getOstKeyManager(userId: self.userId)
+            .getDeviceMnemonics() else {
+                
                 throw OstError("w_gpw_pwaau_1", .paperWalletNotFound)
-            }
-            
-            self.postWorkflowComplete(entity: mnemonics)
-            
-        }catch let error {
-            self.postError(error)
         }
+        
+        self.postWorkflowComplete(entity: mnemonics)
     }
-
+    
     /// Get current workflow context
     ///
     /// - Returns: OstWorkflowContext

@@ -13,11 +13,12 @@ import Foundation
 class OstAddSession: OstUserAuthenticatorWorkflow {
     
     static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
+    private let workflowTransactionCountForPolling = 1
     private let spendingLimit: String
     private let expireAfter: TimeInterval;
     
     private var sessionData: OstSessionHelper.SessionData? = nil
-  
+    
     /// Initializer
     ///
     /// - Parameters:
@@ -57,55 +58,85 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
             throw OstError("w_as_vp_2", .invalidExpirationTimeStamp)
         }
     }
-
+    
     /// Proceed with workflow after user is authenticated.
-    override func onUserAuthenticated() {
-        do {
-            self.sessionData = try OstSessionHelper(userId: self.userId,
-                                                    expiresAfter: self.expireAfter,
-                                                    spendingLimit: self.spendingLimit).getSessionData()
-            self.authorizeSession()
-        }catch let error {
-            self.postError(error)
+    override func onUserAuthenticated() throws {
+        try fetchDeviceManager()
+        self.sessionData = try OstSessionHelper(userId: self.userId,
+                                                expiresAfter: self.expireAfter,
+                                                spendingLimit: self.spendingLimit).getSessionData()
+        try self.authorizeSession()
+    }
+    
+    /// Get device manager from server
+    ///
+    /// - Throws: OstError
+    func fetchDeviceManager() throws {
+        var error: OstError? = nil
+        let group: DispatchGroup = DispatchGroup()
+        group.enter()
+        try OstAPIDeviceManager(userId: self.userId)
+            .getDeviceManager(
+                onSuccess: { (_) in
+                    group.leave()
+            }) { (ostError) in
+                error = ostError
+                group.leave()
+        }
+        group.wait()
+        
+        if (nil != error) {
+            throw error!
         }
     }
     
     /// Authorize session
-    private func authorizeSession() {
-        let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-            do {
-                let keychainManager = OstKeyManager(userId: self.userId)
-                if let deviceAddress = keychainManager.getDeviceAddress() {
-                    let signature = try keychainManager.signWithDeviceKey(signingHash)
-                    return (signature, deviceAddress)
-                }
-                throw OstError("w_as_as_1", .signatureGenerationFailed)
-            }catch {
-                return (nil, nil)
-            }
-        }
+    private func authorizeSession() throws {
         
-        let onRequestAcknowledged: ((OstSession) -> Void) = { (ostSession) in
-            self.postRequestAcknowledged(entity: ostSession)
-        }
+        let authorizeSessionSigner = OstKeyManagerGateway
+            .getOstAuthorizeSessionSigner(userId: self.userId,
+                                          sessionAddress: self.sessionData!.sessionAddress,
+                                          spendingLimit: self.spendingLimit,
+                                          expirationHeight: self.sessionData!.expirationHeight)
         
-        let onSuccess: ((OstSession) -> Void) = { (ostSession) in
+        let authroizeSessionParams = try authorizeSessionSigner.getApiParams()
+        
+        try OstAPISession(userId: self.userId)
+            .authorizeSession(params: authroizeSessionParams,
+                              onSuccess: { (ostSession) in
+                                
+                                self.postRequestAcknowledged(entity: ostSession)
+                                self.pollingForAuthorizeSession(ostSession)
+                                
+            }, onFailure: { (error) in
+                self.postError(error)
+            })
+    }
+    
+    
+    /// Polling service for Session
+    ///
+    /// - Parameter ostSession: session entity
+    private func pollingForAuthorizeSession(_ ostSession: OstSession) {
+        
+        let successCallback: ((OstSession) -> Void) = { ostSession in
             self.postWorkflowComplete(entity: ostSession)
         }
         
-        let onFailure: ((OstError) -> Void) = { (error) in
-            self.postError(error)
+        let failureCallback:  ((OstError) -> Void) = { error in
+            DispatchQueue.init(label: "retryQueue").async {
+                self.postError(error)
+            }
         }
         
-        OstAuthorizeSession(userId: self.userId,
-                            sessionAddress: self.sessionData!.sessionAddress,
-                            spendingLimit: self.spendingLimit,
-                            expirationHeight: self.sessionData!.expirationHeight,
-                            generateSignatureCallback: generateSignatureCallback,
-                            onRequestAcknowledged: onRequestAcknowledged,
-                            onSuccess: onSuccess,
-                            onFailure: onFailure).perform()
-    }        
+        OstSessionPollingService(userId: ostSession.userId!,
+                                 sessionAddress: ostSession.address!,
+                                 successStatus: OstSession.Status.AUTHORIZED.rawValue,
+                                 failureStatus: OstSession.Status.CREATED.rawValue,
+                                 workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                 successCallback: successCallback,
+                                 failureCallback: failureCallback).perform()
+    }
 
     /// Get current workflow context
     ///
