@@ -15,6 +15,15 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - iOS version : 9.0 and above (**recommended version 10.3** )
 - Swift version: 4.2
 
+## Dependencies
+We use open-source code from the projects listed below. The `Setup` section below provides instructions on adding the packages to your code. 
+- [Alamofire](https://github.com/Alamofire/Alamofire)
+- [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift)
+- [EthereumKit](https://github.com/D-Technologies/EthereumKit)
+- [FMDB](https://github.com/ccgus/fmdb)
+- [BigInt](https://github.com/attaswift/BigInt)
+
+
 ## Setup
 
 - Get [Carthage](https://github.com/Carthage/Carthage) by running `brew install carthage` or choose [another installation method](https://github.com/Carthage/Carthage/#installing-carthage)
@@ -79,9 +88,10 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
 - _SessionBufferTime_: Buffer expiration time for session keys in seconds.
 - _UseSeedPassword_: Uses mnemonics and password to generate seed.
 
+**These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
+
 ## Enable FaceID Authentication
 To authenticate user using FaceID on devices that support it, please add [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsfaceidusagedescription) to your application's `Info.plist`.
-
 
 ## OST Wallet SDK APIs
 To use Ost wallet sdk use `import OstWalletSdk`
