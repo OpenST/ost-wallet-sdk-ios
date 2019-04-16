@@ -14,6 +14,7 @@ class OstBundle {
     
     enum PermissionKey: String {
         case NSFaceIDUsageDescription
+        case CFBundleShortVersionString
     }
     
     /// Get content of files
@@ -52,7 +53,25 @@ class OstBundle {
         )
     }
     
+    /// Get Sdk version
+    ///
+    /// - Returns: version string
+    class func getSdkVersion() -> String  {
+        do {
+            let ostBundle = OstBundle()
+            let bundleObj = ostBundle.getSdkBundle()
+            let version = try ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
+                                                       fromFile: "Info",
+                                                       withExtension: "plist",
+                                                       inBundle: bundleObj)
+            return (version as? String) ?? ""
+        }catch {
+            return ""
+        }
+    }
+    
     //MARK: Private Methods
+    
     /// Initialize
     fileprivate init() { }
     

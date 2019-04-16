@@ -13,8 +13,14 @@ import Foundation
 public class OstError: Error {
     
     public internal(set) var isApiError = false
-    
-    public let internalCode:String
+    private var _internalCode: String = ""
+    public var internalCode:String {
+        set(code) {
+            _internalCode = "v\(OstBundle.getSdkVersion())_\(code)"
+        }get {
+            return _internalCode
+        }
+    }
     public let errorMessage:String
     public let messageTextCode:OstErrorText;
     
@@ -24,24 +30,24 @@ public class OstError: Error {
     public var errorInfo: [String: Any]? = nil
 
     init(_ code: String, _ messageTextCode: OstErrorText) {
-        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(code)"
         self.errorMessage = messageTextCode.rawValue
-        self.messageTextCode = messageTextCode;
+        self.messageTextCode = messageTextCode
+        self.internalCode = code
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
     init(_ code: String, msg errorMessage: String) {
-        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(code)"
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
+        self.internalCode = code
     }
     
     init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
-        self.internalCode = "v\(OstWalletSdkVersionNumber)_\(err["code"] as! String)"
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
+        self.internalCode = err["code"] as! String
     }
 }
 

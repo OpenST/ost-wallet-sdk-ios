@@ -17,7 +17,6 @@ public class OstWalletSdk {
     /// - Parameter apiEndPoint: API end point
     /// - Throws: OstError
     public class func initialize(apiEndPoint:String) throws {
-        
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);

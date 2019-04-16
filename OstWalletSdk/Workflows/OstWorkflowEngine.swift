@@ -80,32 +80,26 @@ class OstWorkflowEngine {
     /// Process
     func process() throws {
         switch self.workflowStateManager.getCurrentState() {
-        case OstWorkflowStateManager.INITIAL: do {
+        case OstWorkflowStateManager.INITIAL:
             try validateParams()
             try processNext()
-            }
             
-        case OstWorkflowStateManager.PARAMS_VALIDATED: do {
+        case OstWorkflowStateManager.PARAMS_VALIDATED:
             try performUserDeviceValidation()
             try onUserDeviceValidated()
-            }
             
-        case OstWorkflowStateManager.DEVICE_VALIDATED: do {
+        case OstWorkflowStateManager.DEVICE_VALIDATED:
             try onDeviceValidated()
-            }
             
-        case OstWorkflowStateManager.COMPLETED: do {
+        case OstWorkflowStateManager.COMPLETED:
             onWorkflowComplete()
-            }
             
-        case OstWorkflowStateManager.CANCELLED: do {
+        case OstWorkflowStateManager.CANCELLED:
             let ostError:OstError = OstError("w_we_p_1", OstErrorText.userCanceled)
             self.postError(ostError)
-            }
             
-        default: do {
+        default:
             throw OstError("w_we_p_2", OstErrorText.unknown)
-            }
         }
     }
     
