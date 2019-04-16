@@ -50,12 +50,10 @@ class OstWorkflowEngine {
     func getOrderedStates() -> [String] {
         var orderedStates = [String]()
         
-        let inBetweenStates = getInBetweenOrderedStates()
-        
         orderedStates.append(OstWorkflowStateManager.INITIAL)
         orderedStates.append(OstWorkflowStateManager.PARAMS_VALIDATED)
         orderedStates.append(OstWorkflowStateManager.DEVICE_VALIDATED)
-        orderedStates.append(contentsOf: inBetweenStates)
+        
         orderedStates.append(OstWorkflowStateManager.COMPLETED)
         orderedStates.append(OstWorkflowStateManager.CANCELLED)
         
@@ -104,13 +102,6 @@ class OstWorkflowEngine {
     }
     
     //MARK: - Methods to override
-    
-    ///Get inbeween states for workflow
-    ///
-    /// - Returns: Workflow states
-    func getInBetweenOrderedStates() -> [String] {
-        return []
-    }
     
     /// Validiate basic parameters for workflow
     ///

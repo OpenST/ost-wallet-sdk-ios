@@ -40,15 +40,17 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// Get in betweeen ordered states
+    /// Sets in ordered states for current Workflow
     ///
-    /// - Returns: States array
-    override func getInBetweenOrderedStates() -> [String] {
-        var orderedStates = [String]()
+    /// - Returns: Order states array
+    override func getOrderedStates() -> [String] {
+        var orderedStates:[String] = super.getOrderedStates()
         
-        orderedStates.append(OstWorkflowStateManager.VERIFY_DATA)
-        orderedStates.append(OstWorkflowStateManager.DATA_VERIFIED)
+        var inBetweenOrderedStates = [String]()
+        inBetweenOrderedStates.append(OstWorkflowStateManager.VERIFY_DATA)
+        inBetweenOrderedStates.append(OstWorkflowStateManager.DATA_VERIFIED)
         
+        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
         return orderedStates
     }
     

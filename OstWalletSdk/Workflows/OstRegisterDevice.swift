@@ -35,13 +35,16 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         super.init(userId: userId, delegate: delegate)
     }
     
-    /// Get workflow states in order
+    /// Sets in ordered states for current Workflow
     ///
-    /// - Returns: Workflow states
-    override func getInBetweenOrderedStates() -> [String] {
-        var orderedStates = [String]()
-        orderedStates.append(OstRegisterDevice.DEVICE_REGISTERED)
+    /// - Returns: Order states array
+    override func getOrderedStates() -> [String] {
+        var orderedStates:[String] = super.getOrderedStates()
         
+        var inBetweenOrderedStates = [String]()
+        inBetweenOrderedStates.append(OstRegisterDevice.DEVICE_REGISTERED)
+        
+        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
         return orderedStates
     }
     
