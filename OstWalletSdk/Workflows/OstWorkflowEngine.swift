@@ -11,7 +11,7 @@
 import Foundation
 
 class OstWorkflowEngine {
-    
+    static private let ostWorkflowEngineQueue = DispatchQueue(label: "com.ost.sdk.OstWorkflowEngine", qos: .userInitiated)
     let userId: String
     weak var delegate: OstWorkflowDelegate?
     let workflowStateManager: OstWorkflowStateManager
@@ -64,7 +64,7 @@ class OstWorkflowEngine {
     func perform() {
         let asyncQueue: DispatchQueue = DispatchQueue(label: "asyncThread")
         asyncQueue.async {
-            let queue: DispatchQueue = self.getWorkflowQueue()
+            let queue: DispatchQueue = self.getCommonWorkflowQueue()
             queue.sync {
                 do {
                     try self.process()
@@ -184,6 +184,13 @@ class OstWorkflowEngine {
         self.postError(ostError)
     }
     
+    /// Get worflow running queue.
+    ///
+    /// - Returns: DispatchQueue
+    private func getCommonWorkflowQueue() -> DispatchQueue {
+        return OstWorkflowEngine.ostWorkflowEngineQueue
+    }
+
     /// Get worflow running queue.
     ///
     /// - Returns: DispatchQueue
