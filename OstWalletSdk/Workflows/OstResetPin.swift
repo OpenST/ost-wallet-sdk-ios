@@ -52,7 +52,6 @@ class OstResetPin: OstWorkflowBase {
     override func validateParams() throws {
         try super.validateParams()
         try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
         try self.pinManager.validateResetPin()
     }
     
