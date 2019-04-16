@@ -35,7 +35,9 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED)
         inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.AUTHENTICATED)
         
-        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
+        let indexOfDeviceValidated = orderedStates.firstIndex(of: OstWorkflowStateManager.DEVICE_VALIDATED)
+        
+        orderedStates.insert(contentsOf: inBetweenOrderedStates, at: (indexOfDeviceValidated!+1))
         return orderedStates
     }
     

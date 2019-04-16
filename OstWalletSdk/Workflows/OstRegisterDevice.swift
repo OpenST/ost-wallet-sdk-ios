@@ -44,7 +44,9 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         var inBetweenOrderedStates = [String]()
         inBetweenOrderedStates.append(OstRegisterDevice.DEVICE_REGISTERED)
         
-        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
+        let indexOfDeviceValidated = orderedStates.firstIndex(of: OstWorkflowStateManager.DEVICE_VALIDATED)
+
+        orderedStates.insert(contentsOf: inBetweenOrderedStates, at: (indexOfDeviceValidated!+1))
         return orderedStates
     }
     
@@ -81,12 +83,17 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     override func process() throws {
         switch self.workflowStateManager.getCurrentState() {
         case OstRegisterDevice.DEVICE_REGISTERED:
-            self.forceSync = true
-            sync()
+            onDeviceRegistered()
             
         default:
             try super.process()
         }
+    }
+    
+    /// On device registered
+    func onDeviceRegistered() {
+        self.forceSync = true
+        sync()
     }
     
     /// Register device on params validated
@@ -175,7 +182,10 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Parameter apiResponse: API response from server.
     public func deviceRegistered(_ apiResponse: [String : Any]) {
-        self.performNext(withObject: apiResponse)
+        self.performState(
+            OstRegisterDevice.DEVICE_REGISTERED,
+            withObject: apiResponse
+        )
     }
     
     /// Sync required entities.

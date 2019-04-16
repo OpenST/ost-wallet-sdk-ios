@@ -80,7 +80,7 @@ class OstWorkflowEngine {
         switch self.workflowStateManager.getCurrentState() {
         case OstWorkflowStateManager.INITIAL:
             try validateParams()
-            try processNext()
+            try onValidateParams()
             
         case OstWorkflowStateManager.PARAMS_VALIDATED:
             try performUserDeviceValidation()
@@ -93,8 +93,10 @@ class OstWorkflowEngine {
             onWorkflowComplete()
             
         case OstWorkflowStateManager.CANCELLED:
-            let ostError:OstError = OstError("w_we_p_1", OstErrorText.userCanceled)
-            self.postError(ostError)
+            onWorkflowCancelled()
+
+        case OstWorkflowStateManager.COMPLETED_WITH_ERROR:
+            onCompleteWithError()
             
         default:
             throw OstError("w_we_p_2", OstErrorText.unknown)
@@ -108,6 +110,13 @@ class OstWorkflowEngine {
     /// - Throws: OstError
     func validateParams() throws {
         //Common checks not present.
+    }
+    
+    /// Process on params validated
+    ///
+    /// - Throws: OstError
+    func onValidateParams() throws {
+        try processNext()
     }
     
     /// Perform user device validation
@@ -162,6 +171,17 @@ class OstWorkflowEngine {
         let workflowContext = getWorkflowContext()
         let contextEntity = OstContextEntity(entity: "", entityType: .string)
         postWorkflowComplete(workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    /// Perfrom action on workflow cancelled
+    func onWorkflowCancelled() {
+        let ostError:OstError = OstError("w_we_wc_1", OstErrorText.userCanceled)
+        self.postError(ostError)
+    }
+    
+    func onCompleteWithError() {
+        let ostError:OstError = OstError("w_we_cwe_1", OstErrorText.userCanceled)
+        self.postError(ostError)
     }
     
     /// Get worflow running queue.
@@ -221,7 +241,6 @@ class OstWorkflowEngine {
         try process();
     }
 }
-
 
 extension OstWorkflowEngine {
     

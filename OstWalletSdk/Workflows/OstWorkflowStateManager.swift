@@ -21,7 +21,6 @@ class OstWorkflowStateManager {
     static let CANCELLED = "CANCELLED"
     static let COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR"
     static let COMPLETED = "COMPLETED"
-    static let UNEXPECTED = "UNEXPECTED"
     
     private var orderedStates = [String]()
     private var currentStateIndex: Int = 0
@@ -39,7 +38,7 @@ class OstWorkflowStateManager {
         if self.orderedStates.count > currentStateIndex {
             return self.orderedStates[currentStateIndex]
         }
-        return OstWorkflowStateManager.UNEXPECTED
+        return OstWorkflowStateManager.COMPLETED_WITH_ERROR
     }
     
     /// Get next state value
@@ -50,7 +49,7 @@ class OstWorkflowStateManager {
         if self.orderedStates.count > stateIndex {
             return self.orderedStates[stateIndex]
         }
-        return OstWorkflowStateManager.UNEXPECTED
+        return OstWorkflowStateManager.COMPLETED_WITH_ERROR
     }
     
     /// Set next state
