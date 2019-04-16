@@ -57,6 +57,19 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         return OstRegisterDevice.ostRegisterDeviceQueue
     }
     
+    /// Process workflow
+    ///
+    /// - Throws: OstError
+    override func process() throws {
+        switch self.workflowStateManager.getCurrentState() {
+        case OstRegisterDevice.DEVICE_REGISTERED:
+            try onDeviceRegistered()
+
+        default:
+            try super.process()
+        }
+    }
+    
     /// Valdiate parameters.
     ///
     /// - Throws: OstError
@@ -75,25 +88,6 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Throws: OstError
     override func performUserDeviceValidation() throws {
         //Exceptional case.
-    }
-     
-    /// Process workflow
-    ///
-    /// - Throws: OstError
-    override func process() throws {
-        switch self.workflowStateManager.getCurrentState() {
-        case OstRegisterDevice.DEVICE_REGISTERED:
-            onDeviceRegistered()
-            
-        default:
-            try super.process()
-        }
-    }
-    
-    /// On device registered
-    func onDeviceRegistered() {
-        self.forceSync = true
-        sync()
     }
     
     /// Register device on params validated
@@ -114,7 +108,51 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
             return
         }
         
-        try self.processNext()
+        if self.forceSync {
+            try self.syncEntities()
+        }else {
+            try ensureEntities()
+        }
+        
+        self.postWorkflowComplete(entity: self.currentDevice!)
+    }
+    
+    /// On device registered
+    func onDeviceRegistered() throws  {
+        try syncEntities()
+        self.postWorkflowComplete(entity: self.currentDevice!)
+    }
+    
+    /// Verify device registered
+    ///
+    /// - Throws: OstError
+    func verifyDeviceRegistered() throws {
+        try syncCurrentDevice()
+        
+        if (!self.currentDevice!.canMakeApiCall()) {
+            throw OstError("w_rd_vdr_1", .deviceNotSet)
+        }
+    }
+    
+    /// Sync entities from server
+    ///
+    /// - Throws: OstError
+    func syncEntities() throws {
+        try verifyDeviceRegistered()
+        try syncCurrentDevice()
+        try syncUser()
+        try syncToken()
+    }
+    
+    /// Ensure that entities are persent
+    ///
+    /// - Throws: OstError
+    func ensureEntities() throws {
+        try verifyDeviceRegistered()
+        try ensureApiCommunication()
+        try ensureUser()
+        try ensureToken()
+        try ensureDeviceManager()
     }
     
     /// Creates user if user is not persent.
@@ -182,30 +220,6 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Parameter apiResponse: API response from server.
     public func deviceRegistered(_ apiResponse: [String : Any]) {
-        self.performState(
-            OstRegisterDevice.DEVICE_REGISTERED,
-            withObject: apiResponse
-        )
-    }
-    
-    /// Sync required entities.
-    private func sync() {
-        let onCompletion: ((Bool) -> Void) = {isComplete in
-            guard let user = try! OstUser.getById(self.userId) else {
-                self.postError(OstError("w_rd_s_1", .userNotFound))
-                return
-            }
-            guard let currentDevice = user.getCurrentDevice() else {
-                self.postError(OstError("w_rd_s_2", .deviceNotSet))
-                return
-            }
-            do {
-                let device:OstDevice = try OstDevice.getById(currentDevice.address!)!
-                self.postWorkflowComplete(entity: device)
-            } catch let err {
-                self.postError(err as! OstError);
-            }
-        }
-        OstSdkSync(userId: self.userId, forceSync: self.forceSync, syncEntites: .User, .CurrentDevice, .Token, onCompletion: onCompletion).perform()
+        self.performState(OstRegisterDevice.DEVICE_REGISTERED, withObject: apiResponse)
     }
 }

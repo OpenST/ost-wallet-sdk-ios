@@ -174,7 +174,7 @@ class OstActivateUser: OstWorkflowEngine {
     private func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
-            self.sync()
+            self.onPollingSuccess()
         }
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
@@ -190,32 +190,24 @@ class OstActivateUser: OstWorkflowEngine {
             ).perform()
     }
     
-    
-    /// Sync entities that were updated in activate user process
-    private func sync() {
-        if (self.sessionData?.sessionAddress != nil) {
-            try? OstAPISession(userId: self.userId)
-                .getSession(
-                    sessionAddress: self.sessionData!.sessionAddress,
-                    onSuccess: nil,
-                    onFailure: nil
+    /// Fetch updated entities from server
+    /// In that case, we are fetching session, device manager, user
+    func onPollingSuccess() {
+        let queue = DispatchQueue(label: "com.ost.onPollingSuccess", qos: .userInitiated)
+        queue.async {
+            if (self.sessionData?.sessionAddress != nil) {
+                try? OstAPISession(userId: self.userId)
+                    .getSession(
+                        sessionAddress: self.sessionData!.sessionAddress,
+                        onSuccess: nil,
+                        onFailure: nil
                 )
-        }
-        
-        try? OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: nil,
-                onFailure: nil
-            )
-
-        OstSdkSync(
-            userId: self.userId,
-            forceSync: true,
-            syncEntites: .CurrentDevice,
-            onCompletion: { (_) in
-                self.postWorkflowComplete(entity: self.currentUser!)
             }
-        ).perform()
+            
+            try? self.syncDeviceManager()
+            try? self.syncUser()
+            self.postWorkflowComplete(entity: self.currentUser!)
+        }
     }
     
     /// Get current workflow context

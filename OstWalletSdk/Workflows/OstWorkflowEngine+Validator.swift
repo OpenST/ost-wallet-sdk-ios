@@ -107,6 +107,10 @@ extension OstWorkflowEngine {
     }
     
     //MARK: - Ensure API Communication
+    
+    /// Ensure API communication
+    ///
+    /// - Throws: OstError
     func ensureApiCommunication() throws {
         if(nil == self.currentUser) {
             throw OstError("w_wev_eac_1", .deviceNotSet)
@@ -139,6 +143,10 @@ extension OstWorkflowEngine {
         }
     }
     
+    /// Check whether device can make api calls
+    ///
+    /// - Parameter ostDevice: OstDevice
+    /// - Returns: `true` if device can make api call else `false`
     func canDeviceMakeApiCall(ostDevice: OstDevice) -> Bool {
         //Must have Device Api Key which should have been registered.
         do {
@@ -149,6 +157,9 @@ extension OstWorkflowEngine {
         return ostDevice.canMakeApiCall();
     }
     
+    /// Fetch current device from server
+    ///
+    /// - Throws: OstError
     func syncCurrentDevice() throws {
         var err: OstError? = nil
         let group = DispatchGroup()
@@ -167,6 +178,11 @@ extension OstWorkflowEngine {
     }
     
     //MARK: - Ensure User
+    
+    /// Ensure that user is updated
+    ///
+    /// - Parameter forceSync: should fetch user or not. default `false`
+    /// - Throws: OstError
     func ensureUser(forceSync: Bool = false) throws {
         if (forceSync
             ||  nil == self.currentUser
@@ -176,6 +192,9 @@ extension OstWorkflowEngine {
         }
     }
     
+    /// Fetch user from server
+    ///
+    /// - Throws: OstError
     func syncUser() throws {
         var err: OstError? = nil
         let group = DispatchGroup()
@@ -194,6 +213,10 @@ extension OstWorkflowEngine {
     }
     
     //MARK: - Ensure Token
+    
+    /// Ensure that token is preset
+    ///
+    /// - Throws: OstError
     func ensureToken() throws {
         if nil == self.currentUser {
             try ensureUser()
@@ -206,6 +229,9 @@ extension OstWorkflowEngine {
         }
     }
     
+    /// Fetch token from server
+    ///
+    /// - Throws: OstError
     func syncToken() throws {
         var err: OstError? = nil
         let group = DispatchGroup()
@@ -225,6 +251,10 @@ extension OstWorkflowEngine {
     }
     
     //MARK: - Ensure Device
+    
+    /// Ensure that device is authorized
+    ///
+    /// - Throws: OstError
     func ensureDeviceAuthorized() throws {
         if nil == self.currentDevice {
             try ensureApiCommunication()
@@ -239,6 +269,10 @@ extension OstWorkflowEngine {
     }
     
     //MARK: - Ensure Device Manager
+    
+    /// Ensure that device manager is persent
+    ///
+    /// - Throws: OstError
     func ensureDeviceManager() throws {
         if nil == self.currentUser {
             try ensureUser()
@@ -247,24 +281,39 @@ extension OstWorkflowEngine {
             throw OstError("w_wev_edm_1", .userNotActivated);
         }
         guard let _ = try OstDeviceManager.getById(deviceManagerAddress) else {
-            let _ = try syncDeviceManager()
+            try syncDeviceManager()
             return
         }
     }
     
-    func syncDeviceManager() throws -> OstDeviceManager {
+    /// Fetch device manager from server
+    ///
+    /// - Throws: OstError
+    func syncDeviceManager() throws {
+        _ = try fetchDeviceManager()
+    }
+    
+    /// Fetch device manager from server
+    ///
+    /// - Returns: OstDeviceManager
+    /// - Throws: OstError
+    func fetchDeviceManager() throws -> OstDeviceManager {
         var err: OstError? = nil
         var ostDeviceManager: OstDeviceManager? = nil
         let group = DispatchGroup()
         group.enter()
         
-        try OstAPIDeviceManager(userId: self.userId).getDeviceManager(onSuccess: { (deviceManager) in
-            ostDeviceManager = deviceManager
-            group.leave()
-        }, onFailure: { (error) in
-            err = error
-            group.leave()
-        })
+        try OstAPIDeviceManager(userId: self.userId)
+            .getDeviceManager(
+                onSuccess: { (deviceManager) in
+                    
+                    ostDeviceManager = deviceManager
+                    group.leave()
+                    
+            }, onFailure: { (error) in
+                err = error
+                group.leave()
+            })
         group.wait()
         
         if (nil != err) {
@@ -273,4 +322,6 @@ extension OstWorkflowEngine {
         
         return ostDeviceManager!
     }
+    
+   
 }
