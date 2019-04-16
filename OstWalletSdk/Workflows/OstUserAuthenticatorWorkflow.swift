@@ -24,15 +24,18 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     
     private var enterPinCount = 0
     
-    /// Get in between ordered states
+    /// Sets in ordered states for current Workflow
     ///
     /// - Returns: Order states array
-    override func getInBetweenOrderedStates() -> [String] {
-        var orderedStates = [String]()
-        orderedStates.append(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
-        orderedStates.append(OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED)
-        orderedStates.append(OstUserAuthenticatorWorkflow.AUTHENTICATED)
+    override func getOrderedStates() -> [String] {
+        var orderedStates:[String] = super.getOrderedStates()
         
+        var inBetweenOrderedStates = [String]()
+        inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
+        inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED)
+        inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.AUTHENTICATED)
+        
+        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
         return orderedStates
     }
     
