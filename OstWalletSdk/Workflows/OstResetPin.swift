@@ -141,9 +141,7 @@ class OstResetPin: OstWorkflowEngine {
     /// - Parameter entity: Recovery owner entity object
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
-            OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
-                self.postWorkflowComplete(entity: ostRecoveryOwner)
-            }).perform()
+            self.onPollingSuccess(recoveryOwner: ostRecoveryOwner)
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in
@@ -158,6 +156,14 @@ class OstResetPin: OstWorkflowEngine {
                                  workflowTransactionCount: workflowTransactionCountForPolling,
                                  successCallback: successCallback, failureCallback: failureCallback)
             .perform()
+    }
+    
+    func onPollingSuccess(recoveryOwner: OstRecoveryOwnerEntity) {
+        let queue = DispatchQueue(label: "com.ost.onPollingSuccess", qos: .userInitiated)
+        queue.async {
+            try? self.syncUser()
+            self.postWorkflowComplete(entity: recoveryOwner)
+        }
     }
     
     /// Get current workflow context

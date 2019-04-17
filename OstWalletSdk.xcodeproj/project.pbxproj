@@ -146,7 +146,6 @@
 		EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */; };
 		EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */; };
 		EC38BF9422413A96006F8DA2 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBF22413A96006F8DA2 /* OstPerform.swift */; };
-		EC38BF9522413A96006F8DA2 /* OstSdkSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */; };
 		EC38BF9822413A96006F8DA2 /* OstRevokeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */; };
 		EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */; };
 		EC38BF9A22413A96006F8DA2 /* OstBasePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */; };
@@ -403,7 +402,6 @@
 		EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddSession.swift; sourceTree = "<group>"; };
 		EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
 		EC38BEBF22413A96006F8DA2 /* OstPerform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
-		EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkSync.swift; sourceTree = "<group>"; };
 		EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDevice.swift; sourceTree = "<group>"; };
 		EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeBase.swift; sourceTree = "<group>"; };
 		EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBasePollingService.swift; sourceTree = "<group>"; };
@@ -871,7 +869,6 @@
 				EC38BEC622413A96006F8DA2 /* Services */,
 				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
 				EC38BEC322413A96006F8DA2 /* OstRevoke */,
-				EC38BEC022413A96006F8DA2 /* OstSdkSync.swift */,
 				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
 				4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */,
@@ -1446,7 +1443,6 @@
 				EC38BF4622413A96006F8DA2 /* String+BytesConvertible.swift in Sources */,
 				EC38BF8822413A96006F8DA2 /* OstContextEntity.swift in Sources */,
 				EC38BF7F22413A96006F8DA2 /* OstUtils.swift in Sources */,
-				EC38BF9522413A96006F8DA2 /* OstSdkSync.swift in Sources */,
 				EC38BFCE22413A96006F8DA2 /* OstUserModelRepository.swift in Sources */,
 				EC38BFA822413A96006F8DA2 /* OstBaseDbQueries.swift in Sources */,
 				EC38BF4122413A96006F8DA2 /* RPCResponse.swift in Sources */,

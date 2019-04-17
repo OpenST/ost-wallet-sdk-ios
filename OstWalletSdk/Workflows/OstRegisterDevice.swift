@@ -139,7 +139,6 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Throws: OstError
     func syncEntities() throws {
         try verifyDeviceRegistered()
-        try syncCurrentDevice()
         try syncUser()
         try syncToken()
     }
@@ -149,7 +148,6 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// - Throws: OstError
     func ensureEntities() throws {
         try verifyDeviceRegistered()
-        try ensureApiCommunication()
         try ensureUser()
         try ensureToken()
         try ensureDeviceManager()
