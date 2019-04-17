@@ -146,8 +146,6 @@
 		EC38BF9222413A96006F8DA2 /* OstAddSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */; };
 		EC38BF9322413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */; };
 		EC38BF9422413A96006F8DA2 /* OstPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEBF22413A96006F8DA2 /* OstPerform.swift */; };
-		EC38BF9822413A96006F8DA2 /* OstRevokeDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */; };
-		EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */; };
 		EC38BF9A22413A96006F8DA2 /* OstBasePollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */; };
 		EC38BF9B22413A96006F8DA2 /* OstSessionPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC822413A96006F8DA2 /* OstSessionPollingService.swift */; };
 		EC38BF9C22413A96006F8DA2 /* OstTransactionPollingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEC922413A96006F8DA2 /* OstTransactionPollingService.swift */; };
@@ -402,8 +400,6 @@
 		EC38BEBD22413A96006F8DA2 /* OstAddSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAddSession.swift; sourceTree = "<group>"; };
 		EC38BEBE22413A96006F8DA2 /* OstRevokeDeviceWithQRData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWithQRData.swift; sourceTree = "<group>"; };
 		EC38BEBF22413A96006F8DA2 /* OstPerform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPerform.swift; sourceTree = "<group>"; };
-		EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeDevice.swift; sourceTree = "<group>"; };
-		EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstRevokeBase.swift; sourceTree = "<group>"; };
 		EC38BEC722413A96006F8DA2 /* OstBasePollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBasePollingService.swift; sourceTree = "<group>"; };
 		EC38BEC822413A96006F8DA2 /* OstSessionPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSessionPollingService.swift; sourceTree = "<group>"; };
 		EC38BEC922413A96006F8DA2 /* OstTransactionPollingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTransactionPollingService.swift; sourceTree = "<group>"; };
@@ -868,7 +864,6 @@
 				EC38BEB522413A96006F8DA2 /* WorkflowHelpers */,
 				EC38BEC622413A96006F8DA2 /* Services */,
 				EC38BEA822413A96006F8DA2 /* OstAuthorize */,
-				EC38BEC322413A96006F8DA2 /* OstRevoke */,
 				4BCC1B542251FB00008B58A1 /* OstWorkflowStateManager.swift */,
 				EC38BEB022413A96006F8DA2 /* OstWorkFlowFactory.swift */,
 				4BCC1B5722522776008B58A1 /* OstWorkflowEngine.swift */,
@@ -917,15 +912,6 @@
 				EC38BEB922413A96006F8DA2 /* OstSessionHelper.swift */,
 			);
 			path = WorkflowHelpers;
-			sourceTree = "<group>";
-		};
-		EC38BEC322413A96006F8DA2 /* OstRevoke */ = {
-			isa = PBXGroup;
-			children = (
-				EC38BEC422413A96006F8DA2 /* OstRevokeDevice.swift */,
-				EC38BEC522413A96006F8DA2 /* OstRevokeBase.swift */,
-			);
-			path = OstRevoke;
 			sourceTree = "<group>";
 		};
 		EC38BEC622413A96006F8DA2 /* Services */ = {
@@ -1375,7 +1361,6 @@
 				EC38BF6322413A96006F8DA2 /* SolidityType+Codable.swift in Sources */,
 				EC38BF9D22413A96006F8DA2 /* OstUserPollingService.swift in Sources */,
 				EC38BFA622413A96006F8DA2 /* OstMigration_1.swift in Sources */,
-				EC38BF9822413A96006F8DA2 /* OstRevokeDevice.swift in Sources */,
 				EC38BF1A22413A96006F8DA2 /* OstMnemonicsKeyManager.swift in Sources */,
 				EC38BF6722413A96006F8DA2 /* ABIConvertible.swift in Sources */,
 				EC38BF6522413A96006F8DA2 /* ABI.swift in Sources */,
@@ -1467,7 +1452,6 @@
 				EC38BF3D22413A96006F8DA2 /* EthereumValueConvertible.swift in Sources */,
 				EC38BF4522413A96006F8DA2 /* EthereumLogObject.swift in Sources */,
 				EC38BF4C22413A96006F8DA2 /* BytesConvertible.swift in Sources */,
-				EC38BF9922413A96006F8DA2 /* OstRevokeBase.swift in Sources */,
 				4BF8FE562244E5A200519779 /* OstLogoutPollingService.swift in Sources */,
 				EC38BF8F22413A96006F8DA2 /* OstExecuteTransaction.swift in Sources */,
 				EC38BF2A22413A96006F8DA2 /* Date+Timestamp.swift in Sources */,

@@ -54,7 +54,7 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
         } 
     }
     
-    /// Check for current device authorization
+    /// Should check whether current device authorized or not
     ///
     /// - Returns: `true` if check required, else `false`
     override func shouldCheckCurrentDeviceAuthorization() -> Bool {

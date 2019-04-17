@@ -16,7 +16,8 @@ public class OstError: Error {
     private var _internalCode: String = ""
     public var internalCode:String {
         set(code) {
-            _internalCode = "v\(OstBundle.getSdkVersion())_\(code)"
+//            _internalCode = "v\(OstBundle.getSdkVersion())_\(code)"
+            _internalCode = code
         }get {
             return _internalCode
         }
