@@ -108,25 +108,20 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
             return
         }
         
-        if self.forceSync {
-            try self.syncEntities()
-        }else {
-            try ensureEntities()
-        }
-        
+        try syncEntitesIfNeeded()
         self.postWorkflowComplete(entity: self.currentDevice!)
     }
     
     /// On device registered
     func onDeviceRegistered() throws  {
-        try syncEntities()
+        try syncEntitesIfNeeded()
         self.postWorkflowComplete(entity: self.currentDevice!)
     }
     
     /// Verify device registered
     ///
     /// - Throws: OstError
-    func verifyDeviceRegistered() throws {
+    private func verifyDeviceRegistered() throws {
         try syncCurrentDevice()
         
         if (!self.currentDevice!.canMakeApiCall()) {
@@ -134,10 +129,21 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         }
     }
     
+    /// Sync entities if needed. It checks for `forceSync` flag.
+    ///
+    /// - Throws: OstError
+    private func syncEntitesIfNeeded() throws {
+        if self.forceSync {
+            try self.syncEntities()
+        }else {
+            try ensureEntities()
+        }
+    }
+    
     /// Sync entities from server
     ///
     /// - Throws: OstError
-    func syncEntities() throws {
+    private func syncEntities() throws {
         try verifyDeviceRegistered()
         try syncUser()
         try syncToken()
@@ -146,7 +152,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// Ensure that entities are persent
     ///
     /// - Throws: OstError
-    func ensureEntities() throws {
+    private func ensureEntities() throws {
         try verifyDeviceRegistered()
         try ensureUser()
         try ensureToken()
