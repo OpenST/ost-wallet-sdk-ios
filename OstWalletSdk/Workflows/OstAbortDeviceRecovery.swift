@@ -56,6 +56,12 @@ class OstAbortDeviceRecovery: OstWorkflowEngine {
         try self.pinManager.validatePassphrasePrefixLength()
     }
     
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
     
     /// Abort device recovery after device validated.
     ///
