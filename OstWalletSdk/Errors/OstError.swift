@@ -141,6 +141,7 @@ public enum OstErrorText: String {
     case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
     case insufficientData = "Insufficient data"
     case invalidSpendingLimit = "Spending limit provided is invalid. Spending limit should be in atto BT and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
+    case solidityTypeNotSupported = "Solidity Shar3 type not supported. Supported types are bytes, sting, bool, address, uint."
     
     //API-Errors
     case invalidApiEndPoint = "Invalid Api Endpoint"
