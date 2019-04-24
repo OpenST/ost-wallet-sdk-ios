@@ -180,9 +180,9 @@ class SoliditySha3 {
                     throw OstError("u_s_ss_sp_9", "Supplied int exceeds width: \(size) vs \(num.bitWidth)")
                 }
                 
-                if (num<BigInt("0")) {
-                    let twosComplimentVal = twosCompliment(num)
-                    return String(format: "%x", twosComplimentVal as! CVarArg)
+                if (num.sign == BigInt.Sign.minus ) {
+                    // for negative numbers, two's compliment is same as the number itself.
+                    return String(format: "%x", num as! CVarArg)
                 }else {
                     return size != -1 ?
                         String(format: "%x", Int(num.description)!).padLeft(totalWidth: size / 8 * 2, with: "0") : String(format: "%x", Int(num.description)!)
@@ -194,18 +194,6 @@ class SoliditySha3 {
             // FIXME: support all other types
             throw OstError("u_s_ss_sp_10", "Unsupported or invalid type: \(type)")
         }
-    }
-    
-    fileprivate static func twosCompliment(_ original: BigInt) -> BigInt {
-        // for negative BigInteger, top byte is negative
-        let contents = Array(BigUInt(original).serialize())
-        
-        // prepend byte of opposite sign
-        var result = contents
-        result[0] = (contents[0] < 0) ? 0 : UInt8(-1);
-        
-        // this will be two's complement
-        return BigInt(BigUInt(Data(bytes: result)))
     }
     
     fileprivate static func parseNumber(_ value: Any) throws -> BigInt {
