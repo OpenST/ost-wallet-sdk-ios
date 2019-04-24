@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.0.4
+### Changes: 
+* Removed integer support for solidity SHA-3 to enable SDK compilation with Xcode 10.2.1.
+
 ## Version 2.0.3
 ### Changes: 
 * Fixed a bug that blocked PIN Reset during recovery.The PIN Reset now works during recovery.
