@@ -169,30 +169,9 @@ class SoliditySha3 {
             }catch let error {
                 throw error
             }
-        }else if (type.starts(with: "int")) {
-            if ((size % 8 != 0) || (size < 8) || (size > 256)) {
-                throw OstError("u_s_ss_sp_8", "Invalid int \(size) size")
-            }
-            
-            do {
-                let num: BigInt = try parseNumber(value)
-                if (num.bitWidth > size) {
-                    throw OstError("u_s_ss_sp_9", "Supplied int exceeds width: \(size) vs \(num.bitWidth)")
-                }
-                
-                if (num.sign == BigInt.Sign.minus ) {
-                    // for negative numbers, two's compliment is same as the number itself.
-                    return String(format: "%x", num as! CVarArg)
-                }else {
-                    return size != -1 ?
-                        String(format: "%x", Int(num.description)!).padLeft(totalWidth: size / 8 * 2, with: "0") : String(format: "%x", Int(num.description)!)
-                }
-            }catch let error {
-                throw error
-            }
         }else {
             // FIXME: support all other types
-            throw OstError("u_s_ss_sp_10", "Unsupported or invalid type: \(type)")
+            throw OstError("u_s_ss_sp_10", .solidityTypeNotSupported)
         }
     }
     
