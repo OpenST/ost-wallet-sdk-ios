@@ -195,22 +195,10 @@ class SoliditySha3 {
             }
         }else {
             // FIXME: support all other types
-            throw OstError("u_s_ss_sp_10", msg: "Unsupported or invalid type: \(type)")
+            throw OstError("u_s_ss_sp_10", .solidityTypeNotSupported)
         }
     }
-    
-    fileprivate static func twosCompliment(_ original: BigInt) -> BigInt {
-        // for negative BigInteger, top byte is negative
-        let contents = Array(BigUInt(original).serialize())
-        
-        // prepend byte of opposite sign
-        var result = contents
-        result[0] = (contents[0] < 0) ? 0 : UInt8(-1);
-        
-        // this will be two's complement
-        return BigInt(BigUInt(Data(bytes: result)))
-    }
-    
+
     fileprivate static func parseNumber(_ value: Any) throws -> BigInt {
         if (value is String) {
             if ((value as! String).lowercased().hasPrefix("0x")) {
