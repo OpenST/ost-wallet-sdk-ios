@@ -10,6 +10,10 @@
 
 import UIKit
 
-class OstTheme: NSObject {
-
+class OstTheme {
+    static var font: OstFontProvider = OstFontProvider()
+    static var primaryButton: OstPrimaryButtonTheamer = OstPrimaryButtonTheamer();
+    
+    
+    
 }

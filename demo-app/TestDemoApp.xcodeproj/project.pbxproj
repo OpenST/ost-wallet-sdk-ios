@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
-		00FF2327226F52B6009C2945 /* OstPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2326226F52B6009C2945 /* OstPrimaryButton.swift */; };
-		00FF2328226F52B6009C2945 /* OstPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2326226F52B6009C2945 /* OstPrimaryButton.swift */; };
-		00FF2329226F52B6009C2945 /* OstPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2326226F52B6009C2945 /* OstPrimaryButton.swift */; };
-		00FF232B226F5385009C2945 /* OstSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232A226F5385009C2945 /* OstSecondaryButton.swift */; };
-		00FF232C226F5385009C2945 /* OstSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232A226F5385009C2945 /* OstSecondaryButton.swift */; };
-		00FF232D226F5385009C2945 /* OstSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232A226F5385009C2945 /* OstSecondaryButton.swift */; };
-		00FF232F226F5398009C2945 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232E226F5398009C2945 /* OstLinkButton.swift */; };
-		00FF2330226F5398009C2945 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232E226F5398009C2945 /* OstLinkButton.swift */; };
-		00FF2331226F5398009C2945 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF232E226F5398009C2945 /* OstLinkButton.swift */; };
+		002EAF3122719ED800B48F1D /* OstPrimaryButtonTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3022719ED800B48F1D /* OstPrimaryButtonTheamer.swift */; };
+		002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF352271AAFD00B48F1D /* OstFontProvider.swift */; };
+		002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */; };
+		002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */; };
+		002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */; };
+		002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3B2271F8B700B48F1D /* UIColor+Helper.swift */; };
+		002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3B2271F8B700B48F1D /* UIColor+Helper.swift */; };
+		002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3B2271F8B700B48F1D /* UIColor+Helper.swift */; };
+		002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF352271AAFD00B48F1D /* OstFontProvider.swift */; };
+		002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF352271AAFD00B48F1D /* OstFontProvider.swift */; };
+		002EAF432272056300B48F1D /* OstPrimaryButtonTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3022719ED800B48F1D /* OstPrimaryButtonTheamer.swift */; };
+		002EAF442272056400B48F1D /* OstPrimaryButtonTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3022719ED800B48F1D /* OstPrimaryButtonTheamer.swift */; };
 		00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
@@ -101,9 +104,10 @@
 
 /* Begin PBXFileReference section */
 		00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTokensToUserView.swift; sourceTree = "<group>"; };
-		00FF2326226F52B6009C2945 /* OstPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPrimaryButton.swift; sourceTree = "<group>"; };
-		00FF232A226F5385009C2945 /* OstSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecondaryButton.swift; sourceTree = "<group>"; };
-		00FF232E226F5398009C2945 /* OstLinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLinkButton.swift; sourceTree = "<group>"; };
+		002EAF3022719ED800B48F1D /* OstPrimaryButtonTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPrimaryButtonTheamer.swift; sourceTree = "<group>"; };
+		002EAF352271AAFD00B48F1D /* OstFontProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstFontProvider.swift; sourceTree = "<group>"; };
+		002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Helpers.swift"; sourceTree = "<group>"; };
+		002EAF3B2271F8B700B48F1D /* UIColor+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helper.swift"; sourceTree = "<group>"; };
 		00FF2332226F5B2C009C2945 /* OstTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTheme.swift; sourceTree = "<group>"; };
 		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
@@ -205,9 +209,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		002EAF2F22719E8700B48F1D /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				002EAF3022719ED800B48F1D /* OstPrimaryButtonTheamer.swift */,
+				002EAF352271AAFD00B48F1D /* OstFontProvider.swift */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		002EAF3222719F3D00B48F1D /* UIHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */,
+				002EAF3B2271F8B700B48F1D /* UIColor+Helper.swift */,
+			);
+			path = UIHelpers;
+			sourceTree = "<group>";
+		};
 		00FF2323226F4C09009C2945 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				002EAF3222719F3D00B48F1D /* UIHelpers */,
+				002EAF2F22719E8700B48F1D /* Configurations */,
 				00FF2325226F4C25009C2945 /* Labels */,
 				00FF2324226F4C14009C2945 /* Buttons */,
 				00FF2332226F5B2C009C2945 /* OstTheme.swift */,
@@ -218,9 +242,6 @@
 		00FF2324226F4C14009C2945 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				00FF2326226F52B6009C2945 /* OstPrimaryButton.swift */,
-				00FF232A226F5385009C2945 /* OstSecondaryButton.swift */,
-				00FF232E226F5398009C2945 /* OstLinkButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -718,18 +739,21 @@
 				4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */,
 				4BF8FE182240FD1400519779 /* Users.swift in Sources */,
 				4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */,
-				00FF2327226F52B6009C2945 /* OstPrimaryButton.swift in Sources */,
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
+				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
+				002EAF3122719ED800B48F1D /* OstPrimaryButtonTheamer.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
+				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
 				4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */,
+				002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
 				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
@@ -740,12 +764,10 @@
 				00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */,
 				4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */,
-				00FF232F226F5398009C2945 /* OstLinkButton.swift in Sources */,
 				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
 				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
 				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
-				00FF232B226F5385009C2945 /* OstSecondaryButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,11 +775,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
+				002EAF432272056300B48F1D /* OstPrimaryButtonTheamer.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
-				00FF2328226F52B6009C2945 /* OstPrimaryButton.swift in Sources */,
+				002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */,
 				00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */,
-				00FF2330226F5398009C2945 /* OstLinkButton.swift in Sources */,
-				00FF232C226F5385009C2945 /* OstSecondaryButton.swift in Sources */,
+				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,11 +788,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
+				002EAF442272056400B48F1D /* OstPrimaryButtonTheamer.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
-				00FF2329226F52B6009C2945 /* OstPrimaryButton.swift in Sources */,
+				002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */,
 				00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */,
-				00FF2331226F5398009C2945 /* OstLinkButton.swift in Sources */,
-				00FF232D226F5385009C2945 /* OstSecondaryButton.swift in Sources */,
+				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -933,7 +957,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.testapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -957,7 +981,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.testapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
