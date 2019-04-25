@@ -29,5 +29,12 @@ class OstFontProvider {
     }
 }
 
+extension UIFont {
+    public class func ostFont(size:CGFloat) -> UIFont {
+        let provider = OstTheme.fontProvider;
+        return provider.get(size: size);
+    }
+}
+
 
 

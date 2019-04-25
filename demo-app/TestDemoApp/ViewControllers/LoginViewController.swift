@@ -62,15 +62,15 @@ class LoginViewController: UIViewController {
   let bioTextFieldController: MDCTextInputControllerOutlined
 
   // Add buttons
-  let toggleModeButton: MDCButton = {
-    let toggleModeButton = MDCButton()
+  let toggleModeButton: UIButton = {
+    let toggleModeButton = UIButton.ostSecondaryButton();
     toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
     toggleModeButton.setTitle("Create Account", for: .normal)
     toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
     return toggleModeButton
   }()
-  let nextButton: MDCButton = {
-    let nextButton = MDCButton()
+  let nextButton: UIButton = {
+    let nextButton = UIButton.ostPrimaryButton();
     nextButton.translatesAutoresizingMaskIntoConstraints = false
     nextButton.setTitle("NEXT", for: .normal)
     nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
@@ -154,6 +154,7 @@ class LoginViewController: UIViewController {
     scrollView.addSubview(mobileNumberTextField)
     scrollView.addSubview(bioTextField)
     
+    
     usernameTextFieldController.placeholderText = "Username"
     usernameTextField.delegate = self
     
@@ -172,6 +173,7 @@ class LoginViewController: UIViewController {
     scrollView.addSubview(nextButton)
     scrollView.addSubview(toggleModeButton)
     scrollView.sendSubviewToBack(self.activityIndicator);
+    
     
     
     // Error Label
@@ -275,74 +277,19 @@ class LoginViewController: UIViewController {
                                      metrics: nil,
                                      views: [ "bioTextField" : bioTextField]))
 
+    NSLayoutConstraint.activate(constraints);
+    
     // Buttons
     // Setup button constraints
+    nextButton.placeBelow(toItem: bioTextField);
+    nextButton.applyBlockElementConstraints();
     
-    constraints.append(NSLayoutConstraint(item: toggleModeButton,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: bioTextField,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 8))
-    constraints.append(NSLayoutConstraint(item: toggleModeButton,
-                                          attribute: .centerY,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .centerY,
-                                          multiplier: 1,
-                                          constant: 0))
-    constraints.append(contentsOf:
-      NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
-                                     options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-                                     metrics: nil,
-                                     views: [ "cancel" : toggleModeButton, "next" : nextButton]))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .height,
-                                          relatedBy: .equal,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: 50))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .width,
-                                          relatedBy: .greaterThanOrEqual,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: 90))
+    toggleModeButton.placeBelow(toItem: nextButton);
+    toggleModeButton.applyBlockElementConstraints();
     
-    
-    // Error Label
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
-                                          multiplier: 1,
-                                          constant: -20))
-
-    
-    NSLayoutConstraint.activate(constraints)
-    
-    let appScheme = ApplicationScheme.shared;
-    MDCContainedButtonThemer.applyScheme(appScheme.buttonScheme, to: nextButton);
-    MDCTextButtonThemer.applyScheme(appScheme.buttonScheme, to: toggleModeButton);
+    errorLabel.placeBelow(toItem: toggleModeButton);
+    errorLabel.applyBlockElementConstraints();
+    errorLabel.bottomAlignWithParent(constant: -20);
     
   }
 

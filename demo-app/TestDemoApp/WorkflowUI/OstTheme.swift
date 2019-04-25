@@ -11,9 +11,7 @@
 import UIKit
 
 class OstTheme {
-    static var font: OstFontProvider = OstFontProvider()
-    static var primaryButton: OstPrimaryButtonTheamer = OstPrimaryButtonTheamer();
-    
-    
-    
+    static var fontProvider: OstFontProvider = OstFontProvider()
+    static var primaryButton: OstPrimaryButton = OstPrimaryButton();
+    static var secondaryButton: OstSecondaryButton = OstSecondaryButton();
 }
