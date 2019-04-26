@@ -33,12 +33,3 @@ class OstSecondaryButton: OstButton {
         self.borderWidth = 2;
     }
 }
-
-extension UIButton {
-    class func ostSecondaryButton() -> UIButton {
-        let btn = UIButton();
-        let themer = OstTheme.secondaryButton;
-        themer.apply(button: btn);
-        return btn;
-    }
-}

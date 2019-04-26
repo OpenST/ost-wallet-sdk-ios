@@ -64,7 +64,7 @@ class OstButton {
     }
     
     
-    func apply(button:UIButton) {
+    func apply(_ button:UIButton) {
         
         //Set title font
         // Note for code-reviewer: As per documentation, titleLabel shall not be null.

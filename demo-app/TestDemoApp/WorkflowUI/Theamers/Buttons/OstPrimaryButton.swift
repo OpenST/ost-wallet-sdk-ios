@@ -32,10 +32,5 @@ class OstPrimaryButton : OstButton {
 }
 
 extension UIButton {
-    class func ostPrimaryButton() -> UIButton {
-        let btn = UIButton();
-        let themer = OstTheme.primaryButton;
-        themer.apply(button: btn);
-        return btn;
-    }
+
 }

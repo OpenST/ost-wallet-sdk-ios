@@ -25,10 +25,8 @@ class LoginViewController: UIViewController {
 
   
   let titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    let titleLabel = OstUIKit.h1()
     titleLabel.text = "Sign in to continue"
-    titleLabel.sizeToFit()
     return titleLabel
   }()
 
@@ -57,25 +55,25 @@ class LoginViewController: UIViewController {
 
   
   // Add text field controllers
-  let usernameTextFieldController: MDCTextInputControllerOutlined
-  let mobileNumberTextFieldController: MDCTextInputControllerOutlined
-  let bioTextFieldController: MDCTextInputControllerOutlined
+    let usernameTextFieldController: MDCTextInputControllerOutlined
+    let mobileNumberTextFieldController: MDCTextInputControllerOutlined
+    let bioTextFieldController: MDCTextInputControllerOutlined
 
   // Add buttons
-  let toggleModeButton: UIButton = {
-    let toggleModeButton = UIButton.ostSecondaryButton();
-    toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
-    toggleModeButton.setTitle("Create Account", for: .normal)
-    toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
-    return toggleModeButton
-  }()
-  let nextButton: UIButton = {
-    let nextButton = UIButton.ostPrimaryButton();
-    nextButton.translatesAutoresizingMaskIntoConstraints = false
-    nextButton.setTitle("NEXT", for: .normal)
-    nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
-    return nextButton
-  }()
+    let nextButton: UIButton = {
+        let nextButton = OstUIKit.primaryButton();
+        nextButton.setTitle("NEXT", for: .normal)
+        nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
+        return nextButton
+    }()
+
+    let toggleModeButton: UIButton = {
+        let toggleModeButton = OstUIKit.secondaryButton();
+        toggleModeButton.setTitle("Create Account", for: .normal)
+        toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
+        return toggleModeButton
+    }()
+    
   
   let errorLabel: UILabel = {
     let errorLabel = UILabel()
@@ -280,7 +278,7 @@ class LoginViewController: UIViewController {
     NSLayoutConstraint.activate(constraints);
     
     // Buttons
-    // Setup button constraints
+    // Setup constraints new way
     nextButton.placeBelow(toItem: bioTextField);
     nextButton.applyBlockElementConstraints();
     
