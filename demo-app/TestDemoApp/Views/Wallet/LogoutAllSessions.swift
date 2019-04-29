@@ -58,21 +58,16 @@ class LogoutAllSessions: BaseWalletWorkflowView {
         NSLayoutConstraint.activate(constraints)
         super.addBottomSubviewConstraints(afterView:self.logoImageView);
     }
-
-    override func receivedSdkEvent(eventData: [String : Any]) {
-        super.receivedSdkEvent(eventData: eventData)
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-        let workflowContext:OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
-        let workFlowType = workflowContext.workflowType;
+    
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
         
-        if eventType == OstSdkInteract.WorkflowEventType.flowComplete
-            && workFlowType == .logoutAllSessions {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2) , execute: {
-                let rootViewController: HomeViewController = self.window!.rootViewController as! HomeViewController
-                rootViewController.dismiss(animated: false, completion: nil)
-                rootViewController.showLoginViewController(animated: true)
-            })
+        if workflowContext.workflowType == .logoutAllSessions {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2) , execute: {
+            let rootViewController: HomeViewController = self.window!.rootViewController as! HomeViewController
+            rootViewController.dismiss(animated: false, completion: nil)
+            rootViewController.showLoginViewController(animated: true)
+        })
         }
-        
     }
 }

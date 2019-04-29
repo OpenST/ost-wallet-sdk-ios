@@ -35,7 +35,7 @@ class SetupWalletView: BaseWalletWorkflowView {
                               passphrasePrefix: currentUser.userPinSalt!,
                               spendingLimit: spendingLimitInAttoBT,
                               expireAfterInSec: TimeInterval(Double(2*60*60)),
-                              delegate: self.sdkInteract);
+                              delegate: self.workflowCallback);
     
     //Call super to update UI and log stuff.
     super.didTapNext(sender: sender);
@@ -171,19 +171,22 @@ class SetupWalletView: BaseWalletWorkflowView {
     return true;
   }
   
-  override func receivedSdkEvent(eventData: [String : Any]) {
-    super.receivedSdkEvent(eventData: eventData);
-    let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-    if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
-      //Time and close.
-      DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-        self.dismissViewController();
-      }
-      self.addToLog(log: "This window will close in 5 seconds");
-    } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
-      self.nextButton.setTitle("Try Again", for: .normal);
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId,
+                           workflowContext: workflowContext,
+                           contextEntity: contextEntity)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            self.dismissViewController();
+        }
+        self.addToLog(log: "This window will close in 5 seconds");
     }
-  }
+    
+    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        super.flowInterrupted(workflowId: workflowId,
+                              workflowContext: workflowContext,
+                              error: error)
+         self.nextButton.setTitle("Try Again", for: .normal);
+    }
 
 }
 

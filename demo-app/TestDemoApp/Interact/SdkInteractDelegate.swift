@@ -7,7 +7,26 @@
 //
 
 import Foundation
+import OstWalletSdk
 
 protocol SdkInteractDelegate: AnyObject {
-    func handleInteractListner(_ eventHandler: EventHandler)
 }
+
+protocol FlowCompleteDelegate: SdkInteractDelegate{
+    func flowComplete(workflowId: String,
+                      workflowContext: OstWorkflowContext,
+                      contextEntity: OstContextEntity)
+}
+
+protocol FlowInterruptedDelegate: SdkInteractDelegate{
+    func flowInterrupted(workflowId: String,
+                         workflowContext: OstWorkflowContext,
+                         error: OstError)
+}
+
+protocol RequestAcknowledgedDelegate: SdkInteractDelegate{
+    func requestAcknowledged(workflowId: String,
+                             workflowContext: OstWorkflowContext,
+                             contextEntity: OstContextEntity)
+}
+

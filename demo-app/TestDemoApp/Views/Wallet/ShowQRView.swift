@@ -24,49 +24,47 @@ class ShowQRView: BaseWalletWorkflowView {
         self.nextButton.isHidden = true;
         OstWalletSdk.setupDevice(userId: currentUser.id,
                                  tokenId: currentUser.tokenId!,
-                                 delegate: self.sdkInteract);
+                                 delegate: self.workflowCallback);
     }
     
-    override func receivedSdkEvent(eventData: [String : Any]) {
-        super.receivedSdkEvent(eventData: eventData);
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-        if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType
-            || OstSdkInteract.WorkflowEventType.flowInterrupt == eventType) {
-            
-            let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
-            if ( workflowContext.workflowType != OstWorkflowType.setupDevice ) {
-                return;
-            }
-            
-            if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType) {
-                //Failed to update status.
-                self.errorLabel.text = "Failed to update status.";
-                self.successLabel.text = "";
-                return;
-            }
-            
-            let ostContextEntity: OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity
-            self.activityIndicator.stopAnimating()
-            let userDevice = ostContextEntity.entity as! OstDevice;
-            if ( userDevice.isStatusAuthorized ) {
-                self.successLabel.text = "Device has been authorized.";
-                self.errorLabel.text = "";
-            } else {
-                self.successLabel.text = "";
-                if ( userDevice.isStatusRegistered ) {
-                    self.errorLabel.text = "Device is 'Registered'.";
-                } else if ( userDevice.isStatusCreated ) {
-                    self.errorLabel.text = "Device is 'Created'.";
-                } else if ( userDevice.isStatusAuthorizing ) {
-                    self.errorLabel.text = "Device is still Authorizing.";
-                }
-            }
-        }
+    func sdkEventReceived() {
         self.nextButton.isHidden = false;
         self.cancelButton.isHidden = true;
         self.activityIndicator.stopAnimating();
     }
     
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId,
+                           workflowContext: workflowContext,
+                           contextEntity: contextEntity)
+        
+        self.activityIndicator.stopAnimating()
+        let userDevice = contextEntity.entity as! OstDevice;
+        if ( userDevice.isStatusAuthorized ) {
+            self.successLabel.text = "Device has been authorized.";
+            self.errorLabel.text = "";
+        } else {
+            self.successLabel.text = "";
+            if ( userDevice.isStatusRegistered ) {
+                self.errorLabel.text = "Device is 'Registered'.";
+            } else if ( userDevice.isStatusCreated ) {
+                self.errorLabel.text = "Device is 'Created'.";
+            } else if ( userDevice.isStatusAuthorizing ) {
+                self.errorLabel.text = "Device is still Authorizing.";
+            }
+        }
+        sdkEventReceived()
+    }
+    
+    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        super.flowInterrupted(workflowId: workflowId,
+                              workflowContext: workflowContext,
+                              error: error)
+        
+        self.errorLabel.text = "Failed to update status.";
+        self.successLabel.text = "";
+    }
+
     // Mark - Sub Views
     let logoImageView: UIImageView = {
         let baseImage = UIImage.init(named: "Logo")

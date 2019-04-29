@@ -11,7 +11,62 @@
 import UIKit
 import OstWalletSdk
 
-class BaseWalletWorkflowView: BaseWalletView {
+class BaseWalletWorkflowView: BaseWalletView, FlowCompleteDelegate, FlowInterruptedDelegate, RequestAcknowledgedDelegate {
+    
+    var workflowCallback: WorkflowCallbacks {
+        let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
+        SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
+        return workflowCallback
+    }
+
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+        let timeStamp = String(Date().timeIntervalSince1970);
+        addToLog(log: "⚠️ Workflow Failed at " + timeStamp + " for workflowId: \(workflowId)");
+        
+        addToLog(log: "\nError.isApiError: \(error.isApiError)");
+        addToLog(log: "\nError.localizedDescription: \(error.localizedDescription)");
+        addToLog(log: "\nError.message: \(error.errorMessage)");
+        addToLog(log: "\nError.messageTextCode: \(error.messageTextCode.rawValue)");
+        addToLog(log: "\nError.internalCode: \(error.internalCode)");
+        addToLog(log: "\nError.errorInfo:\n \(String(describing: error.errorInfo))");
+        
+        self.nextButton.isHidden = false;
+        self.cancelButton.isHidden = false;
+        self.activityIndicator.stopAnimating();
+    }
+    
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+        let timeStamp = String(Date().timeIntervalSince1970);
+        addToLog(log: "☑️ Workflow request acknowledged at " + timeStamp + " for workflowId: \(workflowId)");
+    }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        let timeStamp = String(Date().timeIntervalSince1970);
+        addToLog(log: "✅ Workflow completed at " + timeStamp + " for workflowId: \(workflowId)");
+        self.nextButton.isHidden = false;
+        self.cancelButton.isHidden = false;
+        self.activityIndicator.stopAnimating();
+        
+        let workFlowType = workflowContext.workflowType;
+        
+        if ( workFlowType == .activateUser ) {
+            self.successLabel.text = "Great! Your wallet has been setup."
+        } else if ( workFlowType == .authorizeDeviceWithQRCode ) {
+            self.successLabel.text = "This device has been authorized."
+        } else if ( workFlowType == .addSession ) {
+            self.successLabel.text = "The session on this device has been authorized."
+        } else if ( workFlowType == .getDeviceMnemonics ) {
+            self.successLabel.text = "Please note down these words."
+        } else if ( workFlowType == .setupDevice ) {
+            self.successLabel.text = "This device has been registered."
+        } else if ( workFlowType == .resetPin ) {
+            self.successLabel.text = "Pin reset successfully."
+        } else if ( workFlowType == .initiateDeviceRecovery ) {
+            self.successLabel.text = "Recover device successfully."
+        }
+    }
 
     /*
     // Only override draw() if you perform custom drawing.

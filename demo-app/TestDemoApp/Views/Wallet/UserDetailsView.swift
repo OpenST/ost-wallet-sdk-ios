@@ -165,29 +165,42 @@ class UserDetailsView: BaseWalletWorkflowView {
         let currentUser = CurrentUser.getInstance();
         OstWalletSdk.setupDevice(userId: currentUser.ostUserId!,
                                  tokenId: currentUser.tokenId!,
-                                 delegate: self.sdkInteract);
+                                 delegate: self.workflowCallback);
     }
 
-    override func receivedSdkEvent(eventData: [String : Any]) {
-        super.receivedSdkEvent(eventData: eventData);
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-        if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType) {
-            let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
-            if ( workflowContext.workflowType != OstWorkflowType.setupDevice ) {
-                return;
-            }
-            fillData();
-            self.nextButton.isHidden = false;
-            self.cancelButton.isHidden = true;
-            self.logsTextView.isHidden = true;
-            self.activityIndicator.stopAnimating();
+//    override func receivedSdkEvent(eventData: [String : Any]) {
+//        super.receivedSdkEvent(eventData: eventData);
+//        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+//        if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType) {
+//            let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
+//            if ( workflowContext.workflowType != OstWorkflowType.setupDevice ) {
+//                return;
+//            }
+//            fillData();
+//            self.nextButton.isHidden = false;
+//            self.cancelButton.isHidden = true;
+//            self.logsTextView.isHidden = true;
+//            self.activityIndicator.stopAnimating();
+//        }
+//    }
+//
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId,
+                           workflowContext: workflowContext,
+                           contextEntity: contextEntity)
+        if ( workflowContext.workflowType != OstWorkflowType.setupDevice ) {
+            return;
         }
+        fillData();
+        self.nextButton.isHidden = false;
+        self.cancelButton.isHidden = true;
+        self.logsTextView.isHidden = true;
+        self.activityIndicator.stopAnimating();
     }
         
     func fillData() {
-        do {
             let currentUser = CurrentUser.getInstance();
-            let ostUser = try OstWalletSdk.getUser(currentUser.ostUserId!)
+            let ostUser = OstWalletSdk.getUser(currentUser.ostUserId!)
             let ostCurrentDevice = ostUser!.getCurrentDevice()
             
             kitEndPointTF.text = OstWalletSdk.getApiEndPoint()
@@ -204,8 +217,6 @@ class UserDetailsView: BaseWalletWorkflowView {
             self.nextButton.isHidden = true;
             self.cancelButton.isHidden = true;
             self.logsTextView.isHidden = true;
-        } catch let err {
-            //Logger.log(message: "Some error has occoured.", parameterToPrint: err);
-        }
+
     }
 }

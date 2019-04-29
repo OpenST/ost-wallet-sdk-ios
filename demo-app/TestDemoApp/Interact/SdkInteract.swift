@@ -19,19 +19,12 @@ class WeakRef<T> where T: AnyObject {
     }
 }
 
-struct EventHandler {
+struct EventData {
     var delegate: OstBaseDelegate?
     var workflowContext: OstWorkflowContext?
     var contextEntity: OstContextEntity?
     var error: OstError?
-    
-    let workflowId: String
-    let eventType: EventType
-    
-    init(workflowId: String, eventType: EventType) {
-        self.workflowId = workflowId
-        self.eventType = eventType
-    }
+    var data: Any?
 }
 
 enum EventType {
@@ -42,7 +35,8 @@ enum EventType {
     flowComplete,
     flowInterrupted,
     verifyData,
-    requestAcknowledged
+    requestAcknowledged,
+    all
 }
 
 class Events {
@@ -73,64 +67,74 @@ class Events {
 class SdkInteract {
     static let getInstance = SdkInteract()
     private init() {}
-    private var callbacks: [String: Events] = [:]
+    private var callbackListners: [String: [WeakRef<AnyObject>]] = [:]
+    private var workflowCallbackList: [WorkflowCallbacks] = []
     
-    func getCallbackEventFor(workflowId id: String) ->  Events? {
-        return callbacks[id]
+    func getWorkflowCallback() -> WorkflowCallbacks {
+        let workflow = WorkflowCallbacks()
+        workflowCallbackList.append(workflow)
+        return workflow
     }
     
-    func getCallbackEventListners(workflowId: String, eventType: EventType) -> [WeakRef<AnyObject>]? {
-        guard let event: Events = self.callbacks[workflowId] else {
-            return nil
-        }
-        return event.getEventListners(forEventType: eventType)
+    func getEventListner(forWorkflowId id: String) ->  [WeakRef<AnyObject>]? {
+        return self.callbackListners[id]
     }
     
-    func subscribeForWorkflow(workflowId: String, eventType: EventType, listner: SdkInteractDelegate) {
-        if let event = getCallbackEventFor(workflowId: workflowId) {
-            event.appendEventListner(listner, forEventType: eventType)
-            
-        }else {
-            let event = Events(eventType: eventType, listner: listner)
-            self.callbacks[workflowId] = event
+    func subscribe(forWorkflowId workflowId: String, listner: SdkInteractDelegate) {
+        var loListners = getEventListner(forWorkflowId: workflowId) ?? []
+        
+        for loListner in loListners {
+            let wListner = loListner.value
+            if wListner === listner {
+                return
+            }
         }
+        let weakListner = WeakRef<AnyObject>(value: listner)
+        loListners.append(weakListner)
+        self.callbackListners[workflowId] = loListners
     }
     
     func removeEventListners(forWorkflowId id: String) {
-        self.callbacks[id] = nil
-    }
-}
-
-extension SdkInteract {
-    func registerDevice(apiParams: [String : Any], delegate: OstDeviceRegisteredDelegate) {
-        
-    }
-    
-    func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        
+        self.callbackListners[id] = nil
+        for (i,workflowCallback) in workflowCallbackList.enumerated() {
+            let wfId = workflowCallback.workflowId
+            if wfId.caseInsensitiveCompare(id) == .orderedSame {
+                workflowCallbackList.remove(at: i)
+                break
+            }
+        }
     }
     
-    func invalidPin(_ userId: String, delegate: OstPinAcceptDelegate) {
+    func broadcaseEvent(workflowId: String, eventType: EventType, eventHandler: EventData) {
+        guard let eventListners =
+            getEventListner(forWorkflowId: workflowId)
+            else {
+                return
+        }
         
-    }
-    
-    func pinValidated(_ userId: String) {
-        
-    }
-    
-    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        
-    }
-    
-    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        
-    }
-    
-    func verifyData(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity, delegate: OstValidateDataDelegate) {
-        
-    }
-    
-    func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        
+        for eventListner in eventListners {
+            switch eventType {
+            case .flowComplete:
+                (eventListner.value as? FlowCompleteDelegate)?.flowComplete(workflowId: workflowId,
+                                                                            workflowContext: eventHandler.workflowContext!,
+                                                                            contextEntity: eventHandler.contextEntity!)
+                
+            case .flowInterrupted:
+                (eventListner.value as? FlowInterruptedDelegate)?.flowInterrupted(workflowId: workflowId,
+                                                                                  workflowContext: eventHandler.workflowContext!,
+                                                                                  error: eventHandler.error!)
+                
+            case .requestAcknowledged:
+                (eventListner.value as? RequestAcknowledgedDelegate)?.requestAcknowledged(workflowId: workflowId,
+                                                                                          workflowContext: eventHandler.workflowContext!,
+                                                                                          contextEntity: eventHandler.contextEntity!)
+            default:
+                continue
+                
+            }
+        }
+        if eventType == .flowComplete || eventType == .flowInterrupted {
+            removeEventListners(forWorkflowId: workflowId)
+        }
     }
 }

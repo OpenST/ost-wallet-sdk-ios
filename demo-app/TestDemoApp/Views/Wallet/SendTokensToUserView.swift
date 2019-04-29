@@ -66,7 +66,7 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
                                                    amounts: [amountToTransferStr],
                                                    transactionType: ruleType,
                                                    meta: txMeta,
-                                                   delegate: self.sdkInteract);
+                                                   delegate: self.workflowCallback);
     }
     
     

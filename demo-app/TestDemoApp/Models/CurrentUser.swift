@@ -10,8 +10,8 @@
 
 import Foundation;
 import OstWalletSdk
-class CurrentUser: BaseModel {
-  
+class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
+
   static var sharedInstance:CurrentUser?;
   
   class func getInstance() -> CurrentUser {
@@ -113,7 +113,12 @@ class CurrentUser: BaseModel {
   
   //
   
+    var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
+    var setupDeviceOnComplete: ((Bool)->Void)?
   func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
+    
+    setupDeviceOnSuccess = onSuccess
+    setupDeviceOnComplete = onComplete
     
     let ostSdkInteract = OstSdkInteract();
     ostSdkInteract.addEventListner { (eventData:[String : Any]) in
@@ -126,13 +131,10 @@ class CurrentUser: BaseModel {
           let userDevice = ostContextEntity.entity as! OstDevice;
           self.currentDeviceAddress = userDevice.address;
           self.userDevice = userDevice;
-          do {
-            try self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
+            self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
             print("onSuccess triggered for ", eventType);
             onSuccess(self.ostUser!, self.userDevice!);
-          } catch {
-            //We can't do anything.
-          }
+
         }
         //Callback onComplete with true.
         onComplete(true);
@@ -142,13 +144,30 @@ class CurrentUser: BaseModel {
       }
     }
     
+    let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
+    SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
+    
     OstWalletSdk.setupDevice(userId: self.ostUserId!,
                              tokenId: self.tokenId!,
                              forceSync:true,
-                             delegate: ostSdkInteract);
+                             delegate: workflowCallback);
   }
-//
-//  func registerDevice(_ apiParams: [String : Any], delegate ostDeviceRegisteredProtocol: OstDeviceRegisteredProtocol) {
-//
-//  }
+    
+    
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        setupDeviceOnComplete?(true);
+    }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
+            let userDevice = contextEntity.entity as! OstDevice;
+            self.currentDeviceAddress = userDevice.address;
+            self.userDevice = userDevice;
+            self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
+            print("onSuccess triggered for ", workflowContext.workflowType);
+            setupDeviceOnSuccess?(self.ostUser!, self.userDevice!)
+        }
+        //Callback onComplete with true.
+        setupDeviceOnComplete?(true);
+    }
 }

@@ -24,7 +24,7 @@ class PaperWalletView: BaseWalletWorkflowView {
     super.didTapNext(sender: sender);
     let currentUser = CurrentUser.getInstance();
     OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!,
-                                    delegate: self.sdkInteract)
+                                    delegate: self.workflowCallback)
   }
   // Mark - Sub Views
   let logoImageView: UIImageView = {
@@ -58,6 +58,7 @@ class PaperWalletView: BaseWalletWorkflowView {
   
   override func addSubviewConstraints() {
     let scrollView = self;
+
     
     // Constraints
     var constraints = [NSLayoutConstraint]()
@@ -102,18 +103,16 @@ class PaperWalletView: BaseWalletWorkflowView {
     super.addBottomSubviewConstraints(afterView:wordsTextView, constraints: constraints);
   }
   
-  override func receivedSdkEvent(eventData: [String : Any]) {
-    super.receivedSdkEvent(eventData: eventData);
-    let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-    if ( OstSdkInteract.WorkflowEventType.flowComplete != eventType ) {
-      return;
+    
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId,
+                           workflowContext: workflowContext,
+                           contextEntity: contextEntity)
+        
+        let wordsToShow:String = (contextEntity.entity as! [String]).joined(separator: " ");
+        self.wordsTextView.text = wordsToShow;
+        self.nextButton.isHidden = true;
+        self.cancelButton.isHidden = true;
+        self.activityIndicator.stopAnimating();
     }
-    let ostContextEntity: OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity
-
-    let wordsToShow:String = (ostContextEntity.entity as! [String]).joined(separator: " ");
-    self.wordsTextView.text = wordsToShow;
-    self.nextButton.isHidden = true;
-    self.cancelButton.isHidden = true;
-    self.activityIndicator.stopAnimating();
-  }
 }

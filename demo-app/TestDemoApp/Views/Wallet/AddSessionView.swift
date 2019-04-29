@@ -21,7 +21,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
             OstWalletSdk.addSession(userId: currentUser.ostUserId!,
                                     spendingLimit: self.spendingLimitTestField.text ?? "",
                                     expireAfterInSec: Double(expireAfter),
-                                    delegate: self.sdkInteract)
+                                    delegate: self.workflowCallback)
     }
   
     // Mark - Expires After Data
