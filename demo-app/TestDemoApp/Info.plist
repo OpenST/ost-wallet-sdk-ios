@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lato-Black</string>
+		<string>Lato-BlackItalic</string>
+		<string>Lato-Bold</string>
+		<string>Lato-BoldItalic</string>
+		<string>Lato-Hairline</string>
+		<string>Lato-HairlineItalic</string>
+		<string>Lato-Italic</string>
+		<string>Lato-LightItalic</string>
+		<string>Lato-Light</string>
+		<string>Lato-Regular</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
