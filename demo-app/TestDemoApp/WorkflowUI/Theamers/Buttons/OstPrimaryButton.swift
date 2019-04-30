@@ -9,7 +9,7 @@
 import UIKit
 
 class OstPrimaryButton : OstButton {
-    override init() {
+    init() {
         //Title Font-Size
         super.init(titleFontSize: CGFloat(18));
         
@@ -29,8 +29,4 @@ class OstPrimaryButton : OstButton {
         //Corner Radius
         self.cornerRadius = 10;
     }
-}
-
-extension UIButton {
-
 }

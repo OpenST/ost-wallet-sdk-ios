@@ -18,7 +18,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Demo App</string>
+	<string>DevS6TDemo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,13 +36,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MAPPY_APP_SERVER_URL</key>
-	<string>https://localhost:8080/</string>
+	<string>https://s5-mappy.stagingost.com/api</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Applications uses camera to scan QR-Code</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Applications uses Face ID to verify your identity</string>
 	<key>OST_PLATFORM_API_ENDPOINT</key>
-	<string>https://localhost:3000/</string>
+	<string>https://s6-api.stagingost.com/testnet/v2</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -9,7 +9,7 @@
 import UIKit
 
 class OstSecondaryButton: OstButton {
-    override init() {
+    init() {
         //Title Font-Size
         let titleFontSize = CGFloat(18);
         super.init(titleFontSize: titleFontSize);

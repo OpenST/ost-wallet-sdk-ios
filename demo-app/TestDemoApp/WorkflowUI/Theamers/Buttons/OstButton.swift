@@ -8,10 +8,7 @@
 
 import UIKit
 
-class OstButton {
-    
-    //Font-Provider
-    public var fontProvider:OstFontProvider?;
+class OstButton:BaseTheamer {
     
     //Title
     public var titleFontSize:CGFloat = 17;
@@ -28,17 +25,8 @@ class OstButton {
     public var borderWidth:CGFloat = 0;
     public var borderColor:CGColor = UIColor.white.cgColor;
     
-    init() {}
-    
     init(titleFontSize:CGFloat) {
         self.titleFontSize = titleFontSize;
-    }
-    
-    func getFontProvider() -> OstFontProvider {
-        if ( nil != fontProvider) {
-            return fontProvider!;
-        }
-        return OstTheme.fontProvider;
     }
     
     func setBackgroundImage(image:UIImage, state:UIButton.State) {
@@ -104,7 +92,5 @@ class OstButton {
             button.layer.borderWidth = borderWidth;
             button.layer.borderColor = borderColor;
         }
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
     }
 }

@@ -11,14 +11,14 @@
 import UIKit
 
 class OstTheme {
-    static var fontProvider: OstFontProvider = OstFontProvider()
+    public static var fontProvider: OstFontProvider = OstFontProvider()
     
     //Buttons
-    static var primaryButton: OstPrimaryButton = OstPrimaryButton();
-    static var secondaryButton: OstSecondaryButton = OstSecondaryButton();
-    
+    public static var primaryButton: OstPrimaryButton = OstPrimaryButton();
+    public static var secondaryButton: OstSecondaryButton = OstSecondaryButton();
     
     //Labels
-    static var h1:OstH1 = OstH1();
+    public static var h1:OstH1 = OstH1();
+    public static var leadLabel:OstLeadLabel = OstLeadLabel();
     
 }
