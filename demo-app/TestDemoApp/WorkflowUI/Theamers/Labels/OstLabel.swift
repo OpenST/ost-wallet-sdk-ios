@@ -16,10 +16,15 @@ class OstLabel:BaseTheamer {
     //Color
     public var textColor:UIColor = UIColor.black;
     
+    public var textAliginment: NSTextAlignment = .left
+    
+    override init() {}
+    
     func apply(_ label:UILabel) {
         label.font = getFontProvider().get(size: fontSize);
         label.textColor = textColor;
         label.numberOfLines = 0;
+        label.textAlignment = textAliginment
     }
 
 }
