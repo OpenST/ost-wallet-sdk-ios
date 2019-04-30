@@ -112,7 +112,6 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
   }
   
   //
-  
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
     var setupDeviceOnComplete: ((Bool)->Void)?
   func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {

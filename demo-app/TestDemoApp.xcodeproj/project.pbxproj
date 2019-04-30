@@ -101,6 +101,32 @@
 		4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
 		4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
 		4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
+		4B464EF222782A2100F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */; };
+		4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */; };
+		4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */; };
+		4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */; };
+		4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */; };
+		4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */; };
+		4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */; };
+		4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */; };
+		4B464EFB2278320100F1F4AF /* SdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* SdkInteract.swift */; };
+		4B464EFC2278320200F1F4AF /* SdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* SdkInteract.swift */; };
+		4B464EFD2278320400F1F4AF /* WorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */; };
+		4B464EFE2278320500F1F4AF /* WorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */; };
+		4B464EFF227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		4B464F00227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
+		4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
+		4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
+		4B464F0D227850C300F1F4AF /* OstBlueNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */; };
+		4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */; };
+		4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */; };
+		4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
+		4B464F142278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
+		4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
+		4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -216,6 +242,10 @@
 		4B464EC722773ABA00F1F4AF /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsViewController.swift; sourceTree = "<group>"; };
 		4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMnemonicsViewController.swift; sourceTree = "<group>"; };
+		4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsCollectionViewCell.swift; sourceTree = "<group>"; };
+		4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBlueNavigation.swift; sourceTree = "<group>"; };
+		4B464F122278516B00F1F4AF /* OstNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -314,7 +344,7 @@
 		002EAF2F22719E8700B48F1D /* Theamers */ = {
 			isa = PBXGroup;
 			children = (
-				0068D7032276F8CA00068CED /* TextViews */,
+				4B464F0522784B1E00F1F4AF /* Navigation */,
 				002EAF5C2272711F00B48F1D /* Labels */,
 				002EAF4622720B1B00B48F1D /* Fonts */,
 				002EAF4522720B0800B48F1D /* Buttons */,
@@ -374,6 +404,31 @@
 			path = Labels;
 			sourceTree = "<group>";
 		};
+		00ECB856227724D90085E4AB /* new */ = {
+			isa = PBXGroup;
+			children = (
+				00ECB8572277269A0085E4AB /* Login */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
+		00ECB8572277269A0085E4AB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				00ECB858227726D40085E4AB /* IntroViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		00ECB865227730340085E4AB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				00ECB861227727310085E4AB /* OstBaseViewController.swift */,
+				00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		4B464E752271CC9400F1F4AF /* Interact */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,38 +463,32 @@
 				4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */,
 			);
 			path = SettingOptions;
-      sourceTree = "<group>";
-    };
-		0068D7032276F8CA00068CED /* TextViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TextViews;
 			sourceTree = "<group>";
 		};
-		00ECB856227724D90085E4AB /* new */ = {
+		4B464EEF22782A0200F1F4AF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				00ECB8572277269A0085E4AB /* Login */,
+				4B464EF022782A0B00F1F4AF /* CollectionViewCell */,
 			);
-			path = new;
+			path = Cell;
 			sourceTree = "<group>";
 		};
-		00ECB8572277269A0085E4AB /* Login */ = {
+		4B464EF022782A0B00F1F4AF /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				00ECB858227726D40085E4AB /* IntroViewController.swift */,
+				4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */,
+				4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */,
 			);
-			path = Login;
+			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
-		00ECB865227730340085E4AB /* ViewControllers */ = {
+		4B464F0522784B1E00F1F4AF /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				00ECB861227727310085E4AB /* OstBaseViewController.swift */,
-				00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */,
+				4B464F122278516B00F1F4AF /* OstNavigation.swift */,
+				4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */,
 			);
-			path = ViewControllers;
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		4BF8FDAF2240FA7600519779 = {
@@ -467,26 +516,26 @@
 		4BF8FDBA2240FA7600519779 /* TestDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B464EEF22782A0200F1F4AF /* Cell */,
 				4B464EE622773B5300F1F4AF /* SettingOptions */,
 				4B464EBD22773A9C00F1F4AF /* Fonts */,
 				002EAF5B22726EC600B48F1D /* WorkflowUI */,
 				4B464E752271CC9400F1F4AF /* Interact */,
-				00FF2323226F4C09009C2945 /* Components */,
-				4BF8FE3C2241004600519779 /* OstWalletSdk.plist */,
-				4BF8FE162240FD1400519779 /* ApplicationScheme.swift */,
 				4BF8FDE92240FD1300519779 /* Base.lproj */,
 				4BF8FE042240FD1400519779 /* Cells */,
 				4BF8FDF62240FD1300519779 /* Jdenticon */,
 				4BF8FDF32240FD1300519779 /* Layouts */,
-				4BF8FDF52240FD1300519779 /* Main.storyboard */,
 				4BF8FDEC2240FD1300519779 /* Models */,
 				4BF8FDF02240FD1300519779 /* OstSdkInteract */,
 				4BF8FDFF2240FD1400519779 /* ViewControllers */,
 				4BF8FE062240FD1400519779 /* Views */,
 				4BF8FDBB2240FA7600519779 /* AppDelegate.swift */,
 				4BF8FDBD2240FA7600519779 /* ViewController.swift */,
+				4BF8FE162240FD1400519779 /* ApplicationScheme.swift */,
+				4BF8FDF52240FD1300519779 /* Main.storyboard */,
 				4BF8FDC22240FA7700519779 /* Assets.xcassets */,
 				4BF8FDC72240FA7700519779 /* Info.plist */,
+				4BF8FE3C2241004600519779 /* OstWalletSdk.plist */,
 			);
 			path = TestDemoApp;
 			sourceTree = "<group>";
@@ -776,7 +825,6 @@
 				4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */,
 				4B464ED722773ABB00F1F4AF /* Lato-Black.ttf in Resources */,
 				4BF8FE232240FD1400519779 /* README.md in Resources */,
-				4BF8FE1C2240FD1400519779 /* Assets.xcassets in Resources */,
 				4B464EE322773ABB00F1F4AF /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -982,6 +1030,7 @@
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
 				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
+				4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */,
 				002EAF4822720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
@@ -989,9 +1038,11 @@
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
 				002EAF5E227272B600B48F1D /* OstLabel.swift in Sources */,
 				4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */,
+				4B464EF222782A2100F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				00ECB85E227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
+				4B464F0D227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
 				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
 				4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */,
@@ -1006,6 +1057,7 @@
 				4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */,
 				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
 				4B464EE822773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				4B464EBC2273122700F1F4AF /* SdkInteractDelegate.swift in Sources */,
 				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
@@ -1017,19 +1069,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
+				4B464EFD2278320400F1F4AF /* WorkflowCallbacks.swift in Sources */,
+				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF632272752E00B48F1D /* OstH1.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
+				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabel.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464EFB2278320100F1F4AF /* SdkInteract.swift in Sources */,
+				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
+				4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
 				002EAF5F227272B600B48F1D /* OstLabel.swift in Sources */,
+				4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */,
+				4B464F142278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4D2272154800B48F1D /* OstButton.swift in Sources */,
 				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
@@ -1044,19 +1107,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
+				4B464EFE2278320500F1F4AF /* WorkflowCallbacks.swift in Sources */,
+				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF642272752E00B48F1D /* OstH1.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
+				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabel.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464EFC2278320200F1F4AF /* SdkInteract.swift in Sources */,
+				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
+				4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
 				002EAF60227272B600B48F1D /* OstLabel.swift in Sources */,
+				4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */,
+				4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4E2272154800B48F1D /* OstButton.swift in Sources */,
 				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,

@@ -7,23 +7,62 @@
 //
 
 import UIKit
+import OstWalletSdk
 
-class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    //MARK: - Components
     var titleLabel: UILabel?
     var collectionView: UICollectionView?
+    var tipLabel: UILabel?
     
+    //MARK: - Variables
+    let collectionViewMargine: CGFloat = 30.0
+    var mnemonicsArray = [String]()
+    var leadLabelText: String = "Write down your 12-word mnemonic phrase and store them securely"
+    var tipLabelText: String = """
+        Tips:
+        You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too.
+        """
+    
+    //MAKR: - Themer
+    var leadLabelThemer: UILabel = OstUIKit.lead()
+    var tipLabelThemer: UILabel = OstUIKit.lead()
+    
+    
+    override func getNavBarTitle() -> String {
+        return "View Mnemonics"
+    }
+    
+    //MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let currentUser = CurrentUser.getInstance()
+        if nil != currentUser.ostUserId {
+            let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
+            SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
+            OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!, delegate: workflowCallback)
+        }
+    }
+    
+    // MARK: - Create Views
     override func createViews() {
         super.createViews()
         createLabel()
         createCollectionView()
+        createTipLabel()
     }
     
     func createLabel() {
-        let label = UILabel()
-        label.text = "Write down your 12-word mnemonic phrase and store them securely"
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = UIColor.black
+        let label = leadLabelThemer
+        label.textAlignment = .left
+        label.text = leadLabelText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sizeToFit()
 
@@ -40,7 +79,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         loCollectionView.backgroundColor = .gray
         loCollectionView.clipsToBounds = true
         loCollectionView.layer.cornerRadius = 7
-        loCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        loCollectionView.contentInset = UIEdgeInsets(top: collectionViewMargine, left: collectionViewMargine, bottom: collectionViewMargine, right: collectionViewMargine)
         loCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         self.collectionView = loCollectionView
@@ -50,15 +89,26 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
     }
     
     func registerCollectionViewCell() {
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "abc")
+        collectionView?.register(MnemonicsCollectionViewCell.self, forCellWithReuseIdentifier: MnemonicsCollectionViewCell.cellIdentifier)
     }
     
+    func createTipLabel() {
+        let label = tipLabelThemer
+        label.text = tipLabelText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        tipLabel = label
+        contentView.addSubview(label)
+    }
+    
+    //MARK: - Apply Constraints
     override func applyConstraints() {
         super.applyConstraints()
         applyTitleLabelConstraints()
         applyCollectionViewConstraints()
+        applyTipLabelConstraints()
         
-        applyContentViewBottomAnchor(with: self.collectionView!)
+        applyContentViewBottomAnchor(with: self.tipLabel!)
     }
     
     func applyTitleLabelConstraints() {
@@ -74,22 +124,53 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         collectionView?.topAnchor.constraint(equalTo: titleLabel!.bottomAnchor, constant: 26).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 26).isActive = true
         collectionView?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -26).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 44*6).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: (44*6) + (2 * collectionViewMargine)).isActive = true
+    }
+    
+    func applyTipLabelConstraints() {
+        guard let parent = tipLabel?.superview else {return}
+        
+        tipLabel?.topAnchor.constraint(equalTo: collectionView!.bottomAnchor, constant: 16).isActive = true
+        tipLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 26).isActive = true
+        tipLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -26).isActive = true
     }
     
     //MARK: - Collection View
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return mnemonicsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "abc", for: indexPath)
-        cell.backgroundColor = .white
+        let cell: MnemonicsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MnemonicsCollectionViewCell.cellIdentifier,
+                                                                                   for: indexPath) as! MnemonicsCollectionViewCell
+        let mnemonics: String
+        let index: Int = indexPath.row+1
+        
+        if  !mnemonicsArray.isEmpty && mnemonicsArray.count >= indexPath.row  {
+            mnemonics = mnemonicsArray[indexPath.row]
+        }else {
+            mnemonics = ""
+        }
+        cell.setCellData(mnemonics: mnemonics, index: index)
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width/2), height: 44)
+        let cellWidth = (collectionView.frame.width/2) - (2*collectionViewMargine)
+        return CGSize(width: cellWidth, height: 44)
+    }
+    
+    //MAKR: - Sdk Interact Delegate
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if workflowContext.workflowType == .getDeviceMnemonics {
+            self.mnemonicsArray.append(contentsOf: (contextEntity.entity as! [String]))
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
     }
 }

@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
     errorLabel.sizeToFit()
     return errorLabel
   }()
-
+    
   let activityIndicator: MDCActivityIndicator = {
     let activityIndicator = MDCActivityIndicator()
     activityIndicator.indicatorMode = .indeterminate

@@ -4,16 +4,16 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Lato-Black</string>
-		<string>Lato-BlackItalic</string>
-		<string>Lato-Bold</string>
-		<string>Lato-BoldItalic</string>
-		<string>Lato-Hairline</string>
-		<string>Lato-HairlineItalic</string>
-		<string>Lato-Italic</string>
-		<string>Lato-LightItalic</string>
-		<string>Lato-Light</string>
-		<string>Lato-Regular</string>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Hairline.ttf</string>
+		<string>Lato-HairlineItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-Regular.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

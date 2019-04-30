@@ -21,4 +21,6 @@ class OstTheme {
     public static var h1:OstH1 = OstH1();
     public static var leadLabel:OstLeadLabel = OstLeadLabel();
     
+    //Navigation
+    static var blueNavigation: OstBlueNavigation = OstBlueNavigation()    
 }
