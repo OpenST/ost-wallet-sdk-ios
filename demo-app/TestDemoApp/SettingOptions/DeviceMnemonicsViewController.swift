@@ -26,8 +26,8 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         """
     
     //MAKR: - Themer
-    var leadLabelThemer: UILabel = OstUIKit.lead()
-    var tipLabelThemer: UILabel = OstUIKit.lead()
+    var leadLabelThemer: UILabel = OstUIKit.leadLabel()
+    var tipLabelThemer: UILabel = OstUIKit.leadLabel()
     
     
     override func getNavBarTitle() -> String {
