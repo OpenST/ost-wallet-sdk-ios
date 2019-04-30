@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OstH1: OstLabel {
+class OstH1Theamer: OstLabelTheamer {
     override init() {
         super.init();
         self.fontSize = 20;

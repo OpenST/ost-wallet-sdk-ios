@@ -27,18 +27,20 @@ class OstUIKit {
         return view;
     }
     
-    class func h1() -> UILabel {
-        let view = UILabel();
+    class func h1() -> OstLabel {
+        let view = OstLabel();
         view.translatesAutoresizingMaskIntoConstraints = false
         let themer = OstTheme.h1;
+        view.setTheamer(themer);
         themer.apply(view);
         return view;
     }
     
-    class func leadLabel() -> UILabel {
-        let view = UILabel();
+    class func leadLabel() -> OstLabel {
+        let view = OstLabel();
         view.translatesAutoresizingMaskIntoConstraints = false
         let themer = OstTheme.leadLabel;
+        view.setTheamer(themer);
         themer.apply(view);
         return view;
     }

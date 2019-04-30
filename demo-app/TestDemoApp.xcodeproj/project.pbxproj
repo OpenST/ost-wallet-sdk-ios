@@ -34,21 +34,24 @@
 		002EAF54227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF53227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift */; };
 		002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF53227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift */; };
 		002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF53227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift */; };
-		002EAF5E227272B600B48F1D /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabel.swift */; };
-		002EAF5F227272B600B48F1D /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabel.swift */; };
-		002EAF60227272B600B48F1D /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabel.swift */; };
-		002EAF622272752E00B48F1D /* OstH1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1.swift */; };
-		002EAF632272752E00B48F1D /* OstH1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1.swift */; };
-		002EAF642272752E00B48F1D /* OstH1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1.swift */; };
+		002EAF5E227272B600B48F1D /* OstLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabelTheamer.swift */; };
+		002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabelTheamer.swift */; };
+		002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF5D227272B600B48F1D /* OstLabelTheamer.swift */; };
+		002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1Theamer.swift */; };
+		002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1Theamer.swift */; };
+		002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF612272752E00B48F1D /* OstH1Theamer.swift */; };
 		002EAF66227275F000B48F1D /* OstUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF65227275F000B48F1D /* OstUIKit.swift */; };
 		002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF65227275F000B48F1D /* OstUIKit.swift */; };
 		002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF65227275F000B48F1D /* OstUIKit.swift */; };
-		002EAF6A22727C8100B48F1D /* OstLeadLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabel.swift */; };
-		002EAF6B22727C8100B48F1D /* OstLeadLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabel.swift */; };
-		002EAF6C22727C8100B48F1D /* OstLeadLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabel.swift */; };
+		002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
+		002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
+		002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
 		00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
+		00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
+		00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
+		00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
 		00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
 		00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
 		00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
@@ -214,11 +217,12 @@
 		002EAF4B2272154800B48F1D /* OstButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstButton.swift; sourceTree = "<group>"; };
 		002EAF4F2272321500B48F1D /* OstSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSecondaryButton.swift; sourceTree = "<group>"; };
 		002EAF53227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+NSLayoutConstraintHelper.swift"; sourceTree = "<group>"; };
-		002EAF5D227272B600B48F1D /* OstLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
-		002EAF612272752E00B48F1D /* OstH1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstH1.swift; sourceTree = "<group>"; };
+		002EAF5D227272B600B48F1D /* OstLabelTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabelTheamer.swift; sourceTree = "<group>"; };
+		002EAF612272752E00B48F1D /* OstH1Theamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstH1Theamer.swift; sourceTree = "<group>"; };
 		002EAF65227275F000B48F1D /* OstUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIKit.swift; sourceTree = "<group>"; };
-		002EAF6922727C8100B48F1D /* OstLeadLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLeadLabel.swift; sourceTree = "<group>"; };
+		002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLeadLabelTheamer.swift; sourceTree = "<group>"; };
 		00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTheamer.swift; sourceTree = "<group>"; };
+		00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
 		00ECB858227726D40085E4AB /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseScrollViewController.swift; sourceTree = "<group>"; };
 		00ECB861227727310085E4AB /* OstBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseViewController.swift; sourceTree = "<group>"; };
@@ -385,6 +389,7 @@
 		002EAF5B22726EC600B48F1D /* WorkflowUI */ = {
 			isa = PBXGroup;
 			children = (
+				00C1345C2278AF1600D6E7B8 /* Views */,
 				00FF2332226F5B2C009C2945 /* OstTheme.swift */,
 				002EAF65227275F000B48F1D /* OstUIKit.swift */,
 				002EAF2F22719E8700B48F1D /* Theamers */,
@@ -397,9 +402,25 @@
 		002EAF5C2272711F00B48F1D /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				002EAF5D227272B600B48F1D /* OstLabel.swift */,
-				002EAF612272752E00B48F1D /* OstH1.swift */,
-				002EAF6922727C8100B48F1D /* OstLeadLabel.swift */,
+				002EAF5D227272B600B48F1D /* OstLabelTheamer.swift */,
+				002EAF612272752E00B48F1D /* OstH1Theamer.swift */,
+				002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		00C1345C2278AF1600D6E7B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				00C1345D2278AF2300D6E7B8 /* Labels */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		00C1345D2278AF2300D6E7B8 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -1022,21 +1043,22 @@
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
+				00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 				4B464E792271DE7000F1F4AF /* WorkflowCallbacks.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
-				002EAF6A22727C8100B48F1D /* OstLeadLabel.swift in Sources */,
+				002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
 				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
 				4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */,
 				002EAF4822720EB200B48F1D /* UIImage+Helper.swift in Sources */,
-				002EAF622272752E00B48F1D /* OstH1.swift in Sources */,
+				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
-				002EAF5E227272B600B48F1D /* OstLabel.swift in Sources */,
+				002EAF5E227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4BF8FE1B2240FD1400519779 /* OstSdkInteract.swift in Sources */,
 				4B464EF222782A2100F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
@@ -1076,19 +1098,19 @@
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
-				002EAF632272752E00B48F1D /* OstH1.swift in Sources */,
+				002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
-				002EAF6B22727C8100B48F1D /* OstLeadLabel.swift in Sources */,
+				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464EFB2278320100F1F4AF /* SdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
-				002EAF5F227272B600B48F1D /* OstLabel.swift in Sources */,
+				002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */,
 				4B464F142278516B00F1F4AF /* OstNavigation.swift in Sources */,
@@ -1100,6 +1122,7 @@
 				00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */,
+				00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,19 +1137,19 @@
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
-				002EAF642272752E00B48F1D /* OstH1.swift in Sources */,
+				002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
-				002EAF6C22727C8100B48F1D /* OstLeadLabel.swift in Sources */,
+				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464EFC2278320200F1F4AF /* SdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
-				002EAF60227272B600B48F1D /* OstLabel.swift in Sources */,
+				002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */,
 				4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */,
@@ -1138,6 +1161,7 @@
 				00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */,
+				00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

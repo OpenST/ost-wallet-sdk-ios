@@ -40,12 +40,29 @@ class IntroViewController: OstBaseScrollViewController {
         return view;
     }()
     
+    
     let leadLabel: UILabel = {
-        let view = UILabel();
-        view.translatesAutoresizingMaskIntoConstraints = false;
-        view.text = "Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller Pass the selected object to the new view controller";
+        let view = OstUIKit.leadLabel();
+        view.setText("Test your Brand Token Economy deployed on OST Platform");
         view.backgroundColor = .white;
-        view.numberOfLines = 0;
+        return view;
+    }()
+    
+    let introImageView: UIImageView = {
+        let view = UIImageView(image: UIImage.init(named: "ostIntroImage") );
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view;
+    }()
+    
+    let createAccountBtn: UIButton = {
+        let view = OstUIKit.primaryButton();
+        view.setTitle("Create Account", for: .normal);
+        return view;
+    }()
+
+    let loginBtn: UIButton = {
+        let view = OstUIKit.secondaryButton();
+        view.setTitle("Log in", for: .normal);
         return view;
     }()
     
@@ -53,17 +70,35 @@ class IntroViewController: OstBaseScrollViewController {
         super.addSubviews();
         addSubview(logoImageView);
         addSubview(leadLabel);
+        addSubview(introImageView);
+        addSubview(createAccountBtn);
+        addSubview(loginBtn);
     }
 
     override func addLayoutConstraints() {
         super.addLayoutConstraints();
-        logoImageView.topAlignWithParent();
+        
+        logoImageView.topAlignWithParent(constant: 30);
         logoImageView.centerAlignWithParent();
         logoImageView.setAspectRatio(width: 70, height: 38);
         
         leadLabel.placeBelow(toItem: logoImageView);
         leadLabel.applyBlockElementConstraints();
-        leadLabel.bottomAlignWithParent();
+        
+        introImageView.placeBelow(toItem: leadLabel, constant: 40);
+        introImageView.setAspectRatio(width: 221, height: 236);
+        introImageView.centerAlignWithParent();
+        
+        createAccountBtn.placeBelow(toItem: introImageView, constant: 60);
+        createAccountBtn.applyBlockElementConstraints();
+        
+        loginBtn.placeBelow(toItem: createAccountBtn);
+        loginBtn.applyBlockElementConstraints();
+        
+        
+        //Update lastView as needed.
+        let lastView = loginBtn;
+        lastView.bottomAlignWithParent(constant: -20);
     }
 
 }

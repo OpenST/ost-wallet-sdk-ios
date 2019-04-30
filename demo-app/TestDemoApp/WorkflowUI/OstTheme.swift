@@ -18,8 +18,8 @@ class OstTheme {
     public static var secondaryButton: OstSecondaryButton = OstSecondaryButton();
     
     //Labels
-    public static var h1:OstH1 = OstH1();
-    public static var leadLabel:OstLeadLabel = OstLeadLabel();
+    public static var h1:OstH1Theamer = OstH1Theamer();
+    public static var leadLabel:OstLeadLabelTheamer = OstLeadLabelTheamer();
     
     //Navigation
     static var blueNavigation: OstBlueNavigation = OstBlueNavigation()    

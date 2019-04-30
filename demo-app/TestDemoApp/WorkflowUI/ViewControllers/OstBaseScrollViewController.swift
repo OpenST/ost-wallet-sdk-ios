@@ -13,10 +13,8 @@ class OstBaseScrollViewController: OstBaseViewController {
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false;
-        scrollView.backgroundColor = .red;
+        scrollView.backgroundColor = .white;
         scrollView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        scrollView.layer.borderWidth = 2;
-        scrollView.layer.borderColor = UIColor.green.cgColor;
         scrollView.isDirectionalLockEnabled = true;
         return scrollView
     }()
@@ -24,7 +22,7 @@ class OstBaseScrollViewController: OstBaseViewController {
     let svContentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false;
-        view.backgroundColor = .yellow;
+        view.backgroundColor = .white;
         return view;
     }()
     
@@ -50,12 +48,12 @@ class OstBaseScrollViewController: OstBaseViewController {
     
     func addScrollViewLayoutConstraints() {
         scrollView.applyBlockElementConstraints(horizontalMargin: 0);
-        scrollView.topAlignWithParent();
+        scrollView.topAlignWithParent(constant: 20.0);
         scrollView.bottomAlignWithParent();
         
         svContentView.applyBlockElementConstraints(horizontalMargin: 0);
         svContentView.topAlignWithParent();
-        svContentView.bottomAlignWithParent();
+        svContentView.bottomAlignWithParent(constant: -20.0);
 
     }
     
