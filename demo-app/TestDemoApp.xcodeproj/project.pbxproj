@@ -130,6 +130,18 @@
 		4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
 		4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
 		4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
+		4B464F232278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
+		4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
+		4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
+		4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
+		4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
+		4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
+		4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */; };
+		4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */; };
+		4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */; };
+		4B464F3122794E9500F1F4AF /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3022794E9500F1F4AF /* String+Extension.swift */; };
+		4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3022794E9500F1F4AF /* String+Extension.swift */; };
+		4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3022794E9500F1F4AF /* String+Extension.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -250,6 +262,10 @@
 		4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBlueNavigation.swift; sourceTree = "<group>"; };
 		4B464F122278516B00F1F4AF /* OstNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
+		4B464F222278C99F00F1F4AF /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionTableViewCell.swift; sourceTree = "<group>"; };
+		4B464F3022794E9500F1F4AF /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -482,6 +498,7 @@
 			children = (
 				4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */,
 				4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */,
+				4B464F222278C99F00F1F4AF /* OptionsViewController.swift */,
 			);
 			path = SettingOptions;
 			sourceTree = "<group>";
@@ -489,6 +506,7 @@
 		4B464EEF22782A0200F1F4AF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4B464F262278CB8500F1F4AF /* TabelViewCell */,
 				4B464EF022782A0B00F1F4AF /* CollectionViewCell */,
 			);
 			path = Cell;
@@ -510,6 +528,23 @@
 				4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4B464F262278CB8500F1F4AF /* TabelViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */,
+				4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */,
+			);
+			path = TabelViewCell;
+			sourceTree = "<group>";
+		};
+		4B464F2F22794E7F00F1F4AF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4B464F3022794E9500F1F4AF /* String+Extension.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		4BF8FDAF2240FA7600519779 = {
@@ -537,6 +572,7 @@
 		4BF8FDBA2240FA7600519779 /* TestDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B464F2F22794E7F00F1F4AF /* Helpers */,
 				4B464EEF22782A0200F1F4AF /* Cell */,
 				4B464EE622773B5300F1F4AF /* SettingOptions */,
 				4B464EBD22773A9C00F1F4AF /* Fonts */,
@@ -1025,6 +1061,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BF8FE2E2240FD1400519779 /* BaseWalletWorkflowView.swift in Sources */,
+				4B464F3122794E9500F1F4AF /* String+Extension.swift in Sources */,
 				002EAF66227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */,
 				4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */,
@@ -1033,6 +1070,7 @@
 				002EAF4C2272154800B48F1D /* OstButton.swift in Sources */,
 				4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */,
 				4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */,
+				4B464F232278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				4B464E772271CD8C00F1F4AF /* SdkInteract.swift in Sources */,
 				4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */,
 				4BF8FE182240FD1400519779 /* Users.swift in Sources */,
@@ -1040,6 +1078,7 @@
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1055,6 +1094,8 @@
 				4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */,
 				002EAF4822720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
+				002EAF622272752E00B48F1D /* OstH1.swift in Sources */,
+				4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
@@ -1092,11 +1133,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */,
+				4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
+				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* WorkflowCallbacks.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
@@ -1106,6 +1150,7 @@
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B464EFB2278320100F1F4AF /* SdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
@@ -1131,11 +1176,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */,
+				4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
+				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* WorkflowCallbacks.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
@@ -1145,6 +1193,7 @@
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B464EFC2278320200F1F4AF /* SdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,

@@ -31,6 +31,8 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
     var userDevice: OstDevice?;
     var ostUser: OstUser?;
     var currentDeviceAddress: String?
+    var userName: String?
+    var currentUserData: [String: Any]?
   
   override init() {
     self.tokenId = nil;
@@ -46,6 +48,7 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
     self.ostUserId = nil;
     self.skdUser = nil;
     self.userPinSalt = nil;
+    self.currentUserData = nil
   }
     
   func signUp(username:String , phonenumber:String, userDescription:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
@@ -53,6 +56,8 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
         onComplete(false);
         return;
     }
+    
+    self.userName = username
   
     var params: [String: Any] = [:];
     params["username"] = username;
@@ -65,6 +70,7 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
       self.ostUserId = appApiResponse!["user_id"] as? String;
       self.tokenId = appApiResponse!["token_id"] as? String;
       self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
+        self.currentUserData = appApiResponse!
       
       self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
     }) { (failureResponse) in
@@ -77,6 +83,7 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
       onComplete(false);
       return;
     }
+    self.userName = username
     
     var params: [String: Any] = [:];
     params["username"] = username;
@@ -87,6 +94,7 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
         self.ostUserId = appApiResponse!["user_id"] as? String;
         self.tokenId = appApiResponse!["token_id"] as? String;
         self.userPinSalt = appApiResponse!["user_pin_salt"] as? String;
+        self.currentUserData = appApiResponse!
         
         self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
     }, onFailure: { (failureResponse) in

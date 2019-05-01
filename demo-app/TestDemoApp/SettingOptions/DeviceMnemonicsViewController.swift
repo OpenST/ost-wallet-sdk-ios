@@ -36,6 +36,10 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
     
     //MARK: - View Life Cycle
     
+    deinit {
+        print("deinit: \(String(describing: self))")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -76,7 +80,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         let loCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectioViewFlowLayout)
         loCollectionView.delegate = self
         loCollectionView.dataSource = self
-        loCollectionView.backgroundColor = .gray
+        loCollectionView.backgroundColor = UIColor.color(238, 245, 248)
         loCollectionView.clipsToBounds = true
         loCollectionView.layer.cornerRadius = 7
         loCollectionView.contentInset = UIEdgeInsets(top: collectionViewMargine, left: collectionViewMargine, bottom: collectionViewMargine, right: collectionViewMargine)

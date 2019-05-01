@@ -106,8 +106,7 @@ class LoginViewController: UIViewController {
     logoImageView.translatesAutoresizingMaskIntoConstraints = false
     return logoImageView
   }()
-
-
+    
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     //Setup text field controllers
     usernameTextFieldController = MDCTextInputControllerOutlined(textInput: usernameTextField)

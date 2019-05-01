@@ -95,12 +95,9 @@ class BaseSettingOptionsViewController: UIViewController, FlowCompleteDelegate, 
     
     //MAKR: - Actions
     @objc func tappedBackButton() {
-        
-        // Do your thing
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }
-
 
 class CustomBackButton: NSObject {
     

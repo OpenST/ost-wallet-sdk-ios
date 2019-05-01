@@ -277,11 +277,7 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
         else if ( actionType.caseInsensitiveCompare(ACTIONS.paperWallet.rawValue) == .orderedSame ) {
             let walletController = WalletViewController(nibName: nil, bundle: nil);
             walletController.viewMode = WalletViewController.ViewMode.PAPER_WALLET;
-//            self.present(walletController, animated: true, completion: nil);
-            
-            let d = DeviceMnemonicsViewController()
-            let n = UINavigationController(rootViewController: d)
-            self.present(n, animated: true, completion: nil)
+            self.present(walletController, animated: true, completion: nil);
         }
         
         else if ( actionType.caseInsensitiveCompare(ACTIONS.addSession.rawValue) == .orderedSame ) {
