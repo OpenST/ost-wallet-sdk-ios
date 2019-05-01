@@ -46,7 +46,7 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     }
     
     func invalidPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        getPinFromUser(ostPinAcceptProtocol: delegate)
+        getPinFromUser(message: "Invalid pin, Please re-enter", ostPinAcceptProtocol: delegate)
     }
     
     func pinValidated(_ userId: String) {
@@ -56,7 +56,13 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     func verifyData(workflowContext: OstWorkflowContext,
                     ostContextEntity: OstContextEntity,
                     delegate: OstValidateDataDelegate) {
-        delegate.dataVerified()
+        if workflowContext.workflowType == .authorizeDeviceWithQRCode {
+            let vc = VerifyAuthDeviceViewController()
+            vc.workflowContext = workflowContext
+            vc.contextEntity = ostContextEntity
+            vc.delegate = delegate as OstBaseDelegate
+            vc.showVC()
+        }
     }
     
     func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
@@ -121,5 +127,18 @@ public extension UIAlertController {
         win.windowLevel = UIWindow.Level.alert + 1
         win.makeKeyAndVisible()
         vc.present(self, animated: true, completion: nil)
+    }
+}
+
+public extension UIViewController {
+    func showVC() {
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        let vc = UIViewController()
+        vc.view.backgroundColor = .clear
+        win.rootViewController = vc
+        win.windowLevel = UIWindow.Level.alert + 1
+        win.makeKeyAndVisible()
+        let navC = UINavigationController(rootViewController: self)
+        vc.present(navC, animated: true, completion: nil)
     }
 }

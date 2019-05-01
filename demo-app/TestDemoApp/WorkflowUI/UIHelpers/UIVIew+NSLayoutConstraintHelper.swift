@@ -45,7 +45,7 @@ extension UIView {
                                               constant: constant));
     }
     
-    func centerAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func centerAlignX(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .centerX,
@@ -56,9 +56,9 @@ extension UIView {
                                               constant: constant));
     }
     
-    func centerAlignWithParent(multiplier:CGFloat = 1, constant:CGFloat = 0) {
+    func centerXAlignWithParent(multiplier:CGFloat = 1, constant:CGFloat = 0) {
         if ( nil != self.superview ) {
-            centerAlign(toItem: self.superview!, multiplier: multiplier, constant: constant, addConstraintTo: self.superview!);
+            centerAlignX(toItem: self.superview!, multiplier: multiplier, constant: constant, addConstraintTo: self.superview!);
         }
     }
     
@@ -149,7 +149,7 @@ extension UIView {
         if ( nil == myParent ) {
             return;
         }
-        self.centerAlign(toItem: myParent!);
+        self.centerAlignX(toItem: myParent!);
         self.setWidthFromWidth(toItem: myParent!, constant: (-2) * horizontalMargin);
     }
     
@@ -162,14 +162,15 @@ extension UIView {
         let windowWidth:CGFloat = 375.0;
         let multiplier = width / windowWidth;
         let window = UIApplication.shared.keyWindow;
-        
-        window?.addConstraint(NSLayoutConstraint(item: self,
+        let widthConstant = (window?.frame.width)! * multiplier
+            
+        self.addConstraint(NSLayoutConstraint(item: self,
                                                 attribute: .width,
                                                 relatedBy: .equal,
-                                                toItem: window,
+                                                toItem: nil,
                                               attribute: .width,
-                                              multiplier: multiplier,
-                                              constant: 0));
+                                              multiplier: 1,
+                                              constant: widthConstant));
     }
     
     
@@ -181,14 +182,15 @@ extension UIView {
         let windowHeight:CGFloat = 667.0;
         let multiplier = height / windowHeight;
         let window = UIApplication.shared.keyWindow;
-        
-        window?.addConstraint(NSLayoutConstraint(item: self,
+        let heightConstant = (window?.frame.height)! * multiplier
+
+        self.addConstraint(NSLayoutConstraint(item: self,
                                                  attribute: .height,
                                                  relatedBy: .equal,
-                                                 toItem: window,
+                                                 toItem: nil,
                                                  attribute: .height,
-                                                 multiplier: multiplier,
-                                                 constant: 0));
+                                                 multiplier: 1,
+                                                 constant: heightConstant));
     }
     
     func setAspectRatio(width: CGFloat, height: CGFloat) {

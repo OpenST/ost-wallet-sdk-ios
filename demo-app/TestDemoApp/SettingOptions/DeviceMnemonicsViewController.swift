@@ -12,7 +12,6 @@ import OstWalletSdk
 class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     //MARK: - Components
-    var titleLabel: UILabel?
     var collectionView: UICollectionView?
     var tipLabel: UILabel?
     
@@ -26,16 +25,18 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         """
     
     //MAKR: - Themer
-    var leadLabelThemer: UILabel = OstUIKit.leadLabel()
     var tipLabelThemer: UILabel = OstUIKit.leadLabel()
-    
-    
+
+    //MARK: - View Life Cycle
+
     override func getNavBarTitle() -> String {
         return "View Mnemonics"
     }
     
-    //MARK: - View Life Cycle
-    
+    override func getLeadLabelText() -> String {
+        return leadLabelText
+    }
+
     deinit {
         print("deinit: \(String(describing: self))")
     }
@@ -49,30 +50,20 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         
         let currentUser = CurrentUser.getInstance()
         if nil != currentUser.ostUserId {
-            let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
-            SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
-            OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!, delegate: workflowCallback)
+//            let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
+//            SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self as! SdkInteractDelegate)
+            OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!, delegate: self.workflowDelegate)
         }
     }
     
     // MARK: - Create Views
-    override func createViews() {
-        super.createViews()
-        createLabel()
+    override func addSubviews() {
+        super.addSubviews()
         createCollectionView()
         createTipLabel()
+        addTapGesture()
     }
     
-    func createLabel() {
-        let label = leadLabelThemer
-        label.textAlignment = .left
-        label.text = leadLabelText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.sizeToFit()
-
-        titleLabel = label
-        contentView.addSubview(titleLabel!)
-    }
     
     func createCollectionView() {
         let collectioViewFlowLayout = UICollectionViewFlowLayout()
@@ -82,12 +73,13 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         loCollectionView.dataSource = self
         loCollectionView.backgroundColor = UIColor.color(238, 245, 248)
         loCollectionView.clipsToBounds = true
+        loCollectionView.allowsSelection = false
         loCollectionView.layer.cornerRadius = 7
         loCollectionView.contentInset = UIEdgeInsets(top: collectionViewMargine, left: collectionViewMargine, bottom: collectionViewMargine, right: collectionViewMargine)
         loCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         self.collectionView = loCollectionView
-        contentView.addSubview(loCollectionView)
+        svContentView.addSubview(loCollectionView)
         
         registerCollectionViewCell()
     }
@@ -99,33 +91,40 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
     func createTipLabel() {
         let label = tipLabelThemer
         label.text = tipLabelText
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         
         tipLabel = label
-        contentView.addSubview(label)
+        svContentView.addSubview(label)
     }
+ 
+    func addTapGesture() {
+        weak var weakSelf = self
+        let tapGesture = UITapGestureRecognizer(target: weakSelf, action: #selector(weakSelf!.doubleTapGestureDetected) )
+        tapGesture.numberOfTapsRequired = 2
+        
+        self.collectionView?.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func doubleTapGestureDetected() {
+        let mnemonicsString = self.mnemonicsArray.joined(separator: " ")
+        UIPasteboard.general.string = mnemonicsString
+    }
+    
+    
     
     //MARK: - Apply Constraints
-    override func applyConstraints() {
-        super.applyConstraints()
-        applyTitleLabelConstraints()
+    override func addLayoutConstraints() {
+        super.addLayoutConstraints()
         applyCollectionViewConstraints()
         applyTipLabelConstraints()
-        
-        applyContentViewBottomAnchor(with: self.tipLabel!)
     }
     
-    func applyTitleLabelConstraints() {
-        guard let parent = titleLabel?.superview else {return}
-        titleLabel?.topAnchor.constraint(equalTo: parent.topAnchor, constant: 26).isActive = true
-        titleLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 26).isActive = true
-        titleLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -26).isActive = true
-    }
     
     func applyCollectionViewConstraints() {
         guard let parent = collectionView?.superview else {return}
         
-        collectionView?.topAnchor.constraint(equalTo: titleLabel!.bottomAnchor, constant: 26).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: leadLabel.bottomAnchor, constant: 26).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 26).isActive = true
         collectionView?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -26).isActive = true
         collectionView?.heightAnchor.constraint(equalToConstant: (44*6) + (2 * collectionViewMargine)).isActive = true
@@ -137,6 +136,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         tipLabel?.topAnchor.constraint(equalTo: collectionView!.bottomAnchor, constant: 16).isActive = true
         tipLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 26).isActive = true
         tipLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -26).isActive = true
+        tipLabel?.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -26).isActive = true
     }
     
     //MARK: - Collection View

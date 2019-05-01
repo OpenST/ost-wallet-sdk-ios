@@ -79,7 +79,7 @@ class IntroViewController: OstBaseScrollViewController {
         super.addLayoutConstraints();
         
         logoImageView.topAlignWithParent(constant: 30);
-        logoImageView.centerAlignWithParent();
+        logoImageView.centerXAlignWithParent();
         logoImageView.setAspectRatio(width: 70, height: 38);
         
         leadLabel.placeBelow(toItem: logoImageView);
@@ -87,7 +87,7 @@ class IntroViewController: OstBaseScrollViewController {
         
         introImageView.placeBelow(toItem: leadLabel, constant: 40);
         introImageView.setAspectRatio(width: 221, height: 236);
-        introImageView.centerAlignWithParent();
+        introImageView.centerXAlignWithParent();
         
         createAccountBtn.placeBelow(toItem: introImageView, constant: 60);
         createAccountBtn.applyBlockElementConstraints();

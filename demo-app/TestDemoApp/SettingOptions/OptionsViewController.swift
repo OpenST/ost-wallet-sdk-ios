@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     //MAKR: - Components
     var tableView: UITableView?
@@ -22,10 +22,12 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("deinit: \(String(describing: self))")
     }
     
+    override func getNavBarTitle() -> String {
+        return "Setting"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        createViews()
-        applyConstraints()
         
         createGeneralOptionsArray()
         createDeviceOptionsArray()
@@ -33,21 +35,13 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //MARK: - Create Views
-    func createViews() {
+    
+    override func addSubviews() {
         setupNavigationBar()
         createTabelView()
     }
     
-    func setupNavigationBar() {
-        self.navigationItem.title = "Options"
-        if nil != self.navigationController {
-            weak var weakself = self
-            let navigationThemer: OstNavigation =  OstTheme.blueNavigation
-            navigationThemer.apply(self.navigationController!, target: weakself, action: #selector(weakself!.tappedBackButton))
-        }
-    }
-
-    @objc func tappedBackButton() {
+    @objc override func tappedBackButton() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -72,7 +66,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //MAKR: - Apply Constraints
-    func applyConstraints() {
+    override func addLayoutConstraints() {
         applyTableViewConstraints()
     }
     
@@ -218,6 +212,18 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             destinationVC = DeviceMnemonicsViewController()
         }
         
+        else if option.type == .authorizeViaMnemonics {
+            destinationVC = AuthorizeDeviceViaMnemonicsViewController()
+        }
+            
+        else if option.type == .showDeviceQR {
+            destinationVC = ShowQRCodeViewController()
+        }
+        
+        else if option.type == .authorizeViaQR {
+            destinationVC = QRScannerViewController()
+        }
+        
         if nil == self.navigationController {
             let navC = UINavigationController(rootViewController: destinationVC!)
             self.present(navC, animated: true, completion: nil)
@@ -226,7 +232,6 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
 }
-
 
 class OptionTableHeaderView: UIView {
     

@@ -11,6 +11,7 @@ import UIKit
 class OstBaseViewController: UIViewController {
 
     var showNavigationController:Bool = true;
+    var navigationThemer: OstNavigation =  OstTheme.blueNavigation
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,24 @@ class OstBaseViewController: UIViewController {
         self.view.backgroundColor = .white;
     }
     
+    func getNavBarTitle() -> String {
+        return ""
+    }
+    
+    func setupNavigationBar() {
+                self.navigationItem.title = getNavBarTitle()
+                if nil != self.navigationController {
+                    weak var weakSelf = self
+                    navigationThemer.apply(self.navigationController!, target: weakSelf, action: #selector(weakSelf!.tappedBackButton))
+                }
+            }
+    
+    @objc func tappedBackButton() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func addSubviews() {
+        setupNavigationBar()
         // Add subviews. Make sure to call super method (applicable to most cases).
         // super.addSubviews();
     }
