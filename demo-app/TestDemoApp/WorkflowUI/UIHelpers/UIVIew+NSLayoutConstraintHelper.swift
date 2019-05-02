@@ -62,6 +62,25 @@ extension UIView {
         }
     }
     
+    func centerAlignY(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+        constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
+            .addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .centerY,
+                                              relatedBy: .equal,
+                                              toItem: toItem,
+                                              attribute: .centerY,
+                                              multiplier: multiplier,
+                                              constant: constant));
+    }
+    
+    func centerYAlignWithParent(multiplier:CGFloat = 1, constant:CGFloat = 0) {
+        if ( nil != self.superview ) {
+            centerAlignY(toItem: self.superview!, multiplier: multiplier, constant: constant, addConstraintTo: self.superview!);
+        }
+    }
+    
+    
+    
     func leftAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
@@ -140,6 +159,18 @@ extension UIView {
                                               multiplier: multiplier,
                                               constant: constant));
     }
+    
+    func setFixedHeight(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil) {
+        constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
+            .addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .height,
+                                              relatedBy: .equal,
+                                              toItem: nil,
+                                              attribute: .height,
+                                              multiplier: multiplier,
+                                              constant: constant));
+    }
+    
     
     func applyBlockElementConstraints(_ parent:UIView? = nil, horizontalMargin:CGFloat = 20) {
         var myParent:UIView? = parent;

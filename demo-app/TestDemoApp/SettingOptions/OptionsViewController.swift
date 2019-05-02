@@ -46,6 +46,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let loTableView = UITableView(frame: .zero, style: .plain)
         loTableView.delegate = self
         loTableView.dataSource = self
+        loTableView.separatorStyle = .none
         loTableView.rowHeight = UITableView.automaticDimension
         loTableView.estimatedRowHeight = 100
         loTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,10 +126,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         container.backgroundColor = .white
         container.addSubview(sectionTitle)
         
-        sectionTitle.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 18).isActive = true
-        sectionTitle.topAnchor.constraint(equalTo: container.topAnchor, constant: 5).isActive = true
-        sectionTitle.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -20).isActive = true
-        sectionTitle.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -5).isActive = true
+        sectionTitle.topAlignWithParent(multiplier: 1, constant: 20)
+        sectionTitle.leftAlignWithParent(multiplier: 1, constant: 20)
+        sectionTitle.rightAlignWithParent(multiplier: 1, constant: 20)
+        sectionTitle.bottomAlignWithParent(multiplier: 1, constant: -20)
 
         return container
     }

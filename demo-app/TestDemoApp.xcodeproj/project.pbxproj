@@ -165,6 +165,8 @@
 		4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
 		4B464F51227AED7D00F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
 		4B464F52227AED7D00F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
+		4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */; };
+		4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -1218,6 +1220,7 @@
 				4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4D2272154800B48F1D /* OstButton.swift in Sources */,
 				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
@@ -1269,6 +1272,7 @@
 				4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4E2272154800B48F1D /* OstButton.swift in Sources */,
 				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
