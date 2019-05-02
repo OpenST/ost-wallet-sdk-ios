@@ -36,10 +36,6 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
     override func getLeadLabelText() -> String {
         return leadLabelText
     }
-
-    deinit {
-        print("deinit: \(String(describing: self))")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +46,8 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         
         let currentUser = CurrentUser.getInstance()
         if nil != currentUser.ostUserId {
-//            let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
-//            SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self as! SdkInteractDelegate)
-            OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!, delegate: self.workflowDelegate)
+            OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!,
+                                            delegate: self.workflowDelegate)
         }
     }
     
@@ -63,7 +58,6 @@ class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollect
         createTipLabel()
         addTapGesture()
     }
-    
     
     func createCollectionView() {
         let collectioViewFlowLayout = UICollectionViewFlowLayout()

@@ -18,10 +18,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var deviceOptions = [OptionVM]()
     
     //MAKR: - View LC
-    deinit {
-        print("deinit: \(String(describing: self))")
-    }
-    
+
     override func getNavBarTitle() -> String {
         return "Setting"
     }

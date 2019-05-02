@@ -29,10 +29,6 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
         scanner?.startScanning()
     }
     
-    deinit {
-        print("deinit \(String(describing: self))")
-    }
-    
     //MAKR: - Add Subviews
     override func addSubviews() {
         super.addSubviews()

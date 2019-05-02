@@ -33,6 +33,11 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
     }
     
     //MAKR: - Add Views
+    
+    deinit {
+        print("deinit \(String(describing: self))")
+    }
+    
     override func addSubviews() {
         super.addSubviews()
         addSubview(leadLabel)

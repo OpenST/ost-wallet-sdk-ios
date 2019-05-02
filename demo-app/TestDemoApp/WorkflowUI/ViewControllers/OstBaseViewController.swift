@@ -13,6 +13,10 @@ class OstBaseViewController: UIViewController {
     var showNavigationController:Bool = true;
     var navigationThemer: OstNavigation =  OstTheme.blueNavigation
     
+    deinit {
+        print("deinit: \(String(describing: self))")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

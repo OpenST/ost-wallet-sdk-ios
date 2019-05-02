@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class OstScannerView: UIView, AVCaptureMetadataOutputObjectsDelegate {
+class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     //MARK: - Components
     private let scannerContainer: UIView = {
@@ -24,36 +24,20 @@ class OstScannerView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     private var captureSession: AVCaptureSession? = nil
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer? = nil
    
-    
     init(completion: (([String]?) -> Void)?) {
         self.onCompletion = completion
         super.init(frame: .zero)
-        createViews()
-        applyConstraints()
-    }
-    
-    deinit {
-        print("deinit: \(String(describing: self))")
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        createViews()
-        applyConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        createViews()
-        applyConstraints()
-
     }
-    
-    private func createViews() {
+
+    override func createViews() {
         self.addSubview(scannerContainer)
     }
     
-    private func applyConstraints() {
+    override func applyConstraints() {
         guard let parent = scannerContainer.superview else {return}
         scannerContainer.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
         scannerContainer.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
