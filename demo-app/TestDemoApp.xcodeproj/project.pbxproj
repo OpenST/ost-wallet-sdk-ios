@@ -167,6 +167,12 @@
 		4B464F52227AED7D00F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
 		4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */; };
 		4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */; };
+		4B464F57227B40A900F1F4AF /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F55227B40A900F1F4AF /* OFL.txt */; };
+		4B464F58227B40A900F1F4AF /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F55227B40A900F1F4AF /* OFL.txt */; };
+		4B464F59227B40A900F1F4AF /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F55227B40A900F1F4AF /* OFL.txt */; };
+		4B464F5A227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
+		4B464F5B227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
+		4B464F5C227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -298,6 +304,8 @@
 		4B464F49227AC9E700F1F4AF /* OstScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstScannerView.swift; sourceTree = "<group>"; };
 		4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B464F4F227AED7300F1F4AF /* OstBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseView.swift; sourceTree = "<group>"; };
+		4B464F55227B40A900F1F4AF /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		4B464F56227B40A900F1F4AF /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -515,6 +523,8 @@
 		4B464EBD22773A9C00F1F4AF /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				4B464F56227B40A900F1F4AF /* FONTLOG.txt */,
+				4B464F55227B40A900F1F4AF /* OFL.txt */,
 				4B464EC322773ABA00F1F4AF /* Lato-Black.ttf */,
 				4B464EC622773ABA00F1F4AF /* Lato-BlackItalic.ttf */,
 				4B464EC122773ABA00F1F4AF /* Lato-Bold.ttf */,
@@ -914,6 +924,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B464F57227B40A900F1F4AF /* OFL.txt in Resources */,
 				4B464EE022773ABB00F1F4AF /* Lato-BlackItalic.ttf in Resources */,
 				4B464ED122773ABB00F1F4AF /* Lato-Bold.ttf in Resources */,
 				4B464EDD22773ABB00F1F4AF /* Lato-LightItalic.ttf in Resources */,
@@ -927,6 +938,7 @@
 				4B464EDA22773ABB00F1F4AF /* Lato-HairlineItalic.ttf in Resources */,
 				4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */,
 				4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */,
+				4B464F5A227B40A900F1F4AF /* FONTLOG.txt in Resources */,
 				4B464ED722773ABB00F1F4AF /* Lato-Black.ttf in Resources */,
 				4BF8FE232240FD1400519779 /* README.md in Resources */,
 				4B464EE322773ABB00F1F4AF /* Lato-Regular.ttf in Resources */,
@@ -943,9 +955,11 @@
 				4B464EDE22773ABB00F1F4AF /* Lato-LightItalic.ttf in Resources */,
 				4B464ECF22773ABB00F1F4AF /* Lato-Italic.ttf in Resources */,
 				4B464EE122773ABB00F1F4AF /* Lato-BlackItalic.ttf in Resources */,
+				4B464F58227B40A900F1F4AF /* OFL.txt in Resources */,
 				4B464ECC22773ABB00F1F4AF /* Lato-Light.ttf in Resources */,
 				4B464EE422773ABB00F1F4AF /* Lato-Regular.ttf in Resources */,
 				4B464ED822773ABB00F1F4AF /* Lato-Black.ttf in Resources */,
+				4B464F5B227B40A900F1F4AF /* FONTLOG.txt in Resources */,
 				4B464ED222773ABB00F1F4AF /* Lato-Bold.ttf in Resources */,
 				00031EE5227860EB00A7FF80 /* Assets.xcassets in Resources */,
 			);
@@ -961,9 +975,11 @@
 				4B464EDF22773ABB00F1F4AF /* Lato-LightItalic.ttf in Resources */,
 				4B464ED022773ABB00F1F4AF /* Lato-Italic.ttf in Resources */,
 				4B464EE222773ABB00F1F4AF /* Lato-BlackItalic.ttf in Resources */,
+				4B464F59227B40A900F1F4AF /* OFL.txt in Resources */,
 				4B464ECD22773ABB00F1F4AF /* Lato-Light.ttf in Resources */,
 				4B464EE522773ABB00F1F4AF /* Lato-Regular.ttf in Resources */,
 				4B464ED922773ABB00F1F4AF /* Lato-Black.ttf in Resources */,
+				4B464F5C227B40A900F1F4AF /* FONTLOG.txt in Resources */,
 				4B464ED322773ABB00F1F4AF /* Lato-Bold.ttf in Resources */,
 				00031EE6227860EB00A7FF80 /* Assets.xcassets in Resources */,
 			);
