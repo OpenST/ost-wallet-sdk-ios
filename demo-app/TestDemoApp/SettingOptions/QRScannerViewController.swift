@@ -14,14 +14,7 @@ import OstWalletSdk
 class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     //MARK: - Components
-    var captureSession: AVCaptureSession? = nil
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer? = nil
-    let viewPreview: UIView = {
-        var viewPreview = UIView(frame: CGRect.zero)
-        viewPreview.backgroundColor = UIColor.clear
-        viewPreview.translatesAutoresizingMaskIntoConstraints = false
-        return viewPreview
-    }();
+    var scanner: OstScannerView? = nil
     
     override func getNavBarTitle() -> String {
         return "Scan QR"
@@ -33,7 +26,7 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     //MARK: - View LC
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startReading()
+        scanner?.startScanning()
     }
     
     deinit {
@@ -43,7 +36,30 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     //MAKR: - Add Subviews
     override func addSubviews() {
         super.addSubviews()
-        addSubview(viewPreview)
+        addScannerView()
+    }
+    
+    func addScannerView() {
+        let viewPreview = OstScannerView(completion: {[weak self] (values) in
+            guard let strongSelf = self else {return}
+            if (nil != values) && !values!.isEmpty {
+                guard let qrData = values!.first else {
+                    strongSelf.scanner?.startScanning()
+                    return
+                }
+                
+                let currentUser = CurrentUser.getInstance();
+                OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
+                                             payload: qrData,
+                                             delegate: strongSelf.workflowDelegate)
+            }else {
+                strongSelf.scanner?.startScanning()
+            }
+        })
+        viewPreview.backgroundColor = UIColor.clear
+        viewPreview.translatesAutoresizingMaskIntoConstraints = false
+        scanner = viewPreview
+        addSubview(scanner!)
     }
     
     //MARK: - Add Constraints
@@ -51,70 +67,14 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
         super.addLayoutConstraints()
         addViewPreviewConstraints()
         
-        let lastView = viewPreview
+        let lastView = scanner!
         lastView.bottomAlignWithParent()
     }
     
     func addViewPreviewConstraints() {
-        viewPreview.placeBelow(toItem: leadLabel)
-        viewPreview.setW375Width(width: 375)
-        viewPreview.setAspectRatio(width: 375, height: 493)
-    }
-    
-    func stopReading() {
-        captureSession?.stopRunning()
-        captureSession = nil
-        videoPreviewLayer?.removeFromSuperlayer()
-    }
-    
-    func startReading() {
-        let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
-        if (captureDevice == nil) {
-            
-            let alert = UIAlertController(title: "Please check camera permission.", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
-            self.present(alert, animated: true, completion: nil)
-    
-            return
-        }
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice!)
-            captureSession = AVCaptureSession()
-            captureSession?.addInput(input)
-            // Do the rest of your work...
-        } catch let error as NSError {
-            // Handle any errors
-            print(error)
-        }
-        
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-        videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        videoPreviewLayer!.frame = viewPreview.layer.bounds
-        viewPreview.layer.addSublayer(videoPreviewLayer!)
-        
-        /* Check for metadata */
-        let captureMetadataOutput = AVCaptureMetadataOutput()
-        captureSession?.addOutput(captureMetadataOutput)
-        captureMetadataOutput.metadataObjectTypes = captureMetadataOutput.availableMetadataObjectTypes
-        print(captureMetadataOutput.availableMetadataObjectTypes)
-        captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        captureSession?.startRunning()
-    }
-    
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        captureSession?.stopRunning()
-        let qrCode = (videoPreviewLayer?.transformedMetadataObject(for: metadataObjects[0]) as? AVMetadataMachineReadableCodeObject)?.stringValue
-        
-        if (nil == qrCode) {
-            return;
-        }
-        let currentUser = CurrentUser.getInstance();
-        OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
-                                     payload: qrCode!,
-                                     delegate: self.workflowDelegate)
-        
-        //Stop using cam.
-        stopReading();
+        scanner?.placeBelow(toItem: leadLabel)
+        scanner?.setW375Width(width: 375)
+        scanner?.setAspectRatio(width: 375, height: 493)
     }
     
     //MARK: - OstWalletSdk Workflow delegate
@@ -126,7 +86,6 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        
-        startReading()
+        scanner?.startScanning()
     }
 }

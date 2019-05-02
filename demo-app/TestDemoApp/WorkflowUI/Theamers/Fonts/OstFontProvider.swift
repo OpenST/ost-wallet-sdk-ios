@@ -9,7 +9,7 @@
 import UIKit
 
 class OstFontProvider {
-    var fontName:String = "";
+    var fontName:String = "Lato";
     var useSystemFont = true;
     
     init() {

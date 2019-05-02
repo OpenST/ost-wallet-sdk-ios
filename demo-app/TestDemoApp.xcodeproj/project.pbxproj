@@ -154,6 +154,13 @@
 		4B464F42227A0CA200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F43227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F44227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
+		4B464F45227AC6EA00F1F4AF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		4B464F46227AC6EA00F1F4AF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
+		4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
+		4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
+		4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
+		4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -282,6 +289,7 @@
 		4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAuthDeviceViewController.swift; sourceTree = "<group>"; };
 		4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRCodeViewController.swift; sourceTree = "<group>"; };
 		4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
+		4B464F49227AC9E700F1F4AF /* OstScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstScannerView.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -445,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				00C1345D2278AF2300D6E7B8 /* Labels */,
+				4B464F49227AC9E700F1F4AF /* OstScannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1107,6 +1116,7 @@
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
+				4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */,
 				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
@@ -1182,6 +1192,7 @@
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
+				4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B464F43227A118200F1F4AF /* QRScannerViewController.swift in Sources */,
@@ -1200,7 +1211,9 @@
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4B464F3F2279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,
+				4B464F45227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */,
+				4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
@@ -1229,6 +1242,7 @@
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
+				4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B464F44227A118200F1F4AF /* QRScannerViewController.swift in Sources */,
@@ -1247,7 +1261,9 @@
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4B464F402279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,
+				4B464F46227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */,
+				4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
