@@ -20,7 +20,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MAKR: - View LC
 
     override func getNavBarTitle() -> String {
-        return "Setting"
+        return "Wallet Settings"
     }
     
     override func viewDidLoad() {
@@ -129,7 +129,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         sectionTitle.topAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.leftAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.rightAlignWithParent(multiplier: 1, constant: 20)
-        sectionTitle.bottomAlignWithParent(multiplier: 1, constant: -20)
+        sectionTitle.bottomAlignWithParent()
 
         return container
     }
