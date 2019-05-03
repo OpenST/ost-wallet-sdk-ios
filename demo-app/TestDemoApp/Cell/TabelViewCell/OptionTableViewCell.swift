@@ -56,8 +56,9 @@ class OptionTableViewCell: BaseTableViewCell {
     }()
     
     let arrowImage: UIImageView = {
-        let image = UIImage(named: "Back")
+        let image = UIImage(named: "rightArrow")
         let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView

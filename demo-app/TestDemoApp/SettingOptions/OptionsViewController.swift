@@ -274,11 +274,11 @@ class OptionTableHeaderView: UIView {
     }
     func createcirCularView() {
         let circularView = UIView()
-        circularView.backgroundColor = UIColor.color(67, 139, 173)
+        circularView.backgroundColor = UIColor.color(244, 244, 244)
         circularView.layer.cornerRadius = 25
         
         let letter = UILabel()
-        letter.textColor = .white
+        letter.textColor = UIColor.color(155, 155, 155)
         letter.numberOfLines = 1
         letter.font = UIFont(name: "Lato", size: 17)?.bold()
         

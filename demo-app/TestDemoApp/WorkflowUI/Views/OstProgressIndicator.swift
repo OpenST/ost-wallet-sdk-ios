@@ -24,7 +24,6 @@ class OstProgressIndicator: OstBaseView {
         let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.startAnimating()
         return activityIndicator
     }()
     
@@ -50,7 +49,7 @@ class OstProgressIndicator: OstBaseView {
     //MAKR: - Create Views
     override func createViews() {
         super.createViews()
-        
+        self.alpha = 0.0
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.addSubview(containerView)
         
@@ -85,7 +84,18 @@ class OstProgressIndicator: OstBaseView {
         progressTextLabel.bottomAlignWithParent(constant: -20)
     }
     
+    func show() {
+        if nil != self.superview {
+            self.superview?.bringSubviewToFront(self)
+            let screenFrame = UIScreen.main.bounds
+            self.frame = screenFrame
+            activityIndicator.startAnimating()
+            self.alpha = 1.0
+        }
+    }
+    
     func close() {
-        self.removeFromSuperview()
+        self.superview?.sendSubviewToBack(self)
+        self.alpha = 0.0
     }
 }
