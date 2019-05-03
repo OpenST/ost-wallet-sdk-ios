@@ -35,7 +35,6 @@ class LoginViewController: UIViewController {
     let usernameTextField = MDCTextField()
     usernameTextField.translatesAutoresizingMaskIntoConstraints = false
     usernameTextField.clearButtonMode = .unlessEditing
-    usernameTextField.text = "Aniket 121"
     return usernameTextField
   }()
   
@@ -43,7 +42,6 @@ class LoginViewController: UIViewController {
     let mobileNumberTextField = MDCTextField()
     mobileNumberTextField.translatesAutoresizingMaskIntoConstraints = false
     mobileNumberTextField.isSecureTextEntry = false
-    mobileNumberTextField.text = "1212220121"
     return mobileNumberTextField
   }()
 
