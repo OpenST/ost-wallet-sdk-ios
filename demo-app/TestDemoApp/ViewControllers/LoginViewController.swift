@@ -35,6 +35,7 @@ class LoginViewController: UIViewController {
     let usernameTextField = MDCTextField()
     usernameTextField.translatesAutoresizingMaskIntoConstraints = false
     usernameTextField.clearButtonMode = .unlessEditing
+    usernameTextField.text = "Aniket 121"
     return usernameTextField
   }()
   
@@ -42,6 +43,7 @@ class LoginViewController: UIViewController {
     let mobileNumberTextField = MDCTextField()
     mobileNumberTextField.translatesAutoresizingMaskIntoConstraints = false
     mobileNumberTextField.isSecureTextEntry = false
+    mobileNumberTextField.text = "1212220121"
     return mobileNumberTextField
   }()
 
@@ -422,12 +424,12 @@ class LoginViewController: UIViewController {
     }
     
     func validatePhoneNumber() -> Bool {
-        if (mobileNumberTextField.text!.count < 10) {
-            mobileNumberTextFieldController.setErrorText("Mobile Number is too short",
-                                                         errorAccessibilityValue: nil);
-            return false;
-        }
-        mobileNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
+//        if (mobileNumberTextField.text!.count < 10) {
+//            mobileNumberTextFieldController.setErrorText("Mobile Number is too short",
+//                                                         errorAccessibilityValue: nil);
+//            return false;
+//        }
+//        mobileNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
         return true;
     }
 }
@@ -451,4 +453,12 @@ extension LoginViewController: UITextFieldDelegate {
 
     return false
   }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        let a = AuthorizeDeviceViewController()
+//        let n = UINavigationController(rootViewController: a)
+//        self.present(n, animated: true, completion: nil)
+    }
 }

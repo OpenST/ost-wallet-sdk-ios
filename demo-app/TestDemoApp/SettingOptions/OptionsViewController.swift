@@ -280,7 +280,7 @@ class OptionTableHeaderView: UIView {
         let letter = UILabel()
         letter.textColor = UIColor.color(155, 155, 155)
         letter.numberOfLines = 1
-        letter.font = UIFont(name: "Lato", size: 17)?.bold()
+        letter.font = UIFont(name: "Lato", size: 20)?.bold()
         
         self.initialLetter = letter
         circularView.addSubview(letter)
