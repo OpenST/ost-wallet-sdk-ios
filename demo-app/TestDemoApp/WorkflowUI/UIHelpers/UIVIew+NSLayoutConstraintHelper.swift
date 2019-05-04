@@ -79,8 +79,6 @@ extension UIView {
         }
     }
     
-    
-    
     func leftAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
@@ -96,6 +94,17 @@ extension UIView {
         if ( nil != self.superview ) {
             leftAlign(toItem: self.superview!, multiplier: multiplier, constant: constant, addConstraintTo: self.superview!);
         }
+    }
+    
+    func leftWithRightAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+        constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
+            .addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .left,
+                                              relatedBy: .equal,
+                                              toItem: toItem,
+                                              attribute: .right,
+                                              multiplier: multiplier,
+                                              constant: constant));
     }
     
     func rightAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {

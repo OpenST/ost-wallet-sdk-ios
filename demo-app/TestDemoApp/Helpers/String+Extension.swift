@@ -16,7 +16,7 @@ extension String {
     }
     
     func character(at position: Int) -> Character? {
-        guard position >= 0, let indexPosition = index(at: position) else {
+        guard !self.isEmpty, position >= 0, let indexPosition = index(at: position) else {
             return nil
         }
         return self[indexPosition]

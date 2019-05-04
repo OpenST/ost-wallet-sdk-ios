@@ -33,7 +33,11 @@ class OstProgressIndicator: OstBaseView {
     var progressTextLabelThemer: OstLabelTheamer = OstTheme.leadLabel
     
     //MARK: - Variables
-    let progressText: String
+    var progressText: String! {
+        didSet {
+            progressTextLabel.text = progressText
+        }
+    }
     
     //MARK: - Initializier
     init(progressText: String = "") {
@@ -55,8 +59,6 @@ class OstProgressIndicator: OstBaseView {
         
         containerView.addSubview(activityIndicator)
         containerView.addSubview(progressTextLabel)
-       
-        progressTextLabel.text = progressText
     }
     
     //MARK: - Apply Constraints

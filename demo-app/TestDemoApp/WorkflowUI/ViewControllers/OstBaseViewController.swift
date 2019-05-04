@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OstBaseViewController: UIViewController {
+class OstBaseViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
     var showNavigationController:Bool = true;
     var navigationThemer: OstNavigation =  OstTheme.blueNavigation
@@ -19,6 +19,7 @@ class OstBaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         // Do any additional setup after loading the view.
 
@@ -36,6 +37,10 @@ class OstBaseViewController: UIViewController {
         
         //Add Layout Constraints.
         addLayoutConstraints();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     func configure() {
@@ -94,7 +99,7 @@ class OstBaseViewController: UIViewController {
         } else {
             navViewController = pusher.navigationController;
         }
-        
+        navViewController?.interactivePopGestureRecognizer?.isEnabled = false
         navViewController?.pushViewController(self, animated: animated);
     }
     

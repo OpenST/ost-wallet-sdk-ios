@@ -48,7 +48,7 @@ class OstBaseScrollViewController: OstBaseViewController {
     
     func addScrollViewLayoutConstraints() {
         scrollView.applyBlockElementConstraints(horizontalMargin: 0);
-        scrollView.topAlignWithParent(constant: 20.0);
+        scrollView.topAlignWithParent();
         scrollView.bottomAlignWithParent();
         
         svContentView.applyBlockElementConstraints(horizontalMargin: 0);

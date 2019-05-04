@@ -51,11 +51,11 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     
     override func addSubviews() {
         super.addSubviews()
-        svContentView.addSubview(authorizeViaQRButton)
-        svContentView.addSubview(authorizeViaMnemonicsButton)
-        svContentView.addSubview(recoverWithPinButton)
-        svContentView.addSubview(infoTextForRecovery)
-        
+        addSubview(authorizeViaQRButton)
+        addSubview(authorizeViaMnemonicsButton)
+        addSubview(recoverWithPinButton)
+        addSubview(infoTextForRecovery)
+
         infoTextForRecoveryThemer.apply(infoTextForRecovery)
        
         weak var weakSelf = self

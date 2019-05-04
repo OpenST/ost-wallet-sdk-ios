@@ -29,9 +29,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
         
         return button
     }()
-    
-    var progressIndicator: OstProgressIndicator =  OstProgressIndicator(progressText: "Recovering your Wallet")
-    
+        
     //MARK: - View LC
     override func getNavBarTitle() -> String {
         return "Enter 12-word Mnemonic"
@@ -49,7 +47,6 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
         
         addSubview(wordsTextView)
         addSubview(recoverWalletButton)
-        addSubview(progressIndicator)
         
         weak var weakSelf = self
         recoverWalletButton.addTarget(weakSelf, action: #selector(weakSelf!.recoverWalletButtonTapped(_:)), for: .touchUpInside)

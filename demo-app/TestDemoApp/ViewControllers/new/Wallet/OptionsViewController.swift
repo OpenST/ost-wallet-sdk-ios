@@ -347,14 +347,13 @@ class OptionTableHeaderView: UIView {
         self.stackView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    func setData() {
-        let currentUserName = CurrentUser.getInstance().userName
-        let userTokenHolder = (CurrentUser.getInstance().currentUserData)?["token_holder_address"] as? String
+    func setData(title: String = "", subtitle: String = "") {
+//        let currentUserName = CurrentUser.getInstance().userName
+//        let userTokenHolder = (CurrentUser.getInstance().currentUserData)?["token_holder_address"] as? String
 
-        self.titleLabel?.text = currentUserName ?? ""
-        self.tokenHolderAddressLabel?.text = userTokenHolder
-        if let char = currentUserName?.character(at: 0) {
-            self.initialLetter?.text = "\(char)"
-        }
+        self.titleLabel?.text = title
+        self.tokenHolderAddressLabel?.text = subtitle
+        let fistLetter = title.character(at: 0)
+        self.initialLetter?.text = (fistLetter == nil) ? "" : "\(fistLetter!)".uppercased()
     }
 }

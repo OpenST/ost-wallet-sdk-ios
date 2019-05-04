@@ -20,6 +20,7 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
         
         return label
     }()
+    var progressIndicator: OstProgressIndicator = OstProgressIndicator(progressText: "")
     
     //MARK: - Variables
     
@@ -33,17 +34,16 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
     }
     
     //MAKR: - Add Views
-    
     deinit {
         print("deinit \(String(describing: self))")
     }
     
     override func addSubviews() {
         super.addSubviews()
+        addSubview(progressIndicator)
         addSubview(leadLabel)
         leadLabel.text = getLeadLabelText()
     }
-    
    
     //MARK: - Add Constraints
     override func addLayoutConstraints() {
