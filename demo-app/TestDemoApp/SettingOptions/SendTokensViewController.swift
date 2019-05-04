@@ -8,8 +8,9 @@
 
 import UIKit
 import OstWalletSdk
+import MaterialComponents
 
-class SendTokensViewController: BaseSettingOptionsViewController {
+class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDelegate {
     
     //MAKR: - Components
     let sendTokensLable: UILabel = {
@@ -60,7 +61,35 @@ class SendTokensViewController: BaseSettingOptionsViewController {
         return button
     }()
     
+    var amountTextField: MDCTextField = {
+        let textField = MDCTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clearButtonMode = .unlessEditing
+        textField.keyboardType = .numberPad
+        textField.placeholderLabel.text = "Amount"
+        textField.font = OstFontProvider().get(size: 15)
+        textField.text = "1";
+        textField.clearButtonMode = UITextField.ViewMode.never
+        return textField
+    }()
+    var amountTextFieldController: MDCTextInputControllerOutlined? = nil
+    
+    var spendingUnitTextField: MDCTextField = {
+        let textField = MDCTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clearButtonMode = .unlessEditing
+        textField.placeholderLabel.text = "Unit"
+        textField.text = "Atto BT";
+        textField.font = OstFontProvider().get(size: 15)
+        textField.clearButtonMode = UITextField.ViewMode.never
+        return textField
+    }()
+    var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
+    
     //MAKR: - Variables
+    var isShowingActionSheet = false;
+    var isEthTx = false
+
     var userDetails: [String: Any]! {
         didSet {
             userInfoView.userData = userDetails
@@ -69,6 +98,10 @@ class SendTokensViewController: BaseSettingOptionsViewController {
     }
     
     //MARK: - View LC
+    
+    override func getNavBarTitle() -> String {
+        return "Send Tokens"
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         balanceLabel.text = "Balance: \(BalanceModel.getInstance.balance ?? "0") SPOO"
@@ -83,13 +116,21 @@ class SendTokensViewController: BaseSettingOptionsViewController {
         addSubview(sendTokensLable)
         addSubview(balanceLabel)
         addSubview(userInfoView)
+        addSubview(amountTextField)
+        addSubview(spendingUnitTextField)
         addSubview(sendButton)
         addSubview(cancelButton)
     }
     
     func setupComponents() {
         progressIndicator.progressText = "Executing Transaction..."
+
+        amountTextField.delegate = self
+        spendingUnitTextField.delegate = self
         
+        self.amountTextFieldController = MDCTextInputControllerOutlined(textInput: self.amountTextField)
+        self.spendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: self.spendingUnitTextField);
+
         weak var weakSelf = self
         sendButton.addTarget(weakSelf, action: #selector(weakSelf!.sendTokenButtonTapped(_ :)), for: .touchUpInside)
         cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
@@ -101,6 +142,8 @@ class SendTokensViewController: BaseSettingOptionsViewController {
         addSendTokenLabelConstraints()
         addBalanceLabelConstraints()
         addUserInfoConstraints()
+        addAmountTextFieldConstraints()
+        addUnitTextFiledConstraints()
         addSendButtonConstraints()
         addCancelButtonConstraints()
     }
@@ -122,8 +165,20 @@ class SendTokensViewController: BaseSettingOptionsViewController {
         userInfoView.heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
     
+    func addAmountTextFieldConstraints() {
+        amountTextField.placeBelow(toItem: userInfoView)
+        amountTextField.leftAlignWithParent(multiplier: 1, constant: 20)
+        amountTextField.setW375Width(width: 238)
+    }
+    
+    func addUnitTextFiledConstraints() {
+        spendingUnitTextField.placeBelow(toItem: userInfoView)
+        spendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
+        spendingUnitTextField.setW375Width(width: 90)
+    }
+    
     func addSendButtonConstraints() {
-        sendButton.placeBelow(toItem: userInfoView)
+        sendButton.placeBelow(toItem: amountTextField)
         sendButton.applyBlockElementConstraints()
     }
     
@@ -136,18 +191,72 @@ class SendTokensViewController: BaseSettingOptionsViewController {
     //MARK: - Actions
     
     @objc func sendTokenButtonTapped(_ sender: Any?) {
+        
+        var amountToTransferStr = self.amountTextField.text!;
+        if ( isEthTx ) {
+            //Multiply value with 10^18. Since we have string.
+            //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
+            amountToTransferStr = amountToTransferStr + "000000000000000000";
+        }
+        
+        var txMeta:[String: String] = [:];
+            txMeta["type"] = "user_to_user";
+            txMeta["name"] = "known_user";
+            //Let's build some json. Not the best way do it, but, works here.
+            txMeta["details"] = "Sending to \(userDetails["username"] as? String ?? "")";
+        
+        let ruleType:OstExecuteTransactionType = .DirectTransfer
+//        if ( isDirectTransfer ) {
+//            ruleType = OstExecuteTransactionType.DirectTransfer;
+//        } else {
+//            ruleType = OstExecuteTransactionType.Pay;
+//        }
+        
         progressIndicator.show()
         let tokenHolderAddress = userDetails["token_holder_address"] as! String
         OstWalletSdk.executeTransaction(userId: CurrentUser.getInstance().ostUserId!,
                                         tokenHolderAddresses: [tokenHolderAddress],
-                                        amounts: ["1"],
-                                        transactionType: .DirectTransfer,
-                                        meta: [:],
+                                        amounts: [amountToTransferStr],
+                                        transactionType: ruleType,
+                                        meta: txMeta,
                                         delegate: self.workflowDelegate)
     }
     
     @objc func cancelButtonTapped(_ sender: Any?) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - TextField Delegate
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if ( spendingUnitTextField == textField && !isShowingActionSheet ) {
+            showUnitActionSheet();
+            return false;
+        }
+        return true;
+    }
+    
+    func showUnitActionSheet() {
+        if ( isShowingActionSheet ) {
+            //return;
+        }
+        isShowingActionSheet = true;
+        let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transaction Rule", preferredStyle: UIAlertController.Style.actionSheet);
+        
+        let directTransafer = UIAlertAction(title: "Atto BT [10^(-18)]", style: .default, handler: { (UIAlertAction) in
+            self.spendingUnitTextField.text = "Atto BT";
+            self.isEthTx = false
+        });
+        actionSheet.addAction(directTransafer);
+        
+        let pricer = UIAlertAction(title: "Eth [1]", style: .default, handler: { (UIAlertAction) in
+            self.spendingUnitTextField.text = "Eth";
+            self.isEthTx = true
+        });
+        actionSheet.addAction(pricer);
+        
+        self.present(actionSheet, animated: true, completion: {
+            self.isShowingActionSheet = false;
+        });
     }
     
     //MARK: - Workflow Delegate
