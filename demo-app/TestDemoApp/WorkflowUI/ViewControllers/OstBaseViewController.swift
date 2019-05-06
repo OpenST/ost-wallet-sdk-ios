@@ -83,26 +83,6 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         self.view.addSubview( view );
     }
     
-    
-    public func presentWith(_ presneter: UIViewController, animated:Bool = true, completion: (() -> Void)? = nil ){
-        var viewControllerToBePresented:UIViewController = self;
-        if ( showNavigationController ) {
-            viewControllerToBePresented = UINavigationController(rootViewController: self);
-        }
-        presneter.present(viewControllerToBePresented, animated: animated, completion: completion);
-    }
-    
-    public func pushWith(_ pusher: UIViewController, animated:Bool = true) {
-        var navViewController:UINavigationController?;
-        if ( pusher is UINavigationController ) {
-            navViewController = (pusher as! UINavigationController);
-        } else {
-            navViewController = pusher.navigationController;
-        }
-        navViewController?.interactivePopGestureRecognizer?.isEnabled = false
-        navViewController?.pushViewController(self, animated: animated);
-    }
-    
     /*
     // MARK: - Navigation
 
@@ -113,4 +93,25 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     }
     */
 
+}
+
+public extension UIViewController {
+    public func presentViewControllerWith(_ presneter: UIViewController, animated:Bool = true, completion: (() -> Void)? = nil ){
+        var viewControllerToBePresented:UIViewController = self;
+        if ( showNavigationController ) {
+            viewControllerToBePresented = UINavigationController(rootViewController: self);
+        }
+        presneter.present(viewControllerToBePresented, animated: animated, completion: completion);
+    }
+    
+    public func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {
+        var navViewController:UINavigationController?;
+        if ( pusher is UINavigationController ) {
+            navViewController = (pusher as! UINavigationController);
+        } else {
+            navViewController = pusher.navigationController;
+        }
+        navViewController?.interactivePopGestureRecognizer?.isEnabled = false
+        navViewController?.pushViewController(self, animated: animated);
+    }
 }
