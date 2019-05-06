@@ -25,8 +25,8 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
     //MARK: - Variables
     
     var workflowDelegate: OstWorkflowDelegate {
-        let delegate = SdkInteract.getInstance.getWorkflowCallback()
-        SdkInteract.getInstance.subscribe(forWorkflowId: delegate.workflowId, listner: self)
+        let delegate = OstSdkInteract.getInstance.getWorkflowCallback()
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: delegate.workflowId, listner: self)
         return delegate
     }
     func getLeadLabelText() -> String {

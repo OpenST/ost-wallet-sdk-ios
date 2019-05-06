@@ -39,8 +39,8 @@ enum OstInteractEventType {
     all
 }
 
-class SdkInteract {
-    static let getInstance = SdkInteract()
+class OstSdkInteract {
+    static let getInstance = OstSdkInteract()
     private init() {}
     private var callbackListners: [String: [OstWeakRef<AnyObject>]] = [:]
     private var workflowCallbackList: [WorkflowCallbacks] = []

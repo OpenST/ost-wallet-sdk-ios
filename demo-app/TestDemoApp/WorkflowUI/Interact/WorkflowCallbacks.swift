@@ -16,8 +16,8 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     
     let workflowId: String
     
-    private var interact: SdkInteract {
-        return SdkInteract.getInstance
+    private var interact: OstSdkInteract {
+        return OstSdkInteract.getInstance
     }
     
     init() {

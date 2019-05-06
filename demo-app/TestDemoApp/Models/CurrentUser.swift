@@ -151,8 +151,8 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
       }
     }
     
-    let workflowCallback = SdkInteract.getInstance.getWorkflowCallback()
-    SdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
+    let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback()
+    OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
     
     OstWalletSdk.setupDevice(userId: self.ostUserId!,
                              tokenId: self.tokenId!,
