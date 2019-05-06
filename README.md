@@ -53,7 +53,7 @@ $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
 $(SRCROOT)/Carthage/Build/iOS/FMDB.framework
 $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
-$(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
+$(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
 ```
 
 - Create `OstWalletSdk.plist` file. Following is the default configurations.
