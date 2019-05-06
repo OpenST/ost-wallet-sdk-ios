@@ -11,7 +11,7 @@
 import Foundation
 import OstWalletSdk
 
-class WorkflowCallbacks: OstWorkflowDelegate {
+class OstWorkflowCallbacks: OstWorkflowDelegate {
     private static var workflowIdentifierCounter: Double = 0
     
     let workflowId: String
@@ -21,8 +21,8 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     }
     
     init() {
-        self.workflowId = String(WorkflowCallbacks.workflowIdentifierCounter)
-        WorkflowCallbacks.workflowIdentifierCounter += 1
+        self.workflowId = String(OstWorkflowCallbacks.workflowIdentifierCounter)
+        OstWorkflowCallbacks.workflowIdentifierCounter += 1
     }
     
     func registerDevice(_ apiParams: [String : Any], delegate: OstDeviceRegisteredDelegate) {
@@ -57,7 +57,7 @@ class WorkflowCallbacks: OstWorkflowDelegate {
                     ostContextEntity: OstContextEntity,
                     delegate: OstValidateDataDelegate) {
         if workflowContext.workflowType == .authorizeDeviceWithQRCode {
-            let vc = VerifyAuthDeviceViewController()
+            let vc = OstVerifyAuthDeviceViewController()
             vc.workflowContext = workflowContext
             vc.contextEntity = ostContextEntity
             vc.delegate = delegate as OstBaseDelegate

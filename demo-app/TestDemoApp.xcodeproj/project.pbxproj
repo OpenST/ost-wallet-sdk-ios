@@ -69,8 +69,8 @@
 		00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
 		4B464E772271CD8C00F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
-		4B464E792271DE7000F1F4AF /* WorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */; };
-		4B464EBC2273122700F1F4AF /* SdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */; };
+		4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
+		4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
 		4B464EC822773ABB00F1F4AF /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EBE22773ABA00F1F4AF /* Lato-BoldItalic.ttf */; };
 		4B464EC922773ABB00F1F4AF /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EBE22773ABA00F1F4AF /* Lato-BoldItalic.ttf */; };
 		4B464ECA22773ABB00F1F4AF /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EBE22773ABA00F1F4AF /* Lato-BoldItalic.ttf */; };
@@ -113,12 +113,12 @@
 		4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */; };
 		4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */; };
 		4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */; };
-		4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */; };
-		4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */; };
+		4B464EF9227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
+		4B464EFA227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
 		4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
 		4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
-		4B464EFD2278320400F1F4AF /* WorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */; };
-		4B464EFE2278320500F1F4AF /* WorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */; };
+		4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
+		4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
 		4B464EFF227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
 		4B464F00227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
 		4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
@@ -148,9 +148,9 @@
 		4B464F3522796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */; };
 		4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */; };
 		4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */; };
-		4B464F3A2279863700F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */; };
-		4B464F3B22798B4C00F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */; };
-		4B464F3C22798B4C00F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */; };
+		4B464F3A2279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */; };
+		4B464F3B22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */; };
+		4B464F3C22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */; };
 		4B464F3E2279A2B000F1F4AF /* ShowQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */; };
 		4B464F3F2279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */; };
 		4B464F402279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */; };
@@ -318,8 +318,8 @@
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
-		4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowCallbacks.swift; sourceTree = "<group>"; };
-		4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkInteractDelegate.swift; sourceTree = "<group>"; };
+		4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
+		4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteractDelegate.swift; sourceTree = "<group>"; };
 		4B464EBE22773ABA00F1F4AF /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		4B464EBF22773ABA00F1F4AF /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		4B464EC022773ABA00F1F4AF /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 		4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionTableViewCell.swift; sourceTree = "<group>"; };
 		4B464F3022794E9500F1F4AF /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceViaMnemonicsViewController.swift; sourceTree = "<group>"; };
-		4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAuthDeviceViewController.swift; sourceTree = "<group>"; };
+		4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyAuthDeviceViewController.swift; sourceTree = "<group>"; };
 		4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRCodeViewController.swift; sourceTree = "<group>"; };
 		4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		4B464F49227AC9E700F1F4AF /* OstScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstScannerView.swift; sourceTree = "<group>"; };
@@ -574,6 +574,7 @@
 		00ECB865227730340085E4AB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */,
 				00ECB861227727310085E4AB /* OstBaseViewController.swift */,
 				00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */,
 			);
@@ -583,10 +584,9 @@
 		4B464E752271CC9400F1F4AF /* Interact */ = {
 			isa = PBXGroup;
 			children = (
-				4B464F382279861200F1F4AF /* InteractHelperViewControllers */,
-				4B464EBB2273122700F1F4AF /* SdkInteractDelegate.swift */,
+				4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */,
 				4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */,
-				4B464E782271DE7000F1F4AF /* WorkflowCallbacks.swift */,
+				4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */,
 			);
 			path = Interact;
 			sourceTree = "<group>";
@@ -671,14 +671,6 @@
 				4B464F3022794E9500F1F4AF /* String+Extension.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		4B464F382279861200F1F4AF /* InteractHelperViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				4B464F392279863700F1F4AF /* VerifyAuthDeviceViewController.swift */,
-			);
-			path = InteractHelperViewControllers;
 			sourceTree = "<group>";
 		};
 		4B464FAB227D9A5500F1F4AF /* Wallet */ = {
@@ -1278,13 +1270,13 @@
 				4B464F62227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B9E7373227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
-				4B464E792271DE7000F1F4AF /* WorkflowCallbacks.swift in Sources */,
+				4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4BA4CB09227DEE6600A623ED /* BalanceModel.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
-				4B464F3A2279863700F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */,
+				4B464F3A2279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4BA4CB0D227DF2B300A623ED /* CurrentToken.swift in Sources */,
 				0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
@@ -1327,7 +1319,7 @@
 				4B464EE822773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				4BA4CB12227DF42200A623ED /* Conversion+Helper.swift in Sources */,
-				4B464EBC2273122700F1F4AF /* SdkInteractDelegate.swift in Sources */,
+				4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
 				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
@@ -1344,11 +1336,11 @@
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
-				4B464EFD2278320400F1F4AF /* WorkflowCallbacks.swift in Sources */,
+				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */,
-				4B464F3C22798B4C00F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */,
+				4B464F3C22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
@@ -1369,7 +1361,7 @@
 				4B464F63227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
-				4B464EF9227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
+				4B464EF9227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
 				002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
@@ -1408,11 +1400,11 @@
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
-				4B464EFE2278320500F1F4AF /* WorkflowCallbacks.swift in Sources */,
+				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */,
-				4B464F3B22798B4C00F1F4AF /* VerifyAuthDeviceViewController.swift in Sources */,
+				4B464F3B22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
@@ -1433,7 +1425,7 @@
 				4B464F64227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
-				4B464EFA227831FF00F1F4AF /* SdkInteractDelegate.swift in Sources */,
+				4B464EFA227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
 				002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,

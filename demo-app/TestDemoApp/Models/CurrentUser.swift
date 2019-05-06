@@ -10,7 +10,7 @@
 
 import Foundation;
 import OstWalletSdk
-class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
+class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate {
 
   static var sharedInstance:CurrentUser?;
   

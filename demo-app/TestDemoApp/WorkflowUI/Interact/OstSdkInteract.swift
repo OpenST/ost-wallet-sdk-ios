@@ -43,10 +43,10 @@ class OstSdkInteract {
     static let getInstance = OstSdkInteract()
     private init() {}
     private var callbackListners: [String: [OstWeakRef<AnyObject>]] = [:]
-    private var workflowCallbackList: [WorkflowCallbacks] = []
+    private var workflowCallbackList: [OstWorkflowCallbacks] = []
     
-    func getWorkflowCallback() -> WorkflowCallbacks {
-        let workflow = WorkflowCallbacks()
+    func getWorkflowCallback() -> OstWorkflowCallbacks {
+        let workflow = OstWorkflowCallbacks()
         workflowCallbackList.append(workflow)
         return workflow
     }
@@ -55,7 +55,7 @@ class OstSdkInteract {
         return self.callbackListners[id]
     }
     
-    func subscribe(forWorkflowId workflowId: String, listner: SdkInteractDelegate) {
+    func subscribe(forWorkflowId workflowId: String, listner: OstSdkInteractDelegate) {
         var loListners = getEventListner(forWorkflowId: workflowId) ?? []
         
         for loListner in loListners {
@@ -90,17 +90,17 @@ class OstSdkInteract {
         for eventListner in eventListners {
             switch eventType {
             case .flowComplete:
-                (eventListner.value as? FlowCompleteDelegate)?.flowComplete(workflowId: workflowId,
+                (eventListner.value as? OstFlowCompleteDelegate)?.flowComplete(workflowId: workflowId,
                                                                             workflowContext: eventHandler.workflowContext!,
                                                                             contextEntity: eventHandler.contextEntity!)
                 
             case .flowInterrupted:
-                (eventListner.value as? FlowInterruptedDelegate)?.flowInterrupted(workflowId: workflowId,
+                (eventListner.value as? OstFlowInterruptedDelegate)?.flowInterrupted(workflowId: workflowId,
                                                                                   workflowContext: eventHandler.workflowContext!,
                                                                                   error: eventHandler.error!)
                 
             case .requestAcknowledged:
-                (eventListner.value as? RequestAcknowledgedDelegate)?.requestAcknowledged(workflowId: workflowId,
+                (eventListner.value as? OstRequestAcknowledgedDelegate)?.requestAcknowledged(workflowId: workflowId,
                                                                                           workflowContext: eventHandler.workflowContext!,
                                                                                           contextEntity: eventHandler.contextEntity!)
             default:

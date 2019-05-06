@@ -9,7 +9,7 @@
 import UIKit
 import OstWalletSdk
 
-class VerifyAuthDeviceViewController: OstBaseScrollViewController {
+class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     
     //MARK: - Variables
     var workflowContext: OstWorkflowContext? = nil
