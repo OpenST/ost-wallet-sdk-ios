@@ -79,7 +79,7 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .unlessEditing
         textField.placeholderLabel.text = "Unit"
-        textField.text = "Atto BT";
+        textField.text = "BT";
         textField.font = OstFontProvider().get(size: 15)
         textField.clearButtonMode = UITextField.ViewMode.never
         return textField
@@ -88,7 +88,7 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
     
     //MAKR: - Variables
     var isShowingActionSheet = false;
-    var isEthTx = false
+    var isUsdTx = false
 
     var userDetails: [String: Any]! {
         didSet {
@@ -192,14 +192,19 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
     
     @objc func sendTokenButtonTapped(_ sender: Any?) {
         
-        var amountToTransferStr = self.amountTextField.text!;
-        if ( isEthTx ) {
+        var amountToTransferStr = self.amountTextField.text!
+        let ruleType:OstExecuteTransactionType
+        if ( isUsdTx ) {
             //Multiply value with 10^18. Since we have string.
             //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
-            amountToTransferStr = amountToTransferStr + "000000000000000000";
+           ruleType = .Pay
+        }else {
+            amountToTransferStr = amountToTransferStr + "000000000000000000"
+            ruleType = .DirectTransfer
+            
         }
         
-        var txMeta:[String: String] = [:];
+        var txMeta: [String: String] = [:];
             txMeta["type"] = "user_to_user";
             txMeta["name"] = "known_user";
             //Let's build some json. Not the best way do it, but, works here.
@@ -242,15 +247,15 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
         isShowingActionSheet = true;
         let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transaction Rule", preferredStyle: UIAlertController.Style.actionSheet);
         
-        let directTransafer = UIAlertAction(title: "Atto BT [10^(-18)]", style: .default, handler: { (UIAlertAction) in
-            self.spendingUnitTextField.text = "Atto BT";
-            self.isEthTx = false
+        let directTransafer = UIAlertAction(title: "BT", style: .default, handler: { (UIAlertAction) in
+            self.spendingUnitTextField.text = "BT";
+            self.isUsdTx = false
         });
         actionSheet.addAction(directTransafer);
         
-        let pricer = UIAlertAction(title: "Eth [1]", style: .default, handler: { (UIAlertAction) in
-            self.spendingUnitTextField.text = "Eth";
-            self.isEthTx = true
+        let pricer = UIAlertAction(title: "USD", style: .default, handler: { (UIAlertAction) in
+            self.spendingUnitTextField.text = "USD";
+            self.isUsdTx = true
         });
         actionSheet.addAction(pricer);
         

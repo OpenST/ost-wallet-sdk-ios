@@ -12,6 +12,19 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     //MAKR: - Components
     var tableView: UITableView?
+    var tableHeaderView: UsersTableViewCell = {
+        let view = UsersTableViewCell()
+
+        view.sendButton?.isHidden = true
+        view.sendButton?.setTitle("", for: .normal)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+        view.seperatorLine?.isHidden = true
+        view.backgroundColor = UIColor.color(239, 249, 250)
+        view.layer.cornerRadius = 6
+        view.clipsToBounds = true
+
+        return view
+    }()
     
     //MARK: - Variables
     var generalOptions = [OptionVM]()
@@ -31,15 +44,22 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         tableView?.reloadData()
     }
     
+    @objc override func tappedBackButton() {
+      //  self.dismiss(animated: true, completion: nil)
+    }
+    
     //MARK: - Create Views
     
     override func addSubviews() {
         setupNavigationBar()
+        setupTableHeaderView()
         createTabelView()
     }
     
-    @objc override func tappedBackButton() {
-        self.dismiss(animated: true, completion: nil)
+    func setupTableHeaderView() {
+        let userData = ["username": CurrentUser.getInstance().userName!]
+        tableHeaderView.userData = userData
+        tableHeaderView.balanceLabel?.text =  (CurrentUser.getInstance().currentUserData!["token_holder_address"] as! String)
     }
     
     func createTabelView() {
@@ -50,7 +70,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         loTableView.rowHeight = UITableView.automaticDimension
         loTableView.estimatedRowHeight = 100
         loTableView.translatesAutoresizingMaskIntoConstraints = false
-        loTableView.tableHeaderView = OptionTableHeaderView()
+        loTableView.tableHeaderView = tableHeaderView
         loTableView.tableHeaderView?.frame.size = CGSize(width: loTableView.frame.width, height: CGFloat(77))
 
         tableView = loTableView
