@@ -34,7 +34,7 @@ class OstNavigation {
         navigation.navigationBar.isTranslucent = isTranslucent
         navigation.navigationBar.barTintColor = barTintColor
         navigation.navigationBar.titleTextAttributes = [.foregroundColor: barTextColor,
-                                                        .font: getFontProvider().get(size: fontSize)]
+                                                        .font: getFontProvider().get(size: fontSize).bold()]
         if nil != backBarButtonImage && nil != target  &&  nil != action {
             navigation.navigationBar.backIndicatorImage = backBarButtonImage
             navigation.navigationBar.backIndicatorTransitionMaskImage = backBarButtonImage

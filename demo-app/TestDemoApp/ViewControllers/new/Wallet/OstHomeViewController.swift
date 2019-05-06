@@ -24,7 +24,14 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         return tableView
     }()
     var tableHeaderView: UIView?
-    var refreshControl: UIRefreshControl?
+    var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
+        refreshControl.tintColor = UIColor.color(22, 141, 193)
+        
+        return refreshControl
+    }()
     var paginatingCell: PaginationLoaderTableViewCell?
     
     //MARK: - Variables
@@ -56,7 +63,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         super.addSubviews()
         createInfoLable()
         setupUsersTableView()
-        createRefreshControl()
+        setupRefreshControl()
     }
     
     func createInfoLable() {
@@ -79,20 +86,16 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func registerTableViewCells() {
-        self.usersTableView.register(UsersTableViewCell.self, forCellReuseIdentifier: UsersTableViewCell.cellIdentifier)
+        self.usersTableView.register(UsersTableViewCell.self, forCellReuseIdentifier: UsersTableViewCell.usersCellIdentifier)
         self.usersTableView.register(PaginationLoaderTableViewCell.self, forCellReuseIdentifier: PaginationLoaderTableViewCell.cellIdentifier)
     }
     
-    func createRefreshControl() {
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetching Users...")
-        self.refreshControl?.tintColor = UIColor.color(22, 141, 193)
-        
+    func setupRefreshControl() {
+    
         if #available(iOS 10.0, *) {
-            self.usersTableView.refreshControl = self.refreshControl!
+            self.usersTableView.refreshControl = self.refreshControl
         } else {
-            self.usersTableView.addSubview(self.refreshControl!)
+            self.usersTableView.addSubview(self.refreshControl)
         }
     }
     
@@ -142,7 +145,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         let cell: BaseTableViewCell
         switch indexPath.section {
         case 0:
-            let userCell: UsersTableViewCell = tableView.dequeueReusableCell(withIdentifier: UsersTableViewCell.cellIdentifier, for: indexPath) as! UsersTableViewCell
+            let userCell: UsersTableViewCell = tableView.dequeueReusableCell(withIdentifier: UsersTableViewCell.usersCellIdentifier, for: indexPath) as! UsersTableViewCell
             if self.tableDataArray.count > indexPath.row {
                 let userDetails = self.tableDataArray[indexPath.row]
                 userCell.userData = userDetails
@@ -219,8 +222,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if !isApiCallInProgress {
-            if self.refreshControl?.isRefreshing ?? false {
-                self.refreshControl?.endRefreshing()
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
             }
             self.usersTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }

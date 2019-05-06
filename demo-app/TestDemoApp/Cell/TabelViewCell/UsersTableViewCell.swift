@@ -10,7 +10,7 @@ import UIKit
 
 class UsersTableViewCell: BaseTableViewCell {
     
-    static var cellIdentifier: String {
+    static var usersCellIdentifier: String {
         return String(describing: UsersTableViewCell.self)
     }
     
@@ -26,6 +26,9 @@ class UsersTableViewCell: BaseTableViewCell {
         
         let fistLetter = name.character(at: 0)
         self.initialLetter?.text = (fistLetter == nil) ? "" : "\(fistLetter!)".uppercased()
+        
+        let tokenHolderAddress: String? = userData["token_holder_address"] as? String
+        self.sendButton?.isEnabled = tokenHolderAddress == nil ? false : true
     }
     
     var userBalance: [String: Any]! {
@@ -37,12 +40,10 @@ class UsersTableViewCell: BaseTableViewCell {
     func setBalance() {
         if let balance: String = userBalance["available_balance"] as? String {
             self.balanceLabel?.textColor = UIColor.black.withAlphaComponent(0.48)
-            self.balanceLabel?.text = "Balacen: \(balance)"
-            self.sendButton?.isEnabled = true
+            self.balanceLabel?.text = "Balance: \(balance)"
         }else {
             self.balanceLabel?.textColor = UIColor.color(255, 94, 84)
             self.balanceLabel?.text = "Wallet Setup Incomplete"
-            self.sendButton?.isEnabled = false
         }
     }
     

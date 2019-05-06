@@ -145,7 +145,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
         
-        var optionSession = OptionVM(type: .addSession, name: "Add Session", isEnable: true)
+        var optionSession = OptionVM(type: .createSession, name: "Add Session", isEnable: true)
         if !userDevice.isStatusAuthorized {
             optionSession.isEnable = false
         }
@@ -220,6 +220,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         else if option.type == .authorizeViaQR {
             destinationVC = QRScannerViewController()
+        }
+        
+        else if option.type == .createSession {
+            destinationVC = CreateSessionViewController()
         }
         
         if nil == self.navigationController {

@@ -20,7 +20,7 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
         
         return label
     }()
-    var progressIndicator: OstProgressIndicator = OstProgressIndicator(progressText: "")
+    var progressIndicator: OstProgressIndicator? = OstProgressIndicator(progressText: "")
     
     //MARK: - Variables
     
@@ -40,7 +40,7 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
     
     override func addSubviews() {
         super.addSubviews()
-        addSubview(progressIndicator)
+        addSubview(progressIndicator!)
         addSubview(leadLabel)
         leadLabel.text = getLeadLabelText()
     }
@@ -52,21 +52,25 @@ class BaseSettingOptionsViewController: OstBaseScrollViewController, FlowComplet
     }
     
     func addLeadLabelLayoutConstraints() {
-        leadLabel.topAlignWithParent()
+        leadLabel.topAlignWithParent(multiplier: 1, constant: 20)
         leadLabel.applyBlockElementConstraints()
     }
     
     //MARK: - Sdk Interact Delegate
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        
+        let message = """
+            \(getNavBarTitle()) flow interrupted.
+            \(error.errorMessage)
+        """
+        progressIndicator?.progressText = message
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        
+        progressIndicator?.progressText = "\(getNavBarTitle()) request acknowledged."
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        
+         progressIndicator?.progressText = "\(getNavBarTitle()) flow complete."
     }
 }

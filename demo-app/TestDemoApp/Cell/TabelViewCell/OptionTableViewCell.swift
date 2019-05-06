@@ -10,7 +10,7 @@ import UIKit
 
 enum OptionType {
     case details,
-    addSession,
+    createSession,
     resetPin,
     viewMnemonics,
     authorizeViaQR,

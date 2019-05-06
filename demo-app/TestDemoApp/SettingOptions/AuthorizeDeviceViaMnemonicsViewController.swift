@@ -29,7 +29,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
         
         return button
     }()
-        
+    
     //MARK: - View LC
     override func getNavBarTitle() -> String {
         return "Enter 12-word Mnemonic"
@@ -76,7 +76,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
     //MARK: - Button Action
     
     @objc func recoverWalletButtonTapped(_ sender: Any?) {
-        progressIndicator.show()
+        progressIndicator?.show()
         let currentUser = CurrentUser.getInstance()
         let mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
         OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId: currentUser.ostUserId!,
@@ -88,12 +88,12 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator.close()
+        progressIndicator?.close()
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator.close()
+        progressIndicator?.close()
 
     }
 }
