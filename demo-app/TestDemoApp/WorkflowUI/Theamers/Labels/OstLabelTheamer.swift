@@ -19,7 +19,7 @@ class OstLabelTheamer:BaseTheamer {
     public var textAliginment: NSTextAlignment = .left
     
     //NSMutableParagraphStyle
-    public var paragraphStyle:NSMutableParagraphStyle?;
+    public var paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle();
     
     override init() {}
     
@@ -31,14 +31,14 @@ class OstLabelTheamer:BaseTheamer {
     }
     
     func setText(_ label:UILabel, text: String?) {
-        if (nil == paragraphStyle || nil == text) {
-            label.text = text;
-            return;
+        var textToSet = "";
+        if (nil != text) {
+            textToSet = text!;
         }
     
-        let attrString = NSMutableAttributedString(string: text!);
+        let attrString = NSMutableAttributedString(string: textToSet);
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle,
-                                value: paragraphStyle!,
+                                value: paragraphStyle,
                                 range: NSMakeRange(0, attrString.length));
         
         attrString.addAttribute(NSAttributedString.Key.font,

@@ -13,5 +13,7 @@ class OstH1Theamer: OstLabelTheamer {
         super.init();
         self.fontSize = 20;
         self.textColor = UIColor.color(52, 68, 91);
+//        self.paragraphStyle.maximumLineHeight = 30.0;
+//        self.paragraphStyle.minimumLineHeight = 30.0;
     }
 }

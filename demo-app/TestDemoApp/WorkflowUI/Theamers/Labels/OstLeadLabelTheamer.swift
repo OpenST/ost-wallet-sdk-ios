@@ -14,7 +14,5 @@ class OstLeadLabelTheamer: OstLabelTheamer {
         self.fontSize = 16;
         self.textColor = UIColor.color(52, 68, 91);
         self.textAliginment = .center
-        self.paragraphStyle = NSMutableParagraphStyle();
-        self.paragraphStyle!.lineSpacing = 12.5;
     }
 }

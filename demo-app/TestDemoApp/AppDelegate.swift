@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //Logger.log(message: "Failed to initialize OstSdk", parameterToPrint: ostError as! OstError);
         }
         
+
 //        introViewController = IntroViewController();
 //        window?.rootViewController = introViewController;
 //        window?.makeKeyAndVisible();

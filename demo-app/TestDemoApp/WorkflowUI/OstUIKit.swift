@@ -10,19 +10,20 @@ import UIKit
 import MaterialComponents.MDCTextField
 
 class OstUIKit {
-    class func primaryButton() -> UIButton {
-        let view = UIButton();
+    class func primaryButton() -> OstButton {
+        let view = OstButton();
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         let themer = OstTheme.primaryButton;
+        view.setTheamer(themer);
         themer.apply(view);
         return view;
     }
     
-    class func secondaryButton() -> UIButton {
-        let view = UIButton();
+    class func secondaryButton() -> OstButton {
+        let view = OstButton();
         view.translatesAutoresizingMaskIntoConstraints = false
         let themer = OstTheme.secondaryButton;
+        view.setTheamer(themer);
         themer.apply(view);
         return view;
     }

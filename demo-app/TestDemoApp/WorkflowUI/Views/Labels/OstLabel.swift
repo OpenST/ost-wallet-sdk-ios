@@ -23,6 +23,12 @@ class OstLabel: UILabel {
         self.theamer = theamer;
     }
     
+    override var text: String? {
+        didSet {
+            self.theamer?.setText(self, text: text);
+        }
+    }
+    
     public func setText(_ text:String?) {
         if ( nil == theamer ) {
             self.text = text;

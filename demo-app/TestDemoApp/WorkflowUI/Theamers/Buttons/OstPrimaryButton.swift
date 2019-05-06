@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OstPrimaryButton : OstButton {
+class OstPrimaryButton : OstButtonTheamer {
     init() {
         //Title Font-Size
         super.init(titleFontSize: CGFloat(18));
@@ -21,10 +21,16 @@ class OstPrimaryButton : OstButton {
         self.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14);
         
         //Background Images
+        
+        
         let activeBgImg = UIImage.withColor(154, 204, 215);
-        let disabledImg = UIImage.withColor(154, 204, 215, 0.3);
         setBackgroundImage(image: activeBgImg, state: .normal);
-        setBackgroundImage(image: disabledImg, state: .disabled);
+        
+        let highlightedBgImg = UIImage.withColor(128, 180, 191);
+        setBackgroundImage(image: highlightedBgImg, state: .highlighted);
+        
+//        let disabledImg = UIImage.withColor(154, 204, 215, 0.3);
+//        setBackgroundImage(image: disabledImg, state: .disabled);
         
         //Corner Radius
         self.cornerRadius = 10;

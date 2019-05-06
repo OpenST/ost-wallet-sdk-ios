@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OstButton:BaseTheamer {
+class OstButtonTheamer:BaseTheamer {
     
     //Title
     public var titleFontSize:CGFloat = 17;

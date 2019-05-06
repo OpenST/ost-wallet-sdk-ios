@@ -11,7 +11,7 @@
 import UIKit
 
 class OstTheme {
-    public static var fontProvider: OstFontProvider = OstFontProvider()
+    public static var fontProvider: OstFontProvider = OstFontProvider(fontName: "Lato");
     
     //Buttons
     public static var primaryButton: OstPrimaryButton = OstPrimaryButton();
