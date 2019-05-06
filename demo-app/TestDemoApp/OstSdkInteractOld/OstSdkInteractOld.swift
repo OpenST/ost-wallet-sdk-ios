@@ -12,7 +12,8 @@ import Foundation
 import OstWalletSdk
 import MaterialComponents
 
-class OstSdkInteract: BaseModel, OstWorkflowDelegate {
+@available(*, deprecated, message: "Please use OstSdkInteract instead")
+class OstSdkInteractOld: BaseModel, OstWorkflowDelegate {
     
     typealias OstSdkInteractEventHandler = ([String:Any]) -> ()
     
@@ -64,7 +65,7 @@ class OstSdkInteract: BaseModel, OstWorkflowDelegate {
 }
 
 // MARK: - Sdk Callbacks Implimentation.
-extension OstSdkInteract {
+extension OstSdkInteractOld {
     
     
     func registerDevice(_ apiParams: [String : Any],

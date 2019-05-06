@@ -201,7 +201,6 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
         }else {
             amountToTransferStr = amountToTransferStr + "000000000000000000"
             ruleType = .DirectTransfer
-            
         }
         
         var txMeta: [String: String] = [:];
@@ -209,13 +208,6 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
             txMeta["name"] = "known_user";
             //Let's build some json. Not the best way do it, but, works here.
             txMeta["details"] = "Sending to \(userDetails["username"] as? String ?? "")";
-        
-        let ruleType:OstExecuteTransactionType = .DirectTransfer
-//        if ( isDirectTransfer ) {
-//            ruleType = OstExecuteTransactionType.DirectTransfer;
-//        } else {
-//            ruleType = OstExecuteTransactionType.Pay;
-//        }
         
         progressIndicator?.show()
         let tokenHolderAddress = userDetails["token_holder_address"] as! String

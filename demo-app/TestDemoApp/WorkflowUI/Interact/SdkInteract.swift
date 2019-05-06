@@ -11,7 +11,7 @@
 import Foundation
 import OstWalletSdk
 
-class WeakRef<T> where T: AnyObject {
+class OstWeakRef<T> where T: AnyObject {
     
     private(set) weak var value: T?
     init(value: T?) {
@@ -19,7 +19,7 @@ class WeakRef<T> where T: AnyObject {
     }
 }
 
-struct EventData {
+struct OstInteractEventData {
     var delegate: OstBaseDelegate?
     var workflowContext: OstWorkflowContext?
     var contextEntity: OstContextEntity?
@@ -27,7 +27,7 @@ struct EventData {
     var data: Any?
 }
 
-enum EventType {
+enum OstInteractEventType {
     case register,
     getPin,
     invalidPin,
@@ -39,35 +39,10 @@ enum EventType {
     all
 }
 
-class Events {
-    private var event: [EventType: [WeakRef<AnyObject>]] = [:]
-    
-    init(eventType: EventType, listner: SdkInteractDelegate) {
-        let weakListner = WeakRef<AnyObject>(value: listner)
-        let listners: [WeakRef<AnyObject>] = [weakListner]
-        self.event[eventType] = listners
-    }
-    
-    func appendEventListner(_ listner: SdkInteractDelegate, forEventType eventType: EventType) {
-        let weakListner = WeakRef<AnyObject>(value: listner)
-        var listners: [WeakRef<AnyObject>]? = event[eventType]
-        if nil == listners{
-            listners = [weakListner]
-        }else {
-            listners!.append(weakListner)
-        }
-        self.event[eventType] = listners!
-    }
-    
-    func getEventListners(forEventType eventType: EventType) -> [WeakRef<AnyObject>]? {
-        return self.event[eventType]
-    }
-}
-
 class SdkInteract {
     static let getInstance = SdkInteract()
     private init() {}
-    private var callbackListners: [String: [WeakRef<AnyObject>]] = [:]
+    private var callbackListners: [String: [OstWeakRef<AnyObject>]] = [:]
     private var workflowCallbackList: [WorkflowCallbacks] = []
     
     func getWorkflowCallback() -> WorkflowCallbacks {
@@ -76,7 +51,7 @@ class SdkInteract {
         return workflow
     }
     
-    func getEventListner(forWorkflowId id: String) ->  [WeakRef<AnyObject>]? {
+    func getEventListner(forWorkflowId id: String) ->  [OstWeakRef<AnyObject>]? {
         return self.callbackListners[id]
     }
     
@@ -89,7 +64,7 @@ class SdkInteract {
                 return
             }
         }
-        let weakListner = WeakRef<AnyObject>(value: listner)
+        let weakListner = OstWeakRef<AnyObject>(value: listner)
         loListners.append(weakListner)
         self.callbackListners[workflowId] = loListners
     }
@@ -105,7 +80,7 @@ class SdkInteract {
         }
     }
     
-    func broadcaseEvent(workflowId: String, eventType: EventType, eventHandler: EventData) {
+    func broadcaseEvent(workflowId: String, eventType: OstInteractEventType, eventHandler: OstInteractEventData) {
         guard let eventListners =
             getEventListner(forWorkflowId: workflowId)
             else {

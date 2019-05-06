@@ -127,11 +127,11 @@ class CurrentUser: BaseModel, FlowInterruptedDelegate, FlowCompleteDelegate {
     setupDeviceOnSuccess = onSuccess
     setupDeviceOnComplete = onComplete
     
-    let ostSdkInteract = OstSdkInteract();
+    let ostSdkInteract = OstSdkInteractOld();
     ostSdkInteract.addEventListner { (eventData:[String : Any]) in
       //self.onComplete = onComplete
-      let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-      if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+      let eventType:OstSdkInteractOld.WorkflowEventType = eventData["eventType"] as! OstSdkInteractOld.WorkflowEventType;
+      if ( OstSdkInteractOld.WorkflowEventType.flowComplete == eventType ) {
         let ostContextEntity: OstContextEntity = eventData["ostContextEntity"] as! OstContextEntity
         let workflowContext: OstWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {

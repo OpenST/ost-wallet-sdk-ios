@@ -77,18 +77,18 @@ class BaseWalletWorkflowView: BaseWalletView, FlowCompleteDelegate, FlowInterrup
     */
   
   // Mark - OstSdkInteract
-  var sdkInteract: OstSdkInteract = {
-    let interact = OstSdkInteract();
+  var sdkInteract: OstSdkInteractOld = {
+    let interact = OstSdkInteractOld();
     return interact;
   }()
   
     func receivedSdkEvent(eventData: [String : Any]) {
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
-        if ( OstSdkInteract.WorkflowEventType.requestAcknowledged == eventType ) {
+        let eventType:OstSdkInteractOld.WorkflowEventType = eventData["eventType"] as! OstSdkInteractOld.WorkflowEventType;
+        if ( OstSdkInteractOld.WorkflowEventType.requestAcknowledged == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "☑️ Workflow request acknowledged at " + timeStamp);
         }
-        else if ( OstSdkInteract.WorkflowEventType.flowComplete == eventType ) {
+        else if ( OstSdkInteractOld.WorkflowEventType.flowComplete == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "✅ Workflow completed at " + timeStamp);
             self.nextButton.isHidden = false;
@@ -114,7 +114,7 @@ class BaseWalletWorkflowView: BaseWalletView, FlowCompleteDelegate, FlowInterrup
                 self.successLabel.text = "Recover device successfully."
             }
             
-        } else if (OstSdkInteract.WorkflowEventType.flowInterrupt == eventType ) {
+        } else if (OstSdkInteractOld.WorkflowEventType.flowInterrupt == eventType ) {
             let timeStamp = String(Date().timeIntervalSince1970);
             addToLog(log: "⚠️ Workflow Failed at " + timeStamp);
             
@@ -130,7 +130,7 @@ class BaseWalletWorkflowView: BaseWalletView, FlowCompleteDelegate, FlowInterrup
             self.cancelButton.isHidden = false;
             self.activityIndicator.stopAnimating();
 
-        } else if (OstSdkInteract.WorkflowEventType.getPinFromUser == eventType ) {
+        } else if (OstSdkInteractOld.WorkflowEventType.getPinFromUser == eventType ) {
             let ostPinAcceptProtocol:OstPinAcceptDelegate = eventData["ostPinAcceptProtocol"] as! OstPinAcceptDelegate;
             getPinFromUser(ostPinAcceptProtocol: ostPinAcceptProtocol);
         }

@@ -66,7 +66,7 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     }
     
     func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        var eventData = EventData()
+        var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         
@@ -74,7 +74,7 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        var eventData = EventData()
+        var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
         
@@ -82,7 +82,7 @@ class WorkflowCallbacks: OstWorkflowDelegate {
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        var eventData = EventData()
+        var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         
