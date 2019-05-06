@@ -13,31 +13,8 @@ import BigInt
 
 class OstConversion {
     
-    static let WEI_EXPONENT = 18
-    typealias NumberComponents = (number: BigInt, exponent: Int)
-    
-    class func getNumberComponents(_ number: String) throws -> NumberComponents {
-        let components = number.split(separator: ".")
-        var exponent: Int
-        var afterDecimalString: Substring = ""
-        
-        if components.count == 1 {
-            exponent = 0
-        }else if components.count == 2 {
-            afterDecimalString = components[1]
-            while (afterDecimalString.hasSuffix("0") && afterDecimalString.count>0) {
-                afterDecimalString = afterDecimalString.dropLast()
-            }
-            exponent = afterDecimalString.count
-        }else {
-            throw OstError("u_c_gnc_1", OstErrorText.invalidAmount)
-        }
-        
-        guard let numberComponent  = BigInt("\( components[0])\(afterDecimalString)") else {
-            throw OstError("u_c_gnc_2", OstErrorText.invalidAmount)
-        }
-        
-        return (numberComponent, -(exponent))
+    class func getNumberComponents(_ number: String) throws -> OstUtils.NumberComponents {
+        return try OstUtils.getNumberComponents( number );
     }
     
     

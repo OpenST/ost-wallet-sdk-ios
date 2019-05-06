@@ -204,19 +204,19 @@ class SoliditySha3 {
     
     fileprivate static func elementaryName(_ name: String) -> String {
         if (name.starts(with: "int[")) {
-            return "int256"+name.substring("int[".count)
+            return "int256"+name.substringAfter("int[".count)
         }else if ("int" == name) {
             return "int256"
         }else if (name.starts(with: "uint[")) {
-            return "uint256"+name.substring("uint[".count)
+            return "uint256"+name.substringAfter("uint[".count)
         }else if ("uint" == name) {
             return "uint256"
         }else if (name.starts(with: "fixed[")) {
-            return "fixed128x128"+name.substring("fixed[".count)
+            return "fixed128x128"+name.substringAfter("fixed[".count)
         }else if ("fixed" == name) {
             return "fixed128x128"
         }else if (name.starts(with: "ufixed[")) {
-            return "ufixed128x128"+name.substring("ufixed[".count)
+            return "ufixed128x128"+name.substringAfter("ufixed[".count)
         }else if ("ufixed" == name) {
             return "ufixed128x128"
         }

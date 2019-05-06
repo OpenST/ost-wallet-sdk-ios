@@ -86,5 +86,27 @@ class OstUtilsTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testToAtto() {
+        XCTAssertEqual(OstUtils.toAtto( "0.000000000000000001" ) , "1");
+        XCTAssertEqual(OstUtils.toAtto( "0.000000000000000011" ) , "11");
+        XCTAssertEqual(OstUtils.toAtto( "1" ) , "1000000000000000000");
+        XCTAssertEqual(OstUtils.toAtto( "01" ) , "1000000000000000000");
+        XCTAssertEqual(OstUtils.toAtto( "1.1" ) , "1100000000000000000");
+        XCTAssertEqual(OstUtils.toAtto( "01.1" ) , "1100000000000000000");
+        XCTAssertEqual(OstUtils.toAtto( "1000000000000000" ) , "1000000000000000000000000000000000");
+        XCTAssertEqual(OstUtils.toAtto( "1000000000000000.1" ) , "1000000000000000100000000000000000");
+    }
+    
+    func testFromAtto() {
+        XCTAssertEqual(OstUtils.fromAtto( "1" ) , "0.000000000000000001");
+        XCTAssertEqual(OstUtils.fromAtto( "01" ) , "0.000000000000000001");
+        XCTAssertEqual(OstUtils.fromAtto( "11" ) , "0.000000000000000011");
+        XCTAssertEqual(OstUtils.fromAtto( "0011" ) , "0.000000000000000011");
+        XCTAssertEqual(OstUtils.fromAtto( "1000000000000000000" ) , "1");
+        XCTAssertEqual(OstUtils.fromAtto( "1100000000000000000" ) , "1.1");
+        XCTAssertEqual(OstUtils.fromAtto( "1000000000000000000000000000000000" ) , "1000000000000000");
+        XCTAssertEqual(OstUtils.fromAtto( "1000000000000000100000000000000000" ) , "1000000000000000.1");
+    }
 
 }

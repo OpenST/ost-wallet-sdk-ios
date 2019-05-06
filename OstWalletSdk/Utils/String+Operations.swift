@@ -18,7 +18,7 @@ extension String {
         return regex.firstMatch(in: self, options: [], range: range) != nil
     }
     
-    func substring(_ offset: Int) -> String {
+    func substringAfter(_ offset: Int) -> String {
         let startIndex = index(self.startIndex, offsetBy: offset)
         if (startIndex < endIndex) {
             let substingVal = self[startIndex..<endIndex]
