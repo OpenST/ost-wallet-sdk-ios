@@ -45,6 +45,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     var userBalances: [String: Any] = [String: Any]()
     var meta: [String: Any]? = nil
     
+    weak var tabbarController: TabBarViewController?
+    
     var paginationTriggerPageNumber = 1
     var paginatingViewCount = 1
     
@@ -52,6 +54,11 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabbarController?.showTabBar()
     }
     
     override func getNavBarTitle() -> String {
@@ -315,6 +322,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     func sendButtonTapped(_ userDetails: [String: Any]?) {
         let sendTokendsVC = SendTokensViewController()
         sendTokendsVC.userDetails = userDetails
+        tabbarController?.hideTabBar()
         sendTokendsVC.pushWith(self, animated: true)
     }
     

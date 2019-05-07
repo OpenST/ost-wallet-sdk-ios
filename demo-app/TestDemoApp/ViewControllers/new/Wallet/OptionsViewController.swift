@@ -30,6 +30,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var generalOptions = [OptionVM]()
     var deviceOptions = [OptionVM]()
     
+    weak var tabbarController: TabBarViewController?
+
     //MAKR: - View LC
 
     override func getNavBarTitle() -> String {
@@ -42,6 +44,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         createGeneralOptionsArray()
         createDeviceOptionsArray()
         tableView?.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabbarController?.showTabBar()
     }
     
     @objc override func tappedBackButton() {
@@ -246,6 +253,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             destinationVC = CreateSessionViewController()
         }
         
+        self.tabbarController?.hideTabBar()
         if nil == self.navigationController {
             let navC = UINavigationController(rootViewController: destinationVC!)
             self.present(navC, animated: true, completion: nil)

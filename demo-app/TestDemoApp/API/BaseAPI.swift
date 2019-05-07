@@ -20,16 +20,17 @@ class BaseAPI {
         return Bundle.main.infoDictionary!["OST_PLATFORM_API_ENDPOINT"] as! String
     }
     
-    static let TOKEN_ID = "58";
     class func post(resource:String,
-              params: [String: AnyObject]?,
-              onSuccess: (([String: Any]?) -> Void)?,
-              onFailure: (([String: Any]?) -> Void)?) {
+                    params: [String: AnyObject]?,
+                    onSuccess: (([String: Any]?) -> Void)?,
+                    onFailure: (([String: Any]?) -> Void)?) {
         
         let url = BaseAPI.mappyServerURL + resource
         
         let dataRequest = Alamofire.request(url, method: .post, parameters: params)
         dataRequest.responseJSON { (httpResonse) in
+            print("POST: \(url)", httpResonse.result.value as AnyObject)
+           
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
                 onSuccess?(httpResonse.result.value as? [String: Any])
@@ -51,6 +52,8 @@ class BaseAPI {
         
         let dataRequest = Alamofire.request(url, method: .get, parameters: params)
         dataRequest.responseJSON { (httpResonse) in
+            print("GET: \(url)", httpResonse.result.value as AnyObject)
+
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
                 onSuccess?(httpResonse.result.value as? [String: Any])

@@ -124,23 +124,13 @@ class UsersTableViewCell: BaseTableViewCell {
     }
     
     func createSendButton() {
-        let loSendButton = UIButton()
-        loSendButton.layer.cornerRadius = 15.0
-        loSendButton.clipsToBounds = true
-        loSendButton.setTitle("SEND", for: .normal)
-        
-        loSendButton.setTitleColor(UIColor.color(0,122,255), for: .normal)
-        loSendButton.setTitleColor(UIColor.color(0,122,255, 0.3), for: .disabled)
-        
-        loSendButton.setBackgroundImage(UIImage.withColor(239,239,244), for: .normal)
-        loSendButton.setBackgroundImage(UIImage.withColor(239,239,244, 0.3), for: .disabled)
-        
-        loSendButton.titleLabel?.font = OstFontProvider().get(size: 15)
+        let button = OstUIKit.secondaryButton()
+        button.setTitle("SEND", for: .normal)
         weak var weakSelf = self
-        loSendButton.addTarget(weakSelf, action: #selector(weakSelf!.sendButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(weakSelf, action: #selector(weakSelf!.sendButtonTapped(_:)), for: .touchUpInside)
         
-        self.sendButton = loSendButton
-        self.addSubview(loSendButton)
+        self.sendButton = button
+        self.addSubview(button)
     }
     
     //MARK: - Apply Constraints

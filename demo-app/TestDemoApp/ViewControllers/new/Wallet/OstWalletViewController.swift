@@ -45,11 +45,19 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     var paginatingViewCount = 1
     
+    weak var tabbarController: TabBarViewController?
+    
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchUserBalance()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabbarController?.showTabBar()
+    }
+
     //MARK: - Views
     override func getNavBarTitle() -> String {
         return "Wallet"
@@ -215,7 +223,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
-        self.fetchUsers(hardRefresh: true)
+        self.fetchUserBalance(hardRefresh: true)
     }
     
     func reloadDataIfNeeded() {
@@ -236,7 +244,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
     }
     
-    func fetchUsers(hardRefresh: Bool = false) {
+    func fetchUserBalance(hardRefresh: Bool = false) {
         if isApiCallInProgress {
             reloadDataIfNeeded()
             return
@@ -249,15 +257,11 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             return
         }
         isApiCallInProgress = true
-        //        UserAPI.getUsers(meta: meta, onSuccess: {[weak self] (apiResponse) in
-        //            if let strongSelf = self {
-        //                strongSelf.onFetchUserSuccess(apiResponse)
-        //            }
-        //            }, onFailure: {[weak self] (apiResponse) in
-        //                if let strongSelf = self {
-        //                    strongSelf.isApiCallInProgress = false
-        //                }
-        //        })
+        UserAPI.getBalance(onSuccess: { (apiResponse) in
+            
+        }) { (apiError) in
+            
+        }
     }
     
 }

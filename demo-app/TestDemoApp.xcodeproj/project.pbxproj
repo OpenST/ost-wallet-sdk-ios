@@ -215,6 +215,28 @@
 		4BA4CB18228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
 		4BA4CB19228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
 		4BA4CB1A228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
+		4BA4CB6A2280B4C600A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
+		4BA4CB6B2280B4C900A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
+		4BA4CB6C2280B4CA00A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
+		4BA4CB6D2280B58A00A623ED /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB02227DA56A00A623ED /* UserAPI.swift */; };
+		4BA4CB6E2280B58B00A623ED /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB02227DA56A00A623ED /* UserAPI.swift */; };
+		4BA4CB6F2280B58F00A623ED /* BaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB00227DA52400A623ED /* BaseAPI.swift */; };
+		4BA4CB702280B58F00A623ED /* BaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB00227DA52400A623ED /* BaseAPI.swift */; };
+		4BA4CB722280B5FB00A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
+		4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
+		4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
+		4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */; };
+		4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */; };
+		4BA4CB772280BC8C00A623ED /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB08227DEE6600A623ED /* BalanceModel.swift */; };
+		4BA4CB782280BC8D00A623ED /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB08227DEE6600A623ED /* BalanceModel.swift */; };
+		4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */; };
+		4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */; };
+		4BA4CB7B2280BE3C00A623ED /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
+		4BA4CB7C2280BE3D00A623ED /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
+		4BA4CB7D2280BE4000A623ED /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0F227DF31600A623ED /* Dictionary+Extension.swift */; };
+		4BA4CB7E2280BE4000A623ED /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0F227DF31600A623ED /* Dictionary+Extension.swift */; };
+		4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */; };
+		4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -366,6 +388,8 @@
 		4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversion+Helper.swift"; sourceTree = "<group>"; };
 		4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletValueTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionViewControllerr.swift; sourceTree = "<group>"; };
+		4BA4CB692280B4C600A623ED /* TransactionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAPI.swift; sourceTree = "<group>"; };
+		4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserModel.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -689,6 +713,7 @@
 			children = (
 				4BA4CB00227DA52400A623ED /* BaseAPI.swift */,
 				4BA4CB02227DA56A00A623ED /* UserAPI.swift */,
+				4BA4CB692280B4C600A623ED /* TransactionAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -699,6 +724,7 @@
 				4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */,
 				4BA4CB08227DEE6600A623ED /* BalanceModel.swift */,
 				4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */,
+				4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -1269,6 +1295,7 @@
 				4BA4CB01227DA52400A623ED /* BaseAPI.swift in Sources */,
 				4B464F62227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B9E7373227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
+				4BA4CB722280B5FB00A623ED /* CurrentUserModel.swift in Sources */,
 				00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 				4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
@@ -1323,6 +1350,7 @@
 				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
 				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
+				4BA4CB6A2280B4C600A623ED /* TransactionAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,19 +1362,27 @@
 				4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
+				4BA4CB782280BC8D00A623ED /* BalanceModel.swift in Sources */,
+				4BA4CB7D2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
+				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4BA4CB6F2280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */,
 				4B464F3C22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
+				4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */,
 				002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
+				4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
+				4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */,
 				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
+				4BA4CB7B2280BE3C00A623ED /* Conversion+Helper.swift in Sources */,
 				0075ED0F227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F52227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1362,11 +1398,13 @@
 				4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EF9227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
+				4BA4CB6E2280B58B00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
 				002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */,
 				4B464F142278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4BA4CB6B2280B4C900A623ED /* TransactionAPI.swift in Sources */,
 				4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4D2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
 				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
@@ -1398,19 +1436,27 @@
 				4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
+				4BA4CB772280BC8C00A623ED /* BalanceModel.swift in Sources */,
+				4BA4CB7E2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
+				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
+				4BA4CB702280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */,
 				4B464F3B22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
+				4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */,
 				002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
+				4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
+				4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */,
 				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
+				4BA4CB7C2280BE3D00A623ED /* Conversion+Helper.swift in Sources */,
 				0075ED10227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F51227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1426,11 +1472,13 @@
 				4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EFA227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
+				4BA4CB6D2280B58A00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
 				002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */,
 				4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4BA4CB6C2280B4CA00A623ED /* TransactionAPI.swift in Sources */,
 				4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4E2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
 				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,

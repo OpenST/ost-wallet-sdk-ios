@@ -35,12 +35,14 @@ class TabBarViewController: UITabBarController {
     func  createTabBarViewControllers() -> [UIViewController] {
         //HomeVC
         let homeVC = OstHomeViewController()
+        homeVC.tabbarController = self
         let homeNavController = UINavigationController(rootViewController: homeVC)
         homeNavController.tabBarItem = UITabBarItem(title: "Home",
                                                     image: UIImage(named: "userImage"),
                                                     selectedImage: UIImage(named: "userImageSelected"))
 
         let walletVC = OstWalletViewController()
+        walletVC.tabbarController = self
         let walletNavController = UINavigationController(rootViewController: walletVC)
         walletNavController.tabBarItem = UITabBarItem(title: "Wallet",
                                                        image: UIImage(named: "walletImage"),
@@ -48,6 +50,7 @@ class TabBarViewController: UITabBarController {
        
         //SettingsVC
         let settingVC = OptionsViewController()
+        settingVC.tabbarController = self
         let settingsNavController = UINavigationController(rootViewController: settingVC)
         settingsNavController.tabBarItem = UITabBarItem(title: "Settings",
                                                         image: UIImage(named: "settingImage"),
