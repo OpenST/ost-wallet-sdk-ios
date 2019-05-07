@@ -52,7 +52,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     @objc override func tappedBackButton() {
-      //  self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Create Views
