@@ -103,12 +103,12 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     
     @objc func authorizeViaQRButtonTapped(_ sender: Any?) {
         let authorizeViaQRVC = QRScannerViewController()
-        authorizeViaQRVC.pushWith(self, animated: true)
+        authorizeViaQRVC.pushViewControllerOn(self)
     }
     
     @objc func authorizeViaMnemonicsButtonTapped(_ sender: Any?) {
         let authorizeViaMnemonicsVC = AuthorizeDeviceViaMnemonicsViewController()
-        authorizeViaMnemonicsVC.pushWith(self, animated: true)
+        authorizeViaMnemonicsVC.pushViewControllerOn(self, animated: true)
     }
     
     @objc func recoverWithPinButton(_ sender: Any?) {

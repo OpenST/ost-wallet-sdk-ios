@@ -323,7 +323,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         let sendTokendsVC = SendTokensViewController()
         sendTokendsVC.userDetails = userDetails
         tabbarController?.hideTabBar()
-        sendTokendsVC.pushWith(self, animated: true)
+        sendTokendsVC.pushViewControllerOn(self, animated: true)
     }
     
     

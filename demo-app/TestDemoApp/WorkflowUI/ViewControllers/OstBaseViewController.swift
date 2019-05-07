@@ -31,7 +31,6 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         
         //Style Navigation Controller.
         
-        
         //Add all sub-views.
         addSubviews();
         
@@ -98,9 +97,9 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
 public extension UIViewController {
     public func presentViewControllerWith(_ presneter: UIViewController, animated:Bool = true, completion: (() -> Void)? = nil ){
         var viewControllerToBePresented:UIViewController = self;
-        if ( showNavigationController ) {
-            viewControllerToBePresented = UINavigationController(rootViewController: self);
-        }
+//        if ( showNavigationController ) {
+//            viewControllerToBePresented = UINavigationController(rootViewController: self);
+//        }
         presneter.present(viewControllerToBePresented, animated: animated, completion: completion);
     }
     

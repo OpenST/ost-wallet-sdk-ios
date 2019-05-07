@@ -136,7 +136,8 @@ class HomeViewController: UICollectionViewController {
 //    let userActionsViewController = UserActionsViewController(collectionViewLayout: layout);
 //    self.present(userActionsViewController, animated: true, completion: nil);
     let options = OptionsViewController()
-    options.presentWith(self)
+    let navController = UINavigationController(rootViewController: options)
+    navController.presentViewControllerWith(self)
   }
   
   //MARK - UICollectionViewDataSource
