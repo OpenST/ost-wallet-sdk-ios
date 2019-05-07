@@ -83,7 +83,9 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     func createAddressLabel() {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "0x123"
+        let ostUser = OstWalletSdk.getUser(CurrentUser.getInstance().ostUserId!)
+        let device = ostUser?.getCurrentDevice()
+        label.text = device?.address ?? ""
         deviceInfoThemer.apply(label)
         label.font = deviceInfoThemer.getFontProvider().get(size: 12).bold()
         
