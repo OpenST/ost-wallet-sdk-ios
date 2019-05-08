@@ -14,7 +14,7 @@ class TransactionAPI: BaseAPI {
     class func getTransactionLedger(onSuccess: (([String: Any]?) -> Void)? = nil,
                                     onFailure: (([String: Any]?) -> Void)? = nil) {
         
-        self.get(resource: "users/ledger",
+        self.get(resource: "/users/ledger",
                  params: nil,
                  onSuccess: onSuccess,
                  onFailure: onFailure)

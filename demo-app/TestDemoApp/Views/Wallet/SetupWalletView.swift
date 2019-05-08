@@ -175,6 +175,13 @@ class SetupWalletView: BaseWalletWorkflowView {
         super.flowComplete(workflowId: workflowId,
                            workflowContext: workflowContext,
                            contextEntity: contextEntity)
+        
+        if workflowContext.workflowType == .activateUser {
+            UserAPI.notifyUserActivated(onSuccess: { (apiReponse) in
+                CurrentUserModel.getInstance.userDetails = apiReponse
+            }, onFailure: nil)
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
             self.dismissViewController();
         }

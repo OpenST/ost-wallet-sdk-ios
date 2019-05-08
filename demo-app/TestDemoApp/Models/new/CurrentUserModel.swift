@@ -17,7 +17,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         super.init()
     }
     //MARK: - Variables
-    var userParams: [String: Any]? = nil
+    var userDetails: [String: Any]? = nil
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
     var setupDeviceOnComplete: ((Bool)->Void)?
@@ -48,7 +48,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         
         UserAPI.loginUser(params: params,
                           onSuccess: { (apiResponse) in
-                            CurrentUserModel.getInstance.userParams = apiResponse
+                            CurrentUserModel.getInstance.userDetails = apiResponse
                             self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
         }) { (apiError) in
             onComplete(false)
@@ -67,7 +67,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         
         UserAPI.signupUser(params: params,
                            onSuccess: { (apiResponse) in
-                            CurrentUserModel.getInstance.userParams = apiResponse
+                            CurrentUserModel.getInstance.userDetails = apiResponse
                             self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
         }) { (apiError) in
             onComplete(false)
@@ -92,21 +92,21 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
 
 extension CurrentUserModel {
     var ostUserId: String? {
-        let userId = userParams?["user_id"]
+        let userId = userDetails?["user_id"]
         return ConversionHelper.toString(userId)
     }
     
     var userName: String? {
-        return (userParams?["username"] as? String) ?? nil
+        return (userDetails?["username"] as? String) ?? nil
     }
     
     var tokenId: String? {
-        let tokenId = userParams?["token_id"]
+        let tokenId = userDetails?["token_id"]
         return ConversionHelper.toString(tokenId)
     }
     
     var appUserId: String? {
-        let appUserId = userParams?["app_user_id"]
+        let appUserId = userDetails?["app_user_id"]
         return ConversionHelper.toString(appUserId)
     }
     
@@ -127,7 +127,7 @@ extension CurrentUserModel {
     }
     
     var userPinSalt: String? {
-        return userParams?["user_pin_salt"] as? String ?? nil
+        return userDetails?["user_pin_salt"] as? String ?? nil
     }
     
     var ostUser: OstUser? {
