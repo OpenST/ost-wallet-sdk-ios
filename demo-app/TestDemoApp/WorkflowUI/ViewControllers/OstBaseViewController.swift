@@ -83,7 +83,12 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     
     func removeViewController(animated flag: Bool = true, completion: (() -> Void)? = nil) {
         if ( nil != self.navigationController && self.navigationController!.viewControllers.first! != self ) {
-            self.navigationController?.popToViewController(self, animated: flag)
+            let selfIndex = self.navigationController?.viewControllers.firstIndex(of: self)
+            if nil == selfIndex {
+                return
+            }
+            let beforeVC = self.navigationController?.viewControllers[selfIndex!-1]
+            self.navigationController?.popToViewController(beforeVC!, animated: flag)
         }
         else if ( nil != self.presentingViewController) {
             self.dismiss(animated: flag, completion: completion);
