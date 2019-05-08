@@ -52,7 +52,7 @@ class UsersTableViewCell: BaseTableViewCell {
     //MARK: - Components
     var circularView: UIView?
     var initialLetter: UILabel?
-    var stackView: UIStackView?
+    var detailsContainerView: UIView?
     var titleLabel: UILabel?
     var balanceLabel: UILabel?
     var sendButton: UIButton?
@@ -62,15 +62,16 @@ class UsersTableViewCell: BaseTableViewCell {
     //MARK: - Create Views
     override func createViews() {
         super.createViews()
-        createcirCularView()
+        createCircularView()
         createSeperatorLine()
         createNameLabel()
         createBalanaceLabel()
-        createStackView()
+        createDetailsContainerView()
+        createDetailsContainerView()
         createSendButton()
     }
     
-    func createcirCularView() {
+    func createCircularView() {
         let circularView = UIView()
         circularView.backgroundColor = UIColor.color(244, 244, 244)
         circularView.layer.cornerRadius = 25
@@ -113,14 +114,14 @@ class UsersTableViewCell: BaseTableViewCell {
         self.balanceLabel = loBalanaceLabel
     }
     
-    func createStackView() {
-        let loStackView = UIStackView(arrangedSubviews: [self.titleLabel!, self.balanceLabel!])
-        loStackView.axis = .vertical
-        loStackView.distribution = .fillEqually
-        loStackView.alignment = .lastBaseline
+    func createDetailsContainerView() {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(titleLabel!)
+        view.addSubview(balanceLabel!)
         
-        self.stackView = loStackView
-        self.addSubview(loStackView)
+        self.detailsContainerView = view
+        self.addSubview(view)
     }
     
     func createSendButton() {
@@ -139,17 +140,20 @@ class UsersTableViewCell: BaseTableViewCell {
         super.applyConstraints()
         applyCircularViewConstraints()
         applyInitialLetterConstraints()
-        applyStackViewConstraints()
+        applyTitleLabelConstraitns()
+        applyBalanceLabelConstraitns()
+        applyDetailsViewConstraints()
         applySendButtonConstraints()
         applySeperatorLineConstraints()
     }
     
     func applyCircularViewConstraints() {
+        guard let parent = self.circularView?.superview else {return}
         self.circularView?.translatesAutoresizingMaskIntoConstraints = false
-        self.circularView?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
+        self.circularView?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 12).isActive = true
         self.circularView?.widthAnchor.constraint(equalToConstant: 50).isActive = true
         self.circularView?.heightAnchor.constraint(equalTo: (self.circularView?.widthAnchor)!).isActive = true
-        self.circularView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        self.circularView?.topAnchor.constraint(equalTo: parent.topAnchor, constant: 12).isActive = true
     }
     
     func applyInitialLetterConstraints() {
@@ -158,12 +162,29 @@ class UsersTableViewCell: BaseTableViewCell {
         self.initialLetter?.centerXAnchor.constraint(equalTo: self.circularView!.centerXAnchor).isActive = true
     }
     
-    func applyStackViewConstraints() {
-        self.stackView?.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
-        self.stackView?.rightAnchor.constraint(equalTo: self.sendButton!.leftAnchor, constant: -8.0).isActive = true
-        self.stackView?.topAnchor.constraint(equalTo: self.topAnchor, constant:12.0).isActive = true
-        self.stackView?.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-12.0).isActive = true
+    func applyTitleLabelConstraitns() {
+        guard let parent = self.titleLabel?.superview else {return}
+        self.titleLabel?.translatesAutoresizingMaskIntoConstraints = false
+        self.titleLabel?.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+        self.titleLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+        self.titleLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+    }
+    
+    func applyBalanceLabelConstraitns() {
+        guard let parent = self.titleLabel?.superview else {return}
+        self.balanceLabel?.translatesAutoresizingMaskIntoConstraints = false
+        self.balanceLabel?.topAnchor.constraint(equalTo: self.titleLabel!.bottomAnchor, constant: 0).isActive = true
+        self.balanceLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+        self.balanceLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+        self.balanceLabel?.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+    }
+    
+    func applyDetailsViewConstraints() {
+        self.detailsContainerView?.translatesAutoresizingMaskIntoConstraints = false
+        self.detailsContainerView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
+        self.detailsContainerView?.rightAnchor.constraint(equalTo: self.sendButton!.leftAnchor, constant: -8.0).isActive = true
+        self.detailsContainerView?.topAnchor.constraint(equalTo: circularView!.topAnchor, constant:4.0).isActive = true
+        self.detailsContainerView?.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-12.0).isActive = true
     }
     
     func applySendButtonConstraints() {
@@ -179,7 +200,7 @@ class UsersTableViewCell: BaseTableViewCell {
         self.seperatorLine?.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         self.seperatorLine?.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive =  true
         self.seperatorLine?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12.0).isActive = true
-        self.seperatorLine?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12.0).isActive = true
+        self.seperatorLine?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0.0).isActive = true
     }
     
     @objc func sendButtonTapped(_ sender: Any?) {

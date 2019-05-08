@@ -64,9 +64,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func setupTableHeaderView() {
-        let userData = ["username": CurrentUser.getInstance().userName!]
+        let userData = ["username": CurrentUserModel.getInstance.userName ?? ""]
         tableHeaderView.userData = userData
-        tableHeaderView.balanceLabel?.text =  (CurrentUser.getInstance().currentUserData!["token_holder_address"] as! String)
+        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.tokenHolderAddress ?? ""
     }
     
     func createTabelView() {
@@ -216,7 +216,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             transactionViaQR.isEnable = false
         }
         
-        var initialRecovery = OptionVM(type: .initialRecovery, name: "Initiate Recovery", isEnable: true)
+        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
         if !userDevice.isStatusRegistered {
             initialRecovery.isEnable = false
         }
@@ -251,6 +251,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         else if option.type == .createSession {
             destinationVC = CreateSessionViewController()
+        }
+        
+        else if  option.type  == .manageDevices {
+            destinationVC = ManageDeviceViewController()
+        }
+        
+        else if option.type == .initiateDeviceRecovery {
+            destinationVC = InitiateDeviceRecoveryViewController()
         }
         
         self.tabbarController?.hideTabBar()

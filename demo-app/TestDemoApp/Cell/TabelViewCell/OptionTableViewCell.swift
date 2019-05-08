@@ -18,7 +18,7 @@ enum OptionType {
     showDeviceQR,
     manageDevices,
     transactionViaQR,
-    initialRecovery,
+    initiateDeviceRecovery,
     abortRecovery
 }
 

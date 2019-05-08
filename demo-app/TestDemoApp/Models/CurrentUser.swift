@@ -52,6 +52,24 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
   }
     
   func signUp(username:String , phonenumber:String, userDescription:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
+    
+    var params: [String: Any] = [:];
+    params["username"] = username;
+    params["password"] = phonenumber;
+    
+    UserAPI.signupUser(params: params, onSuccess: { (appApiResponse) in
+        self.appUserId = ConversionHelper.toString(appApiResponse!["app_user_id"])
+        self.ostUserId = ConversionHelper.toString(appApiResponse!["user_id"])
+        self.tokenId = ConversionHelper.toString(appApiResponse!["token_id"])
+        self.userPinSalt = ConversionHelper.toString(appApiResponse!["user_pin_salt"])
+        CurrentUserModel.getInstance.userDetails = appApiResponse
+        self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
+
+    }) { (apiError) in
+        onComplete(false);
+    }
+    
+    return
     if( username.count < 4 || phonenumber.count < 10) {
         onComplete(false);
         return;
@@ -59,7 +77,7 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     
     self.userName = username
   
-    var params: [String: Any] = [:];
+//    var params: [String: Any] = [:];
     params["username"] = username;
     params["mobile_number"] = phonenumber;
     params["description"] = userDescription;
@@ -79,13 +97,32 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
   }
   
   func login(username:String , phonenumber:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
+    
+    var params: [String: Any] = [:];
+    params["username"] = username;
+    params["password"] = phonenumber;
+    
+    UserAPI.loginUser(params: params, onSuccess: { (apiResponse) in
+        self.appUserId = ConversionHelper.toString(apiResponse!["app_user_id"])
+        self.ostUserId = ConversionHelper.toString(apiResponse!["user_id"])
+        self.tokenId = ConversionHelper.toString(apiResponse!["token_id"])
+        self.userPinSalt = ConversionHelper.toString(apiResponse!["user_pin_salt"])
+        CurrentUserModel.getInstance.userDetails = apiResponse
+        self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
+        
+    }) { (apiError) in
+        onComplete(false);
+    }
+    
+    return
+    
     if( username.count < 4 || phonenumber.count < 10) {
       onComplete(false);
       return;
     }
     self.userName = username
     
-    var params: [String: Any] = [:];
+//    var params: [String: Any] = [:];
     params["username"] = username;
     params["mobile_number"] = phonenumber;
     

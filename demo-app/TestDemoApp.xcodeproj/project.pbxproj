@@ -240,6 +240,15 @@
 		4BA4CB8222828EE500A623ED /* DeviceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8122828EE500A623ED /* DeviceAPI.swift */; };
 		4BA4CB8322828EE800A623ED /* DeviceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8122828EE500A623ED /* DeviceAPI.swift */; };
 		4BA4CB8422828EE900A623ED /* DeviceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8122828EE500A623ED /* DeviceAPI.swift */; };
+		4BA4CB862282AFC100A623ED /* ManageDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */; };
+		4BA4CB872282AFC100A623ED /* ManageDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */; };
+		4BA4CB882282AFC100A623ED /* ManageDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */; };
+		4BA4CB8A2282B83300A623ED /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */; };
+		4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */; };
+		4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */; };
+		4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
+		4BA4CB8F22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
+		4BA4CB9022832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -394,6 +403,9 @@
 		4BA4CB692280B4C600A623ED /* TransactionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAPI.swift; sourceTree = "<group>"; };
 		4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserModel.swift; sourceTree = "<group>"; };
 		4BA4CB8122828EE500A623ED /* DeviceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAPI.swift; sourceTree = "<group>"; };
+		4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDeviceViewController.swift; sourceTree = "<group>"; };
+		4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
+		4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateDeviceRecoveryViewController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -649,6 +661,8 @@
 				4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */,
 				4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */,
 				4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */,
+				4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */,
+				4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */,
 			);
 			path = SettingOptions;
 			sourceTree = "<group>";
@@ -689,6 +703,7 @@
 				4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */,
 				4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */,
 				4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */,
+				4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */,
 			);
 			path = TabelViewCell;
 			sourceTree = "<group>";
@@ -1294,6 +1309,7 @@
 				4BA4CB14227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B9E7377227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
+				4BA4CB8A2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */,
 				4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1321,6 +1337,7 @@
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
+				4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
@@ -1332,6 +1349,7 @@
 				002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				00ECB85E227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				4BA4CB06227DDEF200A623ED /* SendTokensViewController.swift in Sources */,
+				4BA4CB862282AFC100A623ED /* ManageDeviceViewController.swift in Sources */,
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
 				4B464F0D227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
@@ -1404,6 +1422,7 @@
 				4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EF9227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
+				4BA4CB8F22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6E2280B58B00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
 				002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
@@ -1413,11 +1432,13 @@
 				4BA4CB6B2280B4C900A623ED /* TransactionAPI.swift in Sources */,
 				4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4D2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
+				4BA4CB872282AFC100A623ED /* ManageDeviceViewController.swift in Sources */,
 				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB19228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */,
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
+				4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BA4CB8322828EE800A623ED /* DeviceAPI.swift in Sources */,
@@ -1479,6 +1500,7 @@
 				4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
 				4B464EFA227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
+				4BA4CB9022832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6D2280B58A00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
 				002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
@@ -1488,11 +1510,13 @@
 				4BA4CB6C2280B4CA00A623ED /* TransactionAPI.swift in Sources */,
 				4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4E2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
+				4BA4CB882282AFC100A623ED /* ManageDeviceViewController.swift in Sources */,
 				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB1A228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */,
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
+				4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BA4CB8422828EE900A623ED /* DeviceAPI.swift in Sources */,

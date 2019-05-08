@@ -276,6 +276,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
+    //MARK: - API
     func fetchUsers(hardRefresh: Bool = false) {
         if isApiCallInProgress {
             reloadDataIfNeeded()
