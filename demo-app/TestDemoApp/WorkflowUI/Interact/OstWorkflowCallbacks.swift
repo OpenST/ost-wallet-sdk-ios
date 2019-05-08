@@ -27,16 +27,9 @@ class OstWorkflowCallbacks: OstWorkflowDelegate {
     
     func registerDevice(_ apiParams: [String : Any], delegate: OstDeviceRegisteredDelegate) {
         
-        let currentUser = CurrentUser.getInstance()
-        
-        //Make API call to Mappy App Server.
-        let resourceUrl = "/users/" + currentUser.appUserId! + "/devices";
-        currentUser.post(resource: resourceUrl,
-                         params: apiParams as [String : AnyObject],
-                         onSuccess: { (appApiResponse:[String : Any]?) in
-                    
-                    try! delegate.deviceRegistered( appApiResponse! );
-        }) { (failureResponse) in
+        DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
+            try! delegate.deviceRegistered( apiResponse! );
+        }) { (apiError) in
             delegate.cancelFlow();
         }
     }
