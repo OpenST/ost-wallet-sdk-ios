@@ -45,10 +45,14 @@ class OstSdkInteract {
     private var callbackListners: [String: [OstWeakRef<AnyObject>]] = [:]
     private var workflowCallbackList: [OstWorkflowCallbacks] = []
     
-    func getWorkflowCallback() -> OstWorkflowCallbacks {
-        let workflow = OstWorkflowCallbacks()
-        workflowCallbackList.append(workflow)
-        return workflow
+    func getWorkflowCallback(forUserId userId: String) -> OstWorkflowCallbacks {
+        let callback = OstWorkflowCallbacks(userId: userId, passphrasePrefixDelegate: CurrentUserModel.getInstance);
+        retainWorkflowCallback(callback: callback);
+        return callback;
+    }
+    
+    func retainWorkflowCallback(callback:OstWorkflowCallbacks) {
+        workflowCallbackList.append(callback);
     }
     
     func getEventListner(forWorkflowId id: String) ->  [OstWeakRef<AnyObject>]? {

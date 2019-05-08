@@ -14,7 +14,7 @@ import OstWalletSdk
 class BaseWalletWorkflowView: BaseWalletView, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
     
     var workflowCallback: OstWorkflowCallbacks {
-        let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback()
+        let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
         return workflowCallback
     }

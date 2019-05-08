@@ -311,9 +311,9 @@ class LoginViewController: UIViewController {
           //Need to activate user.
           let rootViewController =  self.presentingViewController;
           self.dismiss(animated: true, completion: {
-            let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
-            setupWalletController.showHeaderBackItem = false;
-            rootViewController?.present(setupWalletController, animated: true, completion: nil);
+            _ = OstSdkInteract.getInstance.activateUser(userId: ostUser.id,
+                                                        passphrasePrefixDelegate: CurrentUser.getInstance(),
+                                                        presenter: rootViewController!)
           });
           
         } else if ( ostUser.isStatusActivating ) {

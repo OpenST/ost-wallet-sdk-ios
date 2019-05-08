@@ -23,7 +23,7 @@ public class OstError: Error {
     }
     public var errorInfo: [String: Any]? = nil
 
-    init(_ code: String, _ messageTextCode: OstErrorText) {
+    public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.internalCode = code
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode;
@@ -36,7 +36,7 @@ public class OstError: Error {
         self.messageTextCode = .tempMessageTextCode
     }
     
-    init(fromApiResponse response: [String: Any]) {
+    public init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
         self.internalCode = err["code"] as! String
         self.errorMessage = err["msg"] as! String

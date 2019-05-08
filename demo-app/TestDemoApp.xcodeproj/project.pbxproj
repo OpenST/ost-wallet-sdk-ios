@@ -46,12 +46,40 @@
 		002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
 		002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
 		002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
+		0041A65922807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
+		0041A65A22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
+		0041A65B22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
+		0041A65D2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */; };
+		0041A65E2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */; };
+		0041A65F2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */; };
+		0041A6612280C07F007A52A8 /* OstGetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */; };
+		0041A6622280C07F007A52A8 /* OstGetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */; };
+		0041A6632280C07F007A52A8 /* OstGetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */; };
+		0041A6662280CE14007A52A8 /* OstPinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6652280CE14007A52A8 /* OstPinInput.swift */; };
+		0041A6672280CE14007A52A8 /* OstPinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6652280CE14007A52A8 /* OstPinInput.swift */; };
+		0041A6682280CE14007A52A8 /* OstPinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6652280CE14007A52A8 /* OstPinInput.swift */; };
+		0041A66E2280D60D007A52A8 /* SendTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */; };
+		0041A66F2280D60E007A52A8 /* SendTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */; };
+		0041A6702280D6B9007A52A8 /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
+		0041A6712280D6B9007A52A8 /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
 		0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075ED0D227B4F6700FADF23 /* OstButton.swift */; };
 		0075ED0F227B4F6700FADF23 /* OstButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075ED0D227B4F6700FADF23 /* OstButton.swift */; };
 		0075ED10227B4F6700FADF23 /* OstButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075ED0D227B4F6700FADF23 /* OstButton.swift */; };
+		00A76B272282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */; };
+		00A76B282282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */; };
+		00A76B292282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */; };
+		00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B2A22834611009226B8 /* OstWFCPinManager.swift */; };
+		00A76B2C22834611009226B8 /* OstWFCPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B2A22834611009226B8 /* OstWFCPinManager.swift */; };
+		00A76B2D22834611009226B8 /* OstWFCPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A76B2A22834611009226B8 /* OstWFCPinManager.swift */; };
 		00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
+		00B943A822811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
+		00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
+		00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
+		00B943AC22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */; };
+		00B943AD22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */; };
+		00B943AE22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */; };
 		00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
 		00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
 		00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
@@ -340,8 +368,16 @@
 		002EAF612272752E00B48F1D /* OstH1Theamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstH1Theamer.swift; sourceTree = "<group>"; };
 		002EAF65227275F000B48F1D /* OstUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIKit.swift; sourceTree = "<group>"; };
 		002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLeadLabelTheamer.swift; sourceTree = "<group>"; };
+		0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstSdkInteract+Workflow.swift"; sourceTree = "<group>"; };
+		0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSetNewPinViewController.swift; sourceTree = "<group>"; };
+		0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstGetPinViewController.swift; sourceTree = "<group>"; };
+		0041A6652280CE14007A52A8 /* OstPinInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinInput.swift; sourceTree = "<group>"; };
 		0075ED0D227B4F6700FADF23 /* OstButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstButton.swift; sourceTree = "<group>"; };
+		00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWrokflowUIDelegates.swift; sourceTree = "<group>"; };
+		00A76B2A22834611009226B8 /* OstWFCPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWFCPinManager.swift; sourceTree = "<group>"; };
 		00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTheamer.swift; sourceTree = "<group>"; };
+		00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstActivateUserWorkflowController.swift; sourceTree = "<group>"; };
+		00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConfirmNewPinViewController.swift; sourceTree = "<group>"; };
 		00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
 		00ECB858227726D40085E4AB /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseScrollViewController.swift; sourceTree = "<group>"; };
@@ -545,6 +581,7 @@
 		002EAF5B22726EC600B48F1D /* WorkflowUI */ = {
 			isa = PBXGroup;
 			children = (
+				00A76B252282E601009226B8 /* Protocols */,
 				002EAF65227275F000B48F1D /* OstUIKit.swift */,
 				00FF2332226F5B2C009C2945 /* OstTheme.swift */,
 				4B464E752271CC9400F1F4AF /* Interact */,
@@ -566,6 +603,24 @@
 			path = Labels;
 			sourceTree = "<group>";
 		};
+		0041A6642280CA33007A52A8 /* pin */ = {
+			isa = PBXGroup;
+			children = (
+				0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */,
+				0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */,
+				00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */,
+			);
+			path = pin;
+			sourceTree = "<group>";
+		};
+		0041A6692280D0A6007A52A8 /* PinInput */ = {
+			isa = PBXGroup;
+			children = (
+				0041A6652280CE14007A52A8 /* OstPinInput.swift */,
+			);
+			path = PinInput;
+			sourceTree = "<group>";
+		};
 		0075ED0C227B4F3C00FADF23 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,9 +629,26 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		00A76B252282E601009226B8 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		00B943A622811B400084635A /* WorkflowControllers */ = {
+			isa = PBXGroup;
+			children = (
+				00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */,
+			);
+			path = WorkflowControllers;
+			sourceTree = "<group>";
+		};
 		00C1345C2278AF1600D6E7B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0041A6692280D0A6007A52A8 /* PinInput */,
 				0075ED0C227B4F3C00FADF23 /* Buttons */,
 				00C1345D2278AF2300D6E7B8 /* Labels */,
 				4B464F4F227AED7300F1F4AF /* OstBaseView.swift */,
@@ -614,9 +686,10 @@
 		00ECB865227730340085E4AB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */,
 				00ECB861227727310085E4AB /* OstBaseViewController.swift */,
 				00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */,
+				4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */,
+				0041A6642280CA33007A52A8 /* pin */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -627,6 +700,9 @@
 				4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */,
 				4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */,
 				4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */,
+				0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */,
+				00B943A622811B400084635A /* WorkflowControllers */,
+				00A76B2A22834611009226B8 /* OstWFCPinManager.swift */,
 			);
 			path = Interact;
 			sourceTree = "<group>";
@@ -1286,8 +1362,11 @@
 				4BA4CB0B227DEE8400A623ED /* OstBaseModel.swift in Sources */,
 				4B464F3522796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */,
+				0041A65922807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
 				4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */,
 				4BF8FE222240FD1400519779 /* ColorTheme.swift in Sources */,
+				0041A6612280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
+				0041A6662280CE14007A52A8 /* OstPinInput.swift in Sources */,
 				4BF8FE212240FD1400519779 /* IconGenerator.swift in Sources */,
 				002EAF4C2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
 				4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */,
@@ -1312,6 +1391,7 @@
 				4BA4CB8A2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */,
 				4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
+				00B943AC22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
 				4BA4CB01227DA52400A623ED /* BaseAPI.swift in Sources */,
 				4B464F62227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
@@ -1320,6 +1400,7 @@
 				00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 				4BA4CB8222828EE500A623ED /* DeviceAPI.swift in Sources */,
 				4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
+				0041A65D2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
@@ -1327,6 +1408,8 @@
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4B464F3A2279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4BA4CB0D227DF2B300A623ED /* CurrentToken.swift in Sources */,
+				00A76B272282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
+				00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
 				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
@@ -1361,6 +1444,7 @@
 				4BF8FE242240FD1400519779 /* Shapes.swift in Sources */,
 				00ECB862227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BF8FE352240FD1400519779 /* ScanQRCodeView.swift in Sources */,
+				00B943A822811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				002EAF502272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */,
@@ -1383,13 +1467,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */,
+				00A76B2C22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
 				4BA4CB782280BC8D00A623ED /* BalanceModel.swift in Sources */,
 				4BA4CB7D2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
+				0041A6622280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
+				00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
@@ -1401,16 +1488,19 @@
 				4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */,
 				002EAF632272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
+				00A76B282282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */,
 				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				4BA4CB7B2280BE3C00A623ED /* Conversion+Helper.swift in Sources */,
+				0041A65E2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
 				0075ED0F227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F52227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
 				4B464F5F227B750500F1F4AF /* IconGenerator.swift in Sources */,
+				0041A66E2280D60D007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7374227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
@@ -1421,6 +1511,7 @@
 				4B464F63227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464EFF227835C800F1F4AF /* Users.swift in Sources */,
+				0041A6702280D6B9007A52A8 /* Conversion+Helper.swift in Sources */,
 				4B464EF9227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BA4CB8F22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6E2280B58B00A623ED /* UserAPI.swift in Sources */,
@@ -1447,7 +1538,10 @@
 				4B464F5D227B730E00F1F4AF /* OstSdkInteractOld.swift in Sources */,
 				4B464F45227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				4BA4CB15227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
+				0041A6672280CE14007A52A8 /* OstPinInput.swift in Sources */,
+				00B943AD22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */,
+				0041A65A22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
 				4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464FB1227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
@@ -1461,13 +1555,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */,
+				00A76B2D22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
 				4BA4CB772280BC8C00A623ED /* BalanceModel.swift in Sources */,
 				4BA4CB7E2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
+				0041A6632280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
+				00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
@@ -1479,16 +1576,19 @@
 				4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */,
 				002EAF642272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
+				00A76B292282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */,
 				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				4BA4CB7C2280BE3D00A623ED /* Conversion+Helper.swift in Sources */,
+				0041A65F2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
 				0075ED10227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F51227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
 				4B464F60227B750500F1F4AF /* IconGenerator.swift in Sources */,
+				0041A66F2280D60E007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7375227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
@@ -1499,6 +1599,7 @@
 				4B464F64227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */,
 				4B464F00227835C800F1F4AF /* Users.swift in Sources */,
+				0041A6712280D6B9007A52A8 /* Conversion+Helper.swift in Sources */,
 				4B464EFA227831FF00F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BA4CB9022832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6D2280B58A00A623ED /* UserAPI.swift in Sources */,
@@ -1525,7 +1626,10 @@
 				4B464F5E227B730F00F1F4AF /* OstSdkInteractOld.swift in Sources */,
 				4B464F46227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				4BA4CB16227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
+				0041A6682280CE14007A52A8 /* OstPinInput.swift in Sources */,
+				00B943AE22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */,
+				0041A65B22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
 				4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464FB2227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,

@@ -34,22 +34,28 @@ extension UIView {
         return UIApplication.shared.keyWindow;
     }
     
-    func placeBelow(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 20, addConstraintTo:UIView? = nil ) {
+    func placeBelow(toItem:UIView,
+                    multiplier:CGFloat = 1, constant:CGFloat = 20,
+                    relatedBy: NSLayoutConstraint.Relation = .equal,
+                    addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .top,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .bottom,
                                               multiplier: multiplier,
                                               constant: constant));
     }
     
-    func centerAlignX(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func centerAlignX(toItem:UIView,
+                      multiplier:CGFloat = 1, constant:CGFloat = 0,
+                      relatedBy: NSLayoutConstraint.Relation = .equal,
+                      addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .centerX,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .centerX,
                                               multiplier: multiplier,
@@ -62,11 +68,14 @@ extension UIView {
         }
     }
     
-    func centerAlignY(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func centerAlignY(toItem:UIView,
+                      multiplier:CGFloat = 1, constant:CGFloat = 0,
+                      relatedBy: NSLayoutConstraint.Relation = .equal,
+                      addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .centerY,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .centerY,
                                               multiplier: multiplier,
@@ -79,11 +88,14 @@ extension UIView {
         }
     }
     
-    func leftAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func leftAlign(toItem:UIView,
+                   multiplier:CGFloat = 1, constant:CGFloat = 0,
+                   relatedBy: NSLayoutConstraint.Relation = .equal,
+                   addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .left,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .left,
                                               multiplier: multiplier,
@@ -96,22 +108,28 @@ extension UIView {
         }
     }
     
-    func leftWithRightAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func leftWithRightAlign(toItem:UIView,
+                            multiplier:CGFloat = 1, constant:CGFloat = 0,
+                            relatedBy: NSLayoutConstraint.Relation = .equal,
+                            addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .left,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .right,
                                               multiplier: multiplier,
                                               constant: constant));
     }
     
-    func rightAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func rightAlign(toItem:UIView,
+                    multiplier:CGFloat = 1, constant:CGFloat = 0,
+                    relatedBy: NSLayoutConstraint.Relation = .equal,
+                    addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .right,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .right,
                                               multiplier: multiplier,
@@ -124,11 +142,14 @@ extension UIView {
         }
     }
     
-    func topAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func topAlign(toItem:UIView,
+                  multiplier:CGFloat = 1, constant:CGFloat = 0,
+                  relatedBy: NSLayoutConstraint.Relation = .equal,
+                  addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .top,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .top,
                                               multiplier: multiplier,
@@ -142,11 +163,14 @@ extension UIView {
     }
     
     
-    func bottomAlign(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil ) {
+    func bottomAlign(toItem:UIView,
+                     multiplier:CGFloat = 1, constant:CGFloat = 0,
+                     relatedBy: NSLayoutConstraint.Relation = .equal,
+                     addConstraintTo:UIView? = nil ) {
         constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
             .addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .bottom,
-                                              relatedBy: .equal,
+                                              relatedBy: relatedBy,
                                               toItem: toItem,
                                               attribute: .bottom,
                                               multiplier: multiplier,
@@ -169,9 +193,8 @@ extension UIView {
                                               constant: constant));
     }
     
-    func setFixedHeight(toItem:UIView, multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil) {
-        constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
-            .addConstraint(NSLayoutConstraint(item: self,
+    func setFixedHeight(multiplier:CGFloat = 1, constant:CGFloat = 0, addConstraintTo:UIView? = nil) {
+        self.addConstraint(NSLayoutConstraint(item: self,
                                               attribute: .height,
                                               relatedBy: .equal,
                                               toItem: nil,
@@ -180,6 +203,15 @@ extension UIView {
                                               constant: constant));
     }
     
+    func setFixedWidth(multiplier:CGFloat = 1, constant:CGFloat, addConstraintTo:UIView? = nil) {
+        self.addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .width,
+                                              relatedBy: .equal,
+                                              toItem: nil,
+                                              attribute: .width,
+                                              multiplier: multiplier,
+                                              constant: constant));
+    }
     
     func applyBlockElementConstraints(_ parent:UIView? = nil, horizontalMargin:CGFloat = 20) {
         var myParent:UIView? = parent;
@@ -218,7 +250,7 @@ extension UIView {
     /// assuming the height of screen in 667 points.
     ///
     /// - Parameter height: desired height of the view.
-    func setH667Height(height:CGFloat) {
+    func setH667Height(height:CGFloat, relatedBy: NSLayoutConstraint.Relation = .equal) {
         let windowHeight:CGFloat = 667.0;
         let multiplier = height / windowHeight;
         let window = UIApplication.shared.keyWindow;
@@ -226,7 +258,7 @@ extension UIView {
 
         self.addConstraint(NSLayoutConstraint(item: self,
                                                  attribute: .height,
-                                                 relatedBy: .equal,
+                                                 relatedBy: relatedBy,
                                                  toItem: nil,
                                                  attribute: .height,
                                                  multiplier: 1,

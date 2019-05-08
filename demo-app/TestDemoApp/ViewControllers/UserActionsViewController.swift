@@ -10,6 +10,7 @@
 
 import UIKit
 import MaterialComponents
+import OstWalletSdk;
 
 private let reuseIdentifier = "MDCCollectionViewTextCell"
 
@@ -268,6 +269,12 @@ class UserActionsViewController: UICollectionViewController, UICollectionViewDel
       
         //Initialize User
         if ( actionType.caseInsensitiveCompare(ACTIONS.activateUser.rawValue) == .orderedSame ) {
+//            _ = OstSdkInteract.getInstance
+//                .activateUser(presenter: self,
+//                              userId: "1223445",
+//                              passphrasePrefix: "aaaaaaaaaabbbbbbbbbbcccccccccc",
+//                              spendingLimit: OstUtils.toAtto("15"));
+            
             let walletController = WalletViewController(nibName: nil, bundle: nil)
             walletController.viewMode = WalletViewController.ViewMode.SETUP_WALLET;
             self.present(walletController, animated: true, completion: nil);

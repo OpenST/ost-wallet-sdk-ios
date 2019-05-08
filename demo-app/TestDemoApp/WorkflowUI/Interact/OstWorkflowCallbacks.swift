@@ -11,22 +11,44 @@
 import Foundation
 import OstWalletSdk
 
-class OstWorkflowCallbacks: OstWorkflowDelegate {
-    private static var workflowIdentifierCounter: Double = 0
+class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
     
+    /// Mark - Pin extension variables
+    var userPin:String? = nil;
+    var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;
+    var passphrasePrefixDelegate:OstPassphrasePrefixDelegate?;
+    var getPinViewController:OstGetPinViewController? = nil;
+
+    /// Mark - Workflow callback vars.
     let workflowId: String
+    let userId: String
+    
     
     private var interact: OstSdkInteract {
         return OstSdkInteract.getInstance
     }
-    
-    init() {
-        self.workflowId = String(OstWorkflowCallbacks.workflowIdentifierCounter)
-        OstWorkflowCallbacks.workflowIdentifierCounter += 1
+
+    init(userId: String, passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+        self.userId = userId;
+        self.workflowId = UUID().uuidString;
+        self.passphrasePrefixDelegate = passphrasePrefixDelegate;
     }
     
-    func registerDevice(_ apiParams: [String : Any], delegate: OstDeviceRegisteredDelegate) {
+    func observeViewControllerIsMovingFromParent() {
+        //self.setPinViewController
+        NotificationCenter.default.addObserver(self, selector: #selector(vcIsMovingFromParent(_:)), name: .ostVCIsMovingFromParent, object: nil)
+    }
+
+    @objc func vcIsMovingFromParent(_ notification: Notification) {
+        if ( nil != notification.object && notification.object! as? OstBaseViewController === self.getPinViewController ) {
+            self.getPinViewControllerDismissed();
+        }
+    }
         
+    func registerDevice(_ apiParams: [String : Any], delegate: OstDeviceRegisteredDelegate) {
+        // To-Do: Ensure its setupDevice workflow.
+        // else do not do it. Logout the user.
+
         DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
             try! delegate.deviceRegistered( apiResponse! );
         }) { (apiError) in
@@ -34,18 +56,7 @@ class OstWorkflowCallbacks: OstWorkflowDelegate {
         }
     }
     
-    func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        getPinFromUser(ostPinAcceptProtocol: delegate)
-    }
-    
-    func invalidPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        getPinFromUser(message: "Invalid pin, Please re-enter", ostPinAcceptProtocol: delegate)
-    }
-    
-    func pinValidated(_ userId: String) {
-       
-    }
-    
+        
     func verifyData(workflowContext: OstWorkflowContext,
                     ostContextEntity: OstContextEntity,
                     delegate: OstValidateDataDelegate) {
@@ -62,23 +73,26 @@ class OstWorkflowCallbacks: OstWorkflowDelegate {
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData)
+        hideLoader();
+        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+        cleanUp();
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
-        
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData)
+        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
+        hideLoader();
+        cleanUp();
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        
+        hideLoader();
+        dismissPinViewController();
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
     }
     
@@ -109,9 +123,32 @@ class OstWorkflowCallbacks: OstWorkflowDelegate {
         alert.show()
     }
     
+    func pinValidated(_ userId: String) {
+        
+    }
+    
+    func cancelFlow() {
+        self.cancelPinAcceptor();
+    }
+    
+    func cleanUp() {
+        self.cleanUpPinViewController();
+    }
+    
+    func showLoader() {
+        
+    }
+    
+    func hideLoader() {
+        
+    }
+
+
+    
 }
 
 public extension UIAlertController {
+    @available(*, deprecated, message: "Please avoid using this method.")
     func show() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()
@@ -124,6 +161,7 @@ public extension UIAlertController {
 }
 
 public extension UIViewController {
+    @available(*, deprecated, message: "Please avoid using this method.")
     func showVC() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()

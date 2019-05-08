@@ -28,7 +28,7 @@ public enum OstWorkflowType {
 
 public class OstWorkflowContext {    
     public let workflowType: OstWorkflowType
-    init(workflowType: OstWorkflowType) {
+    public init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType
     }
 }

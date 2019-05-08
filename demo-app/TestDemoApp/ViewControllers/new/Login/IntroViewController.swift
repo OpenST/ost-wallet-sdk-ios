@@ -43,7 +43,7 @@ class IntroViewController: OstBaseScrollViewController {
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        view.setText("Test your Brand Token Economy deployed on OST Platform");
+        view.text = "Test your Brand Token Economy deployed on OST Platform";
         view.backgroundColor = .white;
         return view;
     }()

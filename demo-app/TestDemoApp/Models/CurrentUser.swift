@@ -10,7 +10,7 @@
 
 import Foundation;
 import OstWalletSdk
-class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate {
+class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
 
   static var sharedInstance:CurrentUser?;
   
@@ -67,9 +67,8 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
 
     }) { (apiError) in
         onComplete(false);
-    }
-    
-    return
+    }    
+    return;
     if( username.count < 4 || phonenumber.count < 10) {
         onComplete(false);
         return;
@@ -188,7 +187,7 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
       }
     }
     
-    let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback()
+    let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: self.ostUserId!)
     OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
     
     OstWalletSdk.setupDevice(userId: self.ostUserId!,
@@ -213,5 +212,9 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
         }
         //Callback onComplete with true.
         setupDeviceOnComplete?(true);
+    }
+    
+    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
+        ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: ostUserId, passphrase: self.userPinSalt!);
     }
 }

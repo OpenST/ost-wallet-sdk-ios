@@ -11,7 +11,7 @@
 import Foundation
 import OstWalletSdk
 
-class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate {
+class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
     static let getInstance = CurrentUserModel()
     override init() {
         super.init()
@@ -28,7 +28,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         setupDeviceOnSuccess = onSuccess
         setupDeviceOnComplete = onComplete
         
-        let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback()
+        let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
         
         OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
@@ -88,6 +88,24 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         //Callback onComplete with true.
         setupDeviceOnComplete?(true);
     }
+    
+    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
+        if ( nil == self.ostUserId || self.ostUserId!.compare(ostUserId) != .orderedSame ) {
+            ostPassphrasePrefixAcceptDelegate.cancelFlow();
+            return;
+        }
+        
+        if ( nil == self.userPinSalt ) {
+            ostPassphrasePrefixAcceptDelegate.cancelFlow();
+            return;
+        }
+        ///TODO - Move this to other function.
+        ///
+        let userPinSalt = self.userPinSalt!;
+        ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self.ostUserId!, passphrase: userPinSalt);
+    }
+    
+    
 }
 
 extension CurrentUserModel {

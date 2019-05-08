@@ -9,10 +9,9 @@
 import UIKit
 
 class OstBaseViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-
-    var showNavigationController:Bool = true;
-    var navigationThemer: OstNavigation =  OstTheme.blueNavigation
     
+    public var navigationThemer: OstNavigation =  OstTheme.blueNavigation
+    var shouldFireIsMovingFromParent = false;
     deinit {
         print("deinit: \(String(describing: self))")
     }
@@ -37,9 +36,24 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         //Add Layout Constraints.
         addLayoutConstraints();
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear( animated );
+        self.resignFirstResponder();
+    }
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        if ( self.shouldFireIsMovingFromParent) {
+            if ( (self.isMovingFromParent || self.isBeingDismissed)
+                || (nil != self.navigationController && self.navigationController!.isBeingDismissed )
+                || (nil != self.navigationController && self.navigationController!.isMovingFromParent )
+                ) {
+                //Trigger a notification.
+                NotificationCenter.default.post(name: .ostVCIsMovingFromParent, object: self);
+            }
+        }
     }
     
     func configure() {
@@ -55,15 +69,25 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     func setupNavigationBar() {
-                self.navigationItem.title = getNavBarTitle()
-                if nil != self.navigationController {
-                    weak var weakSelf = self
-                    navigationThemer.apply(self.navigationController!, target: weakSelf, action: #selector(weakSelf!.tappedBackButton))
-                }
-            }
+        if nil == self.navigationController {
+            return;
+        }
+        self.navigationItem.title = getNavBarTitle()
+        weak var weakSelf = self
+        navigationThemer.apply(self.navigationController!, target: weakSelf, action: #selector(weakSelf!.tappedBackButton))
+    }
     
     @objc func tappedBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        self.removeViewController();
+    }
+    
+    func removeViewController(animated flag: Bool = true, completion: (() -> Void)? = nil) {
+        if ( nil != self.navigationController && self.navigationController!.viewControllers.first! != self ) {
+            self.navigationController?.popToViewController(self, animated: flag)
+        }
+        else if ( nil != self.presentingViewController) {
+            self.dismiss(animated: flag, completion: completion);
+        }
     }
     
     func addSubviews() {
@@ -94,16 +118,19 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
 
 }
 
+
+public extension Notification.Name {
+    static let ostVCIsMovingFromParent = Notification.Name("isMovingFromParent");
+}
+
 public extension UIViewController {
-    public func presentViewControllerWith(_ presneter: UIViewController, animated:Bool = true, completion: (() -> Void)? = nil ){
+    func presentViewControllerWithNavigationController(_ presneter: UIViewController, animated:Bool = true, completion: (() -> Void)? = nil ){
         var viewControllerToBePresented:UIViewController = self;
-//        if ( showNavigationController ) {
-//            viewControllerToBePresented = UINavigationController(rootViewController: self);
-//        }
+        viewControllerToBePresented = UINavigationController(rootViewController: self);
         presneter.present(viewControllerToBePresented, animated: animated, completion: completion);
     }
     
-    public func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {
+    func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {
         var navViewController:UINavigationController?;
         if ( pusher is UINavigationController ) {
             navViewController = (pusher as! UINavigationController);

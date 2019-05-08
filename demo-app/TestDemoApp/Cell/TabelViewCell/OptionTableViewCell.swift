@@ -104,9 +104,9 @@ class OptionTableViewCell: BaseTableViewCell {
 
     func applySeperatorLineConstraints() {
         guard let parent = titleLabel.superview else {return}
-        seperatorLine.bottomAlignWithParent(multiplier: 1, constant: 0)
-        seperatorLine.leftAlignWithParent(multiplier: 1, constant: 20)
-        seperatorLine.rightAlignWithParent(multiplier: 1, constant: 0)
-        seperatorLine.setFixedHeight(toItem: parent, multiplier: 1, constant: 1)
+        seperatorLine.bottomAlignWithParent(constant: 0)
+        seperatorLine.leftAlignWithParent(constant: 20)
+        seperatorLine.rightAlignWithParent(constant: 0)
+        seperatorLine.setFixedHeight(constant: 1)
     }
 }
