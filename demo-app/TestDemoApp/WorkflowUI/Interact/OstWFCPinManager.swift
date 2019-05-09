@@ -15,12 +15,11 @@ extension OstWorkflowCallbacks {
     
     
     func showGetPinViewController() {
-        let win = UIWindow(frame: UIScreen.main.bounds)
+        
+        let win = getWindow()
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.alert + 1
-        win.makeKeyAndVisible()
         let navC = UINavigationController(rootViewController: self.getPinViewController!);
         vc.present(navC, animated: true, completion: nil)
     }

@@ -6,33 +6,26 @@
  You may obtain a copy of the License at
  
  http://www.apache.org/licenses/LICENSE-2.0
-*/
+ */
 
-import Foundation
 import UIKit
 import OstWalletSdk;
 
-class OstActivateUserWorkflowController: OstWorkflowCallbacks {
-
-    let spendingLimit: String;
-    let expireAfterInSec:TimeInterval;
+class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     
+    let recoverDeviceAddress: String
     /// Mark - View Controllers.
     var setPinViewController:OstSetNewPinViewController? = nil;
-    var confirmPinViewController:OstConfirmNewPinViewController?;
-     
+    
     init(userId: String,
          passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
          presenter:UIViewController,
-         spendingLimit: String = OstUtils.toAtto("15"),
-         expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
-    ) {
-        self.spendingLimit = spendingLimit;
-        self.expireAfterInSec = expireAfterInSec;
+         recoverDeviceAddress: String) {
+       
+        self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
         self.setPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
-        
         
         if ( nil == presenter.navigationController ) {
             self.setPinViewController!.presentViewControllerWithNavigationController(presenter);
@@ -40,17 +33,14 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             //Push into existing navigation controller.
             self.setPinViewController!.pushViewControllerOn( presenter.navigationController! );
         }
-
-
     }
+    
     deinit {
         print("OstActivateUserWorkflowController :: I am deinit ");
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
-        if ( notification.object is OstConfirmNewPinViewController ) {
-            self.confirmPinViewController = nil;
-        } else if ( notification.object is OstSetNewPinViewController ) {
+       if ( notification.object is OstSetNewPinViewController ) {
             self.setPinViewController = nil;
             //The workflow has been cancled by user.
             
@@ -74,34 +64,19 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             return;
         }
         
-        OstWalletSdk.activateUser(userId: self.userId,
-                                  userPin: self.userPin!,
-                                  passphrasePrefix: passphrase,
-                                  spendingLimit: self.spendingLimit,
-                                  expireAfterInSec: self.expireAfterInSec,
-                                  delegate: self);
+        OstWalletSdk.initiateDeviceRecovery(userId: self.userId,
+                                            recoverDeviceAddress: self.recoverDeviceAddress,
+                                            userPin: self.userPin!,
+                                            passphrasePrefix: passphrase,
+                                            delegate: self)
         self.userPin = nil;
         showLoader();
     }
     
-
     /// Mark - OstPinAcceptDelegate
     override func pinProvided(pin: String) {
-        if ( nil == self.userPin || nil == self.confirmPinViewController ) {
-            self.userPin = pin;
-            showConfirmPinViewController();
-        } else if ( self.userPin!.compare(pin) == .orderedSame ){
-            //Fetch salt and inititate workflow.
-            passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
-        } else {
-            //Show error.
-            self.confirmPinViewController?.showInvalidPin();
-        }
-    }
-    
-    func showConfirmPinViewController() {
-        self.confirmPinViewController = OstConfirmNewPinViewController.newInstance(pinInputDelegate: self);
-        self.confirmPinViewController?.pushViewControllerOn(self.setPinViewController!);
+        self.userPin = pin;
+        passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
     }
     
     override func cleanUp() {
@@ -110,9 +85,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             self.setPinViewController?.removeViewController();
         }
         self.setPinViewController = nil;
-        self.confirmPinViewController = nil;
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
     }
-
 }

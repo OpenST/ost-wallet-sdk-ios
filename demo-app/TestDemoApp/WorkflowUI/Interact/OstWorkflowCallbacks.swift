@@ -23,6 +23,18 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     let workflowId: String
     let userId: String
     
+    weak var uiWindow: UIWindow? = nil
+    
+    func getWindow() -> UIWindow{
+        if nil == uiWindow {
+            let win = UIWindow(frame: UIScreen.main.bounds)
+            win.windowLevel = UIWindow.Level.alert + 1
+            win.makeKeyAndVisible()
+            uiWindow = win
+        }
+        
+        return uiWindow!
+    }
     
     private var interact: OstSdkInteract {
         return OstSdkInteract.getInstance

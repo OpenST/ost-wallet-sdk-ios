@@ -277,6 +277,9 @@
 		4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
 		4BA4CB8F22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
 		4BA4CB9022832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */; };
+		4BA4CB92228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB93228440CF00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB94228440D000A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -442,6 +445,7 @@
 		4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDeviceViewController.swift; sourceTree = "<group>"; };
 		4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateDeviceRecoveryViewController.swift; sourceTree = "<group>"; };
+		4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -641,6 +645,7 @@
 			isa = PBXGroup;
 			children = (
 				00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */,
+				4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */,
 			);
 			path = WorkflowControllers;
 			sourceTree = "<group>";
@@ -1409,6 +1414,7 @@
 				4B464F3A2279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4BA4CB0D227DF2B300A623ED /* CurrentToken.swift in Sources */,
 				00A76B272282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
+				4BA4CB92228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
@@ -1492,6 +1498,7 @@
 				4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */,
+				4BA4CB93228440CF00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				4BA4CB7B2280BE3C00A623ED /* Conversion+Helper.swift in Sources */,
@@ -1580,6 +1587,7 @@
 				4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */,
+				4BA4CB94228440D000A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
 				4BA4CB7C2280BE3D00A623ED /* Conversion+Helper.swift in Sources */,

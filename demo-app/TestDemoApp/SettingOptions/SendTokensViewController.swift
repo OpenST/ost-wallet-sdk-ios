@@ -205,9 +205,9 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
         
         var txMeta: [String: String] = [:];
             txMeta["type"] = "user_to_user";
-            txMeta["name"] = "known_user";
+            txMeta["name"] = "Sent to \(userDetails["username"] as? String ?? "")";
             //Let's build some json. Not the best way do it, but, works here.
-            txMeta["details"] = "Sending to \(userDetails["username"] as? String ?? "")";
+            txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
         
         progressIndicator?.show()
         let tokenHolderAddress = userDetails["token_holder_address"] as! String

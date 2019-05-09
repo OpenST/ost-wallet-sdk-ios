@@ -16,33 +16,34 @@ class TransactionTableViewCell: UsersTableViewCell {
     
     var transactionData: [String: Any]! {
         didSet {
-            if let meta = transactionData["meta_property"] as? [String: Any],
-                let name = meta["name"] as? String {
-                
-                self.titleLabel?.text = name
-            }else {
-                self.titleLabel?.text =  "Unknown"
-            }
-            let date = getDateFromTimestamp()
-            self.balanceLabel?.text = date ?? ""
+            guard let meta = transactionData["meta_property"] as? [String: Any] else {return}
+            if meta.isEmpty {return}
+            
+            var name: String? = meta["name"] as? String
             
             let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
             let fromUserId = transactionData["from_user_id"] as! String
             
             let amountVal = OstUtils.fromAtto(ConversionHelper.toString(transactionData["amount"])!)
             if currentUserOstId.compare(fromUserId) == .orderedSame {
-                self.overlayImage.image = UIImage(named: "ReceivedTokens")
+                self.overlayImage.image = UIImage(named: "SentTokens")
                 self.amountLabel.text = "- \(amountVal)"
                 self.amountLabel.textColor = UIColor.color(155, 155, 155)
             }else {
-                self.overlayImage.image = UIImage(named: "SentTokens")
+                self.overlayImage.image = UIImage(named: "ReceivedTokens")
                 self.amountLabel.text = "+ \(amountVal)"
                 self.amountLabel.textColor = UIColor.color(67, 139, 173)
+                name = meta["details"] as? String ?? name
             }
             
-            if self.titleLabel!.text!.caseInsensitiveCompare("Welcome Grant") == .orderedSame {
+            if name!.caseInsensitiveCompare("Welcome Grant") == .orderedSame {
                 self.overlayImage.image = UIImage(named: "OstGrantReceived")
             }
+            
+            self.titleLabel?.text = name ?? ""
+            
+            let date = getDateFromTimestamp()
+            self.balanceLabel?.text = date ?? ""
         }
     }
     
