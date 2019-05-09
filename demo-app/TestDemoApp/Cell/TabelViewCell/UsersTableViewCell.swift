@@ -75,17 +75,20 @@ class UsersTableViewCell: BaseTableViewCell {
         let circularView = UIView()
         circularView.backgroundColor = UIColor.color(244, 244, 244)
         circularView.layer.cornerRadius = 25
-        
+        self.circularView = circularView
+
+        createInternalView()
+        self.addSubview(circularView)
+    }
+    
+    func createInternalView(){
         let letter = UILabel()
         letter.textColor = UIColor.color(136, 136, 136)
         letter.numberOfLines = 1
         letter.font = OstFontProvider().get(size: 20).bold()
-        
+    
         self.initialLetter = letter
-        circularView.addSubview(letter)
-        
-        self.circularView = circularView
-        self.addSubview(circularView)
+        circularView!.addSubview(letter)
     }
     
     func createSeperatorLine() {

@@ -16,7 +16,13 @@ class TransactionAPI: BaseAPI {
         
         self.get(resource: "/users/ledger",
                  params: nil,
-                 onSuccess: onSuccess,
+                 onSuccess: { (apiParams) in
+                    guard let data = apiParams?["data"] as? [String: Any] else {
+                        onFailure?(nil)
+                        return
+                    }
+                    onSuccess?(data)
+        },
                  onFailure: onFailure)
     }
 }

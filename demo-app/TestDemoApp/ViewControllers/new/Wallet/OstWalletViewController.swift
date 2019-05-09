@@ -38,6 +38,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var shouldLoadNextPage: Bool = true
     var isApiCallInProgress: Bool = false
     
+    var isFetchingUserBalance: Bool = false
+    var isFetchingUserTransactions: Bool = false
+    
+    var userBalanceDetails: [String: Any] = [String: Any]()
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
@@ -50,11 +54,12 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUserBalance()
+        fetchUserTransactionData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         self.tabbarController?.showTabBar()
     }
 
@@ -131,6 +136,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         switch indexPath.section {
         case 0:
             let valueCell = tableView.dequeueReusableCell(withIdentifier: WalletValueTableViewCell.cellIdentifier, for: indexPath) as! WalletValueTableViewCell
+            valueCell.userBalanceDetails = userBalanceDetails
             cell = valueCell as BaseTableViewCell
             cell.endDisplay()
             
@@ -138,22 +144,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             let tansactionCell: TransactionTableViewCell = tableView.dequeueReusableCell(withIdentifier: TransactionTableViewCell.transactionCellIdentifier, for: indexPath) as! TransactionTableViewCell
             
             if self.tableDataArray.count > indexPath.row {
-                //                let transactionDetails = self.tableDataArray[indexPath.row]
-                //                tansactionCell.userData = transactionDetails
-                //                if let appUserId = ConversionHelper.toString(transactionDetails["app_user_id"]) {
-                ////                    tansactionCell.userBalance = self.userBalances[appUserId] as? [String: Any] ?? [:]
-                //                }else {
-                ////                    tansactionCell = [:]
-                //                }
-                
-                //                tansactionCell.sendButtonAction = {[weak self] (userDetails) in
-                //                    if let strongSelf = self {
-                //                        strongSelf.sendButtonTapped(userDetails)
-                //                    }
-                //                }
-                
+                let transaction = self.tableDataArray[indexPath.row]
+                tansactionCell.transactionData = transaction
             }else {
-                
+                tansactionCell.transactionData = [:]
             }
             
             cell = tansactionCell
@@ -223,14 +217,15 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
-        self.fetchUserBalance(hardRefresh: true)
+        self.fetchUserTransactionData(hardRefresh: true)
     }
     
     func reloadDataIfNeeded() {
         
         let isScrolling: Bool = (self.walletTableView.isDragging) || (self.walletTableView.isDecelerating)
         
-        if !isScrolling && self.isNewDataAvailable {
+        if !isScrolling && self.isNewDataAvailable
+            && !isFetchingUserTransactions  && !isFetchingUserBalance {
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
@@ -244,8 +239,13 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
     }
     
-    func fetchUserBalance(hardRefresh: Bool = false) {
-        if isApiCallInProgress {
+    func fetchUserTransactionData(hardRefresh: Bool = false) {
+        fetchUserTransaction(hardRefresh: hardRefresh)
+        fetchUserBalance(hardRefresh: hardRefresh)
+    }
+    
+    func fetchUserTransaction(hardRefresh: Bool = false) {
+        if isFetchingUserTransactions {
             reloadDataIfNeeded()
             return
         }
@@ -256,12 +256,70 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             reloadDataIfNeeded()
             return
         }
-        isApiCallInProgress = true
-        UserAPI.getBalance(onSuccess: { (apiResponse) in
+        isFetchingUserTransactions = true
+        TransactionAPI.getTransactionLedger(onSuccess: {[weak self] (apiResponse) in
+            self?.onTransactionFetchSuccess(apiResponse: apiResponse)
             
-        }) { (apiError) in
-            
+        }) {[weak self] (ApiError) in
+            self?.isFetchingUserTransactions = false
+            self?.reloadDataIfNeeded()
         }
     }
     
+    func onTransactionFetchSuccess(apiResponse: [String: Any]?) {
+        self.isFetchingUserTransactions = false
+        guard let transactonData = apiResponse else {return}
+        meta = transactonData["meta"] as? [String: Any] ?? [:]
+        
+        guard let resultType = transactonData["result_type"] as? String else {return}
+        guard let transactions = transactonData[resultType] as? [[String: Any]] else {return}
+        
+        var transferArray = [[String: Any]]()
+        for transaction in transactions {
+            let transfers = transaction["transfers"] as! [[String: Any]]
+            for transfer in transfers {
+                var trasferData = transfer
+                
+                let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
+                let fromUserId = trasferData["from_user_id"] as! String
+                let toUserId = trasferData["to_user_id"] as! String
+
+                if [fromUserId, toUserId].contains(currentUserOstId) {
+                    trasferData["meta_property"] = transaction["meta_property"]
+                    trasferData["block_timestamp"] = transaction["block_timestamp"]
+                    trasferData["rule_name"] = transaction["rule_name"]
+                    transferArray.append(trasferData)
+                }
+            }
+        }
+        
+        tableDataArray.append(contentsOf: transferArray)
+        
+        self.isNewDataAvailable = true
+        reloadDataIfNeeded()
+    }
+    
+    func fetchUserBalance(hardRefresh: Bool = false) {
+        if isFetchingUserBalance {
+            reloadDataIfNeeded()
+            return
+        }
+        isFetchingUserBalance = true
+        UserAPI.getBalance(onSuccess: {[weak self] (apiResponse) in
+            self?.onBalanceFetchSuccess(apiResponse: apiResponse)
+        }) {[weak self] (apiError) in
+            self?.isFetchingUserBalance = false
+            self?.reloadDataIfNeeded()
+        }
+    }
+    
+    func onBalanceFetchSuccess(apiResponse: [String: Any]?) {
+        isFetchingUserBalance = false
+        if nil == apiResponse {return}
+        
+        userBalanceDetails = apiResponse!
+        
+        self.isNewDataAvailable = true
+        reloadDataIfNeeded()
+    }
 }

@@ -7,12 +7,25 @@
 //
 
 import UIKit
+import OstWalletSdk
 
 class WalletValueTableViewCell: BaseTableViewCell {
     
     static var cellIdentifier: String {
         return String(describing: WalletValueTableViewCell.self)
     }
+    
+    var userBalanceDetails: [String: Any]! {
+        didSet {
+            if let availabelBalance = userBalanceDetails["available_balance"] {
+                let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
+                self.btValueLabel?.text = amountVal
+            }else {
+                self.btValueLabel?.text = ""
+            }
+        }
+    }
+    
     //MAKR: - Components
     var walletBackground: UIView?
     var valueContainer: UIView?
@@ -57,7 +70,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let btLabel = UILabel()
         btLabel.font = OstFontProvider().get(size: 32).bold()
         btLabel.textColor = UIColor.white
-        btLabel.text = "SPOO 90.00"
         self.btValueLabel = btLabel
         self.valueContainer?.addSubview(btLabel)
     }
@@ -66,7 +78,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let usdLabel = UILabel()
         usdLabel.font = OstFontProvider().get(size: 16)
         usdLabel.textColor = UIColor.white
-        usdLabel.text = "~ $9.00"
         self.usdValueLabel = usdLabel
         self.valueContainer?.addSubview(usdLabel)
     }
@@ -122,9 +133,14 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var diff: Double?
     
     func animate() {
-        diff = endValue - startValue
-        startTime = Date()
-        displayLink?.add(to: .current, forMode: .default)
+        if let availabelBalance = userBalanceDetails["available_balance"] {
+            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
+
+            endValue = Double(amountVal)!
+            diff = endValue - startValue
+            startTime = Date()
+            displayLink?.add(to: .current, forMode: .default)
+        }
     }
     
     @objc func counter() {
@@ -132,13 +148,13 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if elapsedTime > maxDuration {
             displayLink?.invalidate()
             displayLink = nil
-            let finalVal = String(format: "%.2f", endValue)
+            let finalVal = String(format: "%.5f", endValue)
             self.btValueLabel?.text = "SPOO \(finalVal)"
             return
         }
         let percent = elapsedTime/maxDuration
         let value = startValue + (percent * diff!)
-        let finalVal = String(format: "%.2f", value)
+        let finalVal = String(format: "%.5f", value)
         self.btValueLabel?.text = "SPOO \(finalVal)"
     }
 }

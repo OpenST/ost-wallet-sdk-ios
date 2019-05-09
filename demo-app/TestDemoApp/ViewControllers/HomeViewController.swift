@@ -135,7 +135,7 @@ class HomeViewController: UICollectionViewController {
 //    let layout = UICollectionViewFlowLayout();
 //    let userActionsViewController = UserActionsViewController(collectionViewLayout: layout);
 //    self.present(userActionsViewController, animated: true, completion: nil);
-    let options = OptionsViewController()
+    let options = TabBarViewController()
     options.presentViewControllerWithNavigationController(self);
   }
   
