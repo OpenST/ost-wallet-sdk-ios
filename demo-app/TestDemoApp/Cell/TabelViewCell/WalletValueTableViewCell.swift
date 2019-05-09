@@ -61,6 +61,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     func createValueContainer() {
         let container = UIView()
         container.backgroundColor = .clear
+        container.clipsToBounds = true
         
         self.valueContainer = container
         self.addSubview(container)
@@ -69,6 +70,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     func crateBtValueLabel() {
         let btLabel = UILabel()
         btLabel.font = OstFontProvider().get(size: 32).bold()
+        btLabel.textAlignment = .center
         btLabel.textColor = UIColor.white
         self.btValueLabel = btLabel
         self.valueContainer?.addSubview(btLabel)
@@ -78,6 +80,8 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let usdLabel = UILabel()
         usdLabel.font = OstFontProvider().get(size: 16)
         usdLabel.textColor = UIColor.white
+        usdLabel.textAlignment = .center
+        usdLabel.text = "123"
         self.usdValueLabel = usdLabel
         self.valueContainer?.addSubview(usdLabel)
     }
@@ -103,6 +107,8 @@ class WalletValueTableViewCell: BaseTableViewCell {
     func applyValueContainerConstraints() {
         guard let parent = self.valueContainer?.superview else {return}
         self.valueContainer?.translatesAutoresizingMaskIntoConstraints = false
+        self.valueContainer?.leftAnchor.constraint(equalTo: self.walletBackground!.leftAnchor, constant: 12.0).isActive = true
+        self.valueContainer?.rightAnchor.constraint(equalTo: self.walletBackground!.rightAnchor, constant: -12.0).isActive = true
         self.valueContainer?.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         self.valueContainer?.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         self.valueContainer?.bottomAnchor.constraint(equalTo: self.usdValueLabel!.bottomAnchor).isActive = true
@@ -112,14 +118,16 @@ class WalletValueTableViewCell: BaseTableViewCell {
         guard let parent = self.btValueLabel?.superview else {return}
         self.btValueLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.btValueLabel?.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-        self.btValueLabel?.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        self.btValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true
+        self.btValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
     }
     
     func applyUSDValueLabelConstraint() {
         guard let parent = self.usdValueLabel?.superview else {return}
         self.usdValueLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.usdValueLabel?.topAnchor.constraint(equalTo: self.btValueLabel!.bottomAnchor, constant: 10.0).isActive = true
-        self.usdValueLabel?.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        self.usdValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true
+        self.usdValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
     }
     
     override func endDisplay() {
@@ -148,13 +156,13 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if elapsedTime > maxDuration {
             displayLink?.invalidate()
             displayLink = nil
-            let finalVal = String(format: "%.5f", endValue)
+            let finalVal = String(format: "%g", endValue)
             self.btValueLabel?.text = "SPOO \(finalVal)"
             return
         }
         let percent = elapsedTime/maxDuration
         let value = startValue + (percent * diff!)
-        let finalVal = String(format: "%.5f", value)
+        let finalVal = String(format: "%g", value)
         self.btValueLabel?.text = "SPOO \(finalVal)"
     }
 }
