@@ -71,6 +71,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let btLabel = UILabel()
         btLabel.font = OstFontProvider().get(size: 32).bold()
         btLabel.textAlignment = .center
+        btLabel.minimumScaleFactor = 0.5
         btLabel.textColor = UIColor.white
         self.btValueLabel = btLabel
         self.valueContainer?.addSubview(btLabel)

@@ -211,7 +211,7 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
         
         progressIndicator?.show()
         let tokenHolderAddress = userDetails["token_holder_address"] as! String
-        OstWalletSdk.executeTransaction(userId: CurrentUser.getInstance().ostUserId!,
+        OstWalletSdk.executeTransaction(userId: CurrentUserModel.getInstance.ostUserId!,
                                         tokenHolderAddresses: [tokenHolderAddress],
                                         amounts: [amountToTransferStr],
                                         transactionType: ruleType,
@@ -260,11 +260,11 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.close()
+//        progressIndicator?.close()
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.close()
+//        progressIndicator?.close()
     }
 }

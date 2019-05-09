@@ -25,17 +25,17 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     }()
     var spendingLimitTestFieldController: MDCTextInputControllerOutlined? = nil
     
-//    var spendingUnitTextField: MDCTextField = {
-//        let textField = MDCTextField()
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        textField.clearButtonMode = .unlessEditing
-//        textField.placeholderLabel.text = "Unit"
-//        textField.text = "Atto BT";
-//        textField.font = OstFontProvider().get(size: 15)
-//        textField.clearButtonMode = UITextField.ViewMode.never
-//        return textField
-//    }()
-//    var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
+    var spendingUnitTextField: MDCTextField = {
+        let textField = MDCTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clearButtonMode = .unlessEditing
+        textField.placeholderLabel.text = "Unit"
+        textField.text = "Atto BT";
+        textField.font = OstFontProvider().get(size: 15)
+        textField.clearButtonMode = UITextField.ViewMode.never
+        return textField
+    }()
+    var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
     
     var expiresAfterSelectedIndex:Int = DEFAULT_SESSION_EXPIRES_IN;
     var expiresAfterTextField: MDCTextField = {
@@ -103,6 +103,7 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
         
         addSubview(spendingLimitTestField)
         addSubview(expiresAfterTextField)
+        addSubview(spendingUnitTextField)
         addSubview(createSessionButton)
         addSubview(cancelButton)
     }
@@ -110,6 +111,7 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     func setupTextFields() {
         self.spendingLimitTestFieldController = MDCTextInputControllerOutlined(textInput: spendingLimitTestField)
         self.expirationHeightTextFieldController = MDCTextInputControllerOutlined(textInput: expiresAfterTextField)
+        self.spendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: spendingUnitTextField)
         
         self.spendingLimitTestFieldController!.placeholderText = "Spending Limit"
         self.spendingLimitTestField.keyboardType = .numberPad
@@ -117,7 +119,10 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
         self.expirationHeightTextFieldController!.placeholderText = "Expiration Height"
         self.expiresAfterTextField.keyboardType = .numberPad
         
+        self.spendingUnitTextFieldController!.placeholderText = "Unit"
+        
         self.expiresAfterTextField.delegate = self;
+        self.spendingUnitTextField.delegate = self;
     }
     
     func setupComponents() {
@@ -132,6 +137,7 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
         addSpendingLimitConstraints()
+        addSpendingUitTFConstraints()
         addExpiresAfterConstraitns()
         addCreateSessionButtonConstraints()
         addCancelButtonConstraints()
@@ -143,7 +149,14 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     
     func addSpendingLimitConstraints() {
         spendingLimitTestField.placeBelow(toItem: leadLabel)
-        spendingLimitTestField.applyBlockElementConstraints()
+        spendingLimitTestField.leftAlignWithParent(multiplier: 1, constant: 20)
+    }
+    
+    func addSpendingUitTFConstraints() {
+        spendingUnitTextField.placeBelow(toItem: leadLabel)
+        spendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
+        spendingUnitTextField.setW375Width(width: 80)
+        spendingUnitTextField.leftWithRightAlign(toItem: spendingLimitTestField, multiplier: 1, constant: 20)
     }
     
     func addExpiresAfterConstraitns() {
@@ -164,7 +177,9 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     
     //MARK: - Text Field Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        showExpiresAfterActionSheet();
+        if textField == self.expiresAfterTextField {
+            showExpiresAfterActionSheet();
+        }
         return false;
     }
     
