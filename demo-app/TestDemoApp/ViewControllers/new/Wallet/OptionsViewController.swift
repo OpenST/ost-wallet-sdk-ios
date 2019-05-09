@@ -163,7 +163,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell: OptionTableViewCell = tableView.cellForRow(at: indexPath) as! OptionTableViewCell
-        processSelectedOption(cell.option)
+        
+        let isEnable = cell.option.isEnable
+        if isEnable {
+            processSelectedOption(cell.option)
+        }
     }
     
     func createGeneralOptionsArray() {
@@ -265,6 +269,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
                                                     passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                     presenter: self)
+            self.tabbarController?.hideTabBar()
+            return
+        }
+        
+        else if option.type == .abortRecovery {
+            _ = OstSdkInteract.getInstance.aboutDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                               passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                               presenter: self)
+            self.tabbarController?.hideTabBar()
             return
         }
         

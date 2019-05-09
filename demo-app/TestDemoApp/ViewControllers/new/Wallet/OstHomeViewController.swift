@@ -42,6 +42,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     var isApiCallInProgress: Bool = false
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
+    
+    var updatedDataArray: [[String: Any]] = [[String: Any]]()
     var userBalances: [String: Any] = [String: Any]()
     var meta: [String: Any]? = nil
     
@@ -53,7 +55,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUsers()
+        fetchUsers(hardRefresh: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -223,6 +225,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         let isScrolling: Bool = (self.usersTableView.isDragging) || (self.usersTableView.isDecelerating)
         
         if !isScrolling && self.isNewDataAvailable {
+            tableDataArray = updatedDataArray
+            
             self.usersTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
@@ -249,9 +253,6 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if tableDataArray.count > 55 {
-            return
-        }
         if !self.isNewDataAvailable
             && self.shouldLoadNextPage
             && scrollView.panGestureRecognizer.translation(in: scrollView.superview!).y < 0 {
@@ -282,15 +283,21 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             reloadDataIfNeeded()
             return
         }
+        
+        var nextPagePayload: [String: Any]? = nil
         if hardRefresh {
             meta = nil
-            tableDataArray = []
-        }else if nil != meta && meta!.isEmpty {
-            reloadDataIfNeeded()
-            return
+            updatedDataArray = []
+        } else {
+            nextPagePayload = getNextPagePayload()
+            if nil == nextPagePayload {
+                reloadDataIfNeeded()
+                return
+            }
         }
+        
         isApiCallInProgress = true
-        UserAPI.getUsers(meta: meta, onSuccess: {[weak self] (apiResponse) in
+        UserAPI.getUsers(meta: nextPagePayload, onSuccess: {[weak self] (apiResponse) in
                 if let strongSelf = self {
                     strongSelf.onFetchUserSuccess(apiResponse)
                 }
@@ -299,6 +306,16 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                     strongSelf.isApiCallInProgress = false
                 }
         })
+    }
+    
+    func getNextPagePayload() -> [String: Any]? {
+        guard let nextPagePayload = meta?["next_page_payload"] as? [String: Any] else {
+            return nil
+        }
+        if nextPagePayload.isEmpty {
+            return nil
+        }
+        return nextPagePayload
     }
     
     func onFetchUserSuccess(_ apiResponse: [String: Any]?) {
@@ -313,7 +330,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         meta = data["meta"] as? [String: Any]
 //        guard let resultType = data["result_type"] as? String else {return}
         guard let users = data["users"] as? [[String: Any]] else {return}
-        tableDataArray.append(contentsOf: users)
+        updatedDataArray.append(contentsOf: users)
         self.isNewDataAvailable = true
 
         reloadDataIfNeeded()
@@ -326,6 +343,4 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         tabbarController?.hideTabBar()
         sendTokendsVC.pushViewControllerOn(self, animated: true)
     }
-    
-    
 }

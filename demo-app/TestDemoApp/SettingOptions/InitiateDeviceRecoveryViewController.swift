@@ -45,19 +45,4 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
     override func actionButtonTapped(_ entity: [String: Any]) {
         initiateDeviceRecovery(entity: entity)
     }
-    
-    func initiateDeviceRecovery(entity: [String: Any]) {
-        progressIndicator?.progressText = "Initiate device recovery initiated..."
-//        progressIndicator?.show()
-//        OstWalletSdk.initiateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-//                                            recoverDeviceAddress: entity["address"] as! String,
-//                                            userPin: "123456",
-//                                            passphrasePrefix: CurrentUserModel.getInstance.userPinSalt!,
-//                                            delegate: self.workflowDelegate)
-        
-        _ = OstSdkInteract.getInstance.initateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                             passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                             presenter: self,
-                                                             recoverDeviceAddress: entity["address"] as! String)
-    }
 }

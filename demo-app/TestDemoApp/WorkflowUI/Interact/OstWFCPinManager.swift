@@ -24,7 +24,7 @@ extension OstWorkflowCallbacks {
         vc.present(navC, animated: true, completion: nil)
     }
     
-    public func cleanUpPinViewController() {
+    @objc public func cleanUpPinViewController() {
         self.getPinViewController?.dismiss(animated: true);
         self.sdkPinAcceptDelegate = nil;
         self.getPinViewController = nil;
@@ -65,7 +65,7 @@ extension OstWorkflowCallbacks {
         self.hideLoader();
     }
     
-    func dismissPinViewController() {
+    @objc func dismissPinViewController() {
         self.getPinViewController?.dismiss(animated: true);
         self.getPinViewController = nil;
     }

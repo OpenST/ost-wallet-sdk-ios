@@ -208,7 +208,7 @@ class CreateSessionViewController: BaseSettingOptionsViewController, UITextField
     
     //MARK: - Action
     @objc func createSessionButtonTapped(_ sender: Any?) {
-        progressIndicator?.show()
+//        progressIndicator?.show()
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
         OstWalletSdk.addSession(userId: CurrentUser.getInstance().ostUserId!,
                                 spendingLimit: self.spendingLimitTestField.text ?? "",

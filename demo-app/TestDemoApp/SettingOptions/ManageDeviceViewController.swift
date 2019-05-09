@@ -237,6 +237,9 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let status = entity["status"] as! String
         switch status.lowercased() {
         case DeviceStatus.authorized.rawValue:
+            if CurrentUserModel.getInstance.userDevice?.isStatusRegistered ?? false{
+                initiateDeviceRecovery(entity: entity)
+            }
             return
         case DeviceStatus.revoked.rawValue:
             return
@@ -246,23 +249,24 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
             abortDeviceRecovery()
             return
         case DeviceStatus.registered.rawValue:
-            showAuthorizedDevices()
+            return
         default:
             return
         }
     }
     
-    func showAuthorizedDevices() {
-        let intiateDeviceVC = InitiateDeviceRecoveryViewController()
-        intiateDeviceVC.pushViewControllerOn(self, animated: true)
+    func initiateDeviceRecovery(entity: [String: Any]) {
+        _ = OstSdkInteract.getInstance.initateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                             passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                             presenter: self,
+                                                             recoverDeviceAddress: entity["address"] as! String)
     }
     
     func abortDeviceRecovery() {
         progressIndicator?.progressText = "Abort device recovery initiated..."
-        progressIndicator?.show()
-        OstWalletSdk.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                         userPin: "123456",
-                                         passphrasePrefix: CurrentUserModel.getInstance.userPinSalt!,
-                                         delegate: self.workflowDelegate)
+//        progressIndicator?.show()
+       _ = OstSdkInteract.getInstance.aboutDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                          passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                          presenter: self)
     }
 }

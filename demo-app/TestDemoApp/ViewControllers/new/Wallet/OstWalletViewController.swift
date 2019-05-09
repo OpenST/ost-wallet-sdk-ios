@@ -42,7 +42,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var isFetchingUserTransactions: Bool = false
     
     var userBalanceDetails: [String: Any] = [String: Any]()
+    
     var tableDataArray: [[String: Any]] = [[String: Any]]()
+    
+    var updatedDataArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
     var paginationTriggerPageNumber = 1
@@ -54,7 +57,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUserTransactionData()
+        fetchUserWalletData(hardRefresh: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -215,9 +218,46 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         return container
     }
     
+    //MARK: - Scroll View Delegate
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.reloadDataIfNeeded()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.reloadDataIfNeeded()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if !self.isNewDataAvailable
+            && self.shouldLoadNextPage
+            && scrollView.panGestureRecognizer.translation(in: scrollView.superview!).y < 0 {
+            
+            if (shouldRequestPaginationData(isUpDirection: false,
+                                            andTargetPoint: targetContentOffset.pointee.y)) {
+                
+                self.shouldLoadNextPage = false
+                fetchUserTransaction()
+            }
+        }
+    }
+    
+    func shouldRequestPaginationData(isUpDirection: Bool = false,
+                                     andTargetPoint targetPoint: CGFloat) -> Bool {
+        
+        let triggerPoint: CGFloat = CGFloat(self.paginationTriggerPageNumber) * self.walletTableView.frame.size.height
+        if (isUpDirection) {
+            return targetPoint <= triggerPoint
+        }else {
+            return targetPoint >= (self.walletTableView.contentSize.height - triggerPoint)
+        }
+    }
+    
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
-        self.fetchUserTransactionData(hardRefresh: true)
+        self.fetchUserWalletData(hardRefresh: true)
     }
     
     func reloadDataIfNeeded() {
@@ -226,6 +266,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         if !isScrolling && self.isNewDataAvailable
             && !isFetchingUserTransactions  && !isFetchingUserBalance {
+            tableDataArray = updatedDataArray
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
@@ -239,7 +280,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
     }
     
-    func fetchUserTransactionData(hardRefresh: Bool = false) {
+    func fetchUserWalletData(hardRefresh: Bool = false) {
         fetchUserTransaction(hardRefresh: hardRefresh)
         fetchUserBalance(hardRefresh: hardRefresh)
     }
@@ -249,12 +290,16 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             reloadDataIfNeeded()
             return
         }
+        var nextPagePayload: [String: Any]? = nil
         if hardRefresh {
             meta = nil
-            tableDataArray = []
-        }else if nil != meta && meta!.isEmpty {
-            reloadDataIfNeeded()
-            return
+            updatedDataArray = []
+        } else {
+            nextPagePayload = getNextPagePayload()
+            if nil == nextPagePayload {
+                reloadDataIfNeeded()
+                return
+            }
         }
         isFetchingUserTransactions = true
         TransactionAPI.getTransactionLedger(onSuccess: {[weak self] (apiResponse) in
@@ -264,6 +309,16 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             self?.isFetchingUserTransactions = false
             self?.reloadDataIfNeeded()
         }
+    }
+    
+    func getNextPagePayload() -> [String: Any]? {
+        guard let nextPagePayload = meta?["next_page_payload"] as? [String: Any] else {
+            return nil
+        }
+        if nextPagePayload.isEmpty {
+            return nil
+        }
+        return nextPagePayload
     }
     
     func onTransactionFetchSuccess(apiResponse: [String: Any]?) {
@@ -293,7 +348,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             }
         }
         
-        tableDataArray.append(contentsOf: transferArray)
+        updatedDataArray.append(contentsOf: transferArray)
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()

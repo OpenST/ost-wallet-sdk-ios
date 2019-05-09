@@ -19,7 +19,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         didSet {
             if let availabelBalance = userBalanceDetails["available_balance"] {
                 let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-                self.btValueLabel?.text = "Balance: \(amountVal)"
+                self.btValueLabel?.text = "Balance: \(String(format: "%g", Double(amountVal)!))"
             }else {
                 self.btValueLabel?.text = ""
             }
@@ -124,7 +124,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
     }
     
     func applyUSDValueLabelConstraint() {
-        guard let parent = self.usdValueLabel?.superview else {return}
         self.usdValueLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.usdValueLabel?.topAnchor.constraint(equalTo: self.btValueLabel!.bottomAnchor, constant: 10.0).isActive = true
         self.usdValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true

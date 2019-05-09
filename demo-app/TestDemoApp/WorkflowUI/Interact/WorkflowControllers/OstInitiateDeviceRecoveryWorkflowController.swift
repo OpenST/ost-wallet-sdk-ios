@@ -15,7 +15,6 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     
     let recoverDeviceAddress: String
     /// Mark - View Controllers.
-    var setPinViewController:OstSetNewPinViewController? = nil;
     
     init(userId: String,
          passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
@@ -24,14 +23,14 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
        
         self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
-        self.setPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
+        self.getPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
         
         if ( nil == presenter.navigationController ) {
-            self.setPinViewController!.presentViewControllerWithNavigationController(presenter);
+            self.getPinViewController!.presentViewControllerWithNavigationController(presenter);
         } else {
             //Push into existing navigation controller.
-            self.setPinViewController!.pushViewControllerOn( presenter.navigationController! );
+            self.getPinViewController!.pushViewControllerOn( presenter.navigationController! );
         }
     }
     
@@ -41,7 +40,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
        if ( notification.object is OstSetNewPinViewController ) {
-            self.setPinViewController = nil;
+            self.getPinViewController = nil;
             //The workflow has been cancled by user.
             
             self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
@@ -79,12 +78,21 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
         passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
     }
     
+    override func dismissPinViewController() {
+        
+    }
+    
+    public override func cleanUpPinViewController() {
+        self.sdkPinAcceptDelegate = nil;
+    }
+    
+    
     override func cleanUp() {
         super.cleanUp();
-        if ( nil != self.setPinViewController ) {
-            self.setPinViewController?.removeViewController();
+        if ( nil != self.getPinViewController ) {
+            self.getPinViewController?.removeViewController();
         }
-        self.setPinViewController = nil;
+        self.getPinViewController = nil;
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
     }

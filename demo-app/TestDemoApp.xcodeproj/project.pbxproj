@@ -240,9 +240,9 @@
 		4BA4CB14227F466300A623ED /* WalletValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */; };
 		4BA4CB15227F466300A623ED /* WalletValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */; };
 		4BA4CB16227F466300A623ED /* WalletValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */; };
-		4BA4CB18228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
-		4BA4CB19228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
-		4BA4CB1A228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */; };
+		4BA4CB18228006F900A623ED /* CreateSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */; };
+		4BA4CB19228006F900A623ED /* CreateSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */; };
+		4BA4CB1A228006F900A623ED /* CreateSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */; };
 		4BA4CB6A2280B4C600A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
 		4BA4CB6B2280B4C900A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
 		4BA4CB6C2280B4CA00A623ED /* TransactionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB692280B4C600A623ED /* TransactionAPI.swift */; };
@@ -283,6 +283,9 @@
 		4BA4CB9622846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
 		4BA4CB9722846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
 		4BA4CB9822846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
+		4BA4CB9A228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -441,7 +444,7 @@
 		4BA4CB0F227DF31600A623ED /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversion+Helper.swift"; sourceTree = "<group>"; };
 		4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletValueTableViewCell.swift; sourceTree = "<group>"; };
-		4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionViewControllerr.swift; sourceTree = "<group>"; };
+		4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionViewController.swift; sourceTree = "<group>"; };
 		4BA4CB692280B4C600A623ED /* TransactionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAPI.swift; sourceTree = "<group>"; };
 		4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserModel.swift; sourceTree = "<group>"; };
 		4BA4CB8122828EE500A623ED /* DeviceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAPI.swift; sourceTree = "<group>"; };
@@ -450,6 +453,7 @@
 		4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateDeviceRecoveryViewController.swift; sourceTree = "<group>"; };
 		4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
 		4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRestPinWorkflowController.swift; sourceTree = "<group>"; };
+		4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -651,6 +655,7 @@
 				00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */,
 				4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */,
 				4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */,
+				4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */,
 			);
 			path = WorkflowControllers;
 			sourceTree = "<group>";
@@ -746,7 +751,7 @@
 				4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */,
 				4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */,
 				4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */,
-				4BA4CB17228006F900A623ED /* CreateSessionViewControllerr.swift */,
+				4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */,
 				4BA4CB852282AFC100A623ED /* ManageDeviceViewController.swift */,
 				4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */,
 			);
@@ -1395,7 +1400,7 @@
 				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
 				4B464FB6227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
-				4BA4CB18228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */,
+				4BA4CB18228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				4BA4CB14227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B9E7377227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
@@ -1450,6 +1455,7 @@
 				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
 				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
 				4BA4CB03227DA56A00A623ED /* UserAPI.swift in Sources */,
+				4BA4CB9A228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
 				4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */,
 				4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */,
 				4B464F42227A0CA200F1F4AF /* QRScannerViewController.swift in Sources */,
@@ -1541,7 +1547,7 @@
 				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
-				4BA4CB19228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */,
+				4BA4CB19228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
@@ -1559,6 +1565,7 @@
 				4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464FB1227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
+				4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
 				00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 			);
@@ -1631,7 +1638,7 @@
 				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,
-				4BA4CB1A228006F900A623ED /* CreateSessionViewControllerr.swift in Sources */,
+				4BA4CB1A228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
@@ -1649,6 +1656,7 @@
 				4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464FB2227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
+				4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
 				00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 			);

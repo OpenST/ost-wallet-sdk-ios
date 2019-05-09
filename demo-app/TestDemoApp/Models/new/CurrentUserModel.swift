@@ -31,8 +31,8 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
         
-        OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
-                                 tokenId: CurrentUserModel.getInstance.tokenId!,
+        OstWalletSdk.setupDevice(userId: self.ostUserId!,
+                                 tokenId: self.tokenId!,
                                  forceSync:true,
                                  delegate: workflowCallback);
     }
@@ -161,5 +161,9 @@ extension CurrentUserModel {
             return ostUser?.getCurrentDevice()
         }
         return nil
+    }
+    
+    var status: String? {
+        return userDetails?["status"] as? String ?? nil
     }
 }

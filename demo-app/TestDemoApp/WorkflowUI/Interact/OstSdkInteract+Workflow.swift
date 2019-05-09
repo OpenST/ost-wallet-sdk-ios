@@ -58,4 +58,17 @@ extension OstSdkInteract {
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback)
         return callback;
     }
+    
+    public func aboutDeviceRecovery(userId: String,
+                                    passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                                    presenter:UIViewController) -> OstWorkflowDelegate {
+        let callback = OstAbortDeviceRecoveryWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate,
+            presenter: presenter
+        )
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback)
+        return callback;
+    }
 }
