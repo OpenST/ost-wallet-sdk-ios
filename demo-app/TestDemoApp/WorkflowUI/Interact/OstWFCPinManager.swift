@@ -68,6 +68,5 @@ extension OstWorkflowCallbacks {
     func dismissPinViewController() {
         self.getPinViewController?.dismiss(animated: true);
         self.getPinViewController = nil;
-        
     }
 }

@@ -19,7 +19,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         didSet {
             if let availabelBalance = userBalanceDetails["available_balance"] {
                 let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-                self.btValueLabel?.text = amountVal
+                self.btValueLabel?.text = "Balance: \(amountVal)"
             }else {
                 self.btValueLabel?.text = ""
             }

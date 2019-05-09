@@ -280,6 +280,9 @@
 		4BA4CB92228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB93228440CF00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB94228440D000A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB9622846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
+		4BA4CB9722846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
+		4BA4CB9822846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -446,6 +449,7 @@
 		4BA4CB892282B83300A623ED /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4CB8D22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateDeviceRecoveryViewController.swift; sourceTree = "<group>"; };
 		4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
+		4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRestPinWorkflowController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -646,6 +650,7 @@
 			children = (
 				00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */,
 				4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */,
+				4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */,
 			);
 			path = WorkflowControllers;
 			sourceTree = "<group>";
@@ -1381,6 +1386,7 @@
 				4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */,
 				4BF8FE182240FD1400519779 /* Users.swift in Sources */,
 				4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */,
+				4BA4CB9622846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */,
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B464F4E227AED2A00F1F4AF /* OstProgressIndicator.swift in Sources */,
@@ -1523,6 +1529,7 @@
 				4BA4CB8F22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6E2280B58B00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */,
+				4BA4CB9722846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */,
 				002EAF5F227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0E227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF412272052700B48F1D /* OstFontProvider.swift in Sources */,
@@ -1612,6 +1619,7 @@
 				4BA4CB9022832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB6D2280B58A00A623ED /* UserAPI.swift in Sources */,
 				4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */,
+				4BA4CB9822846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */,
 				002EAF60227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
 				4B464F0F227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
 				002EAF422272052700B48F1D /* OstFontProvider.swift in Sources */,

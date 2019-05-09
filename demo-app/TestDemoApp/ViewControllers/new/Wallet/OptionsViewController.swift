@@ -261,6 +261,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             destinationVC = InitiateDeviceRecoveryViewController()
         }
         
+        else if option.type == .resetPin {
+            _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                    presenter: self)
+            return
+        }
+        
         self.tabbarController?.hideTabBar()
         if nil == self.navigationController {
             let navC = UINavigationController(rootViewController: destinationVC!)

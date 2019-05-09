@@ -13,6 +13,9 @@ import OstWalletSdk;
 
 class OstSetNewPinViewController: OstGetPinViewController {
     
+    override func getNavBarTitle() -> String {
+        return "Enter New Pin";
+    }
     
     public override class func newInstance(pinInputDelegate:OstPinInputDelegate) -> OstSetNewPinViewController {
         let instance = OstSetNewPinViewController();

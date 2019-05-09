@@ -44,4 +44,18 @@ extension OstSdkInteract {
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback);
         return callback;
     }
+    
+    public func resetPin(userId: String,
+                         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                         presenter:UIViewController) -> OstWorkflowDelegate {
+        
+        let callback = OstRestPinWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate,
+            presenter: presenter
+        )
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback)
+        return callback;
+    }
 }

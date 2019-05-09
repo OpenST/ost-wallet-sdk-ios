@@ -35,6 +35,10 @@ class OstGetPinViewController: OstBaseScrollViewController {
         // Do any additional setup after loading the view.
     }
     
+    deinit {
+        
+    }
+    
     override func getNavBarTitle() -> String {
         return "Enter Pin";
     }

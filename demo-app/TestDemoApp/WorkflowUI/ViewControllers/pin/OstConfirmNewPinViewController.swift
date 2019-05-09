@@ -12,6 +12,12 @@ import UIKit
 import OstWalletSdk;
 
 class OstConfirmNewPinViewController: OstGetPinViewController {
+    
+    override func getNavBarTitle() -> String {
+        return "Confirm Pin";
+    }
+    
+    
     public override class func newInstance(pinInputDelegate:OstPinInputDelegate) -> OstConfirmNewPinViewController {
         let instance = OstConfirmNewPinViewController();
         setEssentials(instance: instance, pinInputDelegate: pinInputDelegate);
