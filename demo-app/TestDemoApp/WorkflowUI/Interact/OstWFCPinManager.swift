@@ -25,7 +25,7 @@ extension OstWorkflowCallbacks {
     }
     
     @objc public func cleanUpPinViewController() {
-        self.getPinViewController?.dismiss(animated: true);
+        self.getPinViewController?.removeViewController()
         self.sdkPinAcceptDelegate = nil;
         self.getPinViewController = nil;
     }
@@ -50,7 +50,7 @@ extension OstWorkflowCallbacks {
         self.sdkPinAcceptDelegate?.pinEntered(self.userPin!, passphrasePrefix: passphrase);
         self.sdkPinAcceptDelegate = nil;
         self.userPin = nil;
-        self.showLoader();
+        self.showLoader(progressText: "Processing...");
     }
     
     func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
@@ -60,13 +60,13 @@ extension OstWorkflowCallbacks {
     }
     
     func invalidPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.getPinViewController!.showInvalidPin();
+        self.getPinViewController!.showInvalidPin(errorMessage: "Invalid entered pin, Retry again.");
         self.sdkPinAcceptDelegate = delegate;
         self.hideLoader();
     }
     
     @objc func dismissPinViewController() {
-        self.getPinViewController?.dismiss(animated: true);
+        self.getPinViewController?.removeViewController()
         self.getPinViewController = nil;
     }
 }

@@ -1,17 +1,16 @@
-/*
- Copyright © 2019 OST.com Inc
- 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- 
- http://www.apache.org/licenses/LICENSE-2.0
- */
+//
+//  BaseSettingOptionsViewController.swift
+//  TestDemoApp
+//
+//  Created by aniket ayachit on 29/04/19.
+//  Copyright © 2019 aniket ayachit. All rights reserved.
+//
 
+import UIKit
 import Foundation
 import OstWalletSdk
 
-class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
+class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
     
     //MAKR: - Components
     let leadLabel: UILabel = {
@@ -45,7 +44,7 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
         addSubview(leadLabel)
         leadLabel.text = getLeadLabelText()
     }
-    
+   
     //MARK: - Add Constraints
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
@@ -61,8 +60,8 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         let message = """
-        \(getNavBarTitle()) flow interrupted.
-        \(error.errorMessage)
+            \(getNavBarTitle()) flow interrupted.
+            \(error.errorMessage)
         """
         progressIndicator?.progressText = message
     }
@@ -72,6 +71,6 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        progressIndicator?.progressText = "\(getNavBarTitle()) flow complete."
+         progressIndicator?.progressText = "\(getNavBarTitle()) flow complete."
     }
 }

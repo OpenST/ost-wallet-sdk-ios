@@ -51,7 +51,7 @@ class OstSdkInteract {
         return callback;
     }
     
-    func retainWorkflowCallback(callback:OstWorkflowCallbacks) {
+    func retainWorkflowCallback(callback: OstWorkflowCallbacks) {
         workflowCallbackList.append(callback);
     }
     

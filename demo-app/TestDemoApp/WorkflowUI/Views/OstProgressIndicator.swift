@@ -29,9 +29,6 @@ class OstProgressIndicator: OstBaseView {
     
     let progressTextLabel: UILabel =  OstUIKit.leadLabel()
     
-    //MARK: - Themer
-    var progressTextLabelThemer: OstLabelTheamer = OstTheme.leadLabel
-    
     //MARK: - Variables
     var progressText: String! {
         didSet {
@@ -41,19 +38,18 @@ class OstProgressIndicator: OstBaseView {
     
     //MARK: - Initializier
     init(progressText: String = "") {
-        self.progressText = progressText
+        progressTextLabel.text = progressText
         super.init(frame: .zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.progressText = ""
+        progressTextLabel.text = ""
         super.init(coder: aDecoder)
     }
     
     //MAKR: - Create Views
     override func createViews() {
         super.createViews()
-        self.alpha = 0.0
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.addSubview(containerView)
         
@@ -87,17 +83,23 @@ class OstProgressIndicator: OstBaseView {
     }
     
     func show() {
-        if nil != self.superview {
-            self.superview?.bringSubviewToFront(self)
-            let screenFrame = UIScreen.main.bounds
-            self.frame = screenFrame
+        guard let paretn = self.superview else {return}
+        
+            paretn.bringSubviewToFront(self)
+            self.frame = paretn.bounds
             activityIndicator.startAnimating()
-            self.alpha = 1.0
+            self.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+            self.containerView.alpha = 0.0
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.containerView.alpha = 1.0
         }
     }
     
-    func close() {
-        self.superview?.sendSubviewToBack(self)
+    func hide() {
+        guard let paretn = self.superview else {return}
+        
+        paretn.sendSubviewToBack(self)
         self.alpha = 0.0
     }
 }

@@ -178,7 +178,6 @@ class SetupWalletView: BaseWalletWorkflowView {
         
         if workflowContext.workflowType == .activateUser {
             UserAPI.notifyUserActivated(onSuccess: { (apiReponse) in
-                CurrentUserModel.getInstance.userDetails = apiReponse
             }, onFailure: nil)
         }
         

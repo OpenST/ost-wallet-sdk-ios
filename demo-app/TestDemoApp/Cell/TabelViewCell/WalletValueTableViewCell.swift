@@ -17,12 +17,16 @@ class WalletValueTableViewCell: BaseTableViewCell {
     
     var userBalanceDetails: [String: Any]! {
         didSet {
-            if let availabelBalance = userBalanceDetails["available_balance"] {
-                let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-                self.btValueLabel?.text = "Balance: \(String(format: "%g", Double(amountVal)!))"
-            }else {
-                self.btValueLabel?.text = ""
-            }
+            let balance = CurrentUserModel.getInstance.balance
+            setValue(balance)
+        }
+    }
+    
+    func setValue(_ val: String) {
+        if let doubleVal:Double =  Double(val) {
+             self.btValueLabel?.text = "Balance: \(String(format: "%g",doubleVal))"
+        }else {
+            self.btValueLabel?.text = ""
         }
     }
     
@@ -141,10 +145,9 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var diff: Double?
     
     func animate() {
-        if let availabelBalance = userBalanceDetails["available_balance"] {
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-
-            endValue = Double(amountVal)!
+        let availabelBalance = CurrentUserModel.getInstance.balance
+        if !availabelBalance.isEmpty {
+            endValue = Double(availabelBalance)!
             diff = endValue - startValue
             startTime = Date()
             displayLink?.add(to: .current, forMode: .default)
@@ -156,13 +159,11 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if elapsedTime > maxDuration {
             displayLink?.invalidate()
             displayLink = nil
-            let finalVal = String(format: "%g", endValue)
-            self.btValueLabel?.text = "SPOO \(finalVal)"
+            setValue("\(endValue)")
             return
         }
         let percent = elapsedTime/maxDuration
         let value = startValue + (percent * diff!)
-        let finalVal = String(format: "%g", value)
-        self.btValueLabel?.text = "SPOO \(finalVal)"
+        setValue("\(value)")
     }
 }

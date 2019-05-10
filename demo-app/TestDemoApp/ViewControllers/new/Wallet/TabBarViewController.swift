@@ -23,7 +23,6 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
-        
         self.selectedViewController = viewControllers![1]
     }
     

@@ -41,8 +41,6 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var isFetchingUserBalance: Bool = false
     var isFetchingUserTransactions: Bool = false
     
-    var userBalanceDetails: [String: Any] = [String: Any]()
-    
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
@@ -139,7 +137,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         switch indexPath.section {
         case 0:
             let valueCell = tableView.dequeueReusableCell(withIdentifier: WalletValueTableViewCell.cellIdentifier, for: indexPath) as! WalletValueTableViewCell
-            valueCell.userBalanceDetails = userBalanceDetails
+            valueCell.userBalanceDetails = CurrentUserModel.getInstance.userBalanceDetails
             cell = valueCell as BaseTableViewCell
             cell.endDisplay()
             
@@ -372,7 +370,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         isFetchingUserBalance = false
         if nil == apiResponse {return}
         
-        userBalanceDetails = apiResponse!
+        CurrentUserModel.getInstance.userBalanceDetails = apiResponse
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()

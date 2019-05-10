@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var loginViewController: LoginViewController?
     var introViewController: IntroViewController?;
+    var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         do {
@@ -29,10 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
 
-//        introViewController = IntroViewController();
-//        window?.rootViewController = introViewController;
-//        window?.makeKeyAndVisible();
-//
+        introViewController = IntroViewController();
+        navigationController = UINavigationController(rootViewController: introViewController!)
+        window?.rootViewController = navigationController!;
+        window?.makeKeyAndVisible();
+
         IQKeyboardManager.shared.enable = true
 
     return true

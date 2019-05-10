@@ -11,7 +11,7 @@ import MaterialComponents
 import OstWalletSdk
 
 
-class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewController {
+class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewController {
     
     //MAKR: - Components
     let wordsTextView: MDCMultilineTextField = {
@@ -88,12 +88,12 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsViewControlle
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.close()
+        progressIndicator?.hide()
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.close()
+        progressIndicator?.hide()
 
     }
 }

@@ -23,7 +23,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     let workflowId: String
     let userId: String
     
-    weak var uiWindow: UIWindow? = nil
+    var uiWindow: UIWindow? = nil
     
     func getWindow() -> UIWindow{
         if nil == uiWindow {
@@ -35,6 +35,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         
         return uiWindow!
     }
+    
+    var progressIndicator: OstProgressIndicator? = nil
     
     private var interact: OstSdkInteract {
         return OstSdkInteract.getInstance
@@ -144,19 +146,22 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func cleanUp() {
+        progressIndicator?.hide()
         self.cleanUpPinViewController();
+        progressIndicator = nil
+        uiWindow = nil
     }
     
-    func showLoader() {
-        
+    func showLoader(progressText: String) {
+        progressIndicator = OstProgressIndicator(progressText: progressText)
+        let window = getWindow()
+        window.addSubview(progressIndicator!)
+        progressIndicator?.show()
     }
     
     func hideLoader() {
         
     }
-
-
-    
 }
 
 public extension UIAlertController {

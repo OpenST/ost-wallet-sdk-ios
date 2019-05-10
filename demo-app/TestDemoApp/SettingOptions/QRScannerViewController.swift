@@ -11,7 +11,7 @@ import AVFoundation
 import OstWalletSdk
 
 
-class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     //MARK: - Components
     var scanner: OstScannerView? = nil

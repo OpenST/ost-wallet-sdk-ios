@@ -11,7 +11,7 @@
 import UIKit
 import OstWalletSdk
 
-class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource {
+class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableViewDelegate, UITableViewDataSource {
     
     enum DeviceStatus: String {
         case authorized

@@ -162,6 +162,20 @@ extension UIView {
         }
     }
     
+    func bottomFromTopAlign(toItem:UIView,
+                     multiplier:CGFloat = 1, constant:CGFloat = 0,
+                     relatedBy: NSLayoutConstraint.Relation = .equal,
+                     addConstraintTo:UIView? = nil ) {
+        
+        constrinatHolder(constraintHolder:addConstraintTo, toItem: toItem)?
+            .addConstraint(NSLayoutConstraint(item: self,
+                                              attribute: .bottom,
+                                              relatedBy: relatedBy,
+                                              toItem: toItem,
+                                              attribute: .top,
+                                              multiplier: multiplier,
+                                              constant: constant));
+    }
     
     func bottomAlign(toItem:UIView,
                      multiplier:CGFloat = 1, constant:CGFloat = 0,

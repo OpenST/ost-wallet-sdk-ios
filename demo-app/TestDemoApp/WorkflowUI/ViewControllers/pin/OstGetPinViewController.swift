@@ -98,14 +98,20 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     var defaultErrorMessage = "Invalid Pin";
-    public func showInvalidPin(errorMessage:String? = nil) {
+    public func showInvalidPin(errorMessage: String? = nil) {
         self.resetView();
-        self.pinInput.becomeFirstResponder();
+        _ = self.pinInput.becomeFirstResponder()
         var errMsgToShow = self.defaultErrorMessage;
         if ( nil != errorMessage ) {
             errMsgToShow = errorMessage!;
         }
-        ///TODO - Show err message. UI missing.
+        
+        let alertController = UIAlertController(title: "Incorrect PIN", message: errMsgToShow, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            alertController.dismiss(animated: true, completion: nil)
+        }) )
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 
     /*

@@ -171,7 +171,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func createGeneralOptionsArray() {
-        let currentUser = CurrentUser.getInstance();
+        let currentUser = CurrentUserModel.getInstance;
         let userDevice = currentUser.userDevice!;
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
@@ -195,7 +195,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func createDeviceOptionsArray() {
-        let currentUser = CurrentUser.getInstance();
+        let currentUser = CurrentUserModel.getInstance;
         let userDevice = currentUser.userDevice!;
         
         var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
@@ -236,7 +236,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     
     func processSelectedOption(_ option: OptionVM) {
-        var destinationVC: BaseSettingOptionsViewController? = nil
+        var destinationVC: BaseSettingOptionsSVViewController? = nil
         if option.type == .viewMnemonics {
             destinationVC = DeviceMnemonicsViewController()
         }

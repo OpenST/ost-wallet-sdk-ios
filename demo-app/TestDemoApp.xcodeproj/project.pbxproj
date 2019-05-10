@@ -129,9 +129,9 @@
 		4B464EE322773ABB00F1F4AF /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EC722773ABA00F1F4AF /* Lato-Regular.ttf */; };
 		4B464EE422773ABB00F1F4AF /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EC722773ABA00F1F4AF /* Lato-Regular.ttf */; };
 		4B464EE522773ABB00F1F4AF /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B464EC722773ABA00F1F4AF /* Lato-Regular.ttf */; };
-		4B464EE822773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */; };
-		4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */; };
-		4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */; };
+		4B464EE822773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */; };
+		4B464EE922773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */; };
+		4B464EEA22773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */; };
 		4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
 		4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
 		4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */; };
@@ -232,9 +232,8 @@
 		4BA4CB01227DA52400A623ED /* BaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB00227DA52400A623ED /* BaseAPI.swift */; };
 		4BA4CB03227DA56A00A623ED /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB02227DA56A00A623ED /* UserAPI.swift */; };
 		4BA4CB06227DDEF200A623ED /* SendTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */; };
-		4BA4CB09227DEE6600A623ED /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB08227DEE6600A623ED /* BalanceModel.swift */; };
 		4BA4CB0B227DEE8400A623ED /* OstBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */; };
-		4BA4CB0D227DF2B300A623ED /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */; };
+		4BA4CB0D227DF2B300A623ED /* CurrentEconomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */; };
 		4BA4CB10227DF31600A623ED /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0F227DF31600A623ED /* Dictionary+Extension.swift */; };
 		4BA4CB12227DF42200A623ED /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
 		4BA4CB14227F466300A623ED /* WalletValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */; };
@@ -253,10 +252,8 @@
 		4BA4CB722280B5FB00A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
 		4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
 		4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */; };
-		4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */; };
-		4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */; };
-		4BA4CB772280BC8C00A623ED /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB08227DEE6600A623ED /* BalanceModel.swift */; };
-		4BA4CB782280BC8D00A623ED /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB08227DEE6600A623ED /* BalanceModel.swift */; };
+		4BA4CB752280BC8900A623ED /* CurrentEconomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */; };
+		4BA4CB762280BC8A00A623ED /* CurrentEconomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */; };
 		4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */; };
 		4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */; };
 		4BA4CB7B2280BE3C00A623ED /* Conversion+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */; };
@@ -286,6 +283,15 @@
 		4BA4CB9A228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
+		4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
+		4BA4CB9F22855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
+		4BA4CBA022855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
+		4BA4CBA32285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
+		4BA4CBA42285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
+		4BA4CBA52285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
+		4BA4CBA72285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
+		4BA4CBA82285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
+		4BA4CBA92285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
@@ -409,7 +415,7 @@
 		4B464EC522773ABA00F1F4AF /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		4B464EC622773ABA00F1F4AF /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
 		4B464EC722773ABA00F1F4AF /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
-		4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsViewController.swift; sourceTree = "<group>"; };
+		4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsSVViewController.swift; sourceTree = "<group>"; };
 		4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMnemonicsViewController.swift; sourceTree = "<group>"; };
 		4B464EF122782A2100F1F4AF /* MnemonicsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsCollectionViewCell.swift; sourceTree = "<group>"; };
 		4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -438,9 +444,8 @@
 		4BA4CB00227DA52400A623ED /* BaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPI.swift; sourceTree = "<group>"; };
 		4BA4CB02227DA56A00A623ED /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTokensViewController.swift; sourceTree = "<group>"; };
-		4BA4CB08227DEE6600A623ED /* BalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceModel.swift; sourceTree = "<group>"; };
 		4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseModel.swift; sourceTree = "<group>"; };
-		4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentToken.swift; sourceTree = "<group>"; };
+		4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentEconomy.swift; sourceTree = "<group>"; };
 		4BA4CB0F227DF31600A623ED /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversion+Helper.swift"; sourceTree = "<group>"; };
 		4BA4CB13227F466300A623ED /* WalletValueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletValueTableViewCell.swift; sourceTree = "<group>"; };
@@ -454,6 +459,9 @@
 		4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
 		4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRestPinWorkflowController.swift; sourceTree = "<group>"; };
 		4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
+		4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupUserViewController.swift; sourceTree = "<group>"; };
+		4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EconomyScannerViewController.swift; sourceTree = "<group>"; };
+		4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsViewController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -684,6 +692,7 @@
 		00ECB856227724D90085E4AB /* new */ = {
 			isa = PBXGroup;
 			children = (
+				4BA4CBA12285824B00A623ED /* EconomyScanner */,
 				4B464FAB227D9A5500F1F4AF /* Wallet */,
 				00ECB8572277269A0085E4AB /* Login */,
 			);
@@ -694,6 +703,7 @@
 			isa = PBXGroup;
 			children = (
 				00ECB858227726D40085E4AB /* IntroViewController.swift */,
+				4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -744,7 +754,8 @@
 		4B464EE622773B5300F1F4AF /* SettingOptions */ = {
 			isa = PBXGroup;
 			children = (
-				4B464EE722773B8800F1F4AF /* BaseSettingOptionsViewController.swift */,
+				4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */,
+				4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */,
 				4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */,
 				4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */,
 				4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */,
@@ -833,8 +844,7 @@
 			isa = PBXGroup;
 			children = (
 				4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */,
-				4BA4CB08227DEE6600A623ED /* BalanceModel.swift */,
-				4BA4CB0C227DF2B300A623ED /* CurrentToken.swift */,
+				4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */,
 				4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */,
 			);
 			path = new;
@@ -847,6 +857,14 @@
 				4BA4CB11227DF42200A623ED /* Conversion+Helper.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4BA4CBA12285824B00A623ED /* EconomyScanner */ = {
+			isa = PBXGroup;
+			children = (
+				4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */,
+			);
+			path = EconomyScanner;
 			sourceTree = "<group>";
 		};
 		4BF8FDAF2240FA7600519779 = {
@@ -1420,10 +1438,9 @@
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
-				4BA4CB09227DEE6600A623ED /* BalanceModel.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4B464F3A2279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
-				4BA4CB0D227DF2B300A623ED /* CurrentToken.swift in Sources */,
+				4BA4CB0D227DF2B300A623ED /* CurrentEconomy.swift in Sources */,
 				00A76B272282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB92228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */,
@@ -1438,6 +1455,7 @@
 				4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
+				4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
 				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
@@ -1469,11 +1487,13 @@
 				002EAF54227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */,
 				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
-				4B464EE822773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464EE822773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */,
 				4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				4BA4CB12227DF42200A623ED /* Conversion+Helper.swift in Sources */,
 				4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
+				4BA4CBA72285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
 				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
+				4BA4CBA32285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
 				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
 				4BA4CB6A2280B4C600A623ED /* TransactionAPI.swift in Sources */,
@@ -1489,7 +1509,6 @@
 				4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
-				4BA4CB782280BC8D00A623ED /* BalanceModel.swift in Sources */,
 				4BA4CB7D2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				0041A6622280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
@@ -1509,7 +1528,7 @@
 				00A76B282282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
-				4BA4CB762280BC8A00A623ED /* CurrentToken.swift in Sources */,
+				4BA4CB762280BC8A00A623ED /* CurrentEconomy.swift in Sources */,
 				4BA4CB93228440CF00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF392271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
@@ -1518,11 +1537,13 @@
 				0075ED0F227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F52227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
+				4BA4CBA82285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F5F227B750500F1F4AF /* IconGenerator.swift in Sources */,
 				0041A66E2280D60D007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7374227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
+				4BA4CBA42285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
@@ -1544,7 +1565,7 @@
 				4B464EF722782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4D2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
 				4BA4CB872282AFC100A623ED /* ManageDeviceViewController.swift in Sources */,
-				4B464EE922773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464EE922773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */,
 				4B464F53227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB19228006F900A623ED /* CreateSessionViewController.swift in Sources */,
@@ -1568,6 +1589,7 @@
 				4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
 				00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
+				4BA4CB9F22855D3900A623ED /* SetupUserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1580,7 +1602,6 @@
 				4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
-				4BA4CB772280BC8C00A623ED /* BalanceModel.swift in Sources */,
 				4BA4CB7E2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				0041A6632280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
@@ -1600,7 +1621,7 @@
 				00A76B292282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
-				4BA4CB752280BC8900A623ED /* CurrentToken.swift in Sources */,
+				4BA4CB752280BC8900A623ED /* CurrentEconomy.swift in Sources */,
 				4BA4CB94228440D000A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */,
 				002EAF3A2271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
@@ -1609,11 +1630,13 @@
 				0075ED10227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4B464F51227AED7D00F1F4AF /* OstBaseView.swift in Sources */,
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
+				4BA4CBA92285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F60227B750500F1F4AF /* IconGenerator.swift in Sources */,
 				0041A66F2280D60E007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7375227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
+				4BA4CBA52285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
@@ -1635,7 +1658,7 @@
 				4B464EF822782C5800F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				002EAF4E2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
 				4BA4CB882282AFC100A623ED /* ManageDeviceViewController.swift in Sources */,
-				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsViewController.swift in Sources */,
+				4B464EEA22773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */,
 				4B464F54227AF86800F1F4AF /* OstProgressIndicator.swift in Sources */,
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB1A228006F900A623ED /* CreateSessionViewController.swift in Sources */,
@@ -1659,6 +1682,7 @@
 				4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
 				00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */,
 				00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
+				4BA4CBA022855D3900A623ED /* SetupUserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

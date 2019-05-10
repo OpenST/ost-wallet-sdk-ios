@@ -41,10 +41,12 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
+            
         if ( notification.object is OstConfirmNewPinViewController ) {
             self.confirmNewPinViewController = nil;
         } else if ( notification.object is OstSetNewPinViewController ) {
-            self.getPinViewController = nil;
+            self.newPin = nil
+            self.newPinViewController = nil;
         } else if ( notification.object is OstGetPinViewController ) {
             self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
                                  error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
@@ -61,14 +63,14 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
             showGetNewPinViewController()
         }
         else if (self.userPin!.caseInsensitiveCompare(pin) == .orderedSame && nil == self.newPin) {
-            self.newPinViewController!.showInvalidPin()
+            self.newPinViewController!.showInvalidPin(errorMessage: "Previous pin and new pin should not be same.")
         }
         else if (nil == self.newPin || nil == self.confirmNewPinViewController) {
             self.newPin = pin
             showConfirmNewPinViewController()
         }
         else if (self.newPin!.caseInsensitiveCompare(pin) != .orderedSame) {
-            self.confirmNewPinViewController!.showInvalidPin()
+            self.confirmNewPinViewController!.showInvalidPin(errorMessage: "Please enter same pin as new pin.")
         }
         else {
             passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
@@ -96,7 +98,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
                               delegate: self)
         
         self.userPin = nil;
-        showLoader();
+        showLoader(progressText: "Reseing pin");
     }
     
     

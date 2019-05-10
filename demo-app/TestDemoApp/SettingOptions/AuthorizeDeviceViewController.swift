@@ -89,14 +89,14 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     }
     
     func addInfoTextForRecoveryConstraints() {
-        infoTextForRecovery.placeBelow(toItem: authorizeViaMnemonicsButton, constant: 200)
         infoTextForRecovery.applyBlockElementConstraints()
+        infoTextForRecovery.bottomFromTopAlign(toItem: recoverWithPinButton,
+                                               constant: -4)                      
     }
     
     func addRecoverWithPinButtonConstraints() {
-        recoverWithPinButton.placeBelow(toItem: infoTextForRecovery)
         recoverWithPinButton.applyBlockElementConstraints()
-        recoverWithPinButton.bottomAlignWithParent(multiplier: 1, constant: 38)
+        recoverWithPinButton.bottomAlignWithParent(multiplier: 1, constant: -38)
     }
     
     //MARK: - Button Actions
@@ -112,6 +112,9 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     }
     
     @objc func recoverWithPinButton(_ sender: Any?) {
-        
+        let currentUser = CurrentUserModel.getInstance
+        _ = OstSdkInteract.getInstance.resetPin(userId: currentUser.ostUserId!,
+                                                passphrasePrefixDelegate: currentUser,
+                                                presenter: self)
     }
 }

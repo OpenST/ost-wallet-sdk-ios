@@ -12,13 +12,13 @@ import Foundation
 
 extension String {
     
-    func isMatch(_ regex: String) -> Bool {
+    public func isMatch(_ regex: String) -> Bool {
         let range = NSRange(location: 0, length: utf16.count)
         let regex = try! NSRegularExpression(pattern: regex)
         return regex.firstMatch(in: self, options: [], range: range) != nil
     }
     
-    func substringAfter(_ offset: Int) -> String {
+    public  func substringAfter(_ offset: Int) -> String {
         let startIndex = index(self.startIndex, offsetBy: offset)
         if (startIndex < endIndex) {
             let substingVal = self[startIndex..<endIndex]
@@ -27,28 +27,28 @@ extension String {
         return ""
     }
     
-    func padLeft (totalWidth: Int, with: String) -> String {
+    public  func padLeft (totalWidth: Int, with: String) -> String {
         let toPad = totalWidth - self.count
         if toPad < 1 { return self }
         return "".padding(toLength: toPad, withPad: with, startingAt: 0) + self
     }
 
-    func rightPad (totalWidth: Int, with: String) -> String {
+    public  func rightPad (totalWidth: Int, with: String) -> String {
         if totalWidth < 1 { return self }
         return padding(toLength: totalWidth, withPad: with, startingAt: 0)
     }
 
-    var hexString: String {
+    public var hexString: String {
         let data = Data(self.utf8)
         let hexString = data.map{ String(format:"%02x", $0) }.joined()
         return hexString
     }
     
-    var isAddress: Bool {
+    public var isAddress: Bool {
         return self.isMatch("^(0x|0X)?[0-9a-fA-F]{40}$")
     }
     
-    func groups(for regexPattern: String) -> [[String]] {
+    public func groups(for regexPattern: String) -> [[String]] {
         do {
             let text = self
             let regex = try NSRegularExpression(pattern: regexPattern)

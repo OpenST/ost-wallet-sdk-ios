@@ -10,7 +10,7 @@ import UIKit
 import MaterialComponents
 import OstWalletSdk
 
-class CreateSessionViewController: BaseSettingOptionsViewController, UITextFieldDelegate {
+class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFieldDelegate {
 
     static let DEFAULT_SESSION_EXPIRES_IN: Int = 13;
 

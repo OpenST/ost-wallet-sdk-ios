@@ -20,7 +20,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
     /// Mark - View Controllers.
     var setPinViewController:OstSetNewPinViewController? = nil;
     var confirmPinViewController:OstConfirmNewPinViewController?;
-     
+    
     init(userId: String,
          passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
          presenter:UIViewController,
@@ -81,7 +81,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
         self.userPin = nil;
-        showLoader();
+        showLoader(progressText: "Activating User");
     }
     
 
@@ -95,13 +95,18 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
         } else {
             //Show error.
-            self.confirmPinViewController?.showInvalidPin();
+            self.confirmPinViewController?.showInvalidPin(errorMessage: "Please enter same pin as earlier.");
         }
     }
     
     func showConfirmPinViewController() {
         self.confirmPinViewController = OstConfirmNewPinViewController.newInstance(pinInputDelegate: self);
         self.confirmPinViewController?.pushViewControllerOn(self.setPinViewController!);
+    }
+    
+    override func dismissPinViewController() {
+        setPinViewController?.removeViewController()
+        setPinViewController = nil
     }
     
     override func cleanUp() {

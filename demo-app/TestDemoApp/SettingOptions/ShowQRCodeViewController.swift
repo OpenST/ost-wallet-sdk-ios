@@ -9,7 +9,7 @@
 import UIKit
 import OstWalletSdk
 
-class ShowQRCodeViewController: BaseSettingOptionsViewController {
+class ShowQRCodeViewController: BaseSettingOptionsSVViewController {
 
     override func getNavBarTitle() -> String {
         return "Device QR"

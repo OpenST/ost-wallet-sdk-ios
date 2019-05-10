@@ -10,7 +10,7 @@ import UIKit
 import OstWalletSdk
 import MaterialComponents
 
-class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDelegate {
+class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldDelegate {
     
     //MAKR: - Components
     let sendTokensLable: UILabel = {
@@ -104,7 +104,7 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        balanceLabel.text = "Balance: \(BalanceModel.getInstance.balance ?? "0") SPOO"
+        balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) SPOO"
     }
     
     //MAKR: - Add Subview
@@ -162,7 +162,7 @@ class SendTokensViewController: BaseSettingOptionsViewController, UITextFieldDel
     func addUserInfoConstraints() {
         userInfoView.placeBelow(toItem: sendTokensLable)
         userInfoView.applyBlockElementConstraints()
-        userInfoView.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        userInfoView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
     
     func addAmountTextFieldConstraints() {

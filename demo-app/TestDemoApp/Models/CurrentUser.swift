@@ -62,7 +62,6 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
         self.ostUserId = ConversionHelper.toString(appApiResponse!["user_id"])
         self.tokenId = ConversionHelper.toString(appApiResponse!["token_id"])
         self.userPinSalt = ConversionHelper.toString(appApiResponse!["user_pin_salt"])
-        CurrentUserModel.getInstance.userDetails = appApiResponse
         self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
 
     }) { (apiError) in
@@ -106,7 +105,6 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
         self.ostUserId = ConversionHelper.toString(apiResponse!["user_id"])
         self.tokenId = ConversionHelper.toString(apiResponse!["token_id"])
         self.userPinSalt = ConversionHelper.toString(apiResponse!["user_pin_salt"])
-        CurrentUserModel.getInstance.userDetails = apiResponse
         self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
         
     }) { (apiError) in

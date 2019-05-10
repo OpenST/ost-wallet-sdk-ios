@@ -12,12 +12,17 @@ import Foundation
 import Alamofire
 
 class BaseAPI {
+    
     static var mappyServerURL: String {
-        return Bundle.main.infoDictionary!["MAPPY_APP_SERVER_URL"] as! String
+        let mappyEndpoint = CurrentEconomy.getInstance.mappyApiEndpoint!
+        let tokenId = CurrentEconomy.getInstance.tokenId!
+        let urlId = CurrentEconomy.getInstance.urlId!
+        return "\(mappyEndpoint)api/\(tokenId)/\(urlId)"
+    
     }
     
     static var ostPlatformApiEndpoint: String {
-        return Bundle.main.infoDictionary!["OST_PLATFORM_API_ENDPOINT"] as! String
+        return CurrentEconomy.getInstance.saasApiEndpoint ?? ""
     }
     
     class func post(resource:String,

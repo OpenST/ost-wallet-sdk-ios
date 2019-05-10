@@ -17,7 +17,8 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         super.init()
     }
     //MARK: - Variables
-    var userDetails: [String: Any]? = nil
+    private var userDetails: [String: Any]? = nil
+    var userBalanceDetails: [String: Any]? = nil
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
     var setupDeviceOnComplete: ((Bool)->Void)?
@@ -57,7 +58,6 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     func signUp(username:String ,
                 phonenumber:String,
-                userDescription:String,
                 onSuccess: @escaping ((OstUser, OstDevice) -> Void),
                 onComplete:@escaping ((Bool)->Void) ) {
         
@@ -77,13 +77,16 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     //MARK: - OstWorkflow Delegate
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        setupDeviceOnComplete?(true);
+        setupDeviceOnComplete?(false);
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
             print("onSuccess triggered for ", workflowContext.workflowType);
-            setupDeviceOnSuccess?(self.ostUser!, self.userDevice!)
+           
+                setupDeviceOnSuccess?(self.ostUser!, self.userDevice!)
+           
         }
         //Callback onComplete with true.
         setupDeviceOnComplete?(true);
@@ -165,5 +168,13 @@ extension CurrentUserModel {
     
     var status: String? {
         return userDetails?["status"] as? String ?? nil
+    }
+    
+    var balance: String {
+        if let availabelBalance = userBalanceDetails?["available_balance"] {
+            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
+            return String(format: "%g", Double(amountVal)!)
+        }
+        return ""
     }
 }

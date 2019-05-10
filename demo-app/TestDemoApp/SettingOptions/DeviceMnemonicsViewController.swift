@@ -9,7 +9,7 @@
 import UIKit
 import OstWalletSdk
 
-class DeviceMnemonicsViewController: BaseSettingOptionsViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     //MARK: - Components
     var collectionView: UICollectionView?

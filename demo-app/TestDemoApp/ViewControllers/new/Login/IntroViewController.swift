@@ -10,29 +10,14 @@ import UIKit
 
 class IntroViewController: OstBaseScrollViewController {
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+       
     }
     
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+         self.navigationController?.isNavigationBarHidden = true
     }
-    */
-    
     // MARK - Subviews
     let logoImageView: UIImageView = {
         let view = UIImageView(image: UIImage.init(named: "ostLogoBlue") );
@@ -54,13 +39,13 @@ class IntroViewController: OstBaseScrollViewController {
         return view;
     }()
     
-    let createAccountBtn: UIButton = {
+    var createAccountBtn: UIButton = {
         let view = OstUIKit.primaryButton();
         view.setTitle("Create Account", for: .normal);
         return view;
     }()
 
-    let loginBtn: UIButton = {
+    var loginBtn: UIButton = {
         let view = OstUIKit.secondaryButton();
         view.setTitle("Log in", for: .normal);
         return view;
@@ -68,11 +53,20 @@ class IntroViewController: OstBaseScrollViewController {
     
     override func addSubviews() {
         super.addSubviews();
+        
+        addButtonActions()
+        
         addSubview(logoImageView);
         addSubview(leadLabel);
         addSubview(introImageView);
         addSubview(createAccountBtn);
         addSubview(loginBtn);
+    }
+    
+    func addButtonActions() {
+        weak var weakSelf = self
+        createAccountBtn.addTarget(weakSelf, action: #selector(weakSelf!.createAccountButtonTapped(_:)), for: .touchUpInside)
+        loginBtn.addTarget(weakSelf, action: #selector(weakSelf!.loginButtonTapped(_:)), for: .touchUpInside)
     }
 
     override func addLayoutConstraints() {
@@ -99,6 +93,20 @@ class IntroViewController: OstBaseScrollViewController {
         //Update lastView as needed.
         let lastView = loginBtn;
         lastView.bottomAlignWithParent(constant: -20);
+    }
+    
+    //MARK: - Actions
+    
+    @objc func createAccountButtonTapped(_ sender: Any?) {
+        let createAccountVC = SetupUserViewController()
+        createAccountVC.viewControllerType = .signup
+        createAccountVC.pushViewControllerOn(self)
+    }
+    
+    @objc func loginButtonTapped(_ sender: Any?) {
+        let loginVC = SetupUserViewController()
+        loginVC.viewControllerType = .login
+        loginVC.pushViewControllerOn(self)
     }
 
 }
