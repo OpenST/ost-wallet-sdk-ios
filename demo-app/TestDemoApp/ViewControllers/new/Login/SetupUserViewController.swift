@@ -80,10 +80,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-        
-        var testEconomy: String? = "{\"token_id\":1005,\"token_name\":\"Concern\",\"token_symbol\":\"CORN\",\"url_id\":\"c2a5ebba029d782545f0ddcae2a3ca5439bf9de16e4bfc3f995d6475373d896b\",\"mappy_api_endpoint\":\"https://demo-mappy.stagingost.com/demo/\",\"saas_api_endpoint\":\"https://api.stagingost.com/testnet/v2/\",\"view_api_endpoint\":\"https://view.stagingost.com/testnet/\"}"
-//        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
-        if let economy = testEconomy,
+   
+        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
             let qrJsonData = EconomyScannerViewController.getQRJsonData(economy) {
             CurrentEconomy.getInstance.economyDetails = qrJsonData as [String : Any]
         }

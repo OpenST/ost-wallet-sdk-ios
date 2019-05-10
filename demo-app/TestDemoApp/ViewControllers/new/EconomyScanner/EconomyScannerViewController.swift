@@ -48,11 +48,12 @@ class EconomyScannerViewController: OstBaseViewController {
         super.viewDidAppear(animated)
         scanner?.startScanning()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         scanner?.stopScanning()
     }
+    
     //MAKR: - Add Subview
     
     override func addSubviews() {
@@ -76,7 +77,7 @@ class EconomyScannerViewController: OstBaseViewController {
         let viewPreview = OstScannerView(completion: {[weak self] (values) in
             self?.scannerDataReceived(values: values)
         })
-        viewPreview.backgroundColor = UIColor.clear
+        viewPreview.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         viewPreview.translatesAutoresizingMaskIntoConstraints = false
         scanner = viewPreview
     }
@@ -92,7 +93,8 @@ class EconomyScannerViewController: OstBaseViewController {
     }
     
     func addTitleLabelConstrints() {
-        titleLabel.topAlignWithParent(multiplier: 1, constant: 35)
+        let guide = view.safeAreaLayoutGuide
+        titleLabel.topAnchor.constraint(equalTo: guide.topAnchor, constant: 35).isActive = true
         titleLabel.applyBlockElementConstraints( horizontalMargin: 40)
     }
     
@@ -104,14 +106,14 @@ class EconomyScannerViewController: OstBaseViewController {
     func addScannerConstraints() {
         scanner?.placeBelow(toItem: leadLabel)
         scanner?.applyBlockElementConstraints(horizontalMargin: 1)
-        scanner?.setH667Height(height: 200)
+        scanner?.bottomAlignWithParent()
     }
     
     func addCloseButtonConstraints() {
         closeButton.topAlignWithParent(multiplier: 1, constant: 20)
         closeButton.leftAlignWithParent(multiplier: 1, constant: 20)
-        closeButton.setW375Width(width: 40)
-        closeButton.setH667Height(height: 40)
+        closeButton.setFixedWidth(constant: 44)
+        closeButton.setFixedHeight(multiplier: 1, constant: 44)
     }
     
     func scannerDataReceived(values: [String]?) {
