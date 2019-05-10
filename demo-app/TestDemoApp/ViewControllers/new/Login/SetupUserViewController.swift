@@ -29,7 +29,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.clearButtonMode = .never
         usernameTextField.placeholderLabel.text = "Username"
-        usernameTextField.text = "Aniket8"
         return usernameTextField
     }()
     var usernameTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -39,7 +38,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.clearButtonMode = .unlessEditing
         passwordTextField.placeholderLabel.text = "Password"
-        passwordTextField.text = "123456"
         return passwordTextField
     }()
     var passwordTextFieldController: MDCTextInputControllerOutlined? = nil
