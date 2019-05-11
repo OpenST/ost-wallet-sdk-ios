@@ -244,33 +244,39 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     
     func processSelectedOption(_ option: OptionVM) {
-        var destinationVC: BaseSettingOptionsSVViewController? = nil
-        if option.type == .viewMnemonics {
-            destinationVC = DeviceMnemonicsViewController()
+        var destinationSVVC: BaseSettingOptionsSVViewController? = nil
+        var destinationVC: BaseSettingOptionsViewController? = nil
+        
+        if option.type == .details {
+            destinationVC = UserDetailsViewController()
+        }
+        
+        else if option.type == .viewMnemonics {
+            destinationSVVC = DeviceMnemonicsViewController()
         }
         
         else if option.type == .authorizeViaMnemonics {
-            destinationVC = AuthorizeDeviceViaMnemonicsViewController()
+            destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
         }
             
         else if option.type == .showDeviceQR {
-            destinationVC = ShowQRCodeViewController()
+            destinationSVVC = ShowQRCodeViewController()
         }
         
         else if option.type == .authorizeViaQR {
-            destinationVC = QRScannerViewController()
+            destinationSVVC = QRScannerViewController()
         }
         
         else if option.type == .createSession {
-            destinationVC = CreateSessionViewController()
+            destinationSVVC = CreateSessionViewController()
         }
         
         else if  option.type  == .manageDevices {
-            destinationVC = ManageDeviceViewController()
+            destinationSVVC = ManageDeviceViewController()
         }
         
         else if option.type == .initiateDeviceRecovery {
-            destinationVC = InitiateDeviceRecoveryViewController()
+            destinationSVVC = InitiateDeviceRecoveryViewController()
         }
         
         else if option.type == .resetPin {
@@ -290,11 +296,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         self.tabbarController?.hideTabBar()
+        
+        let viewController: OstBaseViewController = destinationSVVC == nil ? destinationVC! : destinationSVVC!
+        
         if nil == self.navigationController {
-            let navC = UINavigationController(rootViewController: destinationVC!)
+            let navC = UINavigationController(rootViewController: viewController )
             self.present(navC, animated: true, completion: nil)
         }else {
-           self.navigationController?.pushViewController(destinationVC!, animated: true)
+           self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
