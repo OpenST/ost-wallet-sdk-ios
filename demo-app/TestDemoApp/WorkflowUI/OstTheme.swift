@@ -16,6 +16,8 @@ class OstTheme {
     //Buttons
     public static var primaryButton: OstPrimaryButton = OstPrimaryButton();
     public static var secondaryButton: OstSecondaryButton = OstSecondaryButton();
+    public static var linkButton: OstLinkButton = OstLinkButton();
+    
     
     //Labels
     public static var h1:OstH1Theamer = OstH1Theamer();

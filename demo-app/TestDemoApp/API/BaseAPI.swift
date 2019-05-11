@@ -18,11 +18,6 @@ class BaseAPI {
         let tokenId = CurrentEconomy.getInstance.tokenId!
         let urlId = CurrentEconomy.getInstance.urlId!
         return "\(mappyEndpoint)api/\(tokenId)/\(urlId)"
-    
-    }
-    
-    static var ostPlatformApiEndpoint: String {
-        return CurrentEconomy.getInstance.saasApiEndpoint ?? ""
     }
     
     class func post(resource:String,

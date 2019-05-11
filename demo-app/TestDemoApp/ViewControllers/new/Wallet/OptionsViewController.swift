@@ -38,6 +38,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         return "Wallet Settings"
     }
     
+    override func getTargetForNavBarBackbutton() -> AnyObject? {
+        return nil
+    }
+    
+    override func getSelectorForNavBarBackbutton() -> Selector? {
+        return nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

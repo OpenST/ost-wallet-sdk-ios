@@ -48,12 +48,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }()
     
     var changeTypeButton: UIButton = {
-        let button = OstUIKit.secondaryButton()
+        let button = OstUIKit.linkButton()
         return button
     }()
     
     var haveAccountLabel: UILabel = {
         let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 1
         view.textAlignment = .center
         view.text = "a"
@@ -74,7 +75,10 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }
     
     var economyScanner: EconomyScannerViewController? = nil
-    var appTabBarContoller = TabBarViewController()
+    var appTabBarContoller: TabBarViewController? = nil
+    func getAppTabBarContoller() -> TabBarViewController {
+        return TabBarViewController()
+    }
     
     //MARK: - View LC
     override func viewDidLoad() {
@@ -102,7 +106,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         
         if let currentUser = CurrentUserModel.getInstance.ostUser {
             if currentUser.isStatusActivating {
-                appTabBarContoller.pushViewControllerOn(self.navigationController!)
+                getAppTabBarContoller().pushViewControllerOn(self.navigationController!)
             }
         }
     }
@@ -126,7 +130,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         addSubview(testEconomyTextField)
         addSubview(passwordTextField)
         addSubview(setupButton)
-//        addSubview(haveAccountLabel)
+        addSubview(haveAccountLabel)
         addSubview(changeTypeButton)
         
     }
@@ -177,7 +181,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         addUsernameTextFieldConstraints()
         addPasswordTextFieldConstraints()
         addSetupButtonConstraints()
-//        addHaveAccountLabelConstraints()
+        addHaveAccountLabelConstraints()
         addChangeTypeButtonConstraints()
         
         let last = changeTypeButton
@@ -205,12 +209,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }
     
     func addHaveAccountLabelConstraints() {
-        haveAccountLabel.placeBelow(toItem: setupButton, constant: 1)
+        haveAccountLabel.bottomFromTopAlign(toItem: changeTypeButton, constant: -10)
         haveAccountLabel.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
     func addChangeTypeButtonConstraints() {
-        changeTypeButton.placeBelow(toItem: setupButton, constant: 10)
+        let guide = view.safeAreaLayoutGuide
+        changeTypeButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant:-10).isActive = true
         changeTypeButton.centerXAlignWithParent()
     }
     
@@ -221,6 +226,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         if !isCorrectInputPassed() {
             return
         }
+        
+        try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint ?? "")
         
         if viewControllerType == .signup {
             CurrentUserModel.getInstance.signUp(username: self.usernameTextField.text!,
@@ -312,7 +319,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
             onSignupSuccess()
             return
         }
-        
-        appTabBarContoller.pushViewControllerOn(self.navigationController!)
+        UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
+//        getAppTabBarContoller().pushViewControllerOn(self.navigationController!)
     }
 }

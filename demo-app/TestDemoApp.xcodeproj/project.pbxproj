@@ -334,6 +334,9 @@
 		4BF8FF08224A0E0C00519779 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; };
 		4BF8FF09224A0E0C00519779 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
+		4BFA11712286CF2700A9F5A4 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */; };
+		4BFA11722286CF2700A9F5A4 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */; };
+		4BFA11732286CF2700A9F5A4 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */; };
 		4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */; };
 		C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */; };
 /* End PBXBuildFile section */
@@ -512,6 +515,7 @@
 		4BF8FE40224143C900519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstWalletSdk.framework; path = Carthage/Build/iOS/OstWalletSdk.framework; sourceTree = "<group>"; };
 		4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FF17224A5D6E00519779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLinkButton.swift; sourceTree = "<group>"; };
 		512E816A872571D77EA742C7 /* Pods_TestDemoAppStaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppStaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -586,6 +590,7 @@
 				002EAF4B2272154800B48F1D /* OstButtonTheamer.swift */,
 				002EAF3022719ED800B48F1D /* OstPrimaryButton.swift */,
 				002EAF4F2272321500B48F1D /* OstSecondaryButton.swift */,
+				4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1454,6 +1459,7 @@
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
+				4BFA11712286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
@@ -1573,6 +1579,7 @@
 				4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
+				4BFA11722286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8322828EE800A623ED /* DeviceAPI.swift in Sources */,
 				4B464FBA227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4B464F3F2279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,
@@ -1666,6 +1673,7 @@
 				4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
+				4BFA11732286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8422828EE900A623ED /* DeviceAPI.swift in Sources */,
 				4B464FBB227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4B464F402279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,

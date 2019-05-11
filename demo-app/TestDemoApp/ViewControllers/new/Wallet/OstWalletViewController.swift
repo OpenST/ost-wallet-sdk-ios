@@ -52,6 +52,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     weak var tabbarController: TabBarViewController?
     
+    
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +68,14 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     //MARK: - Views
     override func getNavBarTitle() -> String {
         return "Wallet"
+    }
+    
+    override func getTargetForNavBarBackbutton() -> AnyObject? {
+        return nil
+    }
+    
+    override func getSelectorForNavBarBackbutton() -> Selector? {
+        return nil
     }
     
     override func addSubviews() {

@@ -18,13 +18,13 @@ class IntroViewController: OstBaseScrollViewController {
     override func viewWillAppear(_ animated: Bool) {
          self.navigationController?.isNavigationBarHidden = true
     }
+    
     // MARK - Subviews
     let logoImageView: UIImageView = {
         let view = UIImageView(image: UIImage.init(named: "ostLogoBlue") );
         view.translatesAutoresizingMaskIntoConstraints = false
         return view;
     }()
-    
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();

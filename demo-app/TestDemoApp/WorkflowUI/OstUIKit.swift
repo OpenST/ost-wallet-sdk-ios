@@ -30,6 +30,15 @@ class OstUIKit {
         return view;
     }
     
+    class func linkButton() -> OstButton {
+        let view = OstButton();
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let themer = OstTheme.linkButton;
+        view.setTheamer(themer);
+        themer.apply(view);
+        return view;
+    }
+    
     class func h1() -> OstLabel {
         let view = OstLabel();
         view.translatesAutoresizingMaskIntoConstraints = false

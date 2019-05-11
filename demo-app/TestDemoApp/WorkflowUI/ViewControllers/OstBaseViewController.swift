@@ -74,8 +74,20 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
             return;
         }
         self.navigationItem.title = getNavBarTitle()
+        
+        navigationThemer.apply(self.navigationController!,
+                               target: getTargetForNavBarBackbutton(),
+                               action: getSelectorForNavBarBackbutton())
+    }
+    
+    func getTargetForNavBarBackbutton() -> AnyObject? {
         weak var weakSelf = self
-        navigationThemer.apply(self.navigationController!, target: weakSelf, action: #selector(weakSelf!.tappedBackButton))
+        return weakSelf
+    }
+    
+    func getSelectorForNavBarBackbutton() -> Selector? {
+        weak var weakSelf = self
+        return #selector(weakSelf!.tappedBackButton)
     }
     
     @objc func tappedBackButton() {

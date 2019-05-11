@@ -85,21 +85,27 @@ class OstProgressIndicator: OstBaseView {
     func show() {
         guard let paretn = self.superview else {return}
         
-            paretn.bringSubviewToFront(self)
-            self.frame = paretn.bounds
-            activityIndicator.startAnimating()
-            self.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-            self.containerView.alpha = 0.0
-        UIView.animate(withDuration: 0.3) {
+        paretn.bringSubviewToFront(self)
+        self.frame = paretn.bounds
+        activityIndicator.startAnimating()
+        self.backgroundColor = UIColor.white
+        UIView.animate(withDuration: 0.4) {
             self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            self.containerView.alpha = 1.0
         }
+        
+        let theAnimation: CABasicAnimation
+        theAnimation = CABasicAnimation(keyPath: "transform.scale")
+        theAnimation.duration = 0.4;
+        theAnimation.repeatCount = 1;
+        theAnimation.autoreverses = false;
+        theAnimation.fromValue = 1.1
+        theAnimation.toValue = 1
+        theAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
+        self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
     }
     
     func hide() {
-        guard let paretn = self.superview else {return}
-        
-        paretn.sendSubviewToBack(self)
         self.alpha = 0.0
+        self.removeFromSuperview()
     }
 }

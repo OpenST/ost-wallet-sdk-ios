@@ -67,6 +67,14 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         return "Users"
     }
     
+    override func getTargetForNavBarBackbutton() -> AnyObject? {
+        return nil
+    }
+    
+    override func getSelectorForNavBarBackbutton() -> Selector? {
+       return nil
+    }
+    
     //MARK: - Views
     override func addSubviews() {
         super.addSubviews()
@@ -82,7 +90,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         container.translatesAutoresizingMaskIntoConstraints = false
         self.labelContainer = container
         
-        self.infoLabel.text = "Welcome to SPOO Economy. You can send tokens to other users within SPOO."
+        let currentEconomy = CurrentEconomy.getInstance
+        self.infoLabel.text = "Welcome to \(currentEconomy.tokenSymbol ?? "") Economy. You can send tokens to other users within \(currentEconomy.tokenSymbol ?? "")."
         self.labelContainer!.addSubview(self.infoLabel)
         self.view.addSubview(container)
     }

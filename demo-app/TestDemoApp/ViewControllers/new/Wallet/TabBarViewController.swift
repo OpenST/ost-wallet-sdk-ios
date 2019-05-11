@@ -37,16 +37,19 @@ class TabBarViewController: UITabBarController {
         homeVC.tabbarController = self
         let homeNavController = UINavigationController(rootViewController: homeVC)
         homeNavController.tabBarItem = UITabBarItem(title: "Home",
-                                                    image: UIImage(named: "userImage"),
-                                                    selectedImage: UIImage(named: "userImageSelected"))
-
+                                         image: UIImage(named: "userImage"),
+                                         selectedImage: UIImage(named: "userImageSelected"))
+        homeNavController.tabBarItem.tag = 1
+        
+        //Wallet VC
         let walletVC = OstWalletViewController()
         walletVC.tabbarController = self
         let walletNavController = UINavigationController(rootViewController: walletVC)
         walletNavController.tabBarItem = UITabBarItem(title: "Wallet",
-                                                       image: UIImage(named: "walletImage"),
-                                                       selectedImage: UIImage(named: "walletImageSelected"))
-       
+                                                      image: UIImage(named: "walletImage"),
+                                                      selectedImage: UIImage(named: "walletImageSelected"))
+       walletNavController.tabBarItem.tag = 2
+        
         //SettingsVC
         let settingVC = OptionsViewController()
         settingVC.tabbarController = self
@@ -61,7 +64,7 @@ class TabBarViewController: UITabBarController {
     
     //MARK: - Tab Bar Delegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-       
+
     }
     
     func hideTabBar() {

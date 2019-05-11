@@ -104,7 +104,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) SPOO"
+        let currentUse = CurrentUserModel.getInstance
+        let currentEconomy = CurrentEconomy.getInstance
+        balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")"
     }
     
     //MAKR: - Add Subview

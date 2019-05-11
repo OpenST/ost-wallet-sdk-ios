@@ -160,7 +160,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func hideLoader() {
-        
+        progressIndicator?.hide()
     }
 }
 
