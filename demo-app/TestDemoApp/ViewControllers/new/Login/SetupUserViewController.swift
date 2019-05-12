@@ -106,7 +106,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         
         if let currentUser = CurrentUserModel.getInstance.ostUser {
             if currentUser.isStatusActivating {
-                getAppTabBarContoller().pushViewControllerOn(self.navigationController!)
+                pushToTabBarController()
             }
         }
     }
@@ -248,6 +248,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         }
     }
     
+    //MARK: - Validate Inputs
     func isCorrectInputPassed() -> Bool {
         let isValidUsename = validateUserNameTextField()
         let isValidPassword = validatePasswordTextField()
@@ -257,7 +258,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     func validateUserNameTextField() -> Bool {
         if usernameTextField.text?.isMatch("a-zA-Z0-9") ?? false {
             usernameTextFieldController?.setErrorText("Invalid username",
-                                                     errorAccessibilityValue: nil);
+                                                      errorAccessibilityValue: nil);
             return false;
         }
         usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
@@ -275,6 +276,30 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         }
         usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         return true
+    }
+    
+    //MARK: - On Callback Complete
+    func onSignupSuccess() {
+        let currentUse = CurrentUserModel.getInstance
+        _ = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                    passphrasePrefixDelegate: currentUse,
+                                                    presenter: self)
+    }
+    
+    func onLoginSuccess() {
+        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
+        if currentDevice.isStatusRegistered {
+            if let currentUser = CurrentUserModel.getInstance.ostUser {
+                if currentUser.isStatusActivated {
+                    let authorizeDeviceVC = AuthorizeDeviceViewController()
+                    authorizeDeviceVC.pushViewControllerOn(self)
+                    return
+                }
+            }
+            onSignupSuccess()
+            return
+        }
+        pushToTabBarController()
     }
     
 
@@ -298,28 +323,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         }
         self.navigationController?.present(economyScanner!, animated: flag, completion: nil)
     }
-    
-    func onSignupSuccess() {
-        let currentUse = CurrentUserModel.getInstance
-        _ = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                                       passphrasePrefixDelegate: currentUse,
-                                                                       presenter: self)
-    }
-    
-    func onLoginSuccess() {
-        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
-        if currentDevice.isStatusRegistered {
-            if let currentUser = CurrentUserModel.getInstance.ostUser {
-                if currentUser.isStatusActivated {
-                    let authorizeDeviceVC = AuthorizeDeviceViewController()
-                    authorizeDeviceVC.pushViewControllerOn(self)
-                    return
-                }
-            }
-            onSignupSuccess()
-            return
-        }
+
+    func pushToTabBarController() {
         UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
-//        getAppTabBarContoller().pushViewControllerOn(self.navigationController!)
     }
 }

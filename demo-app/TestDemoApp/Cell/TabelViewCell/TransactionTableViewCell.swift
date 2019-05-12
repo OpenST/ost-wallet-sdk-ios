@@ -35,9 +35,12 @@ class TransactionTableViewCell: UsersTableViewCell {
                 name = "Received Tokens"
             }
             
-            if name.caseInsensitiveCompare("Welcome Grant") == .orderedSame {
-                self.overlayImage.image = UIImage(named: "OstGrantReceived")
-                name = "Welcome Grant"
+            if let metaProperty = transactionData["meta_property"] as? [String: Any],
+                let type = metaProperty["type"] as? String {
+                if type.caseInsensitiveCompare("company_to_user") == .orderedSame {
+                    self.overlayImage.image = UIImage(named: "OstGrantReceived")
+                    name = "Welcome Grant"
+                }
             }
             
             self.titleLabel?.text = name

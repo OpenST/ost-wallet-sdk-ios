@@ -16,6 +16,51 @@ class DeviceTableViewCell: UsersTableViewCell {
         return "DeviceTableViewCell"
     }
     
+    var overlayImage: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "DeviceIcon")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    var sendButtonHeightConstraint: NSLayoutConstraint? = nil
+
+    //MARK: - Add Subview
+    override func createInternalView() {
+        self.circularView!.addSubview(overlayImage)
+    }
+    
+    //MARK: - Apply Constraints
+    override func applyInitialLetterConstraints() {
+        self.overlayImage.centerYAnchor.constraint(equalTo: self.circularView!.centerYAnchor).isActive = true
+        self.overlayImage.centerXAnchor.constraint(equalTo: self.circularView!.centerXAnchor).isActive = true
+        self.overlayImage.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        self.overlayImage.heightAnchor.constraint(equalTo: (self.overlayImage.widthAnchor)).isActive = true
+    }
+    
+    override func applyDetailsViewConstraints() {
+        self.detailsContainerView?.translatesAutoresizingMaskIntoConstraints = false
+        self.detailsContainerView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
+        self.detailsContainerView?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8.0).isActive = true
+        self.detailsContainerView?.topAnchor.constraint(equalTo: circularView!.topAnchor, constant:4.0).isActive = true
+    }
+    
+    override func applySendButtonConstraints() {
+        self.sendButton?.translatesAutoresizingMaskIntoConstraints = false
+        self.sendButton?.leftAnchor.constraint(equalTo: self.detailsContainerView!.leftAnchor).isActive = true
+        self.sendButton?.topAnchor.constraint(equalTo: self.detailsContainerView!.bottomAnchor, constant:12.0).isActive = true
+        self.sendButton?.bottomAnchor.constraint(equalTo: self.seperatorLine!.topAnchor, constant:-12.0).isActive = true
+        sendButtonHeightConstraint = self.sendButton?.heightAnchor.constraint(equalToConstant: 30.0)
+        sendButtonHeightConstraint?.isActive = true
+    }
+    
+    override func sendButtonTapped(_ sender: Any?) {
+        sendButtonAction?(self.deviceDetails)
+    }
+    
+    
     func setDeviceDetails(details: [String: Any], withIndex indexVal: Int) {
         self.deviceDetails = details
         self.titleLabel?.text = "Device \(indexVal)"
@@ -32,14 +77,14 @@ class DeviceTableViewCell: UsersTableViewCell {
                 sendButtonHeightConstraint?.constant = 30.0
                 sendButton?.isHidden = false
                 sendButton?.setTitle(titleText, for: .normal)
-
+                
                 let currentUserDevice = CurrentUserModel.getInstance.userDevice!
                 
                 if address.caseInsensitiveCompare(currentUserDevice.address!) == .orderedSame {
-                     sendButton?.isEnabled = false
+                    sendButton?.isEnabled = false
                 }
                 else if (!currentUserDevice.isStatusRegistered
-                        && status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) == .orderedSame) {
+                    && status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) == .orderedSame) {
                     
                     sendButton?.isEnabled = false
                 }
@@ -90,29 +135,5 @@ class DeviceTableViewCell: UsersTableViewCell {
     
     var address: String {
         return deviceDetails["address"] as? String ?? ""
-    }
-    
-    var sendButtonHeightConstraint: NSLayoutConstraint? = nil
-
-    
-    //MARK: - Apply Constraints
-    override func applyDetailsViewConstraints() {
-        self.detailsContainerView?.translatesAutoresizingMaskIntoConstraints = false
-        self.detailsContainerView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
-        self.detailsContainerView?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8.0).isActive = true
-        self.detailsContainerView?.topAnchor.constraint(equalTo: circularView!.topAnchor, constant:4.0).isActive = true
-    }
-    
-    override func applySendButtonConstraints() {
-        self.sendButton?.translatesAutoresizingMaskIntoConstraints = false
-        self.sendButton?.leftAnchor.constraint(equalTo: self.detailsContainerView!.leftAnchor).isActive = true
-        self.sendButton?.topAnchor.constraint(equalTo: self.detailsContainerView!.bottomAnchor, constant:12.0).isActive = true
-        self.sendButton?.bottomAnchor.constraint(equalTo: self.seperatorLine!.topAnchor, constant:-12.0).isActive = true
-        sendButtonHeightConstraint = self.sendButton?.heightAnchor.constraint(equalToConstant: 30.0)
-        sendButtonHeightConstraint?.isActive = true
-    }
-    
-    override func sendButtonTapped(_ sender: Any?) {
-        sendButtonAction?(self.deviceDetails)
     }
 }

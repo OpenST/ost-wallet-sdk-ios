@@ -196,7 +196,7 @@ class UsersTableViewCell: BaseTableViewCell {
         self.sendButton?.translatesAutoresizingMaskIntoConstraints = false
         self.sendButton?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -18.0).isActive = true
         self.sendButton?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0.0).isActive = true
-        self.sendButton?.widthAnchor.constraint(equalToConstant: 85.0).isActive = true
+        self.sendButton?.widthAnchor.constraint(lessThanOrEqualToConstant: 80).isActive = true
         self.sendButton?.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
     }
     

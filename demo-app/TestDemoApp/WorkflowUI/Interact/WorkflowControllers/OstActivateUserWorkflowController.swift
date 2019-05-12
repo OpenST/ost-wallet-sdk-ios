@@ -119,5 +119,16 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
     }
+    
+    override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        
+        if workflowContext.workflowType == .activateUser  {
+            let user: OstUser = ostContextEntity.entity as! OstUser
+            if user.isStatusActivated {
+                UserAPI.notifyUserActivated()
+            }
+        }
+        super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
+    }
 
 }

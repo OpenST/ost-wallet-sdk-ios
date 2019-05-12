@@ -24,7 +24,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     
     func setValue(_ val: String) {
         if let doubleVal:Double =  Double(val) {
-             self.btValueLabel?.text = "Balance: \(String(format: "%g",doubleVal))"
+             self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(String(format: "%g",doubleVal))"
         }else {
             self.btValueLabel?.text = ""
         }
