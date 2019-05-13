@@ -107,42 +107,52 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     //MARK: - Button Actions
     
     @objc func authorizeViaQRButtonTapped(_ sender: Any?) {
-        let authorizeViaQRVC = QRScannerViewController()
+        let authorizeViaQRVC = ShowQRCodeViewController()
         authorizeViaQRVC.pushViewControllerOn(self)
     }
     
     @objc func authorizeViaMnemonicsButtonTapped(_ sender: Any?) {
         let authorizeViaMnemonicsVC = AuthorizeDeviceViaMnemonicsViewController()
+        authorizeViaMnemonicsVC.subscribeToCallback = {[weak self] workflowCallbacks in
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallbacks.workflowId, listner: self!)
+        }
+        
         authorizeViaMnemonicsVC.pushViewControllerOn(self, animated: true)
     }
     
     @objc func recoverWithPinButton(_ sender: Any?) {
-        let currentUser = CurrentUserModel.getInstance
-        let callback = OstSdkInteract.getInstance.resetPin(userId: currentUser.ostUserId!,
-                                                passphrasePrefixDelegate: currentUser,
-                                                presenter: self)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: callback.workflowId, listner: self)
-    }
-    
-    func pushToTabBarController() {
-        UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
-    }
-    
-    func getAppTabBarContoller() -> TabBarViewController {
-        return TabBarViewController()
+        
+        let initiateDeviceRecovery = InitiateDeviceRecoveryViewController()
+        initiateDeviceRecovery.subscribeToCallback = {[weak self] workflowCallbacks in
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallbacks.workflowId, listner: self!)
+        }
+        
+        initiateDeviceRecovery.pushViewControllerOn(self)
     }
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        
-        if workflowContext.workflowType == .resetPin,
-            let entity = contextEntity.entity as? OstRecoveryOwnerEntity,
+        onRequestAcknowledged(workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    func onRequestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if workflowContext.workflowType == .initiateDeviceRecovery,
+            let entity = contextEntity.entity as? OstDevice,
             let currentDevice = CurrentUserModel.getInstance.userDevice {
             
             if entity.userId?.caseInsensitiveCompare(currentDevice.userId ?? "" ) == .orderedSame
                 && entity.status?.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.authorizing.rawValue) == .orderedSame{
                 
-                pushToTabBarController()
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }else if workflowContext.workflowType == .authorizeDeviceWithMnemonics,
+                    let entity = contextEntity.entity as? OstDevice,
+                    let currentDevice = CurrentUserModel.getInstance.userDevice {
+            
+            if entity.address?.caseInsensitiveCompare(currentDevice.address ?? "" ) == .orderedSame
+                && (entity.isStatusAuthorizing || entity.isStatusAuthorized) {
+                
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

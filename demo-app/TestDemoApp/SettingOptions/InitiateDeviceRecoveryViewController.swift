@@ -12,7 +12,7 @@ import UIKit
 import OstWalletSdk
 
 class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
-    
+ 
     override func getNavBarTitle() -> String {
         return "Initate device recovery"
     }

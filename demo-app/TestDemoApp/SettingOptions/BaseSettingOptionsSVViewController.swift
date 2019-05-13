@@ -24,7 +24,7 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     
     //MARK: - Variables
     
-    var workflowDelegate: OstWorkflowDelegate {
+    var workflowDelegate: OstWorkflowCallbacks {
         let delegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: delegate.workflowId, listner: self)
         return delegate

@@ -13,6 +13,8 @@ import OstWalletSdk
 
 class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var subscribeToCallback: ((OstWorkflowCallbacks) ->Void)? = nil
+    
     enum DeviceStatus: String {
         case authorized
         case revoked
@@ -259,10 +261,11 @@ class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableVie
     }
     
     func initiateDeviceRecovery(entity: [String: Any]) {
-        _ = OstSdkInteract.getInstance.initateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+        let workflowCallback = OstSdkInteract.getInstance.initateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                              passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                              presenter: self,
                                                              recoverDeviceAddress: entity["address"] as! String)
+        subscribeToCallback?(workflowCallback)
     }
     
     func abortDeviceRecovery() {

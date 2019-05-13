@@ -13,6 +13,8 @@ import OstWalletSdk
 
 class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewController {
     
+    var subscribeToCallback: ((OstWorkflowCallbacks) ->Void)? = nil
+    
     //MAKR: - Components
     let wordsTextView: MDCMultilineTextField = {
         let wordsTextView = MDCMultilineTextField()
@@ -79,9 +81,12 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         progressIndicator?.show()
         let currentUser = CurrentUserModel.getInstance
         let mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
+        
+        let workflowDelegate = self.workflowDelegate
+        subscribeToCallback?(workflowDelegate)
         OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId: currentUser.ostUserId!,
                                                          mnemonics: mnemonics,
-                                                         delegate: self.workflowDelegate)
+                                                         delegate: workflowDelegate)
     }
     
     //MARK: - Workflow delegate

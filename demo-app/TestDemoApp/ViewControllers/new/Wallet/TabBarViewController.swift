@@ -23,6 +23,19 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
+        
+        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
+        if currentDevice.isStatusRegistered {
+            if let currentUser = CurrentUserModel.getInstance.ostUser {
+                if currentUser.isStatusActivated {
+                    self.selectedViewController = viewControllers![2]
+                    if let rootVC = (self.selectedViewController as! UINavigationController).viewControllers.first as? OptionsViewController {
+                        rootVC.openAuthorizeDeviceView()
+                    }
+                    return
+                }
+            }
+        }
         self.selectedViewController = viewControllers![1]
     }
     

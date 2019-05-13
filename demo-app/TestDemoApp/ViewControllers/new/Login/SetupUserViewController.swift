@@ -304,18 +304,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }
     
     func onLoginSuccess() {
-        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
-        if currentDevice.isStatusRegistered {
-            if let currentUser = CurrentUserModel.getInstance.ostUser {
-                if currentUser.isStatusActivated {
-                    let authorizeDeviceVC = AuthorizeDeviceViewController()
-                    authorizeDeviceVC.pushViewControllerOn(self)
-                    return
-                }
-            }
-            onSignupSuccess()
-            return
-        }
         pushToTabBarController()
     }
     

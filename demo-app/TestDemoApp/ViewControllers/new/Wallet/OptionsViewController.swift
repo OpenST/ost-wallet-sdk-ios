@@ -48,14 +48,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        createGeneralOptionsArray()
-        createDeviceOptionsArray()
-        tableView?.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        createGeneralOptionsArray()
+        createDeviceOptionsArray()
+        tableView?.reloadData()
         self.tabbarController?.showTabBar()
     }
     
@@ -199,7 +198,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        generalOptions.append(contentsOf: [optionDetail, optionSession, optionResetPin, optionMnemonics])
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics]
+        generalOptions = userOptions
     }
     
     func createDeviceOptionsArray() {
@@ -238,8 +238,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             abortRecovery.isEnable = false
         }
      
-        deviceOptions.append(contentsOf: [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
-                                          transactionViaQR, initialRecovery, abortRecovery])
+        let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
+                             transactionViaQR, initialRecovery, abortRecovery]
+        deviceOptions = dOptions
     }
     
     
@@ -304,6 +305,21 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             self.present(navC, animated: true, completion: nil)
         }else {
            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func openAuthorizeDeviceView() {
+        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
+        if currentDevice.isStatusRegistered {
+            if let currentUser = CurrentUserModel.getInstance.ostUser {
+                if currentUser.isStatusActivated {
+                    let authorizeDeviceVC = AuthorizeDeviceViewController()
+                    authorizeDeviceVC.pushViewControllerOn(self)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.tabbarController?.hideTabBar()
+                    }
+                }
+            }
         }
     }
 }

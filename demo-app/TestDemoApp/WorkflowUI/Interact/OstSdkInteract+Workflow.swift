@@ -20,6 +20,7 @@ extension OstSdkInteract {
                              spendingLimit: String = OstUtils.toAtto("15"),
                              expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
         ) -> OstWorkflowDelegate {
+        
         let callback = OstActivateUserWorkflowController(userId: userId,
                                                          passphrasePrefixDelegate: passphrasePrefixDelegate,
                                                          presenter: presenter,
@@ -32,7 +33,7 @@ extension OstSdkInteract {
     public func initateDeviceRecovery(userId: String,
                                       passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
                                       presenter:UIViewController,
-                                      recoverDeviceAddress: String) -> OstWorkflowDelegate {
+                                      recoverDeviceAddress: String) -> OstWorkflowCallbacks {
         
         let callback = OstInitiateDeviceRecoveryWorkflowController(
             userId: userId,
@@ -62,6 +63,7 @@ extension OstSdkInteract {
     public func abortDeviceRecovery(userId: String,
                                     passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
                                     presenter:UIViewController) -> OstWorkflowDelegate {
+        
         let callback = OstAbortDeviceRecoveryWorkflowController(
             userId: userId,
             passphrasePrefixDelegate: passphrasePrefixDelegate,
