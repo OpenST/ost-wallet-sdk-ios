@@ -242,9 +242,9 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let status = entity["status"] as! String
         switch status.lowercased() {
         case DeviceStatus.authorized.rawValue:
-            if CurrentUserModel.getInstance.userDevice?.isStatusRegistered ?? false {
+            if CurrentUserModel.getInstance.currentDevice?.isStatusRegistered ?? false {
                 initiateDeviceRecovery(entity: entity)
-            }else if CurrentUserModel.getInstance.userDevice?.isStatusAuthorized ?? false {
+            }else if CurrentUserModel.getInstance.currentDevice?.isStatusAuthorized ?? false {
                 revokeDevice(deviceAddress: entity["address"] as! String)
             }
             return

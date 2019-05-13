@@ -85,7 +85,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
             print("onSuccess triggered for ", workflowContext.workflowType);
            
-                setupDeviceOnSuccess?(self.ostUser!, self.userDevice!)
+                setupDeviceOnSuccess?(self.ostUser!, self.currentDevice!)
            
         }
         //Callback onComplete with true.
@@ -158,7 +158,7 @@ extension CurrentUserModel {
         return nil
     }
     
-    var userDevice: OstDevice? {
+    var currentDevice: OstDevice? {
         if let userId = ostUserId {
             let ostUser = OstWalletSdk.getUser(userId)
             return ostUser?.getCurrentDevice()
@@ -176,5 +176,17 @@ extension CurrentUserModel {
             return String(format: "%g", Double(amountVal)!)
         }
         return ""
+    }
+    
+    var isCurrentDeviceStatusAuthorizing: Bool {
+        if let currentDevice = self.currentDevice,
+            let status = currentDevice.status {
+            
+            if status.caseInsensitiveCompare("authorizing") == .orderedSame{
+                return true
+            }
+        }
+        
+        return false
     }
 }

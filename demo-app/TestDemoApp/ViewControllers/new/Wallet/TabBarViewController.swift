@@ -24,7 +24,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         createViews()
         
-        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
+        guard let currentDevice = CurrentUserModel.getInstance.currentDevice else {return}
         if currentDevice.isStatusRegistered {
             if let currentUser = CurrentUserModel.getInstance.ostUser {
                 if currentUser.isStatusActivated {

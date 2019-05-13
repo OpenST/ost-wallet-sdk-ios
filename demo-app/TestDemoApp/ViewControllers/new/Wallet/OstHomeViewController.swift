@@ -337,7 +337,6 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             userBalances.merge(dict: balances)
         }
         meta = data["meta"] as? [String: Any]
-//        guard let resultType = data["result_type"] as? String else {return}
         guard let users = data["users"] as? [[String: Any]] else {return}
         updatedDataArray.append(contentsOf: users)
         self.isNewDataAvailable = true
@@ -347,6 +346,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     //MARK: - Action
     func sendButtonTapped(_ userDetails: [String: Any]?) {
+        
         let sendTokendsVC = SendTokensViewController()
         sendTokendsVC.userDetails = userDetails
         tabbarController?.hideTabBar()

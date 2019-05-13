@@ -133,7 +133,10 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func showDeviceIsAuthroizingAlert() {
+        
+    }
 }
 
 

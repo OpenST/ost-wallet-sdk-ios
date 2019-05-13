@@ -138,7 +138,7 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     func onRequestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .initiateDeviceRecovery,
             let entity = contextEntity.entity as? OstDevice,
-            let currentDevice = CurrentUserModel.getInstance.userDevice {
+            let currentDevice = CurrentUserModel.getInstance.currentDevice {
             
             if entity.userId?.caseInsensitiveCompare(currentDevice.userId ?? "" ) == .orderedSame
                 && entity.status?.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.authorizing.rawValue) == .orderedSame{
@@ -147,7 +147,7 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
             }
         }else if workflowContext.workflowType == .authorizeDeviceWithMnemonics,
                     let entity = contextEntity.entity as? OstDevice,
-                    let currentDevice = CurrentUserModel.getInstance.userDevice {
+                    let currentDevice = CurrentUserModel.getInstance.currentDevice {
             
             if entity.address?.caseInsensitiveCompare(currentDevice.address ?? "" ) == .orderedSame
                 && (entity.isStatusAuthorizing || entity.isStatusAuthorized) {

@@ -78,7 +78,7 @@ class DeviceTableViewCell: UsersTableViewCell {
                 sendButton?.isHidden = false
                 sendButton?.setTitle(titleText, for: .normal)
                 
-                let currentUserDevice = CurrentUserModel.getInstance.userDevice!
+                let currentUserDevice = CurrentUserModel.getInstance.currentDevice!
                 
                 if address.caseInsensitiveCompare(currentUserDevice.address!) == .orderedSame {
                     sendButton?.isEnabled = false
@@ -96,7 +96,7 @@ class DeviceTableViewCell: UsersTableViewCell {
     }
     
     func getButtonTitleForDeviceState() -> String {
-        let currentUserDevice = CurrentUserModel.getInstance.userDevice!
+        let currentUserDevice = CurrentUserModel.getInstance.currentDevice!
         
         if address.caseInsensitiveCompare(currentUserDevice.address ?? "") == .orderedSame {
             return ""

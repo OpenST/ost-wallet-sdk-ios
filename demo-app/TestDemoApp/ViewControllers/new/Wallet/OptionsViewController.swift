@@ -179,7 +179,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func createGeneralOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.userDevice!;
+        let userDevice = currentUser.currentDevice!;
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
         
@@ -204,7 +204,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func createDeviceOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.userDevice!;
+        let userDevice = currentUser.currentDevice!;
         
         var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
         if !userDevice.isStatusAuthorized {
@@ -309,7 +309,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func openAuthorizeDeviceView() {
-        guard let currentDevice = CurrentUserModel.getInstance.userDevice else {return}
+        guard let currentDevice = CurrentUserModel.getInstance.currentDevice else {return}
         if currentDevice.isStatusRegistered {
             if let currentUser = CurrentUserModel.getInstance.ostUser {
                 if currentUser.isStatusActivated {

@@ -161,13 +161,13 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
         
         let deviceAddressVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsViewModel(title: "Device Address",
-                                            value: currentUser.userDevice?.address ?? ""),
+                                            value: currentUser.currentDevice?.address ?? ""),
             type: .withCopy
         )
         
         let deviceStatuVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsViewModel(title: "Device Status",
-                                            value: currentUser.userDevice?.status?.uppercased() ?? "",
+                                            value: currentUser.currentDevice?.status?.uppercased() ?? "",
                                             themer:  statusThemer),
             type: .normal
         )
