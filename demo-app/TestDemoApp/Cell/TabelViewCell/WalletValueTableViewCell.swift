@@ -77,6 +77,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         btLabel.textAlignment = .center
         btLabel.minimumScaleFactor = 0.5
         btLabel.textColor = UIColor.white
+        btLabel.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") 0"
         self.btValueLabel = btLabel
         self.valueContainer?.addSubview(btLabel)
     }
@@ -86,7 +87,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         usdLabel.font = OstFontProvider().get(size: 16)
         usdLabel.textColor = UIColor.white
         usdLabel.textAlignment = .center
-        usdLabel.text = "123"
         self.usdValueLabel = usdLabel
         self.valueContainer?.addSubview(usdLabel)
     }

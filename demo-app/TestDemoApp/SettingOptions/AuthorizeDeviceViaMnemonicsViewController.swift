@@ -77,7 +77,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
     
     @objc func recoverWalletButtonTapped(_ sender: Any?) {
         progressIndicator?.show()
-        let currentUser = CurrentUser.getInstance()
+        let currentUser = CurrentUserModel.getInstance
         let mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
         OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId: currentUser.ostUserId!,
                                                          mnemonics: mnemonics,

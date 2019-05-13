@@ -44,7 +44,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let currentUser = CurrentUser.getInstance()
+        let currentUser = CurrentUserModel.getInstance
         if nil != currentUser.ostUserId {
             OstWalletSdk.getDeviceMnemonics(userId: currentUser.ostUserId!,
                                             delegate: self.workflowDelegate)

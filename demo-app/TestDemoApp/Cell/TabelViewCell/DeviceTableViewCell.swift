@@ -98,7 +98,7 @@ class DeviceTableViewCell: UsersTableViewCell {
     func getButtonTitleForDeviceState() -> String {
         let currentUserDevice = CurrentUserModel.getInstance.userDevice!
         
-        if status.caseInsensitiveCompare(currentUserDevice.status ?? "") == .orderedSame {
+        if address.caseInsensitiveCompare(currentUserDevice.address ?? "") == .orderedSame {
             return ""
         }
         

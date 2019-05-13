@@ -79,7 +79,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .unlessEditing
         textField.placeholderLabel.text = "Unit"
-        textField.text = "BT";
+        textField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
         textField.font = OstFontProvider().get(size: 15)
         textField.clearButtonMode = UITextField.ViewMode.never
         return textField

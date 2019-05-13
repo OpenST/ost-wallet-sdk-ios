@@ -24,6 +24,14 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }()
     var testEconomyTextFieldController: MDCTextInputControllerOutlined? = nil
     
+    var qrCodeButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "QrcodeImage"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        
+        return btn
+    }()
+    
     var usernameTextField: MDCTextField = {
         let usernameTextField = MDCTextField()
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -132,7 +140,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         addSubview(setupButton)
         addSubview(haveAccountLabel)
         addSubview(changeTypeButton)
-        
+        addSubview(qrCodeButton)
     }
     
     func setupTextFields() {
@@ -147,6 +155,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         weak var weakSelf = self
         setupButton.addTarget(weakSelf, action: #selector(weakSelf!.setupButtonTapped(_:)), for: .touchUpInside)
         changeTypeButton.addTarget(weakSelf, action: #selector(weakSelf!.changeTypeTapped(_:)), for: .touchUpInside)
+        qrCodeButton.addTarget(weakSelf, action: #selector(weakSelf!.openEconomyScanner(animation:)), for: .touchUpInside)
     }
     
     func setupViewAccordingToType() {
@@ -183,6 +192,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         addSetupButtonConstraints()
         addHaveAccountLabelConstraints()
         addChangeTypeButtonConstraints()
+        addQrCodeImageConstraints()
         
         let last = changeTypeButton
         last.bottomAlignWithParent()
@@ -217,6 +227,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         let guide = view.safeAreaLayoutGuide
         changeTypeButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant:-10).isActive = true
         changeTypeButton.centerXAlignWithParent()
+    }
+    
+    func addQrCodeImageConstraints() {
+        qrCodeButton.rightAlign(toItem: testEconomyTextField, constant: -8)
+        qrCodeButton.centerAlignY(toItem: testEconomyTextField)
+        qrCodeButton.setFixedWidth(constant: 40)
+        qrCodeButton.setFixedHeight(constant: 40)
     }
     
     //MARK: - Actions
@@ -317,7 +334,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         return true
     }
     
-    func openEconomyScanner(animation flag: Bool) {
+    @objc func openEconomyScanner(animation flag: Bool) {
         if nil == economyScanner {
             economyScanner = EconomyScannerViewController()
         }

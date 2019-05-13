@@ -40,8 +40,6 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             //Push into existing navigation controller.
             self.setPinViewController!.pushViewControllerOn( presenter.navigationController! );
         }
-
-
     }
     deinit {
         print("OstActivateUserWorkflowController :: I am deinit ");

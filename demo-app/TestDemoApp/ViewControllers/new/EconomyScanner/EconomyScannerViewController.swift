@@ -31,10 +31,19 @@ class EconomyScannerViewController: OstBaseViewController {
     var closeButton: UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: ""), for: .normal)
+        button.setImage(UIImage(named: "CloseImageBlack"), for: .normal)
         return button
     }()
-
+    
+    var bottomLabel: UILabel = {
+        let view = OstUIKit.leadLabel()
+        view.textColor = UIColor.white
+        view.backgroundColor = UIColor.color(22, 141, 193)
+        view.textAlignment = .center
+        view.text = "Scanning in progress…"
+        return view
+    }()
+    
     var scanner: OstScannerView? = nil
     
     
@@ -67,6 +76,7 @@ class EconomyScannerViewController: OstBaseViewController {
         addSubview(leadLabel)
         addSubview(scanner!)
         addSubview(closeButton)
+        addSubview(bottomLabel)
     }
     
     func setupButtonAction() {
@@ -90,11 +100,12 @@ class EconomyScannerViewController: OstBaseViewController {
         addLeadLabelConstraints()
         addScannerConstraints()
         addCloseButtonConstraints()
+        addBottomLabelConstraints()
     }
     
     func addTitleLabelConstrints() {
         let guide = view.safeAreaLayoutGuide
-        titleLabel.topAnchor.constraint(equalTo: guide.topAnchor, constant: 35).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: guide.topAnchor, constant: 10).isActive = true
         titleLabel.applyBlockElementConstraints( horizontalMargin: 40)
     }
     
@@ -106,14 +117,21 @@ class EconomyScannerViewController: OstBaseViewController {
     func addScannerConstraints() {
         scanner?.placeBelow(toItem: leadLabel)
         scanner?.applyBlockElementConstraints(horizontalMargin: 1)
-        scanner?.bottomAlignWithParent()
+        scanner?.bottomAlign(toItem: bottomLabel)
     }
     
     func addCloseButtonConstraints() {
-        closeButton.topAlignWithParent(multiplier: 1, constant: 20)
-        closeButton.leftAlignWithParent(multiplier: 1, constant: 20)
+        let guide = view.safeAreaLayoutGuide
+        closeButton.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
+        closeButton.leftAlignWithParent(multiplier: 1, constant: 10)
         closeButton.setFixedWidth(constant: 44)
         closeButton.setFixedHeight(multiplier: 1, constant: 44)
+    }
+    
+    func addBottomLabelConstraints() {
+        bottomLabel.bottomAlignWithParent()
+        bottomLabel.applyBlockElementConstraints(horizontalMargin: 0)
+        bottomLabel.setFixedHeight(constant: 65)
     }
     
     func scannerDataReceived(values: [String]?) {

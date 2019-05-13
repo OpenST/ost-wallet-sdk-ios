@@ -288,8 +288,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     }
     
     func fetchUserWalletData(hardRefresh: Bool = false) {
-        fetchUserTransaction(hardRefresh: hardRefresh)
-        fetchUserBalance(hardRefresh: hardRefresh)
+        if CurrentUserModel.getInstance.ostUser?.isStatusActivated ?? false {
+            fetchUserTransaction(hardRefresh: hardRefresh)
+            fetchUserBalance(hardRefresh: hardRefresh)
+        }
     }
     
     func fetchUserTransaction(hardRefresh: Bool = false) {
