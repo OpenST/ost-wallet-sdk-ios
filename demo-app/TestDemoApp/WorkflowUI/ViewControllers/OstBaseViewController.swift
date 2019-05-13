@@ -135,7 +135,24 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     */
     
     func showDeviceIsAuthroizingAlert() {
+        showAlert(title: "Your Wallet is being Setup",
+                  message: "The Wallet setup process takes about 30 seconds. You can continue to use the app and we’ll notify when the wallet is ready to use.")
+    }
+    
+    func showDeviceIsNotAuthorizedAlert() {
+        showAlert(title: "Your Wallet is not Setup",
+                  message: "Please setup wallet to perfom action")
+    }
+    
+    func showAlert(title: String? = nil , message: String? = nil, buttonTitle: String = "Ok") {
         
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

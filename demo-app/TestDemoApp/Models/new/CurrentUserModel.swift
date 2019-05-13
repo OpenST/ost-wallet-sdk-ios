@@ -182,11 +182,21 @@ extension CurrentUserModel {
         if let currentDevice = self.currentDevice,
             let status = currentDevice.status {
             
-            if status.caseInsensitiveCompare("authorizing") == .orderedSame{
+            if status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.authorizing.rawValue) == .orderedSame{
                 return true
             }
         }
-        
+        return false
+    }
+
+    var isCurrentDeviceStatusAuthrozied: Bool {
+        if let currentDevice = self.currentDevice,
+            let status = currentDevice.status {
+            
+            if status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.authorized.rawValue) == .orderedSame{
+                return true
+            }
+        }
         return false
     }
 }

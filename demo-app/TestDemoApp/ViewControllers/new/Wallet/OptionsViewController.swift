@@ -245,6 +245,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     
     func processSelectedOption(_ option: OptionVM) {
+        
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+            showDeviceIsAuthroizingAlert()
+            return
+        }
+        
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
         

@@ -346,6 +346,15 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     //MARK: - Action
     func sendButtonTapped(_ userDetails: [String: Any]?) {
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+            showDeviceIsAuthroizingAlert()
+            return
+        }
+        
+        if !CurrentUserModel.getInstance.isCurrentDeviceStatusAuthrozied {
+            showDeviceIsNotAuthorizedAlert()
+            return
+        }
         
         let sendTokendsVC = SendTokensViewController()
         sendTokendsVC.userDetails = userDetails
