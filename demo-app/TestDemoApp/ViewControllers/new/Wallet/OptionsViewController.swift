@@ -273,11 +273,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         else if  option.type  == .manageDevices {
-            destinationSVVC = ManageDeviceViewController()
+            destinationVC = ManageDeviceViewController()
         }
         
         else if option.type == .initiateDeviceRecovery {
-            destinationSVVC = InitiateDeviceRecoveryViewController()
+            destinationVC = InitiateDeviceRecoveryViewController()
         }
         
         else if option.type == .resetPin {

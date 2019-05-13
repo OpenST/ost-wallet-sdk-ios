@@ -11,7 +11,7 @@
 import UIKit
 import OstWalletSdk
 
-class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableViewDelegate, UITableViewDataSource {
+class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource {
     
     var subscribeToCallback: ((OstWorkflowCallbacks) ->Void)? = nil
     
@@ -106,7 +106,6 @@ class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableVie
     func addDeviceTableConstraitns() {
         deviceTableView.placeBelow(toItem: leadLabel)
         deviceTableView.applyBlockElementConstraints(horizontalMargin: 0)
-        deviceTableView.setH667Height(height: 600)
         deviceTableView.bottomAlignWithParent()
     }
     
