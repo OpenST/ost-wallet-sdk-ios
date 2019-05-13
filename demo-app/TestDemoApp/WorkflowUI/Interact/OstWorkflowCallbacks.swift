@@ -30,7 +30,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             let win = UIWindow(frame: UIScreen.main.bounds)
             win.windowLevel = UIWindow.Level.alert + 1
             win.makeKeyAndVisible()
-//            uiWindow = win
+            uiWindow = win
             return win
         }
         
@@ -70,8 +70,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             delegate.cancelFlow();
         }
     }
-    
-        
+
     func verifyData(workflowContext: OstWorkflowContext,
                     ostContextEntity: OstContextEntity,
                     delegate: OstValidateDataDelegate) {
@@ -99,8 +98,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
         hideLoader();
+        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
         cleanUp();
     }
     
@@ -111,33 +110,6 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         hideLoader();
         dismissPinViewController();
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
-    }
-    
-    func getPinFromUser(title: String = "Enter your pin",
-                        message: String = "",
-                        ostPinAcceptProtocol: OstPinAcceptDelegate) {
-        
-        let currentUser = CurrentUser.getInstance();
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert);
-        //Add a text field.
-        alert.addTextField { (textField) in
-            textField.placeholder = "6 digit pin"
-            textField.keyboardType = .numberPad
-            textField.isSecureTextEntry = true
-            textField.textAlignment = .center;
-        }
-        //Add action
-        let action = UIAlertAction(title: "Validate", style: .default) { (alertAction) in
-            let pinTextField = alert.textFields![0] as UITextField
-            if ((pinTextField.text?.count)! < 6 ) {
-                self.getPinFromUser( message: "Invalid Pin",ostPinAcceptProtocol: ostPinAcceptProtocol)
-                return;
-            }
-            ostPinAcceptProtocol.pinEntered(pinTextField.text!, passphrasePrefix: currentUser.userPinSalt!);
-            alert.dismiss(animated: true, completion: nil);
-        }
-        alert.addAction(action);
-        alert.show()
     }
     
     func pinValidated(_ userId: String) {
@@ -164,6 +136,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     
     func hideLoader() {
         progressIndicator?.hide()
+        progressIndicator = nil
+        uiWindow = nil
     }
 }
 

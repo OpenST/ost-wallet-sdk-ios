@@ -42,7 +42,6 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         self.resignFirstResponder();
     }
     
-    
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         

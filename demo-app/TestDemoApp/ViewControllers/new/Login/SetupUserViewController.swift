@@ -76,6 +76,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         case signup, login
     }
     
+    var progressIndicator: OstProgressIndicator? = nil
+    
     var viewControllerType: SetupUserControllerType! {
         didSet {
             setupViewAccordingToType()
@@ -103,7 +105,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
             return
         }
     }
-    
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? ""
@@ -244,6 +246,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
             return
         }
         
+        showProgressIndicator()
+        
         try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint ?? "")
         
         if viewControllerType == .signup {
@@ -251,16 +255,16 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
                                                 phonenumber: self.passwordTextField.text!,
                                                 onSuccess: {[weak self] (ostUser, ostDevice) in
                             self?.onSignupSuccess()
-            }) { (isFailed) in
-                
+            }) {[weak self] (isFailed) in
+                self?.onSigupFailed()
             }
         }else if viewControllerType == .login {
             CurrentUserModel.getInstance.login(username: self.usernameTextField.text!,
                 phonenumber: self.passwordTextField.text!,
                 onSuccess: {[weak self] (ostUser, ostDevice) in
                     self?.onLoginSuccess()
-            }) { (isFailed) in
-                
+            }) {[weak self] (isFailed) in
+                self?.onLoginFailed()
             }
         }
     }
@@ -297,14 +301,24 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     
     //MARK: - On Callback Complete
     func onSignupSuccess() {
+        removeProgressIndicator()
         let currentUse = CurrentUserModel.getInstance
         _ = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
                                                     passphrasePrefixDelegate: currentUse,
                                                     presenter: self)
     }
     
+    func onSigupFailed() {
+        removeProgressIndicator()
+    }
+    
     func onLoginSuccess() {
+        removeProgressIndicator()
         pushToTabBarController()
+    }
+    
+    func onLoginFailed() {
+        removeProgressIndicator()
     }
     
 
@@ -331,5 +345,25 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
 
     func pushToTabBarController() {
         UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
+    }
+    
+    func showProgressIndicator() {
+        var message: String = ""
+        if viewControllerType == .signup {
+            message = "Siging up"
+        }else if viewControllerType == .login {
+            message = "Loging in"
+        }
+        
+        if let window = UIApplication.shared.keyWindow {
+            progressIndicator = OstProgressIndicator(progressText: message)
+            window.addSubview(progressIndicator!)
+            progressIndicator?.show()
+        }
+    }
+    
+    func removeProgressIndicator() {
+        progressIndicator?.hide()
+        progressIndicator = nil
     }
 }

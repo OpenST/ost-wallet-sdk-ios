@@ -112,14 +112,6 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
         self.confirmNewPinViewController?.pushViewControllerOn(self.newPinViewController!);
     }
     
-    override func dismissPinViewController() {
-        
-    }
-    
-    public override func cleanUpPinViewController() {
-        self.sdkPinAcceptDelegate = nil;
-    }
-    
     override func cleanUp() {
         super.cleanUp();
         if ( nil != self.getPinViewController ) {
@@ -134,6 +126,6 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
     
     override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        self.getPinViewController!.removeViewController()
+        self.getPinViewController?.removeViewController()
     }
 }
