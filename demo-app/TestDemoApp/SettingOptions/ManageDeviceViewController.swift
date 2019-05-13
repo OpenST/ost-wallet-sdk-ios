@@ -66,6 +66,8 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     var paginatingViewCount = 1
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
+    
+    var updatedTableArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
     //MARK: - View LC
@@ -181,6 +183,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let isScrolling: Bool = (self.deviceTableView.isDragging) || (self.deviceTableView.isDecelerating)
         
         if !isScrolling && self.isNewDataAvailable {
+            tableDataArray = updatedTableArray
             self.deviceTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
@@ -204,7 +207,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         }
         if hardRefresh {
             meta = nil
-            tableDataArray = []
+            updatedTableArray = []
         }else if nil != meta && meta!.isEmpty {
             reloadDataIfNeeded()
             return
@@ -227,8 +230,8 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         meta = apiResponse!["meta"] as? [String: Any]
         guard let resultType = apiResponse!["result_type"] as? String else {return}
         guard let devices = apiResponse![resultType] as? [[String: Any]] else {return}
-       
-        tableDataArray.append(contentsOf: devices)
+    
+        updatedTableArray.append(contentsOf: devices)
         self.isNewDataAvailable = true
         
         reloadDataIfNeeded()
@@ -278,7 +281,6 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
                                              listner: self)
         progressIndicator?.progressText = "Revoke device initiated"
-        progressIndicator?.show()
         OstWalletSdk.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                   deviceAddressToRevoke: deviceAddress,
                                   delegate: workflowCallback)

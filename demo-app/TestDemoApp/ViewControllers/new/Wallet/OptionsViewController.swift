@@ -261,7 +261,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .showDeviceQR {
-            destinationSVVC = ShowQRCodeViewController()
+            destinationVC = ShowQRCodeViewController()
         }
         
         else if option.type == .authorizeViaQR {

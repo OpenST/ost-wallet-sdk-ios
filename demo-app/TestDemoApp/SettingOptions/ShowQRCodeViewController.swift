@@ -9,7 +9,7 @@
 import UIKit
 import OstWalletSdk
 
-class ShowQRCodeViewController: BaseSettingOptionsSVViewController {
+class ShowQRCodeViewController: BaseSettingOptionsViewController {
 
     override func getNavBarTitle() -> String {
         return "Device QR"
@@ -47,7 +47,7 @@ class ShowQRCodeViewController: BaseSettingOptionsSVViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         do {
-            guard let ostUserId = CurrentUser.getInstance().ostUserId else {return}
+            guard let ostUserId = CurrentUserModel.getInstance.ostUserId else {return}
             guard let qrCode = try OstWalletSdk.getAddDeviceQRCode(userId: ostUserId) else {
                 return
             }

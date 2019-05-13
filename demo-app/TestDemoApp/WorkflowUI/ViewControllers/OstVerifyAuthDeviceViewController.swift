@@ -68,10 +68,8 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     }
     
     func createLeadLabel() {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = OstUIKit.leadLabel()
         label.text = "You’ve a new device authorization request from the following device"
-        leadLableThemer.apply(label)
         leadLabel = label
         addSubview(label)
     }
@@ -137,7 +135,7 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     }
     
     func addLeadLabelConstraints() {
-        leadLabel?.topAlignWithParent()
+        leadLabel?.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20)
         leadLabel?.applyBlockElementConstraints(horizontalMargin: 25)
     }
     

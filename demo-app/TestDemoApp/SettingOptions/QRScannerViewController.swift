@@ -44,7 +44,7 @@ class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMeta
                     return
                 }
                 
-                let currentUser = CurrentUser.getInstance();
+                let currentUser = CurrentUserModel.getInstance
                 OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
                                              payload: qrData,
                                              delegate: strongSelf.workflowDelegate)
