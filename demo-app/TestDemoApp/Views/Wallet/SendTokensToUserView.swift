@@ -119,7 +119,7 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .unlessEditing
         textField.placeholderLabel.text = "Unit"
-        textField.text = "Atto BT";
+        textField.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
         textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()

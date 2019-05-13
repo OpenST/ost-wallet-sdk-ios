@@ -47,7 +47,7 @@ extension OstSdkInteract {
     
     public func resetPin(userId: String,
                          passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
-                         presenter:UIViewController) -> OstWorkflowDelegate {
+                         presenter:UIViewController) -> OstWorkflowCallbacks {
         
         let callback = OstRestPinWorkflowController(
             userId: userId,

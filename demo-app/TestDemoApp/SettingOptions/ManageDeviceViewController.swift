@@ -19,6 +19,7 @@ class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableVie
         case revoking
         case recovering
         case registered
+        case authorizing
     }
     
     override func getNavBarTitle() -> String {

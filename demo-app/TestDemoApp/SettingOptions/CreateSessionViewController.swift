@@ -30,7 +30,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .unlessEditing
         textField.placeholderLabel.text = "Unit"
-        textField.text = "Atto BT";
+        textField.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
         textField.font = OstFontProvider().get(size: 15)
         textField.clearButtonMode = UITextField.ViewMode.never
         return textField
@@ -210,7 +210,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     @objc func createSessionButtonTapped(_ sender: Any?) {
 //        progressIndicator?.show()
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
-        OstWalletSdk.addSession(userId: CurrentUser.getInstance().ostUserId!,
+        OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
                                 spendingLimit: self.spendingLimitTestField.text ?? "",
                                 expireAfterInSec: Double(expireAfter),
                                 delegate: self.workflowDelegate)

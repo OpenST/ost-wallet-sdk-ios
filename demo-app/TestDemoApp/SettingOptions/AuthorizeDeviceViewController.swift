@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OstWalletSdk
 
 class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
 
@@ -22,7 +23,7 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
         return view;
     }()
     let recoverWithPinButton: UIButton = {
-        let view = OstUIKit.secondaryButton()
+        let view = OstUIKit.linkButton()
         view.setTitle("Recover with PIN", for: .normal);
         return view;
     }()
@@ -45,6 +46,10 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     
     override func getLeadLabelText() -> String {
         return "We notice that this is not an authorized device. Please recover your wallet from the following options."
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     //MAKR: - Create Views
@@ -113,8 +118,32 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     
     @objc func recoverWithPinButton(_ sender: Any?) {
         let currentUser = CurrentUserModel.getInstance
-        _ = OstSdkInteract.getInstance.resetPin(userId: currentUser.ostUserId!,
+        let callback = OstSdkInteract.getInstance.resetPin(userId: currentUser.ostUserId!,
                                                 passphrasePrefixDelegate: currentUser,
                                                 presenter: self)
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: callback.workflowId, listner: self)
+    }
+    
+    func pushToTabBarController() {
+        UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
+    }
+    
+    func getAppTabBarContoller() -> TabBarViewController {
+        return TabBarViewController()
+    }
+    
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        
+        if workflowContext.workflowType == .resetPin,
+            let entity = contextEntity.entity as? OstRecoveryOwnerEntity,
+            let currentDevice = CurrentUserModel.getInstance.userDevice {
+            
+            if entity.userId?.caseInsensitiveCompare(currentDevice.userId ?? "" ) == .orderedSame
+                && entity.status?.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.authorizing.rawValue) == .orderedSame{
+                
+                pushToTabBarController()
+            }
+        }
     }
 }

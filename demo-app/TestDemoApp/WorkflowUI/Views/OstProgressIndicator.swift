@@ -83,12 +83,13 @@ class OstProgressIndicator: OstBaseView {
     }
     
     func show() {
-        guard let paretn = self.superview else {return}
+        guard let parent = self.superview else {return}
         
-        paretn.bringSubviewToFront(self)
-        self.frame = paretn.bounds
+        parent.bringSubviewToFront(self)
+        self.frame = parent.bounds
         activityIndicator.startAnimating()
         self.backgroundColor = UIColor.white
+        self.alpha = 1.0
         UIView.animate(withDuration: 0.4) {
             self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         }

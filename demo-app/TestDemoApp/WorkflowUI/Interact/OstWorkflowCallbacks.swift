@@ -25,7 +25,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     
     var uiWindow: UIWindow? = nil
     
-    func getWindow() -> UIWindow{
+    func getWindow() -> UIWindow {
         if nil == uiWindow {
             let win = UIWindow(frame: UIScreen.main.bounds)
             win.windowLevel = UIWindow.Level.alert + 1

@@ -211,7 +211,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //Let's build some json. Not the best way do it, but, works here.
             txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
         
-        progressIndicator?.show()
         let tokenHolderAddress = userDetails["token_holder_address"] as! String
         OstWalletSdk.executeTransaction(userId: CurrentUserModel.getInstance.ostUserId!,
                                         tokenHolderAddresses: [tokenHolderAddress],
@@ -242,7 +241,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transaction Rule", preferredStyle: UIAlertController.Style.actionSheet);
         
         let directTransafer = UIAlertAction(title: "BT", style: .default, handler: { (UIAlertAction) in
-            self.spendingUnitTextField.text = "BT";
+            self.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self.isUsdTx = false
         });
         actionSheet.addAction(directTransafer);
@@ -262,11 +261,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-//        progressIndicator?.close()
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-//        progressIndicator?.close()
     }
 }
