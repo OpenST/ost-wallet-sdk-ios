@@ -30,7 +30,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             let win = UIWindow(frame: UIScreen.main.bounds)
             win.windowLevel = UIWindow.Level.alert + 1
             win.makeKeyAndVisible()
-            uiWindow = win
+//            uiWindow = win
+            return win
         }
         
         return uiWindow!
@@ -80,6 +81,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.contextEntity = ostContextEntity
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
+        }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
+            delegate.dataVerified()
         }
     }
     

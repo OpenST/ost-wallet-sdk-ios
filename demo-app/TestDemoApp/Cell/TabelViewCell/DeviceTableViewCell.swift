@@ -120,7 +120,7 @@ class DeviceTableViewCell: UsersTableViewCell {
             return "Abort Recovery"
             
         case ManageDeviceViewController.DeviceStatus.revoked.rawValue:
-            return ""
+            return "Revoked"
             
         default:
             return ""

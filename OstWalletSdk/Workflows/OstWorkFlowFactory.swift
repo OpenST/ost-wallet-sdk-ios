@@ -283,4 +283,13 @@ extension OstWalletSdk {
                                                          delegate: delegate)
         logoutAllSessionsFlow.perform()
     }
+    
+    public class func revokeDevice(userId: String,
+                                   deviceAddressToRevoke: String,
+                                   delegate: OstWorkflowDelegate) {
+        let revokeDeviceFlow = OstRevokeDeviceWithQRData(userId: userId,
+                                                         deviceAddressToRevoke: deviceAddressToRevoke,
+                                                         delegate: delegate)
+        revokeDeviceFlow.perform()
+    }
 }

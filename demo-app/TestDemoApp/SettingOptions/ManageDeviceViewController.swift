@@ -237,8 +237,10 @@ class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableVie
         let status = entity["status"] as! String
         switch status.lowercased() {
         case DeviceStatus.authorized.rawValue:
-            if CurrentUserModel.getInstance.userDevice?.isStatusRegistered ?? false{
+            if CurrentUserModel.getInstance.userDevice?.isStatusRegistered ?? false {
                 initiateDeviceRecovery(entity: entity)
+            }else if CurrentUserModel.getInstance.userDevice?.isStatusAuthorized ?? false {
+                revokeDevice(deviceAddress: entity["address"] as! String)
             }
             return
         case DeviceStatus.revoked.rawValue:
@@ -263,10 +265,19 @@ class ManageDeviceViewController: BaseSettingOptionsSVViewController, UITableVie
     }
     
     func abortDeviceRecovery() {
-        progressIndicator?.progressText = "Abort device recovery initiated..."
-//        progressIndicator?.show()
-       _ = OstSdkInteract.getInstance.aboutDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+       _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                           passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                           presenter: self)
+    }
+    
+    func revokeDevice(deviceAddress: String) {
+        let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
+                                             listner: self)
+        progressIndicator?.progressText = "Revoke device initiated"
+        progressIndicator?.show()
+        OstWalletSdk.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
+                                  deviceAddressToRevoke: deviceAddress,
+                                  delegate: workflowCallback)
     }
 }

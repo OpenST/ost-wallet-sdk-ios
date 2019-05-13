@@ -59,7 +59,7 @@ extension OstSdkInteract {
         return callback;
     }
     
-    public func aboutDeviceRecovery(userId: String,
+    public func abortDeviceRecovery(userId: String,
                                     passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
                                     presenter:UIViewController) -> OstWorkflowDelegate {
         let callback = OstAbortDeviceRecoveryWorkflowController(

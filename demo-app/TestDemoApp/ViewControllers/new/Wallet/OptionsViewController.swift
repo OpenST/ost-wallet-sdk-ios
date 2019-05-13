@@ -288,7 +288,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         else if option.type == .abortRecovery {
-            _ = OstSdkInteract.getInstance.aboutDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+            _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                                presenter: self)
             self.tabbarController?.hideTabBar()
