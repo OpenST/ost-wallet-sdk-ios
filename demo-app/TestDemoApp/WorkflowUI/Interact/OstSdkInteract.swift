@@ -73,6 +73,19 @@ class OstSdkInteract {
         self.callbackListners[workflowId] = loListners
     }
     
+    func unsubscribe(forWorkflowId workflowId: String, listner: OstSdkInteractDelegate) {
+        guard var listners = callbackListners[workflowId] else {return}
+        
+        for (index, weakListner) in listners.enumerated() {
+            if let obj = weakListner.value,
+                obj === listner{
+                
+                listners.remove(at: index)
+            }
+        }
+        callbackListners[workflowId] = listners
+    }
+    
     func removeEventListners(forWorkflowId id: String) {
         self.callbackListners[id] = nil
         for (i,workflowCallback) in workflowCallbackList.enumerated() {

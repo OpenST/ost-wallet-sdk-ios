@@ -81,13 +81,10 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
     fileprivate var userPassphrasePrefix:String?
     override func setPassphrase(ostUserId: String, passphrase: String) {
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            /// TODO: (Future) Do Something here. May be cancel workflow?
-            return;
-        }
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
             self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
+            /// TODO: (Future) Do Something here. May be cancel workflow?
             return;
         }
         

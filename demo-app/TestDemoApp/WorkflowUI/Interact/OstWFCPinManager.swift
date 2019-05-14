@@ -20,6 +20,7 @@ extension OstWorkflowCallbacks {
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
+        observeViewControllerIsMovingFromParent()
         let navC = UINavigationController(rootViewController: self.getPinViewController!);
         vc.present(navC, animated: true, completion: nil)
     }

@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import OstWalletSdk
 
-class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
+
     //MAKR: - Components
     var tableView: UITableView?
     var tableHeaderView: UsersTableViewCell = {
@@ -237,9 +238,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         if userDevice.isStatusRevoked {
             abortRecovery.isEnable = false
         }
+        
+        var logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout All Sessions", isEnable: true)
+        if !userDevice.isStatusAuthorized {
+            logoutAllSession.isEnable = false
+        }
      
         let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
-                             transactionViaQR, initialRecovery, abortRecovery]
+                             transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
+        
         deviceOptions = dOptions
     }
     
@@ -302,6 +309,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
+        else if option.type == .logoutAllSessions {
+            let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance, presenter: self)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
+                                                 listner: self as! OstSdkInteractDelegate)
+            self.tabbarController?.hideTabBar()
+            return
+        }
+        
         self.tabbarController?.hideTabBar()
         
         let viewController: OstBaseViewController = destinationSVVC == nil ? destinationVC! : destinationSVVC!
@@ -326,6 +342,23 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                     }
                 }
             }
+        }
+    }
+    
+    //MARK: - OstSdkInteract Delegate
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+    }
+    
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+    }
+    
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if workflowContext.workflowType == .logoutAllSessions {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.showIntroController()
         }
     }
 }
@@ -447,9 +480,6 @@ class OptionTableHeaderView: UIView {
     }
     
     func setData(title: String = "", subtitle: String = "") {
-//        let currentUserName = CurrentUser.getInstance().userName
-//        let userTokenHolder = (CurrentUser.getInstance().currentUserData)?["token_holder_address"] as? String
-
         self.titleLabel?.text = title
         self.tokenHolderAddressLabel?.text = subtitle
         let fistLetter = title.character(at: 0)

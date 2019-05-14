@@ -12,8 +12,8 @@ import UIKit
 import MaterialComponents
 import OstWalletSdk
 
-class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate {
-
+class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
+    
     //MARK: - Components
     var testEconomyTextField: MDCTextField = {
         let testEconomyTextField = MDCTextField()
@@ -90,6 +90,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
         return TabBarViewController()
     }
     
+    var workflowCallback: OstWorkflowCallbacks? = nil
+    
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,16 +111,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? ""
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if let currentUser = CurrentUserModel.getInstance.ostUser {
-            if currentUser.isStatusActivating {
-                pushToTabBarController()
-            }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -303,9 +295,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     func onSignupSuccess() {
         removeProgressIndicator()
         let currentUse = CurrentUserModel.getInstance
-        _ = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                    passphrasePrefixDelegate: currentUse,
-                                                    presenter: self)
+        workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                                   passphrasePrefixDelegate: currentUse,
+                                                                   presenter: self)
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback!.workflowId,
+                                             listner: self)
     }
     
     func onSigupFailed() {
@@ -344,7 +338,14 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     }
 
     func pushToTabBarController() {
-        UIApplication.shared.keyWindow?.rootViewController = getAppTabBarContoller()
+        if nil != workflowCallback {
+            OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallback!.workflowId,
+                                                   listner: self)
+            workflowCallback = nil
+        }
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.showTabbarController()
     }
     
     func showProgressIndicator() {
@@ -365,5 +366,25 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate 
     func removeProgressIndicator() {
         progressIndicator?.hide()
         progressIndicator = nil
+    }
+    
+    //MARK: - OstSdkInteract Delegate
+    
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+    }
+    
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if let currentUser = CurrentUserModel.getInstance.ostUser {
+            if currentUser.isStatusActivating {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
+                    self?.pushToTabBarController()
+                }
+            }
+        }
+    }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
     }
 }

@@ -96,6 +96,9 @@
 		00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
+		4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
+		4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
+		4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B464E772271CD8C00F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
 		4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
 		4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
@@ -426,6 +429,7 @@
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
 		4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteractDelegate.swift; sourceTree = "<group>"; };
@@ -697,6 +701,7 @@
 				4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */,
 				4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */,
 				4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */,
+				4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */,
 			);
 			path = WorkflowControllers;
 			sourceTree = "<group>";
@@ -1512,6 +1517,7 @@
 				4BA4CB0D227DF2B300A623ED /* CurrentEconomy.swift in Sources */,
 				00A76B272282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BA4CB92228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
+				4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */,
 				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
@@ -1588,6 +1594,7 @@
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
+				4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
@@ -1689,6 +1696,7 @@
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
+				4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,

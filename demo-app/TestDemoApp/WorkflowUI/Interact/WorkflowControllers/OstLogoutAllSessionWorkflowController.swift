@@ -8,20 +8,16 @@
  http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import Foundation
 import UIKit
-import OstWalletSdk;
+import OstWalletSdk
 
-class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
-    
-    let recoverDeviceAddress: String
-    /// Mark - View Controllers.
-    
+class OstLogoutAllSessionWorkflowController: OstWorkflowCallbacks {
+   
     init(userId: String,
-         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
-         presenter:UIViewController,
-         recoverDeviceAddress: String) {
-       
-        self.recoverDeviceAddress = recoverDeviceAddress
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
+         presenter: UIViewController) {
+        
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
         self.getPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
@@ -39,7 +35,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
-       if ( notification.object is OstSetNewPinViewController ) {
+        if ( notification.object is OstSetNewPinViewController ) {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
             
@@ -52,19 +48,16 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     /// Mark - OstPassphrasePrefixAcceptDelegate
     fileprivate var userPassphrasePrefix:String?
     override func setPassphrase(ostUserId: String, passphrase: String) {
-   
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
             self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
+            /// TODO: (Future) Do Something here. May be cancel workflow?
             return;
         }
         
-        OstWalletSdk.initiateDeviceRecovery(userId: self.userId,
-                                            recoverDeviceAddress: self.recoverDeviceAddress,
-                                            userPin: self.userPin!,
-                                            passphrasePrefix: passphrase,
-                                            delegate: self)
+        OstWalletSdk.logoutAllSessions(userId: self.userId, delegate: self)
+        
         self.userPin = nil;
         showLoader(progressText: "Initiating device recovery");
     }

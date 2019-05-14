@@ -19,7 +19,7 @@ extension OstSdkInteract {
                              presenter:UIViewController,
                              spendingLimit: String = OstUtils.toAtto("15"),
                              expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
-        ) -> OstWorkflowDelegate {
+        ) -> OstWorkflowCallbacks {
         
         let callback = OstActivateUserWorkflowController(userId: userId,
                                                          passphrasePrefixDelegate: passphrasePrefixDelegate,
@@ -72,5 +72,19 @@ extension OstSdkInteract {
         
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback)
         return callback;
+    }
+    
+    public func logoutAllSessions(userId: String,
+                                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                                  presenter:UIViewController) -> OstWorkflowCallbacks {
+        
+        let callback = OstLogoutAllSessionWorkflowController (
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate,
+            presenter: presenter
+        )
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: callback)
+        return callback
     }
 }

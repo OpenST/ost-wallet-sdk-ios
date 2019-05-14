@@ -19,7 +19,8 @@ enum OptionType {
     manageDevices,
     transactionViaQR,
     initiateDeviceRecovery,
-    abortRecovery
+    abortRecovery,
+    logoutAllSessions
 }
 
 struct OptionVM {
