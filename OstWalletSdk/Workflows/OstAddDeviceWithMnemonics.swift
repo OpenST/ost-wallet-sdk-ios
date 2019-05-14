@@ -142,7 +142,7 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
         }
         
         OstDevicePollingService(userId: self.userId,
-                                deviceAddress: self.mnemonicsManager.address!,
+                                deviceAddress: self.currentDevice!.address!,
                                 workflowTransactionCount: self.workflowTransactionCountForPolling,
                                 successStatus: OstDevice.Status.AUTHORIZED.rawValue,
                                 failureStatus: OstDevice.Status.REGISTERED.rawValue,

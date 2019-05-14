@@ -234,6 +234,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     @objc func setupButtonTapped(_ sender: Any?) {
         
+        if nil == CurrentEconomy.getInstance.saasApiEndpoint {
+            openEconomyScanner()
+            return
+        }
+        
         if !isCorrectInputPassed() {
             return
         }
@@ -323,14 +328,14 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     //MARK: - Text Field Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField === testEconomyTextField {
-            openEconomyScanner(animation: true)
+            openEconomyScanner()
             return false
         }
         
         return true
     }
     
-    @objc func openEconomyScanner(animation flag: Bool) {
+    @objc func openEconomyScanner(animation flag: Bool = true) {
         if nil == economyScanner {
             economyScanner = EconomyScannerViewController()
         }
@@ -341,11 +346,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         if nil != workflowCallback {
             OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallback!.workflowId,
                                                    listner: self)
-            workflowCallback = nil
         }
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.showTabbarController()
+        appDelegate.showTabbarController(workflowCallback)
+        workflowCallback = nil
     }
     
     func showProgressIndicator() {

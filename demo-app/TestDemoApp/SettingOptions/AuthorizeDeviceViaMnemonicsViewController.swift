@@ -78,7 +78,6 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
     //MARK: - Button Action
     
     @objc func recoverWalletButtonTapped(_ sender: Any?) {
-        progressIndicator?.show()
         let currentUser = CurrentUserModel.getInstance
         let mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
         
@@ -93,12 +92,9 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.hide()
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.hide()
-
     }
 }

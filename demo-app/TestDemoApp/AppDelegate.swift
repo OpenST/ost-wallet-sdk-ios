@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showTabbarController(_ workflowCallback: OstWorkflowCallbacks? = nil) {
         tabbarController = TabBarViewController()
+        tabbarController!.workflowCallbacks = workflowCallback
         window?.rootViewController = tabbarController!;
         window?.makeKeyAndVisible();
         introViewController = nil

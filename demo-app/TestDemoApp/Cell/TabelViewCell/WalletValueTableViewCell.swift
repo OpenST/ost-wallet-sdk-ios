@@ -26,7 +26,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if let doubleVal:Double =  Double(val) {
              self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(String(format: "%g",doubleVal))"
         }else {
-            self.btValueLabel?.text = ""
+            self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") 0"
         }
     }
     
@@ -77,7 +77,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         btLabel.textAlignment = .center
         btLabel.minimumScaleFactor = 0.5
         btLabel.textColor = UIColor.white
-        btLabel.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") 0"
         self.btValueLabel = btLabel
         self.valueContainer?.addSubview(btLabel)
     }

@@ -10,7 +10,7 @@ import UIKit
 import OstWalletSdk
 
 class ShowQRCodeViewController: BaseSettingOptionsViewController {
-
+    
     override func getNavBarTitle() -> String {
         return "Device QR"
     }
@@ -25,6 +25,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     //MARK: - Components
     var addressTextLabel: UILabel? = nil
     var addressLabel: UILabel? = nil
+    var checkStatusButton: UIButton? = nil
     
     let containerView: UIView = {
         let view = UIView()
@@ -65,8 +66,11 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         super.addSubviews()
         createAddressTextLabel()
         createAddressLabel()
+        createCheckStatueButton()
+        
         addSubview(qrCodeImageView)
         addSubview(containerView)
+        addSubview(checkStatusButton!)
     }
     
     func createAddressTextLabel() {
@@ -93,6 +97,14 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         containerView.addSubview(label)
     }
     
+    func createCheckStatueButton() {
+        let button = OstUIKit.primaryButton()
+        button.setTitle("Check Device Status", for: .normal)
+        button.addTarget(self, action: #selector(self.checkStatusButtonTapped(_ :)), for: .touchUpInside)
+        checkStatusButton = button
+    }
+    
+    
     //MARK: - Add Constraint
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
@@ -100,6 +112,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         addAddressTextConstraints()
         addAddressConstraints()
         addContainerViewConstraints()
+        addCheckStatusButtonConstraitns()
     }
     
     func addQRImageView() {
@@ -123,5 +136,60 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         containerView.placeBelow(toItem: qrCodeImageView, multiplier: 1, constant: 25)
         containerView.applyBlockElementConstraints(horizontalMargin: 25)
         containerView.bottomAlign(toItem: addressLabel!, multiplier: 1, constant: 8)
+    }
+    
+    func addCheckStatusButtonConstraitns() {
+        checkStatusButton?.placeBelow(toItem: containerView, multiplier: 1, constant: 20)
+        checkStatusButton?.applyBlockElementConstraints()
+    }
+    
+    //MARK: - Action
+    @objc func checkStatusButtonTapped(_ sender: Any?) {
+        progressIndicator?.progressText = "Checking Device Status…"
+        UIApplication.shared.keyWindow?.addSubview(progressIndicator!)
+        progressIndicator?.show()
+        OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
+                                 tokenId: CurrentEconomy.getInstance.tokenId!,
+                                 delegate: self.workflowDelegate)
+    }
+    
+    //MAKR: - OstSdkInteract Delegate
+    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        let alert = UIAlertController(title: "Something went wrong",
+                                      message: error.errorMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        progressIndicator?.hide()
+    }
+    
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        processIfRequired(workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        processIfRequired(workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    func processIfRequired(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if workflowContext.workflowType == .setupDevice {
+            if let currentDevice = CurrentUserModel.getInstance.currentDevice,
+                (currentDevice.isStatusAuthorizing
+                    || currentDevice.isStatusRecovering
+                    || currentDevice.isStatusAuthorized) {
+                
+                progressIndicator?.progressText = "Signing into your wallet…"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+            }else {
+                let alert = UIAlertController(title: "Device not Authorized",
+                                              message: "Please authorize this device from your other authorized device",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        progressIndicator?.hide()
     }
 }

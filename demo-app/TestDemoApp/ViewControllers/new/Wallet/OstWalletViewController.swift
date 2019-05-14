@@ -402,7 +402,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
             workflowCallbacks = nil
         }
-        fetchUserWalletData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+            self?.fetchUserWalletData()
+        }
+        workflowCallbacks = nil
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {

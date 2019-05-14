@@ -16,12 +16,19 @@ enum TabBarTagEnum: Int {
 
 class TabBarViewController: UITabBarController {
     
-    var workflowCallbacks: OstWorkflowCallbacks? = nil
+    var workflowCallbacks: OstWorkflowCallbacks! {
+        didSet {
+            if let rootVC = (self.selectedViewController as? UINavigationController)?.viewControllers.first,
+                (rootVC is OstWalletViewController){
+                (rootVC as! OstWalletViewController).workflowCallbacks = workflowCallbacks
+            }
+        }
+    }
     
     var homeViewController: OstHomeViewController?
     var walletViewController: OstWalletViewController?
     var settingViewController: OptionsViewController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
@@ -59,7 +66,6 @@ class TabBarViewController: UITabBarController {
         //Wallet VC
         let walletVC = OstWalletViewController()
         walletVC.tabbarController = self
-        walletVC.workflowCallbacks = self.workflowCallbacks
         let walletNavController = UINavigationController(rootViewController: walletVC)
         walletNavController.tabBarItem = UITabBarItem(title: "Wallet",
                                                       image: UIImage(named: "walletImage"),
