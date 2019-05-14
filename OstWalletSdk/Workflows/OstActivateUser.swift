@@ -204,8 +204,8 @@ class OstActivateUser: OstWorkflowEngine {
                 )
             }
             
-            try? self.syncDeviceManager()
-            try? self.syncUser()
+            try? self.syncDeviceManager()            
+            try? self.syncCurrentDevice()
             self.postWorkflowComplete(entity: self.currentUser!)
         }
     }

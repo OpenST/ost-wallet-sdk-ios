@@ -140,7 +140,7 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
     
         let userStatuVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsViewModel(title: "User Status",
-                                            value: currentUser.status?.uppercased() ?? "",
+                                            value: currentUser.ostUser?.status?.uppercased() ?? "",
                                             themer:  statusThemer),
             type: .normal
         )
@@ -151,11 +151,12 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
             type: .normal
         )
         
+        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(currentUser.tokenHolderAddress!)"
         let tokenHolderAddressVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsWithLinkViewModel(title: "Token Holder Address",
                                                     value: currentUser.tokenHolderAddress ?? "",
                                                     themer: copyThemer,
-                                                    urlString: currentEconomy.viewEndPoint ?? ""),
+                                                    urlString: tokenHoderURL),
             type: .withLink
         )
         
@@ -172,11 +173,12 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
             type: .normal
         )
         
+         let deviceManagerURL: String = "\(currentEconomy.viewEndPoint!)address/ad-\(currentEconomy.auxiliaryChainId!)-\(currentUser.deviceManagerAddress!)"
         let deviceManagerVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsWithLinkViewModel(title: "Device Manager Address",
                                                     value: currentUser.deviceManagerAddress ?? "",
                                                     themer: copyThemer,
-                                                    urlString: currentEconomy.viewEndPoint ?? ""),
+                                                    urlString: deviceManagerURL),
             type: .withLink
         )
         
@@ -186,11 +188,12 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
             type: .withCopy
         )
         
+        let recoveryOwnerURL: String = "\(currentEconomy.viewEndPoint!)address/ad-\(currentEconomy.auxiliaryChainId!)-\(currentUser.ostUser!.recoveryOwnerAddress!)"
         let recoveryOwnerKeyVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsWithLinkViewModel(title: "Recovery Owner Address",
                                                     value: currentUser.ostUser?.recoveryOwnerAddress ?? "",
                                                     themer: copyThemer,
-                                                    urlString: currentEconomy.viewEndPoint ?? ""),
+                                                    urlString: recoveryOwnerURL),
             type: .withLink
         )
         

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import OstWalletSdk
 
-class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource {
+class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate {
     
     //MARK: - Components
     var walletTableView: UITableView = {
@@ -52,10 +53,14 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     weak var tabbarController: TabBarViewController?
     
+    var workflowCallbacks: OstWorkflowCallbacks? = nil
     
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
+        if nil != workflowCallbacks {
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
+        }
         fetchUserWalletData(hardRefresh: true)
     }
     
@@ -386,4 +391,22 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         self.isNewDataAvailable = true
         reloadDataIfNeeded()
     }
+    
+    //MARK: - OstSdkInteract Delegate
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+         workflowCallbacks = nil
+    }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if nil != workflowCallbacks {
+            OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
+            workflowCallbacks = nil
+        }
+        fetchUserWalletData()
+    }
+    
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+         workflowCallbacks = nil
+    }
+    
 }

@@ -17,7 +17,7 @@ class UserDetailsWithLinkTableViewCell: UserDetailsWithCopyBtnTableViewCell {
     }
     
     override func getButtonImage() -> UIImage {
-        return UIImage(named: "CopyImage")!
+        return UIImage(named: "viewIcon")!
     }
     
     var userDetailsWithLink: UserDetailsWithLinkViewModel! {
