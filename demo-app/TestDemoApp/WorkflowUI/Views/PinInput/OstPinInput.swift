@@ -145,7 +145,7 @@ class OstPinInput: UIView, UITextFieldDelegate {
         view.setFixedWidth(constant: dotDiameter);
         view.setFixedHeight(constant: dotDiameter);
         view.layer.cornerRadius = dotRadius;
-        view.backgroundColor = UIColor.black;
+        view.backgroundColor = dotEmptyColor;
         return view;
     }
     

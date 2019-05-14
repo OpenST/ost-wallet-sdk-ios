@@ -174,8 +174,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     func processIfRequired(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice {
             if let currentDevice = CurrentUserModel.getInstance.currentDevice,
-                (currentDevice.isStatusAuthorizing
-                    || currentDevice.isStatusRecovering
+                (currentDevice.isStatusRecovering
                     || currentDevice.isStatusAuthorized) {
                 
                 progressIndicator?.progressText = "Signing into your wallet…"
@@ -183,11 +182,13 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
                     self?.navigationController?.popToRootViewController(animated: true)
                 }
             }else {
-                let alert = UIAlertController(title: "Device not Authorized",
-                                              message: "Please authorize this device from your other authorized device",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
+                    let alert = UIAlertController(title: "Device not Authorized",
+                                                  message: "Please authorize this device from your other authorized device",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                }
             }
         }
         progressIndicator?.hide()

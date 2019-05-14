@@ -235,6 +235,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     @objc func setupButtonTapped(_ sender: Any?) {
         
         if nil == CurrentEconomy.getInstance.saasApiEndpoint {
+            self.view.endEditing(true)
             openEconomyScanner()
             return
         }
@@ -242,7 +243,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         if !isCorrectInputPassed() {
             return
         }
-        
+        self.view.endEditing(true)
         showProgressIndicator()
         
         try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint ?? "")

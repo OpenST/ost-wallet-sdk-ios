@@ -9,7 +9,7 @@
 import UIKit
 import OstWalletSdk
 
-class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
+class OstVerifyAuthDeviceViewController: OstBaseViewController {
     
     //MARK: - Variables
     var workflowContext: OstWorkflowContext? = nil
@@ -21,7 +21,6 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     var deviceInfoThemer = OstTheme.leadLabel
     
     var primaryButtonThemer = OstTheme.primaryButton
-    var secondaryButtonThemer = OstTheme.secondaryButton
 
     //MAKR: - Components
     var leadLabel: UILabel? = nil
@@ -88,7 +87,6 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     func createAddressLabel() {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "0x123"
         deviceInfoThemer.apply(label)
         label.font = deviceInfoThemer.getFontProvider().get(size: 12).bold()
         
@@ -108,11 +106,9 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
     }
     
     func createCancelButton() {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = OstUIKit.linkButton()
         button.setTitle("Deny Request", for: .normal);
         
-        secondaryButtonThemer.apply(button)
         weak var weakSelf = self
         button.addTarget(weakSelf!, action: #selector(weakSelf!.cancelDeviceTapped(_:)), for: .touchUpInside)
         cancelButton = button
@@ -129,13 +125,10 @@ class OstVerifyAuthDeviceViewController: OstBaseScrollViewController {
         addContainerViewConstraints()
         addAuthorizeDeviceButtonConstraints()
         addCancelDeviceButtonConstraints()
-
-        let lastView = cancelButton;
-        lastView!.bottomAlignWithParent(constant: -20);
     }
     
     func addLeadLabelConstraints() {
-        leadLabel?.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20)
+        leadLabel?.topAlignWithParent(multiplier: 1, constant: 20)
         leadLabel?.applyBlockElementConstraints(horizontalMargin: 25)
     }
     

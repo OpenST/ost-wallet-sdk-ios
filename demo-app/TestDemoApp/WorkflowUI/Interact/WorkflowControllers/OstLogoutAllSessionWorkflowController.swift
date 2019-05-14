@@ -59,7 +59,7 @@ class OstLogoutAllSessionWorkflowController: OstWorkflowCallbacks {
         OstWalletSdk.logoutAllSessions(userId: self.userId, delegate: self)
         
         self.userPin = nil;
-        showLoader(progressText: "Initiating device recovery");
+        showLoader(progressText: "Logging out...");
     }
     
     /// Mark - OstPinAcceptDelegate

@@ -53,10 +53,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createGeneralOptionsArray()
-        createDeviceOptionsArray()
-        tableView?.reloadData()
+        setupTableViewModels()
         self.tabbarController?.showTabBar()
+        
+        getDeviceStatus()
     }
     
     @objc override func tappedBackButton() {
@@ -178,6 +178,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
+    func setupTableViewModels() {
+        createGeneralOptionsArray()
+        createDeviceOptionsArray()
+        tableView?.reloadData()
+    }
+    
     func createGeneralOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
         let userDevice = currentUser.currentDevice!;
@@ -278,7 +284,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         else if option.type == .authorizeViaQR {
-            destinationSVVC = QRScannerViewController()
+            destinationVC = QRScannerViewController()
         }
         
         else if option.type == .createSession {
@@ -314,7 +320,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                                                 passphrasePrefixDelegate: CurrentUserModel.getInstance, presenter: self)
             OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
                                                  listner: self as! OstSdkInteractDelegate)
-            self.tabbarController?.hideTabBar()
+            return
+        }
+        
+        if nil == destinationVC && nil == destinationSVVC {
             return
         }
         
@@ -348,7 +357,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MARK: - OstSdkInteract Delegate
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        
+        if workflowContext.workflowType == .setupDevice {
+            setupTableViewModels()
+        }
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
@@ -360,6 +371,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.showIntroController()
         }
+    }
+    
+    func getDeviceStatus() {
+        let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
+                                             listner: self)
+        OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
+                                 tokenId: CurrentEconomy.getInstance.tokenId!,
+                                 delegate: workflowDelegate)
     }
 }
 

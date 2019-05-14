@@ -11,7 +11,7 @@ import AVFoundation
 import OstWalletSdk
 
 
-class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     //MARK: - Components
     var scanner: OstScannerView? = nil
@@ -23,6 +23,16 @@ class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMeta
         return "Scan the QR code to procced"
     }
     
+    var bottomLabel: UILabel = {
+        let view = OstUIKit.leadLabel()
+        view.textColor = UIColor.white
+        view.backgroundColor = UIColor.color(22, 141, 193)
+        view.textAlignment = .center
+        view.text = "Scanning in progress…"
+        return view
+    }()
+    
+    
     //MARK: - View LC
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -33,6 +43,7 @@ class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMeta
     override func addSubviews() {
         super.addSubviews()
         addScannerView()
+         addSubview(bottomLabel)
     }
     
     func addScannerView() {
@@ -62,15 +73,19 @@ class QRScannerViewController: BaseSettingOptionsSVViewController, AVCaptureMeta
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
         addViewPreviewConstraints()
-        
-        let lastView = scanner!
-        lastView.bottomAlignWithParent()
+        addBottomLabelConstraints()
     }
     
     func addViewPreviewConstraints() {
         scanner?.placeBelow(toItem: leadLabel)
-        scanner?.setW375Width(width: 375)
-        scanner?.setAspectRatio(width: 375, height: 493)
+        scanner?.applyBlockElementConstraints(horizontalMargin: 0)
+        scanner?.bottomFromTopAlign(toItem: bottomLabel)
+    }
+    
+    func addBottomLabelConstraints() {
+        bottomLabel.bottomAlignWithParent()
+        bottomLabel.applyBlockElementConstraints(horizontalMargin: 0)
+        bottomLabel.setFixedHeight(constant: 65)
     }
     
     //MARK: - OstWalletSdk Workflow delegate
