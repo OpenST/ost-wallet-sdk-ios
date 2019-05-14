@@ -105,22 +105,22 @@ class DeviceTableViewCell: UsersTableViewCell {
         switch (deviceDetails["status"] as! String).lowercased() {
         case ManageDeviceViewController.DeviceStatus.authorized.rawValue:
             if currentUserDevice.isStatusAuthorized {
-                return "Revoke"
+                return "Remove Device"
             }else if currentUserDevice.isStatusRegistered {
-                return "Initiate Recovery"
+                return "Start Recovery"
             }
             
         case ManageDeviceViewController.DeviceStatus.recovering.rawValue:
-            return "Abort Recovery"
+            return "Stop Recovery"
             
         case ManageDeviceViewController.DeviceStatus.registered.rawValue:
-            return "Initiate Recovery"
+            return "Start Recovery"
             
         case ManageDeviceViewController.DeviceStatus.revoking.rawValue:
-            return "Abort Recovery"
+            return "Stop Recovery"
             
         case ManageDeviceViewController.DeviceStatus.revoked.rawValue:
-            return "Revoked"
+            return "Removed"
             
         default:
             return ""
