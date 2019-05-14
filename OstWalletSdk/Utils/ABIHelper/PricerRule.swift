@@ -22,7 +22,8 @@ class PricerRule: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: abiMethodName)
         if (abiObject == nil) {
-            throw OstError("u_ah_tr_gdted_1", "ABI for \(abiMethodName) is not available.")
+            throw OstError("u_ah_tr_gdted_1",
+                           msg: "ABI for \(abiMethodName) is not available.")
         }
         //from eth address
         let fromEthAddress = try EthereumAddress(hex:from, eip55: false)

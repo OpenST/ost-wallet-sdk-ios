@@ -13,6 +13,7 @@ xcuserdata/
 
 #Demo-App
 demo-app/TestDemoApp/Info.plist
+demo-app/TestDemoApp/ServerURLs.swift
 
 #Carthage
 Carthage/

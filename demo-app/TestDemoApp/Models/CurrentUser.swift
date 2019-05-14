@@ -31,7 +31,8 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     var userDevice: OstDevice?;
     var ostUser: OstUser?;
     var currentDeviceAddress: String?
-    var userName: String?
+    var userName: String? = ""
+    var phoneNumber: String? = ""
     var currentUserData: [String: Any]?
   
   override init() {
@@ -51,6 +52,7 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     self.currentUserData = nil
   }
     
+
   func signUp(username:String , phonenumber:String, userDescription:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
     
     var params: [String: Any] = [:];
@@ -74,14 +76,18 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     }
     
     self.userName = username
-  
+    self.phoneNumber = phonenumber
 //    var params: [String: Any] = [:];
     params["username"] = username;
     params["mobile_number"] = phonenumber;
     params["description"] = userDescription;
     params["create_ost_user"] = "true";
     
-    self.post(resource: "/users", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.post(resource: "/users",
+              params: params as [String : AnyObject],
+              onSuccess: { (appApiResponse: [String : Any]?) in
+                
+        self.userName = username
       self.appUserId = appApiResponse!["app_user_id"] as? String;
       self.ostUserId = appApiResponse!["user_id"] as? String;
       self.tokenId = appApiResponse!["token_id"] as? String;
@@ -94,6 +100,7 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     }
   }
   
+
   func login(username:String , phonenumber:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void) ) {
     
     var params: [String: Any] = [:];
@@ -118,12 +125,18 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
       return;
     }
     self.userName = username
+    self.phoneNumber = phonenumber
     
 //    var params: [String: Any] = [:];
     params["username"] = username;
     params["mobile_number"] = phonenumber;
     
-    self.post(resource: "/users/validate", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.post(resource: "/users/validate",
+              params: params as [String : AnyObject],
+              onSuccess: { (appApiResponse: [String : Any]?) in
+                
+        self.userName = username
+        self.phoneNumber = phonenumber
         self.appUserId = appApiResponse!["app_user_id"] as? String;
         self.ostUserId = appApiResponse!["user_id"] as? String;
         self.tokenId = appApiResponse!["token_id"] as? String;
@@ -136,11 +149,15 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
     })
   }
   
-  func getOstUser(appUserId:String, onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
+  func getOstUser(appUserId:String,
+                  onSuccess: @escaping ((OstUser, OstDevice) -> Void),
+                  onComplete:@escaping ((Bool)->Void)) {
     
     let params: [String: Any] = [:];
     
-    self.get(resource: "/users/\(appUserId)/ost-users", params: params as [String : AnyObject], onSuccess: { (appApiResponse: [String : Any]?) in
+    self.get(resource: "/users/\(appUserId)/ost-users",
+             params: params as [String : AnyObject],
+             onSuccess: { (appApiResponse: [String : Any]?) in
 
       self.appUserId = appApiResponse!["app_user_id"] as? String;
       self.ostUserId = appApiResponse!["user_id"] as? String;
@@ -172,10 +189,10 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
           let userDevice = ostContextEntity.entity as! OstDevice;
           self.currentDeviceAddress = userDevice.address;
           self.userDevice = userDevice;
+
             self.ostUser = OstWalletSdk.getUser(self.ostUserId!);
             print("onSuccess triggered for ", eventType);
             onSuccess(self.ostUser!, self.userDevice!);
-
         }
         //Callback onComplete with true.
         onComplete(true);

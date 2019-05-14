@@ -13,8 +13,15 @@ import Foundation
 public class OstError: Error {
     
     public internal(set) var isApiError = false
-    
-    public let internalCode:String
+    private var _internalCode: String = ""
+    public var internalCode:String {
+        set(code) {
+//            _internalCode = "v\(OstBundle.getSdkVersion())_\(code)"
+            _internalCode = code
+        }get {
+            return _internalCode
+        }
+    }
     public let errorMessage:String
     public let messageTextCode:OstErrorText;
     
@@ -23,25 +30,26 @@ public class OstError: Error {
     }
     public var errorInfo: [String: Any]? = nil
 
+
     public init(_ code: String, _ messageTextCode: OstErrorText) {
-        self.internalCode = code
         self.errorMessage = messageTextCode.rawValue
-        self.messageTextCode = messageTextCode;
+        self.messageTextCode = messageTextCode
+        self.internalCode = code
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
-    init(_ code: String, _ errorMessage: String) {
-        self.internalCode = code
+    init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
+        self.internalCode = code
     }
     
     public init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
-        self.internalCode = err["code"] as! String
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
+        self.internalCode = err["code"] as! String
     }
 }
 
@@ -138,9 +146,9 @@ public enum OstErrorText: String {
     case conversionFactorNotFound = "Conversion factor not present."
     case btDecimalNotFound = "Decimal value not found"
     case keyNotFound = "Key not found"
-    case failedToReadOstSdkPlist = "Failed to read configurations from OstWalletSdk.plist"
     case insufficientData = "Insufficient data"
     case invalidSpendingLimit = "Spending limit provided is invalid. Spending limit should be in atto BT and can not be decimal value. Please inspect the value being sent is correct and not null, rectify and re-submit."
+    case unknown = "Unknown error"
     case solidityTypeNotSupported = "Solidity Shar3 type not supported. Supported types are bytes, sting, bool, address, uint."
     
     //API-Errors

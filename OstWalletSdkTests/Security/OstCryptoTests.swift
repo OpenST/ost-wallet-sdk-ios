@@ -35,10 +35,16 @@ class OstCryptoTests: XCTestCase {
     func testGenerateOstWalletKeys() {
         let expectedSignedTx = "0x34daffa295320477d88e6b9597f97cd3a852de50fc471a6b39a5525a2b00459d47d43367f48d24ac9f8f986bb0b4e1b349eb7ab9dc028a4f5d0d2f0909acd5611c"
         do {
-//            let OstCrypto = OstCryptoImpls()
-//            let walletKeys = try OstCrypto.generateOstWalletKeys()
-//            let txHash = getEIP1077TxHash()
-//            XCTAssertEqual(txHash, "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
+            let OstCrypto = OstCryptoImpls()
+            let walletKeys = try OstCrypto
+                .generateOstWalletKeys(
+                    userId: "d54ef261-a1e3-409a-85bd-6b80008a2098",
+                    forKeyType: .device
+                    )
+            
+            let txHash = getEIP1077TxHash()
+            XCTAssertEqual(txHash, "0xc11e96ba445075d92706097a17994b0cc0d991515a40323bf4c0b55cb0eff751")
+
 //            let signedTx = try OstCryptoImpls().signTx(txHash, withPrivatekey: walletKeys.privateKey!)
 //            OstKeyManager(userId: "1").si
 //            XCTAssertEqual(expectedSignedTx, signedTx)

@@ -46,7 +46,7 @@ class OstAPITokenHolder: OstAPIBase{
                 }
         },
              onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstError(fromApiResponse: failureResponse!))
         }
         )
     }
@@ -78,7 +78,7 @@ class OstAPITokenHolder: OstAPIBase{
                 }
         },
             onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstError(fromApiResponse: failureResponse!))
         }
         )
     }

@@ -10,11 +10,11 @@
 
 import Foundation
 
-class OstAbortDeviceRecovery: OstWorkflowBase {
+class OstAbortDeviceRecovery: OstWorkflowEngine {
     static private let ostAbortDeviceRecoveryQueue = DispatchQueue(label: "com.ost.sdk.OstAbortDeviceRecovery", qos: .background)
     private let workflowTransactionCountForPolling = 1
+    private let pinManager: OstPinManager
     
-    private var pinManager: OstPinManager? = nil
     private var signature: String? = nil
     private var signer: String? = nil
     private var recoveringDevice: OstDevice? = nil
@@ -32,10 +32,12 @@ class OstAbortDeviceRecovery: OstWorkflowBase {
          passphrasePrefix: String,
          delegate: OstWorkflowDelegate) {
         
+        self.pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: userId,
+                              passphrasePrefix: passphrasePrefix,
+                              userPin: userPin)
         super.init(userId: userId, delegate: delegate)
-        self.pinManager = OstPinManager(userId: self.userId,
-                                        passphrasePrefix: passphrasePrefix,
-                                        userPin: userPin)
+        
     }
     
     /// Get workflow Queue
@@ -45,13 +47,29 @@ class OstAbortDeviceRecovery: OstWorkflowBase {
         return OstAbortDeviceRecovery.ostAbortDeviceRecoveryQueue
     }
     
-    /// process
+    /// Validate params
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func validateParams() throws {
+        try super.validateParams()
+        try self.pinManager.validatePin()
+        try self.pinManager.validatePassphrasePrefixLength()
+    }
+    
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    /// Abort device recovery after device validated.
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         try fetchPendingRecovery()
         
-        let signedData = try self.pinManager!
+        let signedData = try self.pinManager
             .signAbortRecoverDeviceData(recoveringDevice: self.recoveringDevice!,
                                         revokingDevice: self.revokingDevice!)
         

@@ -13,15 +13,11 @@ import Alamofire
 
 class BaseModel {
     
-    static let MAPPY_APP_SERVER_URL = Bundle.main.infoDictionary!["MAPPY_APP_SERVER_URL"] as! String
-    static let OST_PLATFORM_API_ENDPOINT = Bundle.main.infoDictionary!["OST_PLATFORM_API_ENDPOINT"] as! String
-    
-  static let TOKEN_ID = "58";
   func post(resource:String, params: [String: AnyObject]?,
             onSuccess: (([String: Any]?) -> Void)?,
             onFailure: (([String: Any]?) -> Void)?) {
         
-    let url = BaseModel.MAPPY_APP_SERVER_URL + resource
+    let url = BaseAPI.mappyServerURL + resource
     
     let dataRequest = Alamofire.request(url, method: .post, parameters: params)
     dataRequest.responseJSON { (httpResonse) in
@@ -41,7 +37,7 @@ class BaseModel {
            onSuccess: (([String: Any]?) -> Void)?,
            onFailure: (([String: Any]?) -> Void)?) {
     
-    let url = BaseModel.MAPPY_APP_SERVER_URL + resource
+    let url = BaseAPI.mappyServerURL + resource
     
     let dataRequest = Alamofire.request(url, method: .get, parameters: params)
     dataRequest.responseJSON { (httpResonse) in

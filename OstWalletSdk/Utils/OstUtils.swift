@@ -44,7 +44,7 @@ public class OstUtils {
                                      encoding: .ascii)
             return theJSONText
         }
-        throw OstError.init("u_u_tjs_1", .jsonConversionFailed)
+        throw OstError("u_u_tjs_1", .jsonConversionFailed)
     }
     
     public class func toJSONObject(_ val: String) throws -> Any {

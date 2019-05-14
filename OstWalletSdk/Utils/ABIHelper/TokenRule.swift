@@ -17,7 +17,8 @@ class TokenRule: ABIHelperBase {
         
         let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: abiMethodName)
         if (abiObject == nil) {
-            throw OstError("u_ah_tr_gdted_1", "ABI for \(abiMethodName) is not available.")
+            throw OstError("u_ah_tr_gdted_1",
+                           msg: "ABI for \(abiMethodName) is not available.")
         }
         
         var ethereumAddresses : [EthereumAddress] = []

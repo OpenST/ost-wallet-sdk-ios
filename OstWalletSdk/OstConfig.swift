@@ -36,7 +36,7 @@ import Foundation
  */
 
 class OstConfig {
- 
+    
     private static let plistFileName = "OstWalletSdk"
     private static var blockGenerationTime: Int?
     private static var pricePointTokenSymbol: String?
@@ -47,80 +47,76 @@ class OstConfig {
     private static var useSeedPassword: Bool = false
     
     class func loadConfig() throws {
-        do {
-            let generationTime = try OstBundle
-                .getApplicationPlistContent(
-                    for: "BlockGenerationTime",
-                    fromFile: plistFileName
-                ) as! Int
-            blockGenerationTime = generationTime
-            
-            let tokenSymbol = try OstBundle
-                .getApplicationPlistContent(
-                    for: "PricePointTokenSymbol",
-                    fromFile: plistFileName
-                ) as! String
-            pricePointTokenSymbol = tokenSymbol
-            
-            let currencySymbol = try OstBundle
-                .getApplicationPlistContent(
-                    for: "PricePointCurrencySymbol",
-                    fromFile: plistFileName
-                ) as! String
-            pricePointCurrencySymbol = currencySymbol
-            
-            let timeoutDuration = try OstBundle
-                .getApplicationPlistContent(
-                    for: "RequestTimeoutDuration",
-                    fromFile: plistFileName
-                ) as! Int
-            requestTimeoutDuration = timeoutDuration
-            
-            let maxRetryCount = try OstBundle
-                .getApplicationPlistContent(
-                    for: "PinMaxRetryCount",
-                    fromFile: plistFileName
-                ) as! Int
-            pinMaxRetryCount = maxRetryCount
-            
-            let bufferTime = try OstBundle
-                .getApplicationPlistContent(
-                    for: "SessionBufferTime",
-                    fromFile: plistFileName
-                ) as! Double
-            sessionBufferTime = bufferTime
-            
-            useSeedPassword = try OstBundle
-                .getApplicationPlistContent(
-                    for: "UseSeedPassword",
-                    fromFile: plistFileName
-                ) as! Bool
-            
-        } catch {
-            throw OstError("oc_lc_1", .failedToReadOstSdkPlist)
-        }
+        let generationTime = try OstBundle
+            .getApplicationPlistContent(
+                for: "BlockGenerationTime",
+                fromFile: plistFileName
+            ) as! Int
+        blockGenerationTime = generationTime
+        
+        let tokenSymbol = try OstBundle
+            .getApplicationPlistContent(
+                for: "PricePointTokenSymbol",
+                fromFile: plistFileName
+            ) as! String
+        pricePointTokenSymbol = tokenSymbol
+        
+        let currencySymbol = try OstBundle
+            .getApplicationPlistContent(
+                for: "PricePointCurrencySymbol",
+                fromFile: plistFileName
+            ) as! String
+        pricePointCurrencySymbol = currencySymbol
+        
+        let timeoutDuration = try OstBundle
+            .getApplicationPlistContent(
+                for: "RequestTimeoutDuration",
+                fromFile: plistFileName
+            ) as! Int
+        requestTimeoutDuration = timeoutDuration
+        
+        let maxRetryCount = try OstBundle
+            .getApplicationPlistContent(
+                for: "PinMaxRetryCount",
+                fromFile: plistFileName
+            ) as! Int
+        pinMaxRetryCount = maxRetryCount
+        
+        let bufferTime = try OstBundle
+            .getApplicationPlistContent(
+                for: "SessionBufferTime",
+                fromFile: plistFileName
+            ) as! Double
+        sessionBufferTime = bufferTime
+        
+        useSeedPassword = try OstBundle
+            .getApplicationPlistContent(
+                for: "UseSeedPassword",
+                fromFile: plistFileName
+            ) as! Bool
     }
-
+    
+    //MARK: - Getter
     class func getBlockGenerationTime() -> Int {
         return blockGenerationTime!
     }
-
+    
     class func getPricePointTokenSymbol() -> String {
         return pricePointTokenSymbol!
     }
-
+    
     class func getPricePointCurrencySymbol() -> String {
         return pricePointCurrencySymbol!
     }
-
+    
     class func getRequestTimeoutDuration() -> Int {
         return requestTimeoutDuration!
     }
-
+    
     class func getPinMaxRetryCount() -> Int {
         return pinMaxRetryCount!
     }
-
+    
     class func getSessionBufferTime() -> Double {
         return sessionBufferTime!
     }
@@ -128,5 +124,4 @@ class OstConfig {
     class func shouldUseSeedPassword() -> Bool {
         return useSeedPassword
     }
-    
 }

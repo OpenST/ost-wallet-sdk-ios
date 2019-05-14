@@ -35,14 +35,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MAPPY_APP_SERVER_URL</key>
-	<string>https://localhost:7000/api</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Applications uses camera to scan QR-Code</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Applications uses Face ID to verify your identity</string>
-	<key>OST_PLATFORM_API_ENDPOINT</key>
-	<string>https://localhost:7001/testnet/v2</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -85,6 +85,20 @@ class UserDetailsView: BaseWalletWorkflowView {
         textField.placeholderLabel.text = "Kit End Point";
         return textField;
     }()
+    
+    let userNameTF: MDCTextField = {
+        let textField = MDCTextField();
+        textField.translatesAutoresizingMaskIntoConstraints = false;
+        textField.placeholderLabel.text = "User Name";
+        return textField;
+    }()
+    
+    let phoneNumberTF: MDCTextField = {
+        let textField = MDCTextField();
+        textField.translatesAutoresizingMaskIntoConstraints = false;
+        textField.placeholderLabel.text = "Phone number";
+        return textField;
+    }()
 
     let deviceStatusTF: MDCTextField = {
         let textField = MDCTextField();
@@ -97,7 +111,7 @@ class UserDetailsView: BaseWalletWorkflowView {
     var textFields:[MDCTextField] = [];
     
     override func addSubViews() {
-        textFields = [kitEndPointTF,userIdTF, userStatusTF, tokenIdTF, tokenHolderTF, deviceManagerTF,
+        textFields = [kitEndPointTF, userNameTF, phoneNumberTF, userIdTF, userStatusTF, tokenIdTF, tokenHolderTF, deviceManagerTF,
                       recoveryAddressTF, recoveryOwnerAddressTF, deviceAddressTF, deviceStatusTF];
         for textField in textFields {
             self.addSubview(textField);
@@ -166,6 +180,7 @@ class UserDetailsView: BaseWalletWorkflowView {
         OstWalletSdk.setupDevice(userId: currentUser.ostUserId!,
                                  tokenId: currentUser.tokenId!,
                                  delegate: self.workflowCallback);
+
     }
 
 //    override func receivedSdkEvent(eventData: [String : Any]) {
@@ -202,8 +217,11 @@ class UserDetailsView: BaseWalletWorkflowView {
             let currentUser = CurrentUser.getInstance();
             let ostUser = OstWalletSdk.getUser(currentUser.ostUserId!)
             let ostCurrentDevice = ostUser!.getCurrentDevice()
+
             
             kitEndPointTF.text = OstWalletSdk.getApiEndPoint()
+            userNameTF.text = currentUser.userName
+            phoneNumberTF.text = currentUser.phoneNumber
             userIdTF.text = ostUser?.id;
             userStatusTF.text = ostUser?.status;
             tokenIdTF.text = ostUser?.tokenId;
@@ -217,6 +235,5 @@ class UserDetailsView: BaseWalletWorkflowView {
             self.nextButton.isHidden = true;
             self.cancelButton.isHidden = true;
             self.logsTextView.isHidden = true;
-
     }
 }

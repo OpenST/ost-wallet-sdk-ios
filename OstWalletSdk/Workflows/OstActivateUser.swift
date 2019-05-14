@@ -10,7 +10,8 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowBase {
+class OstActivateUser: OstWorkflowEngine {
+    
     static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 2
     private let spendingLimit: String
@@ -24,7 +25,7 @@ class OstActivateUser: OstWorkflowBase {
     /// - Parameters:
     ///   - userId: User id
     ///   - userPin: User pin
-    ///   - passphrasePrefix: Passphrase prefix provied by application server
+    ///   - passphrasePrefix: Passphrase prefix provided by application server
     ///   - spendingLimit: Maximum spending limit of transaction
     ///   - expireAfter: Relative time
     ///   - delegate: Callback
@@ -40,9 +41,10 @@ class OstActivateUser: OstWorkflowBase {
         
         super.init(userId: userId, delegate: delegate)
         
-        self.pinManager = OstPinManager(userId: self.userId,
-                                        passphrasePrefix: passphrasePrefix,
-                                        userPin: userPin)
+        self.pinManager = OstKeyManagerGateway
+            .getOstPinManager(userId: self.userId,
+                              passphrasePrefix: passphrasePrefix,
+                              userPin: userPin)
     }
     
     /// Get workflow queue.
@@ -61,37 +63,52 @@ class OstActivateUser: OstWorkflowBase {
         try self.pinManager!.validatePinLength()
         try self.pinManager!.validatePassphrasePrefixLength()
         
-        //Current user validation is done in super
-        if self.currentUser!.isStatusActivated {
-            throw OstError("w_au_vp_1", .userAlreadyActivated)
-        }
-        //Current device validation is done in super
-        if self.currentDevice!.isStatusAuthorized {
-            throw OstError("w_au_vp_2", .deviceAuthorized)
-        }
-        
         if  0 > self.expireAfter {
-            throw OstError.init("w_au_vp_3",
-                                "Expiration time should be greater than 0")
+            throw OstError("w_au_vp_1",
+                                msg: "Expiration time should be greater than 0")
         }
         
         do {
-            try self.workFlowValidator!.isValidNumber(input: self.spendingLimit)
+            try isValidNumber(input: self.spendingLimit)
         }catch {
-            throw OstError("w_au_vp_4", .invalidSpendingLimit)
-        }
-        
-        if (!self.currentDevice!.isStatusRegistered &&
-            (self.currentDevice!.isStatusRevoking ||
-                self.currentDevice!.isStatusRevoked )) {
-            throw OstError("w_au_vp_5", "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_vp_2", .invalidSpendingLimit)
         }
     }
     
-    /// process
+    /// Perfrom user device validation
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        //Current user validation is done in super
+        if self.currentUser!.isStatusActivated {
+            throw OstError("w_au_pudv_1", .userAlreadyActivated)
+        }
+        //Current device validation is done in super
+        if self.currentDevice!.isStatusAuthorized {
+            throw OstError("w_au_pudv_2", .deviceAuthorized)
+        }
+        
+        if (!self.currentDevice!.isStatusRegistered
+            && (self.currentDevice!.isStatusRevoking
+                || self.currentDevice!.isStatusRevoked)) {
+            throw OstError("w_au_pudv_3",
+                           msg: "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+        }
+    }
+    
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    /// Activate user on device validated
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         if (self.currentUser!.isStatusActivating) {
             self.pollingForActivatingUser(self.currentUser!)
             return
@@ -99,19 +116,18 @@ class OstActivateUser: OstWorkflowBase {
         
         self.recoveryAddress = self.pinManager?.getRecoveryOwnerAddress()
         if (nil == self.recoveryAddress) {
-            throw OstError.init("w_au_p_1", .recoveryAddressNotFound)
+            throw OstError("w_au_odv_1", .recoveryAddressNotFound)
         }
         
         self.sessionData = try OstSessionHelper(
-                userId: self.userId,
-                expiresAfter: self.expireAfter,
-                spendingLimit: self.spendingLimit
+            userId: self.userId,
+            expiresAfter: self.expireAfter,
+            spendingLimit: self.spendingLimit
             ).getSessionData()
         
         try self.activateUser()
     }
-    
-    
+
     /// Activate user
     ///
     /// - Throws: OstError
@@ -158,7 +174,7 @@ class OstActivateUser: OstWorkflowBase {
     private func pollingForActivatingUser(_ ostUser: OstUser) {
         
         let successCallback: ((OstUser) -> Void) = { ostUser in
-            self.sync()
+            self.onPollingSuccess()
         }
         let failureCallback:  ((OstError) -> Void) = { error in
             self.postError(error)
@@ -174,32 +190,24 @@ class OstActivateUser: OstWorkflowBase {
             ).perform()
     }
     
-    
-    /// Sync entities that were updated in activate user process
-    private func sync() {
-        if (self.sessionData?.sessionAddress != nil) {
-            try? OstAPISession(userId: self.userId)
-                .getSession(
-                    sessionAddress: self.sessionData!.sessionAddress,
-                    onSuccess: nil,
-                    onFailure: nil
+    /// Fetch updated entities from server
+    /// In that case, we are fetching session, device manager, user
+    func onPollingSuccess() {
+        let queue = DispatchQueue(label: "com.ost.onPollingSuccess", qos: .userInitiated)
+        queue.async {
+            if (self.sessionData?.sessionAddress != nil) {
+                try? OstAPISession(userId: self.userId)
+                    .getSession(
+                        sessionAddress: self.sessionData!.sessionAddress,
+                        onSuccess: nil,
+                        onFailure: nil
                 )
-        }
-        
-        try? OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: nil,
-                onFailure: nil
-            )
-
-        OstSdkSync(
-            userId: self.userId,
-            forceSync: true,
-            syncEntites: .CurrentDevice,
-            onCompletion: { (_) in
-                self.postWorkflowComplete(entity: self.currentUser!)
             }
-        ).perform()
+            
+            try? self.syncDeviceManager()
+            try? self.syncUser()
+            self.postWorkflowComplete(entity: self.currentUser!)
+        }
     }
     
     /// Get current workflow context

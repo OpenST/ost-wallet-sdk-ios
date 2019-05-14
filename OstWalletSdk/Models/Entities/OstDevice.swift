@@ -73,6 +73,17 @@ public class OstDevice: OstBaseEntity {
     override func getParentIdKey() -> String {
         return OstDevice.ENTITY_PARENT_IDENTIFIER
     }
+    
+    /// Check can make api call
+    ///
+    /// - Returns: `true` if api call possible else `false`
+    func canMakeApiCall() -> Bool {
+        return self.isStatusAuthorized
+        || self.isStatusRegistered
+        || self.isStatusAuthorizing
+        || self.isStatusRecovering
+        || self.isStatusRevoking
+    }
 }
 
 public extension OstDevice {

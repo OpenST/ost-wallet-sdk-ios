@@ -15,6 +15,8 @@ class OstPinManager {
     private let userId: String
     private let passphrasePrefix: String
     private let userPin: String
+    private let keyManagareDelegate: OstKeyManagerDelegate
+    
     private var newUserPin: String? = nil
     private var salt: String? = nil
     
@@ -28,12 +30,14 @@ class OstPinManager {
     init(userId: String,
          passphrasePrefix: String,
          userPin: String,
-         newUserPin: String? = "") {
+         newUserPin: String? = "",
+         keyManagareDelegate: OstKeyManagerDelegate) {
         
         self.userId = userId
         self.passphrasePrefix = passphrasePrefix
         self.userPin = userPin
         self.newUserPin = newUserPin
+        self.keyManagareDelegate = keyManagareDelegate
     }
     
     /// Validate user pin length
@@ -41,9 +45,9 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePinLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vpl_1",
-                "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                msg: "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }
@@ -52,9 +56,9 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePassphrasePrefixLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.passphrasePrefix.count {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vpwdl_1",
-                "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
+                msg: "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
             )
         }
     }
@@ -66,13 +70,14 @@ class OstPinManager {
     func validatePin() throws{
         try self.validate()
         let user = try self.fetchUser()
-        
-        let isValid = OstKeyManager(userId: self.userId)
-            .verifyPin(
-                passphrasePrefix: self.passphrasePrefix,
-                userPin: self.userPin,
-                salt: self.salt!,
-                recoveryOwnerAddress: user.recoveryOwnerAddress!
+        if nil == user.recoveryOwnerAddress {
+            throw OstError("s_ecki_pm_vp_1", .recoveryOwnerAddressNotFound)
+        }
+        let isValid = self.keyManagareDelegate
+            .verifyPin(passphrasePrefix: self.passphrasePrefix,
+                       userPin: self.userPin,
+                       salt: self.salt!,
+                       recoveryOwnerAddress: user.recoveryOwnerAddress!
         )
         if !isValid {
             throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
@@ -97,7 +102,7 @@ class OstPinManager {
             try self.validatePassphrasePrefixLength()
             try self.fetchSalt()
             try self.validateSaltLength()
-            return try OstKeyManager(userId: self.userId)
+            return try self.keyManagareDelegate
                 .getRecoveryOwnerAddressFrom(
                     passphrasePrefix: self.passphrasePrefix,
                     userPin: self.userPin,
@@ -117,7 +122,7 @@ class OstPinManager {
             try self.validatePassphrasePrefixLength()
             try self.validateSaltLength()
             try self.fetchSalt()
-            return try OstKeyManager(userId: self.userId)
+            return try self.keyManagareDelegate
                 .getRecoveryOwnerAddressFrom(
                     passphrasePrefix: self.passphrasePrefix,
                     userPin: self.newUserPin!,
@@ -132,7 +137,7 @@ class OstPinManager {
     ///
     /// - Throws: OstError
     func clearPinHash() throws {
-        try OstKeyManager(userId: self.userId).deletePinHash()
+        try self.keyManagareDelegate.deletePinHash()
     }
 
     /// Get signed data for pin reset
@@ -140,7 +145,7 @@ class OstPinManager {
     /// - Parameter newRecoveryOwnerAddress: New recovery owner address
     /// - Returns: SignedData
     /// - Throws: OstError
-    func signResetPinData(newRecoveryOwnerAddress: String) throws -> OstKeyManager.SignedData {
+    func signResetPinData(newRecoveryOwnerAddress: String) throws -> OstKeyManagerDelegate.SignedData {
         guard let user = try OstUser.getById(self.userId) else {
             throw OstError("w_wh_pm_srpd_1", .userEntityNotFound)
         }
@@ -169,7 +174,7 @@ class OstPinManager {
         
         let signingHash = try! eip712.getEIP712Hash()
         
-        let signedData = try OstKeyManager(userId: self.userId)
+        let signedData = try self.keyManagareDelegate
             .signWithRecoveryKey(
                 tx: signingHash,
                 userPin: self.userPin,
@@ -189,7 +194,7 @@ class OstPinManager {
     /// - Parameter deviceAddressToRecover: Device address that needs to be recovered
     /// - Returns: SignedData
     /// - Throws: OstError
-    func signRecoverDeviceData(deviceAddressToRecover: String) throws -> OstKeyManager.SignedData {
+    func signRecoverDeviceData(deviceAddressToRecover: String) throws -> OstKeyManagerDelegate.SignedData {
         try validatePin()
         guard let user = try OstUser.getById(self.userId) else {
             throw OstError("w_wh_pm_srdd_1", .userEntityNotFound)
@@ -230,7 +235,7 @@ class OstPinManager {
         
         let signingHash = try eip712.getEIP712Hash()
         
-        let signedData = try OstKeyManager(userId: self.userId)
+        let signedData = try self.keyManagareDelegate
             .signWithRecoveryKey(
                 tx: signingHash,
                 userPin: self.userPin,
@@ -252,7 +257,7 @@ class OstPinManager {
     /// - Returns: Signed data
     /// - Throws: OstError
     func signAbortRecoverDeviceData(recoveringDevice: OstDevice,
-                                    revokingDevice: OstDevice) throws -> OstKeyManager.SignedData {
+                                    revokingDevice: OstDevice) throws -> OstKeyManagerDelegate.SignedData {
         
         try validatePin()
         guard let user = try OstUser.getById(self.userId) else {
@@ -292,7 +297,7 @@ class OstPinManager {
         
         let signingHash = try eip712.getEIP712Hash()
         
-        let signedData = try OstKeyManager(userId: self.userId)
+        let signedData = try self.keyManagareDelegate
             .signWithRecoveryKey(
                 tx: signingHash,
                 userPin: self.userPin,
@@ -313,9 +318,9 @@ class OstPinManager {
         try self.fetchSalt()
         
         if self.salt!.count == 0 {
-            throw OstError.init(
+            throw OstError(
                 "w_wh_pm_vsl_1",
-                "Invalid salt"
+                msg: "Invalid salt"
             )
         }
     }
@@ -324,10 +329,12 @@ class OstPinManager {
     ///
     /// - Throws: OstError
     private func validateNewPinLength() throws {
-        if (self.newUserPin == nil || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
-            throw OstError.init(
+        if (self.newUserPin == nil
+            || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
+            
+            throw OstError(
                 "w_wh_pm_v_1",
-                "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
+                msg: "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
             )
         }
     }

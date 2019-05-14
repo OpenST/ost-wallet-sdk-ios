@@ -16,7 +16,7 @@ enum OstQRCodeDataDefination: String {
     case REVOKE_DEVICE = "RD"
 }
 
-class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
+class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
     static private let ostPerformQueue = DispatchQueue(label: "com.ost.sdk.OstPerform", qos: .background)
     private let payloadString: String?
     
@@ -24,6 +24,7 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
     private var payloadData: [String: Any?]? = nil
     private var meta: [String: Any?]? = nil
     private var executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams? = nil
+    private var dataDefinationWorkflow: OstDataDefinitionWorkflow?
     
     /// Initializer
     ///
@@ -39,6 +40,20 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         super.init(userId: userId, delegate: delegate)
     }
     
+    /// Sets in ordered states for current Workflow
+    ///
+    /// - Returns: Order states array
+    override func getOrderedStates() -> [String] {
+        var orderedStates:[String] = super.getOrderedStates()
+        
+        var inBetweenOrderedStates = [String]()
+        inBetweenOrderedStates.append(OstWorkflowStateManager.VERIFY_DATA)
+        inBetweenOrderedStates.append(OstWorkflowStateManager.DATA_VERIFIED)
+        
+        orderedStates.insert(contentsOf:inBetweenOrderedStates, at:3)
+        return orderedStates
+    }
+    
     /// Get workflow Queue
     ///
     /// - Returns: DispatchQueue
@@ -46,12 +61,31 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         return OstPerform.ostPerformQueue
     }
     
+    /// Process workflow
+    ///
+    /// - Throws: OstError
+    override func process() throws {
+        switch self.workflowStateManager.getCurrentState() {
+        case OstWorkflowStateManager.DEVICE_VALIDATED:
+            try self.dataDefinationWorkflow!.validateApiDependentParams()
+            try processNext()
+            
+        case OstWorkflowStateManager.VERIFY_DATA:
+            verifyDataFromUser()
+            
+        case OstWorkflowStateManager.DATA_VERIFIED:
+            self.dataDefinationWorkflow!.startDataDefinitionFlow()
+            
+        default:
+            try super.process()
+        }
+    }
+    
     /// validate parameters
     ///
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        try self.workFlowValidator!.isDeviceAuthorized()
         
         if ( nil == self.payloadString) {
             throw OstError("w_p_vp_1", OstErrorText.invalidQRCode);
@@ -60,21 +94,6 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
             throw OstError("w_p_vp_2", OstErrorText.invalidQRCode);
         }
         
-    }
-    
-    /// process workflow.
-    ///
-    /// - Throws: OstError
-    override func process() throws {
-        try parseQRCodeString()
-        try self.startSubWorkflow();
-    }
-
-    /// Parse QR-Code data
-    ///
-    /// - Throws: OstError
-    private func parseQRCodeString() throws {
-       
         let jsonObj:[String:Any?]?;
         do {
             jsonObj = try OstUtils.toJSONObject(self.payloadString!) as? [String : Any?];
@@ -89,14 +108,9 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         guard let dataDefination = (jsonObj!["dd"] as? String)?.uppercased() else {
             throw OstError("w_p_pqrcs_3", OstErrorText.invalidQRCode);
         }
+        self.dataDefination = dataDefination;
         
-        let validDefinations:[String] = [OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
-                                         OstQRCodeDataDefination.TRANSACTION.rawValue,
-                                         OstQRCodeDataDefination.REVOKE_DEVICE.rawValue];
-        
-        if ( validDefinations.contains(dataDefination) ) {
-            self.dataDefination = dataDefination;
-        } else {
+        guard let _ = OstUtils.toString(jsonObj!["ddv"] as Any?)?.uppercased() else {
             throw OstError("w_p_pqrcs_4", OstErrorText.invalidQRCode);
         }
         
@@ -109,68 +123,64 @@ class OstPerform: OstWorkflowBase, OstValidateDataDelegate {
         if let payloadMeta = jsonObj!["m"] as? [String: Any?] {
             self.meta = payloadMeta
         }
+        
+        self.dataDefinationWorkflow = try getWorkFlowObject()
     }
-
-    /// Delegate process to respective workflow
+    
+    /// Get workflow object for provided
     ///
+    /// - Returns: OstDataDefinitionWorkflow
     /// - Throws: OstError
-    private func startSubWorkflow() throws {
-        switch self.dataDefination {
+    private func getWorkFlowObject() throws -> OstDataDefinitionWorkflow {
+        
+        switch self.dataDefination! {
         case OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue:
             let deviceAddress = try OstAddDeviceWithQRData.getAddDeviceParamsFromQRPayload(self.payloadData!)
-            OstAddDeviceWithQRData(userId: self.userId,
-                                   deviceAddress: deviceAddress,
-                                   delegate: self.delegate).perform()
-            
-        case OstQRCodeDataDefination.TRANSACTION.rawValue:
-            let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
-            if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
-                throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
-            }
-            self.executeTxPayloadParams = executeTxPayloadParams
-            verifyDataForExecuteTransaction(executeTxPayloadParams)
+            return OstAddDeviceWithQRData(userId: self.userId,
+                                          deviceAddress: deviceAddress,
+                                          delegate: self.delegate!)
             
         case OstQRCodeDataDefination.REVOKE_DEVICE.rawValue:
             let deviceAddress = try OstRevokeDeviceWithQRData.getRevokeDeviceParamsFromQRPayload(self.payloadData!)
-            OstRevokeDeviceWithQRData(userId: self.userId,
-                                      deviceAddressToRevoke: deviceAddress,
-                                      delegate: self.delegate).perform()
+            return OstRevokeDeviceWithQRData(userId: self.userId,
+                                             deviceAddressToRevoke: deviceAddress,
+                                             delegate: self.delegate!)
+            
+        case OstQRCodeDataDefination.TRANSACTION.rawValue:
+             let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
+             if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
+                 throw OstError("w_p_ssw_1", OstErrorText.invalidTokenId)
+             }
+             self.executeTxPayloadParams = executeTxPayloadParams
+            
+            return OstExecuteTransaction(userId: self.userId,
+                                         ruleName: executeTxPayloadParams.ruleName,
+                                         toAddresses: executeTxPayloadParams.addresses,
+                                         amounts: executeTxPayloadParams.amounts,
+                                         transactionMeta: self.meta as! [String : String],
+                                         delegate: self.delegate!)
             
         default:
-            throw OstError("w_p_sswf_1", OstErrorText.invalidQRCode);
+            throw OstError("w_p_gwfo_1", OstErrorText.invalidQRCode);
         }
     }
-    
-    /// Verify data from user about transaction through QR-Code
-    ///
-    /// - Parameter executeTxPayloadParams: ExecuteTxPayloadParams
-    private func verifyDataForExecuteTransaction(_ executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams) {
-        let workflowContext = OstWorkflowContext(workflowType: .executeTransaction);
-        
-        let verifyData: [String: Any] = [
-            "rule_name": executeTxPayloadParams.ruleName,
-            "token_holder_addresses": executeTxPayloadParams.addresses,
-            "amounts": executeTxPayloadParams.amounts,
-            "token_id": executeTxPayloadParams.tokenId
-        ]
 
-        let contextEntity: OstContextEntity = OstContextEntity(entity: verifyData, entityType: .dictionary)
+    /// Verify QR-Code data from user
+    func verifyDataFromUser() {
+        
+        let contextEntity = self.dataDefinationWorkflow!.getDataDefinitionContextEntity()
+        let workflowContext = self.dataDefinationWorkflow!.getDataDefinitionWorkflowContext()
+        
         DispatchQueue.main.async {
-            self.delegate.verifyData(workflowContext: workflowContext,
-                                     ostContextEntity: contextEntity,
-                                     delegate: self)
+            self.delegate?.verifyData(workflowContext: workflowContext,
+                                      ostContextEntity: contextEntity,
+                                      delegate: self)
         }
     }
     
+    /// Callback on user verified QR-Code data
     public func dataVerified() {
-        
-        let transactionMeta: [String: String] = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
-        OstExecuteTransaction(userId: self.userId,
-                              ruleName: self.executeTxPayloadParams!.ruleName,
-                              toAddresses: self.executeTxPayloadParams!.addresses,
-                              amounts: self.executeTxPayloadParams!.amounts,
-                              transactionMeta: transactionMeta,
-                              delegate: self.delegate).perform()
+        performState(OstWorkflowStateManager.DATA_VERIFIED)
     }
 
     /// Get current workflow context

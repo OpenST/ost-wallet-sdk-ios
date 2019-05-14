@@ -11,7 +11,8 @@
 import Foundation
 import UIKit
 
-class OstAddDeviceWithMnemonics: OstWorkflowBase {
+class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
+    
     static private let ostAddDeviceWithMnemonicsQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithMnemonics", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
@@ -26,10 +27,11 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
          mnemonics: [String],
          delegate: OstWorkflowDelegate) {
         
-        self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics, andUserId: userId)
+        self.mnemonicsManager = OstMnemonicsKeyManager(withMnemonics: mnemonics,
+                                                       andUserId: userId)
         super.init(userId: userId, delegate: delegate)
     }
-
+    
     /// Get workflow Queue
     ///
     /// - Returns: DispatchQueue
@@ -49,17 +51,22 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
         
         if (self.currentDevice!.isStatusAuthorized) {
             throw OstError("w_adwm_p_2", .deviceAuthorized)
-        }
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceRegistered()
+        } 
     }
     
-    /// process workflow.
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    /// Fetch device after device validated
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func onDeviceValidated() throws {
         try fetchDevice()
-        self.authenticateUser()
+        try super.onDeviceValidated()
     }
     
     /// Fetch device to validate mnemonics
@@ -76,14 +83,14 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
                 onSuccess: { (ostDevice) in
                     deviceFromMnemonics = ostDevice
                     group.leave()
-        }) { (ostError) in
-            error = ostError
-            group.leave()
+            }) { (ostError) in
+                error = ostError
+                group.leave()
         }
         group.wait()
         
         if (nil != error) {
-             throw error!
+            throw error!
         }
         if (!deviceFromMnemonics!.isStatusAuthorized) {
             throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
@@ -92,40 +99,55 @@ class OstAddDeviceWithMnemonics: OstWorkflowBase {
             throw OstError("w_adwm_fd_2", OstErrorText.differentOwnerDevice)
         }
     }
-
-    /// Proceed with workflow after user is authenticated.
-    override func proceedWorkflowAfterAuthenticateUser() {
-        let queue: DispatchQueue = getWorkflowQueue()
-        queue.async {
-            let generateSignatureCallback: ((String) -> (String?, String?)) = { (signingHash) -> (String?, String?) in
-                do {
-                    let signature = try self.mnemonicsManager.sign(signingHash)
-                    return (signature, self.mnemonicsManager.address)
-                }catch {
-                    return (nil, nil)
-                }
-            }
-            
-            let onSuccess: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postWorkflowComplete(entity: ostDevice)
-            }
-            
-            let onFailure: ((OstError) -> Void) = { (error) in
+    
+    /// Authorize device after user authenticated.
+    override func onUserAuthenticated() throws {
+        _ = try syncDeviceManager()
+        try authorizeDevice()
+    }
+    
+    /// API request for authorize device
+    ///
+    /// - Throws: OstError
+    func authorizeDevice() throws {
+        
+        let authorizeDeviceMangerWithMnemonicsSigner = OstKeyManagerGateway
+            .getOstAuthorizeDeviceWithMnemonicsSigner(userId: self.userId,
+                                                      deviceAddressToAdd: self.currentDevice!.address!,
+                                                      mnemonicsManager: self.mnemonicsManager)
+        
+        let authorizeDeviceParams = try authorizeDeviceMangerWithMnemonicsSigner.getApiParams()
+       
+        try OstAPIDevice(userId: self.userId)
+            .authorizeDevice(params: authorizeDeviceParams,
+                             onSuccess: { (ostDevice) in
+                
+                                self.postRequestAcknowledged(entity: ostDevice)
+                                self.pollingForAuthorizeDevice()
+        }) { (error) in
+            self.postError(error)
+        }
+    }
+    
+    /// Polling for device
+    func pollingForAuthorizeDevice() {
+        let successCallback: ((OstDevice) -> Void) = { ostDevice in
+            self.postWorkflowComplete(entity: ostDevice)
+        }
+        
+        let failureCallback:  ((OstError) -> Void) = { error in
+            DispatchQueue.init(label: "retryQueue").async {
                 self.postError(error)
             }
-            
-            let onRequestAcknowledged: ((OstDevice) -> Void) = { (ostDevice) in
-                self.postRequestAcknowledged(entity: ostDevice)
-            }
-            
-            //Get device for address generated from mnemonics.
-            OstAuthorizeDevice(userId: self.userId,
-                               deviceAddressToAdd: self.currentDevice!.address!,
-                               generateSignatureCallback: generateSignatureCallback,
-                               onRequestAcknowledged: onRequestAcknowledged,
-                               onSuccess: onSuccess,
-                               onFailure: onFailure).perform()
         }
+        
+        OstDevicePollingService(userId: self.userId,
+                                deviceAddress: self.mnemonicsManager.address!,
+                                workflowTransactionCount: self.workflowTransactionCountForPolling,
+                                successStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                failureStatus: OstDevice.Status.REGISTERED.rawValue,
+                                successCallback: successCallback,
+                                failureCallback:failureCallback).perform()
     }
     
     /// Get current workflow context

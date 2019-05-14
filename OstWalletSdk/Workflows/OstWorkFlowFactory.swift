@@ -120,7 +120,7 @@ extension OstWalletSdk {
         performObj.perform()
     }
     
-    /// Get paper wallet of given user id.
+    /// Get device mnemonics of given user id.
     ///
     /// - Parameters:
     ///   - userId: User id
@@ -129,9 +129,9 @@ extension OstWalletSdk {
         userId: String,
         delegate: OstWorkflowDelegate) {
         
-        let paperWalletObj = OstGetPaperWallet(userId: userId,
-                                               delegate: delegate)
-        paperWalletObj.perform()
+        let deviceMnemonicsObj = OstGetDeviceMnemonics(userId: userId,
+                                                       delegate: delegate)
+        deviceMnemonicsObj.perform()
     }
     
     /// Get QR-Code to add device.
@@ -170,7 +170,7 @@ extension OstWalletSdk {
     ///   - userId: User id.
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
     ///   - userPin: User pin.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
     public class func initiateDeviceRecovery(
         userId: String,
@@ -211,7 +211,7 @@ extension OstWalletSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - oldUserPin: Old user pin.
     ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.

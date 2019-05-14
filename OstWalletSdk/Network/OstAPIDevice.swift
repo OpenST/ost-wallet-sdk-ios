@@ -31,12 +31,12 @@ class OstAPIDevice: OstAPIBase {
     func getCurrentDevice(onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError.init("n_ad_gcd_1", .userEntityNotFound)
+            throw OstError("n_ad_gcd_1", .userEntityNotFound)
         }
         
         // Get current device
         guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError.init("n_ad_gcd_1", OstErrorText.deviceNotSet)
+            throw OstError("n_ad_gcd_1", OstErrorText.deviceNotSet)
         }
         try self.getDevice(deviceAddress: currentDevice.address!, onSuccess: onSuccess, onFailure: onFailure)
     }
@@ -220,7 +220,7 @@ class OstAPIDevice: OstAPIBase {
                     onFailure?(error as! OstError)
                 }
         }) { (failureResponse) in
-            onFailure?(OstError.init(fromApiResponse: failureResponse!))
+            onFailure?(OstError(fromApiResponse: failureResponse!))
         }
     }
 }

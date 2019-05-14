@@ -20,13 +20,13 @@ class OstSolidityValue {
             if let bigInt = BigInt(string) {
                 return bigInt
             }
-            throw OstError.init("u_sv_gsv_1", .invalidSolidityTypeInt)
+            throw OstError("u_sv_gsv_1", .invalidSolidityTypeInt)
             
         } else if (stringType == "address") {
             if let ethAddress = EthereumAddress(hexString: string) {
                return ethAddress
             }
-            throw OstError.init("u_sv_gsv_1", .invalidSolidityTypeAddress)
+            throw OstError("u_sv_gsv_1", .invalidSolidityTypeAddress)
             
         } else if (stringType.starts(with: "bytes")) {
             return Data(hex: string)
