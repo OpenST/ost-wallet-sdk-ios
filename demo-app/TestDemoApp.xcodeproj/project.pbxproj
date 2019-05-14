@@ -101,6 +101,12 @@
 		4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A6A228AA859006825FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4B214A6B228AA859006825FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
+		4B214A71228B4F9E006825FE /* OstSuccessNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */; };
+		4B214A72228B4F9E006825FE /* OstSuccessNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */; };
+		4B214A73228B4F9E006825FE /* OstSuccessNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */; };
+		4B214A75228B4FAB006825FE /* OstErroNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A74228B4FAB006825FE /* OstErroNotification.swift */; };
+		4B214A76228B4FAB006825FE /* OstErroNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A74228B4FAB006825FE /* OstErroNotification.swift */; };
+		4B214A77228B4FAB006825FE /* OstErroNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A74228B4FAB006825FE /* OstErroNotification.swift */; };
 		4B464E772271CD8C00F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
 		4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
 		4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
@@ -432,6 +438,8 @@
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessionWorkflowController.swift; sourceTree = "<group>"; };
+		4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSuccessNotification.swift; sourceTree = "<group>"; };
+		4B214A74228B4FAB006825FE /* OstErroNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstErroNotification.swift; sourceTree = "<group>"; };
 		4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
 		4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteractDelegate.swift; sourceTree = "<group>"; };
@@ -1092,6 +1100,8 @@
 			isa = PBXGroup;
 			children = (
 				4BFA11762287388800A9F5A4 /* OstNotification.swift */,
+				4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */,
+				4B214A74228B4FAB006825FE /* OstErroNotification.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -1484,6 +1494,7 @@
 				4BA4CB9622846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */,
 				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
+				4B214A75228B4FAB006825FE /* OstErroNotification.swift in Sources */,
 				4B464F4E227AED2A00F1F4AF /* OstProgressIndicator.swift in Sources */,
 				4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */,
@@ -1507,6 +1518,7 @@
 				4BA4CB722280B5FB00A623ED /* CurrentUserModel.swift in Sources */,
 				00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
 				4BFA118822873C3900A9F5A4 /* UserDetailsWithLinkTableViewCell.swift in Sources */,
+				4B214A71228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4BA4CB8222828EE500A623ED /* DeviceAPI.swift in Sources */,
 				4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				0041A65D2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
@@ -1595,6 +1607,7 @@
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
+				4B214A72228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
@@ -1660,6 +1673,7 @@
 				4BFA1192228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
+				4B214A76228B4FAB006825FE /* OstErroNotification.swift in Sources */,
 				4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BFA11722286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
@@ -1698,6 +1712,7 @@
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
+				4B214A73228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
@@ -1763,6 +1778,7 @@
 				4BFA1193228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
+				4B214A77228B4FAB006825FE /* OstErroNotification.swift in Sources */,
 				4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BFA11732286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
