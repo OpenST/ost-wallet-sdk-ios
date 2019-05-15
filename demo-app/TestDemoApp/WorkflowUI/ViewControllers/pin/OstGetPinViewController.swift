@@ -27,11 +27,23 @@ class OstGetPinViewController: OstBaseScrollViewController {
     
     
     internal var pinInputDelegate:OstPinInputDelegate?;
+    private var contentViewHeightConstraint: NSLayoutConstraint? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad();
         validateViewController();
-        pinInput.delegate = self.pinInputDelegate!;
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+
+//        pinInput.delegate = self.pinInputDelegate!;
         // Do any additional setup after loading the view.
     }
     
@@ -56,6 +68,21 @@ class OstGetPinViewController: OstBaseScrollViewController {
         return view;
     }();
     
+    let termsAndConditionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "here"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        var labelThemer = OstLabelTheamer()
+        labelThemer.fontSize = 12
+        labelThemer.textAliginment = .center
+        labelThemer.textColor = UIColor.color(136, 136, 136)
+        
+        labelThemer.apply(label)
+        
+        return label
+    }()
+    
     
     override func configure() {
         super.configure();
@@ -66,6 +93,29 @@ class OstGetPinViewController: OstBaseScrollViewController {
         super.addSubviews();
         self.addSubview(leadLabel);
         self.addSubview( pinInput );
+        self.addSubview(termsAndConditionLabel)
+        
+        setupTermsAndConditionLabel()
+    }
+    
+    func setupTermsAndConditionLabel() {
+        
+        let attributedString = NSMutableAttributedString(string: "By Creating Your Wallet, you Agree to our\n")
+        
+        let attributes: [NSAttributedString.Key : Any] = [.font: OstFontProvider().get(size: 12).bold()]
+        let termsAttributedString = NSAttributedString(string: "Terms of Service", attributes: attributes)
+        let privacyAttributedString = NSAttributedString(string: "Privacy Policy", attributes: attributes)
+        
+        attributedString.append(termsAttributedString)
+        attributedString.append(NSAttributedString(string: " and "))
+        attributedString.append(privacyAttributedString)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        paragraphStyle.alignment = .center
+        attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+
+        termsAndConditionLabel.attributedText = attributedString
     }
     
     override func addLayoutConstraints() {
@@ -76,7 +126,24 @@ class OstGetPinViewController: OstBaseScrollViewController {
         
         pinInput.placeBelow(toItem: leadLabel, constant: 20.0);
         pinInput.centerXAlignWithParent();
-        pinInput.bottomAlignWithParent();
+        
+        termsAndConditionLabel.applyBlockElementConstraints();
+        termsAndConditionLabel.bottomAlignWithParent()
+        
+        contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())
+        contentViewHeightConstraint?.isActive = true
+    }
+    
+    func getContentViewHeight() -> CGFloat {
+        return getHeightValue(forHeight: 590)
+    }
+    
+    func getHeightValue(forHeight height: CGFloat) -> CGFloat {
+        let windowHeight: CGFloat = 667.0;
+        let multiplier = height / windowHeight;
+        let window = UIApplication.shared.keyWindow;
+        let heightConstant = (window?.frame.height)! * multiplier
+        return heightConstant
     }
         
     override func viewDidAppear(_ animated: Bool) {
@@ -88,9 +155,9 @@ class OstGetPinViewController: OstBaseScrollViewController {
     
 
     fileprivate func validateViewController() {
-        if ( nil == self.pinInputDelegate ) {
-            fatalError("pinInputDelegate is nil. Please use `newInstance` method.");
-        }
+//        if ( nil == self.pinInputDelegate ) {
+//            fatalError("pinInputDelegate is nil. Please use `newInstance` method.");
+//        }
     }
     
     public func resetView() {
@@ -114,14 +181,26 @@ class OstGetPinViewController: OstBaseScrollViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    //MAKR: - Keyboard Notificaiton
+    @objc func keyboardWillShow(_ notification:Notification) {
+        
+        let userInfo:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+        
+        let svContentViewHeight = getContentViewHeight() - keyboardHeight
+        contentViewHeightConstraint?.constant = svContentViewHeight
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
-    */
-
+    
+     @objc func keyboardWillHide(_ notification:Notification) {
+        contentViewHeightConstraint?.constant = getContentViewHeight()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }

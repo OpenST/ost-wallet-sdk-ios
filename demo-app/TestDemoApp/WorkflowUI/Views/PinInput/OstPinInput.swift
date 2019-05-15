@@ -58,6 +58,10 @@ class OstPinInput: UIView, UITextFieldDelegate {
         createDots();
         self.sendSubviewToBack( pinTextField );
         self.bringSubviewToFront( wrapView );
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.wrapViewTapDetected))
+        tapGesture.numberOfTapsRequired = 1
+        addGestureRecognizer(tapGesture)
     }
 
     func styleSelf() {
@@ -116,6 +120,10 @@ class OstPinInput: UIView, UITextFieldDelegate {
         wrapView.bottomAlignWithParent();
         wrapView.backgroundColor = wrapBackgroundColor;
         self.bringSubviewToFront(wrapView);
+    }
+    
+    @objc func wrapViewTapDetected() {
+        _ = becomeFirstResponder()
     }
     
     var dots:[UIView] = [];

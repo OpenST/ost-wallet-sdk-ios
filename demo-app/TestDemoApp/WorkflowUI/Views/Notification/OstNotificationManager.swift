@@ -51,14 +51,15 @@ class OstNotificationManager {
     
    
     func canShowNotification(notificationModel: OstNotificationModel) -> Bool {
-         return true
         let workflowContext = notificationModel.workflowContext
         
         if nil == notificationModel.contextEntity && nil == notificationModel.error {
             return false
         }
-        
         if workflowContext.workflowType == .setupDevice && nil != notificationModel.contextEntity {
+            return false
+        }
+        if workflowContext.workflowType == .getDeviceMnemonics {
             return false
         }
         
@@ -78,7 +79,7 @@ class OstNotificationManager {
             }
             
             if nil != notificationView {
-                removeFirst()
+                removeFirstNotificationModel()
                 showNotificaiton()
             }else {
                 showNext()
@@ -94,37 +95,39 @@ class OstNotificationManager {
                     
                     window.addSubview(notificaitonV)
                     notificaitonV.show(onCompletion: {[weak self] (isCompleted) in
-                        self?.remove()
+                        self?.removeNotificationAfterDelay()
                     })
             }else {
-                self?.remove()
+                self?.removeNotification()
             }
         }
     }
     
-    func remove() {
+    func removeNotificationAfterDelay() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {[weak self] in
-            if let strongSelf = self,
-                nil != strongSelf.notificationView {
-                
-                strongSelf.notificationView!.hide(onCompletion: {[weak self] (isComplete) in
-                    self?.notificationView = nil
-                    self?.showNext()
-                })
-            }else {
-                self?.notificationView = nil
-                self?.showNext()
-            }
+            self?.removeNotification()
         })
     }
     
-    func removeFirst() {
+    func removeNotification() {
+        if nil != notificationView {
+            notificationView!.hide(onCompletion: {[weak self] (isComplete) in
+                self?.notificationView = nil
+                self?.showNext()
+            })
+        }else {
+            notificationView = nil
+            showNext()
+        }
+    }
+    
+    func removeFirstNotificationModel() {
         if notifications.count > 0 {
             notifications.remove(at: 0)
         }
     }
     
-    func removeAll() {
+    func removeAllNotificationModels() {
         notifications.removeAll()
     }
 }

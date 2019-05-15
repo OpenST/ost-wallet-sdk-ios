@@ -78,6 +78,8 @@ class DeviceTableViewCell: UsersTableViewCell {
                 sendButton?.isHidden = false
                 sendButton?.setTitle(titleText, for: .normal)
                 
+                let deviceStatus = deviceDetails["status"] as! String
+                
                 let currentUserDevice = CurrentUserModel.getInstance.currentDevice!
                 
                 if address.caseInsensitiveCompare(currentUserDevice.address!) == .orderedSame {
@@ -86,6 +88,9 @@ class DeviceTableViewCell: UsersTableViewCell {
                 else if (!currentUserDevice.isStatusRegistered
                     && status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) == .orderedSame) {
                     
+                    sendButton?.isEnabled = false
+                }
+                else if deviceStatus.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.revoked.rawValue) == .orderedSame {
                     sendButton?.isEnabled = false
                 }
                 else {

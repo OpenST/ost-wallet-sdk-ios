@@ -784,8 +784,8 @@
 				4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */,
 				4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */,
 				0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */,
-				00B943A622811B400084635A /* WorkflowControllers */,
 				00A76B2A22834611009226B8 /* OstWFCPinManager.swift */,
+				00B943A622811B400084635A /* WorkflowControllers */,
 			);
 			path = Interact;
 			sourceTree = "<group>";

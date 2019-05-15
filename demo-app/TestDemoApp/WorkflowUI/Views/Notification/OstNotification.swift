@@ -16,7 +16,7 @@ class OstNotification: OstBaseView {
     
     //MARK: - Components
     let containerView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .clear
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
@@ -25,7 +25,7 @@ class OstNotification: OstBaseView {
     }()
     
     var titleLabel: UILabel = {
-       let label = OstUIKit.leadLabel()
+        let label = OstUIKit.leadLabel()
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 3
@@ -40,6 +40,25 @@ class OstNotification: OstBaseView {
         return imageView
     }()
     
+    var actionButton: UIButton = {
+        let button = OstButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+       
+        let buttonThemer = OstTheme.linkButton
+        buttonThemer.fontProvider = OstFontProvider()
+        buttonThemer.borderColor = UIColor.clear.cgColor
+        buttonThemer.titleFontSize = 14
+        buttonThemer.setTitleColor(color: UIColor.white, state: .normal)
+        
+        let clearBgImg = UIImage.withColor(1, 1, 1, 0);
+        buttonThemer.setBackgroundImage(image: clearBgImg, state: .highlighted);
+        buttonThemer.setBackgroundImage(image: clearBgImg, state: .normal);
+        
+        buttonThemer.apply(button)
+        
+        return button
+    }()
+    
     //MARK: - Add Subview
     override func createViews() {
         translatesAutoresizingMaskIntoConstraints = false
@@ -48,14 +67,26 @@ class OstNotification: OstBaseView {
         imageView.image = getImage()
         addShadow()
         
+        actionButton.addTarget(self, action: #selector(self.actionButtonTapped(_ :)), for: .touchUpInside)
+        
         containerView.addSubview(imageView)
         containerView.addSubview(titleLabel)
+        containerView.addSubview(actionButton)
         addSubview(containerView)
-        
-        titleLabel.textAlignment = .left
-        titleLabel.lineBreakMode = .byTruncatingTail
+    
+        addTapGesture()
     }
     
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureDetected))
+        tapGesture.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tapGestureDetected() {
+        OstNotificationManager.getInstance.removeNotification()
+    }
+
     func addShadow() {
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOpacity = 1
@@ -71,13 +102,14 @@ class OstNotification: OstBaseView {
     func getImage() -> UIImage? {
         return nil
     }
-
+    
     //MARK: - Add Constraints
     
     override func applyConstraints() {
         applyContainerViewConstraints()
         applyTitleLabelConstraints()
         applyImageViewConstraints()
+        applyActionButtonConstraints()
     }
     
     func applySelfConstraints() {
@@ -92,21 +124,27 @@ class OstNotification: OstBaseView {
         containerView.leftAlignWithParent(multiplier: 1, constant: 10)
         containerView.rightAlignWithParent(multiplier: 1, constant: -10)
         containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
-        containerView.bottomAlign(toItem: titleLabel, constant: 10)
+        containerView.bottomAlign(toItem: actionButton, constant: 10)
     }
     
     func applyTitleLabelConstraints() {
         titleLabel.topAlignWithParent(multiplier: 1, constant: 10)
-        titleLabel.leftWithRightAlign(toItem: imageView, constant:8)
-        titleLabel.rightAlignWithParent(multiplier: 1, constant: -8)
+        titleLabel.leftWithRightAlign(toItem: imageView, constant:10)
+        titleLabel.rightAlignWithParent(multiplier: 1, constant: -10)
     }
     
     func applyImageViewConstraints() {
         imageView.topAlignWithParent(multiplier: 1, constant: 10)
         imageView.leftAlignWithParent(multiplier: 1, constant: 10)
-        imageView.setFixedWidth(constant: 24)
-        imageView.setFixedHeight(multiplier: 1, constant: 24)
+        imageView.setFixedWidth(constant: 25)
+        imageView.setFixedHeight(multiplier: 1, constant: 25)
     }
+    
+    func applyActionButtonConstraints() {
+        actionButton.placeBelow(toItem: titleLabel)
+        actionButton.leftAlign(toItem: titleLabel)
+    }
+    
     
     //MARK: - Show Hide View
     func show(onCompletion: ((Bool) -> Void)? = nil) {
@@ -142,6 +180,7 @@ class OstNotification: OstBaseView {
     var notificationModel: OstNotificationModel! {
         didSet {
             self.titleLabel.text = getTitle()
+            self.actionButton.setTitle(getActionButtonTitle(), for: .normal)
         }
     }
     
@@ -149,35 +188,65 @@ class OstNotification: OstBaseView {
         let workflowContext = notificationModel.workflowContext
         var titleText = ""
         
-        if let contextEntity = notificationModel.contextEntity {
-            
-            if workflowContext.workflowType == .addSession {
-                titleText = getAddSessionText(contextEntity: contextEntity)
-            }
-            
-            
-            
-            
-            
-            
-            
-        }else if let error = notificationModel.error {
-            titleText = error.errorMessage
+        if workflowContext.workflowType == .addSession {
+            titleText = getAddSessionText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
         }
-        
+        else if workflowContext.workflowType == .resetPin {
+            titleText = getResetPinText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .activateUser {
+            titleText = getActivateUserText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .abortDeviceRecovery {
+            titleText = getAbortDeviceRecoveryText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .authorizeDeviceWithMnemonics {
+            titleText = getAuthorizeDeviceWithMnemonicsText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .authorizeDeviceWithQRCode {
+            titleText = getAuthorizeDeviceWithQRText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .executeTransaction {
+            titleText = getExecuteTransactionText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
         return titleText
     }
     
-    func getAddSessionText(contextEntity: OstContextEntity) -> String {
-        var titleText = "Session created successfully."
-        if let entity: OstSession = contextEntity.entity as? OstSession {
-            let aproxExpirationTime = entity.approxExpirationTimestamp
-            if aproxExpirationTime > 0 {
-                let date = Date(timeIntervalSince1970:aproxExpirationTime)
-                titleText += "It expires approximately on \(date.getDateString())"
-            }
-        }
-
-        return titleText
+    func getActionButtonTitle() -> String {
+        return ""
+    }
+    
+    //MARK: - Notification Text
+    
+    func getActivateUserText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getAddSessionText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getResetPinText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getAbortDeviceRecoveryText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getAuthorizeDeviceWithMnemonicsText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getAuthorizeDeviceWithQRText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    func getExecuteTransactionText (contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+        return ""
+    }
+    
+    //MAKR: - Actions
+    @objc func actionButtonTapped(_ sender: Any?) {
     }
 }

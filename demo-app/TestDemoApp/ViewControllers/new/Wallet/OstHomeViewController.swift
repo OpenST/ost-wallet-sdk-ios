@@ -43,6 +43,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
+    var consumedUserData: [String: Any] = [String: Any]()
+    
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
     var userBalances: [String: Any] = [String: Any]()
     var meta: [String: Any]? = nil

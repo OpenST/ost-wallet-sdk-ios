@@ -208,12 +208,21 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     //MARK: - Action
     @objc func createSessionButtonTapped(_ sender: Any?) {
-//        progressIndicator?.show()
+        
+        if !isCorrectInputPassed() {
+            return
+        }
+        
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
+        let finalSpendingLimit: String = self.spendingLimitTestField.text! + "000000000000000000"
         OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
-                                spendingLimit: self.spendingLimitTestField.text ?? "",
+                                spendingLimit: finalSpendingLimit,
                                 expireAfterInSec: Double(expireAfter),
                                 delegate: self.workflowDelegate)
+    }
+    
+    func isCorrectInputPassed() -> Bool {
+        return true
     }
     
     @objc func cancelButtonTapped(_ sender: Any?) {

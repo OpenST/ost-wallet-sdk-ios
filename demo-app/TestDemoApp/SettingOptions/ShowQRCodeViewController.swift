@@ -155,12 +155,14 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     
     //MAKR: - OstSdkInteract Delegate
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        let alert = UIAlertController(title: "Something went wrong",
+        progressIndicator?.hide()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {[weak self] in
+            let alert = UIAlertController(title: "Something went wrong",
                                       message: error.errorMessage,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-        progressIndicator?.hide()
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self?.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
@@ -180,17 +182,19 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
                 progressIndicator?.progressText = "Signing into your wallet…"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
                     self?.navigationController?.popToRootViewController(animated: true)
+                    self?.progressIndicator?.hide()
                 }
             }else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
+                progressIndicator?.hide()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
+                
                     let alert = UIAlertController(title: "Device not Authorized",
                                                   message: "Please authorize this device from your other authorized device",
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    self?.present(alert, animated: true, completion: nil)
+                    self?.present(alert, animated: false, completion: nil)
                 }
             }
         }
-        progressIndicator?.hide()
     }
 }

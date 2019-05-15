@@ -90,6 +90,7 @@ class OstProgressIndicator: OstBaseView {
         activityIndicator.startAnimating()
         self.backgroundColor = UIColor.white
         self.alpha = 1.0
+        self.containerView.alpha = 1.0
         UIView.animate(withDuration: 0.4) {
             self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         }
@@ -106,7 +107,13 @@ class OstProgressIndicator: OstBaseView {
     }
     
     func hide() {
-        self.alpha = 0.0
-        self.removeFromSuperview()
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        UIView.animate(withDuration: 0.4, animations: {[weak self] in
+            self?.backgroundColor = .white
+            self?.containerView.alpha = 0.0
+        }) {[weak self] (isComplete) in
+            self?.removeFromSuperview()
+        }
+
     }
 }

@@ -20,6 +20,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     
     static let PIN_AUTHENTICATION_REQUIRED = "PIN_AUTHENTICATION_REQUIRED";
     static let PIN_INFO_RECEIVED = "PIN_INFO_RECEIVED";
+    static let PIN_INFO_INVALIDATED = "PIN_INFO_INVALIDATED";
     static let AUTHENTICATED = "AUTHENTICATED";
     
     private var enterPinCount = 0
@@ -33,6 +34,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         var inBetweenOrderedStates = [String]()
         inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
         inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_INFO_RECEIVED)
+        inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.PIN_INFO_INVALIDATED)
         inBetweenOrderedStates.append(OstUserAuthenticatorWorkflow.AUTHENTICATED)
         
         let indexOfDeviceValidated = orderedStates.firstIndex(of: OstWorkflowStateManager.DEVICE_VALIDATED)
@@ -73,6 +75,10 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         case OstUserAuthenticatorWorkflow.AUTHENTICATED:
             try self.onUserAuthenticated()
             
+        case OstUserAuthenticatorWorkflow.PIN_INFO_INVALIDATED:
+            DispatchQueue.main.async {
+                self.delegate?.invalidPin(self.userId, delegate: self)
+            }
         default:
             try super.process()
             
@@ -134,7 +140,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         if (OstConfig.getPinMaxRetryCount() <= self.enterPinCount) {
             self.postError(OstError("w_wb_uaf_1", .maxUserValidatedCountReached))
         }else{
-            try? self.processState(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
+            try? self.processState(OstUserAuthenticatorWorkflow.PIN_INFO_INVALIDATED)
         }
     }
     
