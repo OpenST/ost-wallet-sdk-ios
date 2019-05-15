@@ -10,6 +10,7 @@
 
 import Foundation
 import UIKit
+import OstWalletSdk
 
 class OstNotification: OstBaseView {
     
@@ -17,7 +18,7 @@ class OstNotification: OstBaseView {
     let containerView: UIView = {
        let view = UIView()
         view.backgroundColor = .clear
-        view.layer.cornerRadius = 6
+        view.layer.cornerRadius = 10
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -25,9 +26,10 @@ class OstNotification: OstBaseView {
     
     var titleLabel: UILabel = {
        let label = OstUIKit.leadLabel()
-        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
         label.textColor = .white
-        label.text = "Aniket"
         return label
     }()
     
@@ -42,8 +44,6 @@ class OstNotification: OstBaseView {
     override func createViews() {
         translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.textAlignment = .left
-        titleLabel.lineBreakMode = .byTruncatingTail
         containerView.backgroundColor = getContainerBackgorundColor()
         imageView.image = getImage()
         addShadow()
@@ -51,13 +51,16 @@ class OstNotification: OstBaseView {
         containerView.addSubview(imageView)
         containerView.addSubview(titleLabel)
         addSubview(containerView)
+        
+        titleLabel.textAlignment = .left
+        titleLabel.lineBreakMode = .byTruncatingTail
     }
     
     func addShadow() {
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOpacity = 1
         layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 6
+        layer.shadowRadius = 10
     }
     
     //MAKR: - Components Settings
@@ -88,6 +91,7 @@ class OstNotification: OstBaseView {
         topAnchorConstraint!.isActive = true
         containerView.leftAlignWithParent(multiplier: 1, constant: 10)
         containerView.rightAlignWithParent(multiplier: 1, constant: -10)
+        containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
         containerView.bottomAlign(toItem: titleLabel, constant: 10)
     }
     
@@ -104,18 +108,10 @@ class OstNotification: OstBaseView {
         imageView.setFixedHeight(multiplier: 1, constant: 24)
     }
     
-    //MARK: - Variables
-    var topAnchorConstraint: NSLayoutConstraint? = nil
-    
-    var title: String! {
-        didSet {
-            self.titleLabel.text = title
-        }
-    }
-    
-    func show() {
+    //MARK: - Show Hide View
+    func show(onCompletion: ((Bool) -> Void)? = nil) {
         applySelfConstraints()
-       
+        
         self.layoutIfNeeded()
         
         topAnchorConstraint?.constant = 10
@@ -124,21 +120,64 @@ class OstNotification: OstBaseView {
             self.containerView.alpha = 1
             self.layoutIfNeeded()
         }) { (isComplete) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {[weak self] in
-                self?.hide()
-            })
+            onCompletion?(isComplete)
         }
     }
     
-    func hide() {
+    func hide(onCompletion: ((Bool) -> Void)? = nil) {
         topAnchorConstraint?.constant = -100
         self.containerView.alpha = 1.0
         UIView.animate(withDuration: 0.3, animations: {
             self.containerView.alpha = 0.0
             self.layoutIfNeeded()
         }) {[weak self] (isComplete) in
-           self?.removeFromSuperview()
+            self?.removeFromSuperview()
+            onCompletion?(isComplete)
+        }
+    }
+    
+    //MARK: - Variables
+    var topAnchorConstraint: NSLayoutConstraint? = nil
+    
+    var notificationModel: OstNotificationModel! {
+        didSet {
+            self.titleLabel.text = getTitle()
+        }
+    }
+    
+    func getTitle() -> String {
+        let workflowContext = notificationModel.workflowContext
+        var titleText = ""
+        
+        if let contextEntity = notificationModel.contextEntity {
+            
+            if workflowContext.workflowType == .addSession {
+                titleText = getAddSessionText(contextEntity: contextEntity)
+            }
+            
+            
+            
+            
+            
+            
+            
+        }else if let error = notificationModel.error {
+            titleText = error.errorMessage
         }
         
+        return titleText
+    }
+    
+    func getAddSessionText(contextEntity: OstContextEntity) -> String {
+        var titleText = "Session created successfully."
+        if let entity: OstSession = contextEntity.entity as? OstSession {
+            let aproxExpirationTime = entity.approxExpirationTimestamp
+            if aproxExpirationTime > 0 {
+                let date = Date(timeIntervalSince1970:aproxExpirationTime)
+                titleText += "It expires approximately on \(date.getDateString())"
+            }
+        }
+
+        return titleText
     }
 }

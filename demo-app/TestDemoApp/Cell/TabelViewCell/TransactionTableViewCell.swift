@@ -53,13 +53,8 @@ class TransactionTableViewCell: UsersTableViewCell {
     func getDateFromTimestamp() -> String? {
         guard let unixTimestamp = transactionData["block_timestamp"] as? Double else {return nil}
         let date = Date(timeIntervalSince1970: unixTimestamp)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "dd/MM/yyy HH:mm:ss" //Specify your format that you want
-        let strDate = dateFormatter.string(from: date)
-        return strDate
+    
+        return date.getDateWithTimeString()
     }
 
     //MARK: - Components

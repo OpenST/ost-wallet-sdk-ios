@@ -17,6 +17,6 @@ class OstSuccessNotification: OstNotification {
     }
     
     override func getImage() -> UIImage? {
-        return UIImage(named: "Back")
+        return UIImage(named: "NotificationSuccessImage")
     }
 }

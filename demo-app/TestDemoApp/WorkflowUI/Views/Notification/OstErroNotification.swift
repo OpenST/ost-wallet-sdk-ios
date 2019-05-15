@@ -13,10 +13,10 @@ import UIKit
 class OstErroNotification: OstNotification {
     
     override func getContainerBackgorundColor() -> UIColor {
-        return UIColor.color(185, 209, 143)
+        return UIColor.color(255, 132, 133)
     }
     
     override func getImage() -> UIImage? {
-        return UIImage(named: "Back")
+        return UIImage(named: "NotificationErrorImage")
     }
 }

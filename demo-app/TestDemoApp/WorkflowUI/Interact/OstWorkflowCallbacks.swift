@@ -86,6 +86,10 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
+                                                contextEntity: ostContextEntity,
+                                                error: nil)
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
@@ -95,6 +99,12 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        
+        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
+                                                contextEntity: nil,
+                                                error: error)
+        
+        
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
@@ -104,6 +114,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext

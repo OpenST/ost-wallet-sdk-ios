@@ -87,14 +87,4 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
                                                          mnemonics: mnemonics,
                                                          delegate: workflowDelegate)
     }
-    
-    //MARK: - Workflow delegate
-    
-    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-    }
-    
-    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-    }
 }
