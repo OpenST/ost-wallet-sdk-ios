@@ -102,7 +102,7 @@ class IntroViewController: OstBaseScrollViewController {
         createAccountVC.pushViewControllerOn(self)
     }
     
-    @objc func loginButtonTapped(_ sender: Any?) {
+    @objc func loginButtonTapped(_ sender: Any?) {        
         let loginVC = SetupUserViewController()
         loginVC.viewControllerType = .login
         loginVC.pushViewControllerOn(self)

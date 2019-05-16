@@ -11,6 +11,8 @@
 import UIKit
 import OstWalletSdk
 import IQKeyboardManagerSwift
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        Fabric.with([Crashlytics.self])
         showIntroController()
         
         IQKeyboardManager.shared.enable = true

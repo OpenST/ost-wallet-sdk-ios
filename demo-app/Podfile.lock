@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (4.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - CryptoSwift (0.14.0)
+  - Fabric (1.9.0)
   - IQKeyboardManagerSwift (6.2.0)
   - MaterialComponents (55.0.0):
     - MaterialComponents/ActivityIndicator (= 55.0.0)
@@ -441,14 +444,18 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 4.8.1)
+  - Crashlytics
   - CryptoSwift
+  - Fabric
   - IQKeyboardManagerSwift
   - MaterialComponents (from `https://github.com/material-components/material-components-ios`, branch `google-io-codelabs-2018`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Crashlytics
     - CryptoSwift
+    - Fabric
     - IQKeyboardManagerSwift
     - MDFInternationalization
     - MDFTextAccessibility
@@ -468,7 +475,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   MaterialComponents: 71034ff1989c7d0b8ada2d4be7df2f488e41bfa5
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
@@ -477,6 +486,6 @@ SPEC CHECKSUMS:
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   MotionTransitioning: 23d25edc2f4606efb922403cbac6d81af37aa33a
 
-PODFILE CHECKSUM: 482b392e17b067bb129d74340beb47c253fe80e1
+PODFILE CHECKSUM: efc9a15852df659fc31f09a4d79ad0a8d023618b
 
 COCOAPODS: 1.6.0
