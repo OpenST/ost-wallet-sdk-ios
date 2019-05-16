@@ -135,7 +135,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     func getContentViewHeight() -> CGFloat {
-        return getHeightValue(forHeight: 590)
+        return getHeightValue(forHeight: 570)
     }
     
     func getHeightValue(forHeight height: CGFloat) -> CGFloat {
