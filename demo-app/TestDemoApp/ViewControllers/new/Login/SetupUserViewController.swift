@@ -197,6 +197,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         testEconomyTextField.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
+    func addQrCodeImageConstraints() {
+        qrCodeButton.rightAlign(toItem: testEconomyTextField, constant: -8)
+        qrCodeButton.centerAlignY(toItem: testEconomyTextField)
+        qrCodeButton.setFixedWidth(constant: 40)
+        qrCodeButton.setFixedHeight(constant: 40)
+    }
+    
     func addUsernameTextFieldConstraints() {
         usernameTextField.placeBelow(toItem: testEconomyTextField, constant: 1)
         usernameTextField.applyBlockElementConstraints(horizontalMargin: 20)
@@ -223,13 +230,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         changeTypeButton.centerXAlignWithParent()
     }
     
-    func addQrCodeImageConstraints() {
-        qrCodeButton.rightAlign(toItem: testEconomyTextField, constant: -8)
-        qrCodeButton.centerAlignY(toItem: testEconomyTextField)
-        qrCodeButton.setFixedWidth(constant: 40)
-        qrCodeButton.setFixedHeight(constant: 40)
-    }
-    
+ 
     //MARK: - Actions
     
     @objc func setupButtonTapped(_ sender: Any?) {

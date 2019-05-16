@@ -101,6 +101,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                                       forCellReuseIdentifier: TransactionTableViewCell.transactionCellIdentifier)
         self.walletTableView.register(WalletValueTableViewCell.self,
                                       forCellReuseIdentifier: WalletValueTableViewCell.cellIdentifier)
+        self.walletTableView.register(EmptyTransactionTableViewCell.self,
+                                      forCellReuseIdentifier: EmptyTransactionTableViewCell.emptyTransactionTCellIdentifier)
         self.walletTableView.register(PaginationLoaderTableViewCell.self,
                                       forCellReuseIdentifier: PaginationLoaderTableViewCell.cellIdentifier)
     }
@@ -130,7 +132,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     //MARK: - Table View Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,6 +142,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         case 1:
             return tableDataArray.count
         case 2:
+            return tableDataArray.count > 0 ? 0: 1
+        case 3:
             return paginatingViewCount
         default:
             return 0
@@ -166,7 +170,21 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             }
             
             cell = tansactionCell
+            
         case 2:
+             let emptyTansactionCell: EmptyTransactionTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTransactionTableViewCell.emptyTransactionTCellIdentifier, for: indexPath) as! EmptyTransactionTableViewCell
+            
+             let currentUser = CurrentUserModel.getInstance
+             if currentUser.ostUser!.isStatusActivating {
+
+                emptyTansactionCell.showWalletSettingUpView()
+             }else {
+                emptyTansactionCell.showNoTransactionView()
+             }
+             
+            cell = emptyTansactionCell
+            
+        case 3:
             let pCell: PaginationLoaderTableViewCell
             if nil == self.paginatingCell {
                 pCell = tableView.dequeueReusableCell(withIdentifier: PaginationLoaderTableViewCell.cellIdentifier, for: indexPath) as! PaginationLoaderTableViewCell
@@ -197,6 +215,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         case 1:
             return 75.0
         case 2:
+            return tableDataArray.count > 0 ? 0: 200
+        case 3:
             if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
                 return 44.0
             }else {
