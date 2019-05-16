@@ -336,6 +336,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             
             if currentUser.ostUserStatus!.caseInsensitiveCompare("activated") == .orderedSame {
                 UserAPI.notifyUserActivated()
+                removeProgressIndicator()
+                pushToTabBarController()
             }
             else if currentUser.ostUserStatus!.caseInsensitiveCompare("created") == .orderedSame {
                 activateUser()

@@ -246,6 +246,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             sectionTitle.leftAlignWithParent(multiplier: 1, constant: 20)
             sectionTitle.rightAlignWithParent(multiplier: 1, constant: 20)
             sectionTitle.bottomAlignWithParent()
+        }else {
+            container.translatesAutoresizingMaskIntoConstraints = false
+            container.setFixedHeight(constant: 1)
         }
         return container
     }
@@ -303,8 +306,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
         }
-        
-        if !isApiCallInProgress {
+        else if !isFetchingUserTransactions  && !isFetchingUserBalance {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }

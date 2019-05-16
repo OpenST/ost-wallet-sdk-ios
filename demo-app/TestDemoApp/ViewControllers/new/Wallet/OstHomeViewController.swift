@@ -243,7 +243,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             self.shouldLoadNextPage = true
         }
         
-        if !isApiCallInProgress {
+        else if !isApiCallInProgress {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
