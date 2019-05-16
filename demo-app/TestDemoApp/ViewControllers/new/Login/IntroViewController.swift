@@ -12,9 +12,6 @@ class IntroViewController: OstBaseScrollViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let a = OstGetPinViewController()
-//        a.presentViewControllerWithNavigationController(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -129,11 +129,15 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     @objc func termsLabelTapped() {
-        
+        let webview = WKWebViewController()
+        webview.urlString = "https://ost.com/terms"
+        webview.presentViewControllerWithNavigationController(self)
     }
     
     @objc func privacyLabelTapped() {
-        
+        let webview = WKWebViewController()
+        webview.urlString = "https://ost.com/privacy"
+        webview.presentViewControllerWithNavigationController(self)
     }
     
     @objc func tncLabelTapped(_ recognizer: UITapGestureRecognizer) {
@@ -144,8 +148,18 @@ class OstGetPinViewController: OstBaseScrollViewController {
         location.x -= textView.textContainerInset.left;
         location.y -= textView.textContainerInset.top;
         
-       
+        let characterIndex: Int = layoutManager.characterIndex(for: location,
+                                                               in: textView.textContainer,
+                                                               fractionOfDistanceBetweenInsertionPoints: nil)
     
+        if (characterIndex < textView.textStorage.length) {
+            let attributes = textView.textStorage.attributes(at: characterIndex, effectiveRange: nil)
+            if let action = attributes[NSAttributedString.Key(rawValue: "action")] as? Selector,
+                self.responds(to: action){
+                
+                self.perform(action)
+            }
+        }
     }
     
     override func addLayoutConstraints() {
@@ -158,7 +172,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
         pinInput.centerXAlignWithParent();
         
         termsAndConditionLabel.applyBlockElementConstraints();
-        termsAndConditionLabel.setFixedHeight(constant: 60)
+        termsAndConditionLabel.setFixedHeight(constant: 45)
         termsAndConditionLabel.bottomAlignWithParent()
         
         contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())
