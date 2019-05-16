@@ -52,6 +52,9 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
                             CurrentUserModel.getInstance.userDetails = apiResponse
                             self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
         }) { (apiError) in
+            
+            let msg = (apiError?["msg"] as? String) ?? "Login failed due to unknown reason"
+            OstErroNotification.showNotification(withMessage: msg)
             onComplete(false)
         }
     }
@@ -70,6 +73,9 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
                             CurrentUserModel.getInstance.userDetails = apiResponse
                             self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
         }) { (apiError) in
+            
+            let msg = (apiError?["msg"] as? String) ?? "Signup failed due to unknown reason"
+            OstErroNotification.showNotification(withMessage: msg)
             onComplete(false)
         }
     }
@@ -168,6 +174,13 @@ extension CurrentUserModel {
     
     var status: String? {
         return userDetails?["status"] as? String ?? nil
+    }
+    
+    var ostUserStatus: String? {
+        if let user = ostUser {
+            return user.status
+        }
+        return nil
     }
     
     var balance: String {

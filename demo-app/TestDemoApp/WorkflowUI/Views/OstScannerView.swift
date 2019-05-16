@@ -23,7 +23,7 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     private var onCompletion: (([String]?) -> Void)?
     private var captureSession: AVCaptureSession? = nil
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer? = nil
-   
+    
     init(completion: (([String]?) -> Void)?) {
         self.onCompletion = completion
         super.init(frame: .zero)
@@ -32,7 +32,7 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override func createViews() {
         self.addSubview(scannerContainer)
     }
@@ -47,46 +47,68 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     private func addCaptureSession() {
         
-        if nil == captureSession {
-            let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
-            if (captureDevice == nil) {
-                return
-            }
-            do {
-                let input = try AVCaptureDeviceInput(device: captureDevice!)
-                captureSession = AVCaptureSession()
-                captureSession?.addInput(input)
-                // Do the rest of your work...
-            } catch let error as NSError {
-                // Handle any errors
-                print(error)
-            }
+        let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+        if (captureDevice == nil) {
+            return
+        }
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice!)
+            captureSession = AVCaptureSession()
+            captureSession?.addInput(input)
+            // Do the rest of your work...
+        } catch let error as NSError {
+            // Handle any errors
+            print(error)
         }
         
-        if nil == videoPreviewLayer {
-            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-            videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            videoPreviewLayer!.frame = scannerContainer.layer.bounds
-            scannerContainer.layer.addSublayer(videoPreviewLayer!)
-            
-            /* Check for metadata */
-            let captureMetadataOutput = AVCaptureMetadataOutput()
-            captureSession?.addOutput(captureMetadataOutput)
-            captureMetadataOutput.metadataObjectTypes = captureMetadataOutput.availableMetadataObjectTypes
-            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        }
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+        videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        videoPreviewLayer!.frame = scannerContainer.layer.bounds
+        scannerContainer.layer.addSublayer(videoPreviewLayer!)
+        
+        /* Check for metadata */
+        let captureMetadataOutput = AVCaptureMetadataOutput()
+        captureSession?.addOutput(captureMetadataOutput)
+        captureMetadataOutput.metadataObjectTypes = captureMetadataOutput.availableMetadataObjectTypes
+        captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
     }
     
     //MARK: - Methods
     func startScanning() {
-        addCaptureSession()
-        captureSession?.startRunning()
+        
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            addCaptureSession()
+            captureSession?.startRunning()
+        }
+        else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
+            showAlertForAccessDenied()
+        }
+        else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: {[weak self] (granted: Bool) in
+                DispatchQueue.main.async {
+                    if granted {
+                        self?.addCaptureSession()
+                        self?.captureSession?.startRunning()
+                        
+                    } else {
+                        self?.showAlertForAccessDenied()
+                    }
+                }
+            })
+        }
+    }
+    
+    func showAlertForAccessDenied() {
+        let alert = UIAlertController(title: "Access Denied",
+                                      message: "Camera permission has been denied. Please grant access to scan QR-Code from device settings.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        alert.show()
     }
     
     func stopScanning() {
         captureSession?.stopRunning()
     }
-    
     
     //MARK: - AVCaptureMetadataOutputObjectsDelegate
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -100,5 +122,5 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
         }
         onCompletion?(qrData)
     }
-
+    
 }

@@ -13,6 +13,21 @@ import OstWalletSdk
 
 class OstErroNotification: OstNotification {
     
+    class func showNotification(withMessage msg: String) {
+        let notification = OstErroNotification()
+        notification.message = msg
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            notification.show { (isCompleted) in
+                if isCompleted {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                        notification.hide()
+                    })
+                }
+            }
+        })
+    }
+    
     override func getContainerBackgorundColor() -> UIColor {
         return UIColor.color(255, 132, 133)
     }

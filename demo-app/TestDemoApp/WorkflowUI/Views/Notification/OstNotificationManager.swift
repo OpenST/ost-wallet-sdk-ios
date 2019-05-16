@@ -47,7 +47,7 @@ class OstNotificationManager {
     
    
     func canShowNotification(notificationModel: OstNotificationModel) -> Bool {
-        return true
+
         let workflowContext = notificationModel.workflowContext
         
         if nil == notificationModel.contextEntity && nil == notificationModel.error {

@@ -44,7 +44,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     var passwordTextField: MDCTextField = {
         let passwordTextField = MDCTextField()
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.clearButtonMode = .unlessEditing
+        passwordTextField.clearButtonMode = .never
         passwordTextField.placeholderLabel.text = "Password"
         return passwordTextField
     }()
@@ -246,30 +246,37 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         }
         self.view.endEditing(true)
         showProgressIndicator()
-        
         try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint ?? "")
         
         if viewControllerType == .signup {
-            CurrentUserModel.getInstance.signUp(username: self.usernameTextField.text!,
-                                                phonenumber: self.passwordTextField.text!,
-                                                onSuccess: {[weak self] (ostUser, ostDevice) in
-                            self?.onSignupSuccess()
-            }) {[weak self] (isFailed) in
-                self?.onSigupFailed()
-            }
+           signupUser()
         }else if viewControllerType == .login {
-            CurrentUserModel.getInstance.login(username: self.usernameTextField.text!,
-                phonenumber: self.passwordTextField.text!,
-                onSuccess: {[weak self] (ostUser, ostDevice) in
-                    
-                    if ostUser.isStatusCreated {
-                         self?.activateUser()
-                    }else {
-                        self?.onLoginSuccess()
-                    }
-            }) {[weak self] (isFailed) in
-                self?.onLoginFailed()
-            }
+           loginUser()
+        }
+    }
+    
+    func signupUser() {
+        CurrentUserModel.getInstance.signUp(username: self.usernameTextField.text!,
+                                            phonenumber: self.passwordTextField.text!,
+                                            onSuccess: {[weak self] (ostUser, ostDevice) in
+                                                self?.onSignupSuccess()
+        }) {[weak self] (isFailed) in
+            self?.onSigupFailed()
+        }
+    }
+    
+    func loginUser() {
+        CurrentUserModel.getInstance.login(username: self.usernameTextField.text!,
+                                           phonenumber: self.passwordTextField.text!,
+                                           onSuccess: {[weak self] (ostUser, ostDevice) in
+                                            
+                                            if ostUser.isStatusCreated {
+                                                self?.activateUser()
+                                            }else {
+                                                self?.onLoginSuccess()
+                                            }
+        }) {[weak self] (isFailed) in
+            self?.onLoginFailed()
         }
     }
     
@@ -323,8 +330,20 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func onLoginSuccess() {
-        removeProgressIndicator()
-        pushToTabBarController()
+        let currentUser = CurrentUserModel.getInstance
+        
+        if currentUser.status!.caseInsensitiveCompare("created") == .orderedSame {
+            
+            if currentUser.ostUserStatus!.caseInsensitiveCompare("activated") == .orderedSame {
+                UserAPI.notifyUserActivated()
+            }
+            else if currentUser.ostUserStatus!.caseInsensitiveCompare("created") == .orderedSame {
+                activateUser()
+            }
+        }else {
+            removeProgressIndicator()
+            pushToTabBarController()
+        }
     }
     
     func onLoginFailed() {

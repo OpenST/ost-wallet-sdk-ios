@@ -64,12 +64,11 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     var amountTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.keyboardType = .numberPad
         textField.placeholderLabel.text = "Amount"
         textField.font = OstFontProvider().get(size: 15)
         textField.text = "1";
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var amountTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -77,11 +76,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     var spendingUnitTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
         textField.font = OstFontProvider().get(size: 15)
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil

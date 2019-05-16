@@ -93,10 +93,9 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
     var amountTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Amount"
         textField.text = "1";
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var amountTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -105,10 +104,9 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
     var currencyTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Rule"
         textField.text = "BT";
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var currencyTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -117,10 +115,9 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
     var spendingUnitTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil

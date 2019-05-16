@@ -18,7 +18,7 @@ class UserAPI: BaseAPI {
                   params: params as [String : AnyObject]?,
                   onSuccess: { (apiParams) in
                     guard let data = apiParams?["data"] as? [String: Any] else {
-                       onFailure?(nil)
+                       onFailure?(apiParams)
                         return
                     }
                     let resultType = data["result_type"] as! String
@@ -39,7 +39,7 @@ class UserAPI: BaseAPI {
                   params: params as [String : AnyObject]?,
                   onSuccess: { (apiParams) in
                     guard let data = apiParams?["data"] as? [String: Any] else {
-                        onFailure?(nil)
+                        onFailure?(apiParams)
                         return
                     }
                     let resultType = data["result_type"] as! String

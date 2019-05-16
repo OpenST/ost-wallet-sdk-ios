@@ -19,7 +19,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     var spendingLimitTestField: MDCTextField = {
         let spendingLimitTestFiled = MDCTextField()
         spendingLimitTestFiled.translatesAutoresizingMaskIntoConstraints = false
-        spendingLimitTestFiled.clearButtonMode = .unlessEditing
+        spendingLimitTestFiled.clearButtonMode = .never
         spendingLimitTestFiled.placeholderLabel.text = ""
         return spendingLimitTestFiled
     }()
@@ -28,11 +28,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     var spendingUnitTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.clearButtonMode = .unlessEditing
+        textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
         textField.font = OstFontProvider().get(size: 15)
-        textField.clearButtonMode = UITextField.ViewMode.never
         return textField
     }()
     var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -41,7 +40,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     var expiresAfterTextField: MDCTextField = {
         let expiresAfterTextField = MDCTextField()
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
-        expiresAfterTextField.clearButtonMode = .unlessEditing
+        expiresAfterTextField.clearButtonMode = .never
         return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil

@@ -13,6 +13,21 @@ import OstWalletSdk
 
 class OstSuccessNotification: OstNotification {
     
+    class func showNotification(withMessage msg: String) {
+        let notification = OstSuccessNotification()
+        notification.message = msg
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            notification.show { (isCompleted) in
+                if isCompleted {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                        notification.hide()
+                    })
+                }
+            }
+        })
+    }
+    
     override func getContainerBackgorundColor() -> UIColor {
         return UIColor.color(185, 209, 143)
     }
@@ -61,7 +76,7 @@ class OstSuccessNotification: OstNotification {
     }
     
     override func getExecuteTransactionText (contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return "\(CurrentEconomy.getInstance.tokenId) sent successfully!"
+        return "transaction executed successfully!"
     }
     
     //MAKR: - Action Button Title

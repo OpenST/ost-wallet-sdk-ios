@@ -122,12 +122,12 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         
         if tableDataArray.count > indexPath.row {
             let deviceDetail = tableDataArray[indexPath.row]
-            cell.setDeviceDetails(details: deviceDetail, withIndex: indexPath.row)
+            cell.setDeviceDetails(details: deviceDetail, withIndex: indexPath.row+1)
             cell.sendButtonAction = {[weak self] (entity) in
                 self?.actionButtonTapped(entity!)
             }
         }else {
-            cell.setDeviceDetails(details: [:], withIndex: indexPath.row)
+            cell.setDeviceDetails(details: [:], withIndex: indexPath.row+1)
         }
         return cell
     }

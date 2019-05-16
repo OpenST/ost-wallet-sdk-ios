@@ -67,7 +67,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     var spendingLimitTestField: MDCTextField = {
         let spendingLimitTestFiled = MDCTextField()
         spendingLimitTestFiled.translatesAutoresizingMaskIntoConstraints = false
-        spendingLimitTestFiled.clearButtonMode = .unlessEditing
+        spendingLimitTestFiled.clearButtonMode = .never
         spendingLimitTestFiled.placeholderLabel.text = ""
         return spendingLimitTestFiled
     }()
@@ -77,7 +77,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
     var expiresAfterTextField: MDCTextField = {
         let expiresAfterTextField = MDCTextField()
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
-        expiresAfterTextField.clearButtonMode = .unlessEditing
+        expiresAfterTextField.clearButtonMode = .never
         return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil
