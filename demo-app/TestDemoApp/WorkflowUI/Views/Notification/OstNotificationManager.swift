@@ -21,11 +21,7 @@ struct OstNotificationModel {
 class OstNotificationManager {
     static let getInstance = OstNotificationManager()
     private init () { }
-    
-    func getAppWindow() -> UIWindow? {
-        return UIApplication.shared.keyWindow
-    }
-    
+
     var notificationView: OstNotification? = nil
     
     var notifications: [OstNotificationModel] = [OstNotificationModel]()
@@ -51,6 +47,7 @@ class OstNotificationManager {
     
    
     func canShowNotification(notificationModel: OstNotificationModel) -> Bool {
+        return true
         let workflowContext = notificationModel.workflowContext
         
         if nil == notificationModel.contextEntity && nil == notificationModel.error {
@@ -90,12 +87,13 @@ class OstNotificationManager {
     private func showNotificaiton() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {[weak self] in
             if let strongSelf = self,
-                let window = strongSelf.getAppWindow(),
                 let notificaitonV = strongSelf.notificationView {
-                    
-                    window.addSubview(notificaitonV)
                     notificaitonV.show(onCompletion: {[weak self] (isCompleted) in
-                        self?.removeNotificationAfterDelay()
+                        if isCompleted {
+                            self?.removeNotificationAfterDelay()
+                        }else {
+                            self?.removeNotification()
+                        }
                     })
             }else {
                 self?.removeNotification()

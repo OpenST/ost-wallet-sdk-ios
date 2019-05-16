@@ -14,6 +14,10 @@ import OstWalletSdk
 
 class OstNotification: OstBaseView {
     
+    func getAppWindow() -> UIWindow? {
+        return UIApplication.shared.keyWindow
+    }
+    
     //MARK: - Components
     let containerView: UIView = {
         let view = UIView()
@@ -148,6 +152,12 @@ class OstNotification: OstBaseView {
     
     //MARK: - Show Hide View
     func show(onCompletion: ((Bool) -> Void)? = nil) {
+        guard let window = getAppWindow() else {
+            onCompletion?(false)
+            return
+        }
+        window.addSubview(self)
+        
         applySelfConstraints()
         
         self.layoutIfNeeded()
@@ -176,6 +186,12 @@ class OstNotification: OstBaseView {
     
     //MARK: - Variables
     var topAnchorConstraint: NSLayoutConstraint? = nil
+    
+    var message: String! {
+        didSet {
+            self.titleLabel.text = message
+        }
+    }
     
     var notificationModel: OstNotificationModel! {
         didSet {
