@@ -37,6 +37,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.clearButtonMode = .never
         usernameTextField.placeholderLabel.text = "Username"
+//        usernameTextField.text = "Aniket41"
         return usernameTextField
     }()
     var usernameTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -46,6 +47,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.clearButtonMode = .unlessEditing
         passwordTextField.placeholderLabel.text = "Password"
+//        passwordTextField.text = "123123"
         return passwordTextField
     }()
     var passwordTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -260,7 +262,12 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             CurrentUserModel.getInstance.login(username: self.usernameTextField.text!,
                 phonenumber: self.passwordTextField.text!,
                 onSuccess: {[weak self] (ostUser, ostDevice) in
-                    self?.onLoginSuccess()
+                    
+                    if ostUser.isStatusCreated {
+                         self?.activateUser()
+                    }else {
+                        self?.onLoginSuccess()
+                    }
             }) {[weak self] (isFailed) in
                 self?.onLoginFailed()
             }
@@ -299,7 +306,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     //MARK: - On Callback Complete
     func onSignupSuccess() {
-        removeProgressIndicator()
+       activateUser()
+    }
+    
+    func activateUser() {
+         removeProgressIndicator()
         let currentUse = CurrentUserModel.getInstance
         workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
                                                                    passphrasePrefixDelegate: currentUse,

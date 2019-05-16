@@ -43,7 +43,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
 
-//        pinInput.delegate = self.pinInputDelegate!;
+        pinInput.delegate = self.pinInputDelegate!;
         // Do any additional setup after loading the view.
     }
     
@@ -68,17 +68,13 @@ class OstGetPinViewController: OstBaseScrollViewController {
         return view;
     }();
     
-    let termsAndConditionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "here"
+    let termsAndConditionLabel: UITextView = {
+        let label = UITextView()
+        label.isEditable = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        var labelThemer = OstLabelTheamer()
-        labelThemer.fontSize = 12
-        labelThemer.textAliginment = .center
-        labelThemer.textColor = UIColor.color(136, 136, 136)
-        
-        labelThemer.apply(label)
+        label.textAlignment = .center
+        label.font = OstFontProvider().get(size: 12)
+        label.textColor = UIColor.color(136, 136, 136)
         
         return label
     }()
@@ -99,15 +95,24 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     func setupTermsAndConditionLabel() {
+        let attributes: [NSAttributedString.Key : Any] = [.font: OstFontProvider().get(size: 12),
+                                                          .foregroundColor: UIColor.color(136, 136, 136) ]
         
-        let attributedString = NSMutableAttributedString(string: "By Creating Your Wallet, you Agree to our\n")
+        let attributedString = NSMutableAttributedString(string: "By Creating Your Wallet, you Agree to our\n",
+                                                         attributes: attributes)
         
-        let attributes: [NSAttributedString.Key : Any] = [.font: OstFontProvider().get(size: 12).bold()]
-        let termsAttributedString = NSAttributedString(string: "Terms of Service", attributes: attributes)
-        let privacyAttributedString = NSAttributedString(string: "Privacy Policy", attributes: attributes)
+        var termsAttributes: [NSAttributedString.Key : Any]  = attributes
+        termsAttributes[.init("action")] = #selector(self.termsLabelTapped)
+        termsAttributes[.font] = OstFontProvider().get(size: 12).bold()
+        let termsAttributedString = NSAttributedString(string: "Terms of Service", attributes: termsAttributes)
+        
+        var privacyAttributes: [NSAttributedString.Key : Any]  = attributes
+        privacyAttributes[.init("action")] = #selector(self.privacyLabelTapped)
+        privacyAttributes[.font] = OstFontProvider().get(size: 12).bold()
+        let privacyAttributedString = NSAttributedString(string: "Privacy Policy", attributes: privacyAttributes)
         
         attributedString.append(termsAttributedString)
-        attributedString.append(NSAttributedString(string: " and "))
+        attributedString.append(NSAttributedString(string: " and ", attributes: attributes))
         attributedString.append(privacyAttributedString)
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -116,6 +121,31 @@ class OstGetPinViewController: OstBaseScrollViewController {
         attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
 
         termsAndConditionLabel.attributedText = attributedString
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tncLabelTapped(_ :)))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.delegate = self
+        termsAndConditionLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func termsLabelTapped() {
+        
+    }
+    
+    @objc func privacyLabelTapped() {
+        
+    }
+    
+    @objc func tncLabelTapped(_ recognizer: UITapGestureRecognizer) {
+        let textView: UITextView = recognizer.view as! UITextView
+        
+        let layoutManager: NSLayoutManager = textView.layoutManager
+        var location = recognizer.location(in: textView)
+        location.x -= textView.textContainerInset.left;
+        location.y -= textView.textContainerInset.top;
+        
+       
+    
     }
     
     override func addLayoutConstraints() {
@@ -128,6 +158,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
         pinInput.centerXAlignWithParent();
         
         termsAndConditionLabel.applyBlockElementConstraints();
+        termsAndConditionLabel.setFixedHeight(constant: 60)
         termsAndConditionLabel.bottomAlignWithParent()
         
         contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())
@@ -155,9 +186,9 @@ class OstGetPinViewController: OstBaseScrollViewController {
     
 
     fileprivate func validateViewController() {
-//        if ( nil == self.pinInputDelegate ) {
-//            fatalError("pinInputDelegate is nil. Please use `newInstance` method.");
-//        }
+        if ( nil == self.pinInputDelegate ) {
+            fatalError("pinInputDelegate is nil. Please use `newInstance` method.");
+        }
     }
     
     public func resetView() {
