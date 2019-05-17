@@ -20,6 +20,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         let wordsTextView = MDCMultilineTextField()
         wordsTextView.translatesAutoresizingMaskIntoConstraints = false
         wordsTextView.isEnabled = true;
+        wordsTextView.clearButtonMode = .never
         wordsTextView.minimumLines = 3;
         return wordsTextView
     }()
@@ -78,6 +79,10 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
     //MARK: - Button Action
     
     @objc func recoverWalletButtonTapped(_ sender: Any?) {
+        
+        if !isValidInput() {
+            return
+        }
         let currentUser = CurrentUserModel.getInstance
         let mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
         
@@ -86,5 +91,22 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId: currentUser.ostUserId!,
                                                          mnemonics: mnemonics,
                                                          delegate: workflowDelegate)
+    }
+    
+    func isValidInput() -> Bool {
+        var mnemonics: [String] = self.wordsTextView.text!.components(separatedBy: " ")
+        mnemonics = mnemonics.filter({
+            let text = $0.replacingOccurrences(of: " ", with: "")
+            return !text.isEmpty
+        })
+        
+        if mnemonics.count == 12 {
+            wordsTextController?.setErrorText(nil,errorAccessibilityValue: nil);
+            return true
+        }
+        
+        wordsTextController?.setErrorText("Invalid Mnemonics passed.",
+                                          errorAccessibilityValue: nil);
+        return false
     }
 }
