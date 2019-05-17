@@ -17,6 +17,9 @@ class OstConfirmNewPinViewController: OstGetPinViewController {
         return "Confirm Pin";
     }
     
+    override func getLeadLabelText() -> String {
+        return "If you forget your PIN, you cannot recover your Wallet. So please be sure to remember it."
+    }
     
     public override class func newInstance(pinInputDelegate:OstPinInputDelegate) -> OstConfirmNewPinViewController {
         let instance = OstConfirmNewPinViewController();

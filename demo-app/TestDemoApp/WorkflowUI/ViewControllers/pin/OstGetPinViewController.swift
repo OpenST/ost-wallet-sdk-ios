@@ -57,7 +57,6 @@ class OstGetPinViewController: OstBaseScrollViewController {
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        view.text = "Enter you 6-digit PIN to authorize \n your action.";
         view.backgroundColor = .white;
         view.numberOfLines = 4;
         return view;
@@ -83,6 +82,11 @@ class OstGetPinViewController: OstBaseScrollViewController {
     override func configure() {
         super.configure();
         self.shouldFireIsMovingFromParent = true;
+        self.leadLabel.text = getLeadLabelText()
+    }
+    
+    func getLeadLabelText() -> String {
+        return "Enter you 6-digit PIN to authorize \n your action."
     }
     
     override func addSubviews() {
