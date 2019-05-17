@@ -15,7 +15,10 @@ class CurrentEconomy: OstBaseModel {
     static let getInstance = CurrentEconomy()
     
     private override init() {
-        
+        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
+            let qrJsonData = EconomyScannerViewController.getQRJsonData(economy) {
+            economyDetails = qrJsonData as [String : Any]
+        }
     }
     
     var economyDetails: [String: Any]? = nil
