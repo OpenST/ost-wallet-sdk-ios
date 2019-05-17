@@ -20,7 +20,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         let spendingLimitTestFiled = MDCTextField()
         spendingLimitTestFiled.translatesAutoresizingMaskIntoConstraints = false
         spendingLimitTestFiled.clearButtonMode = .never
-        spendingLimitTestFiled.placeholderLabel.text = ""
+        spendingLimitTestFiled.text = "50"
         return spendingLimitTestFiled
     }()
     var spendingLimitTestFieldController: MDCTextInputControllerOutlined? = nil
@@ -41,6 +41,8 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         let expiresAfterTextField = MDCTextField()
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
         expiresAfterTextField.clearButtonMode = .never
+        expiresAfterTextField.placeholderLabel.text = "Set Expiry for Session in Days"
+        expiresAfterTextField.text = "\(DEFAULT_SESSION_EXPIRES_IN) days"
         return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -112,10 +114,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         self.expirationHeightTextFieldController = MDCTextInputControllerOutlined(textInput: expiresAfterTextField)
         self.spendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: spendingUnitTextField)
         
-        self.spendingLimitTestFieldController!.placeholderText = "Spending Limit"
+        self.spendingLimitTestFieldController!.placeholderText = "Spending Limit for Session"
         self.spendingLimitTestField.keyboardType = .numberPad
         
-        self.expirationHeightTextFieldController!.placeholderText = "Expiration Height"
+        self.expirationHeightTextFieldController!.placeholderText = "Set Expiry for Session in Days"
         self.expiresAfterTextField.keyboardType = .numberPad
         
         self.spendingUnitTextFieldController!.placeholderText = "Unit"
@@ -221,6 +223,14 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     }
     
     func isCorrectInputPassed() -> Bool {
+        
+        if self.spendingLimitTestField.text?.isEmpty ?? true  {
+            spendingLimitTestFieldController?.setErrorText("Invalid Spending Limit",
+                                                      errorAccessibilityValue: nil);
+            return false;
+        }
+        
+        spendingLimitTestFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         return true
     }
     
