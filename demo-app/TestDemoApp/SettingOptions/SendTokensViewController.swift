@@ -305,6 +305,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
+        progressIndicator?.hide()
     }
     
     func showRequestAcknowledgedAlert() {
