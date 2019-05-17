@@ -198,7 +198,7 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
         )
         
         let platformEndPointVM : TableViewViewModel = TableViewViewModel(
-            viewModel: UserDetailsViewModel(title: "Recovery Key Address",
+            viewModel: UserDetailsViewModel(title: "Platform End Point",
                                             value: currentEconomy.saasApiEndpoint ?? ""),
             type: .withCopy
         )
