@@ -24,6 +24,8 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     private var captureSession: AVCaptureSession? = nil
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer? = nil
     
+    var cameraPermissionState: ((AVAuthorizationStatus) -> Void)? = nil
+    
     init(completion: (([String]?) -> Void)?) {
         self.onCompletion = completion
         super.init(frame: .zero)
@@ -79,9 +81,11 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
         if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
             addCaptureSession()
             captureSession?.startRunning()
+            cameraPermissionState?(.authorized)
         }
         else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
             showAlertForAccessDenied()
+            cameraPermissionState?(.denied)
         }
         else {
             AVCaptureDevice.requestAccess(for: .video, completionHandler: {[weak self] (granted: Bool) in
@@ -89,9 +93,11 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
                     if granted {
                         self?.addCaptureSession()
                         self?.captureSession?.startRunning()
+                        self?.cameraPermissionState?(.authorized)
                         
                     } else {
                         self?.showAlertForAccessDenied()
+                        self?.cameraPermissionState?(.denied)
                     }
                 }
             })

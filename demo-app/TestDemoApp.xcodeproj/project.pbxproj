@@ -245,6 +245,9 @@
 		4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
 		4B464FBA227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
 		4B464FBB227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
+		4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
+		4B4EB870228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
+		4B4EB871228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
 		4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
@@ -494,6 +497,7 @@
 		4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletViewController.swift; sourceTree = "<group>"; };
 		4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstHomeViewController.swift; sourceTree = "<group>"; };
+		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -823,12 +827,12 @@
 		4B464EE622773B5300F1F4AF /* SettingOptions */ = {
 			isa = PBXGroup;
 			children = (
+				4B4EB86D228E8799001605DE /* QRScan */,
 				4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */,
 				4B464EE722773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift */,
 				4B464EEB2277423500F1F4AF /* DeviceMnemonicsViewController.swift */,
 				4B464F3422796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift */,
 				4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */,
-				4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */,
 				4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */,
 				4BA4CB05227DDEF200A623ED /* SendTokensViewController.swift */,
 				4BA4CB17228006F900A623ED /* CreateSessionViewController.swift */,
@@ -899,6 +903,15 @@
 				4B464F222278C99F00F1F4AF /* OptionsViewController.swift */,
 			);
 			path = Wallet;
+			sourceTree = "<group>";
+		};
+		4B4EB86D228E8799001605DE /* QRScan */ = {
+			isa = PBXGroup;
+			children = (
+				4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */,
+				4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */,
+			);
+			path = QRScan;
 			sourceTree = "<group>";
 		};
 		4BA4CAFF227DA51600A623ED /* API */ = {
@@ -1521,6 +1534,7 @@
 				4B464F4E227AED2A00F1F4AF /* OstProgressIndicator.swift in Sources */,
 				4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */,
+				4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */,
 				4BFA11772287388800A9F5A4 /* OstNotification.swift in Sources */,
 				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
@@ -1631,6 +1645,7 @@
 				4BA4CB7D2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				0041A6622280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2D2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
+				4B4EB870228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */,
 				4B9E7378227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B214A72228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
@@ -1741,6 +1756,7 @@
 				4BA4CB7E2280BE4000A623ED /* Dictionary+Extension.swift in Sources */,
 				0041A6632280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				4B464F2E2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
+				4B4EB871228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */,
 				4B9E7379227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				4B214A73228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,

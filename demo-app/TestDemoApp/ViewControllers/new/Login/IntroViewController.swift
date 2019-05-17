@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IntroViewController: OstBaseScrollViewController {
+class IntroViewController: OstBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ class IntroViewController: OstBaseScrollViewController {
     override func addLayoutConstraints() {
         super.addLayoutConstraints();
         
-        logoImageView.topAlignWithParent(constant: 30);
+        logoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         logoImageView.centerXAlignWithParent();
         logoImageView.setAspectRatio(width: 70, height: 38);
         
@@ -79,19 +79,17 @@ class IntroViewController: OstBaseScrollViewController {
         leadLabel.applyBlockElementConstraints();
         
         introImageView.placeBelow(toItem: leadLabel, constant: 40);
-        introImageView.setAspectRatio(width: 221, height: 236);
+        introImageView.setW375Width(width: 221)
+        introImageView.setH667Height(height: 236)
         introImageView.centerXAlignWithParent();
         
-        createAccountBtn.placeBelow(toItem: introImageView, constant: 60);
         createAccountBtn.applyBlockElementConstraints();
+        createAccountBtn.bottomFromTopAlign(toItem: loginBtn, constant: -20)
         
         loginBtn.placeBelow(toItem: createAccountBtn);
         loginBtn.applyBlockElementConstraints();
-        
-        
-        //Update lastView as needed.
-        let lastView = loginBtn;
-        lastView.bottomAlignWithParent(constant: -20);
+        loginBtn.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+
     }
     
     //MARK: - Actions

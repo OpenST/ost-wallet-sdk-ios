@@ -45,6 +45,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         let passwordTextField = MDCTextField()
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.clearButtonMode = .never
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.placeholderLabel.text = "Password"
         return passwordTextField
     }()
@@ -92,6 +93,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     var workflowCallback: OstWorkflowCallbacks? = nil
     
+    var svContentViewHeightConstraint: NSLayoutConstraint? = nil
+    
     //MARK: - View LC
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +109,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             openEconomyScanner(animation: false)
             return
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -188,8 +202,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         addChangeTypeButtonConstraints()
         addQrCodeImageConstraints()
         
-        let last = changeTypeButton
-        last.bottomAlignWithParent()
+        svContentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())
+        svContentViewHeightConstraint?.isActive = true
     }
     
     func addTestEconomyTextFieldConstraints() {
@@ -225,11 +239,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func addChangeTypeButtonConstraints() {
-        let guide = view.safeAreaLayoutGuide
-        changeTypeButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant:-10).isActive = true
+        changeTypeButton.bottomAlignWithParent()
         changeTypeButton.centerXAlignWithParent()
     }
     
+    func getContentViewHeight() -> CGFloat {
+        return svContentView.getHeightConstant(forHeight: 570)
+    }
+    
+    func getContentViewMinHeight() -> CGFloat {
+        return 430
+    }
  
     //MARK: - Actions
     
@@ -423,5 +443,27 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
+    }
+    
+    //MAKR: - Keyboard Notificaiton
+    @objc func keyboardWillShow(_ notification:Notification) {
+        
+        let userInfo:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+        
+        let svContentViewHeight:CGFloat = getContentViewHeight() - keyboardHeight
+        svContentViewHeightConstraint?.constant = max(getContentViewMinHeight(), svContentViewHeight)
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification:Notification) {
+        svContentViewHeightConstraint?.constant = getContentViewHeight()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
 }

@@ -36,6 +36,17 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     //MARK: - View LC
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        scanner?.cameraPermissionState = {[weak self] state in
+            if state == AVAuthorizationStatus.denied {
+                self?.bottomLabel.text = "Access denied"
+            }
+            else if state == AVAuthorizationStatus.authorized {
+                self?.bottomLabel.text = "Scanning in progress…"
+            }
+            else {
+                self?.bottomLabel.text = ""
+            }
+        }
         scanner?.startScanning()
     }
     
@@ -43,7 +54,7 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     override func addSubviews() {
         super.addSubviews()
         addScannerView()
-         addSubview(bottomLabel)
+        addSubview(bottomLabel)
     }
     
     func addScannerView() {
@@ -54,11 +65,7 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
                     strongSelf.scanner?.startScanning()
                     return
                 }
-                
-                let currentUser = CurrentUserModel.getInstance
-                OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
-                                             payload: qrData,
-                                             delegate: strongSelf.workflowDelegate)
+                strongSelf.scannedQRData(qrData)
             }else {
                 strongSelf.scanner?.startScanning()
             }
@@ -67,6 +74,13 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
         viewPreview.translatesAutoresizingMaskIntoConstraints = false
         scanner = viewPreview
         addSubview(scanner!)
+    }
+    
+    func scannedQRData(_ qrData: String) {
+        let currentUser = CurrentUserModel.getInstance
+        OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
+                                     payload: qrData,
+                                     delegate: workflowDelegate)
     }
     
     //MARK: - Add Constraints
@@ -98,5 +112,45 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
         scanner?.startScanning()
+    }
+    
+    func getpaylaodDataFromQR(_ qr: String) -> [String: Any?]? {
+        if ( 0 == qr.count ) {
+            return nil
+        }
+        
+        let jsonObj:[String:Any?]?;
+        do {
+            jsonObj = try OstUtils.toJSONObject(qr) as? [String : Any?];
+        } catch {
+            return nil
+        }
+        
+        if ( nil == jsonObj) {
+            return nil
+        }
+        //Make sure data defination is present and is correct data-defination.
+        guard let dataDefination = jsonObj!["dd"] as? String else {
+            return nil
+        }
+        
+        if dataDefination.caseInsensitiveCompare(validDataDefination()) != .orderedSame {
+            return nil
+        }
+        
+        guard let _ = ConversionHelper.toString(jsonObj!["ddv"] as Any?)?.uppercased() else {
+            return nil
+        }
+        
+        //Make sure payload data is present.
+        guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
+            return nil
+        }
+        
+        return payloadData
+    }
+    
+    func validDataDefination() -> String {
+        return ""
     }
 }

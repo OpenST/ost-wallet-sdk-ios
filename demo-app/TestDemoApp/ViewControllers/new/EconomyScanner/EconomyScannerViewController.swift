@@ -10,6 +10,7 @@
 
 import UIKit
 import OstWalletSdk
+import AVFoundation
 
 class EconomyScannerViewController: OstBaseViewController {
     //MAKR: - Components
@@ -55,6 +56,18 @@ class EconomyScannerViewController: OstBaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        scanner?.cameraPermissionState = {[weak self] state in
+            if state == AVAuthorizationStatus.denied {
+                self?.bottomLabel.text = "Access denied"
+            }
+            else if state == AVAuthorizationStatus.authorized {
+                self?.bottomLabel.text = "Scanning in progress…"
+            }
+            else {
+                self?.bottomLabel.text = ""
+            }
+        }
         scanner?.startScanning()
     }
 

@@ -29,7 +29,9 @@ class OstNotification: OstBaseView {
     }()
     
     var titleLabel: UILabel = {
-        let label = OstUIKit.leadLabel()
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = OstFontProvider().get(size: 14).bold()
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 3

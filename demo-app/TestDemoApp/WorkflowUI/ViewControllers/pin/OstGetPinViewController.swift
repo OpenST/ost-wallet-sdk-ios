@@ -180,17 +180,9 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     func getContentViewHeight() -> CGFloat {
-        return getHeightValue(forHeight: 570)
+        return svContentView.getHeightConstant(forHeight: 570)
     }
     
-    func getHeightValue(forHeight height: CGFloat) -> CGFloat {
-        let windowHeight: CGFloat = 667.0;
-        let multiplier = height / windowHeight;
-        let window = UIApplication.shared.keyWindow;
-        let heightConstant = (window?.frame.height)! * multiplier
-        return heightConstant
-    }
-        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         validateViewController();
