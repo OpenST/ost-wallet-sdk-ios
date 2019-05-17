@@ -196,9 +196,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         var optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
-        if userDevice.isStatusRegistered || userDevice.isStatusRevoked {
-            optionResetPin.isEnable = false
-        }
         
         var optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
         if !userDevice.isStatusAuthorized {
