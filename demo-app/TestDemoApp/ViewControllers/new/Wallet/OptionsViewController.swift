@@ -283,6 +283,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if option.type == .authorizeViaQR {
             destinationVC = AuthorizeDeviceQRScanner()
         }
+            
+        else if option.type == .transactionViaQR {
+            destinationVC = TransactionQRScanner()
+        }
         
         else if option.type == .createSession {
             destinationSVVC = CreateSessionViewController()

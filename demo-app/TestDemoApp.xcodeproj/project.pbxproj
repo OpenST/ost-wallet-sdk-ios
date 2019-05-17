@@ -248,6 +248,9 @@
 		4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
 		4B4EB870228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
 		4B4EB871228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
+		4B4EB873228F49D5001605DE /* TransactionQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */; };
+		4B4EB874228F49D5001605DE /* TransactionQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */; };
+		4B4EB875228F49D5001605DE /* TransactionQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */; };
 		4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
@@ -498,6 +501,7 @@
 		4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstHomeViewController.swift; sourceTree = "<group>"; };
 		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
+		4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQRScanner.swift; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -910,6 +914,7 @@
 			children = (
 				4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */,
 				4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */,
+				4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */,
 			);
 			path = QRScan;
 			sourceTree = "<group>";
@@ -1544,6 +1549,7 @@
 				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B9E7377227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				4BA4CB8A2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
+				4B4EB873228F49D5001605DE /* TransactionQRScanner.swift in Sources */,
 				4BFA1191228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */,
 				4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
@@ -1676,6 +1682,7 @@
 				002EAF432272056300B48F1D /* OstPrimaryButton.swift in Sources */,
 				4BA4CBA82285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F5F227B750500F1F4AF /* IconGenerator.swift in Sources */,
+				4B4EB874228F49D5001605DE /* TransactionQRScanner.swift in Sources */,
 				0041A66E2280D60D007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7374227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
@@ -1787,6 +1794,7 @@
 				002EAF442272056400B48F1D /* OstPrimaryButton.swift in Sources */,
 				4BA4CBA92285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
 				4B464F60227B750500F1F4AF /* IconGenerator.swift in Sources */,
+				4B4EB875228F49D5001605DE /* TransactionQRScanner.swift in Sources */,
 				0041A66F2280D60E007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7375227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,

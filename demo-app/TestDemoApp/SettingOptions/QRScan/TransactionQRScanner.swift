@@ -9,16 +9,15 @@
  */
 
 import Foundation
-import OstWalletSdk
+import UIKit
 
-class AuthorizeDeviceQRScanner: QRScannerViewController {
-    
+class TransactionQRScanner: QRScannerViewController {
     override func scannedQRData(_ qrData: String) {
         if isValidQRdata(qrData) {
             super.scannedQRData(qrData)
         }else {
             let alert = UIAlertController(title: "Invalid QR-Code",
-                                          message: "QR-Code scanned for authorize device is invalid. Please scan valid QR-Code to authorize device.",
+                                          message: "QR-Code scanned for executing transaction is invalid. Please scan valid QR-Code to executing transaction.",
                                           preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "ScanAgain", style: .default, handler: {[weak self] (alertAction) in
@@ -30,16 +29,25 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
     
     func isValidQRdata(_ qrData: String) -> Bool {
         guard let payloadData = getpaylaodDataFromQR(qrData),
-                let _ =  payloadData["da"] as? String else {
-                    
-                    return false
+            let addresses =  payloadData["ads"] as? [String],
+            let amounts = payloadData["ams"] as? [String] else{
+            
+            return false
         }
         
-        return true
+        let filteredAddress = addresses.filter({
+            let address = $0.replacingOccurrences(of: " ", with: "")
+            return !address.isEmpty
+        })
+        
+        let filteredAmounts = amounts.filter({
+            return $0.isMatch("^[0-9]*$")
+        })
+        
+        return (filteredAddress.count > 0) && (filteredAddress.count == filteredAmounts.count) 
     }
     
     override func validDataDefination() -> String {
-        return "ad"
+        return "tx"
     }
 }
-
