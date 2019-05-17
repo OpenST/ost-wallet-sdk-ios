@@ -314,9 +314,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         else if option.type == .logoutAllSessions {
             let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance, presenter: self)
+                                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                                presenter: self)
             OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
-                                                 listner: self as! OstSdkInteractDelegate)
+                                                 listner: self)
             return
         }
         
@@ -360,11 +361,18 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        
+        if workflowContext.workflowType == .logoutAllSessions,
+            error.errorMessage.contains("logged out") {
+            
+                CurrentUserModel.getInstance.logout()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+        }
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
+            CurrentUserModel.getInstance.logout()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.showIntroController()
         }

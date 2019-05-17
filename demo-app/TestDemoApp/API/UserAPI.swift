@@ -32,7 +32,7 @@ class UserAPI: BaseAPI {
                   onFailure: onFailure)
     }
     
-    class func loginUser(params: [String: Any],
+    class func loginUser(params: [String: Any]? = nil,
                          onSuccess: (([String: Any]?) -> Void)? = nil,
                          onFailure: (([String: Any]?) -> Void)? = nil) {
         self.post(resource: "/login",
@@ -117,5 +117,12 @@ class UserAPI: BaseAPI {
                  params: meta as [String : AnyObject]?,
                  onSuccess: onSuccess,
                  onFailure: onFailure)
+    }
+    
+    class func logoutUser(onSuccess: (([String: Any]?) -> Void)? = nil,
+                         onFailure: (([String: Any]?) -> Void)? = nil) {
+        
+        self.post(resource: "/users/logout", params: nil,
+                  onSuccess: onSuccess, onFailure: onFailure)
     }
 }

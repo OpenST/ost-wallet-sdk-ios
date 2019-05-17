@@ -25,15 +25,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self])
-        showIntroController()
+        showIntroController(fetchUser: true)
         
         IQKeyboardManager.shared.enable = true
         
         return true
     }
     
-    func showIntroController() {
+    func showIntroController(fetchUser: Bool = false) {
         introViewController = IntroViewController();
+        introViewController?.fetchUser = fetchUser
         navigationController = UINavigationController(rootViewController: introViewController!)
         window?.rootViewController = navigationController!;
         window?.makeKeyAndVisible();

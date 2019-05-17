@@ -21,13 +21,13 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     var userBalanceDetails: [String: Any]? = nil
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
-    var setupDeviceOnComplete: ((Bool)->Void)?
+    var setupDeviceOnFailure: (([String: Any]?)->Void)?
     
     //MARK: - API
-    func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onComplete:@escaping ((Bool)->Void)) {
+    func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onFailure:@escaping (([String: Any]?)->Void)) {
         
         setupDeviceOnSuccess = onSuccess
-        setupDeviceOnComplete = onComplete
+        setupDeviceOnFailure = onFailure
         
         let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId, listner: self)
@@ -38,31 +38,31 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
                                  delegate: workflowCallback);
     }
     
-    func login(username:String ,
-               phonenumber:String,
+    func login(username:String? = nil ,
+               phonenumber:String? = nil,
                onSuccess: @escaping ((OstUser, OstDevice) -> Void),
-               onComplete:@escaping ((Bool)->Void) ) {
+               onFailure:@escaping (([String: Any]?)->Void) ) {
         
-        var params: [String: Any] = [:];
-        params["username"] = username;
-        params["password"] = phonenumber;
+        var params: [String: Any]? = nil
+        if nil != username && nil != phonenumber {
+            params = [:]
+            params!["username"] = username;
+            params!["password"] = phonenumber;
+        }
         
         UserAPI.loginUser(params: params,
                           onSuccess: { (apiResponse) in
                             CurrentUserModel.getInstance.userDetails = apiResponse
-                            self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
+                            self.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
         }) { (apiError) in
-            
-            let msg = (apiError?["msg"] as? String) ?? "Login failed due to unknown reason"
-            OstErroNotification.showNotification(withMessage: msg)
-            onComplete(false)
+            onFailure(apiError)
         }
     }
     
     func signUp(username:String ,
                 phonenumber:String,
                 onSuccess: @escaping ((OstUser, OstDevice) -> Void),
-                onComplete:@escaping ((Bool)->Void) ) {
+                onFailure:@escaping (([String: Any]?)->Void) ) {
         
         var params: [String: Any] = [:];
         params["username"] = username;
@@ -71,19 +71,24 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         UserAPI.signupUser(params: params,
                            onSuccess: { (apiResponse) in
                             CurrentUserModel.getInstance.userDetails = apiResponse
-                            self.setupDevice(onSuccess: onSuccess, onComplete: onComplete);
+                            self.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
         }) { (apiError) in
             
             let msg = (apiError?["msg"] as? String) ?? "Signup failed due to unknown reason"
             OstErroNotification.showNotification(withMessage: msg)
-            onComplete(false)
+            onFailure(apiError)
         }
+    }
+    
+    func logout() {
+        UserAPI.logoutUser()
+        userDetails = nil
     }
     
     
     //MARK: - OstWorkflow Delegate
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        setupDeviceOnComplete?(false);
+        setupDeviceOnFailure?(nil);
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
@@ -93,9 +98,9 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
            
                 setupDeviceOnSuccess?(self.ostUser!, self.currentDevice!)
            
+        }else {
+             setupDeviceOnFailure?(nil);
         }
-        //Callback onComplete with true.
-        setupDeviceOnComplete?(true);
     }
     
     func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {

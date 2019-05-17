@@ -7,15 +7,23 @@
 //
 
 import UIKit
+import OstWalletSdk
 
-class IntroViewController: OstBaseViewController {
+class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
 
+    //MARK: - Variables
+    var progressIndicator: OstProgressIndicator? = nil
+    var fetchUser: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
          self.navigationController?.isNavigationBarHidden = true
+        if nil != CurrentEconomy.getInstance.tokenId && fetchUser {
+            getUserFromServer()
+        }
     }
     
     // MARK - Subviews
@@ -106,4 +114,85 @@ class IntroViewController: OstBaseViewController {
         loginVC.pushViewControllerOn(self)
     }
 
+    
+    func getUserFromServer() {
+        progressIndicator = OstProgressIndicator(progressText: "Fetching user...")
+        getApplicationWindow()?.addSubview(progressIndicator!)
+        progressIndicator?.show()
+     
+        CurrentUserModel.getInstance.login(onSuccess: {[weak self] (ostUser, ostDevice) in
+            if ostUser.isStatusCreated {
+                self?.activateUser()
+            }else {
+                self?.onLoginSuccess()
+            }
+        }) {[weak self] (failureResponse) in
+            self?.onFailure(response: failureResponse)
+        }
+    }
+    
+    func activateUser() {
+        removeProgressIndicator()
+        let currentUse = CurrentUserModel.getInstance
+        let workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                                   passphrasePrefixDelegate: currentUse,
+                                                                   presenter: self)
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
+                                             listner: self)
+    }
+    
+    func onLoginSuccess() {
+        let currentUser = CurrentUserModel.getInstance
+        
+        if currentUser.status!.caseInsensitiveCompare("created") == .orderedSame {
+            
+            if currentUser.ostUserStatus!.caseInsensitiveCompare("activated") == .orderedSame {
+                UserAPI.notifyUserActivated()
+                removeProgressIndicator()
+                pushToTabBarController()
+            }
+            else if currentUser.ostUserStatus!.caseInsensitiveCompare("created") == .orderedSame {
+                activateUser()
+            }
+        }else {
+            removeProgressIndicator()
+            pushToTabBarController()
+        }
+    }
+    
+    func removeProgressIndicator() {
+        progressIndicator?.hide(onCompletion: {[weak self] (isCompleted) in
+            self?.progressIndicator = nil
+        })
+    }
+    
+    func pushToTabBarController() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.showTabbarController()
+    }
+
+    
+    func onFailure(response:[String: Any]?) {
+        removeProgressIndicator()
+    }
+    
+    //MARK: - OstSdkInteract Delegate
+    
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+    }
+    
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if let currentUser = CurrentUserModel.getInstance.ostUser {
+            if currentUser.isStatusActivating {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
+                    self?.pushToTabBarController()
+                }
+            }
+        }
+    }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+    }
 }

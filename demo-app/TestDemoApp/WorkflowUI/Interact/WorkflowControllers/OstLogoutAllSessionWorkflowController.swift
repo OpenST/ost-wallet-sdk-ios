@@ -19,7 +19,7 @@ class OstLogoutAllSessionWorkflowController: OstWorkflowCallbacks {
          presenter: UIViewController) {
         
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
-        self.getPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
+        self.getPinViewController = OstGetPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
         
         if ( nil == presenter.navigationController ) {
@@ -31,7 +31,7 @@ class OstLogoutAllSessionWorkflowController: OstWorkflowCallbacks {
     }
     
     deinit {
-        print("OstActivateUserWorkflowController :: I am deinit ");
+        print("OstLogoutAllSessionWorkflowController :: I am deinit ");
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

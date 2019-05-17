@@ -112,8 +112,8 @@ class OstProgressIndicator: OstBaseView {
             self?.backgroundColor = .white
             self?.containerView.alpha = 0.0
         }) {[weak self] (isComplete) in
-            onCompletion?(isComplete)
             self?.removeFromSuperview()
+            onCompletion?(isComplete)
         }
 
     }
