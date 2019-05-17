@@ -210,8 +210,8 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
+            amountToTransferStr = amountToTransferStr + "000000000000000000"
         }
-        amountToTransferStr = amountToTransferStr + "000000000000000000"
         
         progressIndicator = OstProgressIndicator(progressText: progressText)
         getApplicationWindow()?.addSubview(progressIndicator!)
