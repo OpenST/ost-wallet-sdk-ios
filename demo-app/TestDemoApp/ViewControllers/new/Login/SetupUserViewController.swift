@@ -158,7 +158,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         weak var weakSelf = self
         setupButton.addTarget(weakSelf, action: #selector(weakSelf!.setupButtonTapped(_:)), for: .touchUpInside)
         changeTypeButton.addTarget(weakSelf, action: #selector(weakSelf!.changeTypeTapped(_:)), for: .touchUpInside)
-        qrCodeButton.addTarget(weakSelf, action: #selector(weakSelf!.openEconomyScanner(animation:)), for: .touchUpInside)
+        qrCodeButton.addTarget(weakSelf, action: #selector(weakSelf!.qrButtonTapped(_ :)), for: .touchUpInside)
     }
     
     func setupViewAccordingToType() {
@@ -372,6 +372,16 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         viewControllerType = (viewControllerType == .signup) ? .login : .signup
     }
     
+    @objc func qrButtonTapped(_ sender: Any?) {
+        openEconomyScanner(animation: true)
+    }
+    func openEconomyScanner(animation flag: Bool = true) {
+        if nil == economyScanner {
+            economyScanner = EconomyScannerViewController()
+        }
+        self.navigationController?.present(economyScanner!, animated: flag, completion: nil)
+    }
+    
     //MARK: - Text Field Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField === testEconomyTextField {
@@ -380,13 +390,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         }
         
         return true
-    }
-    
-    @objc func openEconomyScanner(animation flag: Bool = true) {
-        if nil == economyScanner {
-            economyScanner = EconomyScannerViewController()
-        }
-        self.navigationController?.present(economyScanner!, animated: flag, completion: nil)
     }
 
     func pushToTabBarController() {
