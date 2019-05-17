@@ -192,20 +192,34 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     @objc func sendTokenButtonTapped(_ sender: Any?) {
         
+        if !isValidInputPassed() {
+            return
+        }
+        
         var amountToTransferStr = self.amountTextField.text!
+        let receiverName = userDetails["username"] as? String ?? ""
+        
         let ruleType:OstExecuteTransactionType
+        let progressText: String
+        
         if ( isUsdTx ) {
             //Multiply value with 10^18. Since we have string.
             //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
-           ruleType = .Pay
+            ruleType = .Pay
+            progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
         }else {
-            amountToTransferStr = amountToTransferStr + "000000000000000000"
             ruleType = .DirectTransfer
+            progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
         }
+        amountToTransferStr = amountToTransferStr + "000000000000000000"
+        
+        progressIndicator = OstProgressIndicator(progressText: progressText)
+        getApplicationWindow()?.addSubview(progressIndicator!)
+        progressIndicator?.show()
         
         var txMeta: [String: String] = [:];
             txMeta["type"] = "user_to_user";
-            txMeta["name"] = "Sent to \(userDetails["username"] as? String ?? "")";
+            txMeta["name"] = "Sent to \(receiverName)";
             //Let's build some json. Not the best way do it, but, works here.
             txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
         
@@ -217,6 +231,31 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
                                         meta: txMeta,
                                         delegate: self.workflowDelegate)
     }
+    
+    func isValidInputPassed() -> Bool {
+        var isValidInput: Bool = true
+        if let userBalance: Double = Double(CurrentUserModel.getInstance.balance),
+            let enteredAmount: Double = Double(self.amountTextField.text!) {
+            
+            if isUsdTx {
+                
+            }else {
+                if enteredAmount > userBalance {
+                    isValidInput = false
+                }
+            }
+        }
+        
+        if isValidInput {
+            amountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+        } else {
+            amountTextFieldController?.setErrorText("Low balance to make this transaction",
+                                                errorAccessibilityValue: nil);
+        }
+       
+        return isValidInput
+    }
+        
     
     @objc func cancelButtonTapped(_ sender: Any?) {
         self.navigationController?.popViewController(animated: true)
@@ -259,9 +298,40 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        progressIndicator?.hide(onCompletion: {[weak self] (isCompleted) in
+            self?.showRequestAcknowledgedAlert()
+        })
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
+    }
+    
+    func showRequestAcknowledgedAlert() {
+        let alert = UIAlertController(title: """
+
+
+
+            Your Transaction has been broadcasted
+            """,
+                                      message: nil,
+                                      preferredStyle: .alert)
+        
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "transactionCheckmark")
+        
+        alert.view.addSubview(imageView)
+        
+        let parent = imageView.superview!
+        imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }

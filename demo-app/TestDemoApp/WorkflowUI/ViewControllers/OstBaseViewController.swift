@@ -16,6 +16,10 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     deinit {
         print("deinit: \(String(describing: self))")
     }
+    
+    func getApplicationWindow() -> UIWindow? {
+        return UIApplication.shared.keyWindow
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

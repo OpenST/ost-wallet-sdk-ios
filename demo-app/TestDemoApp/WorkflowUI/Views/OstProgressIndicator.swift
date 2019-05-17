@@ -106,12 +106,13 @@ class OstProgressIndicator: OstBaseView {
         self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
     }
     
-    func hide() {
+    func hide(onCompletion: ((Bool) -> Void)? = nil) {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         UIView.animate(withDuration: 0.4, animations: {[weak self] in
             self?.backgroundColor = .white
             self?.containerView.alpha = 0.0
         }) {[weak self] (isComplete) in
+            onCompletion?(isComplete)
             self?.removeFromSuperview()
         }
 
