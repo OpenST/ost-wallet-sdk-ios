@@ -36,7 +36,7 @@ class BaseAPI {
                 onSuccess?(httpResonse.result.value as? [String: Any])
             } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode == 401) {
                 // Unauthorized.
-                
+                onFailure?(httpResonse.result.value as? [String: Any])
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }
@@ -59,7 +59,7 @@ class BaseAPI {
                 onSuccess?(httpResonse.result.value as? [String: Any])
             } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 400 && httpResonse.response!.statusCode < 500) {
                 // Unauthorized.
-                
+                onFailure?(httpResonse.result.value as? [String: Any])
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }

@@ -38,7 +38,7 @@ class TabBarViewController: UITabBarController {
             if let currentUser = CurrentUserModel.getInstance.ostUser {
                 if currentUser.isStatusActivated {
                     self.selectedViewController = viewControllers![2]
-                    if let rootVC = (self.selectedViewController as! UINavigationController).viewControllers.first as? OptionsViewController {
+                    if let rootVC = (self.selectedViewController as? UINavigationController)?.viewControllers.first as? OptionsViewController {
                         rootVC.openAuthorizeDeviceViewIfRequired()
                     }
                     return
@@ -107,5 +107,12 @@ class TabBarViewController: UITabBarController {
         UIView.animate(withDuration: 0.3, animations: {
             self.tabBar.frame = frame
         })
+    }
+    
+    func showAuthorizeDeviceOptions() {
+        self.selectedViewController = viewControllers![2]
+        if let rootVC = (self.selectedViewController as? UINavigationController)?.viewControllers.first as? OptionsViewController {
+            rootVC.openAuthorizeDeviceViewIfRequired()
+        }
     }
 }

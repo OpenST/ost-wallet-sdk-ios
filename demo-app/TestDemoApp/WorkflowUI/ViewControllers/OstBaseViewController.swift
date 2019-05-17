@@ -142,18 +142,31 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
                   message: "The Wallet setup process takes about 30 seconds. You can continue to use the app and we’ll notify when the wallet is ready to use.")
     }
     
-    func showDeviceIsNotAuthorizedAlert() {
+    func showDeviceIsNotAuthorizedAlert(actionHandler: ((UIAlertAction) ->Void)? = nil) {
         showAlert(title: "Your Wallet is not Setup",
-                  message: "Please setup wallet to perfom action")
+                  message: "Please setup wallet to perfom action.",
+                  buttonTitle: "Setup wallet",
+                  cancelButtonTitle: "Dismiss",
+                  actionHandler: actionHandler)
     }
     
-    func showAlert(title: String? = nil , message: String? = nil, buttonTitle: String = "Ok") {
+    func showAlert(title: String? = nil ,
+                   message: String? = nil,
+                   buttonTitle: String = "Ok",
+                   cancelButtonTitle: String? = nil,
+                   actionHandler: ((UIAlertAction) ->Void)? = nil) {
         
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: {(alertAction) in
+            actionHandler?(alertAction)
+        }))
+        
+        if nil != cancelButtonTitle && !cancelButtonTitle!.isEmpty {
+            alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .default, handler: nil))
+        }
         
         self.present(alert, animated: true, completion: nil)
     }

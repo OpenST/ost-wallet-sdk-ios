@@ -86,7 +86,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
             
             CurrentUserModel.getInstance.userDetails = apiResponse
             self?.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
-        }) {[weak self] (apiResponse) in
+        }) {(apiResponse) in
             onFailure(apiResponse)
         }
     }

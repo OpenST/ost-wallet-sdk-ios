@@ -354,7 +354,9 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if !CurrentUserModel.getInstance.isCurrentDeviceStatusAuthrozied {
-            showDeviceIsNotAuthorizedAlert()
+            showDeviceIsNotAuthorizedAlert {[weak self] (alertAction) in
+                self?.tabbarController?.showAuthorizeDeviceOptions()
+            }
             return
         }
         
