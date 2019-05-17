@@ -33,7 +33,8 @@ class DeviceTableViewCell: UsersTableViewCell {
         label.layer.cornerRadius = 5
         label.textAlignment = .center
         label.clipsToBounds = true
-        label.padding = 5
+        label.paddingWidth = 4
+        label.paddingHeight = 2
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label

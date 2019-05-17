@@ -13,10 +13,20 @@ import UIKit
 
 class InsetLabel: UILabel {
     
-    var padding: CGFloat = 0
+    var padding: CGFloat! {
+        didSet {
+            paddingWidth = padding
+            paddingHeight = padding
+        }
+    }
+    var paddingWidth: CGFloat = 0.0
+    var paddingHeight: CGFloat = 0.0
     
     override func drawText(in rect: CGRect) {
-        let insetRect = rect.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
+        let insetRect = rect.inset(by: UIEdgeInsets(top: paddingHeight,
+                                                    left: paddingWidth,
+                                                    bottom: paddingHeight,
+                                                    right: paddingWidth))
         super.drawText(in: insetRect)
     }
     
@@ -29,7 +39,11 @@ class InsetLabel: UILabel {
     }
     
     private func addInsets(to size: CGSize) -> CGSize {
-        let contentInsets = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        let contentInsets = UIEdgeInsets(top: paddingHeight,
+                                         left: paddingWidth,
+                                         bottom: paddingHeight,
+                                         right: paddingWidth)
+        
         let width = size.width + contentInsets.left + contentInsets.right
         let height = size.height + contentInsets.top + contentInsets.bottom
         return CGSize(width: width, height: height)

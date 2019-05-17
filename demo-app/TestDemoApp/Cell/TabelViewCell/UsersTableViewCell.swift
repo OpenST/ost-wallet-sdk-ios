@@ -106,7 +106,7 @@ class UsersTableViewCell: BaseTableViewCell {
         nameLabel.numberOfLines = 0
         nameLabel.textAlignment = .left
         nameLabel.textColor = UIColor.black
-        nameLabel.font = OstFontProvider().get(size: 17)
+        nameLabel.font = OstFontProvider().get(size: 16)
         self.titleLabel = nameLabel
     }
     
@@ -115,7 +115,7 @@ class UsersTableViewCell: BaseTableViewCell {
         loBalanaceLabel.numberOfLines = 0
         loBalanaceLabel.textAlignment = .left
         loBalanaceLabel.textColor = UIColor.darkGray
-        loBalanaceLabel.font = OstFontProvider().get(size: 15)
+        loBalanaceLabel.font = OstFontProvider().get(size: 13)
         self.balanceLabel = loBalanaceLabel
     }
     
