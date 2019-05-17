@@ -52,6 +52,25 @@ class UserAPI: BaseAPI {
                   onFailure: onFailure)
     }
     
+    class func getCurrentUser(onSuccess: (([String: Any]?) -> Void)? = nil,
+                              onFailure: (([String: Any]?) -> Void)? = nil) {
+        self.get(resource: "/users/current-user",
+                  params: nil,
+                  onSuccess: { (apiParams) in
+                    guard let data = apiParams?["data"] as? [String: Any] else {
+                        onFailure?(apiParams)
+                        return
+                    }
+                    let resultType = data["result_type"] as! String
+                    guard let userData = data[resultType] as? [String: Any] else {
+                        onFailure?(nil)
+                        return
+                    }
+                    onSuccess?(userData)
+        },
+                  onFailure: onFailure)
+    }
+    
     class func notifyUserActivated(onSuccess: (([String: Any]?) -> Void)? = nil,
                                    onFailure: (([String: Any]?) -> Void)? = nil) {
         self.post(resource: "/notify/user-activate",

@@ -119,8 +119,10 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         progressIndicator = OstProgressIndicator(progressText: "Fetching user...")
         getApplicationWindow()?.addSubview(progressIndicator!)
         progressIndicator?.show()
-     
-        CurrentUserModel.getInstance.login(onSuccess: {[weak self] (ostUser, ostDevice) in
+
+        try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint!)
+
+        CurrentUserModel.getInstance.getCurrentUser(onSuccess: {[weak self] (ostUser, ostDevice) in
             if ostUser.isStatusCreated {
                 self?.activateUser()
             }else {

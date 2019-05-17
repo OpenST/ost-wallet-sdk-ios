@@ -38,23 +38,22 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
                                  delegate: workflowCallback);
     }
     
-    func login(username:String? = nil ,
-               phonenumber:String? = nil,
+    func login(username:String,
+               phonenumber:String,
                onSuccess: @escaping ((OstUser, OstDevice) -> Void),
                onFailure:@escaping (([String: Any]?)->Void) ) {
         
-        var params: [String: Any]? = nil
-        if nil != username && nil != phonenumber {
-            params = [:]
-            params!["username"] = username;
-            params!["password"] = phonenumber;
-        }
+        var params: [String: Any] = [:]
+        params["username"] = username;
+        params["password"] = phonenumber;
         
         UserAPI.loginUser(params: params,
                           onSuccess: { (apiResponse) in
                             CurrentUserModel.getInstance.userDetails = apiResponse
                             self.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
         }) { (apiError) in
+            let msg = (apiError?["msg"] as? String) ?? "Login failed due to unknown reason"
+            OstErroNotification.showNotification(withMessage: msg)
             onFailure(apiError)
         }
     }
@@ -77,6 +76,18 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
             let msg = (apiError?["msg"] as? String) ?? "Signup failed due to unknown reason"
             OstErroNotification.showNotification(withMessage: msg)
             onFailure(apiError)
+        }
+    }
+    
+    func getCurrentUser(onSuccess: @escaping ((OstUser, OstDevice) -> Void),
+                        onFailure:@escaping (([String: Any]?)->Void)) {
+        
+        UserAPI.getCurrentUser(onSuccess: {[weak self] (apiResponse) in
+            
+            CurrentUserModel.getInstance.userDetails = apiResponse
+            self?.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
+        }) {[weak self] (apiResponse) in
+            onFailure(apiResponse)
         }
     }
     

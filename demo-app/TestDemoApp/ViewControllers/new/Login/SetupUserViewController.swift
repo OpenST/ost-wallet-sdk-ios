@@ -37,6 +37,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.clearButtonMode = .never
         usernameTextField.placeholderLabel.text = "Username"
+        usernameTextField.text = "Aniket50"
         return usernameTextField
     }()
     var usernameTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -47,6 +48,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         passwordTextField.clearButtonMode = .never
         passwordTextField.isSecureTextEntry = true
         passwordTextField.placeholderLabel.text = "Password"
+        passwordTextField.text = "123123"
         return passwordTextField
     }()
     var passwordTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -99,11 +101,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-   
-        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
-            let qrJsonData = EconomyScannerViewController.getQRJsonData(economy) {
-            CurrentEconomy.getInstance.economyDetails = qrJsonData as [String : Any]
-        }
         
         if nil == CurrentEconomy.getInstance.tokenId {
             openEconomyScanner(animation: false)
@@ -280,8 +277,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                             phonenumber: self.passwordTextField.text!,
                                             onSuccess: {[weak self] (ostUser, ostDevice) in
                                                 self?.onSignupSuccess()
-        }) {[weak self] (isFailed) in
-            self?.onSigupFailed()
+        }) {[weak self] (apiError) in
+            self?.onSigupFailed(apiError)
         }
     }
     
@@ -295,8 +292,9 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                             }else {
                                                 self?.onLoginSuccess()
                                             }
-        }) {[weak self] (isFailed) in
-            self?.onLoginFailed()
+        }) {[weak self] (apiError) in
+           
+            self?.onLoginFailed(apiError)
         }
     }
     
@@ -345,7 +343,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                              listner: self)
     }
     
-    func onSigupFailed() {
+    func onSigupFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
     }
     
@@ -368,10 +366,9 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         }
     }
     
-    func onLoginFailed() {
+    func onLoginFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
     }
-    
 
     @objc func changeTypeTapped(_ sender: Any?) {
         viewControllerType = (viewControllerType == .signup) ? .login : .signup
