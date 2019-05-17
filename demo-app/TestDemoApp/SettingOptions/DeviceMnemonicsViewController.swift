@@ -162,6 +162,10 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     
     //MAKR: - Sdk Interact Delegate
     override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId,
+                           workflowContext: workflowContext,
+                           contextEntity: contextEntity)
+        
         if workflowContext.workflowType == .getDeviceMnemonics {
             self.mnemonicsArray.append(contentsOf: (contextEntity.entity as! [String]))
             self.collectionView?.reloadData()
@@ -169,6 +173,12 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        super.flowInterrupted(workflowId: workflowId,
+                              workflowContext: workflowContext,
+                              error: error)
         
+        if workflowContext.workflowType == .getDeviceMnemonics {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 }

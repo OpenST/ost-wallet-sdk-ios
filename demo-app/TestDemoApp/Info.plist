@@ -2,33 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Fabric</key>
-    <dict>
-        <key>APIKey</key>
-        <string>CrashlyticsKeyFromFabrics</string>
-        <key>Kits</key>
-        <array>
-            <dict>
-                <key>KitInfo</key>
-                <dict/>
-                <key>KitName</key>
-                <string>Crashlytics</string>
-            </dict>
-        </array>
-    </dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Lato-Black.ttf</string>
-		<string>Lato-BlackItalic.ttf</string>
-		<string>Lato-Bold.ttf</string>
-		<string>Lato-BoldItalic.ttf</string>
-		<string>Lato-Hairline.ttf</string>
-		<string>Lato-HairlineItalic.ttf</string>
-		<string>Lato-Italic.ttf</string>
-		<string>Lato-LightItalic.ttf</string>
-		<string>Lato-Light.ttf</string>
-		<string>Lato-Regular.ttf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -47,12 +20,39 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>CrashlyticsKeyFromFabrics</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Applications uses camera to scan QR-Code</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Applications uses Face ID to verify your identity</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Hairline.ttf</string>
+		<string>Lato-HairlineItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-Regular.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -64,8 +64,7 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
