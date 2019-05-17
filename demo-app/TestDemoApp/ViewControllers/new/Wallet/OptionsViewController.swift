@@ -195,7 +195,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionSession.isEnable = false
         }
         
-        var optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
+        let optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
         
         var optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
         if !userDevice.isStatusAuthorized {
@@ -336,7 +336,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
-    func openAuthorizeDeviceView() {
+    func openAuthorizeDeviceViewIfRequired() {
         guard let currentDevice = CurrentUserModel.getInstance.currentDevice else {return}
         if currentDevice.isStatusRegistered {
             if let currentUser = CurrentUserModel.getInstance.ostUser {

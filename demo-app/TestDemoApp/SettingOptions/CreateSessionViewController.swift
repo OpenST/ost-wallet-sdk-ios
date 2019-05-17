@@ -243,6 +243,4 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
-    
-    
 }
