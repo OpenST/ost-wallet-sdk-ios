@@ -53,7 +53,7 @@ class OstNotificationManager {
         if nil == notificationModel.contextEntity && nil == notificationModel.error {
             return false
         }
-        if workflowContext.workflowType == .setupDevice && nil != notificationModel.contextEntity {
+        if workflowContext.workflowType == .setupDevice {
             return false
         }
         if workflowContext.workflowType == .getDeviceMnemonics {

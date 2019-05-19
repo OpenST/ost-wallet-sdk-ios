@@ -37,32 +37,7 @@ class OstErroNotification: OstNotification {
     }
     
     //MARK: - Notification Text
-    
-    override func getActivateUserText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-    
-    override func getAddSessionText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-    
-    override func getResetPinText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-    
-    override func getAbortDeviceRecoveryText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-    
-    override func getAuthorizeDeviceWithMnemonicsText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-    
-    override func getAuthorizeDeviceWithQRText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
-    }
-   
-    override func getExecuteTransactionText (contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return error?.errorMessage ?? ""
+    override func getTitle() -> String {
+        return notificationModel.error?.errorMessage ?? ""
     }
 }

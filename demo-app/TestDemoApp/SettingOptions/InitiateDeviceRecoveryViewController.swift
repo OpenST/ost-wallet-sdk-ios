@@ -20,7 +20,6 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
     override func getLeadLabelText() -> String {
         return "Here are your authorized devices"
     }
-
     
     override func onFetchDeviceSuccess(_ apiResponse: [String : Any]?) {
         isApiCallInProgress = false

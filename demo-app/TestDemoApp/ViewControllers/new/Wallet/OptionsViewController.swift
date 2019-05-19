@@ -57,6 +57,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         self.tabbarController?.showTabBar()
         
         getDeviceStatus()
+        setupTableHeaderView()
     }
     
     @objc override func tappedBackButton() {
@@ -389,129 +390,5 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                  tokenId: CurrentEconomy.getInstance.tokenId!,
                                  delegate: workflowDelegate)
-    }
-}
-
-class OptionTableHeaderView: UIView {
-    
-    //MARK: - Components
-    var circularView: UIView?
-    var initialLetter: UILabel?
-    var stackView: UIStackView?
-    var titleLabel: UILabel?
-    var tokenHolderAddressLabel: UILabel?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    init() {
-        super.init(frame: .zero)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    func createViews() {
-        createcirCularView()
-        createNameLabel()
-        createTokenHolderLabel()
-        createStackView()
-        
-        self.backgroundColor = UIColor.color(251, 251, 251, 0.92)
-    }
-    func createcirCularView() {
-        let circularView = UIView()
-        circularView.backgroundColor = UIColor.color(244, 244, 244)
-        circularView.layer.cornerRadius = 25
-        
-        let letter = UILabel()
-        letter.textColor = UIColor.color(155, 155, 155)
-        letter.numberOfLines = 1
-        letter.font = UIFont(name: "Lato", size: 20)?.bold()
-        
-        self.initialLetter = letter
-        circularView.addSubview(letter)
-        
-        self.circularView = circularView
-        self.addSubview(circularView)
-    }
-    
-    func createNameLabel() {
-        let nameLabel = UILabel()
-        nameLabel.numberOfLines = 0
-        nameLabel.textAlignment = .left
-        nameLabel.textColor = UIColor.black
-        nameLabel.text = "11111"
-        nameLabel.font = UIFont(name: "Lato", size: 17)
-        self.titleLabel = nameLabel
-    }
-    
-    func createTokenHolderLabel() {
-        let loBalanaceLabel = UILabel()
-        loBalanaceLabel.numberOfLines = 0
-        loBalanaceLabel.textAlignment = .left
-        loBalanaceLabel.textColor = UIColor.darkGray
-        loBalanaceLabel.text = "11111"
-        loBalanaceLabel.font = UIFont(name: "Lato", size: 14)
-        self.tokenHolderAddressLabel = loBalanaceLabel
-    }
-    
-    func createStackView() {
-        let loStackView = UIStackView(arrangedSubviews: [self.titleLabel!, self.tokenHolderAddressLabel!])
-        loStackView.axis = .vertical
-        loStackView.distribution = .fillProportionally
-        loStackView.alignment = .lastBaseline
-        
-        self.stackView = loStackView
-        self.addSubview(loStackView)
-    }
-    
-    func applyConstraints() {
-        applyCircularViewConstraints()
-        applyInitialLetterConstraints()
-        applyStackViewConstraints()
-    }
-    
-    func applyCircularViewConstraints() {
-        self.circularView?.translatesAutoresizingMaskIntoConstraints = false
-        self.circularView?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
-        self.circularView?.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        self.circularView?.heightAnchor.constraint(equalTo: (self.circularView?.widthAnchor)!).isActive = true
-        self.circularView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    }
-    
-    func applyInitialLetterConstraints() {
-        self.initialLetter?.translatesAutoresizingMaskIntoConstraints = false
-        self.initialLetter?.centerYAnchor.constraint(equalTo: self.circularView!.centerYAnchor).isActive = true
-        self.initialLetter?.centerXAnchor.constraint(equalTo: self.circularView!.centerXAnchor).isActive = true
-    }
-    
-    func applyStackViewConstraints() {
-        self.stackView?.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
-        self.stackView?.rightAnchor.constraint(equalTo: stackView!.superview!.rightAnchor).isActive = true
-        self.stackView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.stackView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    }
-    
-    func setData(title: String = "", subtitle: String = "") {
-        self.titleLabel?.text = title
-        self.tokenHolderAddressLabel?.text = subtitle
-        let fistLetter = title.character(at: 0)
-        self.initialLetter?.text = (fistLetter == nil) ? "" : "\(fistLetter!)".uppercased()
     }
 }
