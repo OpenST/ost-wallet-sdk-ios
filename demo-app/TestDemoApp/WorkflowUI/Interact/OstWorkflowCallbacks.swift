@@ -82,6 +82,16 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.showVC()
         }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
             delegate.dataVerified()
+        }else if workflowContext.workflowType == .executeTransaction {
+             let entity: [String: Any] = ostContextEntity.entity as! [String: Any]
+            
+            let vc = OstVerifyTransactionViewController()
+            vc.transferAmounts = entity["amounts"] as? [String]
+            vc.tokenHolderAddress = entity["token_holder_addresses"] as? [String]
+            vc.ruleName = entity["rule_name"] as? String
+            vc.delegate = delegate as OstBaseDelegate
+            vc.showVC()
+            
         }
     }
     
