@@ -75,7 +75,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func setupTableHeaderView() {
         let userData = ["username": CurrentUserModel.getInstance.userName ?? ""]
         tableHeaderView.userData = userData
-        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.tokenHolderAddress ?? ""
+        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.ostUserId ?? ""
     }
     
     func createTabelView() {

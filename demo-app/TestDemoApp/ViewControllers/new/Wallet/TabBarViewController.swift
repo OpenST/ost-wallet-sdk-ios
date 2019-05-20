@@ -59,7 +59,7 @@ class TabBarViewController: UITabBarController {
         let homeVC = OstHomeViewController()
         homeVC.tabbarController = self
         let homeNavController = UINavigationController(rootViewController: homeVC)
-        homeNavController.tabBarItem = UITabBarItem(title: "Home",
+        homeNavController.tabBarItem = UITabBarItem(title: "Users",
                                          image: UIImage(named: "userImage"),
                                          selectedImage: UIImage(named: "userImageSelected"))
         homeNavController.tabBarItem.tag = 1

@@ -207,6 +207,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
             ruleType = .Pay
             progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
+            amountToTransferStr = amountToTransferStr + "0000000000000000"
         }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
@@ -275,9 +276,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //return;
         }
         isShowingActionSheet = true;
-        let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transaction Rule", preferredStyle: UIAlertController.Style.actionSheet);
+        let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transfer Currency", preferredStyle: UIAlertController.Style.actionSheet);
         
-        let directTransafer = UIAlertAction(title: "BT", style: .default, handler: { (UIAlertAction) in
+        let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self.isUsdTx = false
         });
