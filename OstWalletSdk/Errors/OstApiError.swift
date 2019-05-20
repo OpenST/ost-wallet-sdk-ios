@@ -28,6 +28,10 @@ public class OstApiError: OstError {
         self.isApiError = true
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     public func getApiErrorCode() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["code"] as? String

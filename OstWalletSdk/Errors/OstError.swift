@@ -10,8 +10,8 @@
 
 import Foundation
 
-@objc public class OstError: NSObject, Error {
-    
+@objc public class OstError: NSError {
+    private static let ERROR_DOMAIN = "OstSdkError";
     public internal(set) var isApiError = false
     private var _internalCode: String = ""
     public var internalCode:String {
@@ -32,7 +32,7 @@ import Foundation
     
     @objc
     public func getMessageTextCode() -> String {
-        return messageTextCode.rawValue;
+        return "\(messageTextCode)";
     }
     
     @objc
@@ -41,7 +41,7 @@ import Foundation
     public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode
-        super.init();
+        super.init(domain: OstError.ERROR_DOMAIN, code: 1, userInfo: [:]);
         self.internalCode = code
     }
     
@@ -50,7 +50,7 @@ import Foundation
     init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
-        super.init();
+        super.init(domain: "asd", code: 1, userInfo: [:]);
         self.internalCode = code
         
     }
@@ -60,8 +60,12 @@ import Foundation
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
-        super.init();
+        super.init(domain: "asd", code: 1, userInfo: [:]);
         self.internalCode = err["code"] as! String
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
