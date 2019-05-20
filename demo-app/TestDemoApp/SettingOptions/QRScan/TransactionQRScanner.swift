@@ -10,11 +10,12 @@
 
 import Foundation
 import UIKit
+import OstWalletSdk
 
 class TransactionQRScanner: QRScannerViewController {
-    
+        
     override func getLeadLabelText() -> String {
-        return "Scan the transaction QR code to transfer"
+        return "Scan the QR code to complate the transaction"
     }
     
     override func scannedQRData(_ qrData: String) {
@@ -54,5 +55,15 @@ class TransactionQRScanner: QRScannerViewController {
     
     override func validDataDefination() -> String {
         return "tx"
+    }
+    
+    override func showProgressIndicator() {
+        progressIndicator = OstProgressIndicator(progressText: "Executing transaction")
+        progressIndicator?.show()
+    }
+    
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        tabBarVC?.perform(#selector(tabBarVC!.jumpToWalletVC(withWorkflowId:)), with: workflowId, afterDelay: 0.1)
     }
 }

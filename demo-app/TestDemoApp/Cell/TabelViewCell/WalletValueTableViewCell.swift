@@ -133,10 +133,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         self.usdValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
     }
     
-    override func endDisplay() {
-        animate()
-    }
-    
     //MARK: - Animation
     var startTime: Date?
     var startValue = Double(exactly: 0)!

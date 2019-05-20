@@ -59,7 +59,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         if nil != workflowCallbacks {
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
+            subscribeToWorkflowId(workflowCallbacks!.workflowId)
         }
         fetchUserWalletData(hardRefresh: true)
     }
@@ -313,7 +313,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
-            self.walletTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            self.walletTableView.reloadSections(IndexSet(integer: 3), with: .automatic)
         }
     }
     
@@ -415,6 +415,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()
+    }
+    
+    func subscribeToWorkflowId(_ workflowId: String) {
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowId, listner: self)
     }
     
     //MARK: - OstSdkInteract Delegate

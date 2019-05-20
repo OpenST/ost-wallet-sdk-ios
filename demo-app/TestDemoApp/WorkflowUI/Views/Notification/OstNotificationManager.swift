@@ -59,6 +59,10 @@ class OstNotificationManager {
         if workflowContext.workflowType == .getDeviceMnemonics {
             return false
         }
+        if let error = notificationModel.error,
+            error.messageTextCode == OstErrorText.userCanceled {
+             return false
+        }
         
         return true
     }

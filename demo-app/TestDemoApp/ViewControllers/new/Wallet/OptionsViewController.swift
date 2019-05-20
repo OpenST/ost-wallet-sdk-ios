@@ -10,20 +10,20 @@ import UIKit
 import OstWalletSdk
 
 class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
-
+    
     //MAKR: - Components
     var tableView: UITableView?
     var tableHeaderView: UsersTableViewCell = {
         let view = UsersTableViewCell()
-
+        
         view.sendButton?.isHidden = true
         view.sendButton?.setTitle("", for: .normal)
-//        view.translatesAutoresizingMaskIntoConstraints = false
+        //        view.translatesAutoresizingMaskIntoConstraints = false
         view.seperatorLine?.isHidden = true
         view.backgroundColor = UIColor.color(239, 249, 250)
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
-
+        
         return view
     }()
     
@@ -32,9 +32,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var deviceOptions = [OptionVM]()
     
     weak var tabbarController: TabBarViewController?
-
+    
     //MAKR: - View LC
-
+    
     override func getNavBarTitle() -> String {
         return "Wallet Settings"
     }
@@ -88,7 +88,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         loTableView.translatesAutoresizingMaskIntoConstraints = false
         loTableView.tableHeaderView = tableHeaderView
         loTableView.tableHeaderView?.frame.size = CGSize(width: loTableView.frame.width, height: CGFloat(77))
-
+        
         tableView = loTableView
         self.view.addSubview(loTableView)
         
@@ -133,7 +133,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let option: OptionVM
         switch indexPath.section {
         case 0:
-             option = generalOptions[indexPath.row]
+            option = generalOptions[indexPath.row]
         case 1:
             option = deviceOptions[indexPath.row]
         default:
@@ -155,7 +155,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         case 1:
             sectionTitle.text = "DEVICE"
         default:
-             sectionTitle.text = ""
+            sectionTitle.text = ""
         }
         
         let container = UIView()
@@ -166,7 +166,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         sectionTitle.leftAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.rightAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.bottomAlignWithParent()
-
+        
         return container
     }
     
@@ -233,9 +233,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             transactionViaQR.isEnable = false
         }
         
-        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
-        if !userDevice.isStatusRegistered {
-            initialRecovery.isEnable = false
+        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: false)
+        if userDevice.isStatusRegistered && currentUser.isCurrentDeviceStatusAuthrozied {
+            initialRecovery.isEnable = true
         }
         
         var abortRecovery = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: true)
@@ -243,19 +243,22 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             abortRecovery.isEnable = false
         }
         
-        var logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout All Sessions", isEnable: true)
-//        if !userDevice.isStatusAuthorized {
-//            logoutAllSession.isEnable = false
-//        }
-     
+        let logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout", isEnable: true)
+        
+        
         let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
-                             transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
+                        transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
         
         deviceOptions = dOptions
     }
     
     
     func processSelectedOption(_ option: OptionVM) {
+        
+        if option.type == .logoutAllSessions {
+            showLogoutOptions()
+            return
+        }
         
         if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
             showDeviceIsAuthroizingAlert()
@@ -268,11 +271,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         if option.type == .details {
             destinationVC = UserDetailsViewController()
         }
-        
+            
         else if option.type == .viewMnemonics {
             destinationSVVC = DeviceMnemonicsViewController()
         }
-        
+            
         else if option.type == .authorizeViaMnemonics {
             destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
         }
@@ -280,27 +283,28 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if option.type == .showDeviceQR {
             destinationVC = ShowQRCodeViewController()
         }
-        
+            
         else if option.type == .authorizeViaQR {
             destinationVC = AuthorizeDeviceQRScanner()
         }
             
         else if option.type == .transactionViaQR {
             destinationVC = TransactionQRScanner()
+            (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
         }
-        
+            
         else if option.type == .createSession {
             destinationSVVC = CreateSessionViewController()
         }
-        
+            
         else if  option.type  == .manageDevices {
             destinationVC = ManageDeviceViewController()
         }
-        
+            
         else if option.type == .initiateDeviceRecovery {
             destinationVC = InitiateDeviceRecoveryViewController()
         }
-        
+            
         else if option.type == .resetPin {
             _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
                                                     passphrasePrefixDelegate: CurrentUserModel.getInstance,
@@ -308,21 +312,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             self.tabbarController?.hideTabBar()
             return
         }
-        
+            
         else if option.type == .abortRecovery {
             _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                                presenter: self)
             self.tabbarController?.hideTabBar()
-            return
-        }
-        
-        else if option.type == .logoutAllSessions {
-            let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                                                presenter: self)
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
-                                                 listner: self)
             return
         }
         
@@ -338,7 +333,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             let navC = UINavigationController(rootViewController: viewController )
             self.present(navC, animated: true, completion: nil)
         }else {
-           self.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -367,19 +362,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         if workflowContext.workflowType == .logoutAllSessions {
-//            error.errorMessage.contains("logged out") {
             
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
         }
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
-            CurrentUserModel.getInstance.logout()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.showIntroController()
+            
         }
     }
     
@@ -390,5 +379,43 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                  tokenId: CurrentEconomy.getInstance.tokenId!,
                                  delegate: workflowDelegate)
+    }
+    
+    func showLogoutOptions() {
+        
+        let alert: UIAlertController
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+            
+            alert = UIAlertController(title: "Logout from Application",
+                                      message: "As device is in authorizing state, you cannot logout from wallet.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+                CurrentUserModel.getInstance.logout()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+            }))
+            
+        }else {
+            
+            alert = UIAlertController(title: "Sure you want to logout?", message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+                CurrentUserModel.getInstance.logout()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
+                let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                                    presenter: self!)
+                OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
+                                                     listner: self!)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.show()
     }
 }
