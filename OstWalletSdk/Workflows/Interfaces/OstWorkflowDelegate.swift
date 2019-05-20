@@ -13,13 +13,14 @@ import Foundation
 
 /// OstWorkFlowCallback implemented by SDK user to perform prerequisites task.
 /// These tasks are assigned by SDK workflows with help of callbacks.
-public protocol OstWorkflowDelegate: AnyObject {
+@objc public protocol OstWorkflowDelegate: AnyObject {
     
     /// Register device passed as parameter.
     ///
     /// - Parameters:
     ///   - apiParams: Register Device API parameters.
     ///   - delegate: To pass response.
+    @objc
     func registerDevice(_ apiParams: [String: Any],
                         delegate: OstDeviceRegisteredDelegate)
     
@@ -29,6 +30,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     /// - Parameters:
     ///   - userId: Id of user whose passphrase prefix and pin are needed.
     ///   - delegate: To pass pin
+    @objc
     func getPin(_ userId: String,
                 delegate: OstPinAcceptDelegate)
     
@@ -38,6 +40,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     /// - Parameters:
     ///   - userId: User id whose passphrase prefix and pin failed to validate
     ///   - delegate: To pass another pin.
+    @objc
     func invalidPin(_ userId: String,
                     delegate: OstPinAcceptDelegate)
     
@@ -50,6 +53,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostContextEntity: Status of the flow.
+    @objc
     func flowComplete(workflowContext: OstWorkflowContext,
                       ostContextEntity: OstContextEntity)
 
@@ -58,6 +62,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     ///
     /// - Parameter workflowContext: A context that describes the workflow for which the callback was triggered.
     /// - Parameter ostError: Reason of interruption.
+    @objc
     func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
     
@@ -67,6 +72,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     ///   - workflowContext: OstWorkflowContext
     ///   - ostContextEntity: OstContextEntity
     ///   - delegate: callback
+    @objc
     func verifyData(workflowContext: OstWorkflowContext,
                     ostContextEntity: OstContextEntity,
                     delegate: OstValidateDataDelegate)
@@ -76,6 +82,7 @@ public protocol OstWorkflowDelegate: AnyObject {
     /// - Parameters:
     ///   - workflowContext: OstWorkflowContext
     ///   - ostContextEntity: OstContextEntity
+    @objc
     func requestAcknowledged(workflowContext: OstWorkflowContext,
                              ostContextEntity: OstContextEntity)
 }

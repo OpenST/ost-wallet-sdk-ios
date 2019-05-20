@@ -10,7 +10,7 @@
 
 import Foundation
 
-public class OstError: Error {
+@objc public class OstError: NSObject, Error {
     
     public internal(set) var isApiError = false
     private var _internalCode: String = ""
@@ -25,7 +25,7 @@ public class OstError: Error {
     public let errorMessage:String
     public let messageTextCode:OstErrorText;
     
-    public var description: String {
+    override public var description: String {
         return errorMessage
     }
     public var errorInfo: [String: Any]? = nil
@@ -34,6 +34,7 @@ public class OstError: Error {
     public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode
+        super.init();
         self.internalCode = code
     }
     
@@ -41,7 +42,9 @@ public class OstError: Error {
     init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
+        super.init();
         self.internalCode = code
+        
     }
     
     public init(fromApiResponse response: [String: Any]) {
@@ -49,6 +52,7 @@ public class OstError: Error {
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
+        super.init();
         self.internalCode = err["code"] as! String
     }
 }

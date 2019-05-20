@@ -20,6 +20,7 @@ extension OstWalletSdk {
     ///   - tokenId: Token identifier for user.
     ///   - forceSync: Force sync data from server.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func setupDevice(
         userId: String,
         tokenId: String,
@@ -44,6 +45,7 @@ extension OstWalletSdk {
     ///   - spendingLimit: Max amount that user can spend per transaction
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func activateUser(
         userId: String,
         userPin: String,

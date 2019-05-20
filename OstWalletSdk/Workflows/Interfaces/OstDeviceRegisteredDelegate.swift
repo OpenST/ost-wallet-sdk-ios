@@ -11,7 +11,7 @@
 import Foundation
 
 /// Sub Interface of `OstBaseInterface` It declares pinEntered api of Workflows.
-public protocol OstDeviceRegisteredDelegate: OstBaseDelegate {
+@objc public protocol OstDeviceRegisteredDelegate: OstBaseDelegate {
     
     /// SDK user will use it to acknowledge device registration.
     ///

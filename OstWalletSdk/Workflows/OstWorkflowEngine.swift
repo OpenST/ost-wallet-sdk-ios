@@ -306,7 +306,7 @@ extension OstWorkflowEngine {
     /// Cancel currently ongoing workflow.
     ///
     /// - Parameter cancelReason: reason to cancel.
-    public func cancelFlow() {
+    @objc public func cancelFlow() {
         try? self.processState(OstWorkflowStateManager.CANCELLED)
     }
 }

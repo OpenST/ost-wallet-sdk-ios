@@ -10,7 +10,7 @@
 
 import Foundation
 
-protocol OstDataDefinitionWorkflow {
+@objc protocol OstDataDefinitionWorkflow {
     
     /// Validate data defination dependent parameters.
     ///

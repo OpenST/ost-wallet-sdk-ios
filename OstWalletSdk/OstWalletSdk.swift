@@ -16,6 +16,7 @@ public class OstWalletSdk {
     ///
     /// - Parameter apiEndPoint: API end point
     /// - Throws: OstError
+    @objc
     public class func initialize(apiEndPoint:String) throws {
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
@@ -26,6 +27,7 @@ public class OstWalletSdk {
     /// Get api end point
     ///
     /// - Returns: String
+    @objc
     public class func getApiEndPoint() -> String {
         return OstAPIBase.baseURL
     }
@@ -34,6 +36,7 @@ public class OstWalletSdk {
     ///
     /// - Parameter id: User id
     /// - Returns: User entity
+    @objc
     public class func getUser(_ id: String) -> OstUser? {
         do {
             return try OstUser.getById(id)
@@ -46,6 +49,7 @@ public class OstWalletSdk {
     ///
     /// - Parameter id: Token id
     /// - Returns: Token entity
+    @objc
     public class func getToken( _ id: String) -> OstToken? {
         do {
             return try OstToken.getById(id)

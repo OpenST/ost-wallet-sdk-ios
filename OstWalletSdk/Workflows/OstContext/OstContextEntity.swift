@@ -22,7 +22,7 @@ public enum OstEntityType {
     tokenHolder
 }
 
-public class OstContextEntity {
+@objc public class OstContextEntity: NSObject {
 
     public private(set) var entity: Any?
     public private(set) var entityType: OstEntityType

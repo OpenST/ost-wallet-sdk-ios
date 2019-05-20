@@ -26,7 +26,7 @@ public enum OstWorkflowType {
     logoutAllSessions
 }
 
-public class OstWorkflowContext {    
+@objc public class OstWorkflowContext: NSObject {    
     public let workflowType: OstWorkflowType
     public init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType
