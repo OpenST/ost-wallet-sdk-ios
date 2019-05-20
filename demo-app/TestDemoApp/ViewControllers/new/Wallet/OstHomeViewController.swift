@@ -241,8 +241,10 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             self.usersTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
         }
-        
         else if !isApiCallInProgress {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()

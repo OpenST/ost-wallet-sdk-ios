@@ -305,6 +305,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
         }
         else if !isFetchingUserTransactions  && !isFetchingUserBalance {
             if self.refreshControl.isRefreshing {
