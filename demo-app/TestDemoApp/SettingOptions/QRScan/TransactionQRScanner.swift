@@ -12,6 +12,11 @@ import Foundation
 import UIKit
 
 class TransactionQRScanner: QRScannerViewController {
+    
+    override func getLeadLabelText() -> String {
+        return "Scan the transaction QR code to transfer"
+    }
+    
     override func scannedQRData(_ qrData: String) {
         if isValidQRdata(qrData) {
             super.scannedQRData(qrData)
