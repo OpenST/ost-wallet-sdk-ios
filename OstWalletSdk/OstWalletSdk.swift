@@ -10,7 +10,7 @@
 
 import Foundation
 
-public class OstWalletSdk {
+@objc public class OstWalletSdk: NSObject {
     
     /// Initialize SDK
     ///
