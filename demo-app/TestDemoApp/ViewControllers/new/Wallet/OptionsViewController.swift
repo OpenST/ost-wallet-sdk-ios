@@ -244,9 +244,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         var logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout All Sessions", isEnable: true)
-        if !userDevice.isStatusAuthorized {
-            logoutAllSession.isEnable = false
-        }
+//        if !userDevice.isStatusAuthorized {
+//            logoutAllSession.isEnable = false
+//        }
      
         let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
                              transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
@@ -366,8 +366,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        if workflowContext.workflowType == .logoutAllSessions,
-            error.errorMessage.contains("logged out") {
+        if workflowContext.workflowType == .logoutAllSessions {
+//            error.errorMessage.contains("logged out") {
             
                 CurrentUserModel.getInstance.logout()
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate

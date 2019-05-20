@@ -80,8 +80,8 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
         
         if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
             addCaptureSession()
-            captureSession?.startRunning()
-            cameraPermissionState?(.authorized)
+            self.captureSession?.startRunning()
+            self.cameraPermissionState?(.authorized)
         }
         else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
             showAlertForAccessDenied()

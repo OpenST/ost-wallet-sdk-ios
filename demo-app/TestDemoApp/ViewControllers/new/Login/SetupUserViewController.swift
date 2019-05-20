@@ -100,11 +100,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
         
-        if nil == CurrentEconomy.getInstance.tokenId {
-            openEconomyScanner(animation: false)
-            return
-        }
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -114,7 +109,10 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                                selector: #selector(self.keyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-
+        
+        if nil == CurrentEconomy.getInstance.tokenId {
+            openEconomyScanner(animation: false)
+        }
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -375,7 +373,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     @objc func qrButtonTapped(_ sender: Any?) {
         openEconomyScanner(animation: true)
     }
-    func openEconomyScanner(animation flag: Bool = true) {
+    
+   @objc func openEconomyScanner(animation flag: Bool = true) {
         if nil == economyScanner {
             economyScanner = EconomyScannerViewController()
         }
