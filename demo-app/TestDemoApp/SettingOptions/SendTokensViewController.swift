@@ -250,7 +250,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             amountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         } else {
             amountTextFieldController?.setErrorText("Low balance to make this transaction",
-                                                errorAccessibilityValue: nil);
+                                                    errorAccessibilityValue: nil);
         }
        
         return isValidInput

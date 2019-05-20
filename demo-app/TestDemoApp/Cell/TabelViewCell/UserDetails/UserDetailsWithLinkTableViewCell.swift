@@ -41,5 +41,10 @@ class UserDetailsWithLinkTableViewCell: UserDetailsWithCopyBtnTableViewCell {
         webVC.urlString = userDetailsWithLink.urlString
         webVC.showVC()
     }
-
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if selected {
+            buttonTapped(nil)
+        }
+    }
 }

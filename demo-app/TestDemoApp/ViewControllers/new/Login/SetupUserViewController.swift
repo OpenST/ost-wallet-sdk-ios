@@ -298,29 +298,31 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     func isCorrectInputPassed() -> Bool {
         let isValidUsename = validateUserNameTextField()
         let isValidPassword = validatePasswordTextField()
-        return isValidUsename || isValidPassword
+        return isValidUsename && isValidPassword
     }
     
     func validateUserNameTextField() -> Bool {
-        if usernameTextField.text?.isMatch("a-zA-Z0-9") ?? false {
-            usernameTextFieldController?.setErrorText("Invalid username",
-                                                      errorAccessibilityValue: nil);
-            return false;
+        if usernameTextField.text!.count > 0 && (usernameTextField.text?.isMatch("^[a-zA-Z0-9]*$") ?? false) {
+            usernameTextFieldController?.setErrorText(nil, errorAccessibilityValue: nil);
+            return true
         }
-        usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
-        return true
+        usernameTextFieldController?.setErrorText("Invalid username",
+                                                  errorAccessibilityValue: nil);
+        return false;
     }
     
     func validatePasswordTextField() -> Bool {
         if nil == passwordTextField.text
-            || passwordTextField.text!.isMatch("a-zA-Z0-9")
+            || !passwordTextField.text!.isMatch("^[a-zA-Z0-9]*$")
             || passwordTextField.text!.count < 5 {
             
-            usernameTextFieldController?.setErrorText("Invalid password",
+            passwordTextFieldController?.setErrorText("Invalid password",
                                                       errorAccessibilityValue: nil);
-            return false;
+            return false
         }
-        usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+        
+       
+        passwordTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         return true
     }
     

@@ -14,15 +14,17 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     //MARK: - Variables
     var progressIndicator: OstProgressIndicator? = nil
     var fetchUser: Bool = false
+    var isUserFetched: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-         self.navigationController?.isNavigationBarHidden = true
-        if nil != CurrentEconomy.getInstance.tokenId && fetchUser {
+        self.navigationController?.isNavigationBarHidden = true
+        if nil != CurrentEconomy.getInstance.tokenId && fetchUser && !isUserFetched {
             getUserFromServer()
+            isUserFetched = true
         }
     }
     
