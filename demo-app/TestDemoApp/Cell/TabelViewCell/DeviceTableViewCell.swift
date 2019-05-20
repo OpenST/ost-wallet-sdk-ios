@@ -169,7 +169,7 @@ class DeviceTableViewCell: UsersTableViewCell {
             return "Stop Recovery"
             
         case ManageDeviceViewController.DeviceStatus.registered.rawValue:
-            return "Start Recovery"
+            return ""
             
         case ManageDeviceViewController.DeviceStatus.revoking.rawValue:
             return "Stop Recovery"
