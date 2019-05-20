@@ -22,14 +22,21 @@ import Foundation
             return _internalCode
         }
     }
-    public let errorMessage:String
+    @objc public let errorMessage:String
     public let messageTextCode:OstErrorText;
     
+    @objc
     override public var description: String {
         return errorMessage
     }
+    
+    @objc
+    public func getMessageTextCode() -> String {
+        return messageTextCode.rawValue;
+    }
+    
+    @objc
     public var errorInfo: [String: Any]? = nil
-
 
     public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.errorMessage = messageTextCode.rawValue
@@ -39,6 +46,7 @@ import Foundation
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
+    @objc
     init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
