@@ -28,13 +28,20 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.ruleNameValueLabel.text = ruleName ?? ""
+        
+        var transferBalance: Double = Double(0)
+        
         if nil != tokenHolderAddress && tokenHolderAddress!.count > 0 {
             let transferAmounts = self.transferAmounts ?? []
+            
             for (index, transferAddress) in tokenHolderAddress!.enumerated() {
                 var amount = "0"
                 if transferAmounts.count > index {
                     amount = transferAmounts[index]
                     amount = OstUtils.fromAtto(amount)
+                    transferBalance += Double(amount)!
                 }
                 let transfer = getTransferView(forAddress: transferAddress, withValue: amount)
                 
@@ -42,9 +49,37 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
             }
         }
         
-        self.ruleNameValueLabel.text = ruleName ?? ""
         self.balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
-
+        
+        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.rawValue) == .orderedSame {
+            validateBalanceForDirectTransfer(transferBalance: transferBalance)
+        }
+        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.rawValue) == .orderedSame {
+            validateBalanceForPricer(transferBalance: transferBalance)
+        }
+    }
+    
+    func validateBalanceForDirectTransfer(transferBalance: Double) {
+        
+        let availableBalance = Double(CurrentUserModel.getInstance.balance)!
+        if transferBalance <= availableBalance {
+            self.errorLabel.isHidden = true
+            authorizeButton.isEnabled = true
+        }else {
+            self.errorLabel.isHidden = false
+            authorizeButton.isEnabled = false
+        }
+    }
+    
+    func validateBalanceForPricer(transferBalance: Double) {
+        let availableBalance = Double(CurrentUserModel.getInstance.balance)!
+        if transferBalance < availableBalance {
+            self.errorLabel.isHidden = true
+            authorizeButton.isEnabled = true
+        }else {
+            self.errorLabel.isHidden = false
+            authorizeButton.isEnabled = false
+        }
     }
     
     //MAKR: - Components
@@ -121,6 +156,34 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         view.textColor = UIColor.color(155, 155, 155)
         view.text = "Send to"
         view.textAlignment = .left
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    let errorLabel: UILabel = {
+        let view = UILabel()
+        view.font = OstFontProvider().get(size: 11)
+        view.textColor = UIColor.color(222, 53, 11)
+        view.textAlignment = .left
+        
+        let fullString = NSMutableAttributedString(string: "")
+        
+        // create our NSTextAttachment
+        let image1Attachment = NSTextAttachment()
+        image1Attachment.image = #imageLiteral(resourceName: "ErrorMessageImage")
+        
+        
+        // wrap the attachment in its own attributed string so we can append it
+        let image1String = NSAttributedString(attachment: image1Attachment)
+        
+        // add the NSTextAttachment wrapper to our full string, then add some more text.
+        fullString.append(image1String)
+        fullString.append(NSAttributedString(string: " Not enough token balance", attributes: [NSAttributedString.Key.baselineOffset : 3]))
+        
+        // draw the result in a label
+        view.attributedText = fullString
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -238,6 +301,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         transferContainer.addSubview(sendToLable)
         transferContainer.addSubview(stackView)
         
+        addSubview(errorLabel)
         addSubview(authorizeButton)
         addSubview(denyButton)
     }
@@ -258,6 +322,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         
         transferContainer.bottomAlign(toItem: stackView, constant: 15)
         
+        addErrorLabelLayoutConstraints()
         addAuthorizeButtonLayoutConstraints()
         addDenyButtonLayoutConstraints()
         
@@ -311,8 +376,13 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         stackView.rightAlign(toItem: seperatorLine)
     }
     
+    func addErrorLabelLayoutConstraints() {
+        errorLabel.placeBelow(toItem: transferContainer, multiplier: 1, constant: 8)
+        errorLabel.leftAlign(toItem: transferContainer)
+    }
+    
     func addAuthorizeButtonLayoutConstraints() {
-        authorizeButton.placeBelow(toItem: transferContainer, constant: 20)
+        authorizeButton.placeBelow(toItem: errorLabel, constant: 16)
         authorizeButton.applyBlockElementConstraints()
     }
     
