@@ -51,6 +51,8 @@ class WalletValueTableViewCell: BaseTableViewCell {
         createValueContainer()
         crateBtValueLabel()
         crateUSDValueLabel()
+        
+        self.selectionStyle = .none
     }
     
     func createWalletValueContainer() {

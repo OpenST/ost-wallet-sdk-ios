@@ -16,7 +16,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         let tableView: UITableView = UITableView(frame: .zero, style: .plain)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -253,6 +253,23 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         return container
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let transfer = tableDataArray[indexPath.row]
+            
+            if let viewEndPoint = CurrentEconomy.getInstance.viewEndPoint,
+                let auxChainId = CurrentEconomy.getInstance.auxiliaryChainId,
+                let transactionHash = transfer["transaction_hash"] as? String {
+                
+                let transactionURL: String = "\(viewEndPoint)transaction/tx-\(auxChainId)-\(transactionHash)"
+                
+                let webView = WKWebViewController()
+                webView.urlString = transactionURL
+                webView.presentViewControllerWithNavigationController(self)
+            }
+        }
+    }
+    
     //MARK: - Scroll View Delegate
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -380,6 +397,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
 
                 if [fromUserId, toUserId].contains(currentUserOstId) {
                     trasferData["meta_property"] = transaction["meta_property"]
+                    trasferData["transaction_hash"] = transaction["transaction_hash"]
                     trasferData["block_timestamp"] = transaction["block_timestamp"]
                     trasferData["rule_name"] = transaction["rule_name"]
                     transferArray.append(trasferData)

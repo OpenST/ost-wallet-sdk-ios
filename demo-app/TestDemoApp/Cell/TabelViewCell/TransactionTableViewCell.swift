@@ -78,6 +78,11 @@ class TransactionTableViewCell: UsersTableViewCell {
     }()
     
     //MARK: - AddViews
+    override func createViews() {
+        super.createViews()
+        self.selectionStyle = .none
+    }
+    
     override func createInternalView() {
          self.circularView!.addSubview(overlayImage)
     }
