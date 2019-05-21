@@ -23,11 +23,11 @@ class WalletValueTableViewCell: BaseTableViewCell {
     }
     
     func setValue(_ val: String) {
-        if let doubleVal:Double =  Double(val) {
-             self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(String(format: "%g",doubleVal))"
-        }else {
-            self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") 0"
+        var balance = val
+        if balance.isEmpty {
+           balance = "0"
         }
+        self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(val.displayTransactionValue())"
     }
     
     //MAKR: - Components

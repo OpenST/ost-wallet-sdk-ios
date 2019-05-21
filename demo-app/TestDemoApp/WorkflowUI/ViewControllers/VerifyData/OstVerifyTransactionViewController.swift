@@ -29,7 +29,6 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.ruleNameValueLabel.text = ruleName ?? ""
         
         var transferBalance: Double = Double(0)
         
@@ -41,6 +40,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
                 if transferAmounts.count > index {
                     amount = transferAmounts[index]
                     amount = OstUtils.fromAtto(amount)
+                    amount = amount.displayTransactionValue()
                     transferBalance += Double(amount)!
                 }
                 let transfer = getTransferView(forAddress: transferAddress, withValue: amount)
@@ -52,9 +52,13 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         self.balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
         
         if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.rawValue) == .orderedSame {
+            self.ruleNameValueLabel.text = "Direct Transfer"
+
             validateBalanceForDirectTransfer(transferBalance: transferBalance)
         }
         else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.rawValue) == .orderedSame {
+            self.ruleNameValueLabel.text = "Pricer"
+            
             validateBalanceForPricer(transferBalance: transferBalance)
         }
     }
