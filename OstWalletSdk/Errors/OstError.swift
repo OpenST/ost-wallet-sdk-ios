@@ -41,7 +41,7 @@ import Foundation
     public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode
-        super.init(domain: OstError.ERROR_DOMAIN, code: 1, userInfo: [:]);
+        super.init(domain: OstError.ERROR_DOMAIN, code: messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = code
     }
     
@@ -50,9 +50,8 @@ import Foundation
     init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
-        super.init(domain: "asd", code: 1, userInfo: [:]);
+        super.init(domain: OstError.ERROR_DOMAIN, code:  messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = code
-        
     }
     
     public init(fromApiResponse response: [String: Any]) {
@@ -60,9 +59,11 @@ import Foundation
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
         errorInfo = response
-        super.init(domain: "asd", code: 1, userInfo: [:]);
+        super.init(domain: OstError.ERROR_DOMAIN, code:  messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = err["code"] as! String
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

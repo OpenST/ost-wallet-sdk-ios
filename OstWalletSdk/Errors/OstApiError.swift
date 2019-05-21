@@ -32,19 +32,22 @@ public class OstApiError: OstError {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    @objc
     public func getApiErrorCode() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["code"] as? String
     }
     
+    @objc
     public func getApiErrorMessage() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["msg"] as? String
     }
     
+    @objc
     public func getApiInternalId() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["internal_id"] as? String
     }
     
+    @objc
     public func isBadRequest() -> Bool {
         guard let errorCode = getApiErrorCode() else {
             return false
@@ -52,6 +55,7 @@ public class OstApiError: OstError {
         return "BAD_REQUEST".caseInsensitiveCompare(errorCode) == .orderedSame
     }
 
+    @objc
     func isNotFound() -> Bool {
         guard let errorCode = getApiErrorCode() else {
             return false
@@ -59,10 +63,12 @@ public class OstApiError: OstError {
         return "NOT_FOUND".caseInsensitiveCompare(errorCode) == .orderedSame
     }
     
+    @objc
     public func isDeviceTimeOutOfSync() -> Bool{
         return isParameterIncludedInError(parameter: "api_request_timestamp");
     }
     
+    @objc
     public func isApiSignerUnauthorized() -> Bool{
         return isParameterIncludedInError(parameter: "api_key");    
     }
