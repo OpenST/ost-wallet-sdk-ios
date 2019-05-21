@@ -34,7 +34,7 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
                 authorizedDevices.append(device)
             }
         }
-        tableDataArray.append(contentsOf: authorizedDevices)
+        updatedTableArray.append(contentsOf: authorizedDevices)
         self.isNewDataAvailable = true
         
         reloadDataIfNeeded()

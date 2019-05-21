@@ -56,7 +56,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         setupTableViewModels()
         self.tabbarController?.showTabBar()
         
-        getDeviceStatus()
         setupTableHeaderView()
     }
     
@@ -187,7 +186,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func createGeneralOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.currentDevice!;
+        guard let userDevice = currentUser.currentDevice else {
+            BaseAPI.logoutUnauthorizedUser()
+            return
+        }
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
         
@@ -208,38 +210,38 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func createDeviceOptionsArray() {
-        let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.currentDevice!;
+        let currentUser = CurrentUserModel.getInstance
+        let userDevice = currentUser.currentDevice
         
         var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        if  nil == userDevice || !userDevice!.isStatusAuthorized {
             authorizeViaQR.isEnable = false
         }
         
         var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize Device via Mnemonics", isEnable: true)
-        if !userDevice.isStatusRegistered {
+        if  nil == userDevice || !userDevice!.isStatusRegistered {
             authorizeViaMnemonics.isEnable = false
         }
         
         var showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
-        if !userDevice.isStatusRegistered {
+        if  nil == userDevice || !userDevice!.isStatusRegistered {
             showDeviceQR.isEnable = false
         }
         
         let manageDevices = OptionVM(type: .manageDevices, name: "Manage Devices", isEnable: true)
         
         var transactionViaQR = OptionVM(type: .transactionViaQR, name: "Transaction via QR", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        if nil == userDevice || !userDevice!.isStatusAuthorized {
             transactionViaQR.isEnable = false
         }
         
-        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: false)
-        if userDevice.isStatusRegistered && currentUser.isCurrentDeviceStatusAuthrozied {
-            initialRecovery.isEnable = true
+        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
+        if currentUser.isCurrentDeviceStatusAuthrozied || currentUser.isCurrentDeviceStatusAuthrozied {
+            initialRecovery.isEnable = false
         }
         
         var abortRecovery = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: true)
-        if userDevice.isStatusRevoked {
+        if nil == userDevice || userDevice!.isStatusRevoked {
             abortRecovery.isEnable = false
         }
         
@@ -370,15 +372,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         if workflowContext.workflowType == .logoutAllSessions {
             
         }
-    }
-    
-    func getDeviceStatus() {
-        let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
-                                             listner: self)
-        OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
-                                 tokenId: CurrentEconomy.getInstance.tokenId!,
-                                 delegate: workflowDelegate)
     }
     
     func showLogoutOptions() {

@@ -109,18 +109,23 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        
-        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
-                                                contextEntity: nil,
-                                                error: error)
-        
-        
+    
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
         hideLoader();
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
         cleanUp();
+        
+        if error.messageTextCode == .deviceNotSet {
+            
+            BaseAPI.logoutUnauthorizedUser()
+            return
+        }
+        
+        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
+                                                contextEntity: nil,
+                                                error: error)
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {

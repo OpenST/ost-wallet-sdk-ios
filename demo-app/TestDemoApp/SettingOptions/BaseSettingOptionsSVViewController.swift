@@ -40,7 +40,6 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     
     override func addSubviews() {
         super.addSubviews()
-        addSubview(progressIndicator!)
         addSubview(leadLabel)
         leadLabel.text = getLeadLabelText()
     }

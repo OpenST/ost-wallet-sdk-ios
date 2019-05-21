@@ -145,8 +145,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     
     //MARK: - Action
     @objc func checkStatusButtonTapped(_ sender: Any?) {
-        progressIndicator?.progressText = "Checking Device Status…"
-        UIApplication.shared.keyWindow?.addSubview(progressIndicator!)
+        progressIndicator = OstProgressIndicator(textCode: .checkDeviceStatus)
         progressIndicator?.show()
         OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                  tokenId: CurrentEconomy.getInstance.tokenId!,
