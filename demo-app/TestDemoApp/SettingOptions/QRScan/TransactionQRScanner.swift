@@ -58,7 +58,7 @@ class TransactionQRScanner: QRScannerViewController {
     }
     
     override func showProgressIndicator() {
-        progressIndicator = OstProgressIndicator(progressText: "Executing transaction")
+        progressIndicator = OstProgressIndicator(textCode: .executingTransaction)
         progressIndicator?.show()
     }
     

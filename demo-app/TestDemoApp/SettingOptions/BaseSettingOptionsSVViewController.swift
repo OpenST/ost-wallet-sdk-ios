@@ -20,7 +20,7 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
         
         return label
     }()
-    var progressIndicator: OstProgressIndicator? = OstProgressIndicator(progressText: "")
+    var progressIndicator: OstProgressIndicator? = nil
     
     //MARK: - Variables
     

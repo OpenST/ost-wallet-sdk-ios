@@ -95,7 +95,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
                               delegate: self)
         
         self.userPin = nil;
-        showLoader(progressText: "Reseting pin...");
+        showLoader(progressText: .resetPin);
     }
     
     

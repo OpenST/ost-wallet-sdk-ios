@@ -29,7 +29,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     }
     
     override func getLeadLabelText() -> String {
-        return "Here are your devices"
+        return "Here are your authorized devices"
     }
     
     //MAKR: - Components

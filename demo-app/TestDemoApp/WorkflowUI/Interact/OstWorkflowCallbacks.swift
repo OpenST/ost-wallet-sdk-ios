@@ -148,8 +148,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         uiWindow = nil
     }
     
-    func showLoader(progressText: String) {
-        progressIndicator = OstProgressIndicator(progressText: progressText)
+    func showLoader(progressText: OstProgressIndicatorText) {
+        progressIndicator = OstProgressIndicator(textCode: progressText)
         let window = getWindow()
         window.addSubview(progressIndicator!)
         progressIndicator?.show()

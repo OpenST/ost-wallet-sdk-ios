@@ -118,7 +118,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
 
     
     func getUserFromServer() {
-        progressIndicator = OstProgressIndicator(progressText: "Fetching user...")
+        progressIndicator = OstProgressIndicator(textCode: .fetchingUser)
         getApplicationWindow()?.addSubview(progressIndicator!)
         progressIndicator?.show()
 

@@ -405,15 +405,15 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func showProgressIndicator() {
-        var message: String = ""
+        var messageCode: OstProgressIndicatorText = .unknown
         if viewControllerType == .signup {
-            message = "Siging up"
+            messageCode = .signup
         }else if viewControllerType == .login {
-            message = "Loging in"
+            messageCode = .login
         }
         
         if let window = UIApplication.shared.keyWindow {
-            progressIndicator = OstProgressIndicator(progressText: message)
+            progressIndicator = OstProgressIndicator(textCode: messageCode)
             window.addSubview(progressIndicator!)
             progressIndicator?.show()
         }
