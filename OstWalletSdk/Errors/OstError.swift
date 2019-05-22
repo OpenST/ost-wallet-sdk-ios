@@ -12,16 +12,8 @@ import Foundation
 
 @objc public class OstError: NSError {
     private static let ERROR_DOMAIN = "OstSdkError";
-    public internal(set) var isApiError = false
-    private var _internalCode: String = ""
-    public var internalCode:String {
-        set(code) {
-//            _internalCode = "v\(OstBundle.getSdkVersion())_\(code)"
-            _internalCode = code
-        }get {
-            return _internalCode
-        }
-    }
+    @objc public internal(set) var isApiError = false
+    @objc public var internalCode: String = ""
     @objc public let errorMessage:String
     public let messageTextCode:OstErrorText;
     
@@ -41,8 +33,10 @@ import Foundation
     public init(_ code: String, _ messageTextCode: OstErrorText) {
         self.errorMessage = messageTextCode.rawValue
         self.messageTextCode = messageTextCode
-        super.init(domain: OstError.ERROR_DOMAIN, code: messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = code
+        super.init(domain: OstError.ERROR_DOMAIN,
+                   code:  messageTextCode.hashValue,
+                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage, messageTextCode: self.messageTextCode, internalCode: self.internalCode));
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
@@ -50,18 +44,42 @@ import Foundation
     init(_ code: String, msg errorMessage: String) {
         self.errorMessage = errorMessage
         self.messageTextCode = .tempMessageTextCode
-        super.init(domain: OstError.ERROR_DOMAIN, code:  messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = code
+        super.init(domain: OstError.ERROR_DOMAIN,
+                   code:  messageTextCode.hashValue,
+                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage, messageTextCode: self.messageTextCode, internalCode: self.internalCode));
     }
     
+    @objc
     public init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]
         self.errorMessage = err["msg"] as! String
         self.messageTextCode = OstErrorText.apiResponseError;
-        errorInfo = response
-        super.init(domain: OstError.ERROR_DOMAIN, code:  messageTextCode.hashValue, userInfo: [:]);
         self.internalCode = err["code"] as! String
+        self.errorInfo = response
+        super.init(domain: OstError.ERROR_DOMAIN,
+                   code:  messageTextCode.hashValue,
+                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage,
+                                                 messageTextCode: self.messageTextCode,
+                                                 internalCode: self.internalCode,
+                                                 extraData: self.errorInfo));
     }
+    
+    class func toUserInfo(errorMessage: String,
+                          messageTextCode: OstErrorText,
+                          internalCode: String,
+                          extraData: [String: Any]? = nil ) -> [String: Any] {
+        var userInfo: [String: Any] = [:];
+        userInfo["errorMessage"] = errorMessage;
+        userInfo["messageTextCode"] = "\(messageTextCode)";
+        userInfo["internalCode"] = internalCode;
+        if ( nil != extraData ) {
+            userInfo["extraData"] = extraData!;
+        }
+        return userInfo;
+    }
+    
+    
     
     
     
