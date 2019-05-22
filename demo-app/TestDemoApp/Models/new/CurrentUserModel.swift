@@ -19,6 +19,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     //MARK: - Variables
     private var userDetails: [String: Any]? {
         didSet {
+            userBalanceDetails = nil
             if nil == userDetails {
                 isUserLoggedIn = false
             }else {
@@ -68,6 +69,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         UserAPI.loginUser(params: params,
                           onSuccess: { (apiResponse) in
                             CurrentUserModel.getInstance.userDetails = apiResponse
+                            
                             self.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
         }) { (apiError) in
             let msg = (apiError?["msg"] as? String) ?? "Login failed due to unknown reason"
