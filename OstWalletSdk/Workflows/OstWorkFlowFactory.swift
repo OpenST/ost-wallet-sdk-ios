@@ -314,6 +314,4 @@ extension OstWalletSdk {
                                                        delegate: delegate)
         biometricWorkflow.perform()
     }
-    
-    
 }
