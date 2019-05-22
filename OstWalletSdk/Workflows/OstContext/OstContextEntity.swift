@@ -10,7 +10,7 @@
 
 import Foundation
 
-public enum OstEntityType {
+@objc public enum OstEntityType:Int {
     case device,
     user,
     array,
@@ -24,8 +24,8 @@ public enum OstEntityType {
 
 @objc public class OstContextEntity: NSObject {
 
-    public private(set) var entity: Any?
-    public private(set) var entityType: OstEntityType
+    @objc public private(set) var entity: Any?
+    @objc public private(set) var entityType: OstEntityType
     
     init(entity: Any, entityType: OstEntityType) {
         self.entity = entity as Any

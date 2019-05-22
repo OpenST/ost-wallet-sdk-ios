@@ -10,7 +10,7 @@
 
 import Foundation
 
-public class OstBaseEntity: NSObject {
+@objc public class OstBaseEntity: NSObject {
     // The table column names.
     static let ID = "id"
     static let PARENT_ID = "parent_id"
@@ -143,7 +143,7 @@ public extension OstBaseEntity {
     }
     
     /// Get the entity data
-    var data: [String: Any] {
+    @objc var data: [String: Any] {
         return self.entityData as [String : Any]
     }
     

@@ -11,9 +11,18 @@
 import Foundation
 import BigInt
 
-public enum OstExecuteTransactionType: String {
-    case DirectTransfer = "Direct Transfer"
-    case Pay = "Pricer"
+@objc public enum OstExecuteTransactionType:Int {
+    case DirectTransfer
+    case Pay
+    
+    public func getQRText() -> String {
+        switch self {
+        case .DirectTransfer:
+            return "Direct Transfer";
+        case .Pay:
+            return "Pricer";
+        }
+    }
 }
 
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
@@ -138,8 +147,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     override func validateParams() throws {
         try super.validateParams()
       
-        let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
-                                OstExecuteTransactionType.Pay.rawValue.uppercased()]
+        let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.getQRText().uppercased(),
+                                OstExecuteTransactionType.Pay.getQRText().uppercased()]
         
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
             throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
@@ -171,10 +180,10 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         }
         
         switch self.ruleName.uppercased() {
-        case OstExecuteTransactionType.Pay.rawValue.uppercased():
+        case OstExecuteTransactionType.Pay.getQRText().uppercased():
             try self.processForPricer()
             
-        case OstExecuteTransactionType.DirectTransfer.rawValue.uppercased():
+        case OstExecuteTransactionType.DirectTransfer.getQRText().uppercased():
             try self.processForDirectTransfer()
             
         default:
