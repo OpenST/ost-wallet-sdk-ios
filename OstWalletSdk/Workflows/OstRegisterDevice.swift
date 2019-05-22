@@ -147,6 +147,9 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         try verifyDeviceRegistered()
         try syncUser()
         try syncToken()
+        if currentUser?.isStatusActivated ?? false{
+            try ensureDeviceManager()
+        }
     }
     
     /// Ensure that entities are persent
@@ -156,7 +159,9 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         try verifyDeviceRegistered()
         try ensureUser()
         try ensureToken()
-        try ensureDeviceManager()
+        if currentUser?.isStatusActivated ?? false {
+            try ensureDeviceManager()
+        }
     }
     
     /// Creates user if user is not persent.
