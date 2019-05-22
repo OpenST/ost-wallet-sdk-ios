@@ -28,6 +28,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         }
     }
     var userBalanceDetails: [String: Any]? = nil
+    var pricePoint: [String: Any]? = nil
     var isUserLoggedIn: Bool = false
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
@@ -148,6 +149,15 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     }
     
     
+    func toUSD(value: String) -> String? {
+        guard let usdValue = getUSDValue,
+                let doubleValue = Double(value) else {
+            return nil
+        }
+        
+        return String(usdValue * doubleValue)
+    }
+    
 }
 
 extension CurrentUserModel {
@@ -244,5 +254,26 @@ extension CurrentUserModel {
             }
         }
         return false
+    }
+}
+
+//MARK: - Price Point
+extension CurrentUserModel {
+    var getUSDValue: Double? {
+        guard let pricePoint = self.pricePoint else {
+            return nil
+        }
+       
+        if let tokenId = self.tokenId,
+            let ostToken: OstToken = OstWalletSdk.getToken(tokenId) {
+            
+            let baseCurrency = ostToken.baseToken
+            let currencyPricePoint = pricePoint[baseCurrency] as! [String: Any]
+            
+            if let strValue = ConversionHelper.toString(currencyPricePoint["USD"]) {
+                return Double(strValue)
+            }
+        }
+        return nil
     }
 }

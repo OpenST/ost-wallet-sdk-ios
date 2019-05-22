@@ -87,6 +87,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     //MAKR: - Variables
     var isShowingActionSheet = false;
     var isUsdTx = false
+    
+    var isBalanceApiInprogress = false
+    var didUserTapSendTokens = false
 
     var userDetails: [String: Any]! {
         didSet {
@@ -100,6 +103,36 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func getNavBarTitle() -> String {
         return "Send Tokens"
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getUserBalanceFromServer()
+    }
+    
+    func getUserBalanceFromServer() {
+        
+        if isBalanceApiInprogress {
+            return
+        }
+        isBalanceApiInprogress = true
+        UserAPI.getBalance(onSuccess: {[weak self] (_) in
+//            self?.onRequestComplete()
+        }) {[weak self] (_) in
+//            self?.onRequestComplete()
+        }
+    }
+    
+    @objc func onRequestComplete() {
+        isBalanceApiInprogress = false
+        progressIndicator?.hide()
+        progressIndicator = nil
+        if didUserTapSendTokens {
+            didUserTapSendTokens = false
+            self.perform(#selector(sendTokenButtonTapped(_ :)), with: nil, afterDelay: 0.3)
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let currentUse = CurrentUserModel.getInstance
@@ -192,6 +225,14 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     @objc func sendTokenButtonTapped(_ sender: Any?) {
         
+        if isBalanceApiInprogress && isUsdTx {
+            didUserTapSendTokens = true
+            progressIndicator = OstProgressIndicator(textCode: .fetchingUserBalance)
+            progressIndicator?.show()
+            self.perform(#selector(onRequestComplete), with: nil, afterDelay: 2)
+            return
+        }
+        
         if !isValidInputPassed() {
             return
         }
@@ -235,15 +276,15 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     func isValidInputPassed() -> Bool {
         var isValidInput: Bool = true
-        if let userBalance: Double = Double(CurrentUserModel.getInstance.balance),
+        if var userBalance: Double = Double(CurrentUserModel.getInstance.balance),
             let enteredAmount: Double = Double(self.amountTextField.text!) {
             
             if isUsdTx {
-                
-            }else {
-                if enteredAmount > userBalance {
-                    isValidInput = false
-                }
+                let usdBalance = getUserBalance()
+                userBalance = Double(usdBalance)!
+            }
+            if enteredAmount > userBalance {
+                isValidInput = false
             }
         }
         
@@ -281,12 +322,16 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self.isUsdTx = false
+            let balance = CurrentUserModel.getInstance.balance
+            self.balanceLabel.text = "Balance: \(balance.toDisplayTxValue()) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
         });
         actionSheet.addAction(directTransafer);
         
         let pricer = UIAlertAction(title: "USD", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = "USD";
             self.isUsdTx = true
+            let usdBalance = self.getUserBalance()
+            self.balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
         });
         actionSheet.addAction(pricer);
         
@@ -335,5 +380,11 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func getUserBalance() -> String {
+        let currentUser = CurrentUserModel.getInstance
+        let usdBalance = currentUser.toUSD(value: currentUser.balance) ?? "0"
+        return usdBalance
     }
 }

@@ -31,7 +31,7 @@ extension String {
         return self[indexPosition]
     }
     
-    func displayTransactionValue() -> String {
+    func toDisplayTxValue() -> String {
         let values = self.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]

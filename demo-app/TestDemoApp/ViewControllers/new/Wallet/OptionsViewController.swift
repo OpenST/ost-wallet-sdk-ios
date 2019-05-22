@@ -205,8 +205,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "enabled" : "disabled"
-        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "Biomertic is \(biometricStatus)", isEnable: true)
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
+        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
         if userDevice.isStatusRegistered {
             optionBiomertic.isEnable = false
         }
