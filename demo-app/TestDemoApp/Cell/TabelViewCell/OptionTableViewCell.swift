@@ -13,6 +13,7 @@ enum OptionType {
     createSession,
     resetPin,
     viewMnemonics,
+    biomerticStatus,
     authorizeViaQR,
     authorizeViaMnemonics,
     showDeviceQR,

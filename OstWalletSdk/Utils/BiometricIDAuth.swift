@@ -12,8 +12,15 @@ import Foundation
 import LocalAuthentication
 
 class BiometricIDAuth {
+    
     private let context = LAContext()
-    private var loginReason = "Please authenticate yourself to access sensitive information."
+    private var permissionText = "Please authenticate yourself to access sensitive information."
+    
+    init(permissionText: String? = nil) {
+        if (nil != permissionText && permissionText!.isEmpty) {
+            self.permissionText = permissionText!
+        }
+    }
     
     /// Authenticate user with biometrics
     ///
@@ -24,7 +31,7 @@ class BiometricIDAuth {
             return
         }
         context.touchIDAuthenticationAllowableReuseDuration = 10
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: loginReason) { (success, evaluatePolicyError) in
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: permissionText) { (success, evaluatePolicyError) in
             if success {
                 completion(true, nil)
             } else {

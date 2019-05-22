@@ -164,4 +164,17 @@ protocol OstKeyManagerDelegate {
     ///
     /// - Throws: OstError
     func clearUserDeviceInfo() throws
+    
+    
+    /// Check user preference for authenticate user via Biometric.
+    ///
+    /// - Returns: true if
+    func isBiometricEnabled() -> Bool
+    
+    ///  /// Set Biometric preference for user.
+    ///
+    /// - Parameter preference: Biometric preference
+    /// - Throws: OstError
+    func setBiometricPreference(_ preference: Bool) throws
+
 }

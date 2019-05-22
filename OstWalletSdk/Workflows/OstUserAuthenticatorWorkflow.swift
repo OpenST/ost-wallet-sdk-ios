@@ -89,14 +89,27 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     ///
     /// - Throws: OstError
     override func onDeviceValidated() throws {
-        let biomatricAuth: BiometricIDAuth = BiometricIDAuth()
-        biomatricAuth.authenticateUser { (isSuccess, message) in
-            if (isSuccess) {
-                self.performState(OstUserAuthenticatorWorkflow.AUTHENTICATED)
-            }else {
-                self.performState(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
+        
+        let isBiometricAuthenticationEnabled = OstWalletSdk.isBiometricEnabled(userId: self.userId)
+        let canAuthenticateViaBiometric = shouldAskForBiometricAuthentication()
+        if isBiometricAuthenticationEnabled && canAuthenticateViaBiometric {
+            
+            let BiometricAuth: BiometricIDAuth = BiometricIDAuth()
+            BiometricAuth.authenticateUser { (isSuccess, message) in
+                if (isSuccess) {
+                    self.performState(OstUserAuthenticatorWorkflow.AUTHENTICATED)
+                }else {
+                    self.performState(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
+                }
             }
+        }else {
+            self.performState(OstUserAuthenticatorWorkflow.PIN_AUTHENTICATION_REQUIRED)
         }
+    }
+    
+    /// Should ask for biometric authentication
+    func shouldAskForBiometricAuthentication() -> Bool {
+        return true
     }
     
     /// Accept pin from user and validate.

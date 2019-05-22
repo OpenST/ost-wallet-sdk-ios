@@ -205,7 +205,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics]
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "enabled" : "disabled"
+        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "Biomertic is \(biometricStatus)", isEnable: true)
+        if userDevice.isStatusRegistered {
+            optionBiomertic.isEnable = false
+        }
+        
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionBiomertic]
         generalOptions = userOptions
     }
     
@@ -323,6 +329,18 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
+        else if option.type == .biomerticStatus {
+            let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
+                                                 listner: self)
+            
+            let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
+            OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                   enable: !isEnabled,
+                                                   delegate: workflowDelegate)
+            return
+        }
+        
         if nil == destinationVC && nil == destinationSVVC {
             return
         }
@@ -357,7 +375,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MARK: - OstSdkInteract Delegate
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if workflowContext.workflowType == .setupDevice {
+        if workflowContext.workflowType == .setupDevice
+            || workflowContext.workflowType == .updateBiometricPreference {
             setupTableViewModels()
         }
     }

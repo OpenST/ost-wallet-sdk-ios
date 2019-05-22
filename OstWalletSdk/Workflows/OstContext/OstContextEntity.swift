@@ -19,7 +19,8 @@ public enum OstEntityType {
     recoveryOwner,
     string,
     dictionary,
-    tokenHolder
+    tokenHolder,
+    boolean
 }
 
 public class OstContextEntity {

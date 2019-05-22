@@ -23,7 +23,8 @@ public enum OstWorkflowType {
     abortDeviceRecovery,
     revokeDeviceWithQRCode,
     resetPin,
-    logoutAllSessions
+    logoutAllSessions,
+    updateBiometricPreference
 }
 
 public class OstWorkflowContext {    

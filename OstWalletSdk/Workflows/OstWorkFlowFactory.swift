@@ -284,6 +284,12 @@ extension OstWalletSdk {
         logoutAllSessionsFlow.perform()
     }
     
+    /// Revoke device
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - deviceAddressToRevoke: Device address to revoke
+    ///   - delegate: Callback
     public class func revokeDevice(userId: String,
                                    deviceAddressToRevoke: String,
                                    delegate: OstWorkflowDelegate) {
@@ -292,4 +298,22 @@ extension OstWalletSdk {
                                                          delegate: delegate)
         revokeDeviceFlow.perform()
     }
+    
+    /// Update biometric preference
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - enable: Biomertic authentication allowed
+    ///   - delegate: Callback
+    public class func updateBiometricPreference(userId: String,
+                                                enable: Bool,
+                                                delegate: OstWorkflowDelegate) {
+        
+        let biometricWorkflow = OstBiometricPreference(userId: userId,
+                                                       enable: enable,
+                                                       delegate: delegate)
+        biometricWorkflow.perform()
+    }
+    
+    
 }
