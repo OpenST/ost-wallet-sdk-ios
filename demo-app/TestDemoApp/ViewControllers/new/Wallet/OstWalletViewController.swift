@@ -264,6 +264,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 let transactionURL: String = "\(viewEndPoint)transaction/tx-\(auxChainId)-\(transactionHash)"
                 
                 let webView = WKWebViewController()
+                webView.title = "Ost View"
                 webView.urlString = transactionURL
                 webView.presentViewControllerWithNavigationController(self)
             }
