@@ -146,9 +146,7 @@ class ShowQRView: BaseWalletWorkflowView {
         let currentUser = CurrentUser.getInstance();
         //        OstWalletSdk.addDevice(userId: currentUser.ostUserId!, delegate: self.sdkInteract)
         do {
-            guard let qrCode = try OstWalletSdk.getAddDeviceQRCode(userId: currentUser.ostUserId!) else {
-                return
-            }
+            let qrCode = try OstWalletSdk.getAddDeviceQRCode(userId: currentUser.ostUserId!) 
             let multiplyingFactor = (qrCodeImageView.frame.height/100)
             let transform: CGAffineTransform  = CGAffineTransform(scaleX: multiplyingFactor, y: multiplyingFactor);
             let output: CIImage = qrCode.transformed(by: transform)

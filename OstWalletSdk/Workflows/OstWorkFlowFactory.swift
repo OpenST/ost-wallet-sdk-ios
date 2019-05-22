@@ -70,6 +70,7 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func authorizeCurrentDeviceWithMnemonics(
         userId: String,
         mnemonics: [String],
@@ -90,6 +91,7 @@ extension OstWalletSdk {
     ///   - spendingLimit: Amount user can spend in a transaction
     ///   - expireAfterInSec: Seconds after which the session key should expire.
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func addSession(
         userId: String,
         spendingLimit: String,
@@ -111,6 +113,7 @@ extension OstWalletSdk {
     ///   - userId: User id.
     ///   - payload: Json string of payload is expected.
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func performQRAction(
         userId: String,
         payload: String,
@@ -127,6 +130,7 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: User id
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func getDeviceMnemonics(
         userId: String,
         delegate: OstWorkflowDelegate) {
@@ -318,6 +322,7 @@ extension OstWalletSdk {
     ///   - userId: User id
     ///   - enable: Biomertic authentication allowed
     ///   - delegate: Callback
+    @objc
     public class func updateBiometricPreference(userId: String,
                                                 enable: Bool,
                                                 delegate: OstWorkflowDelegate) {
