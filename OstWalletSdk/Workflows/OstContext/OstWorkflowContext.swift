@@ -29,7 +29,7 @@ import Foundation
 
 @objc public class OstWorkflowContext: NSObject {    
     @objc public let workflowType: OstWorkflowType
-    public init(workflowType: OstWorkflowType) {
+    @objc public init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType
     }
 }
