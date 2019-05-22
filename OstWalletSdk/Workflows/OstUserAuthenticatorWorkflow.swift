@@ -43,14 +43,6 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
         return orderedStates
     }
     
-    /// Perform user device validation
-    ///
-    /// - Throws: OstError
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        try isUserActivated()
-    }
-    
     /// Should check whether current device authorized or not
     ///
     /// - Returns: `true` if check required, else `false`
@@ -108,6 +100,8 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     }
     
     /// Should ask for biometric authentication
+    ///
+    /// - Returns: `true` if biometric authentication required, else `false`
     func shouldAskForBiometricAuthentication() -> Bool {
         return true
     }

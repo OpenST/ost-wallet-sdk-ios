@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstActivateUser: OstWorkflowEngine {
+class OstActivateUser: OstUserAuthenticatorWorkflow {
     
     static private let ostActivateUserQueue = DispatchQueue(label: "com.ost.sdk.OstDeployTokenHolder", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 2
@@ -105,10 +105,21 @@ class OstActivateUser: OstWorkflowEngine {
         return false
     }
     
+    override func onDeviceValidated() throws {
+        let BiometricAuth: BiometricIDAuth = BiometricIDAuth(permissionText: "Do you want to user biometric?")
+        BiometricAuth.authenticateUser { (isSuccess, message) in
+            if (isSuccess) {
+                let biometricManager = OstKeyManagerGateway.getOstBiometricManager(userId: self.userId)
+                try? biometricManager.enableBiometric()
+            }
+            self.performState(OstUserAuthenticatorWorkflow.AUTHENTICATED)
+        }
+    }
+    
     /// Activate user on device validated
     ///
     /// - Throws: OstError
-    override func onDeviceValidated() throws {
+    override func onUserAuthenticated() throws {
         if (self.currentUser!.isStatusActivating) {
             self.pollingForActivatingUser(self.currentUser!)
             return

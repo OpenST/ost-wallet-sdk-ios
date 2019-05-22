@@ -27,7 +27,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if balance.isEmpty {
            balance = "0"
         }
-        self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(val.displayTransactionValue())"
+        self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(balance.displayTransactionValue())"
     }
     
     //MAKR: - Components

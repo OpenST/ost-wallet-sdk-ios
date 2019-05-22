@@ -29,6 +29,8 @@ class OstBiometricPreference: OstUserAuthenticatorWorkflow {
     }
     
     /// Should ask for biometric authentication
+    ///
+    /// - Returns: `true` if biometric authentication required, else `false`
     override func shouldAskForBiometricAuthentication() -> Bool {
         return false
     }

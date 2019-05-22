@@ -17,7 +17,7 @@ class BiometricIDAuth {
     private var permissionText = "Please authenticate yourself to access sensitive information."
     
     init(permissionText: String? = nil) {
-        if (nil != permissionText && permissionText!.isEmpty) {
+        if (nil != permissionText && !permissionText!.isEmpty) {
             self.permissionText = permissionText!
         }
     }
