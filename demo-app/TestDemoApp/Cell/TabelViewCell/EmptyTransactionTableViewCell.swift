@@ -45,6 +45,8 @@ class EmptyTransactionTableViewCell: BaseTableViewCell {
         
         containerView.addSubview(titleLabel)
         containerView.addSubview(leadLabel)
+        
+        self.selectionStyle = .none
     }
     
     override func applyConstraints() {

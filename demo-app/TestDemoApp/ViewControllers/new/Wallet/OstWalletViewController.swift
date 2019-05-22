@@ -16,7 +16,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         let tableView: UITableView = UITableView(frame: .zero, style: .plain)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -59,7 +59,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         if nil != workflowCallbacks {
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
+            subscribeToWorkflowId(workflowCallbacks!.workflowId)
         }
         fetchUserWalletData(hardRefresh: true)
     }
@@ -253,6 +253,24 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         return container
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let transfer = tableDataArray[indexPath.row]
+            
+            if let viewEndPoint = CurrentEconomy.getInstance.viewEndPoint,
+                let auxChainId = CurrentEconomy.getInstance.auxiliaryChainId,
+                let transactionHash = transfer["transaction_hash"] as? String {
+                
+                let transactionURL: String = "\(viewEndPoint)transaction/tx-\(auxChainId)-\(transactionHash)"
+                
+                let webView = WKWebViewController()
+                webView.title = "Ost View"
+                webView.urlString = transactionURL
+                webView.presentViewControllerWithNavigationController(self)
+            }
+        }
+    }
+    
     //MARK: - Scroll View Delegate
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -305,12 +323,15 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
         }
         else if !isFetchingUserTransactions  && !isFetchingUserBalance {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
-            self.walletTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            self.walletTableView.reloadSections(IndexSet(integer: 3), with: .automatic)
         }
     }
     
@@ -377,6 +398,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
 
                 if [fromUserId, toUserId].contains(currentUserOstId) {
                     trasferData["meta_property"] = transaction["meta_property"]
+                    trasferData["transaction_hash"] = transaction["transaction_hash"]
                     trasferData["block_timestamp"] = transaction["block_timestamp"]
                     trasferData["rule_name"] = transaction["rule_name"]
                     transferArray.append(trasferData)
@@ -412,6 +434,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()
+    }
+    
+    func subscribeToWorkflowId(_ workflowId: String) {
+        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowId, listner: self)
     }
     
     //MARK: - OstSdkInteract Delegate

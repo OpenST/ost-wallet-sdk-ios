@@ -62,7 +62,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
                                          passphrasePrefix: passphrase,
                                          delegate: self)
         self.userPin = nil;
-        showLoader(progressText: "Stoping device recovery...");
+        showLoader(progressText: .stopDeviceRecovery);
     }
     
     /// Mark - OstPinAcceptDelegate

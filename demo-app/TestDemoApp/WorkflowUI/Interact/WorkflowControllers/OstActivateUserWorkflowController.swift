@@ -76,7 +76,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
         self.userPin = nil;
-        showLoader(progressText: "Activating User");
+        showLoader(progressText: .activingUser);
     }
     
 

@@ -100,11 +100,6 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
         
-        if nil == CurrentEconomy.getInstance.tokenId {
-            openEconomyScanner(animation: false)
-            return
-        }
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -114,7 +109,10 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                                selector: #selector(self.keyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-
+        
+        if nil == CurrentEconomy.getInstance.tokenId {
+            openEconomyScanner(animation: false)
+        }
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -300,29 +298,31 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     func isCorrectInputPassed() -> Bool {
         let isValidUsename = validateUserNameTextField()
         let isValidPassword = validatePasswordTextField()
-        return isValidUsename || isValidPassword
+        return isValidUsename && isValidPassword
     }
     
     func validateUserNameTextField() -> Bool {
-        if usernameTextField.text?.isMatch("a-zA-Z0-9") ?? false {
-            usernameTextFieldController?.setErrorText("Invalid username",
-                                                      errorAccessibilityValue: nil);
-            return false;
+        if usernameTextField.text!.count > 0 && (usernameTextField.text?.isMatch("^[a-zA-Z0-9]*$") ?? false) {
+            usernameTextFieldController?.setErrorText(nil, errorAccessibilityValue: nil);
+            return true
         }
-        usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
-        return true
+        usernameTextFieldController?.setErrorText("Invalid username",
+                                                  errorAccessibilityValue: nil);
+        return false;
     }
     
     func validatePasswordTextField() -> Bool {
         if nil == passwordTextField.text
-            || passwordTextField.text!.isMatch("a-zA-Z0-9")
+            || !passwordTextField.text!.isMatch("^[a-zA-Z0-9]*$")
             || passwordTextField.text!.count < 5 {
             
-            usernameTextFieldController?.setErrorText("Invalid password",
+            passwordTextFieldController?.setErrorText("Invalid password",
                                                       errorAccessibilityValue: nil);
-            return false;
+            return false
         }
-        usernameTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+        
+       
+        passwordTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         return true
     }
     
@@ -375,7 +375,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     @objc func qrButtonTapped(_ sender: Any?) {
         openEconomyScanner(animation: true)
     }
-    func openEconomyScanner(animation flag: Bool = true) {
+    
+   @objc func openEconomyScanner(animation flag: Bool = true) {
         if nil == economyScanner {
             economyScanner = EconomyScannerViewController()
         }
@@ -404,15 +405,15 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func showProgressIndicator() {
-        var message: String = ""
+        var messageCode: OstProgressIndicatorText = .unknown
         if viewControllerType == .signup {
-            message = "Siging up"
+            messageCode = .signup
         }else if viewControllerType == .login {
-            message = "Loging in"
+            messageCode = .login
         }
         
         if let window = UIApplication.shared.keyWindow {
-            progressIndicator = OstProgressIndicator(progressText: message)
+            progressIndicator = OstProgressIndicator(textCode: messageCode)
             window.addSubview(progressIndicator!)
             progressIndicator?.show()
         }

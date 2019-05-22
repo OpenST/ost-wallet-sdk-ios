@@ -20,7 +20,7 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
         
         return label
     }()
-    var progressIndicator: OstProgressIndicator? = OstProgressIndicator(progressText: "")
+    var progressIndicator: OstProgressIndicator? = nil
     
     //MARK: - Variables
     
@@ -40,7 +40,6 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     
     override func addSubviews() {
         super.addSubviews()
-        addSubview(progressIndicator!)
         addSubview(leadLabel)
         leadLabel.text = getLeadLabelText()
     }

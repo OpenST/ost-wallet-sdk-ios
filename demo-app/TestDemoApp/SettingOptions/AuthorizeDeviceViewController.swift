@@ -29,15 +29,10 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     }()
     
     let infoTextForRecovery: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = OstUIKit.leadLabel()
         label.text = "Don’t have a secondary device or mnemonics?"
         return label
     }()
-    
-    //MARK: Themer
-    var infoTextForRecoveryThemer = OstTheme.leadLabel
     
     //MAKR: - View LC
     override func getNavBarTitle() -> String {
@@ -58,10 +53,9 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
         super.addSubviews()
         addSubview(authorizeViaQRButton)
         addSubview(authorizeViaMnemonicsButton)
-        addSubview(recoverWithPinButton)
         addSubview(infoTextForRecovery)
-
-        infoTextForRecoveryThemer.apply(infoTextForRecovery)
+        addSubview(recoverWithPinButton)
+        
        
         weak var weakSelf = self
         authorizeViaQRButton.addTarget(weakSelf, action: #selector(weakSelf!.authorizeViaQRButtonTapped(_:)), for: .touchUpInside)
@@ -101,7 +95,7 @@ class AuthorizeDeviceViewController: BaseSettingOptionsViewController {
     
     func addRecoverWithPinButtonConstraints() {
         recoverWithPinButton.applyBlockElementConstraints()
-        recoverWithPinButton.bottomAlignWithParent(multiplier: 1, constant: -38)
+        recoverWithPinButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
     //MARK: - Button Actions

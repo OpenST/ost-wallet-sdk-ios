@@ -38,11 +38,33 @@ class OstSuccessNotification: OstNotification {
     
     //MARK: - Notification Text
     
-    override func getActivateUserText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return "User activated Successfully."
+    override func getTitle() -> String {
+        let workflowContext = notificationModel.workflowContext
+        var titleText = ""
+        
+        if workflowContext.workflowType == .addSession {
+            titleText = getAddSessionText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .resetPin {
+            titleText = "Pin has been reset successfully."
+        }
+        else if workflowContext.workflowType == .activateUser {
+            titleText = "User activated Successfully."
+        }
+        else if workflowContext.workflowType == .authorizeDeviceWithMnemonics {
+            titleText = "Device authorized successfully."
+        }
+        else if workflowContext.workflowType == .authorizeDeviceWithQRCode {
+            titleText = getAuthorizeDeviceWithQRText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
+        }
+        else if workflowContext.workflowType == .executeTransaction {
+            titleText = "transaction executed successfully!"
+        }
+        
+        return titleText
     }
     
-    override func getAddSessionText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+    func getAddSessionText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
         var titleText = "Session created successfully."
         if let entity: OstSession = contextEntity!.entity as? OstSession {
             let aproxExpirationTime = entity.approxExpirationTimestamp
@@ -55,28 +77,12 @@ class OstSuccessNotification: OstNotification {
         return titleText
     }
     
-    override func getResetPinText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return "Pin has been reset successfully."
-    }
-    
-    override func getAbortDeviceRecoveryText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    override func getAuthorizeDeviceWithMnemonicsText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    override func getAuthorizeDeviceWithQRText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
+    func getAuthorizeDeviceWithQRText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
         var titleText = "Device is authorized."
         if let device: OstDevice = contextEntity?.entity as? OstDevice {
             titleText = "Device with address \(device.address!) is now authroized. You can use device to do transactions or authrorize new device."
         }
         return titleText
-    }
-    
-    override func getExecuteTransactionText (contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return "transaction executed successfully!"
     }
     
     //MAKR: - Action Button Title
@@ -101,6 +107,7 @@ class OstSuccessNotification: OstNotification {
         let currentEconomy = CurrentEconomy.getInstance
         
         let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(currentUser.tokenHolderAddress!)"
+        webView.title = "Ost View"
         webView.urlString = tokenHoderURL
         webView.showVC()
         OstNotificationManager.getInstance.removeNotification()

@@ -31,9 +31,9 @@ class UserDetailsViewModel: UserDetailsBaseViewModel {
 
 class UserDetailsWithLinkViewModel: UserDetailsViewModel {
     
-    let urlString: String
+    var urlString: String? = nil
     
-    init(title: String, value: String, themer: OstLabelTheamer? = nil, urlString: String) {
+    init(title: String, value: String, themer: OstLabelTheamer? = nil, urlString: String?) {
         self.urlString = urlString
         super.init(title: title, value: value, themer: themer)
     }

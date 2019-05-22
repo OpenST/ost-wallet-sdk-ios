@@ -22,7 +22,8 @@ class TransactionTableViewCell: UsersTableViewCell {
             let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
             let fromUserId = transactionData["from_user_id"] as! String
             
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(transactionData["amount"])!)
+            var amountVal = OstUtils.fromAtto(ConversionHelper.toString(transactionData["amount"])!)
+            amountVal = amountVal.displayTransactionValue()
             if currentUserOstId.compare(fromUserId) == .orderedSame {
                 self.overlayImage.image = UIImage(named: "SentTokens")
                 self.amountLabel.text = "- \(amountVal)"
@@ -39,7 +40,7 @@ class TransactionTableViewCell: UsersTableViewCell {
                 let type = metaProperty["type"] as? String {
                 if type.caseInsensitiveCompare("company_to_user") == .orderedSame {
                     self.overlayImage.image = UIImage(named: "OstGrantReceived")
-                    name = "Welcome Grant"
+                    name = "Welcome to Demo Wallet"
                 }
             }
             
@@ -77,6 +78,11 @@ class TransactionTableViewCell: UsersTableViewCell {
     }()
     
     //MARK: - AddViews
+    override func createViews() {
+        super.createViews()
+        self.selectionStyle = .none
+    }
+    
     override func createInternalView() {
          self.circularView!.addSubview(overlayImage)
     }

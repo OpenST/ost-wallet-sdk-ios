@@ -163,16 +163,16 @@ class OstVerifyAuthDeviceViewController: OstBaseViewController {
     
     @objc func authorizeDeviceTapped(_ sender: Any) {
         (self.delegate as? OstValidateDataDelegate)?.dataVerified()
-        self.dismiss(animated: true, completion: nil)
+        self.removeViewController()
     }
     
     @objc func cancelDeviceTapped(_ sender: Any) {
         (self.delegate as? OstValidateDataDelegate)?.cancelFlow()
-        self.dismiss(animated: true, completion: nil)
+        self.removeViewController()
     }
     
     override func tappedBackButton() {
         (self.delegate as? OstValidateDataDelegate)?.cancelFlow()
-        self.dismiss(animated: true, completion: nil)
+        self.removeViewController()
     }
 }

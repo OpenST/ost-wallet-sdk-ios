@@ -77,17 +77,7 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     //MARK: - Methods
     func startScanning() {
-        
-        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
-            addCaptureSession()
-            captureSession?.startRunning()
-            cameraPermissionState?(.authorized)
-        }
-        else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
-            showAlertForAccessDenied()
-            cameraPermissionState?(.denied)
-        }
-        else {
+
             AVCaptureDevice.requestAccess(for: .video, completionHandler: {[weak self] (granted: Bool) in
                 DispatchQueue.main.async {
                     if granted {
@@ -101,7 +91,6 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
                     }
                 }
             })
-        }
     }
     
     func showAlertForAccessDenied() {

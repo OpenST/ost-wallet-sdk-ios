@@ -114,4 +114,11 @@ class OstKeyManager {
         return try self.keyManagareDelegate.signWithSessionKey(tx,
                                                                withAddress:address)
     }
+    
+    /// Get user biometric preference
+    ///
+    /// - Returns: true if biometric preference allowed, default false
+    func isBiometricEnabled() -> Bool {
+        return self.keyManagareDelegate.isBiometricEnabled()
+    }
 }

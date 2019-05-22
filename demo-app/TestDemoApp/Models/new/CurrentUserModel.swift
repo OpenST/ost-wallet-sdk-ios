@@ -17,11 +17,30 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         super.init()
     }
     //MARK: - Variables
-    private var userDetails: [String: Any]? = nil
+    private var userDetails: [String: Any]? {
+        didSet {
+            userBalanceDetails = nil
+            if nil == userDetails {
+                isUserLoggedIn = false
+            }else {
+                isUserLoggedIn = true
+            }
+        }
+    }
     var userBalanceDetails: [String: Any]? = nil
+    var isUserLoggedIn: Bool = false
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
     var setupDeviceOnFailure: (([String: Any]?)->Void)?
+    
+    func logoutUser() {
+        self.userDetails = nil
+    }
+    
+    func logout() {
+        UserAPI.logoutUser()
+        logoutUser() 
+    }
     
     //MARK: - API
     func setupDevice(onSuccess: @escaping ((OstUser, OstDevice) -> Void), onFailure:@escaping (([String: Any]?)->Void)) {
@@ -50,6 +69,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         UserAPI.loginUser(params: params,
                           onSuccess: { (apiResponse) in
                             CurrentUserModel.getInstance.userDetails = apiResponse
+                            
                             self.setupDevice(onSuccess: onSuccess, onFailure: onFailure);
         }) { (apiError) in
             let msg = (apiError?["msg"] as? String) ?? "Login failed due to unknown reason"
@@ -91,10 +111,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         }
     }
     
-    func logout() {
-        UserAPI.logoutUser()
-        userDetails = nil
-    }
+   
     
     
     //MARK: - OstWorkflow Delegate

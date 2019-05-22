@@ -21,6 +21,8 @@ class PaginationLoaderTableViewCell: BaseTableViewCell {
     override func createViews() {
         createIndicatorContainer()
         createActivityIndicatorView()
+        
+        self.selectionStyle = .none
     }
     
     func createIndicatorContainer() {

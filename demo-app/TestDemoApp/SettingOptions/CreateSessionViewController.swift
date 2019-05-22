@@ -224,7 +224,11 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     func isCorrectInputPassed() -> Bool {
         
-        if self.spendingLimitTestField.text?.isEmpty ?? true  {
+        
+        if nil == self.spendingLimitTestField.text
+            || self.spendingLimitTestField.text!.isEmpty
+            || !self.spendingLimitTestField.text!.isMatch("^[0-9]*$") {
+            
             spendingLimitTestFieldController?.setErrorText("Invalid Spending Limit",
                                                       errorAccessibilityValue: nil);
             return false;

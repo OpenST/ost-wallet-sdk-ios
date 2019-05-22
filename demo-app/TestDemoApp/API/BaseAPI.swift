@@ -37,6 +37,7 @@ class BaseAPI {
             } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode == 401) {
                 // Unauthorized.
                 onFailure?(httpResonse.result.value as? [String: Any])
+                BaseAPI.logoutUnauthorizedUser()
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }
@@ -60,9 +61,23 @@ class BaseAPI {
             } else if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 400 && httpResonse.response!.statusCode < 500) {
                 // Unauthorized.
                 onFailure?(httpResonse.result.value as? [String: Any])
+                BaseAPI.logoutUnauthorizedUser()
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }
+        }
+    }
+    
+    class func logoutUnauthorizedUser() {
+        if CurrentUserModel.getInstance.isUserLoggedIn {
+            
+            let alert = UIAlertController(title: "Device is unauthorized.", message: "Please authorize deivce by logging in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (alertAction) in
+                CurrentUserModel.getInstance.logoutUser()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+            }))
+            alert.show()
         }
     }
 }

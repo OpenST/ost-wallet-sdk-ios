@@ -59,7 +59,7 @@ class TabBarViewController: UITabBarController {
         let homeVC = OstHomeViewController()
         homeVC.tabbarController = self
         let homeNavController = UINavigationController(rootViewController: homeVC)
-        homeNavController.tabBarItem = UITabBarItem(title: "Home",
+        homeNavController.tabBarItem = UITabBarItem(title: "Users",
                                          image: UIImage(named: "userImage"),
                                          selectedImage: UIImage(named: "userImageSelected"))
         homeNavController.tabBarItem.tag = 1
@@ -115,4 +115,32 @@ class TabBarViewController: UITabBarController {
             rootVC.openAuthorizeDeviceViewIfRequired()
         }
     }
+    
+    //MARK: - Jump
+    
+    @objc func jumpToWalletVC(withWorkflowId workflowId: String? = nil) {
+        self.selectedViewController = viewControllers![1]
+        
+        if let walletVC = getWalletVC(),
+            nil != workflowId{
+            walletVC.subscribeToWorkflowId(workflowId!)
+        }
+    }
+    
+    //MAKR: - VC
+    func getUsersVC() -> OstHomeViewController?{
+        let homeNavVC = viewControllers?[0] as? UINavigationController
+        return homeNavVC?.viewControllers.first as? OstHomeViewController
+    }
+    
+    func getWalletVC() -> OstWalletViewController? {
+        let walletNavVC = viewControllers?[1] as? UINavigationController
+        return walletNavVC?.viewControllers.first as? OstWalletViewController
+    }
+    
+    func getOptionsVC() -> OptionsViewController? {
+        let optionNavVC = viewControllers?[2] as? UINavigationController
+        return optionNavVC?.viewControllers.first as? OptionsViewController
+    }
+    
 }

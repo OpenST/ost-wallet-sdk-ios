@@ -51,7 +51,7 @@ extension OstWorkflowCallbacks {
         self.sdkPinAcceptDelegate?.pinEntered(self.userPin!, passphrasePrefix: passphrase);
         self.sdkPinAcceptDelegate = nil;
         self.userPin = nil;
-        self.showLoader(progressText: "Processing...");
+        self.showLoader(progressText: .unknown);
     }
     
     func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {

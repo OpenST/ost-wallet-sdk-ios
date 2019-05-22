@@ -20,7 +20,6 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
     override func getLeadLabelText() -> String {
         return "Here are your authorized devices"
     }
-
     
     override func onFetchDeviceSuccess(_ apiResponse: [String : Any]?) {
         isApiCallInProgress = false
@@ -35,7 +34,7 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
                 authorizedDevices.append(device)
             }
         }
-        tableDataArray.append(contentsOf: authorizedDevices)
+        updatedTableArray.append(contentsOf: authorizedDevices)
         self.isNewDataAvailable = true
         
         reloadDataIfNeeded()

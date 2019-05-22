@@ -22,7 +22,7 @@ class WKWebViewController: OstBaseViewController, WKNavigationDelegate {
     var urlString: String = ""
     
     override func getNavBarTitle() -> String {
-        return urlString
+        return title ?? ""
     }
     
     override func addSubviews() {

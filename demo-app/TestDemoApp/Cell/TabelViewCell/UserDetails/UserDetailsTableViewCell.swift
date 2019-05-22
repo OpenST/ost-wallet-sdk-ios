@@ -54,6 +54,7 @@ class UserDetailsTableViewCell: BaseTableViewCell {
         addSubview(titleLabel)
         addSubview(infoText)
         addSubview(seperatorLine)
+        self.selectionStyle = .none
     }
 
     //MARK: - Add Constraints

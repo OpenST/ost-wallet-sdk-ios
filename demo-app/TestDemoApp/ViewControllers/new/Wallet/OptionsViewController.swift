@@ -10,20 +10,20 @@ import UIKit
 import OstWalletSdk
 
 class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
-
+    
     //MAKR: - Components
     var tableView: UITableView?
     var tableHeaderView: UsersTableViewCell = {
         let view = UsersTableViewCell()
-
+        
         view.sendButton?.isHidden = true
         view.sendButton?.setTitle("", for: .normal)
-//        view.translatesAutoresizingMaskIntoConstraints = false
+        //        view.translatesAutoresizingMaskIntoConstraints = false
         view.seperatorLine?.isHidden = true
         view.backgroundColor = UIColor.color(239, 249, 250)
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
-
+        
         return view
     }()
     
@@ -32,9 +32,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var deviceOptions = [OptionVM]()
     
     weak var tabbarController: TabBarViewController?
-
+    
     //MAKR: - View LC
-
+    
     override func getNavBarTitle() -> String {
         return "Wallet Settings"
     }
@@ -56,7 +56,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         setupTableViewModels()
         self.tabbarController?.showTabBar()
         
-        getDeviceStatus()
+        setupTableHeaderView()
     }
     
     @objc override func tappedBackButton() {
@@ -74,7 +74,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func setupTableHeaderView() {
         let userData = ["username": CurrentUserModel.getInstance.userName ?? ""]
         tableHeaderView.userData = userData
-        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.tokenHolderAddress ?? ""
+        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.ostUserId ?? ""
     }
     
     func createTabelView() {
@@ -87,7 +87,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         loTableView.translatesAutoresizingMaskIntoConstraints = false
         loTableView.tableHeaderView = tableHeaderView
         loTableView.tableHeaderView?.frame.size = CGSize(width: loTableView.frame.width, height: CGFloat(77))
-
+        
         tableView = loTableView
         self.view.addSubview(loTableView)
         
@@ -132,7 +132,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let option: OptionVM
         switch indexPath.section {
         case 0:
-             option = generalOptions[indexPath.row]
+            option = generalOptions[indexPath.row]
         case 1:
             option = deviceOptions[indexPath.row]
         default:
@@ -154,7 +154,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         case 1:
             sectionTitle.text = "DEVICE"
         default:
-             sectionTitle.text = ""
+            sectionTitle.text = ""
         }
         
         let container = UIView()
@@ -165,7 +165,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         sectionTitle.leftAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.rightAlignWithParent(multiplier: 1, constant: 20)
         sectionTitle.bottomAlignWithParent()
-
+        
         return container
     }
     
@@ -186,7 +186,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func createGeneralOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.currentDevice!;
+        guard let userDevice = currentUser.currentDevice else {
+            BaseAPI.logoutUnauthorizedUser()
+            return
+        }
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
         
@@ -202,59 +205,68 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics]
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "enabled" : "disabled"
+        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "Biomertic is \(biometricStatus)", isEnable: true)
+        if userDevice.isStatusRegistered {
+            optionBiomertic.isEnable = false
+        }
+        
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionBiomertic]
         generalOptions = userOptions
     }
     
     func createDeviceOptionsArray() {
-        let currentUser = CurrentUserModel.getInstance;
-        let userDevice = currentUser.currentDevice!;
+        let currentUser = CurrentUserModel.getInstance
+        let userDevice = currentUser.currentDevice
         
         var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        if  nil == userDevice || !userDevice!.isStatusAuthorized {
             authorizeViaQR.isEnable = false
         }
         
         var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize Device via Mnemonics", isEnable: true)
-        if !userDevice.isStatusRegistered {
+        if  nil == userDevice || !userDevice!.isStatusRegistered {
             authorizeViaMnemonics.isEnable = false
         }
         
         var showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
-        if !userDevice.isStatusRegistered {
+        if  nil == userDevice || !userDevice!.isStatusRegistered {
             showDeviceQR.isEnable = false
         }
         
         let manageDevices = OptionVM(type: .manageDevices, name: "Manage Devices", isEnable: true)
         
         var transactionViaQR = OptionVM(type: .transactionViaQR, name: "Transaction via QR", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        if nil == userDevice || !userDevice!.isStatusAuthorized {
             transactionViaQR.isEnable = false
         }
         
         var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
-        if !userDevice.isStatusRegistered {
+        if currentUser.isCurrentDeviceStatusAuthrozied || currentUser.isCurrentDeviceStatusAuthrozied {
             initialRecovery.isEnable = false
         }
         
         var abortRecovery = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: true)
-        if userDevice.isStatusRevoked {
+        if nil == userDevice || userDevice!.isStatusRevoked {
             abortRecovery.isEnable = false
         }
         
-        var logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout All Sessions", isEnable: true)
-        if !userDevice.isStatusAuthorized {
-            logoutAllSession.isEnable = false
-        }
-     
+        let logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout", isEnable: true)
+        
+        
         let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
-                             transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
+                        transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
         
         deviceOptions = dOptions
     }
     
     
     func processSelectedOption(_ option: OptionVM) {
+        
+        if option.type == .logoutAllSessions {
+            showLogoutOptions()
+            return
+        }
         
         if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
             showDeviceIsAuthroizingAlert()
@@ -267,11 +279,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         if option.type == .details {
             destinationVC = UserDetailsViewController()
         }
-        
+            
         else if option.type == .viewMnemonics {
             destinationSVVC = DeviceMnemonicsViewController()
         }
-        
+            
         else if option.type == .authorizeViaMnemonics {
             destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
         }
@@ -279,23 +291,28 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if option.type == .showDeviceQR {
             destinationVC = ShowQRCodeViewController()
         }
-        
+            
         else if option.type == .authorizeViaQR {
             destinationVC = AuthorizeDeviceQRScanner()
         }
-        
+            
+        else if option.type == .transactionViaQR {
+            destinationVC = TransactionQRScanner()
+            (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
+        }
+            
         else if option.type == .createSession {
             destinationSVVC = CreateSessionViewController()
         }
-        
+            
         else if  option.type  == .manageDevices {
             destinationVC = ManageDeviceViewController()
         }
-        
+            
         else if option.type == .initiateDeviceRecovery {
             destinationVC = InitiateDeviceRecoveryViewController()
         }
-        
+            
         else if option.type == .resetPin {
             _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
                                                     passphrasePrefixDelegate: CurrentUserModel.getInstance,
@@ -303,7 +320,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             self.tabbarController?.hideTabBar()
             return
         }
-        
+            
         else if option.type == .abortRecovery {
             _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
@@ -312,12 +329,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
-        else if option.type == .logoutAllSessions {
-            let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                                                presenter: self)
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
+        else if option.type == .biomerticStatus {
+            let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
                                                  listner: self)
+            
+            let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
+            OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                   enable: !isEnabled,
+                                                   delegate: workflowDelegate)
             return
         }
         
@@ -333,7 +353,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             let navC = UINavigationController(rootViewController: viewController )
             self.present(navC, animated: true, completion: nil)
         }else {
-           self.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -355,159 +375,59 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MARK: - OstSdkInteract Delegate
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if workflowContext.workflowType == .setupDevice {
+        if workflowContext.workflowType == .setupDevice
+            || workflowContext.workflowType == .updateBiometricPreference {
             setupTableViewModels()
         }
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        if workflowContext.workflowType == .logoutAllSessions,
-            error.errorMessage.contains("logged out") {
+        if workflowContext.workflowType == .logoutAllSessions {
             
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
         }
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
-            CurrentUserModel.getInstance.logout()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.showIntroController()
+            
         }
     }
     
-    func getDeviceStatus() {
-        let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
-                                             listner: self)
-        OstWalletSdk.setupDevice(userId: CurrentUserModel.getInstance.ostUserId!,
-                                 tokenId: CurrentEconomy.getInstance.tokenId!,
-                                 delegate: workflowDelegate)
-    }
-}
-
-class OptionTableHeaderView: UIView {
-    
-    //MARK: - Components
-    var circularView: UIView?
-    var initialLetter: UILabel?
-    var stackView: UIStackView?
-    var titleLabel: UILabel?
-    var tokenHolderAddressLabel: UILabel?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    init() {
-        super.init(frame: .zero)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        createViews()
-        applyConstraints()
-        self.clipsToBounds = true
-        setData()
-    }
-    
-    func createViews() {
-        createcirCularView()
-        createNameLabel()
-        createTokenHolderLabel()
-        createStackView()
+    func showLogoutOptions() {
         
-        self.backgroundColor = UIColor.color(251, 251, 251, 0.92)
-    }
-    func createcirCularView() {
-        let circularView = UIView()
-        circularView.backgroundColor = UIColor.color(244, 244, 244)
-        circularView.layer.cornerRadius = 25
+        let alert: UIAlertController
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+            
+            alert = UIAlertController(title: "Logout from Application",
+                                      message: "As device is in authorizing state, you cannot logout from wallet.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+                CurrentUserModel.getInstance.logout()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+            }))
+            
+        }else {
+            
+            alert = UIAlertController(title: "Sure you want to logout?", message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+                CurrentUserModel.getInstance.logout()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.showIntroController()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
+                let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                                    presenter: self!)
+                OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
+                                                     listner: self!)
+            }))
+        }
         
-        let letter = UILabel()
-        letter.textColor = UIColor.color(155, 155, 155)
-        letter.numberOfLines = 1
-        letter.font = UIFont(name: "Lato", size: 20)?.bold()
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        self.initialLetter = letter
-        circularView.addSubview(letter)
-        
-        self.circularView = circularView
-        self.addSubview(circularView)
-    }
-    
-    func createNameLabel() {
-        let nameLabel = UILabel()
-        nameLabel.numberOfLines = 0
-        nameLabel.textAlignment = .left
-        nameLabel.textColor = UIColor.black
-        nameLabel.text = "11111"
-        nameLabel.font = UIFont(name: "Lato", size: 17)
-        self.titleLabel = nameLabel
-    }
-    
-    func createTokenHolderLabel() {
-        let loBalanaceLabel = UILabel()
-        loBalanaceLabel.numberOfLines = 0
-        loBalanaceLabel.textAlignment = .left
-        loBalanaceLabel.textColor = UIColor.darkGray
-        loBalanaceLabel.text = "11111"
-        loBalanaceLabel.font = UIFont(name: "Lato", size: 14)
-        self.tokenHolderAddressLabel = loBalanaceLabel
-    }
-    
-    func createStackView() {
-        let loStackView = UIStackView(arrangedSubviews: [self.titleLabel!, self.tokenHolderAddressLabel!])
-        loStackView.axis = .vertical
-        loStackView.distribution = .fillProportionally
-        loStackView.alignment = .lastBaseline
-        
-        self.stackView = loStackView
-        self.addSubview(loStackView)
-    }
-    
-    func applyConstraints() {
-        applyCircularViewConstraints()
-        applyInitialLetterConstraints()
-        applyStackViewConstraints()
-    }
-    
-    func applyCircularViewConstraints() {
-        self.circularView?.translatesAutoresizingMaskIntoConstraints = false
-        self.circularView?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
-        self.circularView?.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        self.circularView?.heightAnchor.constraint(equalTo: (self.circularView?.widthAnchor)!).isActive = true
-        self.circularView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    }
-    
-    func applyInitialLetterConstraints() {
-        self.initialLetter?.translatesAutoresizingMaskIntoConstraints = false
-        self.initialLetter?.centerYAnchor.constraint(equalTo: self.circularView!.centerYAnchor).isActive = true
-        self.initialLetter?.centerXAnchor.constraint(equalTo: self.circularView!.centerXAnchor).isActive = true
-    }
-    
-    func applyStackViewConstraints() {
-        self.stackView?.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView?.leftAnchor.constraint(equalTo: self.circularView!.rightAnchor, constant: 8.0).isActive = true
-        self.stackView?.rightAnchor.constraint(equalTo: stackView!.superview!.rightAnchor).isActive = true
-        self.stackView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.stackView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    }
-    
-    func setData(title: String = "", subtitle: String = "") {
-        self.titleLabel?.text = title
-        self.tokenHolderAddressLabel?.text = subtitle
-        let fistLetter = title.character(at: 0)
-        self.initialLetter?.text = (fistLetter == nil) ? "" : "\(fistLetter!)".uppercased()
+        alert.show()
     }
 }

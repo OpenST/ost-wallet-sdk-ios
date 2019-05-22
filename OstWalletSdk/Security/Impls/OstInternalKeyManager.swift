@@ -25,6 +25,7 @@ let SESSION_META_MAPPING_KEY = "SessionKeyMetaMapping"
 let API_ADDRESS_KEY = "api_address"
 let DEVICE_ADDRESS_KEY = "device_address"
 let RECOVERY_PIN_HASH = "recovery_pin_hash"
+let BIOMETRIC_PREFERENCE = "biometric_preference"
 
 struct EthMetaMapping {
     /// Ethererum address
@@ -162,6 +163,26 @@ private class OstInternalKeyManager : OstKeyManagerDelegate {
             return try getEthereumKey(forAddresss: apiAddress)
         }
         return nil
+    }
+    
+    //MAKR: - Biometric Preference
+    
+    /// Get Biometric preference for user.
+    ///
+    /// - Returns: true if BiometricEnabled, default false
+    func isBiometricEnabled() -> Bool {
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        return userDeviceInfo[BIOMETRIC_PREFERENCE] as? Bool ?? false
+    }
+    
+    /// Set Biometric preference for user.
+    ///
+    /// - Parameter preference: Biometric preference
+    /// - Throws: OstError
+    func setBiometricPreference(_ preference: Bool) throws {
+        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        userDeviceInfo[BIOMETRIC_PREFERENCE] = preference
+        try setUserDeviceInfo(deviceInfo: userDeviceInfo)
     }
     
     //MARK: - Device Key
@@ -1111,6 +1132,16 @@ class OstKeyManagerGateway {
         let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
         return OstLogoutAllSessionSigner(userId: userId,
                                          keyManagerDelegate: keyManagerDelegate)
+    }
+    
+    /// Get Biometric manager
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: OstBiometricManager
+    class func getOstBiometricManager(userId: String) -> OstBiometricManager {
+        let keyManagerDelegate: OstKeyManagerDelegate = OstInternalKeyManager(userId: userId)
+        return OstBiometricManager(userId: userId,
+                                   keyManagareDelegate: keyManagerDelegate)
     }
 }
 

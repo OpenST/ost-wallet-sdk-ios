@@ -139,12 +139,14 @@ class OstGetPinViewController: OstBaseScrollViewController {
     
     @objc func termsLabelTapped() {
         let webview = WKWebViewController()
+        webview.title = "Terms of Service"
         webview.urlString = "https://ost.com/terms"
         webview.presentViewControllerWithNavigationController(self)
     }
     
     @objc func privacyLabelTapped() {
         let webview = WKWebViewController()
+        webview.title = "Privacy Policy"
         webview.urlString = "https://ost.com/privacy"
         webview.presentViewControllerWithNavigationController(self)
     }

@@ -32,6 +32,7 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
         return view
     }()
     
+    weak var tabBarVC: TabBarViewController? = nil
     
     //MARK: - View LC
     override func viewDidAppear(_ animated: Bool) {
@@ -77,10 +78,16 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     }
     
     func scannedQRData(_ qrData: String) {
+        scanner?.stopScanning()
+        showProgressIndicator()
         let currentUser = CurrentUserModel.getInstance
         OstWalletSdk.performQRAction(userId: currentUser.ostUserId!,
                                      payload: qrData,
                                      delegate: workflowDelegate)
+    }
+    
+    func showProgressIndicator() {
+        
     }
     
     //MARK: - Add Constraints
@@ -105,12 +112,13 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     //MARK: - OstWalletSdk Workflow delegate
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        
+        progressIndicator?.hide()
         self.navigationController?.popViewController(animated: true)
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
+        progressIndicator?.hide()
         scanner?.startScanning()
     }
     

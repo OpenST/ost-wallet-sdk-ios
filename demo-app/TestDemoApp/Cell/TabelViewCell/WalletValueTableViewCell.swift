@@ -23,11 +23,11 @@ class WalletValueTableViewCell: BaseTableViewCell {
     }
     
     func setValue(_ val: String) {
-        if let doubleVal:Double =  Double(val) {
-             self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(String(format: "%g",doubleVal))"
-        }else {
-            self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") 0"
+        var balance = val
+        if balance.isEmpty {
+           balance = "0"
         }
+        self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(balance.displayTransactionValue())"
     }
     
     //MAKR: - Components
@@ -51,6 +51,8 @@ class WalletValueTableViewCell: BaseTableViewCell {
         createValueContainer()
         crateBtValueLabel()
         crateUSDValueLabel()
+        
+        self.selectionStyle = .none
     }
     
     func createWalletValueContainer() {
@@ -131,10 +133,6 @@ class WalletValueTableViewCell: BaseTableViewCell {
         self.usdValueLabel?.topAnchor.constraint(equalTo: self.btValueLabel!.bottomAnchor, constant: 10.0).isActive = true
         self.usdValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true
         self.usdValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
-    }
-    
-    override func endDisplay() {
-        animate()
     }
     
     //MARK: - Animation

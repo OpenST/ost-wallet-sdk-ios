@@ -18,7 +18,9 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
             super.scannedQRData(qrData)
         }else {
             let alert = UIAlertController(title: "Invalid QR-Code",
-                                          message: "QR-Code scanned for authorize device is invalid. Please scan valid QR-Code to authorize device.", preferredStyle: .alert)
+                                          message: "QR-Code scanned for authorize device is invalid. Please scan valid QR-Code to authorize device.",
+                                          preferredStyle: .alert)
+            
             alert.addAction(UIAlertAction(title: "ScanAgain", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
             }))

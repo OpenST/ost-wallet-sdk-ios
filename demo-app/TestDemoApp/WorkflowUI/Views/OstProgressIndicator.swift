@@ -30,40 +30,46 @@ class OstProgressIndicator: OstBaseView {
     let progressTextLabel: UILabel =  OstUIKit.leadLabel()
     
     //MARK: - Variables
-    var progressText: String! {
-        didSet {
-            progressTextLabel.text = progressText
-        }
-    }
+    var progressText: String = ""
+//    {
+//        didSet {
+//            progressTextLabel.text = progressText
+//        }
+//    }
     
     //MARK: - Initializier
     init(progressText: String = "") {
-        progressTextLabel.text = progressText
+        self.progressText = progressText
+        super.init(frame: .zero)
+    }
+    
+    init(textCode: OstProgressIndicatorText) {
+        self.progressText = textCode.rawValue
         super.init(frame: .zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        progressTextLabel.text = ""
+        progressText = ""
         super.init(coder: aDecoder)
     }
     
     //MAKR: - Create Views
     override func createViews() {
         super.createViews()
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.addSubview(containerView)
-        
-        containerView.addSubview(activityIndicator)
-        containerView.addSubview(progressTextLabel)
+        //        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        //        self.addSubview(containerView)
+        //
+        //        containerView.addSubview(activityIndicator)
+        //        containerView.addSubview(progressTextLabel)
     }
     
     //MARK: - Apply Constraints
     
     override func applyConstraints() {
         super.applyConstraints()
-        applyContainerViewConstraints()
-        applyActivityIndicatorConstraints()
-        applyTextLabelConstraints()
+        //        applyContainerViewConstraints()
+        //        applyActivityIndicatorConstraints()
+        //        applyTextLabelConstraints()
     }
     
     func applyContainerViewConstraints() {
@@ -82,39 +88,72 @@ class OstProgressIndicator: OstBaseView {
         progressTextLabel.bottomAlignWithParent(constant: -20)
     }
     
+    var alert: UIAlertController? = nil
     func show() {
-        guard let parent = self.superview else {return}
         
-        parent.bringSubviewToFront(self)
-        self.frame = parent.bounds
-        activityIndicator.startAnimating()
-        self.backgroundColor = UIColor.white
-        self.alpha = 1.0
-        self.containerView.alpha = 1.0
-        UIView.animate(withDuration: 0.4) {
-            self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        }
+        let title = "\n\(progressText ?? "")"
+        alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
-        let theAnimation: CABasicAnimation
-        theAnimation = CABasicAnimation(keyPath: "transform.scale")
-        theAnimation.duration = 0.4;
-        theAnimation.repeatCount = 1;
-        theAnimation.autoreverses = false;
-        theAnimation.fromValue = 1.1
-        theAnimation.toValue = 1
-        theAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
-        self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
+        let activ = UIActivityIndicatorView(style: .gray)
+        activ.startAnimating()
+        activ.translatesAutoresizingMaskIntoConstraints = false
+        alert!.view.addSubview(activ)
+        activ.centerXAnchor.constraint(equalTo: alert!.view.centerXAnchor).isActive = true
+        activ.topAnchor.constraint(equalTo: alert!.view.topAnchor, constant: 10).isActive = true
+        
+        alert?.show()
+        
+        //        guard let parent = self.superview else {return}
+        
+        //        parent.bringSubviewToFront(self)
+        //        self.frame = parent.bounds
+        //        activityIndicator.startAnimating()
+        //        self.backgroundColor = UIColor.white
+        //        self.alpha = 1.0
+        //        self.containerView.alpha = 1.0
+        //        UIView.animate(withDuration: 0.4) {
+        //            self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        //        }
+        //
+        //        let theAnimation: CABasicAnimation
+        //        theAnimation = CABasicAnimation(keyPath: "transform.scale")
+        //        theAnimation.duration = 0.4;
+        //        theAnimation.repeatCount = 1;
+        //        theAnimation.autoreverses = false;
+        //        theAnimation.fromValue = 1.1
+        //        theAnimation.toValue = 1
+        //        theAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
+        //        self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
     }
     
     func hide(onCompletion: ((Bool) -> Void)? = nil) {
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        UIView.animate(withDuration: 0.4, animations: {[weak self] in
-            self?.backgroundColor = .white
-            self?.containerView.alpha = 0.0
-        }) {[weak self] (isComplete) in
-            self?.removeFromSuperview()
-            onCompletion?(isComplete)
-        }
-
+        
+        alert?.dismiss(animated: true, completion: {
+            onCompletion?(true)
+        })
+        //        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        //        UIView.animate(withDuration: 0.4, animations: {[weak self] in
+        //            self?.backgroundColor = .white
+        //            self?.containerView.alpha = 0.0
+        //        }) {[weak self] (isComplete) in
+        //            self?.removeFromSuperview()
+        //            onCompletion?(isComplete)
+        //        }
+        
     }
+}
+
+enum OstProgressIndicatorText: String {
+    case
+    unknown = "Processing...",
+    activingUser = "Activiting User...",
+    executingTransaction = "Executing transaction...",
+    fetchingUser = "Fetching user...",
+    stopDeviceRecovery = "Stoping device recovery...",
+    initiateDeviceRecovery = "Initiating device recovery...",
+    logoutUser = "Logging out...",
+    signup = "Siging up...",
+    login = "Logging in...",
+    resetPin = "Reseting pin...",
+    checkDeviceStatus = "Checking Device Status…"
 }

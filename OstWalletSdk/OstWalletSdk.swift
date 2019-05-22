@@ -32,6 +32,15 @@ import Foundation
         return OstAPIBase.baseURL
     }
     
+    /// Get user biometric authentication status
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: Biomertric status
+    public class func isBiometricEnabled(userId: String) -> Bool {
+        let keyManager = OstKeyManagerGateway.getOstKeyManager(userId: userId)
+        return keyManager.isBiometricEnabled()
+    }
+    
     /// Get user entity for given user id
     ///
     /// - Parameter id: User id

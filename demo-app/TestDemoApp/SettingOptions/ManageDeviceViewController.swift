@@ -65,6 +65,8 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     var paginationTriggerPageNumber = 1
     var paginatingViewCount = 1
     
+    var consumedDevices: [String: Any] = [String: Any]()
+    
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
     var updatedTableArray: [[String: Any]] = [[String: Any]]()
@@ -231,7 +233,21 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         guard let resultType = apiResponse!["result_type"] as? String else {return}
         guard let devices = apiResponse![resultType] as? [[String: Any]] else {return}
     
-        updatedTableArray.append(contentsOf: devices)
+        var newDevices: [[String: Any]] = [[String: Any]]()
+        for device in devices {
+            if (device["status"] as? String ?? "").caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) != .orderedSame
+                && (device["status"] as? String ?? "").caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.revoked.rawValue) != .orderedSame {
+            
+                if let deviceAddress = device["address"] as? String,
+                    consumedDevices[deviceAddress] == nil {
+                    
+                    newDevices.append(device)
+                    consumedDevices[deviceAddress] = device
+                }
+            }
+        }
+        
+        updatedTableArray.append(contentsOf: newDevices)
         self.isNewDataAvailable = true
         
         reloadDataIfNeeded()

@@ -19,7 +19,8 @@ import Foundation
     recoveryOwner,
     string,
     dictionary,
-    tokenHolder
+    tokenHolder,
+    boolean
 }
 
 @objc public class OstContextEntity: NSObject {

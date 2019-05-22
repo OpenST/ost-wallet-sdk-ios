@@ -19,7 +19,8 @@ class OstLinkButton: OstButtonTheamer {
         
         //Title Colors
         setTitleColor(color: UIColor.color(22, 141, 193), state: .normal);
-        
+        setTitleColor(color: UIColor.color(22, 141, 193), state: .highlighted);
+
         //Title Edge Inset
         self.contentEdgeInsets = UIEdgeInsets(top: 4 , left: 4, bottom: 4, right: 4);
         

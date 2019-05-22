@@ -130,7 +130,11 @@ class OstNotification: OstBaseView {
         containerView.leftAlignWithParent(multiplier: 1, constant: 10)
         containerView.rightAlignWithParent(multiplier: 1, constant: -10)
         containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
-        containerView.bottomAlign(toItem: actionButton, constant: 10)
+        bottomAnchorToButton = containerView.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 10)
+        bottomAnchorToButton!.isActive = true
+        
+        bottomAnchorToLabel = containerView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
+        bottomAnchorToLabel!.isActive = true
     }
     
     func applyTitleLabelConstraints() {
@@ -188,6 +192,8 @@ class OstNotification: OstBaseView {
     
     //MARK: - Variables
     var topAnchorConstraint: NSLayoutConstraint? = nil
+    var bottomAnchorToButton: NSLayoutConstraint? = nil
+    var bottomAnchorToLabel: NSLayoutConstraint? = nil
     
     var message: String! {
         didSet {
@@ -198,69 +204,28 @@ class OstNotification: OstBaseView {
     var notificationModel: OstNotificationModel! {
         didSet {
             self.titleLabel.text = getTitle()
-            self.actionButton.setTitle(getActionButtonTitle(), for: .normal)
+            let actionButtonTitle = getActionButtonTitle()
+            if actionButtonTitle.isEmpty {
+                self.actionButton.isHidden = true
+                
+                self.bottomAnchorToButton?.isActive = false
+                self.bottomAnchorToLabel?.isActive = true
+            }
+            else {
+                self.bottomAnchorToLabel?.isActive = false
+                self.bottomAnchorToButton?.isActive = true
+                
+                self.actionButton.isHidden = false
+                self.actionButton.setTitle(actionButtonTitle, for: .normal)
+            }
         }
     }
     
     func getTitle() -> String {
-        let workflowContext = notificationModel.workflowContext
-        var titleText = ""
-        
-        if workflowContext.workflowType == .addSession {
-            titleText = getAddSessionText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .resetPin {
-            titleText = getResetPinText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .activateUser {
-            titleText = getActivateUserText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .abortDeviceRecovery {
-            titleText = getAbortDeviceRecoveryText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .authorizeDeviceWithMnemonics {
-            titleText = getAuthorizeDeviceWithMnemonicsText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .authorizeDeviceWithQRCode {
-            titleText = getAuthorizeDeviceWithQRText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        else if workflowContext.workflowType == .executeTransaction {
-            titleText = getExecuteTransactionText(contextEntity: notificationModel.contextEntity, error: notificationModel.error)
-        }
-        return titleText
+        return ""
     }
     
     func getActionButtonTitle() -> String {
-        return ""
-    }
-    
-    //MARK: - Notification Text
-    
-    func getActivateUserText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getAddSessionText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getResetPinText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getAbortDeviceRecoveryText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getAuthorizeDeviceWithMnemonicsText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getAuthorizeDeviceWithQRText(contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
-        return ""
-    }
-    
-    func getExecuteTransactionText (contextEntity: OstContextEntity? = nil, error: OstError? = nil) -> String {
         return ""
     }
     
