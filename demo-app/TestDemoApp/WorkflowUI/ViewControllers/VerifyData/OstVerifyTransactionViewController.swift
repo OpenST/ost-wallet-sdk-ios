@@ -51,12 +51,12 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         
         self.balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
         
-        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.rawValue) == .orderedSame {
+        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
             self.ruleNameValueLabel.text = "Direct Transfer"
 
             validateBalanceForDirectTransfer(transferBalance: transferBalance)
         }
-        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.rawValue) == .orderedSame {
+        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
             self.ruleNameValueLabel.text = "Pricer"
             
             validateBalanceForPricer(transferBalance: transferBalance)

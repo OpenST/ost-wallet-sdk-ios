@@ -49,9 +49,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         super.viewDidAppear(animated)
         do {
             guard let ostUserId = CurrentUserModel.getInstance.ostUserId else {return}
-            guard let qrCode = try OstWalletSdk.getAddDeviceQRCode(userId: ostUserId) else {
-                return
-            }
+            let qrCode = try OstWalletSdk.getAddDeviceQRCode(userId: ostUserId)
             let multiplyingFactor = (qrCodeImageView.frame.height/100)+1
             let transform: CGAffineTransform  = CGAffineTransform(scaleX: multiplyingFactor, y: multiplyingFactor);
             let output: CIImage = qrCode.transformed(by: transform)
