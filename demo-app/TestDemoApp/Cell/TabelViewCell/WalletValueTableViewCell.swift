@@ -27,146 +27,173 @@ class WalletValueTableViewCell: BaseTableViewCell {
         if balance.isEmpty {
            balance = "0.00"
         }
-        self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(balance.toDisplayTxValue())"
+        self.tokenSymbolLabel.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
+        self.btValueLabel.text =  balance.toDisplayTxValue()
         if let usdVal = CurrentUserModel.getInstance.toUSD(value: balance)?.toDisplayTxValue() {
-            self.usdValueLabel?.text = "≈  $ \(usdVal)"
+            self.usdValueLabel.text = "≈  $ \(usdVal)"
         }else {
-            self.usdValueLabel?.text = ""
+            self.usdValueLabel.text = ""
         }
        
     }
     
     //MAKR: - Components
-    var walletBackground: UIView?
-    var valueContainer: UIView?
-    var btValueLabel: UILabel?
-    var usdValueLabel: UILabel?
-    
-    //MARK: - Variables
-    let maxDuration = TimeInterval(exactly: 1)!
-    var displayLink: CADisplayLink?
-    
-    override func setVariables() {
-        displayLink = CADisplayLink(target: self, selector: #selector(counter))
-    }
-    
-    
-    //MARK: - Create Views
-    override func createViews() {
-        createWalletValueContainer()
-        createValueContainer()
-        crateBtValueLabel()
-        crateUSDValueLabel()
-        
-        self.selectionStyle = .none
-    }
-    
-    func createWalletValueContainer() {
+    var walletBackground: UIView = {
         let container = UIView()
         container.backgroundColor = UIColor.color(154, 204, 215)
         container.layer.cornerRadius = 15.0
+        container.translatesAutoresizingMaskIntoConstraints = false
         
-        self.walletBackground = container
-        self.addSubview(container)
-    }
-    
-    func createValueContainer() {
+        return container
+    }()
+
+    var valueContainer: UIView = {
         let container = UIView()
         container.backgroundColor = .clear
         container.clipsToBounds = true
         
-        self.valueContainer = container
-        self.addSubview(container)
-    }
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        return container
+    }()
     
-    func crateBtValueLabel() {
+    var yourBalLabel: UILabel = {
+        let view = UILabel()
+        view.font = OstFontProvider().get(size: 13).bold()
+        view.textColor = UIColor.white
+        view.textAlignment = .left
+        view.text = "Your Balance"
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    var tokenSymbolLabel: UILabel = {
+        let label = UILabel()
+        label.font = OstFontProvider().get(size: 32).bold()
+        label.textAlignment = .left
+        label.textColor = UIColor.white
+        label.sizeToFit()
+       
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    var btValueContainer: UIView = {
+        let container = UIView()
+        container.backgroundColor = .clear
+        container.clipsToBounds = true
+        container.layer.cornerRadius = 5
+        container.backgroundColor = UIColor.color(250, 250, 250, 0.5)
+        
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        return container
+    }()
+    
+    var btValueLabel: UILabel = {
         let btLabel = UILabel()
         btLabel.font = OstFontProvider().get(size: 32).bold()
-        btLabel.textAlignment = .center
+        btLabel.textAlignment = .left
         btLabel.minimumScaleFactor = 0.5
-        btLabel.textColor = UIColor.white
-        self.btValueLabel = btLabel
-        self.valueContainer?.addSubview(btLabel)
-    }
+        btLabel.textColor = UIColor.color(52, 68, 91)
+        btLabel.clipsToBounds = true
+        
+        btLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        return btLabel
+    }()
     
-    func crateUSDValueLabel() {
+    var usdValueLabel: UILabel = {
         let usdLabel = UILabel()
         usdLabel.font = OstFontProvider().get(size: 16)
         usdLabel.textColor = UIColor.white
-        usdLabel.textAlignment = .center
-        self.usdValueLabel = usdLabel
-        self.valueContainer?.addSubview(usdLabel)
+        usdLabel.textAlignment = .left
+        
+        usdLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        return usdLabel
+    }()
+    
+    //MARK: - Create Views
+    override func createViews() {
+        addSubview(walletBackground)
+        walletBackground.addSubview(valueContainer)
+        
+        valueContainer.addSubview(yourBalLabel)
+        valueContainer.addSubview(btValueContainer)
+        btValueContainer.addSubview(btValueLabel)
+        valueContainer.addSubview(usdValueLabel)
+        valueContainer.addSubview(tokenSymbolLabel)
+        
+        self.selectionStyle = .none
     }
     
     //MARK: - Apply Constraints
     
     override func applyConstraints() {
         applyWalletContainerConstraints()
+        
         applyValueContainerConstraints()
-        applyBtValueLabelConstraint()
-        applyUSDValueLabelConstraint()
+        applyYourBalLabelConstraints()
+        applyBtValueContainerConstraints()
+        applyBtValueLabelConstraints()
+        applyTokenSymbolLabelConstraints()
+        applyUsdValueLabelConstraints()
     }
+    
     
     func applyWalletContainerConstraints() {
-        guard let parent = self.walletBackground?.superview else {return}
-        self.walletBackground?.translatesAutoresizingMaskIntoConstraints = false
-        self.walletBackground?.topAnchor.constraint(equalTo: parent.topAnchor, constant: 22.0).isActive = true
-        self.walletBackground?.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 22.0).isActive = true
-        self.walletBackground?.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -22.0).isActive = true
-        self.walletBackground?.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -22.0).isActive = true
+        guard let parent = self.walletBackground.superview else {return}
+        self.walletBackground.topAnchor.constraint(equalTo: parent.topAnchor, constant: 22.0).isActive = true
+        self.walletBackground.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 22.0).isActive = true
+        self.walletBackground.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -22.0).isActive = true
+        self.walletBackground.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -22.0).isActive = true
     }
-    
+
     func applyValueContainerConstraints() {
-        guard let parent = self.valueContainer?.superview else {return}
-        self.valueContainer?.translatesAutoresizingMaskIntoConstraints = false
-        self.valueContainer?.leftAnchor.constraint(equalTo: self.walletBackground!.leftAnchor, constant: 12.0).isActive = true
-        self.valueContainer?.rightAnchor.constraint(equalTo: self.walletBackground!.rightAnchor, constant: -12.0).isActive = true
-        self.valueContainer?.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-        self.valueContainer?.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        self.valueContainer?.bottomAnchor.constraint(equalTo: self.usdValueLabel!.bottomAnchor).isActive = true
+        guard let parent = self.valueContainer.superview else {return}
+        valueContainer.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 16.0).isActive = true
+        valueContainer.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -16.0).isActive = true
+        valueContainer.topAnchor.constraint(equalTo: self.yourBalLabel.topAnchor, constant: 0.0).isActive = true
+        valueContainer.bottomAnchor.constraint(equalTo: self.usdValueLabel.bottomAnchor, constant: 0.0).isActive = true
+        
+        valueContainer.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
     }
     
-    func applyBtValueLabelConstraint() {
-        guard let parent = self.btValueLabel?.superview else {return}
-        self.btValueLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.btValueLabel?.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-        self.btValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true
-        self.btValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
+    func applyTokenSymbolLabelConstraints() {
+        guard let parent = self.tokenSymbolLabel.superview else {return}
+        tokenSymbolLabel.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+        tokenSymbolLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        tokenSymbolLabel.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
     }
     
-    func applyUSDValueLabelConstraint() {
-        self.usdValueLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.usdValueLabel?.topAnchor.constraint(equalTo: self.btValueLabel!.bottomAnchor, constant: 10.0).isActive = true
-        self.usdValueLabel?.leftAnchor.constraint(equalTo: self.valueContainer!.leftAnchor).isActive = true
-        self.usdValueLabel?.rightAnchor.constraint(equalTo: self.valueContainer!.rightAnchor).isActive = true
+    func applyBtValueContainerConstraints() {
+        guard let parent = self.btValueContainer.superview else {return}
+        btValueContainer.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+        btValueContainer.leftAnchor.constraint(equalTo: tokenSymbolLabel.rightAnchor, constant: 10).isActive = true
+        btValueContainer.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        btValueContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
-    //MARK: - Animation
-    var startTime: Date?
-    var startValue = Double(exactly: 0)!
-    var endValue = Double(exactly: 100)!
-    var diff: Double?
-    
-    func animate() {
-        let availabelBalance = CurrentUserModel.getInstance.balance
-        if !availabelBalance.isEmpty {
-            endValue = Double(availabelBalance)!
-            diff = endValue - startValue
-            startTime = Date()
-            displayLink?.add(to: .current, forMode: .default)
-        }
+    func applyYourBalLabelConstraints() {
+        yourBalLabel.leftAnchor.constraint(equalTo: btValueContainer.leftAnchor).isActive = true
+        yourBalLabel.rightAnchor.constraint(equalTo: btValueContainer.rightAnchor).isActive = true
+        yourBalLabel.bottomAnchor.constraint(equalTo: btValueContainer.topAnchor, constant: -4).isActive = true
     }
     
-    @objc func counter() {
-        let elapsedTime = Date().timeIntervalSince(startTime!)
-        if elapsedTime > maxDuration {
-            displayLink?.invalidate()
-            displayLink = nil
-            setValue("\(endValue)")
-            return
-        }
-        let percent = elapsedTime/maxDuration
-        let value = startValue + (percent * diff!)
-        setValue("\(value)")
+    func applyBtValueLabelConstraints() {
+        guard let parent = self.btValueLabel.superview else {return}
+        btValueLabel.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 8).isActive = true
+        btValueLabel.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        btValueLabel.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+    }
+
+    func applyUsdValueLabelConstraints() {
+        usdValueLabel.leftAnchor.constraint(equalTo: btValueContainer.leftAnchor).isActive = true
+        usdValueLabel.rightAnchor.constraint(equalTo: btValueContainer.rightAnchor).isActive = true
+        usdValueLabel.topAnchor.constraint(equalTo: btValueContainer.bottomAnchor, constant: 4).isActive = true
     }
 }

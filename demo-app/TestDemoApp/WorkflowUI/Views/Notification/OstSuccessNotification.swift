@@ -107,7 +107,7 @@ class OstSuccessNotification: OstNotification {
         let currentEconomy = CurrentEconomy.getInstance
         
         let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(currentUser.tokenHolderAddress!)"
-        webView.title = "Ost View"
+        webView.title = "OST View"
         webView.urlString = tokenHoderURL
         webView.showVC()
         OstNotificationManager.getInstance.removeNotification()
