@@ -57,18 +57,9 @@ class OptionTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    let arrowImage: UIImageView = {
-        let image = UIImage(named: "rightArrow")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        return imageView
-    }()
-    
     let seperatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -76,7 +67,6 @@ class OptionTableViewCell: BaseTableViewCell {
 
     override func createViews() {
         contentView.addSubview(titleLabel)
-        contentView.addSubview(arrowImage)
         contentView.addSubview(seperatorLine)
         
         self.selectionStyle = .none
@@ -84,30 +74,21 @@ class OptionTableViewCell: BaseTableViewCell {
     
     override func applyConstraints() {
         applyLabelConstraints()
-        applyArrowConstraints()
         applySeperatorLineConstraints()
-    }
-    
-    func applyArrowConstraints() {
-        guard let parent = titleLabel.superview else {return}
-        arrowImage.rightAnchor.constraint(equalTo: parent.rightAnchor, constant:-18).isActive = true
-        arrowImage.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-        arrowImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
-        arrowImage.heightAnchor.constraint(equalToConstant: 15).isActive = true
     }
     
     func applyLabelConstraints() {
         guard let parent = titleLabel.superview else {return}
         titleLabel.topAnchor.constraint(equalTo: parent.topAnchor, constant:15).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: parent.leftAnchor, constant:18).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: arrowImage.rightAnchor, constant:-18).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: parent.leftAnchor, constant:30).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: parent.rightAnchor, constant:-18).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: seperatorLine.bottomAnchor, constant:-15).isActive = true
     }
 
     func applySeperatorLineConstraints() {
         seperatorLine.bottomAlignWithParent(constant: 0)
-        seperatorLine.leftAlignWithParent(constant: 20)
+        seperatorLine.leftAlignWithParent(constant: 30)
         seperatorLine.rightAlignWithParent(constant: 0)
-        seperatorLine.setFixedHeight(constant: 1)
+        seperatorLine.setFixedHeight(constant: 0.5)
     }
 }

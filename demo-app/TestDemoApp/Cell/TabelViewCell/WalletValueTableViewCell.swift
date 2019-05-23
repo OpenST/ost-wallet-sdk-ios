@@ -72,7 +72,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var tokenSymbolLabel: UILabel = {
         let label = UILabel()
         label.font = OstFontProvider().get(size: 32).bold()
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.textColor = UIColor.white
         label.sizeToFit()
        
@@ -173,7 +173,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     func applyBtValueContainerConstraints() {
         guard let parent = self.btValueContainer.superview else {return}
         btValueContainer.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-        btValueContainer.leftAnchor.constraint(equalTo: tokenSymbolLabel.rightAnchor, constant: 10).isActive = true
+        btValueContainer.leftAnchor.constraint(equalTo: tokenSymbolLabel.rightAnchor, constant: 18).isActive = true
         btValueContainer.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         btValueContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }

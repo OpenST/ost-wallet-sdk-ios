@@ -245,6 +245,17 @@ extension CurrentUserModel {
         }
         return false
     }
+    
+    var isCurrentDeviceStatusRegistered: Bool {
+        if let currentDevice = self.currentDevice,
+            let status = currentDevice.status {
+            
+            if status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) == .orderedSame{
+                return true
+            }
+        }
+        return false
+    }
 }
 
 //MARK: - Price Point
