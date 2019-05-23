@@ -13,9 +13,9 @@ import Foundation
 
 public class OstApiError: OstError {
 
-    override init(_ code: String, _ messageTextCode: OstErrorText) {
-        super.init(code, messageTextCode)
-        self.isApiError = true
+    override init(_ code: String, _ messageTextCode: OstErrorText,  _ errorInfo:[String:Any]? = nil) {
+        super.init(code, messageTextCode, errorInfo);
+        self.isApiError = true;
     }
     
     override init(_ code: String, msg errorMessage: String) {

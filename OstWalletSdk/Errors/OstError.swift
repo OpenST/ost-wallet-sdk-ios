@@ -30,13 +30,17 @@ import Foundation
     @objc
     public var errorInfo: [String: Any]? = nil
 
-    public init(_ code: String, _ messageTextCode: OstErrorText) {
-        self.errorMessage = messageTextCode.rawValue
-        self.messageTextCode = messageTextCode
-        self.internalCode = code
+    public init(_ code: String, _ messageTextCode: OstErrorText, _ errorInfo:[String:Any]? = nil) {
+        self.errorMessage = messageTextCode.rawValue;
+        self.messageTextCode = messageTextCode;
+        self.internalCode = code;
+        self.errorInfo = errorInfo;
         super.init(domain: OstError.ERROR_DOMAIN,
                    code:  messageTextCode.hashValue,
-                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage, messageTextCode: self.messageTextCode, internalCode: self.internalCode));
+                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage,
+                                                 messageTextCode: self.messageTextCode,
+                                                 internalCode: self.internalCode,
+                                                 errorInfo: self.errorInfo));
     }
     
     //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
@@ -47,7 +51,10 @@ import Foundation
         self.internalCode = code
         super.init(domain: OstError.ERROR_DOMAIN,
                    code:  messageTextCode.hashValue,
-                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage, messageTextCode: self.messageTextCode, internalCode: self.internalCode));
+                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage,
+                                                 messageTextCode: self.messageTextCode,
+                                                 internalCode: self.internalCode,
+                                                 errorInfo: self.errorInfo));
     }
     
     @objc
@@ -57,31 +64,58 @@ import Foundation
         self.messageTextCode = OstErrorText.apiResponseError;
         self.internalCode = err["code"] as! String
         self.errorInfo = response
+        self.isApiError = true
+        let errorCode = messageTextCode.getStringErrorCode();
         super.init(domain: OstError.ERROR_DOMAIN,
                    code:  messageTextCode.hashValue,
                    userInfo: OstError.toUserInfo(errorMessage: self.errorMessage,
-                                                 messageTextCode: self.messageTextCode,
+                                                 errorCode: errorCode,
                                                  internalCode: self.internalCode,
-                                                 extraData: self.errorInfo));
+                                                 errorInfo: self.errorInfo,
+                                                 isApiError: self.isApiError,
+                                                 apiError: response));
+    }
+    
+    @objc public class OstJSONErrorKeys: NSObject {
+        @objc public static let errorCode = "error_code";
+        @objc public static let internalErrorCode = "internal_error_code";
+        @objc public static let errorMessage = "error_message";
+        @objc public static let errorInfo = "error_info";
+        @objc public static let isApiError = "is_api_error";
+        @objc public static let apiError = "api_error";
     }
     
     class func toUserInfo(errorMessage: String,
                           messageTextCode: OstErrorText,
                           internalCode: String,
-                          extraData: [String: Any]? = nil ) -> [String: Any] {
+                          errorInfo: [String: Any]? = nil,
+                          isApiError: Bool = false) -> [String: Any] {
+        let errorCode = messageTextCode.getStringErrorCode();
+        return toUserInfo(errorMessage: errorMessage,
+                          errorCode: errorCode,
+                          internalCode: internalCode,
+                          errorInfo: errorInfo,
+                          isApiError: isApiError,
+                          apiError: nil
+        );
+    }
+    
+    @objc public class func toUserInfo(errorMessage: String,
+                          errorCode: String,
+                          internalCode: String,
+                          errorInfo: [String: Any]? = nil,
+                          isApiError: Bool = false,
+                          apiError: [String:Any]? = nil) -> [String: Any] {
         var userInfo: [String: Any] = [:];
-        userInfo["errorMessage"] = errorMessage;
-        userInfo["messageTextCode"] = "\(messageTextCode)";
-        userInfo["internalCode"] = internalCode;
-        if ( nil != extraData ) {
-            userInfo["extraData"] = extraData!;
+        userInfo[OstJSONErrorKeys.errorMessage] = errorMessage;
+        userInfo[OstJSONErrorKeys.errorCode] = errorCode;
+        userInfo[OstJSONErrorKeys.internalErrorCode] = internalCode;
+        userInfo[OstJSONErrorKeys.isApiError] = isApiError;
+        if ( nil != errorInfo ) {
+            userInfo[OstJSONErrorKeys.errorInfo] = errorInfo!;
         }
         return userInfo;
     }
-    
-    
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -198,4 +232,18 @@ public enum OstErrorText: String {
     case apiResponseError = "Api responsed with error. Please see error info."
     case tempMessageTextCode = "Something went wrong."
     case userCanceled = "User canceled"
+    
+    func getStringErrorCode() -> String {
+        return ("\(self)").snakeCased()!;
+    }
+}
+
+extension String {
+    func snakeCased() -> String? {
+        let pattern = "([a-z0-9])([A-Z])"
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: self.count)
+        let snakeCasedString = regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1_$2").lowercased()
+        return snakeCasedString?.uppercased()
+    }
 }
