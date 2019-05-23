@@ -25,11 +25,21 @@ class OstConversionTests: XCTestCase {
     func testConversion() throws {
         let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: "500",
                                                   btDecimal: 18,
-                                                  ostDecimal: 18, //fix
+                                                  fiatDecimal: 18,
                                                   fiatAmount: BigInt("1")!,
                                                   pricePoint: "0.027626")
         
         XCTAssertEqual(btAmount, BigInt(18098))
+    }
+    
+    func testUSDCConversion() throws {
+        let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: "1",
+                                                  btDecimal: 6,
+                                                  fiatDecimal: 18,
+                                                  fiatAmount: BigInt("1000000000000000000")!,
+                                                  pricePoint: "1")
+        print(btAmount.description)
+        XCTAssertEqual(btAmount, BigInt(1000000))
     }
 
     func testPerformanceExample() {

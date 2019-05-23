@@ -25,7 +25,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     func setValue(_ val: String) {
         var balance = val
         if balance.isEmpty {
-           balance = "0"
+           balance = "0.00"
         }
         self.btValueLabel?.text = "\(CurrentEconomy.getInstance.tokenSymbol ?? "") \(balance.toDisplayTxValue())"
         if let usdVal = CurrentUserModel.getInstance.toUSD(value: balance)?.toDisplayTxValue() {

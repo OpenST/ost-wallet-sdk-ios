@@ -40,7 +40,7 @@ class UsersTableViewCell: BaseTableViewCell {
     
     func setBalance() {
         if let balance = userBalance["available_balance"] {
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(balance)!)
+            let amountVal = ConversionHelper.toString(balance)!.toRedableFormat
             self.balanceLabel?.textColor = UIColor.black.withAlphaComponent(0.48)
             self.balanceLabel?.text = "Balance: \(amountVal.toDisplayTxValue())"
         }else {

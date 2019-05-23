@@ -49,7 +49,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
                 var amount = "0"
                 if transferAmounts.count > index {
                     amount = transferAmounts[index]
-                    amount = OstUtils.fromAtto(amount)
+                    amount = amount.toRedableFormat
                     amount = amount.toDisplayTxValue()
                     transferBalance += Double(amount)!
                 }

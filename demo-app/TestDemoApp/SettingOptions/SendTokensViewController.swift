@@ -107,6 +107,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserBalanceFromServer()
+        amountTextField.addTarget(self,
+                                  action: #selector(textFieldDidChange(textField:)),
+                                  for:  UIControl.Event.editingChanged)
     }
     
     func getUserBalanceFromServer() {
@@ -116,9 +119,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }
         isBalanceApiInprogress = true
         UserAPI.getBalance(onSuccess: {[weak self] (_) in
-//            self?.onRequestComplete()
+            self?.onRequestComplete()
         }) {[weak self] (_) in
-//            self?.onRequestComplete()
+            self?.onRequestComplete()
         }
     }
     
@@ -229,7 +232,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             didUserTapSendTokens = true
             progressIndicator = OstProgressIndicator(textCode: .fetchingUserBalance)
             progressIndicator?.show()
-            self.perform(#selector(onRequestComplete), with: nil, afterDelay: 2)
             return
         }
         
@@ -276,11 +278,18 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     func isValidInputPassed() -> Bool {
         var isValidInput: Bool = true
-        if var userBalance: Double = Double(CurrentUserModel.getInstance.balance),
-            let enteredAmount: Double = Double(self.amountTextField.text!) {
+        
+        if self.amountTextField.text!.isEmpty {
+            isValidInput = false
+        }
+        
+        if isValidInput,
+            var userBalance: Double = Double(CurrentUserModel.getInstance.balance),
+            var enteredAmount: Double = Double(self.amountTextField.text!) {
             
             if isUsdTx {
-                let usdBalance = getUserBalance()
+                enteredAmount = enteredAmount * 0.01
+                let usdBalance = getUserUSDBalance()
                 userBalance = Double(usdBalance)!
             }
             if enteredAmount > userBalance {
@@ -312,6 +321,25 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         return true;
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        amountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+        if string == "." && (textField.text ?? "").contains(string) {
+            return false
+        }
+        return true
+    }
+    
+    @objc func textFieldDidChange(textField: UITextField) {
+        let text = textField.text ?? ""
+        let values = text.components(separatedBy: ".")
+        
+        if values.count == 2
+            && values[1].count > 0{
+            
+            textField.text = text.toDisplayTxValue()
+        }
+    }
+    
     func showUnitActionSheet() {
         if ( isShowingActionSheet ) {
             //return;
@@ -330,7 +358,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let pricer = UIAlertAction(title: "USD", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = "USD";
             self.isUsdTx = true
-            let usdBalance = self.getUserBalance()
+            let usdBalance = self.getUserUSDBalance()
             self.balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
         });
         actionSheet.addAction(pricer);
@@ -382,9 +410,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         self.present(alert, animated: true, completion: nil)
     }
     
-    func getUserBalance() -> String {
+    func getUserUSDBalance() -> String {
         let currentUser = CurrentUserModel.getInstance
-        let usdBalance = currentUser.toUSD(value: currentUser.balance) ?? "0"
+        let usdBalance = currentUser.toUSD(value: currentUser.balance) ?? "0.00"
         return usdBalance
     }
 }

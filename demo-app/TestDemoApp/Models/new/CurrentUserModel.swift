@@ -147,17 +147,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         let userPinSalt = self.userPinSalt!;
         ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self.ostUserId!, passphrase: userPinSalt);
     }
-    
-    
-    func toUSD(value: String) -> String? {
-        guard let usdValue = getUSDValue,
-                let doubleValue = Double(value) else {
-            return nil
-        }
-        
-        return String(usdValue * doubleValue)
-    }
-    
+
 }
 
 extension CurrentUserModel {
@@ -228,8 +218,8 @@ extension CurrentUserModel {
     
     var balance: String {
         if let availabelBalance = userBalanceDetails?["available_balance"] {
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-            return String(format: "%g", Double(amountVal)!)
+            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat
+            return amountVal.toDisplayTxValue()
         }
         return ""
     }
@@ -268,12 +258,29 @@ extension CurrentUserModel {
             let ostToken: OstToken = OstWalletSdk.getToken(tokenId) {
             
             let baseCurrency = ostToken.baseToken
-            let currencyPricePoint = pricePoint[baseCurrency] as! [String: Any]
-            
-            if let strValue = ConversionHelper.toString(currencyPricePoint["USD"]) {
+            if let currencyPricePoint = pricePoint[baseCurrency] as? [String: Any],
+                let strValue = ConversionHelper.toString(currencyPricePoint["USD"]) {
                 return Double(strValue)
             }
         }
         return nil
+    }
+    
+    func toUSD(value: String) -> String? {
+        guard let usdValue = getUSDValue,
+            let doubleValue = Double(value) else {
+                return nil
+        }
+        
+        guard let token = OstWalletSdk.getToken(CurrentEconomy.getInstance.tokenId!),
+            let conversionFactor = token.conversionFactor,
+            let doubleConversionFactor = Double(conversionFactor) else {
+                
+                return nil
+        }
+        
+        let btToOstVal = (doubleValue/doubleConversionFactor)
+        
+        return String(usdValue * btToOstVal)
     }
 }

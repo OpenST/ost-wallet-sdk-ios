@@ -14,6 +14,18 @@ class CurrentEconomy: OstBaseModel {
     static let userDefaultsId = "CurrentEconomy"
     static let getInstance = CurrentEconomy()
     
+    private var economyDecimals: Int? = nil
+    func getEconomyDecimals() -> Int {
+        if nil == economyDecimals {
+            if let currentToken = OstWalletSdk.getToken(tokenId!) {
+                let decimals = currentToken.decimals ?? 18
+                economyDecimals = decimals
+            }
+        }
+
+        return economyDecimals ?? 18
+    }
+    
     private override init() {
         if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
             let qrJsonData = EconomyScannerViewController.getQRJsonData(economy) {
@@ -22,6 +34,7 @@ class CurrentEconomy: OstBaseModel {
     }
     
     var economyDetails: [String: Any]? = nil
+    
 }
 
 extension CurrentEconomy {
