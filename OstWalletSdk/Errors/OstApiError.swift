@@ -13,7 +13,7 @@ import Foundation
 
 public class OstApiError: OstError {
 
-    override init(_ code: String, _ messageTextCode: OstErrorCodes.ErrorCode,  _ errorInfo:[String:Any]? = nil) {
+    override init(_ code: String, _ messageTextCode: OstErrorCodes.OstErrorCode,  _ errorInfo:[String:Any]? = nil) {
         super.init(code, messageTextCode, errorInfo);
         self.isApiError = true;
     }

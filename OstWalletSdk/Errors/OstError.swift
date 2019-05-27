@@ -15,7 +15,7 @@ import Foundation
     @objc public internal(set) var isApiError = false
     @objc public var internalCode: String = ""
     @objc public let errorMessage:String
-    public let messageTextCode:OstErrorCodes.ErrorCode;
+    public let messageTextCode:OstErrorCodes.OstErrorCode;
     
     @objc
     override public var description: String {
@@ -31,7 +31,11 @@ import Foundation
     public var errorInfo: [String: Any]? = nil
 
     @objc
-    public init(_ code: String, _ messageTextCode: OstErrorCodes.ErrorCode, _ errorInfo:[String:Any]? = nil) {
+    public convenience init(internalCode: String, errorCode: OstErrorCodes.OstErrorCode, errorInfo:[String:Any]? = nil) {
+        self.init(internalCode, errorCode, errorInfo);
+    }
+    
+    public init(_ code: String, _ messageTextCode: OstErrorCodes.OstErrorCode, _ errorInfo:[String:Any]? = nil) {
         self.errorMessage = OstErrorCodes.getErrorMessage(errorCode: messageTextCode);
         self.messageTextCode = messageTextCode;
         self.internalCode = code;
@@ -87,7 +91,7 @@ import Foundation
     }
     
     class func toUserInfo(errorMessage: String,
-                          messageTextCode: OstErrorCodes.ErrorCode,
+                          messageTextCode: OstErrorCodes.OstErrorCode,
                           internalCode: String,
                           errorInfo: [String: Any]? = nil,
                           isApiError: Bool = false) -> [String: Any] {

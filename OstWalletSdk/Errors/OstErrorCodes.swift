@@ -11,7 +11,7 @@
 import Foundation
 
 @objc public class OstErrorCodes:NSObject {
-    @objc public enum ErrorCode: Int {
+    @objc public enum OstErrorCode: Int {
         case userNotFound,
         invalidUser,
         userAlreadyActivated,
@@ -127,7 +127,7 @@ import Foundation
         tempMessageTextCode,
         userCanceled;
     }
-    @objc public class func getErrorMessage(errorCode:ErrorCode) -> String {
+    @objc public class func getErrorMessage(errorCode:OstErrorCode) -> String {
         switch errorCode {
         case .userNotFound: return "Unable to find this user in your economy. Inspect if a correct value is being sent in user Id field and its not null. Re-submit after verification.";
         case .invalidUser: return "Unable to recognize the user. Please ensure user id is not null and re-submit the request.";
@@ -246,11 +246,11 @@ import Foundation
         }
     }
     
-    @objc public class func getNSErrorCode(errorCode:ErrorCode) -> Int {
+    @objc public class func getNSErrorCode(errorCode:OstErrorCode) -> Int {
         return errorCode.rawValue + 10000;
     }
     
-    @objc public class func getStringErrorCode(errorCode:ErrorCode) -> String {
+    @objc public class func getStringErrorCode(errorCode:OstErrorCode) -> String {
         return ("\(errorCode)").snakeCased()!;
     }
 }
