@@ -224,7 +224,8 @@ class OstGetPinViewController: OstBaseScrollViewController {
         }
         
         let alertController = UIAlertController(title: "Incorrect PIN", message: errMsgToShow, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: {[weak self] (action) in
+            self?.pinInput.becomeFirstResponder()
             alertController.dismiss(animated: true, completion: nil)
         }) )
         

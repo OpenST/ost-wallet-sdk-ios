@@ -57,15 +57,38 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     
     //MARK: - Sdk Interact Delegate
     
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
-    }
-    
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
     }
     
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-         progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowInterrupted(workflowId: workflowId,
+                                                                        workflowContext: workflowContext,
+                                                                        error: error)
+        })
     }
+    
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowComplete(workflowId: workflowId,
+                                                                     workflowContext: workflowContext,
+                                                                     contextEntity: contextEntity)
+        })
+    }
+    
+    //MARK: - OnCompletion
+    func onFlowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+    }
+    
+    func onFlowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+    }
+    
+    
 }

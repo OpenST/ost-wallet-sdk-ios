@@ -296,9 +296,14 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
                                              listner: self)
-        progressIndicator?.progressText = "Revoke device initiated"
+        showProgressIndicator(withCode: .revokingDevice)
         OstWalletSdk.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                   deviceAddressToRevoke: deviceAddress,
                                   delegate: workflowCallback)
+    }
+    
+    func showProgressIndicator(withCode textCode: OstProgressIndicatorTextCode) {
+        progressIndicator = OstProgressIndicator(textCode: textCode)
+        progressIndicator?.show()
     }
 }

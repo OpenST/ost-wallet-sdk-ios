@@ -41,5 +41,23 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
     override func validDataDefination() -> String {
         return "ad"
     }
+    
+    override func showProgressIndicator() {
+        progressIndicator = OstProgressIndicator(textCode: .authorizingDevice)
+        progressIndicator?.show()
+    }
+    
+    //MARK: - OnCompletion
+    override func onFlowComplete(workflowId: String,
+                                 workflowContext: OstWorkflowContext,
+                                 contextEntity: OstContextEntity) {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    override func onFlowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 

@@ -271,5 +271,7 @@ enum OstProgressIndicatorTextCode: String {
     resetPin = "Reseting pin...",
     checkDeviceStatus = "Checking device status…",
     fetchingUserBalance = "Fetching user balance...",
-    creatingSession = "Creating Session..."
+    creatingSession = "Creating Session...",
+    authorizingDevice = "Authorizing Device....",
+    revokingDevice = "Revoking Device..."
 }
