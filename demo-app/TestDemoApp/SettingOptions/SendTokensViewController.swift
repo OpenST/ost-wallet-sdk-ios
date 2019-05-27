@@ -326,6 +326,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         if string == "." && (textField.text ?? "").contains(string) {
             return false
         }
+        if string == "," {
+            return false
+        }
         return true
     }
     
