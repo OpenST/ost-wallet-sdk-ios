@@ -206,14 +206,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
-        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
-        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        if !canDeviceEvaluatePolicy {
-            optionBiomertic.isEnable = false
-        }
-        
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionBiomertic]
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics]
         generalOptions = userOptions
     }
     
@@ -221,14 +214,21 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let currentUser = CurrentUserModel.getInstance
         let userDevice = currentUser.currentDevice
         
-        var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
+        var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Additional Device via QR", isEnable: true)
         if  nil == userDevice || !userDevice!.isStatusAuthorized {
             authorizeViaQR.isEnable = false
         }
         
-        var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize Device via Mnemonics", isEnable: true)
+        var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize This Device via Mnemonics", isEnable: true)
         if  nil == userDevice || !userDevice!.isStatusRegistered {
             authorizeViaMnemonics.isEnable = false
+        }
+        
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
+        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
+        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        if !canDeviceEvaluatePolicy {
+            optionBiomertic.isEnable = false
         }
         
         var showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
@@ -256,7 +256,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout", isEnable: true)
         
         
-        let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
+        let dOptions = [authorizeViaQR, authorizeViaMnemonics, optionBiomertic, showDeviceQR, manageDevices,
                         transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
         
         deviceOptions = dOptions

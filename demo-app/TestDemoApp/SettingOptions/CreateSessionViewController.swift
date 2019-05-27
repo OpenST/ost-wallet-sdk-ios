@@ -93,7 +93,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         return "Create Session"
     }
     override func getLeadLabelText() -> String {
-        return "Set Spending Limit and Expiry for a session"
+        return "Authorizing a session obviates the need for the user to sign every transaction within the application thereby creating a more seamless user experience."
     }
     
     //MARK: - Add Subviews

@@ -117,7 +117,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     //MARK: - OstWorkflow Delegate
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        setupDeviceOnFailure?(nil);
+        setupDeviceOnFailure?(error.errorInfo);
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {

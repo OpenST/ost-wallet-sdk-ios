@@ -43,7 +43,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
             
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
             );
         }
@@ -54,7 +54,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     override func setPassphrase(ostUserId: String, passphrase: String) {
    
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
             return;

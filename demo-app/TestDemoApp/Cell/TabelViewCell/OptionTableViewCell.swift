@@ -59,7 +59,7 @@ class OptionTableViewCell: BaseTableViewCell {
     
     let seperatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view

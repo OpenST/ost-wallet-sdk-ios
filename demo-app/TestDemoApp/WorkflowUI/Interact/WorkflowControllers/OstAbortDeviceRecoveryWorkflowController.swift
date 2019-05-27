@@ -40,7 +40,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
             
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
             );
         }
@@ -50,7 +50,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     fileprivate var userPassphrasePrefix:String?
     override func setPassphrase(ostUserId: String, passphrase: String) {
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
             /// TODO: (Future) Do Something here. May be cancel workflow?

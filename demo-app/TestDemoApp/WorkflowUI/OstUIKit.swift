@@ -36,6 +36,7 @@ class OstUIKit {
         let themer = OstTheme.linkButton;
         view.setTheamer(themer);
         themer.apply(view);
+        view.setTitleColor(UIColor.color(22, 141, 193), for: .normal)
         return view;
     }
     

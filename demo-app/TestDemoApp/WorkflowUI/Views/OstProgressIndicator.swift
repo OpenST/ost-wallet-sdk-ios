@@ -59,6 +59,7 @@ class OstProgressIndicator: OstBaseView {
                                   preferredStyle: .alert)
         
         let activ = UIActivityIndicatorView(style: .gray)
+        activ.color = UIColor.color(22, 141, 193)
         activ.startAnimating()
         activ.translatesAutoresizingMaskIntoConstraints = false
         alert!.view.addSubview(activ)
