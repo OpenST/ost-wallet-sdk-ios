@@ -58,18 +58,14 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     //MARK: - Sdk Interact Delegate
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        let message = """
-            \(getNavBarTitle()) flow interrupted.
-            \(error.errorMessage)
-        """
-        progressIndicator?.progressText = message
+        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        progressIndicator?.progressText = "\(getNavBarTitle()) request acknowledged."
+        
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-         progressIndicator?.progressText = "\(getNavBarTitle()) flow complete."
+         progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
     }
 }

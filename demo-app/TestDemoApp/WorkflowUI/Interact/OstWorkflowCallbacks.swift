@@ -108,10 +108,11 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         
+        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+
         let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
             self?.hideLoader();
             self?.dismissPinViewController();
-            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowComplete, eventHandler: eventData);
             self?.cleanUp();
         }
         
@@ -136,17 +137,19 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         eventData.workflowContext = workflowContext
         eventData.error = error
         
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.cleanUp();
+        }
+        
         if error.messageTextCode == .deviceNotSet {
+            onComplete(true)
             BaseAPI.logoutUnauthorizedUser()
             return
         }
         
-        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
-            self?.hideLoader();
-            self?.dismissPinViewController();
-            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
-            self?.cleanUp();
-        }
+        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
         
         if nil != progressIndicator {
             progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
