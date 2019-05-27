@@ -125,5 +125,12 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
         }
         super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
     }
+    
+    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
+        
+        hideLoader()
+        cleanUp()
+    }
 
 }

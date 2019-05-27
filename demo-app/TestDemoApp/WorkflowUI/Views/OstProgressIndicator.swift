@@ -31,11 +31,24 @@ class OstProgressIndicator: OstBaseView {
     
     //MARK: - Variables
     var progressText: String = ""
-//    {
-//        didSet {
-//            progressTextLabel.text = progressText
-//        }
-//    }
+    {
+        didSet {
+            alert?.title = "\n\(progressText)"
+        }
+    }
+    
+    var progressMessage: String = ""
+    {
+        didSet {
+            alert?.message = progressMessage
+        }
+    }
+    
+    var textCode: OstProgressIndicatorTextCode! {
+        didSet {
+            progressText = textCode.rawValue
+        }
+    }
     
     //MARK: - Initializier
     init(progressText: String = "") {
@@ -43,7 +56,7 @@ class OstProgressIndicator: OstBaseView {
         super.init(frame: .zero)
     }
     
-    init(textCode: OstProgressIndicatorText) {
+    init(textCode: OstProgressIndicatorTextCode) {
         self.progressText = textCode.rawValue
         super.init(frame: .zero)
     }
@@ -91,8 +104,10 @@ class OstProgressIndicator: OstBaseView {
     var alert: UIAlertController? = nil
     func show() {
         
-        let title = "\n\(progressText ?? "")"
-        alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let title = "\n\(progressText)"
+        alert = UIAlertController(title: title,
+                                  message: "",
+                                  preferredStyle: .alert)
         
         let activ = UIActivityIndicatorView(style: .gray)
         activ.startAnimating()
@@ -126,11 +141,16 @@ class OstProgressIndicator: OstBaseView {
         //        self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
     }
     
-    func hide(onCompletion: ((Bool) -> Void)? = nil) {
+    @objc func hide(onCompletion: ((Bool) -> Void)? = nil) {
         
-        alert?.dismiss(animated: true, completion: {
+        if nil == alert {
             onCompletion?(true)
-        })
+        }else {
+            alert!.dismiss(animated: true, completion: {
+                onCompletion?(true)
+            })
+        }
+        
         //        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         //        UIView.animate(withDuration: 0.4, animations: {[weak self] in
         //            self?.backgroundColor = .white
@@ -141,9 +161,73 @@ class OstProgressIndicator: OstBaseView {
         //        }
         
     }
+    
+    func showSuccessAlert(withTitle title: String = "", message msg: String = "",  onCompletion:((Bool) -> Void)? = nil) {
+        
+        self.hide {[weak self] _ in
+            self?.alert = UIAlertController(title: """
+                
+                
+                
+                \(title)
+                """,
+                message: msg,
+                preferredStyle: .alert)
+            
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "transactionCheckmark")
+            
+            self?.alert?.view.addSubview(imageView)
+            
+            let parent = imageView.superview!
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
+            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+            self?.alert?.show()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                 self?.hide(onCompletion: onCompletion)
+            })
+        }
+    }
+    
+    func showFailureAlert(withTitle title: String = "", message msg: String = "", onCompletion:((Bool) -> Void)? = nil) {
+        
+        self.hide {[weak self] _ in
+            self?.alert = UIAlertController(title: """
+                
+                
+                
+                \(title)
+                """,
+                message: msg,
+                preferredStyle: .alert)
+            
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "transactionCheckmark")
+            
+            self?.alert?.view.addSubview(imageView)
+            
+            let parent = imageView.superview!
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
+            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+            self?.alert?.show()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self?.hide(onCompletion: onCompletion)
+            })
+        }
+    }
 }
 
-enum OstProgressIndicatorText: String {
+enum OstProgressIndicatorTextCode: String {
     case
     unknown = "Processing...",
     activingUser = "Activiting User...",

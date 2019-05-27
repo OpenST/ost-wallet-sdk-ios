@@ -80,8 +80,10 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.contextEntity = ostContextEntity
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
+            
         }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
             delegate.dataVerified()
+            
         }else if workflowContext.workflowType == .executeTransaction {
              let entity: [String: Any] = ostContextEntity.entity as! [String: Any]
             
@@ -95,17 +97,28 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         }
     }
     
-    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
-                                                contextEntity: ostContextEntity,
-                                                error: nil)
+    func flowComplete(workflowContext: OstWorkflowContext,
+                      ostContextEntity: OstContextEntity) {
         
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        hideLoader();
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
-        cleanUp();
+        
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowComplete, eventHandler: eventData);
+            self?.cleanUp();
+        }
+        
+        if nil != progressIndicator
+            && workflowContext.workflowType != .getDeviceMnemonics {
+            
+            progressIndicator?.showSuccessAlert(withTitle: "complete", onCompletion: onComplete)
+            return
+        }
+        
+        onComplete(true)
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
@@ -113,19 +126,24 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
-        hideLoader();
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
-        cleanUp();
         
         if error.messageTextCode == .deviceNotSet {
-            
             BaseAPI.logoutUnauthorizedUser()
             return
         }
         
-        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
-                                                contextEntity: nil,
-                                                error: error)
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowComplete, eventHandler: eventData);
+            self?.cleanUp();
+        }
+        
+        if nil != progressIndicator {
+            progressIndicator?.showFailureAlert(withTitle: "Failed", onCompletion: onComplete)
+            return
+        }
+        onComplete(true)
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
@@ -133,8 +151,6 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        hideLoader();
-        dismissPinViewController();
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
     }
     
@@ -153,7 +169,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         uiWindow = nil
     }
     
-    func showLoader(progressText: OstProgressIndicatorText) {
+    func showLoader(progressText: OstProgressIndicatorTextCode) {
         progressIndicator = OstProgressIndicator(textCode: progressText)
         let window = getWindow()
         window.addSubview(progressIndicator!)

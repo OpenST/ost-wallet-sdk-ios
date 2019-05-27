@@ -405,7 +405,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func showProgressIndicator() {
-        var messageCode: OstProgressIndicatorText = .unknown
+        var messageCode: OstProgressIndicatorTextCode = .unknown
         if viewControllerType == .signup {
             messageCode = .signup
         }else if viewControllerType == .login {

@@ -254,7 +254,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
-            amountToTransferStr = amountToTransferStr + "000000000000000000"
+            amountToTransferStr = amountToTransferStr.toSmallestUnit(isUSDTx: false)
         }
         
         progressIndicator = OstProgressIndicator(progressText: progressText)
@@ -369,17 +369,25 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     //MARK: - Workflow Delegate
-    
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.hide(onCompletion: {[weak self] (isCompleted) in
-            self?.showRequestAcknowledgedAlert()
-        })
+        progressIndicator?.progressText = "Tranasaction Boradcasted!"
+        progressIndicator?.progressMessage = "Waiting for transaction to complete."
+    }
+    
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        
+        progressIndicator?.showSuccessAlert(withTitle: "Tranasaction Complete!",
+                                            message: "Transaction Executed successfully!",
+                                            onCompletion: nil)
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.hide()
+        progressIndicator?.showSuccessAlert(withTitle: "Tranasaction Failed!",
+                                            message: "Transaction Execution failed!",
+                                            onCompletion: nil)
     }
     
     func showRequestAcknowledgedAlert() {

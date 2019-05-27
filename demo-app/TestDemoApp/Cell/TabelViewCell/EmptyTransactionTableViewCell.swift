@@ -85,7 +85,7 @@ class EmptyTransactionTableViewCell: BaseTableViewCell {
     }
     
     func showNoTransactionView() {
-        self.titleLabel.text = "You haven't made any transaction."
-        self.leadLabel.text = ""
+        self.titleLabel.text = "No Transactions Completed!"
+        self.leadLabel.text = "Looks like you have not made any transactions, send some tokens to other users"
     }
 }

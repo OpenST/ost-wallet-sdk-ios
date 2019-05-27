@@ -71,15 +71,6 @@ class OstAbortDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
         passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
     }
     
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        self.getPinViewController!.removeViewController()
-    }
-    
-    override func dismissPinViewController() {
-        
-    }
-    
     public override func cleanUpPinViewController() {
         self.sdkPinAcceptDelegate = nil;
     }
