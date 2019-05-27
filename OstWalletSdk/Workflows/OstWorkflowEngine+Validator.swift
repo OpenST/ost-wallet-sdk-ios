@@ -33,7 +33,7 @@ extension OstWorkflowEngine {
     func isDeviceAuthorized() throws {
         let currentDevice = try self.getCurrentUserDevice()
         if !currentDevice.isStatusAuthorized {
-            throw OstError("w_wfv_ida_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_wfv_ida_1", .deviceNotAuthorized)
         }
     }
     
@@ -43,7 +43,7 @@ extension OstWorkflowEngine {
     func isDeviceRegistered() throws {
         let currentDevice = try self.getCurrentUserDevice()
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wfv_idr_1", OstErrorText.deviceNotRegistered)
+            throw OstError("w_wfv_idr_1", .deviceNotRegistered)
         }
     }
     
@@ -54,7 +54,7 @@ extension OstWorkflowEngine {
     /// - Throws: OstError
     func isUserActivated() throws {
         if (!self.currentUser!.isStatusActivated) {
-            throw OstError("w_wfv_iua_1", OstErrorText.userNotActivated)
+            throw OstError("w_wfv_iua_1", .userNotActivated)
         }
     }
     
@@ -67,7 +67,7 @@ extension OstWorkflowEngine {
     func validateRecoveryOwnerAddress(_ recoveryOwnerAddress: String?) throws {
         if (nil == recoveryOwnerAddress
             || recoveryOwnerAddress!.isEmpty) {
-            throw OstError("w_wfv_vroa_1", OstErrorText.recoveryOwnerAddressNotFound)
+            throw OstError("w_wfv_vroa_1", .recoveryOwnerAddressNotFound)
         }
     }
     
@@ -78,10 +78,10 @@ extension OstWorkflowEngine {
         guard let apiAddress = OstKeyManagerGateway
             .getOstKeyManager(userId: self.currentUser!.id)
             .getAPIAddress() else {
-                throw OstError("w_wfv_ialv_1", OstErrorText.apiAddressNotFound)
+                throw OstError("w_wfv_ialv_1", .apiAddressNotFound)
         }
         if (apiAddress.isEmpty) {
-            throw OstError("w_wfv_ialv_2", OstErrorText.apiAddressNotFound)
+            throw OstError("w_wfv_ialv_2", .apiAddressNotFound)
         }
     }
     
@@ -90,7 +90,7 @@ extension OstWorkflowEngine {
     /// - Throws: OstError
     func isTokenAvailable() throws {
         guard let tokenId = self.currentUser!.tokenId else {
-            throw OstError("w_wfv_ita_1", OstErrorText.tokenNotFound)
+            throw OstError("w_wfv_ita_1", .tokenNotFound)
         }
         let _ = try OstToken.getById(tokenId)
     }

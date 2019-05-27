@@ -149,7 +149,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
                                 OstExecuteTransactionType.Pay.getQRText().uppercased()]
         
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
+            throw OstError("w_et_vp_1", .rulesNotFound)
         }
         
         let filteredAddresses = toAddresses.filter({$0 != ""})
@@ -185,7 +185,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             try self.processForDirectTransfer()
             
         default:
-            throw OstError("w_et_odv_1", OstErrorText.rulesNotFound)
+            throw OstError("w_et_odv_1", .rulesNotFound)
         }
     }
  
@@ -393,20 +393,20 @@ extension OstExecuteTransaction {
         if (nil == self.pricePoint) {
             try fetchPricePoint()
             if nil == self.pricePoint {
-                throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+                throw OstError("w_et_pfdt_1", .callDataFormationFailed)
             }
         }
         
         self.transactionValueInWei = try getTransactionValueInWeiForPay()
         
         guard let session = try getActiveSession() else {
-            throw OstError("w_et_pfp_2", OstErrorText.sessionNotFound)
+            throw OstError("w_et_pfp_2", .sessionNotFound)
         }
         self.activeSession = session
         
         self.calldata = try getCallDataForPricerRule()
         if ( nil == self.calldata) {
-            throw OstError("w_et_pfdt_2", OstErrorText.callDataFormationFailed)
+            throw OstError("w_et_pfdt_2", .callDataFormationFailed)
         }
         
         try createSignatureForTransaction()
@@ -458,18 +458,18 @@ extension OstExecuteTransaction {
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
-            throw OstError("w_et_gcviw_1", OstErrorText.invalidAmount)
+            throw OstError("w_et_gcviw_1", .invalidAmount)
         }
         
         guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
-            throw OstError("w_et_gcviw_2", OstErrorText.pricePointNotFound)
+            throw OstError("w_et_gcviw_2", .pricePointNotFound)
         }
         
         let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
         guard let decimal = OstUtils.toInt(fiatPricePoint["decimals"] as Any) else {
-            throw OstError("w_et_gcviw_3", OstErrorText.callDataFormationFailed)
+            throw OstError("w_et_gcviw_3", .callDataFormationFailed)
         }
         
         let finalExponentComponent = decimal + components.exponent
@@ -486,19 +486,19 @@ extension OstExecuteTransaction {
         var totalAmount: BigInt = BigInt("0")
         
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
-            throw OstError("w_et_gtviwfp_1", OstErrorText.invalidAmount)
+            throw OstError("w_et_gtviwfp_1", .invalidAmount)
         }
         guard let ostToBtConversionFactor = token.conversionFactor else {
-            throw OstError("w_et_gtviwfp_2", OstErrorText.conversionFactorNotFound)
+            throw OstError("w_et_gtviwfp_2", .conversionFactorNotFound)
         }
         guard let btDecimal = token.decimals else {
-            throw OstError("w_et_gtviwfp_3", OstErrorText.btDecimalNotFound)
+            throw OstError("w_et_gtviwfp_3", .btDecimalNotFound)
         }
         guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
-            throw OstError("w_et_gtviwfp_4", OstErrorText.pricePointNotFound)
+            throw OstError("w_et_gtviwfp_4", .pricePointNotFound)
         }
         guard let fiatDecimal = OstUtils.toInt(fiatPricePoint["decimals"]) else {
-            throw OstError("w_et_gtviwfp_5", OstErrorText.pricePointNotFound)
+            throw OstError("w_et_gtviwfp_5", .pricePointNotFound)
         }
         let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
@@ -537,13 +537,13 @@ extension OstExecuteTransaction {
         self.transactionValueInWei = try getTransactionValueForDirectTransfer()
         
         guard let session = try getActiveSession() else {
-            throw OstError("w_et_pfdt_1", OstErrorText.sessionNotFound)
+            throw OstError("w_et_pfdt_1", .sessionNotFound)
         }
         self.activeSession = session
         
         self.calldata = try getCallDataForDirectTransfer()
         if ( nil == self.calldata) {
-            throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+            throw OstError("w_et_pfdt_1", .callDataFormationFailed)
         }
         
         try createSignatureForTransaction()
@@ -579,7 +579,7 @@ extension OstExecuteTransaction {
         var totalAmount: BigInt = BigInt("0")
         for amount in self.amounts {
             guard let amountInBigInt = BigInt(amount) else {
-                throw OstError("w_et_gtsl_1", OstErrorText.invalidAmount)
+                throw OstError("w_et_gtsl_1", .invalidAmount)
             }
             totalAmount += amountInBigInt
         }

@@ -171,7 +171,7 @@ extension OstWalletSdk {
         if ( nil != qrCodePayloadString.qrCode) {
             return qrCodePayloadString.qrCode!;
         }
-        throw OstError("w_wff_gadqc_5", OstErrorText.unexpectedError );
+        throw OstError("w_wff_gadqc_5", .unexpectedError );
     }
         
     /// Initiate device recovery.

@@ -121,11 +121,11 @@ public class OstUtils {
             afterDecimalString = trimTrailing(components[1], suffix: "0");
             exponent = afterDecimalString.count
         }else {
-            throw OstError("u_c_gnc_1", OstErrorText.invalidAmount)
+            throw OstError("u_c_gnc_1", .invalidAmount)
         }
         
         guard let numberComponent  = BigInt("\( components[0])\(afterDecimalString)") else {
-            throw OstError("u_c_gnc_2", OstErrorText.invalidAmount)
+            throw OstError("u_c_gnc_2", .invalidAmount)
         }
         
         return (numberComponent, -(exponent))

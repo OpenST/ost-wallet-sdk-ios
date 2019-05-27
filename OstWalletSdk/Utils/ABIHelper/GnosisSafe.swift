@@ -40,7 +40,7 @@ class GnosisSafe: ABIHelperBase {
         let _invocation = function!.invoke(addressTobeAdded, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {     
-            throw OstError("u_ah_gs_gaowted_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_gs_gaowted_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()
@@ -73,7 +73,7 @@ class GnosisSafe: ABIHelperBase {
         let _invocation = function!.invoke(prevOwnerAddress, ownerAddress, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_gs_gaowted_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_gs_gaowted_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()

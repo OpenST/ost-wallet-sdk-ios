@@ -99,7 +99,7 @@ class OstWorkflowEngine {
             onCompleteWithError()
             
         default:
-            throw OstError("w_we_p_2", OstErrorText.unknown)
+            throw OstError("w_we_p_2", .unknown)
         }
     }
     
@@ -175,12 +175,12 @@ class OstWorkflowEngine {
     
     /// Perfrom action on workflow cancelled
     func onWorkflowCancelled() {
-        let ostError:OstError = OstError("w_we_wc_1", OstErrorText.userCanceled)
+        let ostError:OstError = OstError("w_we_wc_1", .userCanceled)
         self.postError(ostError)
     }
     
     func onCompleteWithError() {
-        let ostError:OstError = OstError("w_we_cwe_1", OstErrorText.userCanceled)
+        let ostError:OstError = OstError("w_we_cwe_1", .userCanceled)
         self.postError(ostError)
     }
     
@@ -262,7 +262,7 @@ extension OstWorkflowEngine {
             }
             else {
                 //Unknown Error. Post Something went wrong.
-                let ostError:OstError = OstError("w_we_pe_1", OstErrorText.sdkError)
+                let ostError:OstError = OstError("w_we_pe_1", .sdkError)
                 self.delegate?.flowInterrupted(workflowContext: errorWorkflowContext, error: ostError )
             }
         }

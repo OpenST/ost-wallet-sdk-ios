@@ -115,7 +115,7 @@ class OstAbortDeviceRecovery: OstWorkflowEngine {
         
         if (nil == self.recoveringDevice
             || nil == self.revokingDevice) {
-            throw OstError("w_ard_fpr_1", OstErrorText.insufficientData)
+            throw OstError("w_ard_fpr_1", .insufficientData)
         }
     }
     

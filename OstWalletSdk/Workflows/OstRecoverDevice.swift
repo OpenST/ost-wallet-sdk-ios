@@ -56,7 +56,7 @@ class OstRecoverDevice: OstWorkflowEngine {
     override func validateParams() throws {
         try super.validateParams()
         if !self.deviceAddressToRecover.isValidAddress {
-            throw OstError("w_rd_vp_1", OstErrorText.wrongDeviceAddress)
+            throw OstError("w_rd_vp_1", .wrongDeviceAddress)
         }
         try self.pinManager.validatePin()
         try self.pinManager.validatePassphrasePrefixLength()
@@ -86,7 +86,7 @@ class OstRecoverDevice: OstWorkflowEngine {
             try self.fetchDevice()
         }
         if (!self.deviceToRecover!.isStatusAuthorized) {
-            throw OstError("w_rd_p_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_rd_p_1", .deviceNotAuthorized)
         }
         
         let signedData = try self.pinManager

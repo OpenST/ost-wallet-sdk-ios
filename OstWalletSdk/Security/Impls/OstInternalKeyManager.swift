@@ -462,7 +462,7 @@ private extension OstInternalKeyManager {
     func getPinHash() throws -> String {
         var userDeviceInfo: [String: Any] = getUserDeviceInfo()
         guard let pinData = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
-            throw OstError("o_s_i_km_gph_1", OstErrorText.recoveryPinNotFoundInKeyManager)
+            throw OstError("o_s_i_km_gph_1", .recoveryPinNotFoundInKeyManager)
         }
         if Device.hasSecureEnclave {
             if #available(iOS 10.3, *) {
@@ -477,7 +477,7 @@ private extension OstInternalKeyManager {
         }else {
             return OstUtils.toDecodedValue(pinData) as! String
         }
-        throw OstError("o_s_i_km_gph_2", OstErrorText.recoveryPinNotFoundInKeyManager)
+        throw OstError("o_s_i_km_gph_2", .recoveryPinNotFoundInKeyManager)
     }
     
     /// Validate pin hash

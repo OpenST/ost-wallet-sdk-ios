@@ -42,7 +42,7 @@ class TokenHolder: ABIHelperBase {
         let _invocation = function!.invoke(sessionAddressTobeAdded, BigInt(spendingLimit)!, BigInt(expirationHeight)!)
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_th_gased_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_th_gased_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()
@@ -65,7 +65,7 @@ class TokenHolder: ABIHelperBase {
         let _invocation = function!.invoke()
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_th_gased_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_th_gased_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()

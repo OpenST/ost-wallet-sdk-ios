@@ -116,7 +116,7 @@ class OstBasePollingService {
             self.postSuccessCallback(entity: entity)
             
         }else if (entity.status!.caseInsensitiveCompare(self.failureStatus) == .orderedSame){
-            self.failureCallback?(OstError("w_s_bps_osp_1", OstErrorText.failedToProcess) )
+            self.failureCallback?(OstError("w_s_bps_osp_1", .failedToProcess) )
             
         }else{
             // Logger.log(message: "test User status is activating for userId: \(ostDevice.id) and is activated at \(Date.timestamp())", parameterToPrint: ostDevice.data)

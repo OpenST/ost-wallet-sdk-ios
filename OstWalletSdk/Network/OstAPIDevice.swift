@@ -36,7 +36,7 @@ class OstAPIDevice: OstAPIBase {
         
         // Get current device
         guard let currentDevice = user.getCurrentDevice() else {
-            throw OstError("n_ad_gcd_1", OstErrorText.deviceNotSet)
+            throw OstError("n_ad_gcd_1", .deviceNotSet)
         }
         try self.getDevice(deviceAddress: currentDevice.address!, onSuccess: onSuccess, onFailure: onFailure)
     }

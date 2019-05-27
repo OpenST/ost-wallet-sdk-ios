@@ -93,10 +93,10 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
             throw error!
         }
         if (!deviceFromMnemonics!.isStatusAuthorized) {
-            throw OstError("w_adwm_fd_1", OstErrorText.deviceNotAuthorized)
+            throw OstError("w_adwm_fd_1", .deviceNotAuthorized)
         }
         if (deviceFromMnemonics!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwm_fd_2", OstErrorText.differentOwnerDevice)
+            throw OstError("w_adwm_fd_2", .differentOwnerDevice)
         }
     }
     

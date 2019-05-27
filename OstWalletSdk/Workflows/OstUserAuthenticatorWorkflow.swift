@@ -122,7 +122,7 @@ class OstUserAuthenticatorWorkflow: OstWorkflowEngine, OstPinAcceptDelegate {
     func onPinInfoReceived() throws {
         guard let userPassphrase =
             self.workflowStateManager.getStateObject() as? OstUserPassphrase else {
-                throw OstError("w_uaw_opir_1", OstErrorText.unknown)
+                throw OstError("w_uaw_opir_1", .unknown)
         }
         
         self.enterPinCount += 1

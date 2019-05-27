@@ -56,7 +56,7 @@ class PricerRule: ABIHelperBase {
                                            currencyPriceInBigInt)
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_tr_gdted_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_tr_gdted_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()
