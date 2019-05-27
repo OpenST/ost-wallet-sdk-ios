@@ -11,6 +11,7 @@
 import UIKit
 import MaterialComponents
 import OstWalletSdk
+import LocalAuthentication
 
 class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
     
@@ -332,13 +333,28 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func activateUser() {
-         removeProgressIndicator()
-        let currentUse = CurrentUserModel.getInstance
-        workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                                   passphrasePrefixDelegate: currentUse,
-                                                                   presenter: self)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback!.workflowId,
-                                             listner: self)
+        removeProgressIndicator()
+        
+        
+        let continueWorkflow: ((UIAlertAction?) -> Void) = {[weak self] (_) in
+            let currentUse = CurrentUserModel.getInstance
+            self!.workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                                       passphrasePrefixDelegate: currentUse,
+                                                                       presenter: self!)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: self!.workflowCallback!.workflowId,
+                                                 listner: self!)
+        }
+        
+        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        if !canDeviceEvaluatePolicy {
+            let alert = UIAlertController(title: "Biometric is not entrolled/activated", message: "Biometric is not ", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Activate User", style: .default, handler: continueWorkflow))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else {
+            continueWorkflow(nil)
+        }
+    
     }
     
     func onSigupFailed(_ apiError: [String: Any]?) {

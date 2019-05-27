@@ -202,7 +202,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
         
         var optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        if !(currentUser.ostUser?.isStatusActivated ?? false){
             optionMnemonics.isEnable = false
         }
         
@@ -455,6 +455,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             }))
             
             alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
+                self?.tabbarController?.hideTabBar()
                 let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
                                                                                     passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                                                     presenter: self!)

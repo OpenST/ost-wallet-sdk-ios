@@ -22,19 +22,18 @@ class WalletValueTableViewCell: BaseTableViewCell {
         }
     }
     
-    func setValue(_ val: String) {
+    private func setValue(_ val: String) {
         var balance = val
         if balance.isEmpty {
            balance = "0.00"
         }
         self.tokenSymbolLabel.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
-        self.btValueLabel.text =  balance.toDisplayTxValue()
+        self.btValueLabel.text =  balance
         if let usdVal = CurrentUserModel.getInstance.toUSD(value: balance)?.toDisplayTxValue() {
             self.usdValueLabel.text = "≈  $ \(usdVal)"
         }else {
             self.usdValueLabel.text = ""
         }
-       
     }
     
     //MAKR: - Components

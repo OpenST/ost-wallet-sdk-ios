@@ -144,7 +144,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
             self?.hideLoader();
             self?.dismissPinViewController();
-            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowComplete, eventHandler: eventData);
+            self?.interact.broadcaseEvent(workflowId: self!.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
             self?.cleanUp();
         }
         
