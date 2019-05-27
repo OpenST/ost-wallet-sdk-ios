@@ -50,21 +50,11 @@ class OstNotificationManager {
 
         let workflowContext = notificationModel.workflowContext
         
-        if nil == notificationModel.contextEntity && nil == notificationModel.error {
-            return false
-        }
-        if workflowContext.workflowType == .setupDevice {
-            return false
-        }
-        if workflowContext.workflowType == .getDeviceMnemonics {
-            return false
-        }
-        if let error = notificationModel.error,
-            error.messageTextCode == OstErrorText.userCanceled {
-             return false
+        if workflowContext.workflowType == .activateUser {
+            return true
         }
         
-        return true
+        return false
     }
     
     func showNext() {

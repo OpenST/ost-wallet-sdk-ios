@@ -7,27 +7,9 @@
 //
 
 import UIKit
+import OstWalletSdk
 
 class OstProgressIndicator: OstBaseView {
-    
-    //MARK: - Components
-    let containerView: UIView  = {
-        let view = UIView()
-        view.layer.cornerRadius = 10
-        view.clipsToBounds = true
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        return activityIndicator
-    }()
-    
-    let progressTextLabel: UILabel =  OstUIKit.leadLabel()
     
     //MARK: - Variables
     var progressText: String = ""
@@ -50,6 +32,8 @@ class OstProgressIndicator: OstBaseView {
         }
     }
     
+    var alert: UIAlertController? = nil
+    
     //MARK: - Initializier
     init(progressText: String = "") {
         self.progressText = progressText
@@ -66,42 +50,7 @@ class OstProgressIndicator: OstBaseView {
         super.init(coder: aDecoder)
     }
     
-    //MAKR: - Create Views
-    override func createViews() {
-        super.createViews()
-        //        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        //        self.addSubview(containerView)
-        //
-        //        containerView.addSubview(activityIndicator)
-        //        containerView.addSubview(progressTextLabel)
-    }
-    
-    //MARK: - Apply Constraints
-    
-    override func applyConstraints() {
-        super.applyConstraints()
-        //        applyContainerViewConstraints()
-        //        applyActivityIndicatorConstraints()
-        //        applyTextLabelConstraints()
-    }
-    
-    func applyContainerViewConstraints() {
-        containerView.centerYAlignWithParent()
-        containerView.applyBlockElementConstraints()
-    }
-    
-    func applyActivityIndicatorConstraints() {
-        activityIndicator.centerXAlignWithParent()
-        activityIndicator.topAlignWithParent(multiplier: 1, constant: 20)
-    }
-    
-    func applyTextLabelConstraints() {
-        progressTextLabel.placeBelow(toItem: activityIndicator)
-        progressTextLabel.applyBlockElementConstraints()
-        progressTextLabel.bottomAlignWithParent(constant: -20)
-    }
-    
-    var alert: UIAlertController? = nil
+    //MARK: - Inporgress Alert
     func show() {
         
         let title = "\n\(progressText)"
@@ -117,28 +66,6 @@ class OstProgressIndicator: OstBaseView {
         activ.topAnchor.constraint(equalTo: alert!.view.topAnchor, constant: 10).isActive = true
         
         alert?.show()
-        
-        //        guard let parent = self.superview else {return}
-        
-        //        parent.bringSubviewToFront(self)
-        //        self.frame = parent.bounds
-        //        activityIndicator.startAnimating()
-        //        self.backgroundColor = UIColor.white
-        //        self.alpha = 1.0
-        //        self.containerView.alpha = 1.0
-        //        UIView.animate(withDuration: 0.4) {
-        //            self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        //        }
-        //
-        //        let theAnimation: CABasicAnimation
-        //        theAnimation = CABasicAnimation(keyPath: "transform.scale")
-        //        theAnimation.duration = 0.4;
-        //        theAnimation.repeatCount = 1;
-        //        theAnimation.autoreverses = false;
-        //        theAnimation.fromValue = 1.1
-        //        theAnimation.toValue = 1
-        //        theAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
-        //        self.containerView.layer.add(theAnimation, forKey: "animateOpacity")
     }
     
     @objc func hide(onCompletion: ((Bool) -> Void)? = nil) {
@@ -150,16 +77,12 @@ class OstProgressIndicator: OstBaseView {
                 onCompletion?(true)
             })
         }
-        
-        //        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        //        UIView.animate(withDuration: 0.4, animations: {[weak self] in
-        //            self?.backgroundColor = .white
-        //            self?.containerView.alpha = 0.0
-        //        }) {[weak self] (isComplete) in
-        //            self?.removeFromSuperview()
-        //            onCompletion?(isComplete)
-        //        }
-        
+    }
+    
+    //MARK: - Success Alert
+    func showSuccessAlert(forWorkflowType type: OstWorkflowType, onCompletion:((Bool) -> Void)? = nil) {
+        let title = getWorkflowCompleteText(workflowType: type)
+        showSuccessAlert(withTitle: title, onCompletion: onCompletion)
     }
     
     func showSuccessAlert(withTitle title: String = "", message msg: String = "",  onCompletion:((Bool) -> Void)? = nil) {
@@ -194,7 +117,18 @@ class OstProgressIndicator: OstBaseView {
         }
     }
     
-    func showFailureAlert(withTitle title: String = "", message msg: String = "", onCompletion:((Bool) -> Void)? = nil) {
+    //MARK: - Failure Alert
+    func showFailureAlert(forWorkflowType type: OstWorkflowType,
+                          error: OstError? = nil,
+                          onCompletion:((Bool) -> Void)? = nil) {
+        
+        let title = getWorkflowInterruptedText(workflowType: type)
+        showFailureAlert(withTitle: title, onCompletion: onCompletion)
+    }
+    
+    func showFailureAlert(withTitle title: String = "",
+                          message msg: String = "",
+                          onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
             self?.alert = UIAlertController(title: """
@@ -223,6 +157,102 @@ class OstProgressIndicator: OstBaseView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 self?.hide(onCompletion: onCompletion)
             })
+        }
+    }
+    
+    
+    //MARK: - Alert Text
+    func getWorkflowCompleteText(workflowType: OstWorkflowType) -> String {
+        
+        switch workflowType {
+        case .setupDevice:
+            return ""
+            
+        case .activateUser:
+            return ""
+            
+        case .addSession:
+            return ""
+            
+        case .getDeviceMnemonics:
+            return ""
+            
+        case .performQRAction:
+            return ""
+            
+        case .executeTransaction:
+            return ""
+            
+        case .authorizeDeviceWithQRCode:
+            return ""
+            
+        case .authorizeDeviceWithMnemonics:
+            return ""
+            
+        case .initiateDeviceRecovery:
+            return ""
+            
+        case .abortDeviceRecovery:
+            return ""
+            
+        case .revokeDeviceWithQRCode:
+            return ""
+            
+        case .resetPin:
+            return ""
+            
+        case .logoutAllSessions:
+            return ""
+            
+        case .updateBiometricPreference:
+            return ""
+        }
+    }
+    
+    func getWorkflowInterruptedText(workflowType: OstWorkflowType) -> String {
+        
+        switch workflowType {
+        case .setupDevice:
+            return ""
+            
+        case .activateUser:
+            return ""
+            
+        case .addSession:
+            return ""
+            
+        case .getDeviceMnemonics:
+            return ""
+            
+        case .performQRAction:
+            return ""
+            
+        case .executeTransaction:
+            return ""
+            
+        case .authorizeDeviceWithQRCode:
+            return ""
+            
+        case .authorizeDeviceWithMnemonics:
+            return ""
+            
+        case .initiateDeviceRecovery:
+            return ""
+            
+        case .abortDeviceRecovery:
+            return ""
+            
+        case .revokeDeviceWithQRCode:
+            return ""
+            
+        case .resetPin:
+            return ""
+            
+        case .logoutAllSessions:
+            return ""
+            
+        case .updateBiometricPreference:
+            return ""
         }
     }
 }

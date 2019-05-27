@@ -378,16 +378,13 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
         
-        progressIndicator?.showSuccessAlert(withTitle: "Tranasaction Complete!",
-                                            message: "Transaction Executed successfully!",
-                                            onCompletion: nil)
+        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
     }
     
     override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.showSuccessAlert(withTitle: "Tranasaction Failed!",
-                                            message: "Transaction Execution failed!",
-                                            onCompletion: nil)
+
+        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
     }
     
     func showRequestAcknowledgedAlert() {
