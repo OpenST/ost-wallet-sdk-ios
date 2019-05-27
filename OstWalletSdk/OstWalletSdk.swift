@@ -36,6 +36,7 @@ import Foundation
     ///
     /// - Parameter userId: User Id
     /// - Returns: Biomertric status
+    @objc 
     public class func isBiometricEnabled(userId: String) -> Bool {
         let keyManager = OstKeyManagerGateway.getOstKeyManager(userId: userId)
         return keyManager.isBiometricEnabled()
