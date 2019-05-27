@@ -65,7 +65,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .never
-        textField.keyboardType = .numberPad
+        textField.keyboardType = .decimalPad
         textField.placeholderLabel.text = "Amount"
         textField.font = OstFontProvider().get(size: 15)
         textField.text = "1";
