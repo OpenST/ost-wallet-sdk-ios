@@ -237,16 +237,19 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         if !isScrolling && self.isNewDataAvailable {
             tableDataArray = updatedDataArray
-            
+            print("here 1")
             self.usersTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
             if self.refreshControl.isRefreshing {
+                print("here 2")
                 self.refreshControl.endRefreshing()
             }
         }
-        else if !isApiCallInProgress {
+        else if !isApiCallInProgress && !isScrolling {
+            print("here 3")
             if self.refreshControl.isRefreshing {
+                print("here 4")
                 self.refreshControl.endRefreshing()
             }
             self.usersTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
@@ -305,6 +308,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             nextPagePayload = getNextPagePayload()
             if nil == nextPagePayload {
                 reloadDataIfNeeded()
+                self.shouldLoadNextPage = true
                 return
             }
         }
