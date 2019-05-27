@@ -104,10 +104,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         return "Send Tokens"
     }
     
-    override func getLeadLabelText() -> String {
-        return "Please choose the currency to price transaction. Choosing USD will mean that the chosen number of USD worth of tokens will be transferred."
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserBalanceFromServer()
@@ -189,14 +185,12 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     func addSendTokenLabelConstraints() {
-        sendTokensLable.placeBelow(toItem: leadLabel)
-//        sendTokensLable.topAlignWithParent(multiplier: 1, constant: 20)
+        sendTokensLable.topAlignWithParent(multiplier: 1, constant: 20)
         sendTokensLable.leftAlignWithParent(multiplier: 1, constant: 20)
     }
     
     func addBalanceLabelConstraints() {
-        balanceLabel.placeBelow(toItem: leadLabel)
-//        balanceLabel.topAlignWithParent(multiplier: 1, constant: 20)
+        balanceLabel.topAlignWithParent(multiplier: 1, constant: 20)
         balanceLabel.rightAlignWithParent(multiplier: 1, constant: -20)
         balanceLabel.leftWithRightAlign(toItem: sendTokensLable, constant: 8)
     }
@@ -354,7 +348,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //return;
         }
         isShowingActionSheet = true;
-        let actionSheet = UIAlertController(title: "Select Rule", message: "Select Your Transfer Currency", preferredStyle: UIAlertController.Style.actionSheet);
+        let actionSheet = UIAlertController(title: "Select Transfer Currency", message: "Please choose the currency to price transaction. Choosing USD will mean that the chosen number of USD worth of tokens will be transferred.", preferredStyle: UIAlertController.Style.actionSheet);
         
         let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";

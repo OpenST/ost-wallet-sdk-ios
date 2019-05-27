@@ -119,7 +119,6 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     func getUserFromServer() {
         progressIndicator = OstProgressIndicator(textCode: .fetchingUser)
-        getApplicationWindow()?.addSubview(progressIndicator!)
         progressIndicator?.show()
 
         try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint!)

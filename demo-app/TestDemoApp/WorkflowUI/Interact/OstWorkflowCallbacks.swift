@@ -166,6 +166,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
+        
+        progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
     }
     
     func pinValidated(_ userId: String) {

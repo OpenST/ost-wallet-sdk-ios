@@ -80,6 +80,14 @@ class OstProgressIndicator: OstBaseView {
         }
     }
     
+    //MAKR: - Acknowledgement
+    func showAcknowledgementAlert(forWorkflowType type: OstWorkflowType) {
+        let title = getAcknowledgementText(workflowType: type)
+        if !title.isEmpty {
+            progressText = title
+        }
+    }
+    
     //MARK: - Success Alert
     func showSuccessAlert(forWorkflowType type: OstWorkflowType, onCompletion:((Bool) -> Void)? = nil) {
         let title = getWorkflowCompleteText(workflowType: type)
@@ -112,7 +120,7 @@ class OstProgressIndicator: OstBaseView {
             imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
             self?.alert?.show()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
                  self?.hide(onCompletion: onCompletion)
             })
         }
@@ -155,7 +163,7 @@ class OstProgressIndicator: OstBaseView {
             imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
             self?.alert?.show()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
                 self?.hide(onCompletion: onCompletion)
             })
         }
@@ -163,8 +171,7 @@ class OstProgressIndicator: OstBaseView {
     
     
     //MARK: - Alert Text
-    func getWorkflowCompleteText(workflowType: OstWorkflowType) -> String {
-        
+    func getAcknowledgementText(workflowType: OstWorkflowType) -> String {
         switch workflowType {
         case .setupDevice:
             return ""
@@ -173,7 +180,7 @@ class OstProgressIndicator: OstBaseView {
             return ""
             
         case .addSession:
-            return ""
+            return "Session authorization request received"
             
         case .getDeviceMnemonics:
             return ""
@@ -185,28 +192,75 @@ class OstProgressIndicator: OstBaseView {
             return ""
             
         case .authorizeDeviceWithQRCode:
-            return ""
+            return "Authorization request received"
             
         case .authorizeDeviceWithMnemonics:
-            return ""
+            return "Authorization request received"
             
         case .initiateDeviceRecovery:
-            return ""
+            return "Recovery request received "
             
         case .abortDeviceRecovery:
-            return ""
+            return "Request to abort recovery received"
             
         case .revokeDeviceWithQRCode:
-            return ""
+            return "Revocation request received"
             
         case .resetPin:
-            return ""
+            return "Reset request received. This request may up to 60 seconds to process"
             
         case .logoutAllSessions:
-            return ""
+            return "Revoking all session request received"
             
         case .updateBiometricPreference:
             return ""
+        }
+    }
+    
+    func getWorkflowCompleteText(workflowType: OstWorkflowType) -> String {
+        
+        switch workflowType {
+        case .setupDevice:
+            return ""
+            
+        case .activateUser:
+            return ""
+            
+        case .addSession:
+            return "A session has been authorized. You can now make in-app transactions seamlessly"
+            
+        case .getDeviceMnemonics:
+            return ""
+            
+        case .performQRAction:
+            return ""
+            
+        case .executeTransaction:
+            return "Transaction complete!"
+            
+        case .authorizeDeviceWithQRCode:
+            return "This device is now authorized to access your Wallet "
+            
+        case .authorizeDeviceWithMnemonics:
+            return "This device is now authorized to access your Wallet "
+            
+        case .initiateDeviceRecovery:
+            return "Wallet recovery has been initiated. Unless interrupted, your device will authorized in about 12 hours"
+            
+        case .abortDeviceRecovery:
+            return "Recovery has been successfully aborted. Existing authorized devices may be used."
+            
+        case .revokeDeviceWithQRCode:
+            return "The chosen device has been revoked. It can no longer access your Wallet"
+            
+        case .resetPin:
+            return "Your PIN has been reset. Please remember this new PIN. "
+            
+        case .logoutAllSessions:
+            return "All sessions are revoked. Please create new session to send tokens."
+            
+        case .updateBiometricPreference:
+            return "Biometric preference updated"
         }
     }
     
@@ -220,7 +274,7 @@ class OstProgressIndicator: OstBaseView {
             return ""
             
         case .addSession:
-            return ""
+            return "Session could not be authorized. Please re-enter confirmation"
             
         case .getDeviceMnemonics:
             return ""
@@ -229,31 +283,31 @@ class OstProgressIndicator: OstBaseView {
             return ""
             
         case .executeTransaction:
-            return ""
+            return "You have no authorized sessions to sign a trasnaction, please authorize a session "
             
         case .authorizeDeviceWithQRCode:
-            return ""
+            return "Authorization failed. Please verify the QR code "
             
         case .authorizeDeviceWithMnemonics:
-            return ""
+            return "Authorization failed. Please verify that the mnemonics are correct"
             
         case .initiateDeviceRecovery:
-            return ""
+            return "Recovery could not be initiated. Please verify PIN "
             
         case .abortDeviceRecovery:
-            return ""
+            return "Abort recovery failed. Unauthorized attempt "
             
         case .revokeDeviceWithQRCode:
-            return ""
+            return "Revokation failed. A device cannot revoke itself "
             
         case .resetPin:
-            return ""
+            return "Reset PIN failed. Please verify that you entered the correct PIN "
             
         case .logoutAllSessions:
-            return ""
+            return "Revoking all sessions failed. Please re-enter confirmation"
             
         case .updateBiometricPreference:
-            return ""
+            return "Biometric preference update failed. Please re-enter confirmation"
         }
     }
 }
@@ -261,18 +315,18 @@ class OstProgressIndicator: OstBaseView {
 enum OstProgressIndicatorTextCode: String {
     case
     unknown = "Processing...",
-    activingUser = "Activiting User...",
-    executingTransaction = "Executing transaction...",
+    activingUser = "Activiting user...",
+    executingTransaction = "Transaction processing...",
     fetchingUser = "Fetching user...",
-    stopDeviceRecovery = "Stoping device recovery...",
-    initiateDeviceRecovery = "Initiating device recovery...",
+    stopDeviceRecovery = "Aborting recovery...",
+    initiateDeviceRecovery = "Initiating recovery... ",
     logoutUser = "Logging out...",
-    signup = "Siging up...",
+    signup = "Signing up...",
     login = "Logging in...",
-    resetPin = "Reseting pin...",
+    resetPin = "Resetting PIN...",
     checkDeviceStatus = "Checking device status…",
     fetchingUserBalance = "Fetching user balance...",
-    creatingSession = "Creating Session...",
+    creatingSession = "Authorizing a session... ",
     authorizingDevice = "Authorizing Device....",
     revokingDevice = "Revoking Device..."
 }

@@ -57,8 +57,11 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     }
     
     //MARK: - Sdk Interact Delegate
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowId: String,
+                             workflowContext: OstWorkflowContext,
+                             contextEntity: OstContextEntity) {
         
+        progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {

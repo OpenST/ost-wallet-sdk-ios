@@ -242,7 +242,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func getContentViewMinHeight() -> CGFloat {
-        return 430
+        return 450
     }
  
     //MARK: - Actions
@@ -428,11 +428,8 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             messageCode = .login
         }
         
-        if let window = UIApplication.shared.keyWindow {
-            progressIndicator = OstProgressIndicator(textCode: messageCode)
-            window.addSubview(progressIndicator!)
-            progressIndicator?.show()
-        }
+        progressIndicator = OstProgressIndicator(textCode: messageCode)
+        progressIndicator?.show()
     }
     
     func removeProgressIndicator() {
