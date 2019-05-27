@@ -18,6 +18,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     /// Atto Value Array
     var transferAmounts: [String]? = nil
     var ruleName: String? = nil
+    var ruleType: OstExecuteTransactionType? = nil
     var delegate: OstBaseDelegate?
     
     //MARK: - View LC
@@ -28,7 +29,8 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        let currentUser = CurrentUserModel.getInstance
+
         
         var transferBalance: Double = Double(0)
         
@@ -39,8 +41,8 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
                 var amount = "0"
                 if transferAmounts.count > index {
                     amount = transferAmounts[index]
-                    amount = OstUtils.fromAtto(amount)
-                    amount = amount.displayTransactionValue()
+                    amount = amount.toRedableFormat
+                    amount = amount.toDisplayTxValue()
                     transferBalance += Double(amount)!
                 }
                 let transfer = getTransferView(forAddress: transferAddress, withValue: amount)
@@ -49,16 +51,17 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
             }
         }
         
-        self.balanceLabel.text = "Balance: \(CurrentUserModel.getInstance.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
-        
         if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
-            self.ruleNameValueLabel.text = "Direct Transfer"
-
-            validateBalanceForDirectTransfer(transferBalance: transferBalance)
+            ruleType = OstExecuteTransactionType.DirectTransfer
+            self.balanceLabel.text = "Balance: \(currentUser.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")";
+            self.ruleNameValueLabel.text = "Direct Transfer";
+            validateBalanceForDirectTransfer(transferBalance: transferBalance);
         }
         else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
-            self.ruleNameValueLabel.text = "Pricer"
-            
+            ruleType = OstExecuteTransactionType.Pay
+            let balance: String = currentUser.toUSD(value: currentUser.balance) ?? "0"
+            self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
+            self.ruleNameValueLabel.text = "Pricer";
             validateBalanceForPricer(transferBalance: transferBalance)
         }
     }
@@ -76,8 +79,10 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     }
     
     func validateBalanceForPricer(transferBalance: Double) {
-        let availableBalance = Double(CurrentUserModel.getInstance.balance)!
-        if transferBalance < availableBalance {
+        let currentUser = CurrentUserModel.getInstance
+        let balance = currentUser.toUSD(value: currentUser.balance) ?? "0"
+        
+        if transferBalance < Double(balance)! {
             self.errorLabel.isHidden = true
             authorizeButton.isEnabled = true
         }else {
@@ -251,7 +256,14 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     func getTransferView(forAddress address: String, withValue value: String, transferUnit: String? = nil) -> UIView {
         
-        let transferUnit: String = transferUnit ?? (CurrentEconomy.getInstance.tokenSymbol ?? "")
+        let balanceText: String
+        switch ruleType! {
+        case .DirectTransfer:
+            let symbol = CurrentEconomy.getInstance.tokenSymbol ?? ""
+            balanceText = "\(value) \(symbol)"
+        case .Pay:
+            balanceText = "$ \(value)"
+        }
         
         let container = UIView()
         
@@ -259,7 +271,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         let balanceLabel = getBalanceLabel()
         
         addressLabel.text = address
-        balanceLabel.text = "\(value) \(transferUnit)"
+        balanceLabel.text = balanceText
         
         container.addSubview(addressLabel)
         container.addSubview(balanceLabel)

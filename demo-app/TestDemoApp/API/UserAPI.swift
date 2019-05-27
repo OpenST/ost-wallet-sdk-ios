@@ -101,11 +101,15 @@ class UserAPI: BaseAPI {
                         return
                     }
                     let resultType = data["result_type"] as! String
-                    guard let userData = data[resultType] as? [String: Any] else {
+                    guard let balanceData = data[resultType] as? [String: Any] else {
                         onFailure?(nil)
                         return
                     }
-                    onSuccess?(userData)
+                    
+                    if let pricePoint = data["price_point"] as? [String: Any] {
+                       CurrentUserModel.getInstance.pricePoint = pricePoint
+                    }
+                    onSuccess?(balanceData)
         },
                  onFailure: onFailure)
     }

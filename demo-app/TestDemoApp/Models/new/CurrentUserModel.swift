@@ -28,6 +28,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         }
     }
     var userBalanceDetails: [String: Any]? = nil
+    var pricePoint: [String: Any]? = nil
     var isUserLoggedIn: Bool = false
     
     var setupDeviceOnSuccess: ((OstUser, OstDevice) -> Void)?
@@ -146,8 +147,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         let userPinSalt = self.userPinSalt!;
         ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self.ostUserId!, passphrase: userPinSalt);
     }
-    
-    
+
 }
 
 extension CurrentUserModel {
@@ -218,8 +218,8 @@ extension CurrentUserModel {
     
     var balance: String {
         if let availabelBalance = userBalanceDetails?["available_balance"] {
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(availabelBalance)!)
-            return String(format: "%g", Double(amountVal)!)
+            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat
+            return amountVal.toDisplayTxValue()
         }
         return ""
     }
@@ -244,5 +244,54 @@ extension CurrentUserModel {
             }
         }
         return false
+    }
+    
+    var isCurrentDeviceStatusRegistered: Bool {
+        if let currentDevice = self.currentDevice,
+            let status = currentDevice.status {
+            
+            if status.caseInsensitiveCompare(ManageDeviceViewController.DeviceStatus.registered.rawValue) == .orderedSame{
+                return true
+            }
+        }
+        return false
+    }
+}
+
+//MARK: - Price Point
+extension CurrentUserModel {
+    var getUSDValue: Double? {
+        guard let pricePoint = self.pricePoint else {
+            return nil
+        }
+       
+        if let tokenId = self.tokenId,
+            let ostToken: OstToken = OstWalletSdk.getToken(tokenId) {
+            
+            let baseCurrency = ostToken.baseToken
+            if let currencyPricePoint = pricePoint[baseCurrency] as? [String: Any],
+                let strValue = ConversionHelper.toString(currencyPricePoint["USD"]) {
+                return Double(strValue)
+            }
+        }
+        return nil
+    }
+    
+    func toUSD(value: String) -> String? {
+        guard let usdValue = getUSDValue,
+            let doubleValue = Double(value) else {
+                return nil
+        }
+        
+        guard let token = OstWalletSdk.getToken(CurrentEconomy.getInstance.tokenId!),
+            let conversionFactor = token.conversionFactor,
+            let doubleConversionFactor = Double(conversionFactor) else {
+                
+                return nil
+        }
+        
+        let btToOstVal = (doubleValue/doubleConversionFactor)
+        
+        return String(usdValue * btToOstVal)
     }
 }

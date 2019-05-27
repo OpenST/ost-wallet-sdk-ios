@@ -8,6 +8,7 @@
 
 import UIKit
 import OstWalletSdk
+import LocalAuthentication
 
 class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
     
@@ -46,6 +47,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     override func getSelectorForNavBarBackbutton() -> Selector? {
         return nil
     }
+    
+    //MAKR: - View LC
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +113,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         tableView?.bottomAlignWithParent()
     }
     
-    //MAKR: - Table View Delegate
+    //MARK: - Table View Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -145,7 +148,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionTitle = UILabel()
         sectionTitle.numberOfLines = 1
-        sectionTitle.textColor = UIColor.gray
+        sectionTitle.textColor = UIColor.color(22, 141, 193)
         sectionTitle.translatesAutoresizingMaskIntoConstraints = false
         sectionTitle.font = UIFont(name: "Lato", size: 13)?.bold()
         switch section {
@@ -172,10 +175,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell: OptionTableViewCell = tableView.cellForRow(at: indexPath) as! OptionTableViewCell
         
-        let isEnable = cell.option.isEnable
-        if isEnable {
-            processSelectedOption(cell.option)
-        }
+        processSelectedOption(cell.option)
+        
     }
     
     func setupTableViewModels() {
@@ -205,9 +206,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "enabled" : "disabled"
-        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "Biomertic is \(biometricStatus)", isEnable: true)
-        if userDevice.isStatusRegistered {
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
+        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
+        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        if !canDeviceEvaluatePolicy {
             optionBiomertic.isEnable = false
         }
         
@@ -273,6 +275,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusRegistered {
+            
+        }
+        
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
         
@@ -285,24 +291,44 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .authorizeViaMnemonics {
-            destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+            if option.isEnable {
+                destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+            }else {
+                showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
+            }
         }
             
         else if option.type == .showDeviceQR {
-            destinationVC = ShowQRCodeViewController()
+            if option.isEnable {
+                destinationVC = ShowQRCodeViewController()
+            }else {
+                showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
+            }
         }
             
         else if option.type == .authorizeViaQR {
-            destinationVC = AuthorizeDeviceQRScanner()
+            if option.isEnable {
+                destinationVC = AuthorizeDeviceQRScanner()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .transactionViaQR {
-            destinationVC = TransactionQRScanner()
-            (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
+            if option.isEnable {
+                destinationVC = TransactionQRScanner()
+                (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .createSession {
-            destinationSVVC = CreateSessionViewController()
+            if option.isEnable {
+                destinationSVVC = CreateSessionViewController()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if  option.type  == .manageDevices {
@@ -310,7 +336,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .initiateDeviceRecovery {
-            destinationVC = InitiateDeviceRecoveryViewController()
+            if option.isEnable {
+                destinationVC = InitiateDeviceRecoveryViewController()
+            }else {
+                showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
+            }
         }
             
         else if option.type == .resetPin {
@@ -318,7 +348,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                     passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                     presenter: self)
             self.tabbarController?.hideTabBar()
-            return
+            
         }
             
         else if option.type == .abortRecovery {
@@ -326,19 +356,27 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance,
                                                                presenter: self)
             self.tabbarController?.hideTabBar()
-            return
-        }
-        
-        else if option.type == .biomerticStatus {
-            let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
-                                                 listner: self)
             
-            let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
-            OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                   enable: !isEnabled,
-                                                   delegate: workflowDelegate)
-            return
+        }
+            
+        else if option.type == .biomerticStatus {
+            if option.isEnable {
+                let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
+                OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
+                                                     listner: self)
+                
+                let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
+                OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                       enable: !isEnabled,
+                                                       delegate: workflowDelegate)
+                
+            }else {
+                showInfoAlert(title: "Biometric is not enrolled/activated for this device. Please enroll/activate biometric to use feature.",
+                              actionButtonTitle: "Open Settings") { (_) in
+                          
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                }
+            }
         }
         
         if nil == destinationVC && nil == destinationSVVC {
@@ -358,8 +396,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func openAuthorizeDeviceViewIfRequired() {
-        guard let currentDevice = CurrentUserModel.getInstance.currentDevice else {return}
-        if currentDevice.isStatusRegistered {
+        if CurrentUserModel.getInstance.isCurrentDeviceStatusRegistered {
             if let currentUser = CurrentUserModel.getInstance.ostUser {
                 if currentUser.isStatusActivated {
                     let authorizeDeviceVC = AuthorizeDeviceViewController()
@@ -428,6 +465,21 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
+        alert.show()
+    }
+    
+    func showInfoAlert(title: String,
+                       message: String? = nil,
+                       actionButtonTitle: String? = nil,
+                       actionButtonTapped: ((UIAlertAction) -> Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        if nil != actionButtonTitle && !actionButtonTitle!.isEmpty {
+            alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: actionButtonTapped))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         alert.show()
     }
 }

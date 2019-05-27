@@ -87,10 +87,7 @@ class TabBarViewController: UITabBarController {
     
     //MARK: - Tab Bar Delegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if let destinationVC = self.viewControllers![item.tag-1] as? UINavigationController,
-            let rootVC = destinationVC.viewControllers.first as? OptionsViewController{
-            rootVC.openAuthorizeDeviceViewIfRequired()
-        }
+       
     }
     
     func hideTabBar() {

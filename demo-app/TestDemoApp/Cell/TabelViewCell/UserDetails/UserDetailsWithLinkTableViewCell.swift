@@ -39,7 +39,7 @@ class UserDetailsWithLinkTableViewCell: UserDetailsWithCopyBtnTableViewCell {
     override func buttonTapped(_ sender: Any?) {
         if let urlString =  userDetailsWithLink.urlString {
             let webVC = WKWebViewController()
-            webVC.title = "Ost View"
+            webVC.title = "OST View"
             webVC.urlString = urlString
             webVC.showVC()
         }

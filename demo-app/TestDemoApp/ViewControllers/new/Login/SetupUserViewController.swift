@@ -314,7 +314,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     func validatePasswordTextField() -> Bool {
         if nil == passwordTextField.text
             || !passwordTextField.text!.isMatch("^[a-zA-Z0-9]*$")
-            || passwordTextField.text!.count < 5 {
+            || passwordTextField.text!.count < 8 {
             
             passwordTextFieldController?.setErrorText("Invalid password",
                                                       errorAccessibilityValue: nil);

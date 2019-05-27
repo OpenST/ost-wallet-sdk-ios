@@ -40,9 +40,9 @@ class UsersTableViewCell: BaseTableViewCell {
     
     func setBalance() {
         if let balance = userBalance["available_balance"] {
-            let amountVal = OstUtils.fromAtto(ConversionHelper.toString(balance)!)
+            let amountVal = ConversionHelper.toString(balance)!.toRedableFormat
             self.balanceLabel?.textColor = UIColor.black.withAlphaComponent(0.48)
-            self.balanceLabel?.text = "Balance: \(amountVal.displayTransactionValue())"
+            self.balanceLabel?.text = "Balance: \(amountVal.toDisplayTxValue())"
         }else {
             self.balanceLabel?.textColor = UIColor.color(255, 94, 84)
             self.balanceLabel?.text = "Wallet Setup Incomplete"

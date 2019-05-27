@@ -30,8 +30,6 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
-    private let OST_DECIMAL_VALUE = 18
-    
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
     
@@ -459,15 +457,19 @@ extension OstExecuteTransaction {
     /// - Returns: Currency value
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
-        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
-            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
+            throw OstError("w_et_gcviw_1", OstErrorText.invalidAmount)
         }
         
-        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
+            throw OstError("w_et_gcviw_2", OstErrorText.pricePointNotFound)
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
-        guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
-            throw OstError("w_et_gcviw_2", OstErrorText.callDataFormationFailed)
+        guard let decimal = OstUtils.toInt(fiatPricePoint["decimals"] as Any) else {
+            throw OstError("w_et_gcviw_3", OstErrorText.callDataFormationFailed)
         }
         
         let finalExponentComponent = decimal + components.exponent
@@ -490,18 +492,20 @@ extension OstExecuteTransaction {
             throw OstError("w_et_gtviwfp_2", OstErrorText.conversionFactorNotFound)
         }
         guard let btDecimal = token.decimals else {
-            throw OstError("w_et_gtviwfp_2", OstErrorText.btDecimalNotFound)
+            throw OstError("w_et_gtviwfp_3", OstErrorText.btDecimalNotFound)
         }
-        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
-            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
+            throw OstError("w_et_gtviwfp_4", OstErrorText.pricePointNotFound)
         }
-        
-        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatDecimal = OstUtils.toInt(fiatPricePoint["decimals"]) else {
+            throw OstError("w_et_gtviwfp_5", OstErrorText.pricePointNotFound)
+        }
+        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
         for amount in self.amounts {
             let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
                                                       btDecimal: btDecimal,
-                                                      ostDecimal: self.OST_DECIMAL_VALUE,
+                                                      fiatDecimal: fiatDecimal,
                                                       fiatAmount: BigInt(amount)!,
                                                       pricePoint: fiatValInString)    
             totalAmount += btAmount

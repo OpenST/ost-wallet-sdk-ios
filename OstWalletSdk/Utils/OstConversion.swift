@@ -20,14 +20,14 @@ class OstConversion {
     
     class func fiatToBt(ostToBtConversionFactor: String,
                         btDecimal: Int,
-                        ostDecimal: Int,
+                        fiatDecimal: Int,
                         fiatAmount: BigInt,
                         pricePoint: String) throws -> BigInt {
         
         let pricePointComponents = try OstConversion.getNumberComponents(pricePoint)
         let ost2BtComponents = try OstConversion.getNumberComponents(ostToBtConversionFactor)
         
-        let exponent = btDecimal + ost2BtComponents.exponent - ostDecimal - pricePointComponents.exponent
+        let exponent = btDecimal + ost2BtComponents.exponent - fiatDecimal - pricePointComponents.exponent
         var denominator = pricePointComponents.number
         var numerator = fiatAmount * ost2BtComponents.number
         

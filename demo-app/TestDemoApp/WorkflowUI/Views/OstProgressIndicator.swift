@@ -155,5 +155,6 @@ enum OstProgressIndicatorText: String {
     signup = "Siging up...",
     login = "Logging in...",
     resetPin = "Reseting pin...",
-    checkDeviceStatus = "Checking Device Status…"
+    checkDeviceStatus = "Checking device status…",
+    fetchingUserBalance = "Fetching user balance..."
 }

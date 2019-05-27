@@ -467,6 +467,7 @@
 		4B214A7C228C17CF006825FE /* Date+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Conversion.swift"; sourceTree = "<group>"; };
 		4B214A86228D781F006825FE /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		4B214A8A228D805E006825FE /* EmptyTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTransactionTableViewCell.swift; sourceTree = "<group>"; };
+		4B3416542296894E00F2CFFC /* TestDemoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestDemoApp.entitlements; sourceTree = "<group>"; };
 		4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
 		4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteractDelegate.swift; sourceTree = "<group>"; };
@@ -996,6 +997,7 @@
 		4BF8FDBA2240FA7600519779 /* TestDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B3416542296894E00F2CFFC /* TestDemoApp.entitlements */,
 				4BA4CB0E227DF30600A623ED /* Utils */,
 				4BA4CAFF227DA51600A623ED /* API */,
 				4B464F2F22794E7F00F1F4AF /* Helpers */,
@@ -1287,6 +1289,11 @@
 				TargetAttributes = {
 					4BF8FDB72240FA7600519779 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					4BF8FDCB2240FA7700519779 = {
 						CreatedOnToolsVersion = 10.1;
@@ -2026,6 +2033,7 @@
 			baseConfigurationReference = 0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TestDemoApp/TestDemoApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N83K86W6P4;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2050,6 +2058,7 @@
 			baseConfigurationReference = 529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TestDemoApp/TestDemoApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N83K86W6P4;
 				FRAMEWORK_SEARCH_PATHS = (
