@@ -212,17 +212,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func addUsernameTextFieldConstraints() {
-        usernameTextField.placeBelow(toItem: testEconomyTextField, constant: 1)
+        usernameTextField.placeBelow(toItem: testEconomyTextField, constant: 10)
         usernameTextField.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
     func addPasswordTextFieldConstraints() {
-        passwordTextField.placeBelow(toItem: usernameTextField, constant: 1)
+        passwordTextField.placeBelow(toItem: usernameTextField, constant: 10)
         passwordTextField.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
     func addSetupButtonConstraints() {
-        setupButton.placeBelow(toItem: passwordTextField, constant: 1)
+        setupButton.placeBelow(toItem: passwordTextField, constant: 16)
         setupButton.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
@@ -306,7 +306,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             usernameTextFieldController?.setErrorText(nil, errorAccessibilityValue: nil);
             return true
         }
-        usernameTextFieldController?.setErrorText("Invalid username",
+        usernameTextFieldController?.setErrorText("Username should be alphanumeric only.",
                                                   errorAccessibilityValue: nil);
         return false;
     }
@@ -316,7 +316,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             || !passwordTextField.text!.isMatch("^[a-zA-Z0-9]*$")
             || passwordTextField.text!.count < 8 {
             
-            passwordTextFieldController?.setErrorText("Invalid password",
+            passwordTextFieldController?.setErrorText("Password should be min 8 charater alphanumeric only.",
                                                       errorAccessibilityValue: nil);
             return false
         }

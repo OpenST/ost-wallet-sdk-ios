@@ -172,7 +172,7 @@ class UsersTableViewCell: BaseTableViewCell {
         self.titleLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel?.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
         self.titleLabel?.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-        self.titleLabel?.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+        self.titleLabel?.rightAnchor.constraint(lessThanOrEqualTo: parent.rightAnchor).isActive = true
     }
     
     func applyBalanceLabelConstraitns() {

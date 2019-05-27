@@ -227,14 +227,5 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
             )
             userDetails.append(recoveryOwnerKeyVM)
         }
-        
-       
-        
-        let platformEndPointVM : TableViewViewModel = TableViewViewModel(
-            viewModel: UserDetailsViewModel(title: "Platform End Point",
-                                            value: currentEconomy.saasApiEndpoint ?? ""),
-            type: .withCopy
-        )
-        userDetails.append(platformEndPointVM)
     }
 }
