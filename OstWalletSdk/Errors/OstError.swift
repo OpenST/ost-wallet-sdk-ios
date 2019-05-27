@@ -114,6 +114,9 @@ import Foundation
         if ( nil != errorInfo ) {
             userInfo[OstJSONErrorKeys.errorInfo] = errorInfo!;
         }
+        if ( nil != apiError ) {
+            userInfo[OstJSONErrorKeys.apiError] = apiError;
+        }
         return userInfo;
     }
     
