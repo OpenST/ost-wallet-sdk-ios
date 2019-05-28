@@ -298,9 +298,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
-        if CurrentUserModel.getInstance.isCurrentDeviceStatusRegistered {
-            
-        }
         
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
@@ -310,7 +307,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .viewMnemonics {
-            destinationSVVC = DeviceMnemonicsViewController()
+            if option.isEnable {
+                destinationSVVC = DeviceMnemonicsViewController()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .authorizeViaMnemonics {
@@ -325,7 +326,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             if option.isEnable {
                 destinationVC = ShowQRCodeViewController()
             }else {
-                showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
+                let currentUser = CurrentUserModel.getInstance
+                let userDevice = currentUser.currentDevice
+                
+                if !userDevice!.isStatusRegistered {
+                    showInfoAlert(title: "Device is not in registered state. You can use this function to authorize this device.")
+                }else if (currentUser.ostUser?.isStatusActivating ?? true) {
+                    showDeviceIsAuthroizingAlert()
+                }
             }
         }
             
@@ -371,18 +379,25 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .resetPin {
-            _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                    presenter: self)
-            self.tabbarController?.hideTabBar()
-            
+            if option.isEnable {
+                _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                        presenter: self)
+                self.tabbarController?.hideTabBar()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .abortRecovery {
-            _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                               passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                               presenter: self)
-            self.tabbarController?.hideTabBar()
+            if option.isEnable {
+                _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                   presenter: self)
+                self.tabbarController?.hideTabBar()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
             
         }
             
@@ -400,8 +415,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             }else {
                 showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings",
                               actionButtonTitle: "Open Settings") { (_) in
-                          
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
             }
         }
