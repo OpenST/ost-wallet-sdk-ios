@@ -45,7 +45,9 @@ extension String {
                 formattedDecimal = decimals
             }
         }
-        return "\(values[0]).\(formattedDecimal)"
+        
+        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
+        return "\(intPart).\(formattedDecimal)"
     }
 }
 

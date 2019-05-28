@@ -62,9 +62,7 @@ class UserDetailsWithCopyBtnTableViewCell: UserDetailsTableViewCell {
         
         progressIndicator = OstProgressIndicator()
         progressIndicator?.showSuccessAlert(withTitle: "\(userDetails.title) copied.",
-                        message: "",
             duration: 1,
             onCompletion: nil)
     }
-
 }

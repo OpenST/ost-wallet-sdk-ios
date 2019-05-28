@@ -250,7 +250,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
             ruleType = .Pay
             progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
-            amountToTransferStr = amountToTransferStr + "0000000000000000"
+            amountToTransferStr = OstUtils.toAtto(amountToTransferStr)
         }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
