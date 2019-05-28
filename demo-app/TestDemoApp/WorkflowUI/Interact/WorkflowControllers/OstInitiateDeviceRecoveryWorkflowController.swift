@@ -23,7 +23,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
        
         self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
-        self.getPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
+        self.getPinViewController = OstGetPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
         
         if ( nil == presenter.navigationController ) {

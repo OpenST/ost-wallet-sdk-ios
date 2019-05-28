@@ -94,7 +94,10 @@ class OstProgressIndicator: OstBaseView {
         showSuccessAlert(withTitle: title, onCompletion: onCompletion)
     }
     
-    func showSuccessAlert(withTitle title: String = "", message msg: String = "",  onCompletion:((Bool) -> Void)? = nil) {
+    func showSuccessAlert(withTitle title: String = "",
+                          message msg: String = "",
+                          duration: Double = 3,
+                          onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
             self?.alert = UIAlertController(title: """
@@ -120,7 +123,7 @@ class OstProgressIndicator: OstBaseView {
             imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
             self?.alert?.show()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
                  self?.hide(onCompletion: onCompletion)
             })
         }
@@ -137,6 +140,7 @@ class OstProgressIndicator: OstBaseView {
     
     func showFailureAlert(withTitle title: String = "",
                           message msg: String = "",
+                          duration: Double = 3,
                           onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
