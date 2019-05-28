@@ -16,7 +16,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     var tipLabel: UILabel?
     
     //MARK: - Variables
-    let collectionViewMargine: CGFloat = 30.0
+    let collectionViewMargine: CGFloat = 10.0
     var mnemonicsArray = [String]()
     var leadLabelText: String = "Write down your 12-word mnemonic phrase and store them securely"
     var tipLabelText: String = """

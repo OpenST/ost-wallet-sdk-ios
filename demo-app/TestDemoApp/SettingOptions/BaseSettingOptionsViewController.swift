@@ -65,13 +65,20 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
-                                            onCompletion: {[weak self] (_) in
-                                                
-                                               self?.onFlowInterrupted(workflowId: workflowId,
-                                                                       workflowContext: workflowContext,
-                                                                       error: error)
-        })
+        if error.messageTextCode != .userCanceled {
+            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
+                                                onCompletion: {[weak self] (_) in
+                                                    
+                                                    self?.onFlowInterrupted(workflowId: workflowId,
+                                                                            workflowContext: workflowContext,
+                                                                            error: error)
+            })
+        }else {
+            progressIndicator?.hide()
+            self.onFlowInterrupted(workflowId: workflowId,
+                                   workflowContext: workflowContext,
+                                   error: error)
+        }
     }
 
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
