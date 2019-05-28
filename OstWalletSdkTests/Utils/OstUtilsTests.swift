@@ -75,9 +75,9 @@ class OstUtilsTests: XCTestCase {
         
         //Sign with API-KEY = 0x6edc3804eb9f70b26731447b4e43955c5532f2195a6fe77cbed287dbd3c762ce
         
-        let signature = try OstAPISigner(userId: "6c6ea645-d86d-4449-8efa-3b54743f83de").sign(resource: resource, params: params)
-        Logger.log(message: "signature", parameterToPrint: signature)
-        XCTAssertEqual(signature, expectedSignature)
+//        let signature = try OstAPISigner(userId: "6c6ea645-d86d-4449-8efa-3b54743f83de").sign(resource: resource, params: params)
+//        Logger.log(message: "signature", parameterToPrint: signature)
+//        XCTAssertEqual(signature, expectedSignature)
     }
 
     func testPerformanceExample() {
@@ -107,6 +107,8 @@ class OstUtilsTests: XCTestCase {
         XCTAssertEqual(OstUtils.fromAtto( "1100000000000000000" ) , "1.1");
         XCTAssertEqual(OstUtils.fromAtto( "1000000000000000000000000000000000" ) , "1000000000000000");
         XCTAssertEqual(OstUtils.fromAtto( "1000000000000000100000000000000000" ) , "1000000000000000.1");
+        XCTAssertEqual(OstUtils.fromAtto( "100001000000000000000" ) , "100.001");
+        XCTAssertEqual(OstUtils.fromAtto( "1000000000000000" ) , "0.001");
     }
 
 }
