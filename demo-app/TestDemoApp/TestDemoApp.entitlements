@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:stagingost.com/demo-wallet/launch</string>
+		<string>applinks:stagingost.com</string>
 	</array>
 </dict>
 </plist>

@@ -29,7 +29,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     }
     
     override func getLeadLabelText() -> String {
-        return "Here are your authorized devices"
+        return "This is a list of all the devices that are authorized to access your wallet."
     }
     
     //MAKR: - Components

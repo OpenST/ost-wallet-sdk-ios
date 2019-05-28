@@ -398,7 +398,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                        delegate: workflowDelegate)
                 
             }else {
-                showInfoAlert(title: "Biometric is not enrolled/activated for this device. Please enroll/activate biometric to use feature.",
+                showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings",
                               actionButtonTitle: "Open Settings") { (_) in
                           
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)

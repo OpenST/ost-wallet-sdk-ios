@@ -20,8 +20,8 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     var mnemonicsArray = [String]()
     var leadLabelText: String = "Write down your 12-word mnemonic phrase and store them securely"
     var tipLabelText: String = """
-        Tips:
-        You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too.
+        Tip:
+        This mnemonic phrase can be used to authorize a device. The order of the words is important, so please be sure ot write it down carefully.
         """
     
     //MAKR: - Themer
@@ -86,6 +86,8 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
         let label = tipLabelThemer
         label.text = tipLabelText
         label.textAlignment = .left
+        label.textColor = UIColor.color(136, 136, 136)
+        label.font = OstFontProvider().get(size: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         tipLabel = label
