@@ -160,13 +160,13 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     func setupComponents() {
         progressIndicator?.progressText = "Executing Transaction..."
-
+        
         amountTextField.delegate = self
         spendingUnitTextField.delegate = self
         
         self.amountTextFieldController = MDCTextInputControllerOutlined(textInput: self.amountTextField)
         self.spendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: self.spendingUnitTextField);
-
+        
         weak var weakSelf = self
         sendButton.addTarget(weakSelf, action: #selector(weakSelf!.sendTokenButtonTapped(_ :)), for: .touchUpInside)
         cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
@@ -262,10 +262,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         progressIndicator?.show()
         
         var txMeta: [String: String] = [:];
-            txMeta["type"] = "user_to_user";
-            txMeta["name"] = "Sent to \(receiverName)";
-            //Let's build some json. Not the best way do it, but, works here.
-            txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
+        txMeta["type"] = "user_to_user";
+        txMeta["name"] = "Sent to \(receiverName)";
+        //Let's build some json. Not the best way do it, but, works here.
+        txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
         
         let tokenHolderAddress = userDetails["token_holder_address"] as! String
         OstWalletSdk.executeTransaction(userId: CurrentUserModel.getInstance.ostUserId!,
@@ -303,10 +303,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             amountTextFieldController?.setErrorText("Low balance to make this transaction",
                                                     errorAccessibilityValue: nil);
         }
-       
+        
         return isValidInput
     }
-        
+    
     
     @objc func cancelButtonTapped(_ sender: Any?) {
         self.navigationController?.popViewController(animated: true)
@@ -378,44 +378,29 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         progressIndicator?.progressMessage = "Waiting for transaction to complete."
     }
     
-    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        
-        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
+    override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        if workflowContext.workflowType == .executeTransaction {
+            progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                                actionButtonTitle: "View Transaction",
+                                                actionButtonTapped: {[weak self] (_) in
+                                     
+                                                  self?.showWebViewForTransaction()
+                                                    
+            }, onCompletion: nil)
+        }
     }
     
-    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-
-        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
-    }
-    
-    func showRequestAcknowledgedAlert() {
-        let alert = UIAlertController(title: """
-
-
-
-            Your Transaction has been broadcasted
-            """,
-                                      message: nil,
-                                      preferredStyle: .alert)
+    func showWebViewForTransaction() {
+        progressIndicator = nil
+        let webView = WKWebViewController()
+        let currentUser = CurrentUserModel.getInstance
+        let currentEconomy = CurrentEconomy.getInstance
         
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "transactionCheckmark")
+        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(currentUser.tokenHolderAddress!)"
+        webView.title = "OST View"
+        webView.urlString = tokenHoderURL
         
-        alert.view.addSubview(imageView)
-        
-        let parent = imageView.superview!
-        imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
+        webView.presentViewControllerWithNavigationController(self, animated: true, completion: nil)
     }
     
     func getUserUSDBalance() -> String {

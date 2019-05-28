@@ -89,18 +89,35 @@ class OstProgressIndicator: OstBaseView {
     }
     
     //MARK: - Success Alert
-    func showSuccessAlert(forWorkflowType type: OstWorkflowType, onCompletion:((Bool) -> Void)? = nil) {
+    func showSuccessAlert(forWorkflowType type: OstWorkflowType,
+                          duration: Double = 3,
+                          actionButtonTitle btnTitle: String? = nil,
+                          actionButtonTapped: ((UIAlertAction?) -> Void)? = nil,
+                          onCompletion:((Bool) -> Void)? = nil) {
+        
         let title = getWorkflowCompleteText(workflowType: type)
-        showSuccessAlert(withTitle: title, onCompletion: onCompletion)
+        showSuccessAlert(withTitle: title,
+                         duration: duration,
+                         actionButtonTitle: btnTitle,
+                         actionButtonTapped: actionButtonTapped,
+                         onCompletion: onCompletion)
     }
     
     func showSuccessAlert(withTitle title: String = "",
                           message msg: String = "",
                           duration: Double = 3,
+                          actionButtonTitle btnTitle: String? = nil,
+                          actionButtonTapped: ((UIAlertAction?) -> Void)? = nil,
                           onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
-            self?.alert = UIAlertController(title: """
+            
+            guard let strongSelf = self else {
+                onCompletion?(true)
+                return
+            }
+            
+            strongSelf.alert = UIAlertController(title: """
                 
                 
                 
@@ -114,14 +131,22 @@ class OstProgressIndicator: OstBaseView {
             imageView.contentMode = .scaleAspectFit
             imageView.image = UIImage(named: "transactionCheckmark")
             
-            self?.alert?.view.addSubview(imageView)
+            strongSelf.alert?.view.addSubview(imageView)
             
             let parent = imageView.superview!
             imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
             imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
-            self?.alert?.show()
+            
+            if nil != btnTitle {
+                strongSelf.alert?.addAction(UIAlertAction(title: btnTitle, style: .default, handler: {[weak self] (actionButton) in
+                    actionButtonTapped?(nil)
+                    self?.hide()
+                }))
+            }
+            
+            strongSelf.alert?.show()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
                  self?.hide(onCompletion: onCompletion)
@@ -156,7 +181,7 @@ class OstProgressIndicator: OstBaseView {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.contentMode = .scaleAspectFit
-            imageView.image = UIImage(named: "transactionCheckmark")
+            imageView.image = UIImage(named: "CrossIcon")
             
             self?.alert?.view.addSubview(imageView)
             

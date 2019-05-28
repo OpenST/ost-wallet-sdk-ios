@@ -62,22 +62,37 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
-                                            onCompletion: {[weak self] (_) in
-                                                
-                                                self?.onFlowInterrupted(workflowId: workflowId,
-                                                                        workflowContext: workflowContext,
-                                                                        error: error)
-        })
+        showFailureAlert(workflowId: workflowId,
+                         workflowContext: workflowContext,
+                         error: error)
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        showSuccessAlert(workflowId: workflowId,
+                         workflowContext: workflowContext,
+                         contextEntity: contextEntity)
+    }
+    
+    //MARK: - Alert
+    
+    func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
         progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
                                             onCompletion: {[weak self] (_) in
                                                 
                                                 self?.onFlowComplete(workflowId: workflowId,
                                                                      workflowContext: workflowContext,
                                                                      contextEntity: contextEntity)
+        })
+    }
+    
+    func showFailureAlert(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowInterrupted(workflowId: workflowId,
+                                                                        workflowContext: workflowContext,
+                                                                        error: error)
         })
     }
     
