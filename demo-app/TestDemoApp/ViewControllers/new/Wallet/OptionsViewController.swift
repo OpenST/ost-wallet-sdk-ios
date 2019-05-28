@@ -199,10 +199,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionSession.isEnable = false
         }
         
-        let optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
+        var optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
+        if (currentUser.ostUser?.isStatusActivating ?? true) {
+            optionResetPin.isEnable = false
+        }
         
         var optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
-        if !(currentUser.ostUser?.isStatusActivated ?? false){
+        if !(currentUser.ostUser?.isStatusActivated ?? false)
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             optionMnemonics.isEnable = false
         }
         
@@ -220,36 +225,54 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize This Device via Mnemonics", isEnable: true)
-        if  nil == userDevice || !userDevice!.isStatusRegistered {
+        if  nil == userDevice
+            || !userDevice!.isStatusRegistered
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             authorizeViaMnemonics.isEnable = false
         }
         
         let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
         var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
         let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        if !canDeviceEvaluatePolicy {
+        if !canDeviceEvaluatePolicy
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             optionBiomertic.isEnable = false
         }
         
         var showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
-        if  nil == userDevice || !userDevice!.isStatusRegistered {
+        if  nil == userDevice
+            || !userDevice!.isStatusRegistered
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             showDeviceQR.isEnable = false
         }
         
         let manageDevices = OptionVM(type: .manageDevices, name: "Manage Devices", isEnable: true)
         
         var transactionViaQR = OptionVM(type: .transactionViaQR, name: "Transaction via QR", isEnable: true)
-        if nil == userDevice || !userDevice!.isStatusAuthorized {
+        if nil == userDevice
+            || !userDevice!.isStatusAuthorized
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             transactionViaQR.isEnable = false
         }
         
         var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
-        if currentUser.isCurrentDeviceStatusAuthrozied || currentUser.isCurrentDeviceStatusAuthrozied {
+        if currentUser.isCurrentDeviceStatusAuthrozied
+            || currentUser.isCurrentDeviceStatusAuthrozied
+            || (currentUser.ostUser?.isStatusActivating ?? false)
+            || (currentUser.ostUser?.isStatusActivated ?? false) {
+            
             initialRecovery.isEnable = false
         }
         
         var abortRecovery = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: true)
-        if nil == userDevice || userDevice!.isStatusRevoked {
+        if nil == userDevice
+            || userDevice!.isStatusRevoked
+            || (currentUser.ostUser?.isStatusActivating ?? true) {
+            
             abortRecovery.isEnable = false
         }
         
@@ -332,7 +355,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if  option.type  == .manageDevices {
-            destinationVC = ManageDeviceViewController()
+            if option.isEnable {
+                destinationVC = ManageDeviceViewController()
+            }else {
+                showInfoAlert(title: "Once")
+            }
         }
             
         else if option.type == .initiateDeviceRecovery {

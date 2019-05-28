@@ -218,7 +218,7 @@ extension CurrentUserModel {
     
     var balance: String {
         if let availabelBalance = userBalanceDetails?["available_balance"] {
-            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat
+            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat()
             return amountVal.toDisplayTxValue()
         }
         return ""
