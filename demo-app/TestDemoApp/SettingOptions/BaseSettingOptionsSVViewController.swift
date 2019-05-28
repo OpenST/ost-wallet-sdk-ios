@@ -62,6 +62,10 @@ class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCo
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == .userCanceled {
+            progressIndicator?.hide()
+            return
+        }
         showFailureAlert(workflowId: workflowId,
                          workflowContext: workflowContext,
                          error: error)

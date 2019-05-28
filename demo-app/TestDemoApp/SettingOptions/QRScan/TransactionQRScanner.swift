@@ -26,7 +26,7 @@ class TransactionQRScanner: QRScannerViewController {
                                           message: "QR-Code scanned for executing transaction is invalid. Please scan valid QR-Code to executing transaction.",
                                           preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "ScanAgain", style: .default, handler: {[weak self] (alertAction) in
+            alert.addAction(UIAlertAction(title: "Scan Again", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
             }))
             
