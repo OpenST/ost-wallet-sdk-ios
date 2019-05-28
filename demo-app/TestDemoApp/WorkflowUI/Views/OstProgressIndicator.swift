@@ -306,10 +306,10 @@ class OstProgressIndicator: OstBaseView {
             return "Session could not be authorized. Please re-enter confirmation"
             
         case .getDeviceMnemonics:
-            return ""
+            return "Getting device mnemonics failed."
             
         case .performQRAction:
-            return ""
+            return "Invalid QR-Code passsed. Please Scan correct QR-Code to perform action."
             
         case .executeTransaction:
             return "You have no authorized sessions to sign a trasnaction, please authorize a session "

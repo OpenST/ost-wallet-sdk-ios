@@ -148,17 +148,30 @@ class EconomyScannerViewController: OstBaseViewController {
     }
     
     func scannerDataReceived(values: [String]?) {
+        
+        let showAlert: (() -> Void) = {[weak self] in
+            let alert = UIAlertController(title: "Invalid QR-Code", message: "Please scan valid QR-Code to select economy.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Scan", style: .default, handler: {[weak self] (_) in
+                self?.scanner?.startScanning()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] (_) in
+                self?.closeButtonTapped(nil)
+            }))
+            self?.present(alert, animated: true, completion: nil)
+        }
+        
         if (nil != values) && !values!.isEmpty {
             guard let qrData = values!.first,
                     let qrJsonData = EconomyScannerViewController.getQRJsonData(qrData) else {
-                scanner?.startScanning()
+                showAlert()
                 return
             }
             CurrentEconomy.getInstance.economyDetails = qrJsonData as [String : Any]
             
             self.dismiss(animated: true, completion: nil)
         }else {
-            scanner?.startScanning()
+            showAlert()
         }
     }
     

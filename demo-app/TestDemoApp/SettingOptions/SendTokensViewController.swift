@@ -285,10 +285,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         if isValidInput,
             var userBalance: Double = Double(CurrentUserModel.getInstance.balance),
-            var enteredAmount: Double = Double(self.amountTextField.text!) {
+            let enteredAmount: Double = Double(self.amountTextField.text!) {
             
             if isUsdTx {
-                enteredAmount = enteredAmount * 0.01
                 let usdBalance = getUserUSDBalance()
                 userBalance = Double(usdBalance)!
             }
