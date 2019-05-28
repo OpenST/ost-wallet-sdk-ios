@@ -250,19 +250,19 @@ class OstProgressIndicator: OstBaseView {
         
         switch workflowType {
         case .setupDevice:
-            return ""
+            return "Action completed!"
             
         case .activateUser:
-            return ""
+            return "Action completed!"
             
         case .addSession:
             return "A session has been authorized. You can now make in-app transactions seamlessly"
             
         case .getDeviceMnemonics:
-            return ""
+            return "Action completed!"
             
         case .performQRAction:
-            return ""
+            return "Action completed!"
             
         case .executeTransaction:
             return "Transaction complete!"
@@ -297,10 +297,10 @@ class OstProgressIndicator: OstBaseView {
         
         switch workflowType {
         case .setupDevice:
-            return ""
+            return "Something went wrong"
             
         case .activateUser:
-            return ""
+            return "Something went wrong"
             
         case .addSession:
             return "Session could not be authorized. Please re-enter confirmation"
