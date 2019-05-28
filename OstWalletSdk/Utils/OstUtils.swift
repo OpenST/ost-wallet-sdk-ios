@@ -256,6 +256,7 @@ public class OstUtils {
                 val = "0" + val;
                 diff = diff - 1;
             }
+            val = trimTrailingZeros(val)
             return "0." + val;
         }
 
@@ -270,7 +271,7 @@ public class OstUtils {
         if ( nil == fractionalBigInt || fractionalBigInt! <= BigInt(0) ) {
             fractionalPart = "";
         } else {
-            fractionalPart = trimTrailingZeros(fractionalBigInt!.description);
+            fractionalPart = trimTrailingZeros(fractionalPart);
         }
         
         if ( fractionalPart.count > 0 ) {
@@ -280,11 +281,6 @@ public class OstUtils {
         return intPart! + fractionalPart;
         
     }
-    
-    
-    
-    
-    
 }
 
 class HttpParam {

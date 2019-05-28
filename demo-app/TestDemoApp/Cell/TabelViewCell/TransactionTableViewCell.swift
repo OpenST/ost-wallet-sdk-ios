@@ -22,7 +22,7 @@ class TransactionTableViewCell: UsersTableViewCell {
             let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
             let fromUserId = transactionData["from_user_id"] as! String
             
-            var amountVal = (ConversionHelper.toString(transactionData["amount"])!).toRedableFormat
+            var amountVal = (ConversionHelper.toString(transactionData["amount"])!).toRedableFormat()
             amountVal = amountVal.toDisplayTxValue()
             if currentUserOstId.compare(fromUserId) == .orderedSame {
                 self.overlayImage.image = UIImage(named: "SentTokens")

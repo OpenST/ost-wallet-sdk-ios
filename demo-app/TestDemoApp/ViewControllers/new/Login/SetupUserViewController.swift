@@ -345,16 +345,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                                  listner: self!)
         }
         
-        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        if !canDeviceEvaluatePolicy {
-            let alert = UIAlertController(title: "Biometric is not entrolled/activated", message: "Biometric is not ", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Activate User", style: .default, handler: continueWorkflow))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }else {
-            continueWorkflow(nil)
-        }
-    
+        continueWorkflow(nil)
     }
     
     func onSigupFailed(_ apiError: [String: Any]?) {

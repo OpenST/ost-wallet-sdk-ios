@@ -52,10 +52,13 @@ extension String {
 }
 
 extension String {
-    var toRedableFormat: String {
+    func toRedableFormat(isUSDTx: Bool = false) -> String {
         let economyDecimals = CurrentEconomy.getInstance.getEconomyDecimals()
         
         if economyDecimals == 6 {
+            if isUSDTx {
+                return OstUtils.fromAtto(self)
+            }
             return OstUtils.fromMicro(self)
         }
         else if economyDecimals == 18 {
