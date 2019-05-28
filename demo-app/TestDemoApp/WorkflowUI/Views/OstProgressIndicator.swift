@@ -236,7 +236,7 @@ class OstProgressIndicator: OstBaseView {
             return "Revocation request received"
             
         case .resetPin:
-            return "Reset request received. This request may up to 60 seconds to process"
+            return "Reset request received. This request may take up to 60 seconds to process"
             
         case .logoutAllSessions:
             return "Revoking all session request received"
