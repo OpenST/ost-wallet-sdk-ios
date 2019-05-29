@@ -23,7 +23,7 @@ class TransactionTableViewCell: UsersTableViewCell {
             let fromUserId = transactionData["from_user_id"] as! String
             
             var amountVal = (ConversionHelper.toString(transactionData["amount"])!).toRedableFormat()
-            amountVal = amountVal.toDisplayTxValue()
+            amountVal = amountVal.toRoundUpTxValue()
             if currentUserOstId.compare(fromUserId) == .orderedSame {
                 self.overlayImage.image = UIImage(named: "SentTokens")
                 self.amountLabel.text = "- \(amountVal)"

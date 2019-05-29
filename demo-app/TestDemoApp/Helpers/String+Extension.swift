@@ -32,7 +32,6 @@ extension String {
         return self[indexPosition]
     }
     
-    
     func toDisplayTxValue() -> String {
         var formattedDecimal: String = "00"
         
@@ -48,6 +47,24 @@ extension String {
         
         let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
         return "\(intPart).\(formattedDecimal)"
+    }
+    
+    func toRoundUpTxValue() -> String {
+        var formattedDecimal: String = "00"
+        
+        let values = self.components(separatedBy: ".")
+        if values.count == 2 {
+            let decimalVal: String = values[1]
+            
+            let decimals = decimalVal.substringTill(2)
+            if !decimals.isEmpty {
+                formattedDecimal = decimals
+            }
+        }
+        
+        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
+        let doubleVal = Double("\(intPart).\(formattedDecimal)")!
+        return String(format: "%.2f", doubleVal)
     }
 }
 

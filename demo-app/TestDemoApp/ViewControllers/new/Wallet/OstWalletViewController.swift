@@ -418,7 +418,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             return
         }
         isFetchingUserBalance = true
-        UserAPI.getBalance(onSuccess: {[weak self] (apiResponse) in
+        UserAPI.getCurrentUserBalance(onSuccess: {[weak self] (apiResponse) in
             self?.onBalanceFetchSuccess(apiResponse: apiResponse)
         }) {[weak self] (apiError) in
             self?.isFetchingUserBalance = false

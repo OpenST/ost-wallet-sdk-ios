@@ -67,7 +67,7 @@ class TransactionQRScanner: QRScannerViewController {
     //MARK
     override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
-        UserAPI.getBalance()
+        UserAPI.getCurrentUserBalance()
         
         let showTokenHolder: ((UIAlertAction?) -> Void) = {[weak self] (_) in
             
@@ -79,7 +79,7 @@ class TransactionQRScanner: QRScannerViewController {
         }
         
         progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
-                                            actionButtonTitle: "View Transaction",
+                                            actionButtonTitle: "View Details",
                                             actionButtonTapped: showTokenHolder,
                                             onCompletion: {[weak self] (_) in
                                                 

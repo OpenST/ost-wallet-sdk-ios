@@ -90,29 +90,44 @@ class UserAPI: BaseAPI {
                   onFailure: onFailure)
     }
     
-    class func getBalance(onSuccess: (([String: Any]?) -> Void)? = nil,
-                          onFailure: (([String: Any]?) -> Void)? = nil) {
+    class func getCurrentUserBalance(onSuccess: (([String: Any]?) -> Void)? = nil,
+                                     onFailure: (([String: Any]?) -> Void)? = nil) {
         
-        self.get(resource: "/users/\(CurrentUserModel.getInstance.appUserId!)/balance",
-                 params: nil,
-                 onSuccess: { (apiParams) in
-                    guard let data = apiParams?["data"] as? [String: Any] else {
-                        onFailure?(nil)
-                        return
-                    }
-                    let resultType = data["result_type"] as! String
-                    guard let balanceData = data[resultType] as? [String: Any] else {
-                        onFailure?(nil)
-                        return
-                    }
-                    
-                    if let pricePoint = data["price_point"] as? [String: Any] {
-                       CurrentUserModel.getInstance.pricePoint = pricePoint
-                    }
-                    CurrentUserModel.getInstance.userBalanceDetails = balanceData
-                    onSuccess?(balanceData)
+       self.getUserBalance(userId: CurrentUserModel.getInstance.appUserId!,
+                           onSuccess: { (userBalance) in
+                            
+                            CurrentUserModel.getInstance.userBalanceDetails = userBalance
+                            onSuccess?(userBalance)
+                            
+       },
+                           onFailure: onFailure)
+        
+    }
+    
+    class func getUserBalance(userId: String,
+                              onSuccess: (([String: Any]?) -> Void)? = nil,
+                              onFailure: (([String: Any]?) -> Void)? = nil) {
+        
+        self.get(resource: "/users/\(userId)/balance",
+            params: nil,
+            onSuccess: { (apiParams) in
+                guard let data = apiParams?["data"] as? [String: Any] else {
+                    onFailure?(nil)
+                    return
+                }
+                let resultType = data["result_type"] as! String
+                guard let balanceData = data[resultType] as? [String: Any] else {
+                    onFailure?(nil)
+                    return
+                }
+                
+                if let pricePoint = data["price_point"] as? [String: Any] {
+                    CurrentUserModel.getInstance.pricePoint = pricePoint
+                }
+                
+                onSuccess?(balanceData)
         },
-                 onFailure: onFailure)
+            onFailure: onFailure)
     }
     
     class func getUserDetails(onSuccess: (([String: Any]?) -> Void)? = nil,

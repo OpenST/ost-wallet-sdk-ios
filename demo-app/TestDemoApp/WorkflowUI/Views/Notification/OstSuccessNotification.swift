@@ -88,7 +88,7 @@ class OstSuccessNotification: OstNotification {
     //MAKR: - Action Button Title
     override func getActionButtonTitle() -> String {
         if notificationModel.workflowContext.workflowType == .executeTransaction {
-            return "View Transaction"
+            return "View Details"
         }
         return ""
     }

@@ -537,7 +537,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         alert.show()
     }
     
-    
     func logoutSessions() {
         progressIndicator = OstProgressIndicator(textCode: .revokingAllSessions)
         progressIndicator?.show()

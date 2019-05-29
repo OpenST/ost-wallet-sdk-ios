@@ -117,7 +117,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             return
         }
         isBalanceApiInprogress = true
-        UserAPI.getBalance(onSuccess: {[weak self] (_) in
+        UserAPI.getCurrentUserBalance(onSuccess: {[weak self] (_) in
             self?.onRequestComplete()
         }) {[weak self] (_) in
             self?.onRequestComplete()
@@ -386,7 +386,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .executeTransaction {
             progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
-                                                actionButtonTitle: "View Transaction",
+                                                actionButtonTitle: "View Details",
                                                 actionButtonTapped: {[weak self] (_) in
                                      
                                                   self?.showWebViewForTransaction()
