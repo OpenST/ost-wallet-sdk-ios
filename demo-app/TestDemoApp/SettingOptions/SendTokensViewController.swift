@@ -137,10 +137,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let currentUse = CurrentUserModel.getInstance
         let currentEconomy = CurrentEconomy.getInstance
         if isUsdTx {
-            balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")"
-        }else {
             let usdBalance = self.getUserUSDBalance()
             balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
+        }else {
+            balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")" 
         }
     }
     
