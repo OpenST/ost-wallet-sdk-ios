@@ -10,7 +10,7 @@
 
 import Foundation
 import UIKit
-protocol CanConfigureEconomyProtocol: UIViewController {
+protocol CanConfigureEconomyProtocol {
     func defaultEconomySet(payload:[String:Any?]);
     func newEconomySet(payload:[String:Any?]);
     func newEconomyNotSet();

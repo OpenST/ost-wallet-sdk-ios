@@ -158,17 +158,19 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         }
         
         //Ensure last view controller can configure economy.
-        if let canConfigureVc = vc as? CanConfigureEconomyProtocol {
+        if vc is CanConfigureEconomyProtocol {
             //Ask for confirmation.
             let alert = UIAlertController(title: "Change Economy", message: "The app is configured for \(kEconomy.tokenName!) economy. Would you like to switch to \(gTokenName) economy ?", preferredStyle: .alert);
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {[weak canConfigureVc] (_) in
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {[weak vc] (_) in
+                let canConfigureVc = vc as? CanConfigureEconomyProtocol;
                 CurrentEconomy.getInstance.economyDetails = economyPayload! as [String : Any];
                 canConfigureVc?.newEconomySet(payload: economyPayload!);
                 canConfigureVc?.clearAppUrlData();
             }));
             
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: {[weak canConfigureVc] (_) in
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: {[weak vc] (_) in
+                let canConfigureVc = vc as? CanConfigureEconomyProtocol;
                 canConfigureVc?.newEconomyNotSet();
                 canConfigureVc?.clearAppUrlData();
             }));
