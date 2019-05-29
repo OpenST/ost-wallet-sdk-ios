@@ -352,6 +352,56 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         reloadDataIfNeeded()
     }
     
+    //MARK: - REFRESH USER DATA
+    func refreshUsersData(appUserIds:[String]) {
+        //Make api call.
+        var payload:[String:Any] = [:];
+        payload["app_user_ids"] = "[\(appUserIds.joined(separator: ","))]";
+        UserAPI.getUsers(meta: payload,
+                         onSuccess: {[weak self] (apiResponse) in
+                            if let strongSelf = self {
+                                strongSelf.onUserDataUpdated(apiResponse)
+                            }
+            },
+                         onFailure: {(apiResponse) in
+                            //Ignore.
+                            
+        });
+    }
+    
+    func onUserDataUpdated(_ apiResponse: [String: Any]?) {
+        guard let response = apiResponse else {return}
+        guard let data = response["data"] as? [String: Any] else {return}
+        if let balances = data["balances"] as? [String: Any] {
+            userBalances.merge(dict: balances)
+        }
+        
+        guard let users = data["users"] as? [[String: Any]] else {return}
+        var newData:[String: [String: Any]] = [:];
+        for var newUserData in users {
+            guard let appUserId = ConversionHelper.toString(newUserData["app_user_id"]) else {continue;};
+            newData[appUserId] = newUserData;
+        }
+        var cnt = -1;
+        for var existingUser in tableDataArray {
+            cnt = cnt + 1;
+            guard let appUserId = ConversionHelper.toString(existingUser["app_user_id"]) else {continue;};
+            if ( nil == newData[appUserId] ) {
+                continue;
+            }
+            existingUser.merge(dict: newData[appUserId]!);
+            tableDataArray[ cnt ] = existingUser;
+        }
+        refreshVisibleCells();
+    }
+    
+    func refreshVisibleCells() {
+        let isScrolling: Bool = (self.usersTableView.isDragging) || (self.usersTableView.isDecelerating)
+        if !isScrolling {
+            self.usersTableView.reloadData();
+        }
+    }
+    
     //MARK: - Action
     func sendButtonTapped(_ userDetails: [String: Any]?) {
         

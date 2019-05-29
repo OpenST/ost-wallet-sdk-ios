@@ -16,10 +16,15 @@ public class OstUtils {
         if val == nil {
             return nil
         }
+                
         if (val is String){
             return (val as! String)
-        }else if (val is Int){
+        } else if (val is Int){
             return String(val as! Int)
+        } else if (val is Double ) {
+            return String(val as! Double)
+        } else if (val is Float ) {
+            return String(val as! Float)
         }
         return nil
     }
