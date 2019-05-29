@@ -65,6 +65,30 @@ class TransactionQRScanner: QRScannerViewController {
     }
     
     //MARK
+    override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+        UserAPI.getBalance()
+        
+        let showTokenHolder: ((UIAlertAction?) -> Void) = {[weak self] (_) in
+            
+            CurrentUserModel.getInstance.showTokenHolderInView()
+            self?.progressIndicator = nil
+            self?.onFlowComplete(workflowId: workflowId,
+                                 workflowContext: workflowContext,
+                                 contextEntity: contextEntity)
+        }
+        
+        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                            actionButtonTitle: "View Transaction",
+                                            actionButtonTapped: showTokenHolder,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowComplete(workflowId: workflowId,
+                                                                     workflowContext: workflowContext,
+                                                                     contextEntity: contextEntity)
+        })
+    }
+    
     override func onFlowComplete(workflowId: String,
                                  workflowContext: OstWorkflowContext,
                                  contextEntity: OstContextEntity) {

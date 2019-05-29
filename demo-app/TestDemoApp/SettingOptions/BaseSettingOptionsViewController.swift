@@ -82,6 +82,10 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     }
 
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
                                             onCompletion: {[weak self] (_) in
                                                 

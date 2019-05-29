@@ -397,15 +397,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     func showWebViewForTransaction() {
         progressIndicator = nil
-        let webView = WKWebViewController()
-        let currentUser = CurrentUserModel.getInstance
-        let currentEconomy = CurrentEconomy.getInstance
-        
-        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(currentUser.tokenHolderAddress!)"
-        webView.title = "OST View"
-        webView.urlString = tokenHoderURL
-        
-        webView.presentViewControllerWithNavigationController(self, animated: true, completion: nil)
+        CurrentUserModel.getInstance.showTokenHolderInView()
     }
     
     func getUserUSDBalance() -> String {

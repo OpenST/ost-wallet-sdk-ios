@@ -160,7 +160,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         //Ensure last view controller can configure economy.
         if vc is CanConfigureEconomyProtocol {
             //Ask for confirmation.
-            let alert = UIAlertController(title: "Change Economy", message: "The app is configured for \(kEconomy.tokenName!) economy. Would you like to switch to \(gTokenName) economy ?", preferredStyle: .alert);
+            let alert = UIAlertController(title: "Change Economy", message: "The app is configured for \(kEconomy.tokenName!) economy. Would you like to switch to \(gTokenName) economy?", preferredStyle: .alert);
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {[weak vc] (_) in
                 let canConfigureVc = vc as? CanConfigureEconomyProtocol;

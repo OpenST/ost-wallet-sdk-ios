@@ -109,6 +109,7 @@ class UserAPI: BaseAPI {
                     if let pricePoint = data["price_point"] as? [String: Any] {
                        CurrentUserModel.getInstance.pricePoint = pricePoint
                     }
+                    CurrentUserModel.getInstance.userBalanceDetails = balanceData
                     onSuccess?(balanceData)
         },
                  onFailure: onFailure)

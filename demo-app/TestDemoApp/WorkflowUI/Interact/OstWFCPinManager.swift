@@ -40,7 +40,7 @@ extension OstWorkflowCallbacks {
         userPin = pin;
         self.showLoader(progressText: .unknown);
         self.passphrasePrefixDelegate?.getPassphrase(ostUserId: self.userId,
-                                          ostPassphrasePrefixAcceptDelegate: self);
+                                                     ostPassphrasePrefixAcceptDelegate: self);
     }
     
     func cancelPinAcceptor() {

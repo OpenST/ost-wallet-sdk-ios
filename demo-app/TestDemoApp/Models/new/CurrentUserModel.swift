@@ -256,6 +256,18 @@ extension CurrentUserModel {
         }
         return false
     }
+    
+    func showTokenHolderInView() {
+        
+        let webView = WKWebViewController()
+        let currentEconomy = CurrentEconomy.getInstance
+        
+        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(tokenHolderAddress!)"
+        webView.title = "OST View"
+        webView.urlString = tokenHoderURL
+        
+        webView.showVC()
+    }
 }
 
 //MARK: - Price Point
