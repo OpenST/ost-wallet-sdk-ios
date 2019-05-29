@@ -140,7 +140,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             let usdBalance = self.getUserUSDBalance()
             balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
         }else {
-            balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")" 
+            balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")"
         }
     }
     
@@ -321,8 +321,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     //MARK: - TextField Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if ( spendingUnitTextField == textField && !isShowingActionSheet ) {
-            showUnitActionSheet();
+        if ( spendingUnitTextField == textField ) {
+            if  !isShowingActionSheet {
+                showUnitActionSheet();
+            }
             return false;
         }
         return true;
@@ -358,6 +360,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         let actionSheet = UIAlertController(title: "Select Transfer Currency", message: "Please choose the currency to price transaction. Choosing USD will mean that the chosen number of USD worth of tokens will be transferred.", preferredStyle: UIAlertController.Style.actionSheet);
         
         let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.isShowingActionSheet = false;
             self?.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self?.isUsdTx = false
             self?.updateUserBalanceUI()
@@ -366,6 +369,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         actionSheet.addAction(directTransafer);
         
         let pricer = UIAlertAction(title: "USD", style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.isShowingActionSheet = false;
             self?.spendingUnitTextField.text = "USD";
             self?.isUsdTx = true
             self?.updateUserBalanceUI()

@@ -35,12 +35,12 @@ class TransactionTableViewCell: UsersTableViewCell {
                 self.amountLabel.textColor = UIColor.color(67, 139, 173)
                 name = "Received Tokens"
             }
-            
+                        
             if let metaProperty = transactionData["meta_property"] as? [String: Any],
                 let type = metaProperty["type"] as? String {
                 if type.caseInsensitiveCompare("company_to_user") == .orderedSame {
                     self.overlayImage.image = UIImage(named: "OstGrantReceived")
-                    name = "Welcome to Demo Wallet"
+                    name = metaProperty["name"] as? String ?? ""
                 }
             }
             
