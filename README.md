@@ -321,6 +321,11 @@ func registerDevice(
         delegate: OstDeviceRegisteredDelegate
         )
 ```
+| Argument | Description |
+|---|---|
+| **apiParams** <br> **[String: Any]**	|	Device information for registration	|
+| **delegate** <br> **OstDeviceRegisteredDelegate**	| **delegate.deviceRegistered(_ apiResponse: [String: Any] )** should be called to pass the newly created device entity back to SDK. <br>In case data if there is some issue while registering the device then the current workflow should be canceled  by calling **delegate.cancelFlow()** |
+
 ```Swift
 /// Pin needed to check the authenticity of the user.
 /// Developers should show pin dialog on this callback.
@@ -333,6 +338,14 @@ func getPin(
         delegate: OstPinAcceptDelegate
         )
 ```
+
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	| Unique identifier of the user |
+| **delegate** <br> **OstPinAcceptDelegate**	| **delegate.pinEntered(_ userPin: String, passphrasePrefix: String)** should be called to pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **delegate.cancelFlow()**|
+
+
+
 ```Swift    
 /// Inform SDK user about invalid pin.
 /// Developers should show invalid pin error and ask for pin again on this callback.
@@ -345,12 +358,26 @@ func invalidPin(
         delegate: OstPinAcceptDelegate
         )
 ```
+
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	|	Unique identifier of the user	|
+| **delegate** <br> **OstPinAcceptDelegate**	| **delegate.pinEntered(_ userPin: String, passphrasePrefix: String)** should be called to again pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **delegate.cancelFlow()** |
+
+
+
 ```Swift
 /// Inform SDK user that entered pin is validated.
 /// Developers should dismiss pin dialog on this callback.
 /// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
 func pinValidated(_ userId: String)
 ```
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	| Unique identifier of the user |
+
+
+
 ```Swift
 /// Inform SDK user the the flow is complete.
 ///
@@ -361,6 +388,13 @@ func flowComplete(
         ostContextEntity: OstContextEntity
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	|	Information about the workflow	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
+
+
+
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
 /// Developers should dismiss pin dialog (if open) on this callback.
@@ -372,6 +406,11 @@ func flowInterrupted(
         error: OstError
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow |
+| **ostError** <br> **OstError**	| ostError object will have details about the error that interrupted the flow |
+
 ```Swift
 
 /// Verify data which is scanned from QR-Code
@@ -386,6 +425,12 @@ func verifyData(
         delegate: OstValidateDataDelegate
         )
 ```
+| Argument | Description |
+|---|---|
+| **workflowContext** <br> **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
+| **delegate** <br> **OstValidateDataDelegate**	| **delegate.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by calling **delegate.cancelFlow()**|
+
 ```Swift
 /// Acknowledge user about the request which is going to make by SDK.
 ///
@@ -397,6 +442,10 @@ func requestAcknowledged(
         ostContextEntity: OstContextEntity
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
 
 ## Reference
 
