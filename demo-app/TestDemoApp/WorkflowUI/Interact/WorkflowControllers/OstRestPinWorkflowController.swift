@@ -73,6 +73,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
             self.confirmNewPinViewController!.showInvalidPin(errorMessage: "Please enter same pin as new pin.")
         }
         else {
+            showLoader(progressText: .resetPin);
             passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
         } 
     }

@@ -72,6 +72,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     /// Mark - OstPinAcceptDelegate
     override func pinProvided(pin: String) {
         self.userPin = pin;
+        showLoader(progressText: .initiateDeviceRecovery);
         passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
     }
     
