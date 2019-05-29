@@ -126,8 +126,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     @objc func onRequestComplete() {
         isBalanceApiInprogress = false
-        progressIndicator?.hide()
-        progressIndicator = nil
         if didUserTapSendTokens {
             didUserTapSendTokens = false
             self.perform(#selector(sendTokenButtonTapped(_ :)), with: nil, afterDelay: 0.3)
@@ -233,6 +231,8 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             progressIndicator?.show()
             return
         }
+        progressIndicator?.hide()
+        progressIndicator = nil
         
         if !isValidInputPassed() {
             return
