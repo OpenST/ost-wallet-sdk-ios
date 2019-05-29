@@ -86,6 +86,11 @@ extension String {
     }
     
     func toSmallestUnit(isUSDTx: Bool) -> String {
+        
+        if isUSDTx {
+            return OstUtils.toAtto(self)
+        }
+        
         let economyDecimals = CurrentEconomy.getInstance.getEconomyDecimals()
         if economyDecimals == 6 {
             return OstUtils.toMicro(self)

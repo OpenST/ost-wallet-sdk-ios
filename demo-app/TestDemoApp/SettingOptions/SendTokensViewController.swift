@@ -125,6 +125,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     @objc func onRequestComplete() {
+        updateUserBalanceUI()
         isBalanceApiInprogress = false
         if didUserTapSendTokens {
             didUserTapSendTokens = false
@@ -132,12 +133,20 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }
     }
     
+    func updateUserBalanceUI() {
+        let currentUse = CurrentUserModel.getInstance
+        let currentEconomy = CurrentEconomy.getInstance
+        if isUsdTx {
+            balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")"
+        }else {
+            let usdBalance = self.getUserUSDBalance()
+            balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let currentUse = CurrentUserModel.getInstance
-        let currentEconomy = CurrentEconomy.getInstance
-        balanceLabel.text = "Balance: \(currentUse.balance) \(currentEconomy.tokenSymbol ?? "")"
+        updateUserBalanceUI()
     }
     
     //MAKR: - Add Subview
@@ -249,12 +258,12 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
             ruleType = .Pay
             progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
-            amountToTransferStr = OstUtils.toAtto(amountToTransferStr)
         }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
-            amountToTransferStr = amountToTransferStr.toSmallestUnit(isUSDTx: false)
         }
+        
+        amountToTransferStr = amountToTransferStr.toSmallestUnit(isUSDTx: isUsdTx)
         
         progressIndicator = OstProgressIndicator(progressText: progressText)
         getApplicationWindow()?.addSubview(progressIndicator!)
@@ -348,19 +357,18 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         isShowingActionSheet = true;
         let actionSheet = UIAlertController(title: "Select Transfer Currency", message: "Please choose the currency to price transaction. Choosing USD will mean that the chosen number of USD worth of tokens will be transferred.", preferredStyle: UIAlertController.Style.actionSheet);
         
-        let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: { (UIAlertAction) in
-            self.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
-            self.isUsdTx = false
-            let balance = CurrentUserModel.getInstance.balance
-            self.balanceLabel.text = "Balance: \(balance.toDisplayTxValue()) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
+        let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
+            self?.isUsdTx = false
+            self?.updateUserBalanceUI()
+            
         });
         actionSheet.addAction(directTransafer);
         
-        let pricer = UIAlertAction(title: "USD", style: .default, handler: { (UIAlertAction) in
-            self.spendingUnitTextField.text = "USD";
-            self.isUsdTx = true
-            let usdBalance = self.getUserUSDBalance()
-            self.balanceLabel.text = "Balance: $ \(usdBalance.toDisplayTxValue())"
+        let pricer = UIAlertAction(title: "USD", style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.spendingUnitTextField.text = "USD";
+            self?.isUsdTx = true
+            self?.updateUserBalanceUI()
         });
         actionSheet.addAction(pricer);
         
