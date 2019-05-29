@@ -87,6 +87,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             showConfirmPinViewController();
         } else if ( self.userPin!.compare(pin) == .orderedSame ){
             //Fetch salt and inititate workflow.
+            showLoader(progressText: .activingUser);
             passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
         } else {
             //Show error.

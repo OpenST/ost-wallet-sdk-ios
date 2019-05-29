@@ -186,9 +186,13 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func showLoader(progressText: OstProgressIndicatorTextCode) {
+        if ( nil != progressIndicator ) {
+            if ( nil != progressIndicator!.alert ) {
+                //progressIndicator is showing.
+                return;
+            }
+        }
         progressIndicator = OstProgressIndicator(textCode: progressText)
-        let window = getWindow()
-        window.addSubview(progressIndicator!)
         progressIndicator?.show()
     }
     
@@ -200,7 +204,6 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
 }
 
 public extension UIAlertController {
-    @available(*, deprecated, message: "Please avoid using this method.")
     func show() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()
