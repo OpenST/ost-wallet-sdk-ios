@@ -33,6 +33,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var deviceOptions = [OptionVM]()
     
     weak var tabbarController: TabBarViewController?
+    var progressIndicator: OstProgressIndicator? = nil
     
     //MAKR: - View LC
     
@@ -456,19 +457,24 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice
             || workflowContext.workflowType == .updateBiometricPreference {
+            
             setupTableViewModels()
+        }
+        
+        if workflowContext.workflowType == .logoutAllSessions {
+             progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         if workflowContext.workflowType == .logoutAllSessions {
-            
+            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
-            
+            progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
@@ -497,12 +503,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             }))
             
             alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
-                self?.tabbarController?.hideTabBar()
-                let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                                                    presenter: self!)
-                OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
-                                                     listner: self!)
+               self?.showAlertForRevokeAllSessions()
             }))
         }
         
@@ -524,5 +525,30 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         alert.show()
+    }
+    
+    func showAlertForRevokeAllSessions() {
+        
+        let alert = UIAlertController(title: "Sure you want to revoke sessions?", message: "This would revoke all other device sessions too. Sessions needs to be re-added with PIN.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Revoke Sessions", style: .default, handler: {[weak self] (_) in
+            self?.logoutSessions()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.show()
+    }
+    
+    
+    func logoutSessions() {
+        progressIndicator = OstProgressIndicator(textCode: .revokingAllSessions)
+        progressIndicator?.show()
+        
+        if let ostUserId = CurrentUserModel.getInstance.ostUserId {
+            let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: ostUserId)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
+                                                 listner: self)
+        
+            OstWalletSdk.logoutAllSessions(userId: ostUserId,
+                                           delegate: workflowDelegate)
+        }
     }
 }

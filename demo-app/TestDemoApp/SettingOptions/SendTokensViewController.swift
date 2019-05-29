@@ -262,7 +262,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         var txMeta: [String: String] = [:];
         txMeta["type"] = "user_to_user";
-        txMeta["name"] = "Sent to \(receiverName)";
+        txMeta["name"] = "Tokens sent from iOS";
         //Let's build some json. Not the best way do it, but, works here.
         txMeta["details"] = "Received from \(CurrentUserModel.getInstance.userName ?? "")";
         

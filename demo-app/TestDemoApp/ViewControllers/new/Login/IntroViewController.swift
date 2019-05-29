@@ -105,6 +105,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
                 //Continue normalFlow.
                 normalFlow();
             }
+            return;
         } else if ( appUrlData!.action != .launch ) {
             //We can't handle this action.
             if ( vc == self ) {
