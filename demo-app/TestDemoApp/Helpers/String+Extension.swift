@@ -88,18 +88,10 @@ extension String {
     func toSmallestUnit(isUSDTx: Bool) -> String {
         let economyDecimals = CurrentEconomy.getInstance.getEconomyDecimals()
         if economyDecimals == 6 {
-            if isUSDTx {
-                return self + "0000"
-            }else {
-                return self + "000000"
-            }
+            return OstUtils.toMicro(self)
         }
         else if economyDecimals == 18 {
-            if isUSDTx {
-                return self + "0000000000000000"
-            }else {
-                return self + "000000000000000000"
-            }
+            return OstUtils.toAtto(self)
         }
         
         return self
