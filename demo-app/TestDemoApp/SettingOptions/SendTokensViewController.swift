@@ -113,7 +113,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     func getUserBalanceFromServer() {
-        
         if isBalanceApiInprogress {
             return
         }
@@ -375,6 +374,13 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
         progressIndicator?.progressText = "Tranasaction Boradcasted!"
         progressIndicator?.progressMessage = "Waiting for transaction to complete."
+    }
+    
+    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+        getUserBalanceFromServer()
+        
+        super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
     override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
