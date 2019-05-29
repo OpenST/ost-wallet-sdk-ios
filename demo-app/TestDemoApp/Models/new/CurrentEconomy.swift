@@ -28,12 +28,49 @@ class CurrentEconomy: OstBaseModel {
     
     private override init() {
         if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
-            let qrJsonData = EconomyScannerViewController.getQRJsonData(economy) {
-            economyDetails = qrJsonData as [String : Any]
+            let qrJsonData = CurrentEconomy.getQRJsonData(economy) {
+            _economyDetails = qrJsonData as [String : Any]
+        }
+    }
+    private var _economyDetails: [String: Any]? = nil;
+    
+    var economyDetails: [String: Any]? {
+        get {
+            return _economyDetails;
+        }
+        set {
+            _economyDetails = newValue;
+            if (nil != _economyDetails ) {
+                let jsonDetails = OstUtils.dictionaryToJSONString(dictionary: _economyDetails!);
+                if (nil != jsonDetails ) {
+                    UserDefaults.standard.set(jsonDetails, forKey: CurrentEconomy.userDefaultsId)
+                    UserDefaults.standard.synchronize()
+                } else {
+                    _economyDetails = nil;
+                }
+            }
         }
     }
     
-    var economyDetails: [String: Any]? = nil
+    class func getQRJsonData(_ qr: String) -> [String: Any?]? {
+        let jsonObj: [String:Any?]?
+        do {
+            jsonObj = try OstUtils.toJSONObject(qr) as? [String : Any?]
+        } catch {
+            return nil
+        }
+        
+        let viewEndPoint = jsonObj!["view_api_endpoint"] as? String
+        let tokenId = jsonObj!["token_id"]
+        let mappyApiEndpoint = jsonObj!["mappy_api_endpoint"]
+        let tokenSymbol = jsonObj!["token_symbol"]
+        
+        if nil == viewEndPoint || nil == tokenId || nil == mappyApiEndpoint || nil == tokenSymbol {
+            return nil
+        }
+        
+        return jsonObj
+    }
     
 }
 

@@ -13,7 +13,42 @@ import MaterialComponents
 import OstWalletSdk
 import LocalAuthentication
 
-class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
+class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
+    
+    var appUrlData:AppUrlData? {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        return delegate.getWebPageUrl();
+    };
+
+    func defaultEconomySet(payload: [String : Any?]) {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func newEconomySet(payload: [String : Any?]) {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func newEconomyNotSet() {
+        //Do nothing. Let the economyScanner be open if it was already open.
+    }
+    
+    func sameEconomySet() {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func clearAppUrlData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        delegate.clearWebPageUrl();
+    }
     
     //MARK: - Components
     var testEconomyTextField: MDCTextField = {
@@ -118,12 +153,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? ""
+        updateEconomyDetails();
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.economyScanner = nil
+    }
+    
+    func updateEconomyDetails() {
+        self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? "";
     }
     
     //MARK: - Add SubView

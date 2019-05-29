@@ -131,26 +131,6 @@ public class OstUtils {
         return (numberComponent, -(exponent))
     }
     
-//    public static func toAtto(_ amount: Float ) -> String {
-//        return toAtto(NSNumber(value: amount));
-//    }
-//
-//    public static func toAtto(_ amount: Int ) -> String {
-//        return toAtto(NSNumber(value: amount));
-//    }
-//
-//    public class func toAtto(_ amount: NSNumber ) -> String {
-//        let numberFormatter = NumberFormatter()
-//        numberFormatter.maximumFractionDigits = 18;
-//        let strAmount = numberFormatter.string(from: amount);
-//        if ( nil == strAmount ) {
-//            return "";
-//        }
-//        return toAtto( strAmount! );
-//    }
-    
-
-    
     //pragma mark Deci
     public static func toDeci( _ amount: String ) -> String {
         return convertNum(amount: amount, exponent:  1);
@@ -223,9 +203,6 @@ public class OstUtils {
         return convertNum(amount: amount, exponent:  -18);
     }
     
-    
-    
-    
     //pragma mark convertor
     static func convertNum(amount: String, exponent:Int) -> String {
         
@@ -281,6 +258,56 @@ public class OstUtils {
         return intPart! + fractionalPart;
         
     }
+    
+    @objc public class func getQueryParams(url:URL) -> [String:Any] {
+        let query = url.query;
+        var params:[String:Any] = [:];
+        if ( nil == query ) {
+            return params;
+        }
+        
+        for pair in query!.components(separatedBy: "&") {
+            let pairParts = pair.components(separatedBy: "=");
+            var key:String = pairParts[0];
+            key = key.removingPercentEncoding ?? key;
+            key = key.replacingOccurrences(of: "[]", with: "");
+            
+            if ( pairParts.count < 2 ) {
+                addToParamDict(dict: &params, key: key, value: "");
+                continue;
+            }
+            let paramValue:String = pairParts[1]
+                .replacingOccurrences(of: "+", with: " ")
+                .removingPercentEncoding ?? ""
+            addToParamDict(dict: &params, key: key, value: paramValue);
+        }
+        return params;
+    }
+    
+    class func addToParamDict(dict:inout [String:Any], key:String, value:Any) {
+        if ( dict[key] == nil ) {
+            dict[key] = value;
+            return;
+        }
+        let dictValue = dict[key]!;
+        if ( dictValue is Array<Any>) {
+            var arrayVals = dictValue as! Array<Any>;
+            arrayVals.append( value );
+            dict[key] = arrayVals;
+            return;
+        }
+        
+        //Same key multiple values.
+        dict[key] = [dictValue, value];
+    }
+    
+    public class func dictionaryToJSONString(dictionary:[String:Any?]) -> String? {
+        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
+        guard jsonData != nil else {return nil}
+        let jsonString = String(data: jsonData!, encoding: .utf8)
+        guard jsonString != nil else {return nil}
+        return jsonString! as String
+    }
 }
 
 class HttpParam {
@@ -310,3 +337,4 @@ class HttpParam {
     }
     
 }
+

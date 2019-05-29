@@ -163,7 +163,7 @@ class EconomyScannerViewController: OstBaseViewController {
         
         if (nil != values) && !values!.isEmpty {
             guard let qrData = values!.first,
-                    let qrJsonData = EconomyScannerViewController.getQRJsonData(qrData) else {
+                    let qrJsonData = CurrentEconomy.getQRJsonData(qrData) else {
                 showAlert()
                 return
             }
@@ -175,28 +175,7 @@ class EconomyScannerViewController: OstBaseViewController {
         }
     }
     
-    class func getQRJsonData(_ qr: String) -> [String: Any?]? {
-        let jsonObj: [String:Any?]?
-        do {
-            jsonObj = try OstUtils.toJSONObject(qr) as? [String : Any?]
-        } catch {
-            return nil
-        }
-        
-        let viewEndPoint = jsonObj!["view_api_endpoint"] as? String
-        let tokenId = jsonObj!["token_id"]
-        let mappyApiEndpoint = jsonObj!["mappy_api_endpoint"]
-        let tokenSymbol = jsonObj!["token_symbol"]
-        
-        if nil == viewEndPoint || nil == tokenId || nil == mappyApiEndpoint || nil == tokenSymbol {
-            return nil
-        }
-        
-        UserDefaults.standard.set(qr, forKey: CurrentEconomy.userDefaultsId)
-        UserDefaults.standard.synchronize()
 
-        return jsonObj
-    }
     
     @objc func closeButtonTapped(_ sender: Any?) {
         self.dismiss(animated: true, completion: nil)

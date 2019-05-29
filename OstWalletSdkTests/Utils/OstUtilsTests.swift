@@ -110,5 +110,11 @@ class OstUtilsTests: XCTestCase {
         XCTAssertEqual(OstUtils.fromAtto( "100001000000000000000" ) , "100.001");
         XCTAssertEqual(OstUtils.fromAtto( "1000000000000000" ) , "0.001");
     }
+    
+    func testGetQueryParams() {
+        let url1 = URL(string: "https://ost.com/demo-wallet/launch/?a=someString&b=1001&c[]=1&c[]=2&c[]=3");
+        let params1:[String:Any] = OstUtils.getQueryParams(url: url1!);
+        print(params1);
+    }
 
 }
