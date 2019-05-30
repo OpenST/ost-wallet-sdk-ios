@@ -78,7 +78,7 @@ import Foundation
                                                  internalCode: self.internalCode,
                                                  errorInfo: self.errorInfo,
                                                  isApiError: self.isApiError,
-                                                 apiError: response));
+                                                 apiError: err));
     }
     
     @objc public class OstJSONErrorKeys: NSObject {
