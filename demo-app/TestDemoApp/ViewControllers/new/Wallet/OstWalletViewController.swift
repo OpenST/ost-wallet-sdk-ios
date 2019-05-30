@@ -68,6 +68,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         super.viewWillAppear(animated)
 
         self.tabbarController?.showTabBar()
+        self.walletTableView.reloadSections([0], with: UITableView.RowAnimation.automatic)
     }
 
     //MARK: - Views

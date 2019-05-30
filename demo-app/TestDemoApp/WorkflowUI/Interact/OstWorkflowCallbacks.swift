@@ -124,6 +124,29 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             return
         }
         
+        if workflowContext.workflowType == .executeTransaction {
+                        
+            if let transaction: OstTransaction = ostContextEntity.entity as? OstTransaction,
+                let transfers: [[String: Any]] = transaction.data["transfers"] as? [[String: Any]] {
+                
+                var tokenHolderAddresses: Set<String> = Set<String>()
+                for transfer in transfers {
+                    if let address = transfer["to"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                    
+                    if let address = transfer["from"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                }
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserData"),
+                                                object: Array(tokenHolderAddresses),
+                                                userInfo: nil)
+            }
+            
+        }
+        
         onComplete(true)
     }
     

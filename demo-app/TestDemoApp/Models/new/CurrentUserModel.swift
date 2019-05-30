@@ -148,6 +148,14 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         });
     }
 
+    
+    func updateBalance(balance: [String: Any]) {
+        if let userBalance = ConversionHelper.toString(balance["available_balance"]),
+            self.userDetails != nil {
+            
+            self.userDetails!["available_balance"] = userBalance
+        }
+    }
 }
 
 extension CurrentUserModel {

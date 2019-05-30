@@ -60,6 +60,14 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         fetchUsers(hardRefresh: true)
     }
     
+    func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateUserData(_:)),
+            name: NSNotification.Name(rawValue: "updateUserData"),
+            object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabbarController?.showTabBar()
@@ -346,13 +354,40 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         meta = data["meta"] as? [String: Any]
         guard let users = data["users"] as? [[String: Any]] else {return}
-        updatedDataArray.append(contentsOf: users)
+        
+        var newUsersData = [[String: Any]]()
+        for user in users {
+            if let tokenHolderAddress = user["token_holder_address"] as? String {
+                if consumedUserData[tokenHolderAddress] == nil {
+                    consumedUserData[tokenHolderAddress] = user
+                    newUsersData.append(user)
+                }
+            }
+        }
+        
+        updatedDataArray.append(contentsOf: newUsersData)
         self.isNewDataAvailable = true
 
         reloadDataIfNeeded()
     }
     
     //MARK: - REFRESH USER DATA
+    @objc func updateUserData(_ notification: Notification) {
+        if let tokenHolderAddresses = notification.object as? [String] {
+            
+            var appUserIds = [String]()
+            for tokenHolderAddress in tokenHolderAddresses {
+                if let user = consumedUserData[tokenHolderAddress] as? [String: Any],
+                    let appUserId = ConversionHelper.toString(user["app_user_id"]) {
+                    appUserIds.append(appUserId)
+                }
+            }
+            if appUserIds.count > 0 {
+                refreshUsersData(appUserIds: appUserIds)
+            }
+        }
+    }
+    
     func refreshUsersData(appUserIds:[String]) {
         //Make api call.
         var payload:[String:Any] = [:];
@@ -372,8 +407,17 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     func onUserDataUpdated(_ apiResponse: [String: Any]?) {
         guard let response = apiResponse else {return}
         guard let data = response["data"] as? [String: Any] else {return}
+        
+        if let pricePoint = data["price_point"] as? [String: Any] {
+            CurrentUserModel.getInstance.pricePoint = pricePoint
+        }
+        
         if let balances = data["balances"] as? [String: Any] {
             userBalances.merge(dict: balances)
+            
+            if let currentUserBalance = balances[CurrentUserModel.getInstance.appUserId!] as? [String : Any] {
+                CurrentUserModel.getInstance.updateBalance(balance: currentUserBalance )
+            }
         }
         
         guard let users = data["users"] as? [[String: Any]] else {return}

@@ -384,14 +384,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     //MARK: - Workflow Delegate
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.progressText = "Tranasaction Boradcasted!"
-        progressIndicator?.progressMessage = "Waiting for transaction to complete."
+        progressIndicator?.progressText = "Transaction processing..."
     }
     
     override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        
-        getUserBalanceFromServer()
-        
         super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
