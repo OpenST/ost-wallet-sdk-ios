@@ -204,7 +204,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                 pCell = self.paginatingCell!
             }
             
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 pCell.startAnimating()
             }else {
                 pCell.stopAnimating()
@@ -223,10 +223,9 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         case 0:
              return 75.0
         case 1:
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 return 44.0
             }else {
-                self.paginatingCell?.stopAnimating()
                 return 0.0
             }
         default:
@@ -236,6 +235,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
 
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
+        consumedUserData = [:]
         self.fetchUsers(hardRefresh: true)
     }
     
@@ -245,19 +245,15 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         if !isScrolling && self.isNewDataAvailable {
             tableDataArray = updatedDataArray
-            print("here 1")
             self.usersTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
             if self.refreshControl.isRefreshing {
-                print("here 2")
                 self.refreshControl.endRefreshing()
             }
         }
         else if !isApiCallInProgress && !isScrolling {
-            print("here 3")
             if self.refreshControl.isRefreshing {
-                print("here 4")
                 self.refreshControl.endRefreshing()
             }
             self.usersTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
@@ -331,6 +327,10 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                     strongSelf.isApiCallInProgress = false
                 }
         })
+    }
+    
+    func isNextPageAvailable() -> Bool {
+        return getNextPagePayload() != nil
     }
     
     func getNextPagePayload() -> [String: Any]? {
