@@ -60,8 +60,8 @@ class OstNotificationManager {
             return false
         }
         if let error = notificationModel.error,
-            error.messageTextCode == OstErrorText.userCanceled {
-             return false
+            error.messageTextCode == .userCanceled {
+            return false
         }
         
         return true
