@@ -165,22 +165,34 @@ class UserAPI: BaseAPI {
                  params: meta as [String : AnyObject]?,
                  onSuccess: { (apiResponse) in
                     guard let data = apiResponse?["data"] as? [String: Any] else {
+                        var error:[String: Any] = apiResponse?["error"] as? [String: Any]  ?? [:];
+                        error["display_message"] = "Something went wrong";
+                        error["extra_info"] = "Api returned error.";
                         onFailure?( apiResponse?["error"] as? [String: Any] )
                         return
                     }
                     
                     guard let resultType = data["result_type"] as? String else {
-                        onFailure?(nil);
+                        var error:[String: Any] = [:];
+                        error["display_message"] = "Something went wrong";
+                        error["extra_info"] = "Api response is not as expected.";
+                        onFailure?(error);
                         return;
                     }
                     
                     guard let result = data[ resultType ] as? [String: Any] else {
-                        onFailure?(nil);
+                        var error:[String: Any] = [:];
+                        error["display_message"] = "Something went wrong";
+                        error["extra_info"] = "Api response is not as expected.";
+                        onFailure?(error);
                         return;
                     }
                     
                     guard let recoveryPinSalt = result["recovery_pin_salt"] as? String else {
-                        onFailure?(nil);
+                        var error:[String: Any] = [:];
+                        error["display_message"] = "Something went wrong";
+                        error["extra_info"] = "Api response is not as expected.";
+                        onFailure?(error);
                         return;
                     }
                     

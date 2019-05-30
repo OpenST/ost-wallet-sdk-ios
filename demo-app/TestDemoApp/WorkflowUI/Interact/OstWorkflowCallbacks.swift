@@ -174,7 +174,11 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         
     }
     
-    func cancelFlow() {
+    func cancelFlow(error:[String:Any]?) {
+        let errorMessage:String? = error?["display_message"] as? String;
+        if ( nil != errorMessage ) {
+            //TODO: Please display the error message if available.
+        }
         self.cancelPinAcceptor();
     }
     
@@ -216,7 +220,6 @@ public extension UIAlertController {
 }
 
 public extension UIViewController {
-    @available(*, deprecated, message: "Please avoid using this method.")
     func showVC() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()

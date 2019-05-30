@@ -134,14 +134,17 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
         if ( nil == self.ostUserId || self.ostUserId!.compare(ostUserId) != .orderedSame ) {
-            ostPassphrasePrefixAcceptDelegate.cancelFlow();
+            var error:[String:Any] = [:];
+            error["display_message"] = "Something went wrong. Please re-launch the application and try again.";
+            error["extra_info"] = "Sdk requested for passphrase of user-id which is not logged-in.";
+            ostPassphrasePrefixAcceptDelegate.cancelFlow(error: error);
             return;
         }
         
         UserAPI.getCurrentUserSalt(meta: nil, onSuccess: {[weak self,ostPassphrasePrefixAcceptDelegate] (userPinSalt, data) in
             ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self!.ostUserId!, passphrase: userPinSalt);
         }, onFailure: {[ostPassphrasePrefixAcceptDelegate] (error) in
-            ostPassphrasePrefixAcceptDelegate.cancelFlow();
+            ostPassphrasePrefixAcceptDelegate.cancelFlow(error: error);
         });
     }
 
