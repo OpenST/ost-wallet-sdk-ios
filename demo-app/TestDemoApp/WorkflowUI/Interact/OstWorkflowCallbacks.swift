@@ -174,7 +174,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         
         self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
         
-        if nil != progressIndicator {
+        if nil != progressIndicator && error.messageTextCode != .userCanceled {
             progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
                                                 error: error,
                                                 onCompletion: onComplete)
@@ -200,9 +200,12 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     func cancelFlow(error:[String:Any]?) {
         let errorMessage:String? = error?["display_message"] as? String;
         if ( nil != errorMessage ) {
-            //TODO: Please display the error message if available.
+            progressIndicator?.showFailureAlert(withTitle: errorMessage!, onCompletion: {[weak self] (_) in
+                self?.cancelPinAcceptor();
+            })
+        }else {
+            self.cancelPinAcceptor();
         }
-        self.cancelPinAcceptor();
     }
     
     func cleanUp() {

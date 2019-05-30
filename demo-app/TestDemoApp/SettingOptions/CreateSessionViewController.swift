@@ -214,15 +214,15 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
             return
         }
         
-        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
-        progressIndicator?.show()
-        
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
         let finalSpendingLimit: String = self.spendingLimitTestField.text! + "000000000000000000"
         OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
                                 spendingLimit: finalSpendingLimit,
                                 expireAfterInSec: Double(expireAfter),
                                 delegate: self.workflowDelegate)
+        
+        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
+        progressIndicator?.show()
     }
     
     func isCorrectInputPassed() -> Bool {
