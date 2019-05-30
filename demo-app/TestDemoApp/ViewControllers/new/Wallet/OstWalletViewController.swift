@@ -194,7 +194,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 pCell = self.paginatingCell!
             }
             
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 pCell.startAnimating()
             }else {
                 pCell.stopAnimating()
@@ -218,10 +218,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         case 2:
             return tableDataArray.count > 0 ? 0: 200
         case 3:
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 return 44.0
             }else {
-                self.paginatingCell?.stopAnimating()
                 return 0.0
             }
         default:
@@ -319,7 +318,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         let isScrolling: Bool = (self.walletTableView.isDragging) || (self.walletTableView.isDecelerating)
         
         if !isScrolling && self.isNewDataAvailable
-            && !isFetchingUserTransactions  && !isFetchingUserBalance {
+            && !isFetchingUserTransactions
+            && !isFetchingUserBalance {
+            
             tableDataArray = updatedDataArray
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
@@ -328,7 +329,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 self.refreshControl.endRefreshing()
             }
         }
-        else if !isFetchingUserTransactions  && !isFetchingUserBalance {
+        else if !isFetchingUserTransactions  && !isFetchingUserBalance && !isScrolling {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
@@ -369,6 +370,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
     }
     
+    func isNextPageAvailable() -> Bool {
+        return getNextPagePayload() != nil
+    }
+    
     func getNextPagePayload() -> [String: Any]? {
         guard let nextPagePayload = meta?["next_page_payload"] as? [String: Any] else {
             return nil
@@ -389,6 +394,14 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         var transferArray = [[String: Any]]()
         for transaction in transactions {
+            guard let status = transaction["status"] as? String else {
+                continue
+            }
+        
+            if status.caseInsensitiveCompare("SUCCESS") != .orderedSame {
+                continue
+            }
+            
             let transfers = transaction["transfers"] as! [[String: Any]]
             for transfer in transfers {
                 var trasferData = transfer

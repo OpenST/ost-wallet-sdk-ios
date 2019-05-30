@@ -56,7 +56,7 @@ extension String {
         if values.count == 2 {
             let decimalVal: String = values[1]
             
-            let decimals = decimalVal.substringTill(2)
+            let decimals = decimalVal.substringTill(3)
             if !decimals.isEmpty {
                 formattedDecimal = decimals
             }
