@@ -73,7 +73,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
 
     //MARK: - Views
     override func getNavBarTitle() -> String {
-        return "Wallet"
+        return "OST Wallet"
     }
     
     override func getTargetForNavBarBackbutton() -> AnyObject? {

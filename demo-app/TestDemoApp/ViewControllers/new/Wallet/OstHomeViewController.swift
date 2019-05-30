@@ -9,7 +9,7 @@
 import UIKit
 
 class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     //MARK: - Components
     var labelContainer: UIView?
     var infoLabel: UILabel = OstUIKit.leadLabel()
@@ -43,6 +43,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
+    var tokenHolderAddressesMap: [String: Any] = [String: Any]()
     var consumedUserData: [String: Any] = [String: Any]()
     
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
@@ -82,13 +83,13 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     override func getSelectorForNavBarBackbutton() -> Selector? {
-       return nil
+        return nil
     }
     
     //MARK: - Views
     override func addSubviews() {
         super.addSubviews()
-        createInfoLable()
+        //        createInfoLable()
         setupUsersTableView()
         setupRefreshControl()
     }
@@ -119,7 +120,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func setupRefreshControl() {
-    
+        
         if #available(iOS 10.0, *) {
             self.usersTableView.refreshControl = self.refreshControl
         } else {
@@ -131,8 +132,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
-        applyLabelContainerConstraints()
-        applyInfoLableConstraints()
+        //        applyLabelContainerConstraints()
+        //        applyInfoLableConstraints()
         applyUsersTableViewConstraints()
     }
     
@@ -148,7 +149,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func applyUsersTableViewConstraints() {
-        self.usersTableView.placeBelow(toItem: self.infoLabel)
+        self.usersTableView.topAlignWithParent()
         self.usersTableView.applyBlockElementConstraints(horizontalMargin: 0)
         self.usersTableView.bottomAlignWithParent()
     }
@@ -194,7 +195,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             }
             
             cell = userCell as BaseTableViewCell
-    
+            
         case 1:
             let pCell: PaginationLoaderTableViewCell
             if nil == self.paginatingCell {
@@ -209,19 +210,19 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             }else {
                 pCell.stopAnimating()
             }
-        
+            
             cell = pCell as BaseTableViewCell
         default:
             cell = BaseTableViewCell()
         }
-    
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-             return 75.0
+            return 75.0
         case 1:
             if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 return 44.0
@@ -232,7 +233,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             return 0
         }
     }
-
+    
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
         consumedUserData = [:]
@@ -279,7 +280,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             
             if (shouldRequestPaginationData(isUpDirection: false,
                                             andTargetPoint: targetContentOffset.pointee.y)) {
-             
+                
                 self.shouldLoadNextPage = false
                 fetchUsers()
             }
@@ -319,9 +320,9 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         isApiCallInProgress = true
         UserAPI.getUsers(meta: nextPagePayload, onSuccess: {[weak self] (apiResponse) in
-                if let strongSelf = self {
-                    strongSelf.onFetchUserSuccess(apiResponse)
-                }
+            if let strongSelf = self {
+                strongSelf.onFetchUserSuccess(apiResponse)
+            }
             }, onFailure: {[weak self] (apiResponse) in
                 if let strongSelf = self {
                     strongSelf.isApiCallInProgress = false
@@ -357,17 +358,21 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         var newUsersData = [[String: Any]]()
         for user in users {
-            if let tokenHolderAddress = user["token_holder_address"] as? String {
-                if consumedUserData[tokenHolderAddress] == nil {
-                    consumedUserData[tokenHolderAddress] = user
-                    newUsersData.append(user)
+            if let appUserId = user["app_user_id"],
+                let strAppUserId = ConversionHelper.toString(appUserId),
+                consumedUserData[strAppUserId] == nil {
+                
+                consumedUserData[strAppUserId] = user
+                newUsersData.append(user)
+                if let tokenHolderAddress = user["token_holder_address"] as? String,
+                    !["", "<null>"].contains(tokenHolderAddress) {
+                    tokenHolderAddressesMap[tokenHolderAddress] = strAppUserId
                 }
             }
         }
-        
         updatedDataArray.append(contentsOf: newUsersData)
         self.isNewDataAvailable = true
-
+        
         reloadDataIfNeeded()
     }
     
@@ -375,15 +380,23 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     @objc func updateUserData(_ notification: Notification) {
         if let tokenHolderAddresses = notification.object as? [String] {
             
-            var appUserIds = [String]()
+            var appUserIds: Set<String> = []
+            let currentTokenHolderAddress = CurrentUserModel.getInstance.tokenHolderAddress
+            let currentUserAppUserId = CurrentUserModel.getInstance.appUserId
             for tokenHolderAddress in tokenHolderAddresses {
-                if let user = consumedUserData[tokenHolderAddress] as? [String: Any],
-                    let appUserId = ConversionHelper.toString(user["app_user_id"]) {
-                    appUserIds.append(appUserId)
+                if let appUserId = tokenHolderAddressesMap[tokenHolderAddress],
+                    let strAppUserId = ConversionHelper.toString(appUserId) {
+                    appUserIds.insert(strAppUserId)
+                }else if nil != currentUserAppUserId
+                    && nil != currentTokenHolderAddress
+                    && currentTokenHolderAddress!.caseInsensitiveCompare(tokenHolderAddress) == .orderedSame {
+                    
+                        appUserIds.insert(currentUserAppUserId!)
                 }
             }
+            
             if appUserIds.count > 0 {
-                refreshUsersData(appUserIds: appUserIds)
+                refreshUsersData(appUserIds: Array(appUserIds))
             }
         }
     }
