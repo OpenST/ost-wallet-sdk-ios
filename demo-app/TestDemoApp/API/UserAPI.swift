@@ -158,6 +158,39 @@ class UserAPI: BaseAPI {
                  onFailure: onFailure)
     }
     
+    class func getCurrentUserSalt(meta: [String: Any]? = nil,
+                        onSuccess: ((String, [String: Any]?) -> Void)? = nil,
+                        onFailure: (([String: Any]?) -> Void)? = nil) {
+        self.get(resource: "/users/current-user-salt",
+                 params: meta as [String : AnyObject]?,
+                 onSuccess: { (apiResponse) in
+                    guard let data = apiResponse?["data"] as? [String: Any] else {
+                        onFailure?( apiResponse?["error"] as? [String: Any] )
+                        return
+                    }
+                    
+                    guard let resultType = data["result_type"] as? String else {
+                        onFailure?(nil);
+                        return;
+                    }
+                    
+                    guard let result = data[ resultType ] as? [String: Any] else {
+                        onFailure?(nil);
+                        return;
+                    }
+                    
+                    guard let recoveryPinSalt = result["recovery_pin_salt"] as? String else {
+                        onFailure?(nil);
+                        return;
+                    }
+                    
+                    onSuccess?(recoveryPinSalt, data);
+        },
+                 onFailure: { (apiResponse) in
+                    onFailure?( apiResponse?["error"] as? [String: Any] );
+        });
+    }
+    
     class func logoutUser(onSuccess: (([String: Any]?) -> Void)? = nil,
                          onFailure: (([String: Any]?) -> Void)? = nil) {
         

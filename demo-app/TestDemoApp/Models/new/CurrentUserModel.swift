@@ -138,14 +138,11 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
             return;
         }
         
-        if ( nil == self.userPinSalt ) {
+        UserAPI.getCurrentUserSalt(meta: nil, onSuccess: {[weak self,ostPassphrasePrefixAcceptDelegate] (userPinSalt, data) in
+            ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self!.ostUserId!, passphrase: userPinSalt);
+        }, onFailure: {[ostPassphrasePrefixAcceptDelegate] (error) in
             ostPassphrasePrefixAcceptDelegate.cancelFlow();
-            return;
-        }
-        ///TODO - Move this to other function.
-        ///
-        let userPinSalt = self.userPinSalt!;
-        ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self.ostUserId!, passphrase: userPinSalt);
+        });
     }
 
 }
