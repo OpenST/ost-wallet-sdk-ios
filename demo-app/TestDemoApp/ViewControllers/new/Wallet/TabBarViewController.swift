@@ -68,6 +68,7 @@ class TabBarViewController: UITabBarController {
         //Wallet VC
         let walletVC = OstWalletViewController()
         walletVC.tabbarController = self
+        walletVC.registerObserver()
         let walletNavController = UINavigationController(rootViewController: walletVC)
         walletNavController.tabBarItem = UITabBarItem(title: "Wallet",
                                                       image: UIImage(named: "walletImage"),

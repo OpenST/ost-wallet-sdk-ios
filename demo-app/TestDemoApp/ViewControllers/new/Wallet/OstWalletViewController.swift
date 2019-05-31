@@ -64,6 +64,18 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         fetchUserWalletData(hardRefresh: true)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateUserDataForTrasaction(_:)),
+            name: NSNotification.Name(rawValue: "updateUserDataForTransaction"),
+            object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -338,7 +350,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     }
     
     func fetchUserWalletData(hardRefresh: Bool = false) {
-        if CurrentUserModel.getInstance.ostUser?.isStatusActivated ?? false {
+        if CurrentUserModel.getInstance.isCurrentUserStatusActivated ?? false {
             fetchUserTransaction(hardRefresh: hardRefresh)
             fetchUserBalance(hardRefresh: hardRefresh)
         }
@@ -399,7 +411,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             }
         
             if status.caseInsensitiveCompare("SUCCESS") != .orderedSame
-                && status.caseInsensitiveCompare("MINED") != .orderedSame {
+                && status.caseInsensitiveCompare("MINED") != .orderedSame
+                && status.caseInsensitiveCompare("SUBMITTED") != .orderedSame {
                 continue
             }
             
@@ -465,8 +478,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
             workflowCallbacks = nil
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
-            self?.fetchUserWalletData()
+        if workflowContext.workflowType == .activateUser {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+                self?.fetchUserWalletData(hardRefresh: true)
+            }
         }
         workflowCallbacks = nil
     }
@@ -475,4 +490,16 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
          workflowCallbacks = nil
     }
     
+    
+    @objc func updateUserDataForTrasaction(_ notification: Notification) {
+        if let executeTransactionNotification = notification.object as? [String: Any],
+            let isRequestAcknowledged = executeTransactionNotification["isRequestAcknowledged"] as? Bool {
+            
+            if isRequestAcknowledged {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {[weak self] in
+                    self?.fetchUserTransaction(hardRefresh: true)
+                }
+            }
+        }
+    }
 }

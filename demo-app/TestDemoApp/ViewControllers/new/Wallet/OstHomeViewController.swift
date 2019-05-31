@@ -61,11 +61,15 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         fetchUsers(hardRefresh: true)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func registerObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.updateUserData(_:)),
-            name: NSNotification.Name(rawValue: "updateUserData"),
+            name: NSNotification.Name(rawValue: "updateUserDataForTransaction"),
             object: nil)
     }
     
@@ -75,7 +79,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     override func getNavBarTitle() -> String {
-        return "Users"
+        return "\(CurrentEconomy.getInstance.tokenSymbol ?? "") Users"
     }
     
     override func getTargetForNavBarBackbutton() -> AnyObject? {
@@ -378,7 +382,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     //MARK: - REFRESH USER DATA
     @objc func updateUserData(_ notification: Notification) {
-        if let tokenHolderAddresses = notification.object as? [String] {
+        if let executeTransactionNotification = notification.object as? [String: Any],
+            let tokenHolderAddresses = executeTransactionNotification["tokenHolderAddresses"] as? [String] {
             
             var appUserIds: Set<String> = []
             let currentTokenHolderAddress = CurrentUserModel.getInstance.tokenHolderAddress

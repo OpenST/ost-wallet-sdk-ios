@@ -52,7 +52,9 @@ class TransactionTableViewCell: UsersTableViewCell {
     }
     
     func getDateFromTimestamp() -> String? {
-        guard let unixTimestamp = transactionData["block_timestamp"] as? Double else {return nil}
+        guard let unixTimestamp = transactionData["block_timestamp"] as? Double else {
+            return Date().getDateWithTimeString()
+        }
         let date = Date(timeIntervalSince1970: unixTimestamp)
     
         return date.getDateWithTimeString()

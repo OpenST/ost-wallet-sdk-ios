@@ -120,8 +120,12 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
                     }
                 }
                 
-                NotificationCenter.default.post(name: NSNotification.Name("updateUserData"),
-                                                object: Array(tokenHolderAddresses),
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = Array(tokenHolderAddresses)
+                executeTransactionNotification["isRequestAcknowledged"] = false
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
                                                 userInfo: nil)
             }
         }
@@ -187,8 +191,12 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         if workflowContext.workflowType == .executeTransaction {
             if let tokenHolderAddress = CurrentUserModel.getInstance.ostUser?.tokenHolderAddress {
                 
-                NotificationCenter.default.post(name: NSNotification.Name("updateUserData"),
-                                                object: [tokenHolderAddress],
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = [tokenHolderAddress]
+                executeTransactionNotification["isRequestAcknowledged"] = true
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
                                                 userInfo: nil)
             }
         }
