@@ -81,7 +81,8 @@ class EmptyTransactionTableViewCell: BaseTableViewCell {
     func showWalletSettingUpView() {
         self.titleLabel.text = "Your wallet is being setup"
         let currentEconomy = CurrentEconomy.getInstance
-        self.leadLabel.text = "The Wallet setup process takes about 30 seconds. You’ll also receive some \(currentEconomy.tokenSymbol ?? "") tokens to test your brand economy."
+        self.leadLabel.text = "The wallet setup process takes about 30 seconds. You’ll also receive an airdrop of 10 \(currentEconomy.tokenSymbol ?? "tokens")  to test with."
+        
     }
     
     func showNoTransactionView() {
