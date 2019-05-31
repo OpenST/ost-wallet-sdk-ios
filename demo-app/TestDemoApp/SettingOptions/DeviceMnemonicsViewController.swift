@@ -20,8 +20,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     var mnemonicsArray = [String]()
     var leadLabelText: String = "These 12 words can recover your wallet if you forget your username and PIN."
     var tipLabelText: String = """
-        Note:
-        Enter these 12 words to recover your wallet if you forget your PIN. The order of the words is important, so please make sure to write it down carefully.
+        Note: Enter these 12 words to recover your wallet if you forget your PIN. The order of the words is important, so please make sure to write it down carefully.
         """
     
     //MAKR: - Themer
