@@ -399,7 +399,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             }
         
             if status.caseInsensitiveCompare("SUCCESS") != .orderedSame
-                || status.caseInsensitiveCompare("MINED") != .orderedSame {
+                && status.caseInsensitiveCompare("MINED") != .orderedSame {
                 continue
             }
             
