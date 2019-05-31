@@ -176,7 +176,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
              let emptyTansactionCell: EmptyTransactionTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTransactionTableViewCell.emptyTransactionTCellIdentifier, for: indexPath) as! EmptyTransactionTableViewCell
             
              let currentUser = CurrentUserModel.getInstance
-             if currentUser.ostUser!.isStatusActivating {
+             if currentUser.isCurrentUserStatusActivating! {
 
                 emptyTansactionCell.showWalletSettingUpView()
              }else {
@@ -398,7 +398,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 continue
             }
         
-            if status.caseInsensitiveCompare("SUCCESS") != .orderedSame {
+            if status.caseInsensitiveCompare("SUCCESS") != .orderedSame
+                || status.caseInsensitiveCompare("MINED") != .orderedSame {
                 continue
             }
             

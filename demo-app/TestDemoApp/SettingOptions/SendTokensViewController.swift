@@ -384,7 +384,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     //MARK: - Workflow Delegate
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.progressText = "Transaction processing..."
+        showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
     override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
@@ -394,12 +394,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .executeTransaction {
             progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
-                                                actionButtonTitle: "View Details",
-                                                actionButtonTapped: {[weak self] (_) in
-                                     
-                                                  self?.showWebViewForTransaction()
-                                                    
-            }, onCompletion: nil)
+                                                onCompletion: {[weak self] (_) in
+                self?.onFlowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+            })
         }
     }
     

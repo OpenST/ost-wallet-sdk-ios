@@ -104,28 +104,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
                                                 contextEntity: ostContextEntity,
                                                 error: nil)
         
-        var eventData = OstInteractEventData()
-        eventData.contextEntity = ostContextEntity
-        eventData.workflowContext = workflowContext
-        
-        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
-
-        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
-            self?.hideLoader();
-            self?.dismissPinViewController();
-            self?.cleanUp();
-        }
-        
-        if nil != progressIndicator
-            && workflowContext.workflowType != .getDeviceMnemonics {
-            
-            progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
-                                                onCompletion: onComplete)
-            return
-        }
-        
         if workflowContext.workflowType == .executeTransaction {
-                        
+            
             if let transaction: OstTransaction = ostContextEntity.entity as? OstTransaction,
                 let transfers: [[String: Any]] = transaction.data["transfers"] as? [[String: Any]] {
                 
@@ -144,7 +124,26 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
                                                 object: Array(tokenHolderAddresses),
                                                 userInfo: nil)
             }
+        }
+        
+        var eventData = OstInteractEventData()
+        eventData.contextEntity = ostContextEntity
+        eventData.workflowContext = workflowContext
+        
+        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.cleanUp();
+        }
+        
+        if nil != progressIndicator
+            && workflowContext.workflowType != .getDeviceMnemonics {
             
+            progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                                onCompletion: onComplete)
+            return
         }
         
         onComplete(true)
@@ -185,12 +184,22 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         
+        if workflowContext.workflowType == .executeTransaction {
+            if let tokenHolderAddress = CurrentUserModel.getInstance.ostUser?.tokenHolderAddress {
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserData"),
+                                                object: [tokenHolderAddress],
+                                                userInfo: nil)
+            }
+        }
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
         
         progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
+        
     }
     
     func pinValidated(_ userId: String) {
