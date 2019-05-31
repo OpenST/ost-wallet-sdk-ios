@@ -18,10 +18,10 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     //MARK: - Variables
     let collectionViewMargine: CGFloat = 10.0
     var mnemonicsArray = [String]()
-    var leadLabelText: String = "Write down your 12-word mnemonic phrase and store them securely"
+    var leadLabelText: String = "These 12 words can recover your wallet if you forget your username and PIN."
     var tipLabelText: String = """
-        Tip:
-        This mnemonic phrase can be used to authorize a device. The order of the words is important, so please be sure ot write it down carefully.
+        Note:
+        Enter these 12 words to recover your wallet if you forget your PIN. The order of the words is important, so please make sure to write it down carefully.
         """
     
     //MAKR: - Themer

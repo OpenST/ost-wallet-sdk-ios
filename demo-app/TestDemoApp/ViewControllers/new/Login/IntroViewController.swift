@@ -209,7 +209,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        //view.text = "Test your Brand Token Economy deployed on OST Platform";
+        view.text = "Version 0.0.1 (testnet)";
         view.backgroundColor = .white;
         return view;
     }()
