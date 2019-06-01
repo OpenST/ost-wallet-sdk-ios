@@ -104,6 +104,32 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
                                                 contextEntity: ostContextEntity,
                                                 error: nil)
         
+        if workflowContext.workflowType == .executeTransaction {
+            
+            if let transaction: OstTransaction = ostContextEntity.entity as? OstTransaction,
+                let transfers: [[String: Any]] = transaction.data["transfers"] as? [[String: Any]] {
+                
+                var tokenHolderAddresses: Set<String> = Set<String>()
+                for transfer in transfers {
+                    if let address = transfer["to"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                    
+                    if let address = transfer["from"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                }
+                
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = Array(tokenHolderAddresses)
+                executeTransactionNotification["isRequestAcknowledged"] = false
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
+                                                userInfo: nil)
+            }
+        }
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
@@ -122,29 +148,6 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
                                                 onCompletion: onComplete)
             return
-        }
-        
-        if workflowContext.workflowType == .executeTransaction {
-                        
-            if let transaction: OstTransaction = ostContextEntity.entity as? OstTransaction,
-                let transfers: [[String: Any]] = transaction.data["transfers"] as? [[String: Any]] {
-                
-                var tokenHolderAddresses: Set<String> = Set<String>()
-                for transfer in transfers {
-                    if let address = transfer["to"] as? String {
-                        tokenHolderAddresses.insert(address)
-                    }
-                    
-                    if let address = transfer["from"] as? String {
-                        tokenHolderAddresses.insert(address)
-                    }
-                }
-                
-                NotificationCenter.default.post(name: NSNotification.Name("updateUserData"),
-                                                object: Array(tokenHolderAddresses),
-                                                userInfo: nil)
-            }
-            
         }
         
         onComplete(true)
@@ -185,12 +188,26 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         
+        if workflowContext.workflowType == .executeTransaction {
+            if let tokenHolderAddress = CurrentUserModel.getInstance.ostUser?.tokenHolderAddress {
+                
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = [tokenHolderAddress]
+                executeTransactionNotification["isRequestAcknowledged"] = true
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
+                                                userInfo: nil)
+            }
+        }
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
         
         progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
+        
     }
     
     func pinValidated(_ userId: String) {

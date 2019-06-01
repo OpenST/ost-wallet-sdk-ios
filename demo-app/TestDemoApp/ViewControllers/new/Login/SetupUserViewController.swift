@@ -475,13 +475,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if let currentUser = CurrentUserModel.getInstance.ostUser {
-            if currentUser.isStatusActivating {
+        if nil != CurrentUserModel.getInstance.ostUser
+            && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
+            
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
                     self?.pushToTabBarController()
                 }
             }
-        }
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {

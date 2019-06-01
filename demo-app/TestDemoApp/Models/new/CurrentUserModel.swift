@@ -13,6 +13,10 @@ import OstWalletSdk
 
 class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
     static let getInstance = CurrentUserModel()
+    
+    static var shouldPerfromActivateUserAfterDelay: Bool = false
+    static var artificalDelayForActivateUser: Double = 24
+    
     override init() {
         super.init()
     }
@@ -225,6 +229,15 @@ extension CurrentUserModel {
         return nil
     }
     
+    var currentDeviceStatus: String {
+        var deviceStatus = currentDevice?.status?.uppercased() ?? ""
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            deviceStatus =  "ACTIVATING"
+        }
+        
+        return deviceStatus
+    }
+    
     var balance: String {
         if let availabelBalance = userBalanceDetails?["available_balance"] {
             let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat()
@@ -233,6 +246,39 @@ extension CurrentUserModel {
         return ""
     }
     
+    func showTokenHolderInView() {
+        
+        let webView = WKWebViewController()
+        let currentEconomy = CurrentEconomy.getInstance
+        
+        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(tokenHolderAddress!)"
+        webView.title = "OST View"
+        webView.urlString = tokenHoderURL
+        
+        webView.showVC()
+    }
+}
+
+//MARK: - Status
+extension CurrentUserModel {
+    
+    //MARK: - User
+    var isCurrentUserStatusActivating: Bool? {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return true
+        }
+        return ostUser?.isStatusActivating
+    }
+    
+    var isCurrentUserStatusActivated: Bool? {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return false
+        }
+        return ostUser?.isStatusActivated
+    }
+    
+    
+    //MARK: - Device
     var isCurrentDeviceStatusAuthorizing: Bool {
         if let currentDevice = self.currentDevice,
             let status = currentDevice.status {
@@ -243,8 +289,12 @@ extension CurrentUserModel {
         }
         return false
     }
-
+    
     var isCurrentDeviceStatusAuthrozied: Bool {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return false
+        }
+        
         if let currentDevice = self.currentDevice,
             let status = currentDevice.status {
             
@@ -265,19 +315,8 @@ extension CurrentUserModel {
         }
         return false
     }
-    
-    func showTokenHolderInView() {
-        
-        let webView = WKWebViewController()
-        let currentEconomy = CurrentEconomy.getInstance
-        
-        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(tokenHolderAddress!)"
-        webView.title = "OST View"
-        webView.urlString = tokenHoderURL
-        
-        webView.showVC()
-    }
 }
+
 
 //MARK: - Price Point
 extension CurrentUserModel {

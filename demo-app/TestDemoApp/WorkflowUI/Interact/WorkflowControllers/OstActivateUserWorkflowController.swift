@@ -69,6 +69,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             return;
         }
         
+        CurrentUserModel.shouldPerfromActivateUserAfterDelay = true
         OstWalletSdk.activateUser(userId: self.userId,
                                   userPin: self.userPin!,
                                   passphrasePrefix: passphrase,
@@ -123,7 +124,15 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
             if user.isStatusActivated {
                 UserAPI.notifyUserActivated()
             }
+            
+            if  CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+                DispatchQueue.main.asyncAfter(deadline: .now() + CurrentUserModel.artificalDelayForActivateUser) {[weak self] in
+                    self?.performFlowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
+                }
+                return
+            }
         }
+        
         super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
     }
     
@@ -132,6 +141,11 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
         
         hideLoader()
         cleanUp()
+    }
+    
+    func performFlowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        CurrentUserModel.shouldPerfromActivateUserAfterDelay = false
+        super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
     }
 
 }

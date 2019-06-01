@@ -182,7 +182,7 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
         
         let deviceStatuVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsViewModel(title: "Device Status",
-                                            value: currentUser.currentDevice?.status?.uppercased() ?? "",
+                                            value:  currentUser.currentDeviceStatus,
                                             themer:  statusThemer),
             type: .normal
         )

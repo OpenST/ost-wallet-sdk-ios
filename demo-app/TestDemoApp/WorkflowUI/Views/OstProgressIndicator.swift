@@ -265,7 +265,7 @@ class OstProgressIndicator: OstBaseView {
             return "Action completed!"
             
         case .executeTransaction:
-            return "Transaction complete!"
+            return "Transaction Submitted!"
             
         case .authorizeDeviceWithQRCode:
             return "This device is now authorized to access your Wallet "

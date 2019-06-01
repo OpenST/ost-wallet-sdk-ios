@@ -209,7 +209,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        view.text = "Test your Brand Token Economy deployed on OST Platform";
+        view.text = "Version 0.0.1 (testnet)";
         view.backgroundColor = .white;
         return view;
     }()
@@ -365,12 +365,12 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if let currentUser = CurrentUserModel.getInstance.ostUser {
-            if currentUser.isStatusActivating {
+        if nil != CurrentUserModel.getInstance.ostUser
+            && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
+            
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
                     self?.pushToTabBarController()
                 }
-            }
         }
     }
     
