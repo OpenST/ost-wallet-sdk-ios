@@ -12,7 +12,7 @@ import OstWalletSdk
 
 class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFieldDelegate {
 
-    static let DEFAULT_SESSION_EXPIRES_IN: Int = 13;
+    static let DEFAULT_SESSION_EXPIRES_IN: Int = 14;
 
     
     //MARK: - Components
@@ -42,7 +42,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
         expiresAfterTextField.clearButtonMode = .never
         expiresAfterTextField.placeholderLabel.text = "Set Expiry for Session in Days"
-        expiresAfterTextField.text = "\(DEFAULT_SESSION_EXPIRES_IN) days"
+        expiresAfterTextField.text = "2 Weeks"
         return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -201,9 +201,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     func getActionForIndex(indx:Int) -> UIAlertAction {
         let displayText = expiresOptions[indx];
-        return UIAlertAction(title: displayText, style: .default, handler: { (UIAlertAction) in
-            self.expiresAfterSelectedIndex = indx;
-            self.expiresAfterTextField.text = displayText;
+        return UIAlertAction(title: displayText, style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.isShowingActionSheet = false;
+            self?.expiresAfterSelectedIndex = indx;
+            self?.expiresAfterTextField.text = displayText;
         })
     }
     
@@ -215,7 +216,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         }
         
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
-        let finalSpendingLimit: String = self.spendingLimitTestField.text! + "000000000000000000"
+        let finalSpendingLimit: String = OstUtils.toAtto(self.spendingLimitTestField.text!)
         OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
                                 spendingLimit: finalSpendingLimit,
                                 expireAfterInSec: Double(expireAfter),

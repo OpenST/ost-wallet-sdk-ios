@@ -20,7 +20,14 @@ class DeviceAPI: BaseAPI {
                   params: params as [String: AnyObject],
                   onSuccess: { (apiParams) in
                     guard let data = apiParams?["data"] as? [String: Any] else {
-                        onFailure?(nil)
+                        onFailure?(apiParams)
+                        var msg: String = "Something went wrong"
+                        if let err = apiParams?["err"] as? [String: Any] {
+                            msg = err["msg"] as? String ?? msg
+                        }else {
+                            msg = apiParams?["msg"] as? String ?? msg
+                        }
+                        OstErroNotification.showNotification(withMessage: msg)
                         return
                     }
                     let resultType = data["result_type"] as! String
