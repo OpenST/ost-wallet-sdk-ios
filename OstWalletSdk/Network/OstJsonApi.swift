@@ -81,8 +81,9 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
     public class func getTransactions(forUserId userId:String, params:[String:Any], delegate:OstJsonApiDelegate) {
         do {
             try OstAPIUser.init(userId: userId)
-                .getTransactions(params:params, onSuccess: self.getApiSuccessCallback(delegate: delegate),
-                            onFailure: self.getApiErrorCallback(delegate: delegate));
+                .getTransactions(params:params,
+                                 onSuccess: self.getApiSuccessCallback(delegate: delegate),
+                                 onFailure: self.getApiErrorCallback(delegate: delegate));
         } catch let error {
             delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
         }
@@ -105,6 +106,18 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
             delegate.onOstJsonApiError(error: error, errorData: errorData);
         };
         return callback;
+    }
+    
+    public class func getTransactions(forUserId userId:String, delegate:OstJsonApiDelegate) {
+        do {
+            try OstAPIDevice(userId: userId)
+                .getJsonPendingRecovery(params: nil,
+                                        onSuccess: self.getApiSuccessCallback(delegate: delegate),
+                                        onFailure: self.getApiErrorCallback(delegate: delegate))
+            
+        } catch let error {
+            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+        }
     }
 }
 
