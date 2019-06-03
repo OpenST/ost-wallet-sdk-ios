@@ -154,12 +154,11 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
 
     
     func updateBalance(balance: [String: Any]) {
-        if let userBalance = ConversionHelper.toString(balance["available_balance"]),
-            !userBalance.isEmpty,
-            self.userBalanceDetails != nil {
-            
-            self.userBalanceDetails!["available_balance"] = userBalance
+        if ( nil == self.userBalanceDetails ) {
+            self.userBalanceDetails = [:];
         }
+        
+        self.userBalanceDetails?.merge(dict: balance);
     }
 }
 

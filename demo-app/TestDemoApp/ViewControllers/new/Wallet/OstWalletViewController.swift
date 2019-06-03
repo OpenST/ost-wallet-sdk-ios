@@ -9,7 +9,38 @@
 import UIKit
 import OstWalletSdk
 
-class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate {
+class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        var needsReload:Bool = false;
+        let resultType = OstJsonApi.getResultType(apiData: data);
+        
+        if ( "balance" == resultType ) {
+            let balance = OstJsonApi.getResultAsDictionary(apiData: data);
+            if ( nil != balance ) {
+                CurrentUserModel.getInstance.updateBalance(balance: balance!);
+                needsReload = true;
+            }
+        } else if ( "transactions" == resultType ) {
+            let transactions = OstJsonApi.getResultAsArray(apiData: data);
+            if ( nil != transactions ) {
+                //Map transactions data.
+                
+                needsReload = true;
+            }
+        }
+        
+        if ( needsReload ) {
+            self.isNewDataAvailable = true;
+            reloadDataIfNeeded();
+        }
+    }
+    
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+        if ( nil != error ) {
+            print( error! );
+        }
+    }
+    
     
     //MARK: - Components
     var walletTableView: UITableView = {
@@ -362,6 +393,12 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             return
         }
         var nextPagePayload: [String: Any]? = nil
+        
+        OstJsonApi.getTransactions(forUserId: CurrentUserModel.getInstance.ostUserId!,
+                                   params: [:],
+                                   delegate: self);
+
+        
         if hardRefresh {
             meta = nil
             updatedDataArray = []
