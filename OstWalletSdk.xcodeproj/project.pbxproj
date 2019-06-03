@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		008F899322A1440D00412C95 /* OstWalletSdk+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstWalletSdk+Api.swift */; };
-		008F899422A1440D00412C95 /* OstWalletSdk+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstWalletSdk+Api.swift */; };
+		008F899322A1440D00412C95 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
+		00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
 		4B34164E2295399800F2CFFC /* OstBiometricManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34164D2295399800F2CFFC /* OstBiometricManager.swift */; };
 		4B3416512295520D00F2CFFC /* OstBiometricPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3416502295520D00F2CFFC /* OstBiometricPreference.swift */; };
 		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
@@ -258,7 +258,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F899222A1440D00412C95 /* OstWalletSdk+Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstWalletSdk+Api.swift"; sourceTree = "<group>"; };
+		008F899222A1440D00412C95 /* OstJsonApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstJsonApi.swift; sourceTree = "<group>"; };
 		4B34164D2295399800F2CFFC /* OstBiometricManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBiometricManager.swift; sourceTree = "<group>"; };
 		4B3416502295520D00F2CFFC /* OstBiometricPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBiometricPreference.swift; sourceTree = "<group>"; };
 		4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstWorkflowEngine+Validator.swift"; sourceTree = "<group>"; };
@@ -996,7 +996,7 @@
 				EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */,
 				EC38BEF622413A96006F8DA2 /* OstAPIChain.swift */,
 				4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */,
-				008F899222A1440D00412C95 /* OstWalletSdk+Api.swift */,
+				008F899222A1440D00412C95 /* OstJsonApi.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1415,7 +1415,7 @@
 				EC38BFD522413A96006F8DA2 /* OstTransaction.swift in Sources */,
 				EC38BF4022413A96006F8DA2 /* EthereumValue.swift in Sources */,
 				4BB35BBF226097C0004E8569 /* OstAuthorizeDeviceWithQRSigner.swift in Sources */,
-				008F899322A1440D00412C95 /* OstWalletSdk+Api.swift in Sources */,
+				008F899322A1440D00412C95 /* OstJsonApi.swift in Sources */,
 				EC38BFB122413A96006F8DA2 /* OstSdkDatabase.swift in Sources */,
 				EC38BF6E22413A96006F8DA2 /* EIP1077.swift in Sources */,
 				EC38BFC822413A96006F8DA2 /* OstError.swift in Sources */,
@@ -1529,7 +1529,6 @@
 				EC38C00422413AA1006F8DA2 /* OstUtilsTests.swift in Sources */,
 				EC38C00022413AA1006F8DA2 /* OstTransactionTests.swift in Sources */,
 				EC38C00122413AA1006F8DA2 /* OstRuleTests.swift in Sources */,
-				008F899422A1440D00412C95 /* OstWalletSdk+Api.swift in Sources */,
 				EC38C00822413AA1006F8DA2 /* EIP712Tests.swift in Sources */,
 				EC38BFFD22413AA1006F8DA2 /* OstTokenTests.swift in Sources */,
 				EC38BFFB22413AA1006F8DA2 /* OstDeviceManagerTests.swift in Sources */,
@@ -1540,6 +1539,7 @@
 				EC38C00522413AA1006F8DA2 /* EIP1077Tests.swift in Sources */,
 				EC38C00D22413AA1006F8DA2 /* OstCryptoTests.swift in Sources */,
 				EC38C00322413AA1006F8DA2 /* OstBaseDBQueriesTests.swift in Sources */,
+				00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

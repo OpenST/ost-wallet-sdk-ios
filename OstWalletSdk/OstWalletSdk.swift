@@ -89,9 +89,5 @@ public class OstWalletSdk {
         
         // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
-    }
-    
-    @objc public class Api:NSObject {
-        
-    }
+    }    
 }
