@@ -11,7 +11,10 @@
 import Foundation
 import OstWalletSdk
 
-class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
+class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate, OstJsonApiDelegate {
+  
+    
+
     static let getInstance = CurrentUserModel()
     
     static var shouldPerfromActivateUserAfterDelay: Bool = false
@@ -152,6 +155,37 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         });
     }
 
+    var fetchUserBalanceCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil
+    func fetchUserBalance(onCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil) {
+        fetchUserBalanceCompletion = onCompletion
+        OstJsonApi.getBalanceWithPriceOracle(forUserId: ostUserId!, delegate: self)
+    }
+    
+    //MAKR: Ost Json api Delegate
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        guard let apiData = data,
+            let resutType = OstJsonApi.getResultType(apiData: data),
+            let balance = OstJsonApi.getResultAsDictionary(apiData: apiData) else {
+            
+            fetchUserBalanceCompletion?(false, data, nil)
+            return
+        }
+        if "balance".caseInsensitiveCompare(resutType) == .orderedSame {
+            CurrentUserModel.getInstance.pricePoint = apiData["price_point"] as! [String: Any]
+            CurrentUserModel.getInstance.updateBalance(balance: balance)
+        }
+        
+        fetchUserBalanceCompletion?(true, data, nil)
+        fetchUserBalanceCompletion = nil
+    }
+    
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+        if nil != error {
+            OstErroNotification.showNotification(withMessage: error!.errorMessage)
+        }
+        fetchUserBalanceCompletion?(false, nil, errorData)
+        fetchUserBalanceCompletion = nil
+    }
     
     func updateBalance(balance: [String: Any]) {
         if ( nil == self.userBalanceDetails ) {

@@ -404,7 +404,11 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             return
         }
         isFetchingUserBalance = true
-        OstJsonApi.getBalance(forUserId: CurrentUserModel.getInstance.ostUserId!, delegate: self)
+        CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isSuccess, _, _) in
+            self?.isFetchingUserBalance = false
+            self?.isNewDataAvailable = isSuccess
+            self?.reloadDataIfNeeded()
+        }
     }
     
     func subscribeToWorkflowId(_ workflowId: String) {
@@ -454,7 +458,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         let resultType = OstJsonApi.getResultType(apiData: data);
         if ( "balance" == resultType ) {
-            onBalanceFetchSuccess(apiResponse: data)
+            isFetchingUserBalance = false
+            reloadDataIfNeeded()
+            
         } else if ( "transactions" == resultType ) {
             onTransactionFetchSuccess(apiResponse: data)
         }
@@ -517,16 +523,6 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
         
         updatedDataArray.append(contentsOf: transferArray)
-        
-        self.isNewDataAvailable = true
-        reloadDataIfNeeded()
-    }
-    
-    func onBalanceFetchSuccess(apiResponse: [String: Any]?) {
-        
-        if nil == apiResponse {return}
-        let balance = OstJsonApi.getResultAsDictionary(apiData: apiResponse)
-        CurrentUserModel.getInstance.userBalanceDetails = balance
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()

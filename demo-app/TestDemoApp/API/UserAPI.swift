@@ -90,20 +90,6 @@ class UserAPI: BaseAPI {
                   onFailure: onFailure)
     }
     
-    class func getCurrentUserBalance(onSuccess: (([String: Any]?) -> Void)? = nil,
-                                     onFailure: (([String: Any]?) -> Void)? = nil) {
-        
-       self.getUserBalance(userId: CurrentUserModel.getInstance.appUserId!,
-                           onSuccess: { (userBalance) in
-                            
-                            CurrentUserModel.getInstance.userBalanceDetails = userBalance
-                            onSuccess?(userBalance)
-                            
-       },
-                           onFailure: onFailure)
-        
-    }
-    
     class func getUserBalance(userId: String,
                               onSuccess: (([String: Any]?) -> Void)? = nil,
                               onFailure: (([String: Any]?) -> Void)? = nil) {

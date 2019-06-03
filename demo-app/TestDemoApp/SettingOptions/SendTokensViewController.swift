@@ -117,10 +117,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             return
         }
         isBalanceApiInprogress = true
-        UserAPI.getCurrentUserBalance(onSuccess: {[weak self] (_) in
-            self?.onRequestComplete()
-        }) {[weak self] (_) in
-            self?.onRequestComplete()
+        
+        CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isSuccess, _, _) in
+             self?.onRequestComplete()
         }
     }
     

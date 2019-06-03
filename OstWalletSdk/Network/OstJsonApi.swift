@@ -60,8 +60,9 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
             try OstAPIUser.init(userId: userId).getBalance(onSuccess: { (balanceData) in
                 do {
                     try OstAPIChain(userId: userId).getPricePoint(onSuccess: { (pricePointData) in
+                        let pricePoint = ["price_point": pricePointData]
                         var finalData:[String:Any] = [:];
-                        finalData.merge(dict: pricePointData);
+                        finalData.merge(dict: pricePoint);
                         finalData.merge(dict: balanceData!);
                         delegate.onOstJsonApiSuccess(data: finalData);
                     }, onFailure: { (ostError) in
