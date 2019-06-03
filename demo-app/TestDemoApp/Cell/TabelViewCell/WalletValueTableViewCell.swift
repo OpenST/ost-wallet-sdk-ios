@@ -59,7 +59,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var yourBalLabel: UILabel = {
         let view = UILabel()
         view.font = OstFontProvider().get(size: 13).bold()
-        view.textColor = UIColor.white
+        view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .left
         view.text = "Your Balance"
         
@@ -72,7 +72,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.font = OstFontProvider().get(size: 32).bold()
         label.textAlignment = .center
-        label.textColor = UIColor.white
+        label.textColor = UIColor.color(52, 68, 91)
         label.sizeToFit()
        
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -108,7 +108,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var usdValueLabel: UILabel = {
         let usdLabel = UILabel()
         usdLabel.font = OstFontProvider().get(size: 16)
-        usdLabel.textColor = UIColor.white
+        usdLabel.textColor = UIColor.color(52, 68, 91)
         usdLabel.textAlignment = .left
         
         usdLabel.translatesAutoresizingMaskIntoConstraints = false
