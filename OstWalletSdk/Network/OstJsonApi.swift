@@ -108,7 +108,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         return callback;
     }
     
-    public class func getTransactions(forUserId userId:String, delegate:OstJsonApiDelegate) {
+    public class func getPendingRecovery(forUserId userId:String, delegate:OstJsonApiDelegate) {
         do {
             try OstAPIDevice(userId: userId)
                 .getJsonPendingRecovery(params: nil,
