@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		008F899322A1440D00412C95 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
-		00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
 		4B34164E2295399800F2CFFC /* OstBiometricManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34164D2295399800F2CFFC /* OstBiometricManager.swift */; };
 		4B3416512295520D00F2CFFC /* OstBiometricPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3416502295520D00F2CFFC /* OstBiometricPreference.swift */; };
+		4B7BD94022A54CE700849686 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
 		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
 		4BB35BA9225C81FA004E8569 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */; };
 		4BB35BB1225F3A2E004E8569 /* OstKeyManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BB0225F3A2E004E8569 /* OstKeyManagerDelegate.swift */; };
@@ -1529,6 +1529,7 @@
 				EC38C00422413AA1006F8DA2 /* OstUtilsTests.swift in Sources */,
 				EC38C00022413AA1006F8DA2 /* OstTransactionTests.swift in Sources */,
 				EC38C00122413AA1006F8DA2 /* OstRuleTests.swift in Sources */,
+				4B7BD94022A54CE700849686 /* OstJsonApi.swift in Sources */,
 				EC38C00822413AA1006F8DA2 /* EIP712Tests.swift in Sources */,
 				EC38BFFD22413AA1006F8DA2 /* OstTokenTests.swift in Sources */,
 				EC38BFFB22413AA1006F8DA2 /* OstDeviceManagerTests.swift in Sources */,
@@ -1539,7 +1540,6 @@
 				EC38C00522413AA1006F8DA2 /* EIP1077Tests.swift in Sources */,
 				EC38C00D22413AA1006F8DA2 /* OstCryptoTests.swift in Sources */,
 				EC38C00322413AA1006F8DA2 /* OstBaseDBQueriesTests.swift in Sources */,
-				00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
