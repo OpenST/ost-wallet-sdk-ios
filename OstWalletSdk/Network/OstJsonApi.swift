@@ -53,6 +53,29 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
             delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
         }
     }
+
+    public class func getBalanceWithPriceOracle(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
+        do {
+            let failureCallback = self.getApiErrorCallback(delegate: delegate);
+            try OstAPIUser.init(userId: userId).getBalance(onSuccess: { (balanceData) in
+                do {
+                    try OstAPIChain(userId: userId).getPricePoint(onSuccess: { (pricePointData) in
+                        var finalData:[String:Any] = [:];
+                        finalData.merge(dict: pricePointData);
+                        finalData.merge(dict: balanceData!);
+                        delegate.onOstJsonApiSuccess(data: finalData);
+                    }, onFailure: { (ostError) in
+                        delegate.onOstJsonApiError(error: ostError, errorData: nil);
+                    });
+                } catch let error {
+                    delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+                }
+            },
+                                                           onFailure: failureCallback);
+        } catch let error {
+            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+        }
+    }
     
     public class func getTransactions(forUserId userId:String, params:[String:Any], delegate:OstJsonApiDelegate) {
         do {
