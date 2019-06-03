@@ -517,7 +517,18 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                     trasferData["transaction_hash"] = transaction["transaction_hash"]
                     trasferData["block_timestamp"] = transaction["block_timestamp"]
                     trasferData["rule_name"] = transaction["rule_name"]
-                    transferArray.append(trasferData)
+                    
+                    if fromUserId == toUserId {
+                        var fromTrasferData = transfer
+                        fromTrasferData["from_user_id"] = ""
+                        transferArray.append(fromTrasferData)
+                        
+                        var toTrasferData = transfer
+                        toTrasferData["to_user_id"] = ""
+                        transferArray.append(toTrasferData)
+                    }else {
+                        transferArray.append(trasferData)
+                    }
                 }
             }
         }

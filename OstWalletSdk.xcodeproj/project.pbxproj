@@ -39,6 +39,7 @@
 		4B7BD93822A52F3A00849686 /* OstAPISalt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF422413A96006F8DA2 /* OstAPISalt.swift */; };
 		4B7BD93922A52F3C00849686 /* OstAPIDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF522413A96006F8DA2 /* OstAPIDeviceManager.swift */; };
 		4B7BD93A22A52F4000849686 /* OstAPITokenHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE532244E56300519779 /* OstAPITokenHolder.swift */; };
+		4B7BD93B22A52F5900849686 /* OstConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BE3F22413A95006F8DA2 /* OstConnectivity.swift */; };
 		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
 		4BB35BA9225C81FA004E8569 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */; };
 		4BB35BB1225F3A2E004E8569 /* OstKeyManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BB0225F3A2E004E8569 /* OstKeyManagerDelegate.swift */; };
@@ -1579,6 +1580,7 @@
 				EC38BE2122413992006F8DA2 /* OstWalletSdkTests.swift in Sources */,
 				4B7BD92E22A52F1E00849686 /* OstSession.swift in Sources */,
 				4B7BD93822A52F3A00849686 /* OstAPISalt.swift in Sources */,
+				4B7BD93B22A52F5900849686 /* OstConnectivity.swift in Sources */,
 				4B7BD92122A51B7B00849686 /* OstAPIBase.swift in Sources */,
 				4B7BD92422A52D7D00849686 /* OstApiError.swift in Sources */,
 				4B7BD93A22A52F4000849686 /* OstAPITokenHolder.swift in Sources */,
