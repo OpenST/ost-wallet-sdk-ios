@@ -45,6 +45,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
     var consumedTransactions: [String: Any] = [:]
+    var transactionUsers: [String: Any] = [:]
     
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
@@ -378,9 +379,13 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         }
         isFetchingUserTransactions = true
         
-        OstJsonApi.getTransactions(forUserId: CurrentUserModel.getInstance.ostUserId!,
-                                   params: params,
-                                   delegate: self)
+        TransactionAPI.getTransactionLedger(params: params,
+                                            onSuccess: {[weak self] (apiResponse) in
+                                                self?.onTransactionFetchSuccess(apiResponse: apiResponse)
+        }) {[weak self] (error) in
+            self?.isFetchingUserTransactions = false
+            self?.reloadDataIfNeeded()
+        }
         
     }
     
@@ -481,6 +486,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         guard let transactonData = apiResponse else {return}
         meta = transactonData["meta"] as? [String: Any] ?? [:]
         
+        if let transctionUsersArray: [String: Any] = transactonData["transaction_users"] as? [String: Any] {
+            transactionUsers.merge(dict: transctionUsersArray)
+        }
+        
         guard let transactions: [[String: Any]] = OstJsonApi.getResultAsArray(apiData: apiResponse) as? [[String: Any]] else {return}
         
         var transferArray = [[String: Any]]()
@@ -521,12 +530,16 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                     if fromUserId == toUserId {
                         var fromTrasferData = transfer
                         fromTrasferData["from_user_id"] = ""
+                        updatedDisplayNameInTransferData(trasferData: &fromTrasferData)
                         transferArray.append(fromTrasferData)
                         
                         var toTrasferData = transfer
                         toTrasferData["to_user_id"] = ""
+                        updatedDisplayNameInTransferData(trasferData: &toTrasferData)
                         transferArray.append(toTrasferData)
                     }else {
+                        
+                        updatedDisplayNameInTransferData(trasferData: &trasferData)
                         transferArray.append(trasferData)
                     }
                 }
@@ -537,5 +550,50 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         
         self.isNewDataAvailable = true
         reloadDataIfNeeded()
+    }
+    
+    func updatedDisplayNameInTransferData(trasferData: inout [String: Any]) {
+        let fromUserId = trasferData["from_user_id"] as! String
+        let toUserId = trasferData["to_user_id"] as! String
+        
+        guard let ostUserId = CurrentUserModel.getInstance.ostUserId else {
+            return
+        }
+        
+        var displayText = ""
+        var imageName = ""
+        
+        if fromUserId == ostUserId {
+            if let transactionData = transactionUsers[toUserId] as? [String: Any] {
+                
+                let name = transactionData["username"] as! String
+                displayText = "Sent to \(name)"
+            }else {
+                displayText = "Sent tokens"
+            }
+            imageName = "SentTokens"
+        }
+            
+        else if toUserId == ostUserId {
+            if let transactionData = transactionUsers[toUserId] as? [String: Any] {
+                
+                let name = transactionData["username"] as! String
+                displayText = "Received from \(name)"
+            }else {
+                displayText = "Received tokens"
+            }
+            imageName = "ReceivedTokens"
+        }
+        
+        if let metaProperty = trasferData["meta_property"] as? [String: Any],
+            let type = metaProperty["type"] as? String {
+            if type.caseInsensitiveCompare("company_to_user") == .orderedSame {
+                imageName = "OstGrantReceived"
+                displayText = metaProperty["name"] as? String ?? "Received tokens"
+            }
+        }
+        
+        trasferData["display_name"] = displayText
+        trasferData["image_name"] = imageName
     }
 }
