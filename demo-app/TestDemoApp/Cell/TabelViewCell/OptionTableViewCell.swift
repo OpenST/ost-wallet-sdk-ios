@@ -24,10 +24,16 @@ enum OptionType {
     logoutAllSessions
 }
 
-struct OptionVM {
+class OptionVM {
     var type: OptionType
     var name: String = ""
     var isEnable: Bool = true
+    
+    init(type: OptionType, name: String = "", isEnable: Bool = true) {
+        self.type = type
+        self.name = name
+        self.isEnable = isEnable
+    }
 }
 
 class OptionTableViewCell: BaseTableViewCell {
