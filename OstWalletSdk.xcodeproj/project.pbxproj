@@ -11,6 +11,9 @@
 		00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F899222A1440D00412C95 /* OstJsonApi.swift */; };
 		4B34164E2295399800F2CFFC /* OstBiometricManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34164D2295399800F2CFFC /* OstBiometricManager.swift */; };
 		4B3416512295520D00F2CFFC /* OstBiometricPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3416502295520D00F2CFFC /* OstBiometricPreference.swift */; };
+		4B7BD91F22A5073800849686 /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEFE22413A96006F8DA2 /* OstError.swift */; };
+		4B7BD92022A51B6200849686 /* OstAPIUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEF222413A96006F8DA2 /* OstAPIUser.swift */; };
+		4B7BD92122A51B7B00849686 /* OstAPIBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38BEED22413A96006F8DA2 /* OstAPIBase.swift */; };
 		4BB35BA5225C7358004E8569 /* OstWorkflowEngine+Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA4225C7358004E8569 /* OstWorkflowEngine+Validator.swift */; };
 		4BB35BA9225C81FA004E8569 /* OstWorkflowHelperBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BA8225C81FA004E8569 /* OstWorkflowHelperBase.swift */; };
 		4BB35BB1225F3A2E004E8569 /* OstKeyManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB35BB0225F3A2E004E8569 /* OstKeyManagerDelegate.swift */; };
@@ -1534,12 +1537,15 @@
 				EC38BFFB22413AA1006F8DA2 /* OstDeviceManagerTests.swift in Sources */,
 				EC38C00622413AA1006F8DA2 /* QRCodeGenerationTests.swift in Sources */,
 				EC38BE2122413992006F8DA2 /* OstWalletSdkTests.swift in Sources */,
+				4B7BD92122A51B7B00849686 /* OstAPIBase.swift in Sources */,
 				EC38BFFF22413AA1006F8DA2 /* OstTokenHolderTests.swift in Sources */,
 				EC38C00722413AA1006F8DA2 /* OstConversionTests.swift in Sources */,
+				4B7BD92022A51B6200849686 /* OstAPIUser.swift in Sources */,
 				EC38C00522413AA1006F8DA2 /* EIP1077Tests.swift in Sources */,
 				EC38C00D22413AA1006F8DA2 /* OstCryptoTests.swift in Sources */,
 				EC38C00322413AA1006F8DA2 /* OstBaseDBQueriesTests.swift in Sources */,
 				00D7D67522A1816E0022A901 /* OstJsonApi.swift in Sources */,
+				4B7BD91F22A5073800849686 /* OstError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
