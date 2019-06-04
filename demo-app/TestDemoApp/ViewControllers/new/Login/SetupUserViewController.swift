@@ -425,7 +425,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                 let msg = "Server temporarily unavailable"
                 OstErroNotification.showNotification(withMessage: msg)
             }
-        }   
+        }
     }
 
     @objc func changeTypeTapped(_ sender: Any?) {
