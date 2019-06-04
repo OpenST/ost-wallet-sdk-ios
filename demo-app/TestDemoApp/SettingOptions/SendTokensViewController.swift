@@ -55,11 +55,11 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         return button
         
     }()
-    var cancelButton: UIButton = {
-        let button = OstUIKit.linkButton()
-        button.setTitle("Cancel", for: .normal)
-        return button
-    }()
+//    var cancelButton: UIButton = {
+//        let button = OstUIKit.linkButton()
+//        button.setTitle("Cancel", for: .normal)
+//        return button
+//    }()
     
     var tokenAmountTextField: MDCTextField = {
         let textField = MDCTextField()
@@ -199,7 +199,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         addSubview(usdAmountTextField)
         addSubview(usdSpendingUnitTextField)
         addSubview(sendButton)
-        addSubview(cancelButton)
+//        addSubview(cancelButton)
     }
     
     func setupComponents() {
@@ -218,7 +218,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         weak var weakSelf = self
         sendButton.addTarget(weakSelf, action: #selector(weakSelf!.sendTokenButtonTapped(_ :)), for: .touchUpInside)
-        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
+//        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
     }
     
     //MAKR: - Add Constraints
@@ -232,9 +232,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         addUsdAmountTextFieldConstraints()
         addUsdUnitTextFiledConstraints()
         addSendButtonConstraints()
-        addCancelButtonConstraints()
+//        addCancelButtonConstraints()
         
-        cancelButton.bottomAlignWithParent()
+        sendButton.bottomAlignWithParent()
     }
     
     func addSendTokenLabelConstraints() {
@@ -283,10 +283,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         sendButton.applyBlockElementConstraints()
     }
     
-    func addCancelButtonConstraints() {
-        cancelButton.placeBelow(toItem: sendButton)
-        cancelButton.applyBlockElementConstraints()
-    }
+//    func addCancelButtonConstraints() {
+//        cancelButton.placeBelow(toItem: sendButton)
+//        cancelButton.applyBlockElementConstraints()
+//    }
     
     //MARK: - Actions
     

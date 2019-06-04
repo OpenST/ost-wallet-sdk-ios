@@ -42,7 +42,7 @@ class UsersTableViewCell: BaseTableViewCell {
         if let balance = userBalance["available_balance"] {
             let amountVal = ConversionHelper.toString(balance)!.toRedableFormat()
             self.balanceLabel?.textColor = UIColor.black.withAlphaComponent(0.48)
-            self.balanceLabel?.text = "Balance: \(amountVal.toDisplayTxValue())"
+            self.balanceLabel?.text = "Balance: \(amountVal.toDisplayTxValue()) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
         }else {
             self.balanceLabel?.textColor = UIColor.color(255, 94, 84)
             self.balanceLabel?.text = "Initializing user..."

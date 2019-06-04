@@ -53,11 +53,11 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         return button
         
     }()
-    var cancelButton: UIButton = {
-        let button = OstUIKit.linkButton()
-        button.setTitle("Cancel", for: .normal)
-        return button
-    }()
+//    var cancelButton: UIButton = {
+//        let button = OstUIKit.linkButton()
+//        button.setTitle("Cancel", for: .normal)
+//        return button
+//    }()
     
     //MARK: - Variables
     var isShowingActionSheet = false;
@@ -106,7 +106,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         addSubview(expiresAfterTextField)
         addSubview(spendingUnitTextField)
         addSubview(createSessionButton)
-        addSubview(cancelButton)
+//        addSubview(cancelButton)
     }
     
     func setupTextFields() {
@@ -131,7 +131,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         
         weak var weakSelf = self
         createSessionButton.addTarget(weakSelf, action: #selector(weakSelf!.createSessionButtonTapped(_ :)), for: .touchUpInside)
-        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
+//        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
     }
     
     //MARK: - Add Constraints
@@ -141,9 +141,9 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         addSpendingUitTFConstraints()
         addExpiresAfterConstraitns()
         addCreateSessionButtonConstraints()
-        addCancelButtonConstraints()
+//        addCancelButtonConstraints()
         
-        let lastView = cancelButton
+        let lastView = createSessionButton
         lastView.bottomAlignWithParent()
 
     }
@@ -170,10 +170,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         createSessionButton.applyBlockElementConstraints()
     }
     
-    func addCancelButtonConstraints() {
-        cancelButton.placeBelow(toItem: createSessionButton)
-        cancelButton.applyBlockElementConstraints()
-    }
+//    func addCancelButtonConstraints() {
+//        cancelButton.placeBelow(toItem: createSessionButton)
+//        cancelButton.applyBlockElementConstraints()
+//    }
     
     
     //MARK: - Text Field Delegate
