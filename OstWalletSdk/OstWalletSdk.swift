@@ -94,5 +94,5 @@ import Foundation
         
         // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
-    }
+    }    
 }

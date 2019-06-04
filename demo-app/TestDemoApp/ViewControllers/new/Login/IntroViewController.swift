@@ -9,12 +9,24 @@
 import UIKit
 import OstWalletSdk
 
-class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
+class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
+
+    
 
     //MARK: - Variables
     var progressIndicator: OstProgressIndicator? = nil
     var fetchUser: Bool = false
     var isUserFetched: Bool = false
+    var hasPerformedNormalFlow:Bool = false;
+    var appUrlData:AppUrlData? {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        return delegate.getWebPageUrl();
+    };
+    
+    var hasAppLink:Bool {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        return delegate.hasWebLink();
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +34,175 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        if ( !hasAppLink ) {
+            normalFlow();
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        introImageView.frame = imageContainter.bounds
+    }
+    
+    
+    //MARK: - CanConfigureEconomyProtocol methods.
+    func defaultEconomySet(payload: [String : Any?]) {
+        // This method is called when following condition(s) are true:
+        // nil == CurrentEconomy.getInstance.economyDetails
+        // This viewController is the last view controller in navigation chain.
+        // Note: CurrentEconomy.getInstance.economyDetails has been updated by this time.
+        
+        // Let's go to sign-up page silently.
+        self.openSetupUserVC();
+        
+        // Update hasPerformedNormalFlow flag so that when user presses back, we skip the normalFlow.
+        hasPerformedNormalFlow = true;
+    }
+    
+    func newEconomySet(payload: [String : Any?]) {
+        //Go-to Signup/Login.
+        openSetupUserVC();
+    }
+    
+    func newEconomyNotSet() {
+        //Perform normal checks and proceed.
+        normalFlow();
+    }
+    
+    func sameEconomySet() {
+        //Perform normal checks and proceed.
+        normalFlow();
+    }
+    
+    func clearAppUrlData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        delegate.clearWebPageUrl();
+    }
+    
+    func showLogoutAlert() {
+        
+    }
+    
+    func appUrlDataAvailable() {
+        //Get the last view controller.
+        let vc:UIViewController = self.navigationController!.viewControllers.last!;
+        
+        //Ensure appUrlData is not nil.
+        if ( nil == appUrlData ) {
+            if ( vc == self ) {
+                //Controle should never come here.
+                normalFlow();
+            }
+            return;
+        }
+        
+        //Ensure payload is valid.
+        let economyParamsJson:String? = appUrlData!.params["ld"] as? String;
+        let economyPayload = CurrentEconomy.getQRJsonData(economyParamsJson ?? "{}");
+        if ( appUrlData!.action == .unknown || nil == economyPayload  ) {
+            //Show invalid url alert.
+            //Note: Also update message in TabBarViewController if needed.
+            let alert = UIAlertController(title: "Invalid Url", message: "The url link is invalid.", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+            vc.present( alert, animated: true, completion: nil);
+
+            if ( vc == self ) {
+                //Continue normalFlow.
+                normalFlow();
+            }
+            return;
+        } else if ( appUrlData!.action != .launch ) {
+            //We can't handle this action.
+            if ( vc == self ) {
+                //Continue normalFlow.
+                normalFlow();
+            }
+            return;
+        }
+        
+        //Ensure user has a pre-configured economy.
+        if ( nil == CurrentEconomy.getInstance.economyDetails ) {
+            //No pre-configured economy found.
+            //Set the economy details.
+            CurrentEconomy.getInstance.economyDetails = economyPayload! as [String : Any];
+            
+            //As current economy is null, user is either on intro page OR on sign-up/login page.
+            if let canConfigureVc = vc as? CanConfigureEconomyProtocol {
+                canConfigureVc.defaultEconomySet(payload: economyPayload!);
+                return;
+            }
+            //The controle should not reach here.
+            //But if it does, make sure to call normalFlow.
+            if ( vc == self ) {
+                normalFlow();
+            }
+            return;
+        }
+        
+        //Ensure user has a different economy configured.
+        //-- small g stands for 'given'
+        let gMappyEndPoint:String = economyPayload!["mappy_api_endpoint"] as! String;
+        let gSaasApiEndpoint:String = economyPayload!["saas_api_endpoint"] as! String;
+        let gTokenId:String = ConversionHelper.toString( economyPayload!["token_id"]! )!;
+        let gUrlId:String = economyPayload!["url_id"] as! String;
+        let gTokenName: String = economyPayload!["token_name"] as! String;
+        
+        //-- small k stands for 'known'.
+        let kEconomy = CurrentEconomy.getInstance;
+        if (( gMappyEndPoint == kEconomy.mappyApiEndpoint )
+            && ( gSaasApiEndpoint == kEconomy.saasApiEndpoint)
+            && ( gTokenId == kEconomy.tokenId)
+            && ( gUrlId == kEconomy.urlId))
+        {
+            //User has the same economy configured as the payload.
+            let vc:UIViewController = self.navigationController!.viewControllers.last!;
+            if let canConfigureVc = vc as? CanConfigureEconomyProtocol {
+                canConfigureVc.sameEconomySet();
+                return;
+            }
+            return;
+        }
+        
+        //Ensure last view controller can configure economy.
+        if vc is CanConfigureEconomyProtocol {
+            //Ask for confirmation.
+            let alert = UIAlertController(title: "Change Economy", message: "The app is configured for \(kEconomy.tokenName!) economy. Would you like to switch to \(gTokenName) economy?", preferredStyle: .alert);
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {[weak vc] (_) in
+                let canConfigureVc = vc as? CanConfigureEconomyProtocol;
+                CurrentEconomy.getInstance.economyDetails = economyPayload! as [String : Any];
+                canConfigureVc?.newEconomySet(payload: economyPayload!);
+                canConfigureVc?.clearAppUrlData();
+            }));
+            
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: {[weak vc] (_) in
+                let canConfigureVc = vc as? CanConfigureEconomyProtocol;
+                canConfigureVc?.newEconomyNotSet();
+                canConfigureVc?.clearAppUrlData();
+            }));
+            vc.present( alert, animated: true, completion: nil);
+            return;
+        }
+
+        //view controller can NOT configure economy.
+        //-- Show alert to logout.
+        //-- clear app url data.
+        let alert = UIAlertController(title: "", message: "You appear to be logged in to another economy, please log out of the application and try connecting again.", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+
+        vc.present( alert, animated: true, completion: nil);
+        self.clearAppUrlData();
+    }
+    
+    func normalFlow() {
+        if ( hasPerformedNormalFlow ) {
+            return;
+        }
         if nil != CurrentEconomy.getInstance.tokenId && fetchUser && !isUserFetched {
             getUserFromServer()
             isUserFetched = true
         }
+        hasPerformedNormalFlow = true;
     }
     
     // MARK - Subviews
@@ -37,14 +214,32 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        view.text = "Test your Brand Token Economy deployed on OST Platform";
-        view.backgroundColor = .white;
+        view.text = "Version 0.1.0 (testnet)";
+        view.backgroundColor = .clear;
         return view;
     }()
     
-    let introImageView: UIImageView = {
-        let view = UIImageView(image: UIImage.init(named: "ostIntroImage") );
+    let imageContainter: UIView = {
+        var view = UIView()
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let introImageView: UIImageView = {
+        var view = UIImageView(image: UIImage.init(named: "ostIntroImage") );
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view;
+    }()
+    
+    let infoLabel: UILabel = {
+        var view = OstUIKit.leadLabel();
+        view.font = OstFontProvider().get(size: 14)
+        view.textColor = UIColor.color(136, 136, 136)
+        view.text = "This beta release enables users to join Brand Token economies, to send and receive tokens, and to access wallet security and recovery features.";
+        view.backgroundColor = .clear;
         return view;
     }()
     
@@ -67,7 +262,9 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         
         addSubview(logoImageView);
         addSubview(leadLabel);
-        addSubview(introImageView);
+        imageContainter.addSubview(introImageView)
+        addSubview(imageContainter);
+        addSubview(infoLabel)
         addSubview(createAccountBtn);
         addSubview(loginBtn);
     }
@@ -85,13 +282,17 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         logoImageView.centerXAlignWithParent();
         logoImageView.setAspectRatio(width: 70, height: 38);
         
-        leadLabel.placeBelow(toItem: logoImageView);
+        leadLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20).isActive = true
         leadLabel.applyBlockElementConstraints();
         
-        introImageView.placeBelow(toItem: leadLabel, constant: 40);
-        introImageView.setW375Width(width: 221)
-        introImageView.setH667Height(height: 236)
-        introImageView.centerXAlignWithParent();
+        imageContainter.placeBelow(toItem: leadLabel, constant: 40);
+        imageContainter.setW375Width(width: 221)
+        imageContainter.bottomAnchor.constraint(equalTo: infoLabel.topAnchor, constant: -40).isActive = true
+        imageContainter.centerXAlignWithParent()
+//        introImageView.applyBlockElementConstraints()
+        
+        infoLabel.bottomFromTopAlign(toItem: createAccountBtn, constant: -20)
+        infoLabel.applyBlockElementConstraints()
         
         createAccountBtn.applyBlockElementConstraints();
         createAccountBtn.bottomFromTopAlign(toItem: loginBtn, constant: -20)
@@ -105,21 +306,27 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     //MARK: - Actions
     
     @objc func createAccountButtonTapped(_ sender: Any?) {
+        openSetupUserVC();
+    }
+    
+    func openSetupUserVC() {
         let createAccountVC = SetupUserViewController()
-        createAccountVC.viewControllerType = .signup
+        createAccountVC.viewControllerType = .signup;
         createAccountVC.pushViewControllerOn(self)
     }
     
-    @objc func loginButtonTapped(_ sender: Any?) {        
-        let loginVC = SetupUserViewController()
-        loginVC.viewControllerType = .login
-        loginVC.pushViewControllerOn(self)
+    func openLoginUserVC() {
+        let createAccountVC = SetupUserViewController()
+        createAccountVC.viewControllerType = .login;
+        createAccountVC.pushViewControllerOn(self)
+    }
+    
+    @objc func loginButtonTapped(_ sender: Any?) {
+        openLoginUserVC()
     }
 
-    
     func getUserFromServer() {
         progressIndicator = OstProgressIndicator(textCode: .fetchingUser)
-        getApplicationWindow()?.addSubview(progressIndicator!)
         progressIndicator?.show()
 
         try! OstWalletSdk.initialize(apiEndPoint: CurrentEconomy.getInstance.saasApiEndpoint!)
@@ -187,12 +394,12 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if let currentUser = CurrentUserModel.getInstance.ostUser {
-            if currentUser.isStatusActivating {
+        if nil != CurrentUserModel.getInstance.ostUser
+            && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
+            
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
                     self?.pushToTabBarController()
                 }
-            }
         }
     }
     

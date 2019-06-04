@@ -18,7 +18,7 @@ class InitiateDeviceRecoveryViewController: ManageDeviceViewController {
     }
     
     override func getLeadLabelText() -> String {
-        return "Here are your authorized devices"
+        return "This is an authorized device, recovery applies only to cases where a user has no authorized device."
     }
     
     override func onFetchDeviceSuccess(_ apiResponse: [String : Any]?) {

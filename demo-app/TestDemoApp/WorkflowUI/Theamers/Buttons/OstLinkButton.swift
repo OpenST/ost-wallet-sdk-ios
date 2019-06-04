@@ -20,6 +20,7 @@ class OstLinkButton: OstButtonTheamer {
         //Title Colors
         setTitleColor(color: UIColor.color(22, 141, 193), state: .normal);
         setTitleColor(color: UIColor.color(22, 141, 193), state: .highlighted);
+        setTitleColor(color: UIColor.color(22, 141, 193), state: .disabled);
 
         //Title Edge Inset
         self.contentEdgeInsets = UIEdgeInsets(top: 4 , left: 4, bottom: 4, right: 4);
@@ -28,7 +29,7 @@ class OstLinkButton: OstButtonTheamer {
         let activeBgImg = UIImage.withColor(color: UIColor.white);
         setBackgroundImage(image: activeBgImg, state: .normal);
         
-        let highlightedBgImg = UIImage.withColor(22, 141, 193);
+        let highlightedBgImg = UIImage.withColor(255, 255, 255, 0.0);
         setBackgroundImage(image: highlightedBgImg, state: .highlighted);
         
         //        let disabledImg = UIImage.withColor(154, 204, 215, 0.3);

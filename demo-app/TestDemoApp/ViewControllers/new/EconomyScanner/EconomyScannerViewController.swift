@@ -148,42 +148,34 @@ class EconomyScannerViewController: OstBaseViewController {
     }
     
     func scannerDataReceived(values: [String]?) {
+        
+        let showAlert: (() -> Void) = {[weak self] in
+            let alert = UIAlertController(title: "Invalid QR-Code", message: "Please scan valid QR-Code to select economy.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Scan", style: .default, handler: {[weak self] (_) in
+                self?.scanner?.startScanning()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] (_) in
+                self?.closeButtonTapped(nil)
+            }))
+            self?.present(alert, animated: true, completion: nil)
+        }
+        
         if (nil != values) && !values!.isEmpty {
             guard let qrData = values!.first,
-                    let qrJsonData = EconomyScannerViewController.getQRJsonData(qrData) else {
-                scanner?.startScanning()
+                    let qrJsonData = CurrentEconomy.getQRJsonData(qrData) else {
+                showAlert()
                 return
             }
             CurrentEconomy.getInstance.economyDetails = qrJsonData as [String : Any]
             
             self.dismiss(animated: true, completion: nil)
         }else {
-            scanner?.startScanning()
+            showAlert()
         }
     }
     
-    class func getQRJsonData(_ qr: String) -> [String: Any?]? {
-        let jsonObj: [String:Any?]?
-        do {
-            jsonObj = try OstUtils.toJSONObject(qr) as? [String : Any?]
-        } catch {
-            return nil
-        }
-        
-        let viewEndPoint = jsonObj!["view_api_endpoint"] as? String
-        let tokenId = jsonObj!["token_id"]
-        let mappyApiEndpoint = jsonObj!["mappy_api_endpoint"]
-        let tokenSymbol = jsonObj!["token_symbol"]
-        
-        if nil == viewEndPoint || nil == tokenId || nil == mappyApiEndpoint || nil == tokenSymbol {
-            return nil
-        }
-        
-        UserDefaults.standard.set(qr, forKey: CurrentEconomy.userDefaultsId)
-        UserDefaults.standard.synchronize()
 
-        return jsonObj
-    }
     
     @objc func closeButtonTapped(_ sender: Any?) {
         self.dismiss(animated: true, completion: nil)

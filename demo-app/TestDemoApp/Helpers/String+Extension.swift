@@ -32,7 +32,6 @@ extension String {
         return self[indexPosition]
     }
     
-    
     func toDisplayTxValue() -> String {
         var formattedDecimal: String = "00"
         
@@ -45,15 +44,38 @@ extension String {
                 formattedDecimal = decimals
             }
         }
-        return "\(values[0]).\(formattedDecimal)"
+        
+        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
+        return "\(intPart).\(formattedDecimal)"
+    }
+    
+    func toRoundUpTxValue() -> String {
+        var formattedDecimal: String = "00"
+        
+        let values = self.components(separatedBy: ".")
+        if values.count == 2 {
+            let decimalVal: String = values[1]
+            
+            let decimals = decimalVal.substringTill(3)
+            if !decimals.isEmpty {
+                formattedDecimal = decimals
+            }
+        }
+        
+        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
+        let doubleVal = Double("\(intPart).\(formattedDecimal)")!
+        return String(format: "%.2f", doubleVal)
     }
 }
 
 extension String {
-    var toRedableFormat: String {
+    func toRedableFormat(isUSDTx: Bool = false) -> String {
         let economyDecimals = CurrentEconomy.getInstance.getEconomyDecimals()
         
         if economyDecimals == 6 {
+            if isUSDTx {
+                return OstUtils.fromAtto(self)
+            }
             return OstUtils.fromMicro(self)
         }
         else if economyDecimals == 18 {
@@ -64,20 +86,17 @@ extension String {
     }
     
     func toSmallestUnit(isUSDTx: Bool) -> String {
+        
+        if isUSDTx {
+            return OstUtils.toAtto(self)
+        }
+        
         let economyDecimals = CurrentEconomy.getInstance.getEconomyDecimals()
         if economyDecimals == 6 {
-            if isUSDTx {
-                return self + "0000"
-            }else {
-                return self + "000000"
-            }
+            return OstUtils.toMicro(self)
         }
         else if economyDecimals == 18 {
-            if isUSDTx {
-                return self + "0000000000000000"
-            }else {
-                return self + "000000000000000000"
-            }
+            return OstUtils.toAtto(self)
         }
         
         return self

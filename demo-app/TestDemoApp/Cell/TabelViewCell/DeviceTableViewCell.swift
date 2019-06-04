@@ -45,7 +45,7 @@ class DeviceTableViewCell: UsersTableViewCell {
     //MARK: - Add Subview
     override func createViews() {
         super.createViews()
-        
+        self.selectionStyle = .none
         self.detailsContainerView?.addSubview(tagLabel)
     }
     

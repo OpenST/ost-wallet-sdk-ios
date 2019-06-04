@@ -9,8 +9,8 @@
 import UIKit
 import OstWalletSdk
 
-class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate {
-    
+class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
+
     //MARK: - Components
     var walletTableView: UITableView = {
         let tableView: UITableView = UITableView(frame: .zero, style: .plain)
@@ -25,7 +25,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Transactions...")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Transactions...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
         
         return refreshControl
@@ -44,12 +44,13 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
+    var consumedTransactions: [String: Any] = [:]
+    var transactionUsers: [String: Any] = [:]
+    
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
     var paginationTriggerPageNumber = 1
-    
-    var paginatingViewCount = 1
     
     weak var tabbarController: TabBarViewController?
     
@@ -64,10 +65,23 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         fetchUserWalletData(hardRefresh: true)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateUserDataForTrasaction(_:)),
+            name: NSNotification.Name(rawValue: "updateUserDataForTransaction"),
+            object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         self.tabbarController?.showTabBar()
+        self.walletTableView.reloadSections([0], with: UITableView.RowAnimation.automatic)
     }
 
     //MARK: - Views
@@ -144,7 +158,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         case 2:
             return tableDataArray.count > 0 ? 0: 1
         case 3:
-            return paginatingViewCount
+            return 1
         default:
             return 0
         }
@@ -175,7 +189,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
              let emptyTansactionCell: EmptyTransactionTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTransactionTableViewCell.emptyTransactionTCellIdentifier, for: indexPath) as! EmptyTransactionTableViewCell
             
              let currentUser = CurrentUserModel.getInstance
-             if currentUser.ostUser!.isStatusActivating {
+             if currentUser.isCurrentUserStatusActivating! {
 
                 emptyTansactionCell.showWalletSettingUpView()
              }else {
@@ -193,7 +207,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 pCell = self.paginatingCell!
             }
             
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 pCell.startAnimating()
             }else {
                 pCell.stopAnimating()
@@ -217,10 +231,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         case 2:
             return tableDataArray.count > 0 ? 0: 200
         case 3:
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 return 44.0
             }else {
-                self.paginatingCell?.stopAnimating()
                 return 0.0
             }
         default:
@@ -310,6 +323,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
+        self.consumedTransactions = [:]
         self.fetchUserWalletData(hardRefresh: true)
     }
     
@@ -318,7 +332,9 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         let isScrolling: Bool = (self.walletTableView.isDragging) || (self.walletTableView.isDecelerating)
         
         if !isScrolling && self.isNewDataAvailable
-            && !isFetchingUserTransactions  && !isFetchingUserBalance {
+            && !isFetchingUserTransactions
+            && !isFetchingUserBalance {
+            
             tableDataArray = updatedDataArray
             self.walletTableView.reloadData()
             self.isNewDataAvailable = false
@@ -327,7 +343,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 self.refreshControl.endRefreshing()
             }
         }
-        else if !isFetchingUserTransactions  && !isFetchingUserBalance {
+        else if !isFetchingUserTransactions  && !isFetchingUserBalance && !isScrolling {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
@@ -336,7 +352,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     }
     
     func fetchUserWalletData(hardRefresh: Bool = false) {
-        if CurrentUserModel.getInstance.ostUser?.isStatusActivated ?? false {
+        if CurrentUserModel.getInstance.isCurrentUserStatusActivated ?? false {
             fetchUserTransaction(hardRefresh: hardRefresh)
             fetchUserBalance(hardRefresh: hardRefresh)
         }
@@ -348,6 +364,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             return
         }
         var nextPagePayload: [String: Any]? = nil
+        var params: [String: Any] = [:]
+        
         if hardRefresh {
             meta = nil
             updatedDataArray = []
@@ -357,15 +375,22 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                 reloadDataIfNeeded()
                 return
             }
+            params = nextPagePayload!
         }
         isFetchingUserTransactions = true
-        TransactionAPI.getTransactionLedger(onSuccess: {[weak self] (apiResponse) in
-            self?.onTransactionFetchSuccess(apiResponse: apiResponse)
-            
-        }) {[weak self] (ApiError) in
+        
+        TransactionAPI.getTransactionLedger(params: params,
+                                            onSuccess: {[weak self] (apiResponse) in
+                                                self?.onTransactionFetchSuccess(apiResponse: apiResponse)
+        }) {[weak self] (error) in
             self?.isFetchingUserTransactions = false
             self?.reloadDataIfNeeded()
         }
+        
+    }
+    
+    func isNextPageAvailable() -> Bool {
+        return getNextPagePayload() != nil
     }
     
     func getNextPagePayload() -> [String: Any]? {
@@ -378,62 +403,17 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         return nextPagePayload
     }
     
-    func onTransactionFetchSuccess(apiResponse: [String: Any]?) {
-        self.isFetchingUserTransactions = false
-        guard let transactonData = apiResponse else {return}
-        meta = transactonData["meta"] as? [String: Any] ?? [:]
-        
-        guard let resultType = transactonData["result_type"] as? String else {return}
-        guard let transactions = transactonData[resultType] as? [[String: Any]] else {return}
-        
-        var transferArray = [[String: Any]]()
-        for transaction in transactions {
-            let transfers = transaction["transfers"] as! [[String: Any]]
-            for transfer in transfers {
-                var trasferData = transfer
-                
-                let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
-                let fromUserId = trasferData["from_user_id"] as! String
-                let toUserId = trasferData["to_user_id"] as! String
-
-                if [fromUserId, toUserId].contains(currentUserOstId) {
-                    trasferData["meta_property"] = transaction["meta_property"]
-                    trasferData["transaction_hash"] = transaction["transaction_hash"]
-                    trasferData["block_timestamp"] = transaction["block_timestamp"]
-                    trasferData["rule_name"] = transaction["rule_name"]
-                    transferArray.append(trasferData)
-                }
-            }
-        }
-        
-        updatedDataArray.append(contentsOf: transferArray)
-        
-        self.isNewDataAvailable = true
-        reloadDataIfNeeded()
-    }
-    
     func fetchUserBalance(hardRefresh: Bool = false) {
         if isFetchingUserBalance {
             reloadDataIfNeeded()
             return
         }
         isFetchingUserBalance = true
-        UserAPI.getBalance(onSuccess: {[weak self] (apiResponse) in
-            self?.onBalanceFetchSuccess(apiResponse: apiResponse)
-        }) {[weak self] (apiError) in
+        CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isSuccess, _, _) in
             self?.isFetchingUserBalance = false
+            self?.isNewDataAvailable = isSuccess
             self?.reloadDataIfNeeded()
         }
-    }
-    
-    func onBalanceFetchSuccess(apiResponse: [String: Any]?) {
-        isFetchingUserBalance = false
-        if nil == apiResponse {return}
-        
-        CurrentUserModel.getInstance.userBalanceDetails = apiResponse
-        
-        self.isNewDataAvailable = true
-        reloadDataIfNeeded()
     }
     
     func subscribeToWorkflowId(_ workflowId: String) {
@@ -450,8 +430,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
             workflowCallbacks = nil
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
-            self?.fetchUserWalletData()
+        if workflowContext.workflowType == .activateUser {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+                self?.fetchUserWalletData(hardRefresh: true)
+            }
         }
         workflowCallbacks = nil
     }
@@ -460,4 +442,166 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
          workflowCallbacks = nil
     }
     
+    
+    @objc func updateUserDataForTrasaction(_ notification: Notification) {
+        if let executeTransactionNotification = notification.object as? [String: Any],
+            let isRequestAcknowledged = executeTransactionNotification["isRequestAcknowledged"] as? Bool {
+            
+            if isRequestAcknowledged {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {[weak self] in
+                    self?.consumedTransactions = [:]
+                    self?.fetchUserTransaction(hardRefresh: true)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Ost JSON API
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        isFetchingUserTransactions = false
+        
+        let resultType = OstJsonApi.getResultType(apiData: data);
+        if ( "balance" == resultType ) {
+            isFetchingUserBalance = false
+            reloadDataIfNeeded()
+            
+        } else if ( "transactions" == resultType ) {
+            onTransactionFetchSuccess(apiResponse: data)
+        }
+    }
+    
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+        if ( nil != error ) {
+            print( error! );
+        }
+        
+        isFetchingUserTransactions = false
+        reloadDataIfNeeded()
+    }
+    
+    func onTransactionFetchSuccess(apiResponse: [String: Any]?) {
+        self.isFetchingUserTransactions = false
+        guard let transactonData = apiResponse else {return}
+        meta = transactonData["meta"] as? [String: Any] ?? [:]
+        
+        if let transctionUsersArray: [String: Any] = transactonData["transaction_users"] as? [String: Any] {
+            transactionUsers.merge(dict: transctionUsersArray)
+        }
+        
+        guard let transactions: [[String: Any]] = OstJsonApi.getResultAsArray(apiData: apiResponse) as? [[String: Any]] else {return}
+        
+        var transferArray = [[String: Any]]()
+        for transaction in transactions {
+            guard let status = transaction["status"] as? String else {
+                continue
+            }
+            
+            if status.caseInsensitiveCompare("SUCCESS") != .orderedSame
+                && status.caseInsensitiveCompare("MINED") != .orderedSame
+                && status.caseInsensitiveCompare("SUBMITTED") != .orderedSame {
+                continue
+            }
+            
+            guard let transactionHash = transaction["transaction_hash"] as? String else {
+                continue
+            }
+            if nil != consumedTransactions[transactionHash] {
+                continue
+            }
+            
+            consumedTransactions[transactionHash] = transaction
+            
+            let transfers = transaction["transfers"] as! [[String: Any]]
+            for transfer in transfers {
+                var trasferData = transfer
+                
+                let currentUserOstId = CurrentUserModel.getInstance.ostUserId ?? ""
+                let fromUserId = trasferData["from_user_id"] as! String
+                let toUserId = trasferData["to_user_id"] as! String
+                
+                if [fromUserId, toUserId].contains(currentUserOstId) {
+                    trasferData["meta_property"] = transaction["meta_property"]
+                    trasferData["transaction_hash"] = transaction["transaction_hash"]
+                    trasferData["block_timestamp"] = transaction["block_timestamp"]
+                    trasferData["rule_name"] = transaction["rule_name"]
+                    
+                    updatedDisplayNameInTransferData(trasferData: &trasferData)
+                    transferArray.append(trasferData)
+                }
+            }
+        }
+        
+        updatedDataArray.append(contentsOf: transferArray)
+        
+        self.isNewDataAvailable = true
+        reloadDataIfNeeded()
+    }
+    
+    func updatedDisplayNameInTransferData(trasferData: inout [String: Any]) {
+        let fromUserId = trasferData["from_user_id"] as! String
+        let toUserId = trasferData["to_user_id"] as! String
+        
+        let companyTokenHolders = CurrentEconomy.getInstance.companyTokenHolders
+        
+        guard let ostUserId = CurrentUserModel.getInstance.ostUserId else {
+            return
+        }
+        
+        var displayText = ""
+        var imageName = ""
+        
+        if fromUserId == toUserId {
+            
+            displayText = "Sent to yourself"
+            imageName = "SentTokens"
+        } else if fromUserId == ostUserId {
+            if let transactionData = transactionUsers[toUserId] as? [String: Any] {
+                
+                let name = transactionData["username"] as! String
+                displayText = "Sent to \(name)"
+                
+            }else if let toAddress = trasferData["to"] as? String {
+                if nil != companyTokenHolders
+                    && companyTokenHolders!.contains(toAddress) {
+                
+                    displayText = "Sent to \(CurrentEconomy.getInstance.tokenName ?? "Company")"
+                }
+            }
+            
+            if displayText.isEmpty {
+                displayText = "Sent tokens"
+            }
+            imageName = "SentTokens"
+        }
+            
+        else if toUserId == ostUserId {
+            if let transactionData = transactionUsers[fromUserId] as? [String: Any] {
+                
+                let name = transactionData["username"] as! String
+                displayText = "Received from \(name)"
+            }else if let fromAddress = trasferData["from"] as? String {
+                if nil != companyTokenHolders
+                    && companyTokenHolders!.contains(fromAddress) {
+                    
+                    displayText = "Received from \(CurrentEconomy.getInstance.tokenName ?? "Company")"
+                }
+            }
+            
+            if displayText.isEmpty {
+                displayText = "Received tokens"
+            }
+            imageName = "ReceivedTokens"
+        }
+        
+        if let metaProperty = trasferData["meta_property"] as? [String: Any],
+            let type = metaProperty["type"] as? String {
+            if type.caseInsensitiveCompare("company_to_user") == .orderedSame {
+                imageName = "OstGrantReceived"
+                displayText = metaProperty["name"] as? String ?? "Received tokens"
+            }
+        }
+        
+        trasferData["display_name"] = displayText
+        trasferData["image_name"] = imageName
+    }
 }

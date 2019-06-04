@@ -12,7 +12,7 @@ import OstWalletSdk
 
 class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFieldDelegate {
 
-    static let DEFAULT_SESSION_EXPIRES_IN: Int = 13;
+    static let DEFAULT_SESSION_EXPIRES_IN: Int = 14;
 
     
     //MARK: - Components
@@ -42,7 +42,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         expiresAfterTextField.translatesAutoresizingMaskIntoConstraints = false
         expiresAfterTextField.clearButtonMode = .never
         expiresAfterTextField.placeholderLabel.text = "Set Expiry for Session in Days"
-        expiresAfterTextField.text = "\(DEFAULT_SESSION_EXPIRES_IN) days"
+        expiresAfterTextField.text = "2 Weeks"
         return expiresAfterTextField
     }()
     var expirationHeightTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -53,11 +53,11 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         return button
         
     }()
-    var cancelButton: UIButton = {
-        let button = OstUIKit.secondaryButton()
-        button.setTitle("Cancel", for: .normal)
-        return button
-    }()
+//    var cancelButton: UIButton = {
+//        let button = OstUIKit.linkButton()
+//        button.setTitle("Cancel", for: .normal)
+//        return button
+//    }()
     
     //MARK: - Variables
     var isShowingActionSheet = false;
@@ -93,7 +93,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         return "Create Session"
     }
     override func getLeadLabelText() -> String {
-        return "Set Spending Limit and Expiry for a session"
+        return "Authorizing a session obviates the need for the user to sign every transaction within the application thereby creating a more seamless user experience."
     }
     
     //MARK: - Add Subviews
@@ -106,7 +106,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         addSubview(expiresAfterTextField)
         addSubview(spendingUnitTextField)
         addSubview(createSessionButton)
-        addSubview(cancelButton)
+//        addSubview(cancelButton)
     }
     
     func setupTextFields() {
@@ -131,7 +131,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         
         weak var weakSelf = self
         createSessionButton.addTarget(weakSelf, action: #selector(weakSelf!.createSessionButtonTapped(_ :)), for: .touchUpInside)
-        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
+//        cancelButton.addTarget(weakSelf, action: #selector(weakSelf!.cancelButtonTapped(_ :)), for: .touchUpInside)
     }
     
     //MARK: - Add Constraints
@@ -141,9 +141,9 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         addSpendingUitTFConstraints()
         addExpiresAfterConstraitns()
         addCreateSessionButtonConstraints()
-        addCancelButtonConstraints()
+//        addCancelButtonConstraints()
         
-        let lastView = cancelButton
+        let lastView = createSessionButton
         lastView.bottomAlignWithParent()
 
     }
@@ -170,10 +170,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         createSessionButton.applyBlockElementConstraints()
     }
     
-    func addCancelButtonConstraints() {
-        cancelButton.placeBelow(toItem: createSessionButton)
-        cancelButton.applyBlockElementConstraints()
-    }
+//    func addCancelButtonConstraints() {
+//        cancelButton.placeBelow(toItem: createSessionButton)
+//        cancelButton.applyBlockElementConstraints()
+//    }
     
     
     //MARK: - Text Field Delegate
@@ -201,9 +201,10 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     func getActionForIndex(indx:Int) -> UIAlertAction {
         let displayText = expiresOptions[indx];
-        return UIAlertAction(title: displayText, style: .default, handler: { (UIAlertAction) in
-            self.expiresAfterSelectedIndex = indx;
-            self.expiresAfterTextField.text = displayText;
+        return UIAlertAction(title: displayText, style: .default, handler: {[weak self] (UIAlertAction) in
+            self?.isShowingActionSheet = false;
+            self?.expiresAfterSelectedIndex = indx;
+            self?.expiresAfterTextField.text = displayText;
         })
     }
     
@@ -215,15 +216,17 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         }
         
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
-        let finalSpendingLimit: String = self.spendingLimitTestField.text! + "000000000000000000"
+        let finalSpendingLimit: String = OstUtils.toAtto(self.spendingLimitTestField.text!)
         OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
                                 spendingLimit: finalSpendingLimit,
                                 expireAfterInSec: Double(expireAfter),
                                 delegate: self.workflowDelegate)
+        
+        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
+        progressIndicator?.show()
     }
     
     func isCorrectInputPassed() -> Bool {
-        
         
         if nil == self.spendingLimitTestField.text
             || self.spendingLimitTestField.text!.isEmpty

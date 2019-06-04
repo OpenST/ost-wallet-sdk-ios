@@ -111,12 +111,14 @@ class OstGetPinViewController: OstBaseScrollViewController {
                                                          attributes: attributes)
         
         var termsAttributes: [NSAttributedString.Key : Any]  = attributes
-        termsAttributes[.init("action")] = #selector(self.termsLabelTapped)
+        termsAttributes[.init("action")] = #selector(self.termsLabelTapped(attributes:))
+        termsAttributes[.init("url")] = "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
         termsAttributes[.font] = OstFontProvider().get(size: 12).bold()
         let termsAttributedString = NSAttributedString(string: "Terms of Service", attributes: termsAttributes)
         
         var privacyAttributes: [NSAttributedString.Key : Any]  = attributes
-        privacyAttributes[.init("action")] = #selector(self.privacyLabelTapped)
+        privacyAttributes[.init("action")] = #selector(self.privacyLabelTapped(attributes:))
+        privacyAttributes[.init("url")] = "https://ost.com/privacy"
         privacyAttributes[.font] = OstFontProvider().get(size: 12).bold()
         let privacyAttributedString = NSAttributedString(string: "Privacy Policy", attributes: privacyAttributes)
         
@@ -137,17 +139,17 @@ class OstGetPinViewController: OstBaseScrollViewController {
         termsAndConditionLabel.addGestureRecognizer(tapGesture)
     }
     
-    @objc func termsLabelTapped() {
+    @objc func termsLabelTapped(attributes: [NSAttributedString.Key: Any]) {
         let webview = WKWebViewController()
         webview.title = "Terms of Service"
-        webview.urlString = "https://ost.com/terms"
+        webview.urlString = attributes[NSAttributedString.Key(rawValue: "url")] as! String
         webview.presentViewControllerWithNavigationController(self)
     }
     
-    @objc func privacyLabelTapped() {
+    @objc func privacyLabelTapped(attributes: [NSAttributedString.Key: Any]) {
         let webview = WKWebViewController()
         webview.title = "Privacy Policy"
-        webview.urlString = "https://ost.com/privacy"
+        webview.urlString = attributes[NSAttributedString.Key(rawValue: "url")] as! String
         webview.presentViewControllerWithNavigationController(self)
     }
     
@@ -168,7 +170,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
             if let action = attributes[NSAttributedString.Key(rawValue: "action")] as? Selector,
                 self.responds(to: action){
                 
-                self.perform(action)
+                self.perform(action, with: attributes)
             }
         }
     }
@@ -222,7 +224,8 @@ class OstGetPinViewController: OstBaseScrollViewController {
         }
         
         let alertController = UIAlertController(title: "Incorrect PIN", message: errMsgToShow, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: {[weak self] (action) in
+            _ = self?.pinInput.becomeFirstResponder()
             alertController.dismiss(animated: true, completion: nil)
         }) )
         

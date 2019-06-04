@@ -13,9 +13,9 @@ import UIKit
 import OstWalletSdk
 
 class TransactionQRScanner: QRScannerViewController {
-        
+    
     override func getLeadLabelText() -> String {
-        return "Scan the QR code to complate the transaction"
+        return "Scan the QR code to complete the transaction"
     }
     
     override func scannedQRData(_ qrData: String) {
@@ -26,9 +26,11 @@ class TransactionQRScanner: QRScannerViewController {
                                           message: "QR-Code scanned for executing transaction is invalid. Please scan valid QR-Code to executing transaction.",
                                           preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "ScanAgain", style: .default, handler: {[weak self] (alertAction) in
+            alert.addAction(UIAlertAction(title: "Scan Again", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
             }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -37,8 +39,8 @@ class TransactionQRScanner: QRScannerViewController {
         guard let payloadData = getpaylaodDataFromQR(qrData),
             let addresses =  payloadData["ads"] as? [String],
             let amounts = payloadData["ams"] as? [String] else{
-            
-            return false
+                
+                return false
         }
         
         let filteredAddress = addresses.filter({
@@ -62,8 +64,37 @@ class TransactionQRScanner: QRScannerViewController {
         progressIndicator?.show()
     }
     
+    
+    //MARK: - Workflow Delegate
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        tabBarVC?.perform(#selector(tabBarVC!.jumpToWalletVC(withWorkflowId:)), with: workflowId, afterDelay: 0.1)
+        showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    //MARK
+    override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowComplete(workflowId: workflowId,
+                                                                     workflowContext: workflowContext,
+                                                                     contextEntity: contextEntity)
+        })
+    }
+    
+    override func onFlowComplete(workflowId: String,
+                                 workflowContext: OstWorkflowContext,
+                                 contextEntity: OstContextEntity) {
+        
+        self.navigationController?.popViewController(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            self.tabBarVC?.jumpToWalletVC(withWorkflowId: workflowId)
+        })
+    }
+    
+    override func onFlowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+        self.navigationController?.popViewController(animated: true)
     }
 }

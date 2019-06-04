@@ -11,8 +11,9 @@
 import Foundation;
 import OstWalletSdk;
 
-protocol OstPassphrasePrefixAcceptDelegate: OstBaseDelegate {
+protocol OstPassphrasePrefixAcceptDelegate {
     func setPassphrase(ostUserId:String, passphrase:String);
+    func cancelFlow(error:[String:Any]?);
 }
 
 protocol OstPassphrasePrefixDelegate {

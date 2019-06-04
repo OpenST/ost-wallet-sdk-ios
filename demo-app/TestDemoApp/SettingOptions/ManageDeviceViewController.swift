@@ -29,7 +29,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     }
     
     override func getLeadLabelText() -> String {
-        return "Here are your authorized devices"
+        return "This is a list of all the devices that are authorized to access your wallet."
     }
     
     //MAKR: - Components
@@ -37,7 +37,6 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let tableView: UITableView = UITableView(frame: .zero, style: .plain)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,7 +46,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
         
         return refreshControl
@@ -132,6 +131,15 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
             cell.setDeviceDetails(details: [:], withIndex: indexPath.row+1)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let device = tableDataArray[indexPath.row]
+        if ((device["address"] as? String) ?? "").caseInsensitiveCompare(CurrentUserModel.getInstance.currentDevice?.address ?? "") == .orderedSame {
+            let alert =  UIAlertController(title: "This is current device.", message: "To see more devices here, you can authorize another device and then perform device management actions here", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     //MARK: - Scroll View Delegate
@@ -296,9 +304,14 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let workflowCallback = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
         OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
                                              listner: self)
-        progressIndicator?.progressText = "Revoke device initiated"
+        showProgressIndicator(withCode: .revokingDevice)
         OstWalletSdk.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
                                   deviceAddressToRevoke: deviceAddress,
                                   delegate: workflowCallback)
+    }
+    
+    func showProgressIndicator(withCode textCode: OstProgressIndicatorTextCode) {
+        progressIndicator = OstProgressIndicator(textCode: textCode)
+        progressIndicator?.show()
     }
 }

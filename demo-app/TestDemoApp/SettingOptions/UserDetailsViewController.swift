@@ -182,7 +182,7 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
         
         let deviceStatuVM : TableViewViewModel = TableViewViewModel(
             viewModel: UserDetailsViewModel(title: "Device Status",
-                                            value: currentUser.currentDevice?.status?.uppercased() ?? "",
+                                            value:  currentUser.currentDeviceStatus,
                                             themer:  statusThemer),
             type: .normal
         )
@@ -227,14 +227,5 @@ class UserDetailsViewController: BaseSettingOptionsViewController, UITableViewDe
             )
             userDetails.append(recoveryOwnerKeyVM)
         }
-        
-       
-        
-        let platformEndPointVM : TableViewViewModel = TableViewViewModel(
-            viewModel: UserDetailsViewModel(title: "Platform End Point",
-                                            value: currentEconomy.saasApiEndpoint ?? ""),
-            type: .withCopy
-        )
-        userDetails.append(platformEndPointVM)
     }
 }

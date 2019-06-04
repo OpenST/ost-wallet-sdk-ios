@@ -12,6 +12,8 @@ import UIKit
 
 class UserDetailsWithCopyBtnTableViewCell: UserDetailsTableViewCell {
 
+    var progressIndicator: OstProgressIndicator? = nil
+    
     static var userDetailsWithCopyCellIdentifier: String {
         return String(describing: UserDetailsWithCopyBtnTableViewCell.self)
     }
@@ -57,6 +59,10 @@ class UserDetailsWithCopyBtnTableViewCell: UserDetailsTableViewCell {
     
     @objc func buttonTapped(_ sender: Any?) {
         UIPasteboard.general.string = infoText.text ?? ""
+        
+        progressIndicator = OstProgressIndicator()
+        progressIndicator?.showSuccessAlert(withTitle: "\(userDetails.title) copied.",
+            duration: 1,
+            onCompletion: nil)
     }
-
 }

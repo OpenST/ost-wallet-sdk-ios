@@ -23,7 +23,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
        
         self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
-        self.getPinViewController = OstSetNewPinViewController.newInstance(pinInputDelegate: self);
+        self.getPinViewController = OstGetPinViewController.newInstance(pinInputDelegate: self);
         self.observeViewControllerIsMovingFromParent();
         
         if ( nil == presenter.navigationController ) {
@@ -43,7 +43,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
             
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
             );
         }
@@ -54,7 +54,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     override func setPassphrase(ostUserId: String, passphrase: String) {
    
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
             return;
@@ -72,6 +72,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     /// Mark - OstPinAcceptDelegate
     override func pinProvided(pin: String) {
         self.userPin = pin;
+        showLoader(progressText: .initiateDeviceRecovery);
         passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
     }
     

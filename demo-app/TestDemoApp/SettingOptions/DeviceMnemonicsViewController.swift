@@ -16,12 +16,11 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
     var tipLabel: UILabel?
     
     //MARK: - Variables
-    let collectionViewMargine: CGFloat = 30.0
+    let collectionViewMargine: CGFloat = 10.0
     var mnemonicsArray = [String]()
-    var leadLabelText: String = "Write down your 12-word mnemonic phrase and store them securely"
+    var leadLabelText: String = "These 12 words can recover your wallet if you forget your username and PIN."
     var tipLabelText: String = """
-        Tips:
-        You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too.
+        Note: Enter these 12 words to recover your wallet if you forget your PIN. The order of the words is important, so please make sure to write it down carefully.
         """
     
     //MAKR: - Themer
@@ -86,6 +85,8 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
         let label = tipLabelThemer
         label.text = tipLabelText
         label.textAlignment = .left
+        label.textColor = UIColor.color(136, 136, 136)
+        label.font = OstFontProvider().get(size: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         tipLabel = label

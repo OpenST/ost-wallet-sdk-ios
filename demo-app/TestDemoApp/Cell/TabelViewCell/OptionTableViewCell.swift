@@ -21,13 +21,21 @@ enum OptionType {
     transactionViaQR,
     initiateDeviceRecovery,
     abortRecovery,
-    logoutAllSessions
+    revokeAllSessions,
+    logout,
+    contactSupport
 }
 
-struct OptionVM {
+class OptionVM {
     var type: OptionType
     var name: String = ""
     var isEnable: Bool = true
+    
+    init(type: OptionType, name: String = "", isEnable: Bool = true) {
+        self.type = type
+        self.name = name
+        self.isEnable = isEnable
+    }
 }
 
 class OptionTableViewCell: BaseTableViewCell {
@@ -59,7 +67,7 @@ class OptionTableViewCell: BaseTableViewCell {
     
     let seperatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view

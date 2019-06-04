@@ -80,8 +80,10 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.contextEntity = ostContextEntity
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
+            
         }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
             delegate.dataVerified()
+            
         }else if workflowContext.workflowType == .executeTransaction {
              let entity: [String: Any] = ostContextEntity.entity as! [String: Any]
             
@@ -95,55 +97,132 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         }
     }
     
-    func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext,
+                      ostContextEntity: OstContextEntity) {
+        
         OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
                                                 contextEntity: ostContextEntity,
                                                 error: nil)
         
+        if workflowContext.workflowType == .executeTransaction {
+            
+            if let transaction: OstTransaction = ostContextEntity.entity as? OstTransaction,
+                let transfers: [[String: Any]] = transaction.data["transfers"] as? [[String: Any]] {
+                
+                var tokenHolderAddresses: Set<String> = Set<String>()
+                for transfer in transfers {
+                    if let address = transfer["to"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                    
+                    if let address = transfer["from"] as? String {
+                        tokenHolderAddresses.insert(address)
+                    }
+                }
+                
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = Array(tokenHolderAddresses)
+                executeTransactionNotification["isRequestAcknowledged"] = false
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
+                                                userInfo: nil)
+            }
+        }
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        hideLoader();
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
-        cleanUp();
+        
+        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.cleanUp();
+        }
+        
+        if nil != progressIndicator
+            && workflowContext.workflowType != .getDeviceMnemonics {
+            
+            progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                                onCompletion: onComplete)
+            return
+        }
+        
+        onComplete(true)
     }
     
     func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
     
+        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
+                                                contextEntity: nil,
+                                                error: error)
+        
         var eventData = OstInteractEventData()
         eventData.workflowContext = workflowContext
         eventData.error = error
-        hideLoader();
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
-        cleanUp();
+        
+        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
+            self?.hideLoader();
+            self?.dismissPinViewController();
+            self?.cleanUp();
+        }
         
         if error.messageTextCode == .deviceNotSet {
-            
+            onComplete(true)
             BaseAPI.logoutUnauthorizedUser()
             return
         }
         
-        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
-                                                contextEntity: nil,
-                                                error: error)
+        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
+        
+        if nil != progressIndicator && error.messageTextCode != .userCanceled {
+            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
+                                                error: error,
+                                                onCompletion: onComplete)
+            return
+        }
+        onComplete(true)
     }
     
     func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         
+        if workflowContext.workflowType == .executeTransaction {
+            if let tokenHolderAddress = CurrentUserModel.getInstance.ostUser?.tokenHolderAddress {
+                
+                var executeTransactionNotification: [String: Any] = [:]
+                executeTransactionNotification["tokenHolderAddresses"] = [tokenHolderAddress]
+                executeTransactionNotification["isRequestAcknowledged"] = true
+                
+                NotificationCenter.default.post(name: NSNotification.Name("updateUserDataForTransaction"),
+                                                object: executeTransactionNotification,
+                                                userInfo: nil)
+            }
+        }
+        
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
-        hideLoader();
-        dismissPinViewController();
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
+        
+        progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
+        
     }
     
     func pinValidated(_ userId: String) {
         
     }
     
-    func cancelFlow() {
-        self.cancelPinAcceptor();
+    func cancelFlow(error:[String:Any]?) {
+        let errorMessage:String? = error?["display_message"] as? String;
+        if ( nil != errorMessage ) {
+            progressIndicator?.showFailureAlert(withTitle: errorMessage!, onCompletion: {[weak self] (_) in
+                self?.cancelPinAcceptor();
+            })
+        }else {
+            self.cancelPinAcceptor();
+        }
     }
     
     func cleanUp() {
@@ -153,10 +232,14 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         uiWindow = nil
     }
     
-    func showLoader(progressText: OstProgressIndicatorText) {
+    func showLoader(progressText: OstProgressIndicatorTextCode) {
+        if ( nil != progressIndicator ) {
+            if ( nil != progressIndicator!.alert ) {
+                //progressIndicator is showing.
+                return;
+            }
+        }
         progressIndicator = OstProgressIndicator(textCode: progressText)
-        let window = getWindow()
-        window.addSubview(progressIndicator!)
         progressIndicator?.show()
     }
     
@@ -168,7 +251,6 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
 }
 
 public extension UIAlertController {
-    @available(*, deprecated, message: "Please avoid using this method.")
     func show() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()
@@ -181,7 +263,6 @@ public extension UIAlertController {
 }
 
 public extension UIViewController {
-    @available(*, deprecated, message: "Please avoid using this method.")
     func showVC() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()

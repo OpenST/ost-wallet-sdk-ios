@@ -22,19 +22,18 @@ class WalletValueTableViewCell: BaseTableViewCell {
         }
     }
     
-    func setValue(_ val: String) {
+    private func setValue(_ val: String) {
         var balance = val
         if balance.isEmpty {
            balance = "0.00"
         }
         self.tokenSymbolLabel.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
-        self.btValueLabel.text =  balance.toDisplayTxValue()
+        self.btValueLabel.text =  balance
         if let usdVal = CurrentUserModel.getInstance.toUSD(value: balance)?.toDisplayTxValue() {
             self.usdValueLabel.text = "≈  $ \(usdVal)"
         }else {
             self.usdValueLabel.text = ""
         }
-       
     }
     
     //MAKR: - Components
@@ -60,7 +59,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var yourBalLabel: UILabel = {
         let view = UILabel()
         view.font = OstFontProvider().get(size: 13).bold()
-        view.textColor = UIColor.white
+        view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .left
         view.text = "Your Balance"
         
@@ -73,7 +72,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.font = OstFontProvider().get(size: 32).bold()
         label.textAlignment = .center
-        label.textColor = UIColor.white
+        label.textColor = UIColor.color(52, 68, 91)
         label.sizeToFit()
        
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +85,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         container.backgroundColor = .clear
         container.clipsToBounds = true
         container.layer.cornerRadius = 5
-        container.backgroundColor = UIColor.color(250, 250, 250, 0.5)
+        container.backgroundColor = .clear
         
         container.translatesAutoresizingMaskIntoConstraints = false
         
@@ -109,7 +108,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     var usdValueLabel: UILabel = {
         let usdLabel = UILabel()
         usdLabel.font = OstFontProvider().get(size: 16)
-        usdLabel.textColor = UIColor.white
+        usdLabel.textColor = UIColor.color(52, 68, 91)
         usdLabel.textAlignment = .left
         
         usdLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +185,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     
     func applyBtValueLabelConstraints() {
         guard let parent = self.btValueLabel.superview else {return}
-        btValueLabel.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 8).isActive = true
+        btValueLabel.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
         btValueLabel.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         btValueLabel.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
     }

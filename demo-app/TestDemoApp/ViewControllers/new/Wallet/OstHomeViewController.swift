@@ -9,7 +9,7 @@
 import UIKit
 
 class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     //MARK: - Components
     var labelContainer: UIView?
     var infoLabel: UILabel = OstUIKit.leadLabel()
@@ -27,7 +27,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
         
         return refreshControl
@@ -43,6 +43,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     var tableDataArray: [[String: Any]] = [[String: Any]]()
     
+    var tokenHolderAddressesMap: [String: Any] = [String: Any]()
     var consumedUserData: [String: Any] = [String: Any]()
     
     var updatedDataArray: [[String: Any]] = [[String: Any]]()
@@ -60,6 +61,18 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         fetchUsers(hardRefresh: true)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateUserData(_:)),
+            name: NSNotification.Name(rawValue: "updateUserDataForTransaction"),
+            object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabbarController?.showTabBar()
@@ -74,13 +87,13 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     override func getSelectorForNavBarBackbutton() -> Selector? {
-       return nil
+        return nil
     }
     
     //MARK: - Views
     override func addSubviews() {
         super.addSubviews()
-        createInfoLable()
+        //        createInfoLable()
         setupUsersTableView()
         setupRefreshControl()
     }
@@ -111,7 +124,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func setupRefreshControl() {
-    
+        
         if #available(iOS 10.0, *) {
             self.usersTableView.refreshControl = self.refreshControl
         } else {
@@ -123,8 +136,8 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
-        applyLabelContainerConstraints()
-        applyInfoLableConstraints()
+        //        applyLabelContainerConstraints()
+        //        applyInfoLableConstraints()
         applyUsersTableViewConstraints()
     }
     
@@ -140,7 +153,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     func applyUsersTableViewConstraints() {
-        self.usersTableView.placeBelow(toItem: self.infoLabel)
+        self.usersTableView.topAlignWithParent()
         self.usersTableView.applyBlockElementConstraints(horizontalMargin: 0)
         self.usersTableView.bottomAlignWithParent()
     }
@@ -186,7 +199,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             }
             
             cell = userCell as BaseTableViewCell
-    
+            
         case 1:
             let pCell: PaginationLoaderTableViewCell
             if nil == self.paginatingCell {
@@ -196,38 +209,38 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                 pCell = self.paginatingCell!
             }
             
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 pCell.startAnimating()
             }else {
                 pCell.stopAnimating()
             }
-        
+            
             cell = pCell as BaseTableViewCell
         default:
             cell = BaseTableViewCell()
         }
-    
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-             return 75.0
+            return 75.0
         case 1:
-            if self.isNewDataAvailable || self.shouldReloadData || !self.shouldLoadNextPage {
+            if isNextPageAvailable() || (self.isNewDataAvailable || self.shouldReloadData) {
                 return 44.0
             }else {
-                self.paginatingCell?.stopAnimating()
                 return 0.0
             }
         default:
             return 0
         }
     }
-
+    
     //MARK: - Pull to Refresh
     @objc func pullToRefresh(_ sender: Any? = nil) {
+        consumedUserData = [:]
         self.fetchUsers(hardRefresh: true)
     }
     
@@ -237,7 +250,6 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         if !isScrolling && self.isNewDataAvailable {
             tableDataArray = updatedDataArray
-            
             self.usersTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
@@ -245,7 +257,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                 self.refreshControl.endRefreshing()
             }
         }
-        else if !isApiCallInProgress {
+        else if !isApiCallInProgress && !isScrolling {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
@@ -272,7 +284,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             
             if (shouldRequestPaginationData(isUpDirection: false,
                                             andTargetPoint: targetContentOffset.pointee.y)) {
-             
+                
                 self.shouldLoadNextPage = false
                 fetchUsers()
             }
@@ -305,20 +317,25 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             nextPagePayload = getNextPagePayload()
             if nil == nextPagePayload {
                 reloadDataIfNeeded()
+                self.shouldLoadNextPage = true
                 return
             }
         }
         
         isApiCallInProgress = true
         UserAPI.getUsers(meta: nextPagePayload, onSuccess: {[weak self] (apiResponse) in
-                if let strongSelf = self {
-                    strongSelf.onFetchUserSuccess(apiResponse)
-                }
+            if let strongSelf = self {
+                strongSelf.onFetchUserSuccess(apiResponse)
+            }
             }, onFailure: {[weak self] (apiResponse) in
                 if let strongSelf = self {
                     strongSelf.isApiCallInProgress = false
                 }
         })
+    }
+    
+    func isNextPageAvailable() -> Bool {
+        return getNextPagePayload() != nil
     }
     
     func getNextPagePayload() -> [String: Any]? {
@@ -342,15 +359,117 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         meta = data["meta"] as? [String: Any]
         guard let users = data["users"] as? [[String: Any]] else {return}
-        updatedDataArray.append(contentsOf: users)
+        
+        var newUsersData = [[String: Any]]()
+        for user in users {
+            if let appUserId = user["app_user_id"],
+                let strAppUserId = ConversionHelper.toString(appUserId),
+                consumedUserData[strAppUserId] == nil {
+                
+                consumedUserData[strAppUserId] = user
+                newUsersData.append(user)
+                if let tokenHolderAddress = user["token_holder_address"] as? String,
+                    !["", "<null>"].contains(tokenHolderAddress) {
+                    tokenHolderAddressesMap[tokenHolderAddress] = strAppUserId
+                }
+            }
+        }
+        updatedDataArray.append(contentsOf: newUsersData)
         self.isNewDataAvailable = true
-
+        
         reloadDataIfNeeded()
+    }
+    
+    //MARK: - REFRESH USER DATA
+    @objc func updateUserData(_ notification: Notification) {
+        if let executeTransactionNotification = notification.object as? [String: Any],
+            let tokenHolderAddresses = executeTransactionNotification["tokenHolderAddresses"] as? [String] {
+            
+            var appUserIds: Set<String> = []
+            let currentTokenHolderAddress = CurrentUserModel.getInstance.tokenHolderAddress
+            let currentUserAppUserId = CurrentUserModel.getInstance.appUserId
+            for tokenHolderAddress in tokenHolderAddresses {
+                if let appUserId = tokenHolderAddressesMap[tokenHolderAddress],
+                    let strAppUserId = ConversionHelper.toString(appUserId) {
+                    appUserIds.insert(strAppUserId)
+                }else if nil != currentUserAppUserId
+                    && nil != currentTokenHolderAddress
+                    && currentTokenHolderAddress!.caseInsensitiveCompare(tokenHolderAddress) == .orderedSame {
+                    
+                        appUserIds.insert(currentUserAppUserId!)
+                }
+            }
+            
+            if appUserIds.count > 0 {
+                refreshUsersData(appUserIds: Array(appUserIds))
+            }
+        }
+    }
+    
+    func refreshUsersData(appUserIds:[String]) {
+        //Make api call.
+        var payload:[String:Any] = [:];
+        payload["app_user_ids"] = "[\(appUserIds.joined(separator: ","))]";
+        UserAPI.getUsers(meta: payload,
+                         onSuccess: {[weak self] (apiResponse) in
+                            if let strongSelf = self {
+                                strongSelf.onUserDataUpdated(apiResponse)
+                            }
+            },
+                         onFailure: {(apiResponse) in
+                            //Ignore.
+                            
+        });
+    }
+    
+    func onUserDataUpdated(_ apiResponse: [String: Any]?) {
+        guard let response = apiResponse else {return}
+        guard let data = response["data"] as? [String: Any] else {return}
+        
+        if let pricePoint = data["price_point"] as? [String: Any] {
+            CurrentUserModel.getInstance.pricePoint = pricePoint
+        }
+        
+        if let balances = data["balances"] as? [String: Any] {
+            userBalances.merge(dict: balances)
+            
+            if let currentUserBalance = balances[CurrentUserModel.getInstance.appUserId!] as? [String : Any] {
+                CurrentUserModel.getInstance.updateBalance(balance: currentUserBalance )
+            }
+        }
+        
+        guard let users = data["users"] as? [[String: Any]] else {return}
+        var newData:[String: [String: Any]] = [:];
+        for var newUserData in users {
+            guard let appUserId = ConversionHelper.toString(newUserData["app_user_id"]) else {continue;};
+            newData[appUserId] = newUserData;
+        }
+        var cnt = -1;
+        for var existingUser in tableDataArray {
+            cnt = cnt + 1;
+            guard let appUserId = ConversionHelper.toString(existingUser["app_user_id"]) else {continue;};
+            if ( nil == newData[appUserId] ) {
+                continue;
+            }
+            existingUser.merge(dict: newData[appUserId]!);
+            tableDataArray[ cnt ] = existingUser;
+        }
+        refreshVisibleCells();
+    }
+    
+    func refreshVisibleCells() {
+        let isScrolling: Bool = (self.usersTableView.isDragging) || (self.usersTableView.isDecelerating)
+        if !isScrolling {
+            self.usersTableView.reloadData();
+        }
     }
     
     //MARK: - Action
     func sendButtonTapped(_ userDetails: [String: Any]?) {
-        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+        
+        if (CurrentUserModel.getInstance.isCurrentUserStatusActivating ?? false)
+            || CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
+            
             showDeviceIsAuthroizingAlert()
             return
         }
@@ -363,6 +482,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         let sendTokendsVC = SendTokensViewController()
+        sendTokendsVC.tabbarController = self.tabbarController
         sendTokendsVC.userDetails = userDetails
         tabbarController?.hideTabBar()
         sendTokendsVC.pushViewControllerOn(self, animated: true)

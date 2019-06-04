@@ -11,8 +11,15 @@
 import Foundation
 import OstWalletSdk
 
-class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
+class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate, OstJsonApiDelegate {
+  
+    
+
     static let getInstance = CurrentUserModel()
+    
+    static var shouldPerfromActivateUserAfterDelay: Bool = false
+    static var artificalDelayForActivateUser: Double = 24
+    
     override init() {
         super.init()
     }
@@ -117,7 +124,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     //MARK: - OstWorkflow Delegate
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        setupDeviceOnFailure?(nil);
+        setupDeviceOnFailure?(error.errorInfo);
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
@@ -134,20 +141,59 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
         if ( nil == self.ostUserId || self.ostUserId!.compare(ostUserId) != .orderedSame ) {
-            ostPassphrasePrefixAcceptDelegate.cancelFlow();
+            var error:[String:Any] = [:];
+            error["display_message"] = "Something went wrong. Please re-launch the application and try again.";
+            error["extra_info"] = "Sdk requested for passphrase of user-id which is not logged-in.";
+            ostPassphrasePrefixAcceptDelegate.cancelFlow(error: error);
             return;
         }
         
-        if ( nil == self.userPinSalt ) {
-            ostPassphrasePrefixAcceptDelegate.cancelFlow();
-            return;
-        }
-        ///TODO - Move this to other function.
-        ///
-        let userPinSalt = self.userPinSalt!;
-        ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self.ostUserId!, passphrase: userPinSalt);
+        UserAPI.getCurrentUserSalt(meta: nil, onSuccess: {[weak self,ostPassphrasePrefixAcceptDelegate] (userPinSalt, data) in
+            ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: self!.ostUserId!, passphrase: userPinSalt);
+        }, onFailure: {[ostPassphrasePrefixAcceptDelegate] (error) in
+            ostPassphrasePrefixAcceptDelegate.cancelFlow(error: error);
+        });
     }
 
+    var fetchUserBalanceCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil
+    func fetchUserBalance(onCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil) {
+        fetchUserBalanceCompletion = onCompletion
+        OstJsonApi.getBalanceWithPriceOracle(forUserId: ostUserId!, delegate: self)
+    }
+    
+    //MAKR: Ost Json api Delegate
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        guard let apiData = data,
+            let resutType = OstJsonApi.getResultType(apiData: data),
+            let balance = OstJsonApi.getResultAsDictionary(apiData: apiData) else {
+            
+            fetchUserBalanceCompletion?(false, data, nil)
+            return
+        }
+        if "balance".caseInsensitiveCompare(resutType) == .orderedSame {
+            CurrentUserModel.getInstance.pricePoint = apiData["price_point"] as! [String: Any]
+            CurrentUserModel.getInstance.updateBalance(balance: balance)
+        }
+        
+        fetchUserBalanceCompletion?(true, data, nil)
+        fetchUserBalanceCompletion = nil
+    }
+    
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+        if nil != error {
+            OstErroNotification.showNotification(withMessage: error!.errorMessage)
+        }
+        fetchUserBalanceCompletion?(false, nil, errorData)
+        fetchUserBalanceCompletion = nil
+    }
+    
+    func updateBalance(balance: [String: Any]) {
+        if ( nil == self.userBalanceDetails ) {
+            self.userBalanceDetails = [:];
+        }
+        
+        self.userBalanceDetails?.merge(dict: balance);
+    }
 }
 
 extension CurrentUserModel {
@@ -216,14 +262,56 @@ extension CurrentUserModel {
         return nil
     }
     
+    var currentDeviceStatus: String {
+        var deviceStatus = currentDevice?.status?.uppercased() ?? ""
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            deviceStatus =  "ACTIVATING"
+        }
+        
+        return deviceStatus
+    }
+    
     var balance: String {
         if let availabelBalance = userBalanceDetails?["available_balance"] {
-            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat
+            let amountVal = ConversionHelper.toString(availabelBalance)!.toRedableFormat()
             return amountVal.toDisplayTxValue()
         }
         return ""
     }
     
+    func showTokenHolderInView() {
+        
+        let webView = WKWebViewController()
+        let currentEconomy = CurrentEconomy.getInstance
+        
+        let tokenHoderURL: String = "\(currentEconomy.viewEndPoint!)token/th-\(currentEconomy.auxiliaryChainId!)-\(currentEconomy.utilityBrandedToken!)-\(tokenHolderAddress!)"
+        webView.title = "OST View"
+        webView.urlString = tokenHoderURL
+        
+        webView.showVC()
+    }
+}
+
+//MARK: - Status
+extension CurrentUserModel {
+    
+    //MARK: - User
+    var isCurrentUserStatusActivating: Bool? {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return true
+        }
+        return ostUser?.isStatusActivating
+    }
+    
+    var isCurrentUserStatusActivated: Bool? {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return false
+        }
+        return ostUser?.isStatusActivated
+    }
+    
+    
+    //MARK: - Device
     var isCurrentDeviceStatusAuthorizing: Bool {
         if let currentDevice = self.currentDevice,
             let status = currentDevice.status {
@@ -234,8 +322,12 @@ extension CurrentUserModel {
         }
         return false
     }
-
+    
     var isCurrentDeviceStatusAuthrozied: Bool {
+        if CurrentUserModel.shouldPerfromActivateUserAfterDelay {
+            return false
+        }
+        
         if let currentDevice = self.currentDevice,
             let status = currentDevice.status {
             
@@ -257,6 +349,7 @@ extension CurrentUserModel {
         return false
     }
 }
+
 
 //MARK: - Price Point
 extension CurrentUserModel {
@@ -291,7 +384,33 @@ extension CurrentUserModel {
         }
         
         let btToOstVal = (doubleValue/doubleConversionFactor)
-        
+    
         return String(usdValue * btToOstVal)
+    }
+    
+    func toBt(value: String) -> String? {
+        
+        guard let token = OstWalletSdk.getToken(CurrentEconomy.getInstance.tokenId!) else {
+            return nil
+        }
+        let baseToken = token.baseToken
+        
+        guard let btDecimal = token.decimals,
+            let conversionFactor = token.conversionFactor,
+            let fiatPricePoint = self.pricePoint?[baseToken] as? [String: Any],
+            let fiatDecimal = ConversionHelper.toInt(fiatPricePoint["decimals"]) else {
+                
+                return nil
+        }
+        
+        let pricePoint = String(format: "%@", fiatPricePoint["USD"] as! CVarArg)
+        
+        let btValue = try? OstConversion.fiatToBt(ostToBtConversionFactor: conversionFactor,
+                                    btDecimal: btDecimal,
+                                    fiatDecimal: fiatDecimal,
+                                    fiatAmount: BigInt(value)!,
+                                    pricePoint: pricePoint)
+        
+        return btValue?.description
     }
 }

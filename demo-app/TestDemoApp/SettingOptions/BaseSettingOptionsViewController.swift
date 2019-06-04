@@ -57,20 +57,50 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
     }
     
     //MARK: - Sdk Interact Delegate
+    func requestAcknowledged(workflowId: String,
+                             workflowContext: OstWorkflowContext,
+                             contextEntity: OstContextEntity) {
+        
+        progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
+    }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        let message = """
-        \(getNavBarTitle()) flow interrupted.
-        \(error.errorMessage)
-        """
-        progressIndicator?.progressText = message
+        if error.messageTextCode != .userCanceled {
+            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
+                                                onCompletion: {[weak self] (_) in
+                                                    
+                                                    self?.onFlowInterrupted(workflowId: workflowId,
+                                                                            workflowContext: workflowContext,
+                                                                            error: error)
+            })
+        }else {
+            progressIndicator?.hide()
+            self.onFlowInterrupted(workflowId: workflowId,
+                                   workflowContext: workflowContext,
+                                   error: error)
+        }
     }
-    
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        progressIndicator?.progressText = "\(getNavBarTitle()) request acknowledged."
-    }
-    
+
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        progressIndicator?.progressText = "\(getNavBarTitle()) flow complete."
+        showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+    }
+    
+    func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
+                                            onCompletion: {[weak self] (_) in
+                                                
+                                                self?.onFlowComplete(workflowId: workflowId,
+                                                                     workflowContext: workflowContext,
+                                                                     contextEntity: contextEntity)
+        })
+    }
+    
+    //MARK: - OnCompletion
+    func onFlowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        
+    }
+    
+    func onFlowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
     }
 }

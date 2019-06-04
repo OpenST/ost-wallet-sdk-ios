@@ -11,8 +11,44 @@
 import UIKit
 import MaterialComponents
 import OstWalletSdk
+import LocalAuthentication
 
-class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate {
+class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
+    
+    var appUrlData:AppUrlData? {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        return delegate.getWebPageUrl();
+    };
+
+    func defaultEconomySet(payload: [String : Any?]) {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func newEconomySet(payload: [String : Any?]) {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func newEconomyNotSet() {
+        //Do nothing. Let the economyScanner be open if it was already open.
+    }
+    
+    func sameEconomySet() {
+        //Update the display details.
+        updateEconomyDetails();
+        //Close the economyScanner if open.
+        economyScanner?.dismiss(animated: true, completion: nil);
+    }
+    
+    func clearAppUrlData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate;
+        delegate.clearWebPageUrl();
+    }
     
     //MARK: - Components
     var testEconomyTextField: MDCTextField = {
@@ -117,12 +153,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? ""
+        updateEconomyDetails();
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.economyScanner = nil
+    }
+    
+    func updateEconomyDetails() {
+        self.testEconomyTextField.text = CurrentEconomy.getInstance.tokenName ?? "";
     }
     
     //MARK: - Add SubView
@@ -212,17 +253,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func addUsernameTextFieldConstraints() {
-        usernameTextField.placeBelow(toItem: testEconomyTextField, constant: 1)
+        usernameTextField.placeBelow(toItem: testEconomyTextField, constant: 10)
         usernameTextField.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
     func addPasswordTextFieldConstraints() {
-        passwordTextField.placeBelow(toItem: usernameTextField, constant: 1)
+        passwordTextField.placeBelow(toItem: usernameTextField, constant: 10)
         passwordTextField.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
     func addSetupButtonConstraints() {
-        setupButton.placeBelow(toItem: passwordTextField, constant: 1)
+        setupButton.placeBelow(toItem: passwordTextField, constant: 16)
         setupButton.applyBlockElementConstraints(horizontalMargin: 20)
     }
     
@@ -241,7 +282,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func getContentViewMinHeight() -> CGFloat {
-        return 430
+        return 450
     }
  
     //MARK: - Actions
@@ -306,17 +347,17 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             usernameTextFieldController?.setErrorText(nil, errorAccessibilityValue: nil);
             return true
         }
-        usernameTextFieldController?.setErrorText("Invalid username",
+        usernameTextFieldController?.setErrorText("Username should be alphanumeric only.",
                                                   errorAccessibilityValue: nil);
         return false;
     }
     
     func validatePasswordTextField() -> Bool {
         if nil == passwordTextField.text
-            || !passwordTextField.text!.isMatch("^[a-zA-Z0-9]*$")
+            || !passwordTextField.text!.isMatch("^[a-zA-Z0-9@#$%!*&]*$")
             || passwordTextField.text!.count < 8 {
             
-            passwordTextFieldController?.setErrorText("Invalid password",
+            passwordTextFieldController?.setErrorText("Please enter a min of 8 chars. Letters, numbers and @ # $ % ! * & are allowed",
                                                       errorAccessibilityValue: nil);
             return false
         }
@@ -332,17 +373,24 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func activateUser() {
-         removeProgressIndicator()
-        let currentUse = CurrentUserModel.getInstance
-        workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                                   passphrasePrefixDelegate: currentUse,
-                                                                   presenter: self)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback!.workflowId,
-                                             listner: self)
+        removeProgressIndicator()
+        
+        
+        let continueWorkflow: ((UIAlertAction?) -> Void) = {[weak self] (_) in
+            let currentUse = CurrentUserModel.getInstance
+            self!.workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                                       passphrasePrefixDelegate: currentUse,
+                                                                       presenter: self!)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: self!.workflowCallback!.workflowId,
+                                                 listner: self!)
+        }
+        
+        continueWorkflow(nil)
     }
     
     func onSigupFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
+        showErrorForSetup(apiError)
     }
     
     func onLoginSuccess() {
@@ -366,6 +414,18 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     func onLoginFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
+        
+        showErrorForSetup(apiError)
+    }
+    
+    func showErrorForSetup(_ apiError: [String: Any]?) {
+        if let err = apiError?["err"] as? [String: Any],
+            let code = err["code"] as? String {
+            if code == "BAD_GATEWAY" {
+                let msg = "Server temporarily unavailable"
+                OstErroNotification.showNotification(withMessage: msg)
+            }
+        }
     }
 
     @objc func changeTypeTapped(_ sender: Any?) {
@@ -405,18 +465,15 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func showProgressIndicator() {
-        var messageCode: OstProgressIndicatorText = .unknown
+        var messageCode: OstProgressIndicatorTextCode = .unknown
         if viewControllerType == .signup {
             messageCode = .signup
         }else if viewControllerType == .login {
             messageCode = .login
         }
         
-        if let window = UIApplication.shared.keyWindow {
-            progressIndicator = OstProgressIndicator(textCode: messageCode)
-            window.addSubview(progressIndicator!)
-            progressIndicator?.show()
-        }
+        progressIndicator = OstProgressIndicator(textCode: messageCode)
+        progressIndicator?.show()
     }
     
     func removeProgressIndicator() {
@@ -431,13 +488,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        if let currentUser = CurrentUserModel.getInstance.ostUser {
-            if currentUser.isStatusActivating {
+        if nil != CurrentUserModel.getInstance.ostUser
+            && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
+            
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {[weak self] in
                     self?.pushToTabBarController()
                 }
             }
-        }
     }
     
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {

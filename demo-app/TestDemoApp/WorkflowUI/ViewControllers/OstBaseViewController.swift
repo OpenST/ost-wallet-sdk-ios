@@ -194,4 +194,13 @@ public extension UIViewController {
         navViewController?.interactivePopGestureRecognizer?.isEnabled = false
         navViewController?.pushViewController(self, animated: animated);
     }
+    
+    func isLastViewController() -> Bool {
+        if (nil == self.navigationController ) {
+            return false;
+        }
+        let navController = self.navigationController!;
+        return self == navController.viewControllers.last;
+    }
+    
 }

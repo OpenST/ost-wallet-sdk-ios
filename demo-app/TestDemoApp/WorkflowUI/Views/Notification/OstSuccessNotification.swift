@@ -49,7 +49,7 @@ class OstSuccessNotification: OstNotification {
             titleText = "Pin has been reset successfully."
         }
         else if workflowContext.workflowType == .activateUser {
-            titleText = "User activated Successfully."
+            titleText = "Congratulations! Your wallet is now ready!."
         }
         else if workflowContext.workflowType == .authorizeDeviceWithMnemonics {
             titleText = "Device authorized successfully."
@@ -88,7 +88,7 @@ class OstSuccessNotification: OstNotification {
     //MAKR: - Action Button Title
     override func getActionButtonTitle() -> String {
         if notificationModel.workflowContext.workflowType == .executeTransaction {
-            return "View Transaction"
+            return "View Details"
         }
         return ""
     }

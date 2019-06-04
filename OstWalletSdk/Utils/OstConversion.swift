@@ -11,14 +11,14 @@
 import Foundation
 import BigInt
 
-class OstConversion {
+public class OstConversion {
     
     class func getNumberComponents(_ number: String) throws -> OstUtils.NumberComponents {
         return try OstUtils.getNumberComponents( number );
     }
     
     
-    class func fiatToBt(ostToBtConversionFactor: String,
+    public class func fiatToBt(ostToBtConversionFactor: String,
                         btDecimal: Int,
                         fiatDecimal: Int,
                         fiatAmount: BigInt,

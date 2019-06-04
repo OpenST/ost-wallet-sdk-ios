@@ -12,7 +12,7 @@ import OstWalletSdk
 
 
 class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetadataOutputObjectsDelegate {
-
+    
     //MARK: - Components
     var scanner: OstScannerView? = nil
     
@@ -108,20 +108,8 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
         bottomLabel.applyBlockElementConstraints(horizontalMargin: 0)
         bottomLabel.setFixedHeight(constant: 65)
     }
-    
-    //MARK: - OstWalletSdk Workflow delegate
-    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.hide()
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
-        super.flowInterrupted(workflowId: workflowId, workflowContext: workflowContext, error: error)
-        progressIndicator?.hide()
-        scanner?.startScanning()
-    }
-    
+
+    //MARK: - QR-Code
     func getpaylaodDataFromQR(_ qr: String) -> [String: Any?]? {
         if ( 0 == qr.count ) {
             return nil
@@ -161,4 +149,5 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     func validDataDefination() -> String {
         return ""
     }
+    
 }

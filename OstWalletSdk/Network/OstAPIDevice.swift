@@ -223,4 +223,18 @@ class OstAPIDevice: OstAPIBase {
             onFailure?(OstError(fromApiResponse: failureResponse!))
         }
     }
+    
+    func getJsonPendingRecovery(params:[String : Any]?,
+                            onSuccess:@escaping (([String: Any]?) -> Void),
+                            onFailure:@escaping (([String: Any]?) -> Void)) throws {
+        resourceURL = deviceApiResourceBase + "/pending-recovery/";
+        var apiParams:[String : Any] = params ?? [:];
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
+        
+        get(params: apiParams as [String : AnyObject],
+            onSuccess: onSuccess,
+            onFailure:onFailure);
+    }
 }

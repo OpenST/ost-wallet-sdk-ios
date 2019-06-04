@@ -48,7 +48,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
             self.newPin = nil
             self.newPinViewController = nil;
         } else if ( notification.object is OstGetPinViewController ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .resetPin),
                                  error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
             );
             cleanUp()
@@ -73,6 +73,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
             self.confirmNewPinViewController!.showInvalidPin(errorMessage: "Please enter same pin as new pin.")
         }
         else {
+            showLoader(progressText: .resetPin);
             passphrasePrefixDelegate!.getPassphrase(ostUserId: self.userId, ostPassphrasePrefixAcceptDelegate: self);
         } 
     }
@@ -81,7 +82,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
     fileprivate var userPassphrasePrefix:String?
     override func setPassphrase(ostUserId: String, passphrase: String) {
         if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
+            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .resetPin),
                                  error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
             );
             /// TODO: (Future) Do Something here. May be cancel workflow?
@@ -120,9 +121,5 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
     }
-    
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        self.getPinViewController?.removeViewController()
-    }
+
 }

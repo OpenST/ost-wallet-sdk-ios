@@ -100,7 +100,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
     }
     
     override func onDeviceValidated() throws {
-        let BiometricAuth: BiometricIDAuth = BiometricIDAuth(permissionText: "Do you want to user biometric?")
+        let BiometricAuth: BiometricIDAuth = BiometricIDAuth(permissionText: "Would you like to use biometrics in place of your PIN for wallet actions? \n Note: Wallet recovery always requires the use of the PIN")
         BiometricAuth.authenticateUser { (isSuccess, message) in
             if (isSuccess) {
                 let biometricManager = OstKeyManagerGateway.getOstBiometricManager(userId: self.userId)

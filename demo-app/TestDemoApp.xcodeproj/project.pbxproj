@@ -46,6 +46,12 @@
 		002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
 		002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
 		002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */; };
+		00361878229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
+		00361879229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
+		0036187A229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
+		0036187C229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
+		0036187D229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
+		0036187E229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
 		0041A65922807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
 		0041A65A22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
 		0041A65B22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
@@ -441,6 +447,8 @@
 		002EAF612272752E00B48F1D /* OstH1Theamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstH1Theamer.swift; sourceTree = "<group>"; };
 		002EAF65227275F000B48F1D /* OstUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIKit.swift; sourceTree = "<group>"; };
 		002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLeadLabelTheamer.swift; sourceTree = "<group>"; };
+		00361877229DA4760042377F /* AppUrlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUrlData.swift; sourceTree = "<group>"; };
+		0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanConfigureEconomyProtocol.swift; sourceTree = "<group>"; };
 		0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstSdkInteract+Workflow.swift"; sourceTree = "<group>"; };
 		0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSetNewPinViewController.swift; sourceTree = "<group>"; };
 		0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstGetPinViewController.swift; sourceTree = "<group>"; };
@@ -507,6 +515,7 @@
 		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransactionViewController.swift; sourceTree = "<group>"; };
+		4B7BD94122A671B900849686 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -786,6 +795,7 @@
 			children = (
 				00ECB858227726D40085E4AB /* IntroViewController.swift */,
 				4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */,
+				0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1020,6 +1030,7 @@
 				4BF8FDC22240FA7700519779 /* Assets.xcassets */,
 				4BF8FDC72240FA7700519779 /* Info.plist */,
 				4BF8FE3C2241004600519779 /* OstWalletSdk.plist */,
+				00361877229DA4760042377F /* AppUrlData.swift */,
 			);
 			path = TestDemoApp;
 			sourceTree = "<group>";
@@ -1202,6 +1213,7 @@
 		DB91270CD9213E4763882444 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B7BD94122A671B900849686 /* BigInt.framework */,
 				4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */,
 				4BF8FE40224143C900519779 /* OstWalletSdk.framework */,
 				4BF8FE3A2240FF0900519779 /* OstSdk.framework */,
@@ -1494,6 +1506,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
@@ -1502,12 +1515,14 @@
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
@@ -1516,6 +1531,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1573,6 +1589,7 @@
 				4B4EB873228F49D5001605DE /* TransactionQRScanner.swift in Sources */,
 				4BFA1191228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */,
+				0036187C229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
 				00B943AC22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1586,6 +1603,7 @@
 				4BA4CB8222828EE500A623ED /* DeviceAPI.swift in Sources */,
 				4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				0041A65D2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
+				00361878229DA4760042377F /* AppUrlData.swift in Sources */,
 				4BFA118422873C1F00A9F5A4 /* UserDetailsWithCopyBtnTableViewCell.swift in Sources */,
 				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
 				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
@@ -1683,6 +1701,7 @@
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BA4CB6F2280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */,
+				0036187D229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B464F3C22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */,
@@ -1715,6 +1734,7 @@
 				4BFA118122873BF100A9F5A4 /* UserDetailsTableViewCell.swift in Sources */,
 				4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
 				4B464F43227A118200F1F4AF /* QRScannerViewController.swift in Sources */,
+				00361879229DA4760042377F /* AppUrlData.swift in Sources */,
 				4B464F63227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B214A7E228C17CF006825FE /* Date+Conversion.swift in Sources */,
 				4B464EFB2278320100F1F4AF /* OstSdkInteract.swift in Sources */,
@@ -1796,6 +1816,7 @@
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BA4CB702280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */,
+				0036187E229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B464F3B22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */,
@@ -1828,6 +1849,7 @@
 				4BFA118222873BF100A9F5A4 /* UserDetailsTableViewCell.swift in Sources */,
 				4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
 				4B464F44227A118200F1F4AF /* QRScannerViewController.swift in Sources */,
+				0036187A229DA4760042377F /* AppUrlData.swift in Sources */,
 				4B464F64227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */,
 				4B214A7F228C17CF006825FE /* Date+Conversion.swift in Sources */,
 				4B464EFC2278320200F1F4AF /* OstSdkInteract.swift in Sources */,
@@ -2049,7 +2071,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -2074,7 +2096,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoappdevelopment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

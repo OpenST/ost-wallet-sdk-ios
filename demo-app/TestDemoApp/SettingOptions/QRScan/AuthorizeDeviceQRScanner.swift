@@ -21,7 +21,7 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
                                           message: "QR-Code scanned for authorize device is invalid. Please scan valid QR-Code to authorize device.",
                                           preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "ScanAgain", style: .default, handler: {[weak self] (alertAction) in
+            alert.addAction(UIAlertAction(title: "Scan Again", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
             }))
             self.present(alert, animated: true, completion: nil)
@@ -40,6 +40,24 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
     
     override func validDataDefination() -> String {
         return "ad"
+    }
+    
+    override func showProgressIndicator() {
+        progressIndicator = OstProgressIndicator(textCode: .authorizingDevice)
+        progressIndicator?.show()
+    }
+    
+    //MARK: - OnCompletion
+    override func onFlowComplete(workflowId: String,
+                                 workflowContext: OstWorkflowContext,
+                                 contextEntity: OstContextEntity) {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    override func onFlowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

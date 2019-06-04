@@ -11,11 +11,11 @@
 import Foundation
 
 class TransactionAPI: BaseAPI {
-    class func getTransactionLedger(onSuccess: (([String: Any]?) -> Void)? = nil,
+    class func getTransactionLedger(params: [String: Any] = [:],onSuccess: (([String: Any]?) -> Void)? = nil,
                                     onFailure: (([String: Any]?) -> Void)? = nil) {
         
         self.get(resource: "/users/ledger",
-                 params: nil,
+                 params: params as! [String: AnyObject],
                  onSuccess: { (apiParams) in
                     guard let data = apiParams?["data"] as? [String: Any] else {
                         onFailure?(nil)

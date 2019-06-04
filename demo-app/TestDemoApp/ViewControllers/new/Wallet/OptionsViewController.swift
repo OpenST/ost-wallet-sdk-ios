@@ -10,8 +10,8 @@ import UIKit
 import OstWalletSdk
 import LocalAuthentication
 
-class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
-    
+class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
+
     //MAKR: - Components
     var tableView: UITableView?
     var tableHeaderView: UsersTableViewCell = {
@@ -33,11 +33,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     var deviceOptions = [OptionVM]()
     
     weak var tabbarController: TabBarViewController?
+    var progressIndicator: OstProgressIndicator? = nil
+    
+    //MARK: - Options
+    var abortRecoveryOption: OptionVM? = nil
     
     //MAKR: - View LC
     
     override func getNavBarTitle() -> String {
-        return "Wallet Settings"
+        return "Settings"
     }
     
     override func getTargetForNavBarBackbutton() -> AnyObject? {
@@ -194,26 +198,26 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         let optionDetail = OptionVM(type: .details, name: "View Wallet Details", isEnable: true)
         
-        var optionSession = OptionVM(type: .createSession, name: "Add Session", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        let optionSession = OptionVM(type: .createSession, name: "Add Session", isEnable: true)
+        if !currentUser.isCurrentDeviceStatusAuthrozied {
             optionSession.isEnable = false
         }
         
         let optionResetPin = OptionVM(type: .resetPin, name: "Reset PIN", isEnable: true)
+        if (currentUser.isCurrentUserStatusActivating ?? true) {
+            optionResetPin.isEnable = false
+        }
         
-        var optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
-        if !userDevice.isStatusAuthorized {
+        let optionMnemonics = OptionVM(type: .viewMnemonics, name: "View Mnemonics", isEnable: true)
+        if !(currentUser.ostUser?.isStatusActivated ?? false)
+            || (currentUser.isCurrentUserStatusActivating ?? true) {
+            
             optionMnemonics.isEnable = false
         }
         
-        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
-        var optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
-        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        if !canDeviceEvaluatePolicy {
-            optionBiomertic.isEnable = false
-        }
+        let optionSupport = OptionVM(type: .contactSupport, name: "Contact Support", isEnable: true)
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionBiomertic]
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionSupport]
         generalOptions = userOptions
     }
     
@@ -221,43 +225,78 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let currentUser = CurrentUserModel.getInstance
         let userDevice = currentUser.currentDevice
         
-        var authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Device via QR", isEnable: true)
-        if  nil == userDevice || !userDevice!.isStatusAuthorized {
+        let authorizeViaQR = OptionVM(type: .authorizeViaQR, name: "Authorize Additional Device via QR", isEnable: true)
+        if  nil == userDevice || !currentUser.isCurrentDeviceStatusAuthrozied {
             authorizeViaQR.isEnable = false
         }
         
-        var authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize Device via Mnemonics", isEnable: true)
-        if  nil == userDevice || !userDevice!.isStatusRegistered {
+        let authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize This Device via Mnemonics", isEnable: true)
+        if  nil == userDevice
+            || !userDevice!.isStatusRegistered
+            || (currentUser.isCurrentUserStatusActivating ?? true) {
+            
             authorizeViaMnemonics.isEnable = false
         }
         
-        var showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
-        if  nil == userDevice || !userDevice!.isStatusRegistered {
+        let biometricStatus = OstWalletSdk.isBiometricEnabled(userId: currentUser.ostUserId!) ? "Disable" : "Enable"
+        let optionBiomertic = OptionVM(type: .biomerticStatus, name: "\(biometricStatus) Biomertic Authentication", isEnable: true)
+        let canDeviceEvaluatePolicy: Bool = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        if !canDeviceEvaluatePolicy
+            || (currentUser.isCurrentUserStatusActivating ?? true) {
+            
+            optionBiomertic.isEnable = false
+        }
+        
+        let showDeviceQR = OptionVM(type: .showDeviceQR, name: "Show Device QR", isEnable: true)
+        if  nil == userDevice
+            || !userDevice!.isStatusRegistered
+            || (currentUser.isCurrentUserStatusActivating ?? true) {
+            
             showDeviceQR.isEnable = false
         }
         
         let manageDevices = OptionVM(type: .manageDevices, name: "Manage Devices", isEnable: true)
         
-        var transactionViaQR = OptionVM(type: .transactionViaQR, name: "Transaction via QR", isEnable: true)
-        if nil == userDevice || !userDevice!.isStatusAuthorized {
+        let transactionViaQR = OptionVM(type: .transactionViaQR, name: "Transaction via QR", isEnable: true)
+        if nil == userDevice
+            || !userDevice!.isStatusAuthorized
+            || (currentUser.isCurrentUserStatusActivating ?? true) {
+            
             transactionViaQR.isEnable = false
         }
         
-        var initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
-        if currentUser.isCurrentDeviceStatusAuthrozied || currentUser.isCurrentDeviceStatusAuthrozied {
+        let initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
+        if currentUser.isCurrentDeviceStatusAuthrozied
+            || currentUser.isCurrentDeviceStatusAuthrozied
+            || (currentUser.isCurrentUserStatusActivating ?? false)
+            || (currentUser.ostUser?.isStatusActivated ?? false) {
+            
             initialRecovery.isEnable = false
         }
         
-        var abortRecovery = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: true)
-        if nil == userDevice || userDevice!.isStatusRevoked {
-            abortRecovery.isEnable = false
+        self.abortRecoveryOption?.isEnable = false
+        if nil == abortRecoveryOption {
+            abortRecoveryOption = OptionVM(type: .abortRecovery, name: "Abort Recovery", isEnable: false)
         }
         
-        let logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout", isEnable: true)
+        if nil != userDevice
+            || !userDevice!.isStatusRevoked
+            || !(currentUser.isCurrentUserStatusActivating ?? true) {
+            
+            fetchPendingRecovery()
+        }
         
+        let revokeAllSession = OptionVM(type: .revokeAllSessions, name: "Revoke all Sessions", isEnable: true)
+        if !currentUser.isCurrentDeviceStatusAuthrozied {
+            
+            revokeAllSession.isEnable = false
+        }
         
-        let dOptions = [authorizeViaQR, authorizeViaMnemonics, showDeviceQR, manageDevices,
-                        transactionViaQR, initialRecovery, abortRecovery, logoutAllSession]
+        let logoutApp = OptionVM(type: .logout, name: "Logout", isEnable: true)
+
+        
+        let dOptions = [authorizeViaQR, authorizeViaMnemonics, optionBiomertic, showDeviceQR, manageDevices,
+                        transactionViaQR, initialRecovery, abortRecoveryOption!, revokeAllSession, logoutApp]
         
         deviceOptions = dOptions
     }
@@ -265,8 +304,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func processSelectedOption(_ option: OptionVM) {
         
-        if option.type == .logoutAllSessions {
-            showLogoutOptions()
+        if option.type == .logout {
+            showAlertForLogoutApplication()
+            return
+        }
+        
+        if option.type == .contactSupport {
+            openSupportWebView()
             return
         }
         
@@ -275,9 +319,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
-        if CurrentUserModel.getInstance.isCurrentDeviceStatusRegistered {
-            
-        }
         
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
@@ -287,7 +328,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .viewMnemonics {
-            destinationSVVC = DeviceMnemonicsViewController()
+            if option.isEnable {
+                destinationSVVC = DeviceMnemonicsViewController()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .authorizeViaMnemonics {
@@ -302,7 +347,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             if option.isEnable {
                 destinationVC = ShowQRCodeViewController()
             }else {
-                showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
+                let currentUser = CurrentUserModel.getInstance
+                let userDevice = currentUser.currentDevice
+                
+                if !userDevice!.isStatusRegistered {
+                    showInfoAlert(title: "Device is not in registered state. You can use this function to authorize this device.")
+                }else if (currentUser.isCurrentUserStatusActivating ?? true) {
+                    showDeviceIsAuthroizingAlert()
+                }
             }
         }
             
@@ -332,7 +384,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if  option.type  == .manageDevices {
-            destinationVC = ManageDeviceViewController()
+            if option.isEnable {
+                destinationVC = ManageDeviceViewController()
+            }else {
+                showInfoAlert(title: "Once")
+            }
         }
             
         else if option.type == .initiateDeviceRecovery {
@@ -344,18 +400,25 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
             
         else if option.type == .resetPin {
-            _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                    presenter: self)
-            self.tabbarController?.hideTabBar()
-            
+            if option.isEnable {
+                _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                        presenter: self)
+                self.tabbarController?.hideTabBar()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
         }
             
         else if option.type == .abortRecovery {
-            _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                               passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                               presenter: self)
-            self.tabbarController?.hideTabBar()
+            if option.isEnable {
+                _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                   presenter: self)
+                self.tabbarController?.hideTabBar()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
             
         }
             
@@ -371,12 +434,21 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                        delegate: workflowDelegate)
                 
             }else {
-                showInfoAlert(title: "Biometric is not enrolled/activated for this device. Please enroll/activate biometric to use feature.",
+                showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings",
                               actionButtonTitle: "Open Settings") { (_) in
-                          
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
             }
+        }
+        
+        else if option.type == .revokeAllSessions {
+            if option.isEnable {
+                showAlertForRevokeAllSessions()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
+            
         }
         
         if nil == destinationVC && nil == destinationSVVC {
@@ -414,58 +486,25 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice
             || workflowContext.workflowType == .updateBiometricPreference {
+            
             setupTableViewModels()
+        }
+        
+        if workflowContext.workflowType == .logoutAllSessions {
+             progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
     func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         if workflowContext.workflowType == .logoutAllSessions {
-            
+            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
     func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
-            
+            progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
         }
-    }
-    
-    func showLogoutOptions() {
-        
-        let alert: UIAlertController
-        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
-            
-            alert = UIAlertController(title: "Logout from Application",
-                                      message: "As device is in authorizing state, you cannot logout from wallet.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
-            }))
-            
-        }else {
-            
-            alert = UIAlertController(title: "Sure you want to logout?", message: nil, preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
-                let callbackDelegate = OstSdkInteract.getInstance.logoutAllSessions(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                                                    presenter: self!)
-                OstSdkInteract.getInstance.subscribe(forWorkflowId: callbackDelegate.workflowId,
-                                                     listner: self!)
-            }))
-        }
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        alert.show()
     }
     
     func showInfoAlert(title: String,
@@ -481,5 +520,70 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         alert.show()
+    }
+    
+    func showAlertForLogoutApplication() {
+        let alert = UIAlertController(title: "Are you sure you want to logout from OST Wallet",
+                                  message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+            CurrentUserModel.getInstance.logout()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.showIntroController()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.show()
+    }
+    
+    func showAlertForRevokeAllSessions() {
+        
+        let alert = UIAlertController(title: "Are you sure you want to revoke all sessions? You will need re-authenticate to spend tokens.", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Revoke Sessions", style: .default, handler: {[weak self] (_) in
+            self?.logoutSessions()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.show()
+    }
+    
+    func logoutSessions() {
+        progressIndicator = OstProgressIndicator(textCode: .revokingAllSessions)
+        progressIndicator?.show()
+        
+        if let ostUserId = CurrentUserModel.getInstance.ostUserId {
+            let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: ostUserId)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
+                                                 listner: self)
+        
+            OstWalletSdk.logoutAllSessions(userId: ostUserId,
+                                           delegate: workflowDelegate)
+        }
+    }
+    
+    func openSupportWebView() {
+        let webView = WKWebViewController()
+        webView.title = "OST Support"
+        webView.urlString = "https://help.ost.com/support/home"
+        webView.showVC()
+    }
+    
+    func fetchPendingRecovery() {
+        if let ostUserId: String =  CurrentUserModel.getInstance.ostUserId {
+            OstJsonApi.getPendingRecovery(forUserId:ostUserId, delegate: self)
+        }
+    }
+    
+    //MARK: - Ost Json Api Delegate
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        if let resultType = OstJsonApi.getResultType(apiData: data),
+            "devices".caseInsensitiveCompare(resultType) == .orderedSame {
+            
+            self.abortRecoveryOption?.isEnable = true
+            self.tableView?.reloadSections([1], with: .automatic)
+        }
+    }
+    
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+    
     }
 }
