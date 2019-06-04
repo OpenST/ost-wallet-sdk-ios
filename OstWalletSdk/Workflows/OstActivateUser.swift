@@ -64,8 +64,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         try self.pinManager!.validatePassphrasePrefixLength()
         
         if  0 > self.expireAfter {
-            throw OstError("w_au_vp_1",
-                                msg: "Expiration time should be greater than 0")
+            throw OstError("w_au_vp_1", .invalidSessionExpiryTime);
         }
         
         do {
@@ -93,8 +92,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         if (!self.currentDevice!.isStatusRegistered
             && (self.currentDevice!.isStatusRevoking
                 || self.currentDevice!.isStatusRevoked)) {
-            throw OstError("w_au_pudv_3",
-                           msg: "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_pudv_3", .deviceNotSet);
         }
     }
     

@@ -30,20 +30,17 @@ class OstAPIChain: OstAPIBase {
     func getChain(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError("n_ac_gc_1",
-                                msg: "User entity not found for id \(userId). Please create user first. User OstWalletSdk.setup")
+            throw OstError("n_ac_gc_1", .sdkError)
         }
         
         // Get token associated with the user
         guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError("n_ac_gc_2",
-                                msg: "Token entity not found for id \(userId)")
+            throw OstError("n_ac_gc_2", .sdkError)
         }
         
         let chainId: String? = token.auxiliaryChainId
         if (chainId == nil || chainId!.isEmpty) {
-            throw OstError("n_ac_gc_3",
-                                msg: "Chain id not found for id \(userId). Please contact OST support.")
+            throw OstError("n_ac_gc_3", .sdkError)
         }
         
         resourceURL = chainApiResourceBase + "/" + chainId!
@@ -71,20 +68,17 @@ class OstAPIChain: OstAPIBase {
     func getPricePoint(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError("n_ac_gpp_1",
-                                msg: "User entity not found for id \(userId). Please create user first. User OstWalletSdk.setup")
+            throw OstError("n_ac_gpp_1", .sdkError)
         }
         
         // Get token associated with the user
         guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError("n_ac_gpp_2",
-                                msg: "Token entity not found for id \(userId)")
+            throw OstError("n_ac_gpp_2", .sdkError);
         }
         
         let chainId: String? = token.auxiliaryChainId
         if (chainId == nil || chainId!.isEmpty) {
-            throw OstError("n_ac_gpp_3",
-                                msg: "Chain id not found for id \(userId). Please contact OST support.")
+            throw OstError("n_ac_gpp_3", .sdkError)
         }
         
         resourceURL = "\(chainApiResourceBase)/\(chainId!)/price-points"

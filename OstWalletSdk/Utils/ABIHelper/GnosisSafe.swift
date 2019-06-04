@@ -29,14 +29,11 @@ class GnosisSafe: ABIHelperBase {
     func getAddOwnerWithThresholdExecutableData(ownerAddress: String,
                                                 threshold: String = "1") throws -> String {
         
-        let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.ADD_OWNER_ABI_METHOD_NAME)
-        if (abiObject == nil) {
-            throw OstError("u_ah_gs_gaowted_1", msg: "ABI for \(self.ADD_OWNER_ABI_METHOD_NAME) is not available.")
-        }
+        let abiObject: ABIObject = try! getABI(ABI_NAME, forMethod: self.ADD_OWNER_ABI_METHOD_NAME)!;
         
         let addressTobeAdded = try EthereumAddress(hex:ownerAddress, eip55: false)
         let solidityHander = OstSolidityHandler()
-        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let function = SolidityNonPayableFunction(abiObject: abiObject, handler: solidityHander)
         let _invocation = function!.invoke(addressTobeAdded, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {     
@@ -59,17 +56,13 @@ class GnosisSafe: ABIHelperBase {
                                                     owner: String,
                                                     threshold: String = "1") throws -> String {
         
-        let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.REVOKE_DEVICE_ABI_METHOD_NAME)
-        if (abiObject == nil) {
-            throw OstError("u_ah_gs_grdwted_1",
-                           msg: "ABI for \(self.REVOKE_DEVICE_ABI_METHOD_NAME) is not available.")
-        }
+        let abiObject: ABIObject = try! getABI(ABI_NAME, forMethod: self.REVOKE_DEVICE_ABI_METHOD_NAME)!
         
         let prevOwnerAddress = try EthereumAddress(hex:prevOwner, eip55: false)
         let ownerAddress = try EthereumAddress(hex:owner, eip55: false)
         
         let solidityHander = OstSolidityHandler()
-        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let function = SolidityNonPayableFunction(abiObject: abiObject, handler: solidityHander)
         let _invocation = function!.invoke(prevOwnerAddress, ownerAddress, BigInt(threshold)! )
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
