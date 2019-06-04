@@ -79,7 +79,7 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     override func getNavBarTitle() -> String {
-        return "\(CurrentEconomy.getInstance.tokenSymbol ?? "") Users"
+        return "Users"
     }
     
     override func getTargetForNavBarBackbutton() -> AnyObject? {

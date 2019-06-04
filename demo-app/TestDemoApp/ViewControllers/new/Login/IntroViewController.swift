@@ -214,7 +214,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
-        view.text = "Version 0.0.1 (testnet)";
+        view.text = "Version 0.1.0 (testnet)";
         view.backgroundColor = .clear;
         return view;
     }()

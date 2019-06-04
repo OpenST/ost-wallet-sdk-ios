@@ -15,7 +15,7 @@ import OstWalletSdk
 class TransactionQRScanner: QRScannerViewController {
     
     override func getLeadLabelText() -> String {
-        return "Scan the QR code to complate the transaction"
+        return "Scan the QR code to complete the transaction"
     }
     
     override func scannedQRData(_ qrData: String) {

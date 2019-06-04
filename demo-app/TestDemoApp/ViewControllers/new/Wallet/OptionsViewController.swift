@@ -41,7 +41,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     //MAKR: - View LC
     
     override func getNavBarTitle() -> String {
-        return "Wallet Settings"
+        return "Settings"
     }
     
     override func getTargetForNavBarBackbutton() -> AnyObject? {
