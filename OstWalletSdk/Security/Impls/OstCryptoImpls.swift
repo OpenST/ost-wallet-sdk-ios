@@ -149,18 +149,15 @@ class OstCryptoImpls: OstCrypto {
                              size: Int) throws -> String {
         
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > passphrasePrefix.count {
-            throw OstError("s_i_ci_grk_1",
-                                 msg: "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_1", .invalidPassphrasePrefix)
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > userId.count {
-            throw OstError("s_i_ci_grk_2",
-                                 msg: "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_2", .invalidUserId)
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
-            throw OstError("s_i_ci_grk_3",
-                                 msg: "User pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_3", .invalidUserPassphrase)
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,
@@ -203,18 +200,15 @@ class OstCryptoImpls: OstCrypto {
         p: Int,
         size: Int) throws -> Wallet {
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > passphrasePrefix.count {
-            throw OstError("s_i_ci_grk_1",
-                                msg: "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_1", .invalidPassphrasePrefix)
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH > userId.count {
-            throw OstError("s_i_ci_grk_2",
-                                msg: "User id must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_POSTFIX_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_2", .invalidUserId)
         }
         
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > userPin.count {
-            throw OstError("s_i_ci_grk_3",
-                                msg: "User pin must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)")
+            throw OstError("s_i_ci_grk_3", .invalidUserPassphrase)
         }
         
         let stringToCalculate: String = getRecoveryPinString(passphrasePrefix: passphrasePrefix,

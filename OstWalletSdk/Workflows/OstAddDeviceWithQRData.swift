@@ -61,7 +61,7 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         }
         
         if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_adwqrd_fd_2", .processSameDevice)
+            throw OstError("w_adwqrd_fd_2", .wrongDeviceAddress)
         }
     }
     
@@ -95,13 +95,13 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         }
         
         if (self.deviceToAdd!.isStatusAuthorized) {
-            throw OstError("w_adwqrd_fd_1", .deviceAuthorized)
+            throw OstError("w_adwqrd_fd_1", .deviceCanNotBeAuthorized)
         }
         if (!self.deviceToAdd!.isStatusRegistered) {
-            throw OstError("w_adwqrd_fd_1", .deviceNotRegistered)
+            throw OstError("w_adwqrd_fd_1", .deviceCanNotBeAuthorized)
         }
         if (self.deviceToAdd!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwqrd_fd_2", .differentOwnerDevice)
+            throw OstError("w_adwqrd_fd_2", .deviceCanNotBeAuthorized)
         }
     }
     

@@ -35,7 +35,7 @@ class OstLogoutAllSessionSigner {
     func getApiParams() throws -> [String: Any] {
     
         guard let user = try OstUser.getById(self.userId) else {
-            throw OstError("s_ecki_lass_gap_1", .userNotFound)
+            throw OstError("s_ecki_lass_gap_1", .invalidUserId)
         }
         guard let deviceManager: OstDeviceManager = try OstDeviceManager.getById(user.deviceManagerAddress!) else {
             throw OstError("s_ecki_lass_gap_2", .deviceManagerNotFound)

@@ -64,8 +64,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         try self.pinManager!.validatePassphrasePrefixLength()
         
         if  0 > self.expireAfter {
-            throw OstError("w_au_vp_1",
-                                msg: "Expiration time should be greater than 0")
+            throw OstError("w_au_vp_1", .invalidExpirationTimeStamp);
         }
         
         do {
@@ -85,16 +84,11 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         if self.currentUser!.isStatusActivated {
             throw OstError("w_au_pudv_1", .userAlreadyActivated)
         }
-        //Current device validation is done in super
-        if self.currentDevice!.isStatusAuthorized {
-            throw OstError("w_au_pudv_2", .deviceAuthorized)
-        }
         
         if (!self.currentDevice!.isStatusRegistered
             && (self.currentDevice!.isStatusRevoking
                 || self.currentDevice!.isStatusRevoked)) {
-            throw OstError("w_au_pudv_3",
-                           msg: "Device is revoked for \(self.userId). Please setup device first by calling OstWalletSdk.setupDevice")
+            throw OstError("w_au_pudv_3", .deviceNotSet);
         }
     }
     
@@ -127,7 +121,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         
         self.recoveryAddress = self.pinManager?.getRecoveryOwnerAddress()
         if (nil == self.recoveryAddress) {
-            throw OstError("w_au_odv_1", .recoveryAddressNotFound)
+            throw OstError("w_au_odv_1", .sdkError)
         }
         
         self.sessionData = try OstSessionHelper(

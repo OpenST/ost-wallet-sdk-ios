@@ -45,10 +45,7 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePinLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.userPin.count {
-            throw OstError(
-                "w_wh_pm_vpl_1",
-                msg: "Pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
-            )
+            throw OstError(internalCode: "w_wh_pm_vpl_1", errorCode: .invalidUserPassphrase );
         }
     }
     /// Validate passphrase prefix length
@@ -56,10 +53,7 @@ class OstPinManager {
     /// - Throws: OstError
     func validatePassphrasePrefixLength() throws {
         if OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH > self.passphrasePrefix.count {
-            throw OstError(
-                "w_wh_pm_vpwdl_1",
-                msg: "Passphrase prefix must be minimum of length \(OstConstants.OST_RECOVERY_KEY_PIN_PREFIX_MIN_LENGTH)"
-            )
+            throw OstError(internalCode: "w_wh_pm_vpl_1", errorCode: .invalidPassphrasePrefix );            
         }
     }
     
@@ -153,7 +147,7 @@ class OstPinManager {
             throw OstError("w_wh_pm_srpd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srpd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srpd_3", .sdkError)
         }
         guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
             throw OstError("w_wh_pm_srpd_4", .recoveryOwnerAddressNotFound)
@@ -203,22 +197,24 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srdd_3", .sdkError)
         }
         guard let device = try OstDevice.getById(deviceAddressToRecover) else {
-            throw OstError("w_wh_pm_srdd_4", .deviceNotSet)
-        }
-        guard let linkedAddress = device.linkedAddress else {
-            throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
+            throw OstError("w_wh_pm_srdd_4", .invalidRecoverDeviceAddress)
         }
         if (!device.isStatusAuthorized) {
-            throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
+            throw OstError("w_wh_pm_srdd_6", .invalidRecoverDeviceAddress)
         }
+        
+        guard let linkedAddress = device.linkedAddress else {
+            throw OstError("w_wh_pm_srdd_5", .sdkError)
+        }
+
         guard let currentDevice = user.getCurrentDevice() else {
             throw OstError("w_wh_pm_srdd_6", .deviceNotSet)
         }
         if (!currentDevice.isStatusRegistered) {
-            throw OstError("w_wh_pm_srdd_7", .deviceNotRegistered)
+            throw OstError("w_wh_pm_srdd_7", .deviceNotSet)
         }
         let typedData = TypedDataForRecovery
             .getInitiateRecoveryTypedData(
@@ -267,15 +263,15 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srdd_3", .sdkError)
         }
         
         if !recoveringDevice.isStatusRecovering {
-            throw OstError("w_wh_pm_srdd_4", .deviceNotRecovering)
+            throw OstError("w_wh_pm_srdd_4", .noPendingRecovery)
         }
         
         if !revokingDevice.isStatusRevoking {
-            throw OstError("w_wh_pm_srdd_5", .deviceNotRevoking)
+            throw OstError("w_wh_pm_srdd_5", .noPendingRecovery)
         }
         
         guard let linkedAddress = revokingDevice.linkedAddress else {
@@ -318,10 +314,7 @@ class OstPinManager {
         try self.fetchSalt()
         
         if self.salt!.count == 0 {
-            throw OstError(
-                "w_wh_pm_vsl_1",
-                msg: "Invalid salt"
-            )
+            throw OstError( "w_wh_pm_vsl_1", .saltApiFailed);
         }
     }
     
@@ -332,10 +325,7 @@ class OstPinManager {
         if (self.newUserPin == nil
             || OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH > self.newUserPin!.count) {
             
-            throw OstError(
-                "w_wh_pm_v_1",
-                msg: "New pin should be of length \(OstConstants.OST_RECOVERY_KEY_PIN_MIN_LENGTH)"
-            )
+            throw OstError("w_wh_pm_v_1", .invalidNewUserPassphrase);
         }
     }
     /// Validate pin data

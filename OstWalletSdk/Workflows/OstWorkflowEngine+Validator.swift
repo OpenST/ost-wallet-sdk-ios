@@ -90,7 +90,7 @@ extension OstWorkflowEngine {
     /// - Throws: OstError
     func isTokenAvailable() throws {
         guard let tokenId = self.currentUser!.tokenId else {
-            throw OstError("w_wfv_ita_1", .tokenNotFound)
+            throw OstError("w_wfv_ita_1", .invalidTokenId)
         }
         let _ = try OstToken.getById(tokenId)
     }

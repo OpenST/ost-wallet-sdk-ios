@@ -150,7 +150,7 @@ extension OstWalletSdk {
         userId: String) throws -> CIImage {
         
         guard let user = try OstUser.getById(userId) else {
-            throw OstError("w_wff_gadqc_1", .userNotFound)
+            throw OstError("w_wff_gadqc_1", .invalidUserId)
         }
         
         if user.isStatusCreated {
@@ -171,7 +171,7 @@ extension OstWalletSdk {
         if ( nil != qrCodePayloadString.qrCode) {
             return qrCodePayloadString.qrCode!;
         }
-        throw OstError("w_wff_gadqc_5", .unexpectedError );
+        throw OstError("w_wff_gadqc_5", .sdkError );
     }
         
     /// Initiate device recovery.

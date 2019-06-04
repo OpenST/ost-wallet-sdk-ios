@@ -42,7 +42,7 @@ class OstDeviceManagerSignerBase {
     /// - Throws: OstError
     func getApiParams() throws -> [String: Any] {
         guard let user = try OstUser.getById(self.userId) else {
-            throw OstError("s_ecki_dms_dmsb_gap_1", .userNotFound)
+            throw OstError("s_ecki_dms_dmsb_gap_1", .invalidUserId)
         }
         self.deviceManager = try OstDeviceManager.getById(user.deviceManagerAddress!)
         if nil == self.deviceManager{

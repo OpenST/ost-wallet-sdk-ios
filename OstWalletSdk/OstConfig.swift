@@ -19,8 +19,6 @@ import Foundation
  <dict>
  <key>BlockGenerationTime</key>
  <integer>3</integer>
- <key>PricePointTokenSymbol</key>
- <string>OST</string>
  <key>PricePointCurrencySymbol</key>
  <string>USD</string>
  <key>RequestTimeoutDuration</key>
@@ -39,7 +37,6 @@ class OstConfig {
     
     private static let plistFileName = "OstWalletSdk"
     private static var blockGenerationTime: Int?
-    private static var pricePointTokenSymbol: String?
     private static var pricePointCurrencySymbol: String?
     private static var requestTimeoutDuration: Int?
     private static var pinMaxRetryCount: Int?
@@ -47,62 +44,67 @@ class OstConfig {
     private static var useSeedPassword: Bool = false
     
     class func loadConfig() throws {
-        let generationTime = try OstBundle
+        
+        guard let generationTime = OstBundle
             .getApplicationPlistContent(
                 for: "BlockGenerationTime",
                 fromFile: plistFileName
-            ) as! Int
+            ) as? Int else {
+                throw OstError("w_c_lc_1", .invalidBlockGenerationTime)
+                
+        }
         blockGenerationTime = generationTime
         
-        let tokenSymbol = try OstBundle
-            .getApplicationPlistContent(
-                for: "PricePointTokenSymbol",
-                fromFile: plistFileName
-            ) as! String
-        pricePointTokenSymbol = tokenSymbol
-        
-        let currencySymbol = try OstBundle
+        guard let currencySymbol =  OstBundle
             .getApplicationPlistContent(
                 for: "PricePointCurrencySymbol",
                 fromFile: plistFileName
-            ) as! String
+            ) as? String else {
+                throw OstError("w_c_lc_3", .invalidPricePointCurrencySymbol)
+        }
         pricePointCurrencySymbol = currencySymbol
         
-        let timeoutDuration = try OstBundle
+        guard let timeoutDuration =  OstBundle
             .getApplicationPlistContent(
                 for: "RequestTimeoutDuration",
                 fromFile: plistFileName
-            ) as! Int
+            ) as? Int else {
+                throw OstError("w_c_lc_4", .invalidRequestTimeoutDuration)
+        }
         requestTimeoutDuration = timeoutDuration
         
-        let maxRetryCount = try OstBundle
+        guard let maxRetryCount = OstBundle
             .getApplicationPlistContent(
                 for: "PinMaxRetryCount",
                 fromFile: plistFileName
-            ) as! Int
+            ) as? Int else {
+                throw OstError("w_c_lc_5", .invalidPinMaxRetryCount)
+        }
         pinMaxRetryCount = maxRetryCount
         
-        let bufferTime = try OstBundle
+        guard let bufferTime = OstBundle
             .getApplicationPlistContent(
                 for: "SessionBufferTime",
                 fromFile: plistFileName
-            ) as! Double
+            ) as? Double else {
+                throw OstError("w_c_lc_6", .invalidSessionBufferTime)
+        }
         sessionBufferTime = bufferTime
         
-        useSeedPassword = try OstBundle
+        ///TODO - Check with Aniket.
+        guard let canUseSeedPassword =  OstBundle
             .getApplicationPlistContent(
                 for: "UseSeedPassword",
                 fromFile: plistFileName
-            ) as! Bool
+            ) as? Bool else {
+                throw OstError("w_c_lc_7", .invalidBlockGenerationTime)
+        }
+        useSeedPassword = canUseSeedPassword
     }
     
     //MARK: - Getter
     class func getBlockGenerationTime() -> Int {
         return blockGenerationTime!
-    }
-    
-    class func getPricePointTokenSymbol() -> String {
-        return pricePointTokenSymbol!
     }
     
     class func getPricePointCurrencySymbol() -> String {
