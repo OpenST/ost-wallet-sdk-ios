@@ -357,7 +357,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             || !passwordTextField.text!.isMatch("^[a-zA-Z0-9@#$%!*&]*$")
             || passwordTextField.text!.count < 8 {
             
-            passwordTextFieldController?.setErrorText("Password must be alphanumeric and at least 8 characters \nPassword must be alphanumeric and at least 8 characters",
+            passwordTextFieldController?.setErrorText("Password must be a minimum of 8 characters. Characters allowed: letters, numbers and @ # $ % ! * &",
                                                       errorAccessibilityValue: nil);
             return false
         }
