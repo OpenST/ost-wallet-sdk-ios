@@ -538,7 +538,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func showAlertForRevokeAllSessions() {
         
-        let alert = UIAlertController(title: "Sure you want to revoke sessions?", message: "This would revoke all other device sessions too. Sessions needs to be re-added with PIN.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you want to revoke all sessions? You will need re-authenticate to spend tokens.", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Revoke Sessions", style: .default, handler: {[weak self] (_) in
             self?.logoutSessions()
         }))
