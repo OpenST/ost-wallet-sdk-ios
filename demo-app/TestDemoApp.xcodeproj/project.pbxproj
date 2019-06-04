@@ -515,6 +515,7 @@
 		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransactionViewController.swift; sourceTree = "<group>"; };
+		4B7BD94122A671B900849686 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -1212,6 +1213,7 @@
 		DB91270CD9213E4763882444 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B7BD94122A671B900849686 /* BigInt.framework */,
 				4BF8FF03224A0C5400519779 /* OstWalletSdk.framework */,
 				4BF8FE40224143C900519779 /* OstWalletSdk.framework */,
 				4BF8FE3A2240FF0900519779 /* OstSdk.framework */,
@@ -1504,6 +1506,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
@@ -1512,12 +1515,14 @@
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
@@ -1526,6 +1531,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

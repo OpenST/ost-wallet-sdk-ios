@@ -8,6 +8,7 @@ def shared_pods
 	pod 'CryptoSwift'
 	pod 'IQKeyboardManagerSwift'
 	pod 'Fabric'
+pod 'BigInt'
 pod 'Crashlytics'
 end
 

@@ -85,7 +85,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
         container.backgroundColor = .clear
         container.clipsToBounds = true
         container.layer.cornerRadius = 5
-        container.backgroundColor = UIColor.color(250, 250, 250, 0.5)
+        container.backgroundColor = .clear
         
         container.translatesAutoresizingMaskIntoConstraints = false
         
@@ -185,7 +185,7 @@ class WalletValueTableViewCell: BaseTableViewCell {
     
     func applyBtValueLabelConstraints() {
         guard let parent = self.btValueLabel.superview else {return}
-        btValueLabel.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 8).isActive = true
+        btValueLabel.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
         btValueLabel.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         btValueLabel.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
     }

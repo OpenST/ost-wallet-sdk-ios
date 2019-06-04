@@ -458,7 +458,6 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     
     //MARK: - Ost JSON API
     func onOstJsonApiSuccess(data: [String : Any]?) {
-        isFetchingUserBalance = false
         isFetchingUserTransactions = false
         
         let resultType = OstJsonApi.getResultType(apiData: data);
@@ -476,7 +475,6 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             print( error! );
         }
         
-        isFetchingUserBalance = false
         isFetchingUserTransactions = false
         reloadDataIfNeeded()
     }
@@ -527,21 +525,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
                     trasferData["block_timestamp"] = transaction["block_timestamp"]
                     trasferData["rule_name"] = transaction["rule_name"]
                     
-                    if fromUserId == toUserId {
-                        var fromTrasferData = transfer
-                        fromTrasferData["from_user_id"] = ""
-                        updatedDisplayNameInTransferData(trasferData: &fromTrasferData)
-                        transferArray.append(fromTrasferData)
-                        
-                        var toTrasferData = transfer
-                        toTrasferData["to_user_id"] = ""
-                        updatedDisplayNameInTransferData(trasferData: &toTrasferData)
-                        transferArray.append(toTrasferData)
-                    }else {
-                        
-                        updatedDisplayNameInTransferData(trasferData: &trasferData)
-                        transferArray.append(trasferData)
-                    }
+                    updatedDisplayNameInTransferData(trasferData: &trasferData)
+                    transferArray.append(trasferData)
                 }
             }
         }
@@ -556,6 +541,8 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         let fromUserId = trasferData["from_user_id"] as! String
         let toUserId = trasferData["to_user_id"] as! String
         
+        let companyTokenHolders = CurrentEconomy.getInstance.companyTokenHolders
+        
         guard let ostUserId = CurrentUserModel.getInstance.ostUserId else {
             return
         }
@@ -563,23 +550,44 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         var displayText = ""
         var imageName = ""
         
-        if fromUserId == ostUserId {
+        if fromUserId == toUserId {
+            
+            displayText = "Sent to yourself"
+            imageName = "SentTokens"
+        } else if fromUserId == ostUserId {
             if let transactionData = transactionUsers[toUserId] as? [String: Any] {
                 
                 let name = transactionData["username"] as! String
                 displayText = "Sent to \(name)"
-            }else {
+                
+            }else if let toAddress = trasferData["to"] as? String {
+                if nil != companyTokenHolders
+                    && companyTokenHolders!.contains(toAddress) {
+                
+                    displayText = "Sent to \(CurrentEconomy.getInstance.tokenName ?? "Company")"
+                }
+            }
+            
+            if displayText.isEmpty {
                 displayText = "Sent tokens"
             }
             imageName = "SentTokens"
         }
             
         else if toUserId == ostUserId {
-            if let transactionData = transactionUsers[toUserId] as? [String: Any] {
+            if let transactionData = transactionUsers[fromUserId] as? [String: Any] {
                 
                 let name = transactionData["username"] as! String
                 displayText = "Received from \(name)"
-            }else {
+            }else if let fromAddress = trasferData["from"] as? String {
+                if nil != companyTokenHolders
+                    && companyTokenHolders!.contains(fromAddress) {
+                    
+                    displayText = "Received from \(CurrentEconomy.getInstance.tokenName ?? "Company")"
+                }
+            }
+            
+            if displayText.isEmpty {
                 displayText = "Received tokens"
             }
             imageName = "ReceivedTokens"

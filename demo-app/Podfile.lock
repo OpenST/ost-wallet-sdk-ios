@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.8.1)
+  - BigInt (3.1.0):
+    - SipHash (~> 1.2)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
   - CryptoSwift (0.14.0)
@@ -441,9 +443,11 @@ PODS:
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
   - MotionTransitioning (5.0.0)
+  - SipHash (1.2.2)
 
 DEPENDENCIES:
   - Alamofire (= 4.8.1)
+  - BigInt
   - Crashlytics
   - CryptoSwift
   - Fabric
@@ -453,6 +457,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - BigInt
     - Crashlytics
     - CryptoSwift
     - Fabric
@@ -462,6 +467,7 @@ SPEC REPOS:
     - MotionAnimator
     - MotionInterchange
     - MotionTransitioning
+    - SipHash
 
 EXTERNAL SOURCES:
   MaterialComponents:
@@ -475,6 +481,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
@@ -485,7 +492,8 @@ SPEC CHECKSUMS:
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   MotionTransitioning: 23d25edc2f4606efb922403cbac6d81af37aa33a
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
 
-PODFILE CHECKSUM: efc9a15852df659fc31f09a4d79ad0a8d023618b
+PODFILE CHECKSUM: f70aa6b57c02a473881d646d6f811387cd22ec47
 
 COCOAPODS: 1.6.0

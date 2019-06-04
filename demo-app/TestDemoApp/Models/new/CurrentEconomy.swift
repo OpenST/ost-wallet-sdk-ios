@@ -113,5 +113,10 @@ extension CurrentEconomy {
         let token = OstWalletSdk.getToken(tokenId!)
         return (token?.data["auxiliary_chains"] as! [[String: Any]])[0]["utility_branded_token"] as! String
     }
+    
+    var companyTokenHolders: [String]? {
+        let token = OstWalletSdk.getToken(tokenId!)
+        return (token?.data["auxiliary_chains"] as! [[String: Any]])[0]["company_token_holders"] as? [String]
+    }
   
 }

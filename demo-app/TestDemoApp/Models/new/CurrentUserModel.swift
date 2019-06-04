@@ -384,7 +384,33 @@ extension CurrentUserModel {
         }
         
         let btToOstVal = (doubleValue/doubleConversionFactor)
-        
+    
         return String(usdValue * btToOstVal)
+    }
+    
+    func toBt(value: String) -> String? {
+        
+        guard let token = OstWalletSdk.getToken(CurrentEconomy.getInstance.tokenId!) else {
+            return nil
+        }
+        let baseToken = token.baseToken
+        
+        guard let btDecimal = token.decimals,
+            let conversionFactor = token.conversionFactor,
+            let fiatPricePoint = self.pricePoint?[baseToken] as? [String: Any],
+            let fiatDecimal = ConversionHelper.toInt(fiatPricePoint["decimals"]) else {
+                
+                return nil
+        }
+        
+        let pricePoint = String(format: "%@", fiatPricePoint["USD"] as! CVarArg)
+        
+        let btValue = try? OstConversion.fiatToBt(ostToBtConversionFactor: conversionFactor,
+                                    btDecimal: btDecimal,
+                                    fiatDecimal: fiatDecimal,
+                                    fiatAmount: BigInt(value)!,
+                                    pricePoint: pricePoint)
+        
+        return btValue?.description
     }
 }

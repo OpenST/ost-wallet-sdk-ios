@@ -61,7 +61,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         return button
     }()
     
-    var amountTextField: MDCTextField = {
+    var tokenAmountTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .never
@@ -71,9 +71,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.text = "1";
         return textField
     }()
-    var amountTextFieldController: MDCTextInputControllerOutlined? = nil
+    var tokenAmountTextFieldController: MDCTextInputControllerOutlined? = nil
     
-    var spendingUnitTextField: MDCTextField = {
+    var tokenSpendingUnitTextField: MDCTextField = {
         let textField = MDCTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.clearButtonMode = .never
@@ -82,9 +82,34 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.font = OstFontProvider().get(size: 15)
         return textField
     }()
-    var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
+    var tokenSpendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
+    
+    var usdAmountTextField: MDCTextField = {
+        let textField = MDCTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clearButtonMode = .never
+        textField.keyboardType = .decimalPad
+        textField.placeholderLabel.text = "Amount"
+        textField.font = OstFontProvider().get(size: 15)
+        return textField
+    }()
+    var usdAmountTextFieldController: MDCTextInputControllerOutlined? = nil
+    
+    var usdSpendingUnitTextField: MDCTextField = {
+        let textField = MDCTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.clearButtonMode = .never
+        textField.placeholderLabel.text = "Unit"
+        textField.text = "USD";
+        textField.font = OstFontProvider().get(size: 15)
+        return textField
+    }()
+    var usdSpendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
     
     //MAKR: - Variables
+    
+    var token: OstToken? = nil
+    
     var isShowingActionSheet = false;
     var isUsdTx = false
     
@@ -103,13 +128,16 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func getNavBarTitle() -> String {
         return "Send Tokens"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUserBalanceFromServer()
-        amountTextField.addTarget(self,
+         getUserBalanceFromServer()
+        tokenAmountTextField.addTarget(self,
                                   action: #selector(textFieldDidChange(textField:)),
                                   for:  UIControl.Event.editingChanged)
+        usdAmountTextField.addTarget(self,
+                                     action: #selector(textFieldDidChange(textField:)),
+                                     for:  UIControl.Event.editingChanged)
     }
     
     func getUserBalanceFromServer() {
@@ -146,6 +174,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateUserBalanceUI()
+        
+        let usdAmount = CurrentUserModel.getInstance.toUSD(value: tokenAmountTextField.text ?? "0") ?? "0.00"
+        usdAmountTextField.text = usdAmount.toRoundUpTxValue()
     }
     
     //MAKR: - Add Subview
@@ -157,8 +188,10 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         addSubview(sendTokensLable)
         addSubview(balanceLabel)
         addSubview(userInfoView)
-        addSubview(amountTextField)
-        addSubview(spendingUnitTextField)
+        addSubview(tokenAmountTextField)
+        addSubview(tokenSpendingUnitTextField)
+        addSubview(usdAmountTextField)
+        addSubview(usdSpendingUnitTextField)
         addSubview(sendButton)
         addSubview(cancelButton)
     }
@@ -166,11 +199,16 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     func setupComponents() {
         progressIndicator?.progressText = "Executing Transaction..."
         
-        amountTextField.delegate = self
-        spendingUnitTextField.delegate = self
+        tokenAmountTextField.delegate = self
+        tokenSpendingUnitTextField.delegate = self
+        usdAmountTextField.delegate = self
+        usdSpendingUnitTextField.delegate = self
         
-        self.amountTextFieldController = MDCTextInputControllerOutlined(textInput: self.amountTextField)
-        self.spendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: self.spendingUnitTextField);
+        self.tokenAmountTextFieldController = MDCTextInputControllerOutlined(textInput: self.tokenAmountTextField)
+        self.tokenSpendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: self.tokenSpendingUnitTextField);
+        
+        self.usdAmountTextFieldController = MDCTextInputControllerOutlined(textInput: self.usdAmountTextField)
+        self.usdSpendingUnitTextFieldController = MDCTextInputControllerOutlined(textInput: self.usdSpendingUnitTextField);
         
         weak var weakSelf = self
         sendButton.addTarget(weakSelf, action: #selector(weakSelf!.sendTokenButtonTapped(_ :)), for: .touchUpInside)
@@ -183,10 +221,14 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         addSendTokenLabelConstraints()
         addBalanceLabelConstraints()
         addUserInfoConstraints()
-        addAmountTextFieldConstraints()
-        addUnitTextFiledConstraints()
+        addTokenAmountTextFieldConstraints()
+        addTokenUnitTextFiledConstraints()
+        addUsdAmountTextFieldConstraints()
+        addUsdUnitTextFiledConstraints()
         addSendButtonConstraints()
         addCancelButtonConstraints()
+        
+        cancelButton.bottomAlignWithParent()
     }
     
     func addSendTokenLabelConstraints() {
@@ -206,27 +248,38 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         userInfoView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
     
-    func addAmountTextFieldConstraints() {
-        amountTextField.placeBelow(toItem: userInfoView)
-        amountTextField.leftAlignWithParent(multiplier: 1, constant: 20)
-        amountTextField.setW375Width(width: 238)
+    func addTokenAmountTextFieldConstraints() {
+        tokenAmountTextField.placeBelow(toItem: userInfoView)
+        tokenAmountTextField.leftAlignWithParent(multiplier: 1, constant: 20)
+        tokenAmountTextField.setW375Width(width: 238)
     }
     
-    func addUnitTextFiledConstraints() {
-        spendingUnitTextField.placeBelow(toItem: userInfoView)
-        spendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
-        spendingUnitTextField.setW375Width(width: 90)
+    func addTokenUnitTextFiledConstraints() {
+        tokenSpendingUnitTextField.placeBelow(toItem: userInfoView)
+        tokenSpendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
+        tokenSpendingUnitTextField.setW375Width(width: 90)
+    }
+    
+    func addUsdAmountTextFieldConstraints() {
+        usdAmountTextField.placeBelow(toItem: tokenAmountTextField)
+        usdAmountTextField.leftAlignWithParent(multiplier: 1, constant: 20)
+        usdAmountTextField.setW375Width(width: 238)
+    }
+    
+    func addUsdUnitTextFiledConstraints() {
+        usdSpendingUnitTextField.placeBelow(toItem: tokenSpendingUnitTextField)
+        usdSpendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
+        usdSpendingUnitTextField.setW375Width(width: 90)
     }
     
     func addSendButtonConstraints() {
-        sendButton.placeBelow(toItem: amountTextField)
+        sendButton.placeBelow(toItem: usdSpendingUnitTextField)
         sendButton.applyBlockElementConstraints()
     }
     
     func addCancelButtonConstraints() {
         cancelButton.placeBelow(toItem: sendButton)
         cancelButton.applyBlockElementConstraints()
-        cancelButton.bottomAlignWithParent()
     }
     
     //MARK: - Actions
@@ -246,23 +299,23 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             return
         }
         
-        var amountToTransferStr = self.amountTextField.text!
+        var amountToTransferStr = self.tokenAmountTextField.text!
         let receiverName = userDetails["username"] as? String ?? ""
         
         let ruleType:OstExecuteTransactionType
         let progressText: String
         
-        if ( isUsdTx ) {
-            //Multiply value with 10^18. Since we have string.
-            //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
-            ruleType = .Pay
-            progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
-        }else {
+//        if ( isUsdTx ) {
+//            //Multiply value with 10^18. Since we have string.
+//            //So: we can simply add 18 0s. [Not the best way to do it. Use BigInt]
+//            ruleType = .Pay
+//            progressText = "Sending $\(amountToTransferStr) to \(receiverName)"
+//        }else {
             ruleType = .DirectTransfer
             progressText = "Sending \(amountToTransferStr) \(CurrentEconomy.getInstance.tokenSymbol ?? "") to \(receiverName)"
-        }
+//        }
         
-        amountToTransferStr = amountToTransferStr.toSmallestUnit(isUSDTx: isUsdTx)
+        amountToTransferStr = amountToTransferStr.toSmallestUnit(isUSDTx: false)
         
         progressIndicator = OstProgressIndicator(progressText: progressText)
         getApplicationWindow()?.addSubview(progressIndicator!)
@@ -286,13 +339,13 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     func isValidInputPassed() -> Bool {
         var isValidInput: Bool = true
         
-        if self.amountTextField.text!.isEmpty {
+        if self.tokenAmountTextField.text!.isEmpty {
             isValidInput = false
         }
         
         if isValidInput,
             var userBalance: Double = Double(CurrentUserModel.getInstance.balance),
-            let enteredAmount: Double = Double(self.amountTextField.text!) {
+            let enteredAmount: Double = Double(self.tokenAmountTextField.text!) {
             
             if isUsdTx {
                 let usdBalance = getUserUSDBalance()
@@ -304,9 +357,9 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }
         
         if isValidInput {
-            amountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+            tokenAmountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         } else {
-            amountTextFieldController?.setErrorText("Low balance to make this transaction",
+            tokenAmountTextFieldController?.setErrorText("Low balance to make this transaction",
                                                     errorAccessibilityValue: nil);
         }
         
@@ -320,17 +373,18 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     //MARK: - TextField Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if ( spendingUnitTextField == textField ) {
-            if  !isShowingActionSheet {
-                showUnitActionSheet();
-            }
+        if ( tokenSpendingUnitTextField == textField
+            || usdSpendingUnitTextField == textField) {
+//            if  !isShowingActionSheet {
+//                showUnitActionSheet();
+//            }
             return false;
         }
         return true;
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        amountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
+        tokenAmountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
         if string == "." && (textField.text ?? "").contains(string) {
             return false
         }
@@ -349,6 +403,16 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             
             textField.text = text.toDisplayTxValue()
         }
+        
+        if textField == tokenAmountTextField {
+            let usdAmount = CurrentUserModel.getInstance.toUSD(value: textField.text ?? "0") ?? "0.00"
+            usdAmountTextField.text = usdAmount.toRoundUpTxValue()
+        }
+        else if textField == usdAmountTextField {
+            let transferVal = textField.text?.toSmallestUnit(isUSDTx: true) ?? "0"
+            let finalVal = CurrentUserModel.getInstance.toBt(value: transferVal)
+            tokenAmountTextField.text = finalVal?.toRedableFormat().toRoundUpTxValue()
+        }
     }
     
     func showUnitActionSheet() {
@@ -360,7 +424,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         let directTransafer = UIAlertAction(title: CurrentEconomy.getInstance.tokenSymbol ?? "BT", style: .default, handler: {[weak self] (UIAlertAction) in
             self?.isShowingActionSheet = false;
-            self?.spendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
+            self?.tokenSpendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self?.isUsdTx = false
             self?.updateUserBalanceUI()
             
@@ -369,7 +433,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         let pricer = UIAlertAction(title: "USD", style: .default, handler: {[weak self] (UIAlertAction) in
             self?.isShowingActionSheet = false;
-            self?.spendingUnitTextField.text = "USD";
+            self?.tokenSpendingUnitTextField.text = "USD";
             self?.isUsdTx = true
             self?.updateUserBalanceUI()
         });
