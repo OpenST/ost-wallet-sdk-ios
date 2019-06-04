@@ -215,7 +215,6 @@
 		00ABD3CE22A72BE90080C4BB /* OstError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FC22A72BE90080C4BB /* OstError.swift */; };
 		00ABD3CF22A72BE90080C4BB /* OstErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FD22A72BE90080C4BB /* OstErrorCodes.swift */; };
 		00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FE22A72BE90080C4BB /* OstApiError.swift */; };
-		00ABD3D122A72BE90080C4BB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00ABD2FF22A72BE90080C4BB /* Info.plist */; };
 		00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
@@ -449,28 +448,6 @@
 		00ABD2FE22A72BE90080C4BB /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 		00ABD2FF22A72BE90080C4BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
-		00ABD3D322A72C070080C4BB /* OstBaseDBQueriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseDBQueriesTests.swift; sourceTree = "<group>"; };
-		00ABD3D522A72C070080C4BB /* OstCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstCryptoTests.swift; sourceTree = "<group>"; };
-		00ABD3D722A72C070080C4BB /* OstAPITokensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPITokensTests.swift; sourceTree = "<group>"; };
-		00ABD3D822A72C070080C4BB /* OstAPIBaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAPIBaseTests.swift; sourceTree = "<group>"; };
-		00ABD3DA22A72C070080C4BB /* OstWalletSdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletSdkTests.swift; sourceTree = "<group>"; };
-		00ABD3DB22A72C070080C4BB /* OstUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUtilsTests.swift; sourceTree = "<group>"; };
-		00ABD3DC22A72C070080C4BB /* EIP1077Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP1077Tests.swift; sourceTree = "<group>"; };
-		00ABD3DD22A72C070080C4BB /* QRCodeGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerationTests.swift; sourceTree = "<group>"; };
-		00ABD3DE22A72C070080C4BB /* OstConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConversionTests.swift; sourceTree = "<group>"; };
-		00ABD3DF22A72C070080C4BB /* EIP712Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712Tests.swift; sourceTree = "<group>"; };
-		00ABD3E022A72C070080C4BB /* ABIEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABIEncoderTests.swift; sourceTree = "<group>"; };
-		00ABD3E122A72C070080C4BB /* GnosisSafeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnosisSafeTests.swift; sourceTree = "<group>"; };
-		00ABD3E322A72C070080C4BB /* OstDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceTests.swift; sourceTree = "<group>"; };
-		00ABD3E422A72C070080C4BB /* OstDeviceManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceManagerTests.swift; sourceTree = "<group>"; };
-		00ABD3E522A72C070080C4BB /* OstUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUserTests.swift; sourceTree = "<group>"; };
-		00ABD3E622A72C070080C4BB /* OstTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenTests.swift; sourceTree = "<group>"; };
-		00ABD3E722A72C070080C4BB /* OstBaseEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseEntityTests.swift; sourceTree = "<group>"; };
-		00ABD3E822A72C070080C4BB /* OstTokenHolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTokenHolderTests.swift; sourceTree = "<group>"; };
-		00ABD3E922A72C070080C4BB /* OstTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTransactionTests.swift; sourceTree = "<group>"; };
-		00ABD3EA22A72C070080C4BB /* OstRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRuleTests.swift; sourceTree = "<group>"; };
-		00ABD3EB22A72C070080C4BB /* OstSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSessionTests.swift; sourceTree = "<group>"; };
-		00ABD3EE22A72C070080C4BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -1014,89 +991,10 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		00ABD3D422A72C070080C4BB /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3D322A72C070080C4BB /* OstBaseDBQueriesTests.swift */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
-		00ABD3D622A72C070080C4BB /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3D522A72C070080C4BB /* OstCryptoTests.swift */,
-			);
-			path = Security;
-			sourceTree = "<group>";
-		};
-		00ABD3D922A72C070080C4BB /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3D722A72C070080C4BB /* OstAPITokensTests.swift */,
-				00ABD3D822A72C070080C4BB /* OstAPIBaseTests.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		00ABD3E222A72C070080C4BB /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3DB22A72C070080C4BB /* OstUtilsTests.swift */,
-				00ABD3DC22A72C070080C4BB /* EIP1077Tests.swift */,
-				00ABD3DD22A72C070080C4BB /* QRCodeGenerationTests.swift */,
-				00ABD3DE22A72C070080C4BB /* OstConversionTests.swift */,
-				00ABD3DF22A72C070080C4BB /* EIP712Tests.swift */,
-				00ABD3E022A72C070080C4BB /* ABIEncoderTests.swift */,
-				00ABD3E122A72C070080C4BB /* GnosisSafeTests.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		00ABD3EC22A72C070080C4BB /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3E322A72C070080C4BB /* OstDeviceTests.swift */,
-				00ABD3E422A72C070080C4BB /* OstDeviceManagerTests.swift */,
-				00ABD3E522A72C070080C4BB /* OstUserTests.swift */,
-				00ABD3E622A72C070080C4BB /* OstTokenTests.swift */,
-				00ABD3E722A72C070080C4BB /* OstBaseEntityTests.swift */,
-				00ABD3E822A72C070080C4BB /* OstTokenHolderTests.swift */,
-				00ABD3E922A72C070080C4BB /* OstTransactionTests.swift */,
-				00ABD3EA22A72C070080C4BB /* OstRuleTests.swift */,
-				00ABD3EB22A72C070080C4BB /* OstSessionTests.swift */,
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
-		00ABD3ED22A72C070080C4BB /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3EC22A72C070080C4BB /* Entities */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		00ABD3EF22A72C070080C4BB /* OstWalletSdkTests */ = {
-			isa = PBXGroup;
-			children = (
-				00ABD3D422A72C070080C4BB /* Database */,
-				00ABD3D622A72C070080C4BB /* Security */,
-				00ABD3D922A72C070080C4BB /* Network */,
-				00ABD3DA22A72C070080C4BB /* OstWalletSdkTests.swift */,
-				00ABD3E222A72C070080C4BB /* Utils */,
-				00ABD3ED22A72C070080C4BB /* Models */,
-				00ABD3EE22A72C070080C4BB /* Info.plist */,
-			);
-			name = OstWalletSdkTests;
-			path = "/Users/rachin/mobile/ost-wallet-sdk-ios/OstWalletSdk/OstWalletSdkTests";
-			sourceTree = "<absolute>";
-		};
 		EC38BE0822413992006F8DA2 = {
 			isa = PBXGroup;
 			children = (
 				00ABD20922A72BE90080C4BB /* OstWalletSdk */,
-				00ABD3EF22A72C070080C4BB /* OstWalletSdkTests */,
 				EC38BE1322413992006F8DA2 /* Products */,
 				EC38C00F22413C93006F8DA2 /* Frameworks */,
 			);
@@ -1225,7 +1123,6 @@
 			files = (
 				00ABD3A022A72BE90080C4BB /* README.md in Resources */,
 				00ABD30122A72BE90080C4BB /* PricerRule.abi.json in Resources */,
-				00ABD3D122A72BE90080C4BB /* Info.plist in Resources */,
 				00ABD31322A72BE90080C4BB /* OST_MIGRATION_README.md in Resources */,
 				00ABD30322A72BE90080C4BB /* TokenHolder.abi.json in Resources */,
 				00ABD3AA22A72BE90080C4BB /* COPYRIGHT.txt in Resources */,
@@ -1642,6 +1539,7 @@
 		EC38BE2722413992006F8DA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1676,6 +1574,7 @@
 		EC38BE2822413992006F8DA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
