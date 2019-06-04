@@ -46,7 +46,7 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
         
         return refreshControl

@@ -25,7 +25,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Transactions...")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Transactions...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
         
         return refreshControl
