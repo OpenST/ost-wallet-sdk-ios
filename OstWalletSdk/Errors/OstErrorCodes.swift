@@ -382,6 +382,8 @@ import Foundation
 //        case .invalidPricePointCurrencySymbol: return "INVALID_PRICE_POINT_CURRENCY_SYMBOL";
 //        case .invalidRequestTimeoutDuration: return "INVALID_REQUEST_TIMEOUT_DURATION";
 //        case .invalidSessionBufferTime : return "INVALID_SESSION_BUFFER_TIME";
+        default:
+            return "UNKNOWN"
         }
     }
 }
