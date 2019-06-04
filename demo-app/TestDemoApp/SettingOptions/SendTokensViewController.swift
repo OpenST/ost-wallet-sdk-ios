@@ -56,7 +56,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
     }()
     var cancelButton: UIButton = {
-        let button = OstUIKit.secondaryButton()
+        let button = OstUIKit.linkButton()
         button.setTitle("Cancel", for: .normal)
         return button
     }()
@@ -106,8 +106,8 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }()
     var usdSpendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
     
-    //MAKR: - Variables
-    
+    //MARK: - Variables
+    weak var tabbarController: TabBarViewController? = nil
     var token: OstToken? = nil
     
     var isShowingActionSheet = false;
@@ -177,6 +177,12 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         let usdAmount = CurrentUserModel.getInstance.toUSD(value: tokenAmountTextField.text ?? "0") ?? "0.00"
         usdAmountTextField.text = usdAmount.toRoundUpTxValue()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tokenAmountTextField.becomeFirstResponder()
     }
     
     //MAKR: - Add Subview
@@ -261,13 +267,13 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     func addUsdAmountTextFieldConstraints() {
-        usdAmountTextField.placeBelow(toItem: tokenAmountTextField)
+        usdAmountTextField.placeBelow(toItem: tokenAmountTextField, constant: 0)
         usdAmountTextField.leftAlignWithParent(multiplier: 1, constant: 20)
         usdAmountTextField.setW375Width(width: 238)
     }
     
     func addUsdUnitTextFiledConstraints() {
-        usdSpendingUnitTextField.placeBelow(toItem: tokenSpendingUnitTextField)
+        usdSpendingUnitTextField.placeBelow(toItem: tokenSpendingUnitTextField, constant: 0)
         usdSpendingUnitTextField.rightAlignWithParent(multiplier: 1, constant: -20)
         usdSpendingUnitTextField.setW375Width(width: 90)
     }
@@ -461,6 +467,17 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
                 self?.onFlowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
             })
         }
+    }
+    
+    override func onFlowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.onFlowComplete(workflowId: workflowId,
+                             workflowContext: workflowContext,
+                             contextEntity: contextEntity)
+        
+        self.navigationController?.popViewController(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            self.tabbarController?.jumpToWalletVC(withWorkflowId: workflowId)
+        })
     }
     
     func showWebViewForTransaction() {

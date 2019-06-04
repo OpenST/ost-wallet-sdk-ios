@@ -54,7 +54,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         
     }()
     var cancelButton: UIButton = {
-        let button = OstUIKit.secondaryButton()
+        let button = OstUIKit.linkButton()
         button.setTitle("Cancel", for: .normal)
         return button
     }()
