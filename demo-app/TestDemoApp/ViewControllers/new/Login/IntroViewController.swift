@@ -39,6 +39,11 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        introImageView.frame = imageContainter.bounds
+    }
+    
     
     //MARK: - CanConfigureEconomyProtocol methods.
     func defaultEconomySet(payload: [String : Any?]) {
@@ -210,13 +215,31 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     let leadLabel: UILabel = {
         let view = OstUIKit.leadLabel();
         view.text = "Version 0.0.1 (testnet)";
-        view.backgroundColor = .white;
+        view.backgroundColor = .clear;
         return view;
     }()
     
-    let introImageView: UIImageView = {
-        let view = UIImageView(image: UIImage.init(named: "ostIntroImage") );
+    let imageContainter: UIView = {
+        var view = UIView()
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let introImageView: UIImageView = {
+        var view = UIImageView(image: UIImage.init(named: "ostIntroImage") );
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view;
+    }()
+    
+    let infoLabel: UILabel = {
+        var view = OstUIKit.leadLabel();
+        view.font = OstFontProvider().get(size: 14)
+        view.textColor = UIColor.color(136, 136, 136)
+        view.text = "This beta release enables users to join Brand Token economies, to send and receive tokens, and to access wallet security and recovery features.";
+        view.backgroundColor = .clear;
         return view;
     }()
     
@@ -239,7 +262,9 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         
         addSubview(logoImageView);
         addSubview(leadLabel);
-        addSubview(introImageView);
+        imageContainter.addSubview(introImageView)
+        addSubview(imageContainter);
+        addSubview(infoLabel)
         addSubview(createAccountBtn);
         addSubview(loginBtn);
     }
@@ -257,13 +282,17 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         logoImageView.centerXAlignWithParent();
         logoImageView.setAspectRatio(width: 70, height: 38);
         
-        leadLabel.placeBelow(toItem: logoImageView);
+        leadLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20).isActive = true
         leadLabel.applyBlockElementConstraints();
         
-        introImageView.placeBelow(toItem: leadLabel, constant: 40);
-        introImageView.setW375Width(width: 221)
-        introImageView.setH667Height(height: 236)
-        introImageView.centerXAlignWithParent();
+        imageContainter.placeBelow(toItem: leadLabel, constant: 40);
+        imageContainter.setW375Width(width: 221)
+        imageContainter.bottomAnchor.constraint(equalTo: infoLabel.topAnchor, constant: -40).isActive = true
+        imageContainter.centerXAlignWithParent()
+//        introImageView.applyBlockElementConstraints()
+        
+        infoLabel.bottomFromTopAlign(toItem: createAccountBtn, constant: -20)
+        infoLabel.applyBlockElementConstraints()
         
         createAccountBtn.applyBlockElementConstraints();
         createAccountBtn.bottomFromTopAlign(toItem: loginBtn, constant: -20)
