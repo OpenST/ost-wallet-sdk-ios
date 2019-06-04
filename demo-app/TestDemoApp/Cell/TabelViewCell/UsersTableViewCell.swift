@@ -45,7 +45,7 @@ class UsersTableViewCell: BaseTableViewCell {
             self.balanceLabel?.text = "Balance: \(amountVal.toDisplayTxValue())"
         }else {
             self.balanceLabel?.textColor = UIColor.color(255, 94, 84)
-            self.balanceLabel?.text = "Wallet Setup Incomplete"
+            self.balanceLabel?.text = "Initializing user..."
         }
     }
     

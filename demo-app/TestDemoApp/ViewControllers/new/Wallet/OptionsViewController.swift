@@ -215,7 +215,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics]
+        let optionSupport = OptionVM(type: .contactSupport, name: "Contact Support", isEnable: true)
+        
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionSupport]
         generalOptions = userOptions
     }
     
@@ -284,11 +286,17 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             fetchPendingRecovery()
         }
         
-        let logoutAllSession = OptionVM(type: .logoutAllSessions, name: "Logout", isEnable: true)
+        let revokeAllSession = OptionVM(type: .revokeAllSessions, name: "Revoke all Sessions", isEnable: true)
+        if !currentUser.isCurrentDeviceStatusAuthrozied {
+            
+            revokeAllSession.isEnable = false
+        }
         
+        let logoutApp = OptionVM(type: .logout, name: "Logout", isEnable: true)
+
         
         let dOptions = [authorizeViaQR, authorizeViaMnemonics, optionBiomertic, showDeviceQR, manageDevices,
-                        transactionViaQR, initialRecovery, abortRecoveryOption!, logoutAllSession]
+                        transactionViaQR, initialRecovery, abortRecoveryOption!, revokeAllSession, logoutApp]
         
         deviceOptions = dOptions
     }
@@ -296,8 +304,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func processSelectedOption(_ option: OptionVM) {
         
-        if option.type == .logoutAllSessions {
-            showLogoutOptions()
+        if option.type == .logout {
+            showAlertForLogoutApplication()
+            return
+        }
+        
+        if option.type == .contactSupport {
+            openSupportWebView()
             return
         }
         
@@ -429,6 +442,15 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             }
         }
         
+        else if option.type == .revokeAllSessions {
+            if option.isEnable {
+                showAlertForRevokeAllSessions()
+            }else {
+                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+            }
+            
+        }
+        
         if nil == destinationVC && nil == destinationSVVC {
             return
         }
@@ -485,40 +507,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
-    func showLogoutOptions() {
-        
-        let alert: UIAlertController
-        if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
-            
-            alert = UIAlertController(title: "Logout from Application",
-                                      message: "As device is in authorizing state, you cannot logout from wallet.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
-            }))
-            
-        }else {
-            
-            alert = UIAlertController(title: "Sure you want to logout?", message: nil, preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
-                CurrentUserModel.getInstance.logout()
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.showIntroController()
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Revoke all Sessions", style: .destructive, handler: {[weak self] (alertAction) in
-               self?.showAlertForRevokeAllSessions()
-            }))
-        }
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        alert.show()
-    }
-    
     func showInfoAlert(title: String,
                        message: String? = nil,
                        actionButtonTitle: String? = nil,
@@ -531,6 +519,20 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        alert.show()
+    }
+    
+    func showAlertForLogoutApplication() {
+        let alert = UIAlertController(title: "Are you sure you want to logout from OST Wallet",
+                                  message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { (alertAction) in
+            CurrentUserModel.getInstance.logout()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.showIntroController()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
         alert.show()
     }
     
@@ -556,6 +558,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             OstWalletSdk.logoutAllSessions(userId: ostUserId,
                                            delegate: workflowDelegate)
         }
+    }
+    
+    func openSupportWebView() {
+        let webView = WKWebViewController()
+        webView.title = "OST Support"
+        webView.urlString = "https://help.ost.com/support/home"
+        webView.showVC()
     }
     
     func fetchPendingRecovery() {

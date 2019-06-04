@@ -346,7 +346,7 @@ enum OstProgressIndicatorTextCode: String {
     unknown = "Processing...",
     activingUser = "Activiting user...",
     executingTransaction = "Transaction processing...",
-    fetchingUser = "Fetching user...",
+    fetchingUser = "Loading...",
     stopDeviceRecovery = "Aborting recovery...",
     initiateDeviceRecovery = "Initiating recovery... ",
     logoutUser = "Logging out...",

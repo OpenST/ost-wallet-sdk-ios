@@ -21,7 +21,9 @@ enum OptionType {
     transactionViaQR,
     initiateDeviceRecovery,
     abortRecovery,
-    logoutAllSessions
+    revokeAllSessions,
+    logout,
+    contactSupport
 }
 
 class OptionVM {

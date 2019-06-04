@@ -390,6 +390,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     func onSigupFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
+        showErrorForSetup(apiError)
     }
     
     func onLoginSuccess() {
@@ -413,6 +414,19 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     func onLoginFailed(_ apiError: [String: Any]?) {
         removeProgressIndicator()
+        
+        showErrorForSetup(apiError)
+    }
+    
+    func showErrorForSetup(_ apiError: [String: Any]?) {
+        var msg = "Something went wrong"
+        if let err = apiError?["err"] as? [String: Any],
+            let code = err["code"] as? String {
+            if code == "BAD_GATEWAY" {
+                msg = "Server temporarily unavailable"
+            }
+        }
+        OstErroNotification.showNotification(withMessage: msg)
     }
 
     @objc func changeTypeTapped(_ sender: Any?) {
