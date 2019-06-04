@@ -12,16 +12,13 @@ import Foundation
 
 @objc public class OstErrorCodes:NSObject {
     @objc public enum OstErrorCode: Int {
-        case userNotFound,
-        invalidUser,
-        userAlreadyActivated,
+        
+        case userAlreadyActivated,
         userNotActivated,
         deviceNotSet,
         deviceNotAuthorized,
-        deviceAuthorized,
         wrongDeviceAddress,
-        processSameDevice,
-        differentOwnerDevice,
+        
         accessControlFailed,
         unableToGetPublicKey,
         encryptFail,
@@ -48,21 +45,15 @@ import Foundation
         deviceAlreadyRegistered,
         deviceManagerNotFound,
         userActivationFailed,
-        invalidPayload,
         paperWalletNotFound,
-        invalidDataDefination,
-        recoveryAddressNotFound,
         recoveryOwnerAddressNotFound,
         recoveryOwnerAddressCreationFailed,
         linkedAddressNotFound,
         invalidRecoveryAddress,
         invalidUserId,
         invalidTokenId,
-        tokenNotFound,
         signatureGenerationFailed,
-        unexpectedError,
         abiEncodeFailed,
-        qrReadFailed,
         qrCodeGenerationFailed,
         qrCodeImageGenerationFailed,
         functionNotFoundInABI,
@@ -132,19 +123,18 @@ import Foundation
         invalidNewUserPassphrase,
         invalidPassphrasePrefix,
         saltApiFailed,
-        invalidSessionExpiryTime,
+        
         noPendingRecovery,
         
         //NEW - CONFIGURATION
         invalidBlockGenerationTime,
         invalidPinMaxRetryCount,
-        invalidPricePointTokenSymbol,
         invalidPricePointCurrencySymbol,
         invalidRequestTimeoutDuration,
         invalidSessionBufferTime;
         
         
-        //
+        //Deprecated
         @available(*, deprecated, message: "userNotActivating has been deprecated and is not thrown anymore.")
         case userNotActivating;
         @available(*, deprecated, message: "deviceNotRecovering has been deprecated and is not thrown anymore.")
@@ -153,6 +143,28 @@ import Foundation
         case deviceNotRevoking;
         @available(*, deprecated, message: "deviceNotAuthorizing has been deprecated and is not thrown anymore.")
         case deviceNotAuthorizing;
+        @available(*, deprecated, message: "invalidUser has been deprecated and is not thrown anymore.")
+        case invalidUser;
+        @available(*, deprecated, message: "userNotFound has been deprecated and is not thrown anymore. Use invalidUserId instead.")
+        case userNotFound;
+        @available(*, deprecated, message: "processSameDevice has been deprecated and is not thrown anymore. Use wrongDeviceAddress instead.")
+        case processSameDevice;
+        @available(*, deprecated, message: "invalidPayload has been deprecated and is not thrown anymore.")
+        case invalidPayload;
+        @available(*, deprecated, message: "tokenNotFound has been deprecated and is not thrown anymore. Use invalidTokenId instead.")
+        case tokenNotFound;
+        @available(*, deprecated, message: "deviceAuthorized has been deprecated and is not thrown anymore. Use invalidTokenId instead.")
+        case deviceAuthorized;
+        @available(*, deprecated, message: "deviceAuthorized has been deprecated")
+        case differentOwnerDevice;
+        @available(*, deprecated, message: "qrReadFailed has been deprecated")
+        case qrReadFailed;
+        @available(*, deprecated, message: "unexpectedError has been deprecated. Use sdkError instead.")
+        case unexpectedError;
+        @available(*, deprecated, message: "recoveryAddressNotFound has been deprecated. Use sdkError instead.")
+        case recoveryAddressNotFound;
+        @available(*, deprecated, message: "invalidDataDefination has been deprecated")
+        case invalidDataDefination;
     }
     
     @objc public class func getErrorMessage(errorCode:OstErrorCode) -> String {
@@ -163,7 +175,7 @@ import Foundation
         case .userNotActivated: return "This user is not activated yet. Please setup user's wallet to enable their participation in your economy.";
         case .deviceNotSet: return "Unable to recognize the device. Please setup this device for the user using workflows provided at; https://dev.ost.com/platform/docs/sdk";
         case .deviceNotAuthorized: return "Unable to perform the operation as the device is not authorized. For details on how to authorize a device; please visit https://dev.ost.com/platform/docs/sdk";
-        case .deviceAuthorized: return "This Device is already authorized.";
+        
         case .wrongDeviceAddress: return "Incorrect device address. Please inspect the value being sent is correct and not null, rectify and re-submit.";
         case .processSameDevice: return "Trying to process same device.";
         case .differentOwnerDevice: return "The device is not registered with the user, so the operation could not be complete. Inspect if a correct; value is being sent and re-submit.";
@@ -283,21 +295,17 @@ import Foundation
             return "The new 6 digit PIN you entered is not correct.";
         case .saltApiFailed:
             return "Failed to fetch user salt. Either OST server is unavailable temporarily OR your connection is going idle. Check your connection and re-submit the request a bit later.";
-        case .invalidSessionExpiryTime:
-            return "The expiry time provided is invalid";
             
         case .invalidBlockGenerationTime:
-            return "Invalid configuration 'BLOCK_GENERATION_TIME'. It must be an Integer greater than zero";
+            return "Invalid configuration 'BlockGenerationTime'. It must be an Integer greater than zero";
         case .invalidPinMaxRetryCount:
-            return "Invalid configuration 'PIN_MAX_RETRY_COUNT'. It must be an Integer greater than zero";
-        case .invalidPricePointTokenSymbol:
-            return "Unable to recognize 'PRICE_POINT_TOKEN_SYMBOL'. For details on how supported token symbols please vist https://dev.ost.com/platform/docs/api";
+            return "Invalid configuration 'PinMaxRetryCount'. It must be an Integer greater than zero";
         case .invalidPricePointCurrencySymbol:
-            return "Unable to recognize 'PRICE_POINT_CURRENCY_SYMBOL'. For details on how supported currencies please vist https://dev.ost.com/platform/docs/api ";
+            return "Unable to recognize 'PricePointCurrencySymbol'. For details on how supported currencies please vist https://dev.ost.com/platform/docs/api ";
         case .invalidRequestTimeoutDuration:
-            return "Invalid configuration 'REQUEST_TIMEOUT_DURATION'. It must be Integer greater than zero.";
+            return "Invalid configuration 'RequestTimeoutDuration'. It must be Integer greater than zero.";
         case .invalidSessionBufferTime:
-            return "Invalid configuration 'SESSION_BUFFER_TIME'. It must be long greater than or equal to zero";
+            return "Invalid configuration 'SessionBufferTime'. It must be long greater than or equal to zero";
 
         case .noPendingRecovery:
             return "Could not find any pending device recovery request. For details on how to check the status of the recovery please vist https://dev.ost.com/platform/docs/sdk ";
@@ -312,7 +320,8 @@ import Foundation
         case .userNotActivating: return "User is not activating";
         case .deviceNotRecovering: return "This Device is not in recovering mode. Please ensure you are checking the status of a correct device. If the problem persists contact support@ost.com";
         case .deviceNotRevoking: return "This Device is not in revoking mode. Please ensure you are checking the status of a correct device. If the problem persists contact support@ost.com";
-        case .deviceNotAuthorizing: return "Device is not in authorizing mode. Please ensure you are checking the status of a correct device. If the problem persists contact support@ost.com"
+        case .deviceNotAuthorizing: return "Device is not in authorizing mode. Please ensure you are checking the status of a correct device. If the problem persists contact support@ost.com";
+        case .deviceAuthorized: return "This Device is already authorized.";
         }
     }
     
@@ -323,13 +332,13 @@ import Foundation
     @objc public class func getStringErrorCode(errorCode:OstErrorCode) -> String {
         switch errorCode{
         case .userNotFound: return "USER_NOT_FOUND";
-        case .invalidUser: return "INVALID_USER";
+        
         case .userAlreadyActivated: return "USER_ALREADY_ACTIVATED";
         case .userNotActivated: return "USER_NOT_ACTIVATED";
-        case .deviceNotSet: return "DEVICE_NOT_SET";
-        case .deviceNotAuthorized: return "DEVICE_NOT_AUTHORIZED";
+        case .deviceNotSet: return "DEVICE_NOT_SETUP";
+        case .deviceNotAuthorized: return "DEVICE_UNAUTHORIZED";
         case .deviceAuthorized: return "DEVICE_AUTHORIZED";
-        case .wrongDeviceAddress: return "WRONG_DEVICE_ADDRESS";
+        case .wrongDeviceAddress: return "INVALID_DEVICE_ADDRESS";
         case .processSameDevice: return "PROCESS_SAME_DEVICE";
         case .differentOwnerDevice: return "DIFFERENT_OWNER_DEVICE";
         case .accessControlFailed: return "ACCESS_CONTROL_FAILED";
@@ -345,13 +354,13 @@ import Foundation
         case .scryptKeyGenerationFailed: return "SCRYPT_KEY_GENERATION_FAILED";
         case .seedCreationFailed: return "SEED_CREATION_FAILED";
         case .walletGenerationFailed: return "WALLET_GENERATION_FAILED";
-        case .signTxFailed: return "SIGN_TX_FAILED";
-        case .signatureFailed: return "SIGNATURE_FAILED";
+        case .signTxFailed: return "FAILED_TO_SIGN_DATA";
+        case .signatureFailed: return "FAILED_TO_SIGN_DATA";
         case .apiAddressNotFound: return "API_ADDRESS_NOT_FOUND";
         case .apiEndpointNotFound: return "API_ENDPOINT_NOT_FOUND";
         case .userEntityNotFound: return "USER_ENTITY_NOT_FOUND";
         case .entityNotAvailable: return "ENTITY_NOT_AVAILABLE";
-        case .invalidAPIResponse: return "INVALID_A_P_I_RESPONSE";
+        case .invalidAPIResponse: return "INVALID_API_RESPONSE";
         case .unableToGetSalt: return "UNABLE_TO_GET_SALT";
         case .unableToChainInformation: return "UNABLE_TO_CHAIN_INFORMATION";
         case .deviceNotRegistered: return "DEVICE_NOT_REGISTERED";
@@ -363,13 +372,13 @@ import Foundation
         case .invalidDataDefination: return "INVALID_DATA_DEFINATION";
         case .recoveryAddressNotFound: return "RECOVERY_ADDRESS_NOT_FOUND";
         case .recoveryOwnerAddressNotFound: return "RECOVERY_OWNER_ADDRESS_NOT_FOUND";
-        case .recoveryOwnerAddressCreationFailed: return "RECOVERY_OWNER_ADDRESS_CREATION_FAILED";
+        case .recoveryOwnerAddressCreationFailed: return "RECOVERY_KEY_GENERATION_FAILED";
         case .linkedAddressNotFound: return "LINKED_ADDRESS_NOT_FOUND";
         case .invalidRecoveryAddress: return "INVALID_RECOVERY_ADDRESS";
         case .invalidUserId: return "INVALID_USER_ID";
         case .invalidTokenId: return "INVALID_TOKEN_ID";
         case .tokenNotFound: return "TOKEN_NOT_FOUND";
-        case .signatureGenerationFailed: return "SIGNATURE_GENERATION_FAILED";
+        case .signatureGenerationFailed: return "FAILED_TO_SIGN_DATA";
         case .unexpectedError: return "UNEXPECTED_ERROR";
         case .abiEncodeFailed: return "ABI_ENCODE_FAILED";
         case .qrReadFailed: return "QR_READ_FAILED";
@@ -385,10 +394,10 @@ import Foundation
         case .invalidId: return "INVALID_ID";
         case .unexpectedState: return "UNEXPECTED_STATE";
         case .toAddressNotFound: return "TO_ADDRESS_NOT_FOUND";
-        case .signerAddressNotFound: return "SIGNER_ADDRESS_NOT_FOUND";
+        case .signerAddressNotFound: return "FAILED_TO_SIGN_DATA";
         case .dbExecutionFailed: return "DB_EXECUTION_FAILED";
         case .invalidEntityType: return "INVALID_ENTITY_TYPE";
-        case .invalidQRCode: return "INVALID_Q_R_CODE";
+        case .invalidQRCode: return "INVALID_QR_CODE";
         case .invalidAddressToTransfer: return "INVALID_ADDRESS_TO_TRANSFER";
         case .sessionNotAuthorizing: return "SESSION_NOT_AUTHORIZING";
         case .maxUserValidatedCountReached: return "MAX_USER_VALIDATED_COUNT_REACHED";
@@ -403,21 +412,21 @@ import Foundation
         case .pricePointNotFound: return "PRICE_POINT_NOT_FOUND";
         case .invalidPricePoint: return "INVALID_PRICE_POINT";
         case .invalidNumber: return "INVALID_NUMBER";
-        case .invalidExpirationTimeStamp: return "INVALID_EXPIRATION_TIME_STAMP";
-        case .requestTimedOut: return "REQUEST_TIMED_OUT";
+        case .invalidExpirationTimeStamp: return "INVALID_SESSION_EXPIRY_TIME";
+        case .requestTimedOut: return "POLLING_TIMEOUT";
         case .failedToProcess: return "FAILED_TO_PROCESS";
         case .samePin: return "SAME_PIN";
         case .conversionFactorNotFound: return "CONVERSION_FACTOR_NOT_FOUND";
         case .btDecimalNotFound: return "BT_DECIMAL_NOT_FOUND";
         case .keyNotFound: return "KEY_NOT_FOUND";
         case .insufficientData: return "INSUFFICIENT_DATA";
-        case .invalidSpendingLimit: return "INVALID_SPENDING_LIMIT";
+        case .invalidSpendingLimit: return "INVALID_SESSION_SPENDING_LIMIT";
         case .unknown: return "UNKNOWN";
         case .solidityTypeNotSupported: return "SOLIDITY_TYPE_NOT_SUPPORTED";
         
         //API-Errors
         case .invalidApiEndPoint: return "INVALID_API_END_POINT";
-        case .apiSignatureGenerationFailed: return "API_SIGNATURE_GENERATION_FAILED";
+        case .apiSignatureGenerationFailed: return "FAILED_TO_SIGN_DATA";
         case .sessionApiFailed: return "SESSION_API_FAILED";
         case .pinValidationFailed: return "PIN_VALIDATION_FAILED";
         case .invalidMnemonics: return "INVALID_MNEMONICS";
@@ -431,7 +440,7 @@ import Foundation
         case .sdkError: return "SDK_ERROR";
         case .apiResponseError: return "API_RESPONSE_ERROR";
         case .tempMessageTextCode: return "TEMP_MESSAGE_TEXT_CODE";
-        case .userCanceled: return "USER_CANCELED";
+        case .userCanceled: return "WORKFLOW_CANCELED";
         
         //New
         case .invalidAddDeviceAddress: return "INVALID_ADD_DEVICE_ADDRESS";
@@ -442,13 +451,11 @@ import Foundation
         case .invalidNewUserPassphrase: return "INVALID_NEW_USER_PASSPHRASE";
         case .invalidPassphrasePrefix: return "INVALID_PASSPHRASE_PREFIX";
         case .saltApiFailed: return "SALT_API_FAILED";
-        case .invalidSessionExpiryTime: return "INVALID_SESSION_EXPIRY_TIME";
         case .noPendingRecovery: return "NO_PENDING_RECOVERY";
 
         //NEW - CONFIGURATION
         case .invalidBlockGenerationTime: return "INVALID_BLOCK_GENERATION_TIME";
         case .invalidPinMaxRetryCount: return "INVALID_PIN_MAX_RETRY_COUNT";
-        case .invalidPricePointTokenSymbol: return "INVALID_PRICE_POINT_TOKEN_SYMBOL";
         case .invalidPricePointCurrencySymbol: return "INVALID_PRICE_POINT_CURRENCY_SYMBOL";
         case .invalidRequestTimeoutDuration: return "INVALID_REQUEST_TIMEOUT_DURATION";
         case .invalidSessionBufferTime : return "INVALID_SESSION_BUFFER_TIME";
@@ -458,6 +465,7 @@ import Foundation
         case .deviceNotRecovering: return "DEVICE_NOT_RECOVERING" ;
         case .deviceNotRevoking: return "DEVICE_NOT_REVOKING";
         case .deviceNotAuthorizing: return "DEVICE_NOT_AUTHORIZING";
+        case .invalidUser: return "INVALID_USER";
         }
     }
 }

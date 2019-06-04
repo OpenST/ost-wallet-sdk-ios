@@ -50,7 +50,7 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
         }
         
         if (self.currentDevice!.isStatusAuthorized) {
-            throw OstError("w_adwm_p_2", .deviceAuthorized)
+            throw OstError("w_adwm_p_2", .deviceCanNotBeAuthorized)
         } 
     }
     
@@ -93,10 +93,10 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
             throw error!
         }
         if (!deviceFromMnemonics!.isStatusAuthorized) {
-            throw OstError("w_adwm_fd_1", .deviceNotAuthorized)
+            throw OstError("w_adwm_fd_1", .deviceCanNotBeAuthorized)
         }
         if (deviceFromMnemonics!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwm_fd_2", .differentOwnerDevice)
+            throw OstError("w_adwm_fd_2", .invalidMnemonics)
         }
     }
     

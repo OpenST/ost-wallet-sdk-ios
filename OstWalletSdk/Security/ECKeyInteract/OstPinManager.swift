@@ -147,7 +147,7 @@ class OstPinManager {
             throw OstError("w_wh_pm_srpd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srpd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srpd_3", .sdkError)
         }
         guard let recoveryOwnerAddress = user.recoveryOwnerAddress else {
             throw OstError("w_wh_pm_srpd_4", .recoveryOwnerAddressNotFound)
@@ -197,22 +197,24 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srdd_3", .sdkError)
         }
         guard let device = try OstDevice.getById(deviceAddressToRecover) else {
-            throw OstError("w_wh_pm_srdd_4", .deviceNotSet)
-        }
-        guard let linkedAddress = device.linkedAddress else {
-            throw OstError("w_wh_pm_srdd_5", .linkedAddressNotFound)
+            throw OstError("w_wh_pm_srdd_4", .invalidRecoverDeviceAddress)
         }
         if (!device.isStatusAuthorized) {
-            throw OstError("w_wh_pm_srdd_6", .deviceNotAuthorized)
+            throw OstError("w_wh_pm_srdd_6", .invalidRecoverDeviceAddress)
         }
+        
+        guard let linkedAddress = device.linkedAddress else {
+            throw OstError("w_wh_pm_srdd_5", .sdkError)
+        }
+
         guard let currentDevice = user.getCurrentDevice() else {
             throw OstError("w_wh_pm_srdd_6", .deviceNotSet)
         }
         if (!currentDevice.isStatusRegistered) {
-            throw OstError("w_wh_pm_srdd_7", .deviceNotRegistered)
+            throw OstError("w_wh_pm_srdd_7", .deviceNotSet)
         }
         let typedData = TypedDataForRecovery
             .getInitiateRecoveryTypedData(
@@ -261,7 +263,7 @@ class OstPinManager {
             throw OstError("w_wh_pm_srdd_2", .userNotActivated)
         }
         guard let recoveryAddress = user.recoveryAddress else {
-            throw OstError("w_wh_pm_srdd_3", .recoveryAddressNotFound)
+            throw OstError("w_wh_pm_srdd_3", .sdkError)
         }
         
         if !recoveringDevice.isStatusRecovering {

@@ -19,8 +19,6 @@ import Foundation
  <dict>
  <key>BlockGenerationTime</key>
  <integer>3</integer>
- <key>PricePointTokenSymbol</key>
- <string>OST</string>
  <key>PricePointCurrencySymbol</key>
  <string>USD</string>
  <key>RequestTimeoutDuration</key>
@@ -39,7 +37,6 @@ class OstConfig {
     
     private static let plistFileName = "OstWalletSdk"
     private static var blockGenerationTime: Int?
-    private static var pricePointTokenSymbol: String?
     private static var pricePointCurrencySymbol: String?
     private static var requestTimeoutDuration: Int?
     private static var pinMaxRetryCount: Int?
@@ -57,15 +54,6 @@ class OstConfig {
                 
         }
         blockGenerationTime = generationTime
-        
-        guard let tokenSymbol =  OstBundle
-            .getApplicationPlistContent(
-                for: "PricePointTokenSymbol",
-                fromFile: plistFileName
-            ) as? String else {
-                throw OstError("w_c_lc_2", .invalidPricePointTokenSymbol)
-        }
-        pricePointTokenSymbol = tokenSymbol
         
         guard let currencySymbol =  OstBundle
             .getApplicationPlistContent(
@@ -90,7 +78,7 @@ class OstConfig {
                 for: "PinMaxRetryCount",
                 fromFile: plistFileName
             ) as? Int else {
-                throw OstError("w_c_lc_5", .invalidBlockGenerationTime)
+                throw OstError("w_c_lc_5", .invalidPinMaxRetryCount)
         }
         pinMaxRetryCount = maxRetryCount
         
@@ -99,10 +87,11 @@ class OstConfig {
                 for: "SessionBufferTime",
                 fromFile: plistFileName
             ) as? Double else {
-                throw OstError("w_c_lc_6", .invalidBlockGenerationTime)
+                throw OstError("w_c_lc_6", .invalidSessionBufferTime)
         }
         sessionBufferTime = bufferTime
         
+        ///TODO - Check with Aniket.
         guard let canUseSeedPassword =  OstBundle
             .getApplicationPlistContent(
                 for: "UseSeedPassword",
@@ -116,10 +105,6 @@ class OstConfig {
     //MARK: - Getter
     class func getBlockGenerationTime() -> Int {
         return blockGenerationTime!
-    }
-    
-    class func getPricePointTokenSymbol() -> String {
-        return pricePointTokenSymbol!
     }
     
     class func getPricePointCurrencySymbol() -> String {

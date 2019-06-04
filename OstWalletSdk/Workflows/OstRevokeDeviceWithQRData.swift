@@ -63,10 +63,10 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         try super.validateParams()
 
         if !self.deviceAddressToRevoke.isValidAddress {
-            throw OstError("w_rdwqrd_fd_1", .wrongDeviceAddress)
+            throw OstError("w_rdwqrd_fd_1", .invalidRevokeDeviceAddress);
         }
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_rdwqrd_fd_2", .processSameDevice)
+            throw OstError("w_rdwqrd_fd_2", .invalidRevokeDeviceAddress);
         }
     }
 
@@ -101,13 +101,11 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         }
         
         if (!self.deviceToRevoke!.isStatusAuthorized) {
-            throw OstError("w_rdwqrd_fd_1", .deviceNotAuthorized)
+            throw OstError("w_rdwqrd_fd_1", .invalidRevokeDeviceAddress)
         }
-        if (self.deviceToRevoke!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_rdwqrd_fd_2", .differentOwnerDevice)
-        }
+
         if (nil == self.deviceToRevoke?.linkedAddress) {
-            throw OstError("w_rdwqrd_fd_3", .linkedAddressNotFound)
+            throw OstError("w_rdwqrd_fd_3", .invalidRevokeDeviceAddress);
         }
     }
     
@@ -179,7 +177,7 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     /// - Throws: OstError
     func validateApiDependentParams() throws {
         if (self.deviceAddressToRevoke.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_rdwqrd_vadp_1", .processSameDevice)
+            throw OstError("w_rdwqrd_vadp_1", .invalidRevokeDeviceAddress)
         }
         try self.fetchDevice()
     }
