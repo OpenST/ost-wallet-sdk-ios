@@ -419,14 +419,13 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     }
     
     func showErrorForSetup(_ apiError: [String: Any]?) {
-        var msg = "Something went wrong"
         if let err = apiError?["err"] as? [String: Any],
             let code = err["code"] as? String {
             if code == "BAD_GATEWAY" {
-                msg = "Server temporarily unavailable"
+                let msg = "Server temporarily unavailable"
+                OstErroNotification.showNotification(withMessage: msg)
             }
-        }
-        OstErroNotification.showNotification(withMessage: msg)
+        }   
     }
 
     @objc func changeTypeTapped(_ sender: Any?) {
