@@ -24,7 +24,7 @@ import Foundation
     
     @objc
     public func getMessageTextCode() -> String {
-        return "\(messageTextCode)";
+        return OstErrorCodes.getErrorMessage(errorCode: messageTextCode);
     }
     
     @objc
