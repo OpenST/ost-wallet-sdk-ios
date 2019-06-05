@@ -48,20 +48,6 @@ import Foundation
                                                  errorInfo: self.errorInfo));
     }
     
-    //@available(*, deprecated, message: "Please use OstError(code:String, messageTextCode:OstErrorText)")
-//    @objc
-//    init(_ code: String, msg errorMessage: String) {
-//        self.errorMessage = errorMessage
-//        self.messageTextCode = .tempMessageTextCode
-//        self.internalCode = code
-//        super.init(domain: OstError.ERROR_DOMAIN,
-//                   code:  messageTextCode.hashValue,
-//                   userInfo: OstError.toUserInfo(errorMessage: self.errorMessage,
-//                                                 messageTextCode: self.messageTextCode,
-//                                                 internalCode: self.internalCode,
-//                                                 errorInfo: self.errorInfo));
-//    }
-    
     @objc
     public init(fromApiResponse response: [String: Any]) {
         let err = response["err"] as! [String: Any]

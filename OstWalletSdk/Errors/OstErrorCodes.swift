@@ -111,7 +111,6 @@ import Foundation
         //Generic errors.
         sdkError,
         apiResponseError,
-        tempMessageTextCode,
         userCanceled,
         
         //New
@@ -165,6 +164,8 @@ import Foundation
         case recoveryAddressNotFound;
         @available(*, deprecated, message: "invalidDataDefination has been deprecated")
         case invalidDataDefination;
+        @available(*, deprecated, message: "tempMessageTextCode has been deprecated")
+        case tempMessageTextCode;
     }
     
     @objc public class func getErrorMessage(errorCode:OstErrorCode) -> String {
@@ -331,126 +332,69 @@ import Foundation
     
     @objc public class func getStringErrorCode(errorCode:OstErrorCode) -> String {
         switch errorCode{
-        case .userNotFound: return "USER_NOT_FOUND";
-        
         case .userAlreadyActivated: return "USER_ALREADY_ACTIVATED";
         case .userNotActivated: return "USER_NOT_ACTIVATED";
+        
+            
+        //---------------- Done till here ----------------//
+        case .userEntityNotFound: return "INVALID_USER_ID";
+        case .scryptKeyGenerationFailed: return "GENERATE_PRIVATE_KEY_FAIL";
         case .deviceNotSet: return "DEVICE_NOT_SETUP";
         case .deviceNotAuthorized: return "DEVICE_UNAUTHORIZED";
-        case .deviceAuthorized: return "DEVICE_AUTHORIZED";
         case .wrongDeviceAddress: return "INVALID_DEVICE_ADDRESS";
-        case .processSameDevice: return "PROCESS_SAME_DEVICE";
-        case .differentOwnerDevice: return "DIFFERENT_OWNER_DEVICE";
-        case .accessControlFailed: return "ACCESS_CONTROL_FAILED";
-        case .unableToGetPublicKey: return "UNABLE_TO_GET_PUBLIC_KEY";
-        case .encryptFail: return "ENCRYPT_FAIL";
-        case .decryptFail: return "DECRYPT_FAIL";
-        case .keychainDeleteItemFail: return "KEYCHAIN_DELETE_ITEM_FAIL";
-        case .keychainAddItemFail: return "KEYCHAIN_ADD_ITEM_FAIL";
-        case .generatePrivateKeyFail: return "GENERATE_PRIVATE_KEY_FAIL";
-        case .noPrivateKeyFound: return "NO_PRIVATE_KEY_FOUND";
-        case .mnemonicsNotStored: return "MNEMONICS_NOT_STORED";
-        case .mnemonicsNotFound: return "MNEMONICS_NOT_FOUND";
-        case .scryptKeyGenerationFailed: return "SCRYPT_KEY_GENERATION_FAILED";
-        case .seedCreationFailed: return "SEED_CREATION_FAILED";
-        case .walletGenerationFailed: return "WALLET_GENERATION_FAILED";
+        case .seedCreationFailed: return "GENERATE_PRIVATE_KEY_FAIL";
+        case .walletGenerationFailed: return "GENERATE_PRIVATE_KEY_FAIL";
         case .signTxFailed: return "FAILED_TO_SIGN_DATA";
         case .signatureFailed: return "FAILED_TO_SIGN_DATA";
-        case .apiAddressNotFound: return "API_ADDRESS_NOT_FOUND";
-        case .apiEndpointNotFound: return "API_ENDPOINT_NOT_FOUND";
-        case .userEntityNotFound: return "USER_ENTITY_NOT_FOUND";
-        case .entityNotAvailable: return "ENTITY_NOT_AVAILABLE";
+        case .apiAddressNotFound: return "INVALID_API_END_POINT";
+        case .apiEndpointNotFound: return "INVALID_API_END_POINT";
         case .invalidAPIResponse: return "INVALID_API_RESPONSE";
-        case .unableToGetSalt: return "UNABLE_TO_GET_SALT";
-        case .unableToChainInformation: return "UNABLE_TO_CHAIN_INFORMATION";
-        case .deviceNotRegistered: return "DEVICE_NOT_REGISTERED";
-        case .deviceAlreadyRegistered: return "DEVICE_ALREADY_REGISTERED";
-        case .deviceManagerNotFound: return "DEVICE_MANAGER_NOT_FOUND";
-        case .userActivationFailed: return "USER_ACTIVATION_FAILED";
-        case .invalidPayload: return "INVALID_PAYLOAD";
-        case .paperWalletNotFound: return "PAPER_WALLET_NOT_FOUND";
-        case .invalidDataDefination: return "INVALID_DATA_DEFINATION";
-        case .recoveryAddressNotFound: return "RECOVERY_ADDRESS_NOT_FOUND";
-        case .recoveryOwnerAddressNotFound: return "RECOVERY_OWNER_ADDRESS_NOT_FOUND";
-        case .recoveryOwnerAddressCreationFailed: return "RECOVERY_KEY_GENERATION_FAILED";
-        case .linkedAddressNotFound: return "LINKED_ADDRESS_NOT_FOUND";
+        case .unableToGetSalt: return "INVALID_API_RESPONSE";
+        case .paperWalletNotFound: return "WORKFLOW_FAILED";
+        case .recoveryOwnerAddressCreationFailed: return "GENERATE_PRIVATE_KEY_FAIL";
         case .invalidRecoveryAddress: return "INVALID_RECOVERY_ADDRESS";
         case .invalidUserId: return "INVALID_USER_ID";
         case .invalidTokenId: return "INVALID_TOKEN_ID";
-        case .tokenNotFound: return "TOKEN_NOT_FOUND";
         case .signatureGenerationFailed: return "FAILED_TO_SIGN_DATA";
-        case .unexpectedError: return "UNEXPECTED_ERROR";
-        case .abiEncodeFailed: return "ABI_ENCODE_FAILED";
-        case .qrReadFailed: return "QR_READ_FAILED";
-        case .qrCodeGenerationFailed: return "QR_CODE_GENERATION_FAILED";
-        case .qrCodeImageGenerationFailed: return "QR_CODE_IMAGE_GENERATION_FAILED";
-        case .functionNotFoundInABI: return "FUNCTION_NOT_FOUND_IN_A_B_I";
-        case .invalidSolidityTypeInt: return "INVALID_SOLIDITY_TYPE_INT";
-        case .invalidSolidityTypeAddress: return "INVALID_SOLIDITY_TYPE_ADDRESS";
-        case .invalidJsonObjectIdentifier: return "INVALID_JSON_OBJECT_IDENTIFIER";
-        case .jsonConversionFailed: return "JSON_CONVERSION_FAILED";
-        case .addDeviceFlowCancelled: return "ADD_DEVICE_FLOW_CANCELLED";
-        case .objectCreationFailed: return "OBJECT_CREATION_FAILED";
-        case .invalidId: return "INVALID_ID";
-        case .unexpectedState: return "UNEXPECTED_STATE";
-        case .toAddressNotFound: return "TO_ADDRESS_NOT_FOUND";
+        case .abiEncodeFailed: return "FAILED_TO_SIGN_DATA";
+        case .jsonConversionFailed: return "INVALID_JSON_STRING";
         case .signerAddressNotFound: return "FAILED_TO_SIGN_DATA";
-        case .dbExecutionFailed: return "DB_EXECUTION_FAILED";
-        case .invalidEntityType: return "INVALID_ENTITY_TYPE";
         case .invalidQRCode: return "INVALID_QR_CODE";
         case .invalidAddressToTransfer: return "INVALID_ADDRESS_TO_TRANSFER";
-        case .sessionNotAuthorizing: return "SESSION_NOT_AUTHORIZING";
-        case .maxUserValidatedCountReached: return "MAX_USER_VALIDATED_COUNT_REACHED";
-        case .recoveryPinNotFoundInKeyManager: return "RECOVERY_PIN_NOT_FOUND_IN_KEY_MANAGER";
+        case .maxUserValidatedCountReached: return "MAX_PASSPHRASE_VERIFICATION_LIMIT_REACHED";
         case .rulesNotFound: return "RULES_NOT_FOUND";
         case .invalidAmount: return "INVALID_AMOUNT";
         case .sessionNotFound: return "SESSION_NOT_FOUND";
-        case .callDataFormationFailed: return "CALL_DATA_FORMATION_FAILED";
-        case .transactionFailed: return "TRANSACTION_FAILED";
-        case .resetPinFailed: return "RESET_PIN_FAILED";
-        case .failedFetchRecoveryOwnerAddress: return "FAILED_FETCH_RECOVERY_OWNER_ADDRESS";
-        case .pricePointNotFound: return "PRICE_POINT_NOT_FOUND";
+        case .transactionFailed: return "WORKFLOW_FAILED";
+        case .resetPinFailed: return "WORKFLOW_FAILED";
         case .invalidPricePoint: return "INVALID_PRICE_POINT";
-        case .invalidNumber: return "INVALID_NUMBER";
         case .invalidExpirationTimeStamp: return "INVALID_SESSION_EXPIRY_TIME";
         case .requestTimedOut: return "POLLING_TIMEOUT";
-        case .failedToProcess: return "FAILED_TO_PROCESS";
-        case .samePin: return "SAME_PIN";
-        case .conversionFactorNotFound: return "CONVERSION_FACTOR_NOT_FOUND";
-        case .btDecimalNotFound: return "BT_DECIMAL_NOT_FOUND";
-        case .keyNotFound: return "KEY_NOT_FOUND";
-        case .insufficientData: return "INSUFFICIENT_DATA";
+        case .failedToProcess: return "WORKFLOW_FAILED";
         case .invalidSpendingLimit: return "INVALID_SESSION_SPENDING_LIMIT";
-        case .unknown: return "UNKNOWN";
-        case .solidityTypeNotSupported: return "SOLIDITY_TYPE_NOT_SUPPORTED";
         
         //API-Errors
         case .invalidApiEndPoint: return "INVALID_API_END_POINT";
         case .apiSignatureGenerationFailed: return "FAILED_TO_SIGN_DATA";
-        case .sessionApiFailed: return "SESSION_API_FAILED";
-        case .pinValidationFailed: return "PIN_VALIDATION_FAILED";
         case .invalidMnemonics: return "INVALID_MNEMONICS";
         
         //React-Native Errors.
         case .invalidWorkflow: return "INVALID_WORKFLOW";
-        case .invalidJsonString: return "/* Should replace jsonConversionFailed */ INVALID_JSON_STRING";
+        case .invalidJsonString: return "INVALID_JSON_STRING";
         case .invalidJsonArray: return "INVALID_JSON_ARRAY";
         
         //Generic errors.
         case .sdkError: return "SDK_ERROR";
         case .apiResponseError: return "API_RESPONSE_ERROR";
-        case .tempMessageTextCode: return "TEMP_MESSAGE_TEXT_CODE";
         case .userCanceled: return "WORKFLOW_CANCELED";
         
         //New
-        case .invalidAddDeviceAddress: return "INVALID_ADD_DEVICE_ADDRESS";
         case .invalidRecoverDeviceAddress: return "INVALID_RECOVER_DEVICE_ADDRESS";
         case .invalidRevokeDeviceAddress: return "INVALID_REVOKE_DEVICE_ADDRESS";
         case .deviceCanNotBeAuthorized: return "DEVICE_CAN_NOT_BE_AUTHORIZED";
         case .invalidUserPassphrase: return "INVALID_USER_PASSPHRASE";
         case .invalidNewUserPassphrase: return "INVALID_NEW_USER_PASSPHRASE";
         case .invalidPassphrasePrefix: return "INVALID_PASSPHRASE_PREFIX";
-        case .saltApiFailed: return "SALT_API_FAILED";
         case .noPendingRecovery: return "NO_PENDING_RECOVERY";
 
         //NEW - CONFIGURATION
@@ -461,11 +405,41 @@ import Foundation
         case .invalidSessionBufferTime : return "INVALID_SESSION_BUFFER_TIME";
             
         ///Deprecated
+        case .deviceAuthorized: return "DEVICE_AUTHORIZED";
+        case .userNotFound: return "USER_NOT_FOUND";
+        case .processSameDevice: return "PROCESS_SAME_DEVICE";
+        case .invalidPayload: return "INVALID_PAYLOAD";
+        case .invalidDataDefination: return "INVALID_DATA_DEFINATION";
+        case .tokenNotFound: return "TOKEN_NOT_FOUND";
         case .userNotActivating: return "USER_NOT_ACTIVATING" ;
         case .deviceNotRecovering: return "DEVICE_NOT_RECOVERING" ;
         case .deviceNotRevoking: return "DEVICE_NOT_REVOKING";
         case .deviceNotAuthorizing: return "DEVICE_NOT_AUTHORIZING";
         case .invalidUser: return "INVALID_USER";
+        case .tempMessageTextCode: return "TEMP_MESSAGE_TEXT_CODE";
+        case .qrReadFailed: return "QR_READ_FAILED";
+        case .unexpectedError: return "UNEXPECTED_ERROR";
+        ///TODO - move them.
+        case .mnemonicsNotFound: return "MNEMONICS_NOT_FOUND";
+        case .unableToChainInformation: return "UNABLE_TO_CHAIN_INFORMATION";
+        case .deviceNotRegistered: return "DEVICE_NOT_REGISTERED";
+        case .deviceAlreadyRegistered: return "DEVICE_ALREADY_REGISTERED";
+        case .userActivationFailed: return "WORKFLOW_FAILED";
+        case .qrCodeGenerationFailed: return "QR_CODE_GENERATION_FAILED";
+        case .qrCodeImageGenerationFailed: return "QR_CODE_IMAGE_GENERATION_FAILED";
+        case .functionNotFoundInABI: return "FUNCTION_NOT_FOUND_IN_A_B_I";
+        case .sessionNotAuthorizing: return "SESSION_NOT_AUTHORIZING";
+        case .invalidNumber: return "INVALID_NUMBER";
+        case .samePin: return "SAME_PIN";
+        case .keyNotFound: return "KEY_NOT_FOUND";
+        case .insufficientData: return "INSUFFICIENT_DATA";
+        case .sessionApiFailed: return "SESSION_API_FAILED";
+        case .pinValidationFailed: return "PIN_VALIDATION_FAILED";
+        case .saltApiFailed: return "SALT_API_FAILED";
+        case .invalidAddDeviceAddress: return "INVALID_ADD_DEVICE_ADDRESS";
+        case .addDeviceFlowCancelled: return "ADD_DEVICE_FLOW_CANCELLED";
+        default:
+            return "SDK_ERROR";
         }
     }
 }

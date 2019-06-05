@@ -161,7 +161,7 @@ extension OstWalletSdk {
         }
         
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wff_gadqc_4", .deviceNotRegistered)
+            throw OstError("w_wff_gadqc_4", .deviceNotSet)
         }
         let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                                              "ddv": 1.0,

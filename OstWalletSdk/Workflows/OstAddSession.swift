@@ -47,10 +47,8 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
     ///
     /// - Throws: OstError
     override func validateParams() throws {
-        try super.validateParams()
-        do {
-            try isValidNumber(input: self.spendingLimit)
-        }catch {
+        try super.validateParams()        
+        if ( !isValidNumber(input: self.spendingLimit) ) {
             throw OstError("w_as_vp_1", .invalidSpendingLimit)
         }
         

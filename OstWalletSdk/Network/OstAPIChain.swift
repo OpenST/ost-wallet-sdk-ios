@@ -56,7 +56,7 @@ class OstAPIChain: OstAPIBase {
                 if (resultType == "chain") {
                     onSuccess?(apiResponse![resultType] as! [String: Any])
                 }else {
-                    onFailure?(OstError("n_ac_gc_4", .unableToChainInformation))
+                    onFailure?(OstError("n_ac_gc_4", .invalidAPIResponse))
                 }
             },
             onFailure: { (failureResponse) in
@@ -94,7 +94,7 @@ class OstAPIChain: OstAPIBase {
                 if (resultType == "price_point") {
                     onSuccess?(apiResponse![resultType] as! [String: Any])
                 }else {
-                    onFailure?(OstError("n_ac_gpp_4", .unableToChainInformation))
+                    onFailure?(OstError("n_ac_gpp_4", .invalidAPIResponse))
                 }
         },
             onFailure: { (failureResponse) in

@@ -67,11 +67,10 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
             throw OstError("w_au_vp_1", .invalidExpirationTimeStamp);
         }
         
-        do {
-            try isValidNumber(input: self.spendingLimit)
-        }catch {
+        
+        if ( !isValidNumber(input: self.spendingLimit) ) {
             throw OstError("w_au_vp_2", .invalidSpendingLimit)
-        }
+        }        
     }
     
     /// Perfrom user device validation

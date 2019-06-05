@@ -74,7 +74,7 @@ class OstPinManager {
                        recoveryOwnerAddress: user.recoveryOwnerAddress!
         )
         if !isValid {
-            throw OstError("w_wh_ph_vp_1", .pinValidationFailed)
+            throw OstError("w_wh_ph_vp_1", .invalidUserPassphrase)
         }
     }
     
@@ -314,7 +314,7 @@ class OstPinManager {
         try self.fetchSalt()
         
         if self.salt!.count == 0 {
-            throw OstError( "w_wh_pm_vsl_1", .saltApiFailed);
+            throw OstError( "w_wh_pm_vsl_1", .invalidAPIResponse);
         }
     }
     

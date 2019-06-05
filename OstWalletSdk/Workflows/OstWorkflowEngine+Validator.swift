@@ -16,13 +16,14 @@ extension OstWorkflowEngine {
     ///
     /// - Parameter input: Input string
     /// - Throws: OstError
-    func isValidNumber(input: String) throws{
+    func isValidNumber(input: String) -> Bool {
         if input.isEmpty {
-            throw OstError("w_wfv_ivn_1", .invalidNumber)
+            return false
         }
         guard let _ = BigInt(input) else {
-            throw OstError("w_wfv_ivn_2", .invalidNumber)
+            return false
         }
+        return true
     }
     
     // MARK: - Device related validations
@@ -43,7 +44,7 @@ extension OstWorkflowEngine {
     func isDeviceRegistered() throws {
         let currentDevice = try self.getCurrentUserDevice()
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wfv_idr_1", .deviceNotRegistered)
+            throw OstError("w_wfv_idr_1", .deviceNotSet)
         }
     }
     
