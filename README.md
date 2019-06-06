@@ -31,7 +31,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" == 2.0.4
+github "ostdotcom/ost-wallet-sdk-ios" == 2.1.0
 ```
 
 - Run `carthage update --platform iOS`
@@ -65,8 +65,6 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
  <dict>
  <key>BlockGenerationTime</key>
  <integer>3</integer>
- <key>PricePointTokenSymbol</key>
- <string>OST</string>
  <key>PricePointCurrencySymbol</key>
  <string>USD</string>
  <key>RequestTimeoutDuration</key>
@@ -80,8 +78,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
  </dict>
  </plist>
  ```
- - _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
-- _PricePointTokenSymbol_: This is the symbol of base currency. So it's value will be OST.
+- _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
 - _PricePointCurrencySymbol_: It is the symbol of quote currency used in price conversion.
 - _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
@@ -306,6 +303,36 @@ OstWalletSdk.abortDeviceRecovery(
     userPin: String,
     passphrasePrefix: String,
     delegate: OstWorkflowDelegate)
+```
+
+###  Revoke Device
+
+To unauthorize device.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_deviceAddressToRevoke: Device address to revoke_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstWalletSdk.revokeDevice(
+    userId: String,
+    deviceAddressToRevoke: String,
+    delegate: OstWorkflowDelegate) 
+```
+
+###  Update Biometric Preference
+
+This method can be used to enable or disable the biometric.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_enable: Preference to use biometric_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstWalletSdk.updateBiometricPreference(
+    userId: String,
+    enable: Bool,
+    delegate: OstWorkflowDelegate) 
 ```
 
 ## Workflow Callbacks
