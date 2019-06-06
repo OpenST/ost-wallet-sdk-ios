@@ -11,17 +11,24 @@
 import Foundation
 import BigInt
 
-public enum OstExecuteTransactionType: String {
-    case DirectTransfer = "Direct Transfer"
-    case Pay = "Pricer"
+@objc public enum OstExecuteTransactionType:Int {
+    case DirectTransfer
+    case Pay
+    
+    public func getQRText() -> String {
+        switch self {
+        case .DirectTransfer:
+            return "Direct Transfer";
+        case .Pay:
+            return "Pricer";
+        }
+    }
 }
 
-class OstExecuteTransaction: OstWorkflowBase {
-
+class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
+    
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
-    
-    private let OST_DECIMAL_VALUE = 18
     
     typealias ExecuteTransactionPayloadParams =
         (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
@@ -137,13 +144,12 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        try self.workFlowValidator!.isUserActivated()
-        try self.workFlowValidator!.isDeviceAuthorized()
+      
+        let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.getQRText().uppercased(),
+                                OstExecuteTransactionType.Pay.getQRText().uppercased()]
         
-        let allowedRuleNames = [OstExecuteTransactionType.DirectTransfer.rawValue.uppercased(),
-                                OstExecuteTransactionType.Pay.rawValue.uppercased()]
         if (!allowedRuleNames.contains(self.ruleName.uppercased())) {
-            throw OstError("w_et_vp_1", OstErrorText.rulesNotFound)
+            throw OstError("w_et_vp_1", .rulesNotFound)
         }
         
         let filteredAddresses = toAddresses.filter({$0 != ""})
@@ -158,31 +164,31 @@ class OstExecuteTransaction: OstWorkflowBase {
         }
     }
     
-    /// process
+    /// Execute transaction
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func onDeviceValidated() throws {
         self.rule = try getRuleIfPresent()
         if (nil == self.rule) {
             try fetchTokenRules()
             self.rule = try getRuleIfPresent()
             if (nil == self.rule) {
-                throw OstError("w_et_p_1", .rulesNotFound)
+                throw OstError("w_et_odv_1", .rulesNotFound)
             }
         }
         
         switch self.ruleName.uppercased() {
-        case OstExecuteTransactionType.Pay.rawValue.uppercased():
+        case OstExecuteTransactionType.Pay.getQRText().uppercased():
             try self.processForPricer()
             
-        case OstExecuteTransactionType.DirectTransfer.rawValue.uppercased():
+        case OstExecuteTransactionType.DirectTransfer.getQRText().uppercased():
             try self.processForDirectTransfer()
             
         default:
-            return
+            throw OstError("w_et_odv_1", .rulesNotFound)
         }
     }
-    
+ 
     /// Get appropriate rule from datatabase
     ///
     /// - Throws: OstError
@@ -219,7 +225,8 @@ class OstExecuteTransaction: OstWorkflowBase {
     /// Get session addresses from keymanager and fetch session data from db.
     private func getActiveSession() throws -> OstSession? {
         var ostSession: OstSession?  = nil
-        let keyManager = OstKeyManager(userId: self.userId)
+        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
+        
         let sessionAddresses = try keyManager.getSessions()
         for sessionAddress in sessionAddresses {
             if let session: OstSession = try OstSession.getById(sessionAddress) {
@@ -295,9 +302,12 @@ class OstExecuteTransaction: OstWorkflowBase {
     private func fetchAllSessions() {
         let fetchSessionQueue = DispatchQueue.init(label: "com.ost.fetchSessionQueue", qos: .background)
         fetchSessionQueue.async {
-            let keyManager = OstKeyManager(userId: self.userId)
+
             let sessoionAPI = OstAPISession(userId: self.userId)
-            if let sessions = try? keyManager.getSessions() {
+            if let sessions = try? OstKeyManagerGateway
+                .getOstKeyManager(userId: self.userId)
+                .getSessions() {
+                
                 for session in sessions {
                     try? sessoionAPI.getSession(sessionAddress: session, onSuccess: nil, onFailure: nil)
                 }
@@ -338,6 +348,41 @@ class OstExecuteTransaction: OstWorkflowBase {
     override func getContextEntity(for entity: Any) -> OstContextEntity {
         return OstContextEntity(entity: entity, entityType: .transaction)
     }
+    
+    //MARK: - OstDataDefinitionWorkflow Delegate
+    
+    /// Validate data defination dependent parameters.
+    ///
+    /// - Throws: OstError
+    func validateApiDependentParams() throws {
+        // Nothing to validate
+    }
+    
+    /// Get context entity for provided data defination
+    ///
+    /// - Returns: OstContextEntity
+    func getDataDefinitionContextEntity() -> OstContextEntity {
+        let verifyData: [String: Any] = [
+            "rule_name": self.ruleName,
+            "token_holder_addresses": self.toAddresses,
+            "amounts": self.amounts,
+            "token_id": self.currentUser!.tokenId!
+        ]
+        
+        return OstContextEntity(entity: verifyData, entityType: .dictionary)
+    }
+    
+    /// Get workflow context for provided data defination.
+    ///
+    /// - Returns: OstWorkflowContext
+    func getDataDefinitionWorkflowContext() -> OstWorkflowContext {
+        return getWorkflowContext()
+    }
+    
+    /// Start data defination flow
+    func startDataDefinitionFlow() {
+        performState(OstWorkflowStateManager.DEVICE_VALIDATED)
+    }
 }
 
 //MARK: - Execute transaction for pay
@@ -348,20 +393,20 @@ extension OstExecuteTransaction {
         if (nil == self.pricePoint) {
             try fetchPricePoint()
             if nil == self.pricePoint {
-                throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+                throw OstError("w_et_pfdt_1", .callDataFormationFailed)
             }
         }
         
         self.transactionValueInWei = try getTransactionValueInWeiForPay()
         
         guard let session = try getActiveSession() else {
-            throw OstError("w_et_pfp_2", OstErrorText.sessionNotFound)
+            throw OstError("w_et_pfp_2", .sessionNotFound)
         }
         self.activeSession = session
         
         self.calldata = try getCallDataForPricerRule()
         if ( nil == self.calldata) {
-            throw OstError("w_et_pfdt_2", OstErrorText.callDataFormationFailed)
+            throw OstError("w_et_pfdt_2", .callDataFormationFailed)
         }
         
         try createSignatureForTransaction()
@@ -412,15 +457,19 @@ extension OstExecuteTransaction {
     /// - Returns: Currency value
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
-        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
-            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
+            throw OstError("w_et_gcviw_1", .invalidAmount)
         }
         
-        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
+            throw OstError("w_et_gcviw_2", .pricePointNotFound)
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
-        guard let decimal = OstUtils.toInt(ostDict["decimals"] as Any) else {
-            throw OstError("w_et_gcviw_2", OstErrorText.callDataFormationFailed)
+        guard let decimal = OstUtils.toInt(fiatPricePoint["decimals"] as Any) else {
+            throw OstError("w_et_gcviw_3", .callDataFormationFailed)
         }
         
         let finalExponentComponent = decimal + components.exponent
@@ -437,24 +486,26 @@ extension OstExecuteTransaction {
         var totalAmount: BigInt = BigInt("0")
         
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
-            throw OstError("w_et_gtviwfp_1", OstErrorText.invalidAmount)
+            throw OstError("w_et_gtviwfp_1", .invalidAmount)
         }
         guard let ostToBtConversionFactor = token.conversionFactor else {
-            throw OstError("w_et_gtviwfp_2", OstErrorText.conversionFactorNotFound)
+            throw OstError("w_et_gtviwfp_2", .conversionFactorNotFound)
         }
         guard let btDecimal = token.decimals else {
-            throw OstError("w_et_gtviwfp_2", OstErrorText.btDecimalNotFound)
+            throw OstError("w_et_gtviwfp_3", .btDecimalNotFound)
         }
-        guard let ostDict = self.pricePoint![OstConfig.getPricePointTokenSymbol()] as? [String: Any] else {
-            throw OstError("w_et_gcviw_1", OstErrorText.pricePointNotFound)
+        guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
+            throw OstError("w_et_gtviwfp_4", .pricePointNotFound)
         }
-        
-        let fiatValInString = String(format: "%@", ostDict[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatDecimal = OstUtils.toInt(fiatPricePoint["decimals"]) else {
+            throw OstError("w_et_gtviwfp_5", .pricePointNotFound)
+        }
+        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
         
         for amount in self.amounts {
             let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
                                                       btDecimal: btDecimal,
-                                                      ostDecimal: self.OST_DECIMAL_VALUE,
+                                                      fiatDecimal: fiatDecimal,
                                                       fiatAmount: BigInt(amount)!,
                                                       pricePoint: fiatValInString)    
             totalAmount += btAmount
@@ -486,13 +537,13 @@ extension OstExecuteTransaction {
         self.transactionValueInWei = try getTransactionValueForDirectTransfer()
         
         guard let session = try getActiveSession() else {
-            throw OstError("w_et_pfdt_1", OstErrorText.sessionNotFound)
+            throw OstError("w_et_pfdt_1", .sessionNotFound)
         }
         self.activeSession = session
         
         self.calldata = try getCallDataForDirectTransfer()
         if ( nil == self.calldata) {
-            throw OstError("w_et_pfdt_1", OstErrorText.callDataFormationFailed)
+            throw OstError("w_et_pfdt_1", .callDataFormationFailed)
         }
         
         try createSignatureForTransaction()
@@ -528,7 +579,7 @@ extension OstExecuteTransaction {
         var totalAmount: BigInt = BigInt("0")
         for amount in self.amounts {
             guard let amountInBigInt = BigInt(amount) else {
-                throw OstError("w_et_gtsl_1", OstErrorText.invalidAmount)
+                throw OstError("w_et_gtsl_1", .invalidAmount)
             }
             totalAmount += amountInBigInt
         }

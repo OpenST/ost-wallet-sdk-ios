@@ -10,15 +10,15 @@
 
 import Foundation
 
-class OstLogoutAllSessions: OstWorkflowBase {
+class OstLogoutAllSessions: OstWorkflowEngine {
     static private let ostLogoutAllSessionsQueue = DispatchQueue(label: "com.ost.sdk.OstLogoutAllSessions", qos: .background)
     private let workflowTransactionCount = 1
-    private let nullAddress = "0x0000000000000000000000000000000000000000"
-    private let abiMethodNameForLogout = "logout"
+//    private let nullAddress = "0x0000000000000000000000000000000000000000"
+//    private let abiMethodNameForLogout = "logout"
     
-    private var deviceManager: OstDeviceManager? = nil
-    private var signature: String? = nil
-    private var signer: String? = nil
+//    private var deviceManager: OstDeviceManager? = nil
+//    private var signature: String? = nil
+//    private var signer: String? = nil
     
     /// Get workflow Queue
     ///
@@ -26,90 +26,32 @@ class OstLogoutAllSessions: OstWorkflowBase {
     override func getWorkflowQueue() -> DispatchQueue {
         return OstLogoutAllSessions.ostLogoutAllSessionsQueue
     }
+    
+    /// Validate user and device
+    ///
+    /// - Throws: OstError
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()        
+        try isUserActivated()
+    }
+    
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
 
-    /// process
+    /// Logout all sessions after device validated.
     ///
     /// - Throws: OstError
-    override func process() throws {
-        try fetchDeviceManager()
+    override func onDeviceValidated() throws {
+        try syncDeviceManager()
         
-        let encodedABIHex = try TokenHolder().getLogoutExecutableData()
-        let deviceManagerNonce: Int = self.deviceManager!.nonce
+        let logoutAllSessionsSigner = OstKeyManagerGateway.getOstLogoutAllSessionSigner(userId: self.userId)
+        let logoutParams = try logoutAllSessionsSigner.getApiParams()
         
-        let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(verifyingContract: self.deviceManager!.address!,
-                                                                           to: self.currentUser!.tokenHolderAddress!,
-                                                                           value: "0",
-                                                                           data: encodedABIHex,
-                                                                           operation: "0",
-                                                                           safeTxGas: "0",
-                                                                           dataGas: "0",
-                                                                           gasPrice: "0",
-                                                                           gasToken: self.nullAddress,
-                                                                           refundReceiver: self.nullAddress,
-                                                                           nonce: OstUtils.toString(deviceManagerNonce)!)
-        
-        let eip712: EIP712 = EIP712(types: typedDataInput["types"] as! [String: Any],
-                                    primaryType: typedDataInput["primaryType"] as! String,
-                                    domain: typedDataInput["domain"] as! [String: String],
-                                    message: typedDataInput["message"] as! [String: Any])
-        
-        let signingHash = try! eip712.getEIP712Hash()
-        let keyManager = OstKeyManager(userId: self.userId)
-        self.signature = try keyManager.signWithDeviceKey(signingHash)
-        self.signer = keyManager.getDeviceAddress()
-        
-        let rawCallData: String = getRawCallData()
-        
-        let params: [String: Any] = ["to": self.currentUser!.tokenHolderAddress!,
-                                     "value": "0",
-                                     "calldata": encodedABIHex,
-                                     "raw_calldata": rawCallData,
-                                     "operation": "0",
-                                     "safe_tx_gas": "0",
-                                     "data_gas": "0",
-                                     "gas_price": "0",
-                                     "nonce": OstUtils.toString(deviceManagerNonce)!,
-                                     "gas_token": self.nullAddress,
-                                     "refund_receiver": self.nullAddress,
-                                     "signers": [self.signer!],
-                                     "signatures": self.signature!
-        ]
-        
-        try self.deviceManager?.incrementNonce()
-        try logoutAllSessions(params: params)
-    }
-    
-    /// Get device manager from server
-    ///
-    /// - Throws: OstError
-    private func fetchDeviceManager() throws {
-        var error: OstError? = nil
-        let group: DispatchGroup = DispatchGroup()
-        group.enter()
-        try OstAPIDeviceManager(userId: self.userId)
-            .getDeviceManager(
-                onSuccess: { (ostDeviceManager) in
-                    self.deviceManager = ostDeviceManager
-                    group.leave()
-            }) { (ostError) in
-                
-                error = ostError
-                group.leave()
-        }
-        group.wait()
-        
-        if (nil != error) {
-            throw error!
-        }
-    }
-    
-    /// Get raw call data for logout
-    ///
-    /// - Returns: Raw calldata JSON string
-    private func getRawCallData() -> String {
-        let callData: [String: Any] = ["method": self.abiMethodNameForLogout,
-                                       "parameters":[]]
-        return try! OstUtils.toJSONString(callData)!
+        try logoutAllSessions(params: logoutParams)
     }
     
     /// Logout all sessions
@@ -132,11 +74,14 @@ class OstLogoutAllSessions: OstWorkflowBase {
             })
         group.wait()
         if (nil != err) {
-            try? fetchDeviceManager()
+            _ = try? fetchDeviceManager()
             throw err!
         }
         self.postRequestAcknowledged(entity: tokenHolder!)
-        OstKeyManager(userId: self.userId).deleteAllSessions()
+        OstKeyManagerGateway
+            .getOstKeyManager(userId: self.userId)
+            .deleteAllSessions()
+        
         pollingForLogoutAllSessions(entity: tokenHolder!)
     }
     

@@ -28,13 +28,17 @@ class OstAPITokenHolder: OstAPIBase{
     ///   - onFailure: Failure callback
     /// - Throws: OstError
     func getTokenHolder(onSuccess:((OstTokenHolder) -> Void)?,
-                        onFailure:((OstError) -> Void)?) throws {
+                        onFailure:((OstError) -> Void)?) {
         
         resourceURL = "\(self.tokenHolderApiResourceBase)"
         var params: [String: Any] = [:]
         
         // Sign API resource
-        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
+        do {
+            try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
+        } catch let err {
+            onFailure?(err as! OstError);
+        }
         
         get(params: params as [String: AnyObject],
              onSuccess: {(apiResponse) in
@@ -46,7 +50,7 @@ class OstAPITokenHolder: OstAPIBase{
                 }
         },
              onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstError(fromApiResponse: failureResponse!))
         }
         )
     }
@@ -78,7 +82,7 @@ class OstAPITokenHolder: OstAPIBase{
                 }
         },
             onFailure: { (failureResponse) in
-                onFailure?(OstError.init(fromApiResponse: failureResponse!))
+                onFailure?(OstError(fromApiResponse: failureResponse!))
         }
         )
     }

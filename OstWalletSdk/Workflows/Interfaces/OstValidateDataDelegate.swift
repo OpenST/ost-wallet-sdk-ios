@@ -11,7 +11,7 @@
 
 import Foundation
 
-public protocol OstValidateDataDelegate: OstBaseDelegate {
+@objc public protocol OstValidateDataDelegate: OstBaseDelegate {
     
     /// Confirm desired action taken by user.
     func dataVerified()

@@ -84,7 +84,7 @@ class OstAPISession: OstAPIBase {
         let sessionQueue = DispatchQueue(label: "deleteSessionQueue", qos: .background)
         sessionQueue.async {
             self.getSyncQueueForDeleteSessions().sync {
-                let keyManager = OstKeyManager(userId: self.userId)
+                let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
                 try? keyManager.deleteSessionKey(sessionAddress: address)
             }
         }

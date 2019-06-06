@@ -47,7 +47,7 @@ class QRInfoLabel: UILabel {
     
     public func showUserInfo() {
         let currentUser = CurrentUser.getInstance();
-        let ostUser = try! OstWalletSdk.getUser(currentUser.ostUserId!)
+        let ostUser = OstWalletSdk.getUser(currentUser.ostUserId!)
         let ostCurrentDevice = ostUser!.getCurrentDevice()
         
         self.numberOfLines = 0;

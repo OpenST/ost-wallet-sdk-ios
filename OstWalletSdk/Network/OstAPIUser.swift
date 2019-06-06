@@ -31,7 +31,7 @@ class OstAPIUser: OstAPIBase {
         var params: [String: Any] = [:]
         
         // Sign API resource
-        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &params, withUserId: self.userId)
         
         // Make an API call and store the data in database.
         get(params: params as [String : AnyObject],
@@ -61,7 +61,7 @@ class OstAPIUser: OstAPIBase {
         
         var activateUserParams = params
         // Sign API resource
-        try OstAPIHelper.sign(apiResource: getResource, andParams: &activateUserParams, withUserId: self.userId)
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &activateUserParams, withUserId: self.userId)
         
         // Make an API call and store the data in database.
         post(params: activateUserParams as [String: AnyObject],
@@ -78,4 +78,33 @@ class OstAPIUser: OstAPIBase {
             }
         )
     }
+    
+    func getBalance(onSuccess:@escaping (([String: Any]?) -> Void),
+                    onFailure:@escaping (([String: Any]?) -> Void)) throws {
+        resourceURL = userApiResourceBase + "/" + userId + "/balance/";
+        
+        var apiParams: [String : Any] = [:];
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
+        
+        get(params: apiParams as [String : AnyObject],
+            onSuccess: onSuccess,
+            onFailure:onFailure);
+    }
+    
+    func getTransactions(params:[String : Any]?,
+                         onSuccess:@escaping (([String: Any]?) -> Void),
+                         onFailure:@escaping (([String: Any]?) -> Void)) throws {
+        resourceURL = userApiResourceBase + "/" + userId + "/transactions/";
+        var apiParams:[String : Any] = params ?? [:];
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
+
+        get(params: apiParams as [String : AnyObject],
+            onSuccess: onSuccess,
+            onFailure:onFailure);
+    }
+
 }

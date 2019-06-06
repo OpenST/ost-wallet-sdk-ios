@@ -18,7 +18,7 @@ class ABIHelperBase {
     }
     
     func getABI(_ abiName: String, forMethod methodName: String) throws -> ABIObject? {
-        let content = try OstBundle.getContentOf(file: abiName, fileExtension: "json")
+        let content = OstBundle.getContentOf(file: abiName, fileExtension: "json")!
         
         let contractJsonABI = content.data(using: .utf8)!
         let decoder = JSONDecoder()

@@ -31,7 +31,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" == 2.0.4
+github "ostdotcom/ost-wallet-sdk-ios" == 2.1.0
 ```
 
 - Run `carthage update --platform iOS`
@@ -53,7 +53,7 @@ $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
 $(SRCROOT)/Carthage/Build/iOS/FMDB.framework
 $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
-$(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
+$(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
 ```
 
 - Create `OstWalletSdk.plist` file. Following is the default configurations.
@@ -65,8 +65,6 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
  <dict>
  <key>BlockGenerationTime</key>
  <integer>3</integer>
- <key>PricePointTokenSymbol</key>
- <string>OST</string>
  <key>PricePointCurrencySymbol</key>
  <string>USD</string>
  <key>RequestTimeoutDuration</key>
@@ -80,8 +78,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalleSdk.framework
  </dict>
  </plist>
  ```
- - _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
-- _PricePointTokenSymbol_: This is the symbol of base currency. So it's value will be OST.
+- _BlockGenerationTime_: The time in seconds it takes to mine a block on auxiliary chain.
 - _PricePointCurrencySymbol_: It is the symbol of quote currency used in price conversion.
 - _RequestTimeoutDuration_: Request timeout in seconds for https calls made by ostWalletSdk.
 - _PinMaxRetryCount_: Maximum retry count to get the wallet Pin from user.
@@ -308,6 +305,36 @@ OstWalletSdk.abortDeviceRecovery(
     delegate: OstWorkflowDelegate)
 ```
 
+###  Revoke Device
+
+To revoke device access.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_deviceAddressToRevoke: Device address to revoke_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstWalletSdk.revokeDevice(
+    userId: String,
+    deviceAddressToRevoke: String,
+    delegate: OstWorkflowDelegate) 
+```
+
+###  Update Biometric Preference
+
+This method can be used to enable or disable the biometric.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_enable: Preference to use biometric_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstWalletSdk.updateBiometricPreference(
+    userId: String,
+    enable: Bool,
+    delegate: OstWorkflowDelegate) 
+```
+
 ## Workflow Callbacks
 
 ```Swift
@@ -321,6 +348,11 @@ func registerDevice(
         delegate: OstDeviceRegisteredDelegate
         )
 ```
+| Argument | Description |
+|---|---|
+| **apiParams** <br> **[String: Any]**	|	Device information for registration	|
+| **delegate** <br> **OstDeviceRegisteredDelegate**	| **delegate.deviceRegistered(_ apiResponse: [String: Any] )** should be called to pass the newly created device entity back to SDK. <br>In case data if there is some issue while registering the device then the current workflow should be canceled  by calling **delegate.cancelFlow()** |
+
 ```Swift
 /// Pin needed to check the authenticity of the user.
 /// Developers should show pin dialog on this callback.
@@ -333,6 +365,14 @@ func getPin(
         delegate: OstPinAcceptDelegate
         )
 ```
+
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	| Unique identifier of the user |
+| **delegate** <br> **OstPinAcceptDelegate**	| **delegate.pinEntered(_ userPin: String, passphrasePrefix: String)** should be called to pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **delegate.cancelFlow()**|
+
+
+
 ```Swift    
 /// Inform SDK user about invalid pin.
 /// Developers should show invalid pin error and ask for pin again on this callback.
@@ -345,12 +385,26 @@ func invalidPin(
         delegate: OstPinAcceptDelegate
         )
 ```
+
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	|	Unique identifier of the user	|
+| **delegate** <br> **OstPinAcceptDelegate**	| **delegate.pinEntered(_ userPin: String, passphrasePrefix: String)** should be called to again pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **delegate.cancelFlow()** |
+
+
+
 ```Swift
 /// Inform SDK user that entered pin is validated.
 /// Developers should dismiss pin dialog on this callback.
 /// - Parameter userId: Id of user whose pin and passphrase prefix has been validated.
 func pinValidated(_ userId: String)
 ```
+| Argument | Description |
+|---|---|
+| **userId** <br> **String**	| Unique identifier of the user |
+
+
+
 ```Swift
 /// Inform SDK user the the flow is complete.
 ///
@@ -361,6 +415,13 @@ func flowComplete(
         ostContextEntity: OstContextEntity
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	|	Information about the workflow	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
+
+
+
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
 /// Developers should dismiss pin dialog (if open) on this callback.
@@ -372,6 +433,11 @@ func flowInterrupted(
         error: OstError
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow |
+| **ostError** <br> **OstError**	| ostError object will have details about the error that interrupted the flow |
+
 ```Swift
 
 /// Verify data which is scanned from QR-Code
@@ -386,6 +452,12 @@ func verifyData(
         delegate: OstValidateDataDelegate
         )
 ```
+| Argument | Description |
+|---|---|
+| **workflowContext** <br> **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
+| **delegate** <br> **OstValidateDataDelegate**	| **delegate.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by calling **delegate.cancelFlow()**|
+
 ```Swift
 /// Acknowledge user about the request which is going to make by SDK.
 ///
@@ -397,6 +469,10 @@ func requestAcknowledged(
         ostContextEntity: OstContextEntity
         )
 ```
+| Argument | Description |
+|---|---|
+| **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow	|
+| **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
 
 ## Reference
 

@@ -30,17 +30,17 @@ class OstAPIChain: OstAPIBase {
     func getChain(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError.init("n_ac_gc_1", "User entity not found for id \(userId). Please create user first. User OstWalletSdk.setup")
+            throw OstError("n_ac_gc_1", .sdkError)
         }
         
         // Get token associated with the user
         guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError.init("n_ac_gc_2", "Token entity not found for id \(userId)")
+            throw OstError("n_ac_gc_2", .sdkError)
         }
         
         let chainId: String? = token.auxiliaryChainId
         if (chainId == nil || chainId!.isEmpty) {
-            throw OstError.init("n_ac_gc_3", "Chain id not found for id \(userId). Please contact OST support.")
+            throw OstError("n_ac_gc_3", .sdkError)
         }
         
         resourceURL = chainApiResourceBase + "/" + chainId!
@@ -56,7 +56,7 @@ class OstAPIChain: OstAPIBase {
                 if (resultType == "chain") {
                     onSuccess?(apiResponse![resultType] as! [String: Any])
                 }else {
-                    onFailure?(OstError.init("n_ac_gc_4", .unableToChainInformation))
+                    onFailure?(OstError("n_ac_gc_4", .invalidAPIResponse))
                 }
             },
             onFailure: { (failureResponse) in
@@ -68,17 +68,17 @@ class OstAPIChain: OstAPIBase {
     func getPricePoint(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError.init("n_ac_gpp_1", "User entity not found for id \(userId). Please create user first. User OstWalletSdk.setup")
+            throw OstError("n_ac_gpp_1", .sdkError)
         }
         
         // Get token associated with the user
         guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError.init("n_ac_gpp_2", "Token entity not found for id \(userId)")
+            throw OstError("n_ac_gpp_2", .sdkError);
         }
         
         let chainId: String? = token.auxiliaryChainId
         if (chainId == nil || chainId!.isEmpty) {
-            throw OstError.init("n_ac_gpp_3", "Chain id not found for id \(userId). Please contact OST support.")
+            throw OstError("n_ac_gpp_3", .sdkError)
         }
         
         resourceURL = "\(chainApiResourceBase)/\(chainId!)/price-points"
@@ -94,7 +94,7 @@ class OstAPIChain: OstAPIBase {
                 if (resultType == "price_point") {
                     onSuccess?(apiResponse![resultType] as! [String: Any])
                 }else {
-                    onFailure?(OstError.init("n_ac_gpp_4", .unableToChainInformation))
+                    onFailure?(OstError("n_ac_gpp_4", .invalidAPIResponse))
                 }
         },
             onFailure: { (failureResponse) in

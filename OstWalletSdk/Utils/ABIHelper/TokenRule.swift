@@ -15,10 +15,7 @@ class TokenRule: ABIHelperBase {
     
     func getDirectTransfersExecutableData(abiMethodName: String, tokenHolderAddresses: [String], amounts: [String]) throws -> String {
         
-        let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: abiMethodName)
-        if (abiObject == nil) {
-            throw OstError("u_ah_tr_gdted_1", "ABI for \(abiMethodName) is not available.")
-        }
+        let abiObject: ABIObject = try! getABI(ABI_NAME, forMethod: abiMethodName)!
         
         var ethereumAddresses : [EthereumAddress] = []
         for tokenHolderAddress in tokenHolderAddresses {
@@ -32,11 +29,11 @@ class TokenRule: ABIHelperBase {
         }
         
         let solidityHander = OstSolidityHandler()
-        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let function = SolidityNonPayableFunction(abiObject: abiObject, handler: solidityHander)
         let _invocation = function!.invoke(ethereumAddresses, amountsBigInt)
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_tr_gdted_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_tr_gdted_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()

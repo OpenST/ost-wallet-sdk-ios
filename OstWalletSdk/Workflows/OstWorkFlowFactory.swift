@@ -20,6 +20,7 @@ extension OstWalletSdk {
     ///   - tokenId: Token identifier for user.
     ///   - forceSync: Force sync data from server.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func setupDevice(
         userId: String,
         tokenId: String,
@@ -44,6 +45,7 @@ extension OstWalletSdk {
     ///   - spendingLimit: Max amount that user can spend per transaction
     ///   - expireAfterInSec: Session expiration time in seconds.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func activateUser(
         userId: String,
         userPin: String,
@@ -68,6 +70,7 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: Ost user identifier.
     ///   - delegate: Callback for action complete or to perform respective action.
+    @objc
     public class func authorizeCurrentDeviceWithMnemonics(
         userId: String,
         mnemonics: [String],
@@ -88,6 +91,7 @@ extension OstWalletSdk {
     ///   - spendingLimit: Amount user can spend in a transaction
     ///   - expireAfterInSec: Seconds after which the session key should expire.
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func addSession(
         userId: String,
         spendingLimit: String,
@@ -109,6 +113,7 @@ extension OstWalletSdk {
     ///   - userId: User id.
     ///   - payload: Json string of payload is expected.
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func performQRAction(
         userId: String,
         payload: String,
@@ -120,18 +125,19 @@ extension OstWalletSdk {
         performObj.perform()
     }
     
-    /// Get paper wallet of given user id.
+    /// Get device mnemonics of given user id.
     ///
     /// - Parameters:
     ///   - userId: User id
     ///   - delegate: Callback for action complete or to perform respective action
+    @objc
     public class func getDeviceMnemonics(
         userId: String,
         delegate: OstWorkflowDelegate) {
         
-        let paperWalletObj = OstGetPaperWallet(userId: userId,
-                                               delegate: delegate)
-        paperWalletObj.perform()
+        let deviceMnemonicsObj = OstGetDeviceMnemonics(userId: userId,
+                                                       delegate: delegate)
+        deviceMnemonicsObj.perform()
     }
     
     /// Get QR-Code to add device.
@@ -139,11 +145,12 @@ extension OstWalletSdk {
     /// - Parameter userId: User id.
     /// - Returns: Core image of QR-Code.
     /// - Throws: OstError
+    @objc
     public class func getAddDeviceQRCode(
-        userId: String) throws -> CIImage? {
+        userId: String) throws -> CIImage {
         
         guard let user = try OstUser.getById(userId) else {
-            throw OstError("w_wff_gadqc_1", .userNotFound)
+            throw OstError("w_wff_gadqc_1", .invalidUserId)
         }
         
         if user.isStatusCreated {
@@ -154,14 +161,17 @@ extension OstWalletSdk {
         }
         
         if !currentDevice.isStatusRegistered {
-            throw OstError("w_wff_gadqc_4", .deviceNotRegistered)
+            throw OstError("w_wff_gadqc_4", .deviceNotSet)
         }
         let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                                              "ddv": 1.0,
                                              "d":["da":currentDevice.address!]]
         let qrCodePayloadString: String = try OstUtils.toJSONString(QRCodePaylaod)!
         
-        return qrCodePayloadString.qrCode
+        if ( nil != qrCodePayloadString.qrCode) {
+            return qrCodePayloadString.qrCode!;
+        }
+        throw OstError("w_wff_gadqc_5", .sdkError );
     }
         
     /// Initiate device recovery.
@@ -170,8 +180,9 @@ extension OstWalletSdk {
     ///   - userId: User id.
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
     ///   - userPin: User pin.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
+    @objc
     public class func initiateDeviceRecovery(
         userId: String,
         recoverDeviceAddress: String,
@@ -194,6 +205,7 @@ extension OstWalletSdk {
     ///   - uPin: User pin.
     ///   - password: Application password provied by application server.
     ///   - delegate: Callback for action complete or to perform respective actions.
+    @objc
     public class func abortDeviceRecovery(
         userId: String,
         userPin: String,
@@ -211,10 +223,11 @@ extension OstWalletSdk {
     ///
     /// - Parameters:
     ///   - userId: User id.
-    ///   - passphrasePrefix: Application passphrase prefix provied by application server.
+    ///   - passphrasePrefix: Application passphrase prefix provided by application server.
     ///   - oldUserPin: Old user pin.
     ///   - newUserPin: New user pin.
     ///   - delegate: Callback for action complete or to perform respective actions.
+    @objc
     public class func resetPin(
         userId: String,
         passphrasePrefix: String,
@@ -250,6 +263,7 @@ extension OstWalletSdk {
     ///     * name: Name of transaction
     ///     * type: It could be *user_to_user* or *company_to_user*
     ///   - delegate: Callback
+    @objc
     public class func executeTransaction(
         userId: String,
         tokenHolderAddresses: [String],
@@ -258,9 +272,10 @@ extension OstWalletSdk {
         meta: [String: String],
         delegate: OstWorkflowDelegate) {
         
+        let ruleName = transactionType.getQRText();
         let executeTransactionFlow = OstExecuteTransaction(
             userId: userId,
-            ruleName: transactionType.rawValue,
+            ruleName: ruleName,
             toAddresses: tokenHolderAddresses,
             amounts: amounts,
             transactionMeta: meta,
@@ -274,6 +289,7 @@ extension OstWalletSdk {
     /// - Parameters:
     ///   - userId: User id
     ///   - delegate: Callback
+    @objc
     public class func logoutAllSessions(
         userId: String,
         delegate: OstWorkflowDelegate
@@ -282,5 +298,38 @@ extension OstWalletSdk {
         let logoutAllSessionsFlow = OstLogoutAllSessions(userId: userId,
                                                          delegate: delegate)
         logoutAllSessionsFlow.perform()
+    }
+    
+    /// Revoke device
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - deviceAddressToRevoke: Device address to revoke
+    ///   - delegate: Callback
+    @objc
+    public class func revokeDevice(userId: String,
+                                   deviceAddressToRevoke: String,
+                                   delegate: OstWorkflowDelegate) {
+        let revokeDeviceFlow = OstRevokeDeviceWithQRData(userId: userId,
+                                                         deviceAddressToRevoke: deviceAddressToRevoke,
+                                                         delegate: delegate)
+        revokeDeviceFlow.perform()
+    }
+    
+    /// Update biometric preference
+    ///
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - enable: Biomertic authentication allowed
+    ///   - delegate: Callback
+    @objc
+    public class func updateBiometricPreference(userId: String,
+                                                enable: Bool,
+                                                delegate: OstWorkflowDelegate) {
+        
+        let biometricWorkflow = OstBiometricPreference(userId: userId,
+                                                       enable: enable,
+                                                       delegate: delegate)
+        biometricWorkflow.perform()
     }
 }

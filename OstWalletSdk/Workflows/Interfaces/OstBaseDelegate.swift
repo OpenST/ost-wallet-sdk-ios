@@ -10,8 +10,7 @@
 
 import Foundation
 
-public protocol OstBaseDelegate {
-    
+@objc public protocol OstBaseDelegate {
     /// Cancel ongoing workflow
-    func cancelFlow()
+    @objc func cancelFlow()
 }

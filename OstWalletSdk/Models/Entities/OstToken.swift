@@ -99,4 +99,8 @@ public extension OstToken {
     var conversionFactor: String? {
         return OstUtils.toString(self.data["conversion_factor"])
     }
+    
+    var baseToken: String {
+        return self.data["base_token"] as! String
+    }
 }

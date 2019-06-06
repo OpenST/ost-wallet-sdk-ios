@@ -14,6 +14,7 @@ class OstBundle {
     
     enum PermissionKey: String {
         case NSFaceIDUsageDescription
+        case CFBundleShortVersionString
     }
     
     /// Get content of files
@@ -23,10 +24,10 @@ class OstBundle {
     ///   - fileExtension: file extension
     /// - Returns: Content of file
     /// - Throws: OstError
-    class func getContentOf(file: String, fileExtension: String) throws -> String {
+    class func getContentOf(file: String, fileExtension: String) -> String? {
         let ostBundle = OstBundle()
         let bundleObj = ostBundle.getSdkBundle()
-        return try ostBundle.getFileContent(file,
+        return ostBundle.getFileContent(file,
                                             fileExtension: fileExtension,
                                             fromBundle: bundleObj)
     }
@@ -40,11 +41,11 @@ class OstBundle {
     /// - Throws: OstError
     class func getApplicationPlistContent(
         for key: String,
-        fromFile fileName: String) throws -> AnyObject {
+        fromFile fileName: String) -> AnyObject? {
         
         let ostBundle = OstBundle()
         let bundleObj = ostBundle.getApplicatoinBundle()
-        return try ostBundle.getDescription(
+        return ostBundle.getDescription(
             for: key,
             fromFile: fileName,
             withExtension: "plist",
@@ -52,7 +53,25 @@ class OstBundle {
         )
     }
     
+    /// Get Sdk version
+    ///
+    /// - Returns: version string
+    class func getSdkVersion() -> String  {
+        do {
+            let ostBundle = OstBundle()
+            let bundleObj = ostBundle.getSdkBundle()
+            let version = try ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
+                                                       fromFile: "Info",
+                                                       withExtension: "plist",
+                                                       inBundle: bundleObj)
+            return (version as? String) ?? ""
+        }catch {
+            return ""
+        }
+    }
+    
     //MARK: Private Methods
+    
     /// Initialize
     fileprivate init() { }
     
@@ -82,13 +101,13 @@ class OstBundle {
     /// - Throws: OstError
     fileprivate func getFileContent(_ fileName: String,
                                 fileExtension: String,
-                                fromBundle bundle: Bundle) throws -> String {
+                                fromBundle bundle: Bundle) -> String? {
         
-        if let filepath = bundle.path(forResource: fileName, ofType: fileExtension) {
-            let contents = try String(contentsOfFile: filepath)
+        if let filepath = bundle.path(forResource: fileName, ofType: fileExtension),
+            let contents = try? String(contentsOfFile: filepath) {
             return contents
         }
-        throw OstError.init("u_b_gfc_1", "File not found: \(fileName)")
+        return nil
     }
     
     /// Get permission description
@@ -101,22 +120,19 @@ class OstBundle {
     /// - Returns: Description Text
     /// - Throws: OstError
     fileprivate func getDescription(for key: String,
-                                              fromFile fileName: String,
-                                              withExtension fileExtension: String,
-                                              inBundle bundle: Bundle) throws -> AnyObject {
+                                    fromFile fileName: String,
+                                    withExtension fileExtension: String,
+                                    inBundle bundle: Bundle) -> AnyObject? {
         
         let plistPath: String? = bundle.path(forResource: fileName, ofType: fileExtension)!
         let plistXML = FileManager.default.contents(atPath: plistPath!)!
         
         var propertyListForamt =  PropertyListSerialization.PropertyListFormat.xml //Format of the Property List.
-        let plistData: [String: AnyObject] = try PropertyListSerialization
+        let plistData: [String: AnyObject]? = try? PropertyListSerialization
             .propertyList(from: plistXML,
                           options: .mutableContainersAndLeaves,
                           format: &propertyListForamt) as! [String : AnyObject]
         
-        guard let description = plistData[key] else {
-            throw OstError("u_b_gpd_1", OstErrorText.keyNotFound)
-        }
-        return description
+        return plistData?[key];
     }
 }

@@ -7,6 +7,9 @@ def shared_pods
 	pod 'Alamofire', '4.8.1'
 	pod 'CryptoSwift'
 	pod 'IQKeyboardManagerSwift'
+	pod 'Fabric'
+pod 'BigInt'
+pod 'Crashlytics'
 end
 
 target 'TestDemoApp' do

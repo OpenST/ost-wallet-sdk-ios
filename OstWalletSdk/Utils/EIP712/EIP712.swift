@@ -193,7 +193,7 @@ class EIP712 {
                 encValues.append(solidityValue);
                 
             } else if (fieldType.lastIndexOf("]") == fieldType.count - 1) {
-                throw OstError.init("u_eip712_eip712_ed_1", "Arrays currently unimplemented in encodeData")
+                throw OstError("u_eip712_eip712_ed_1", .sdkError);
                 
             } else{
                 solidityType = try SolidityType.typeFromString(fieldType)

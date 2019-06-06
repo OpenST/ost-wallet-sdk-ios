@@ -132,9 +132,11 @@ class HomeViewController: UICollectionViewController {
   
   //MARK - Methods
   @objc func menuItemTapped(sender: Any) {
-    let layout = UICollectionViewFlowLayout();
-    let userActionsViewController = UserActionsViewController(collectionViewLayout: layout);
-    self.present(userActionsViewController, animated: true, completion: nil);
+//    let layout = UICollectionViewFlowLayout();
+//    let userActionsViewController = UserActionsViewController(collectionViewLayout: layout);
+//    self.present(userActionsViewController, animated: true, completion: nil);
+    let options = TabBarViewController()
+    options.presentViewControllerWithNavigationController(self);
   }
   
   //MARK - UICollectionViewDataSource

@@ -32,7 +32,7 @@ class OstAPIHelper {
     private class func addAPIParams(forUserId userId:String, inParams params: inout [String: Any]) throws {
         if (!userId.isEmpty) {
             guard let user: OstUser = try OstUser.getById(userId) else {
-                throw OstError.init("n_ah_iapir_1", .userEntityNotFound)
+                throw OstError("n_ah_iapir_1", .userEntityNotFound)
             }
             if let currentDevice = user.getCurrentDevice() {
                 params["api_signature_kind"] = OstConstants.OST_SIGNATURE_KIND
@@ -41,7 +41,7 @@ class OstAPIHelper {
                 return
             }
         }
-        throw OstError.init("n_ah_iapir_2", .userEntityNotFound)
+        throw OstError("n_ah_iapir_2", .userEntityNotFound)
     }
     
     /// Sign the request params with API key
@@ -57,13 +57,16 @@ class OstAPIHelper {
     ///   - userId:  UserId for which the API key will be used to sign the request url
     /// - Throws: OSTError
     class func sign(apiResource resource:String, andParams params: inout [String: Any], withUserId userId:String) throws {
-        try OstAPIHelper.addAPIParams(forUserId: userId, inParams: &params)
-        let signature =  try OstAPISigner(userId: userId).sign(resource: resource, params: params)
+        try OstAPIHelper.addAPIParams(forUserId: userId,
+                                      inParams: &params)
+        
+        let signature =  try OstKeyManagerGateway.getOstApiSigner(userId: userId)
+            .sign(resource: resource,
+                  params: params)
+
         params["api_signature"] = signature
     }
-    
-    
-    
+
     /// Sync the entity data with API response
     ///
     /// - Parameter apiResponse: API response data
@@ -75,10 +78,10 @@ class OstAPIHelper {
                 try storeApiResponse(apiResponse!)
                 return try getSyncedEntity(apiResponse!)
             }catch {
-                throw OstError.init("n_ah_gefar_1", .entityNotAvailable)
+                throw OstError("n_ah_gefar_1", .entityNotAvailable)
             }
         }else {
-            throw OstError.init("n_ah_gefar_2", .invalidAPIResponse)
+            throw OstError("n_ah_gefar_2", .invalidAPIResponse)
         }
     }
     
@@ -93,10 +96,10 @@ class OstAPIHelper {
                 try storeApiResponse(apiResponse!)
                 return try getSyncedEntities(apiResponse!)
             }catch {
-                throw OstError.init("n_ah_seswar_1", .entityNotAvailable)
+                throw OstError("n_ah_seswar_1", .entityNotAvailable)
             }
         }else {
-            throw OstError.init("n_ah_seswar_2", .invalidAPIResponse)
+            throw OstError("n_ah_seswar_2", .invalidAPIResponse)
         }
     }
     
@@ -115,28 +118,37 @@ class OstAPIHelper {
         switch resultType {
         case ResultType.token.rawValue:
             try OstToken.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.user.rawValue:
             try OstUser.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.device.rawValue:
             try OstDevice.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.deviceManager.rawValue:
             try OstDeviceManager.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.session.rawValue:
             try OstSession.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.transaction.rawValue:
             try OstTransaction.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.tokenHolder.rawValue:
             try OstTokenHolder.storeEntity(entityData as! [String: Any?])
+            
         case ResultType.rules.rawValue:
             let rulesEntityData = entityData as! [[String: Any?]]
             for ruleEntityData in rulesEntityData {
                 try OstRule.storeEntity(ruleEntityData)
             }
+            
         case ResultType.devices.rawValue:
             let devicesEntityData = entityData as! [[String: Any?]]
             for deviceEntityData in devicesEntityData {
                 try OstDevice.storeEntity(deviceEntityData)
             }
+            
         default:
             return
         }
@@ -154,7 +166,7 @@ class OstAPIHelper {
         let entityData =  apiResponse[resultType] as? [String: Any?]
         
         if (entityData == nil) {
-            throw OstError.init("n_ah_gse_1", .entityNotAvailable)
+            throw OstError("n_ah_gse_1", .entityNotAvailable)
         }
         
         let getItem: ((String) throws -> String) = { (identifier) -> String in
@@ -201,7 +213,7 @@ class OstAPIHelper {
         let resultType = apiResponse["result_type"] as? String ?? ""
         let entityDataArray =  apiResponse[resultType] as? [[String: Any?]]
         if (entityDataArray == nil) {
-            throw OstError.init("n_ah_gses_1", .entityNotAvailable)
+            throw OstError("n_ah_gses_1", .entityNotAvailable)
         }
         
         let getItem: ((String, [String: Any?]) throws -> String) = { (identifier, entityData) -> String in

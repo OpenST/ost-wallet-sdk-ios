@@ -22,7 +22,7 @@ class ResetPinView: AddSessionView {
                         passphrasePrefix: currentUser.userPinSalt!,
                         oldUserPin: spendingLimitTestField.text!,
                         newUserPin: expiresAfterTextField.text!,
-                        delegate: self.sdkInteract)
+                        delegate: self.workflowCallback)
         
         self.nextButton.isHidden = true
         self.cancelButton.isHidden = true

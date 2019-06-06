@@ -30,18 +30,15 @@ class TokenHolder: ABIHelperBase {
                                      expirationHeight: String,
                                      spendingLimit: String) throws -> String {
         
-        let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.abiMethodNameForAuthorizeSession)
-        if (abiObject == nil) {
-            throw OstError("u_ah_th_gased_1", "ABI for \(self.abiMethodNameForAuthorizeSession) is not available.")
-        }
+        let abiObject: ABIObject = try! getABI(ABI_NAME, forMethod: self.abiMethodNameForAuthorizeSession)!
         
         let sessionAddressTobeAdded = try EthereumAddress(hex:sessionAddress, eip55: false)
         let solidityHander = OstSolidityHandler()
-        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let function = SolidityNonPayableFunction(abiObject: abiObject, handler: solidityHander)
         let _invocation = function!.invoke(sessionAddressTobeAdded, BigInt(spendingLimit)!, BigInt(expirationHeight)!)
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_th_gased_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_th_gased_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()
@@ -53,17 +50,14 @@ class TokenHolder: ABIHelperBase {
     /// - Throws: OstError
     func getLogoutExecutableData() throws -> String {
         
-        let abiObject: ABIObject? = try getABI(ABI_NAME, forMethod: self.abiMethodNameForLogout)
-        if (abiObject == nil) {
-            throw OstError("u_ah_th_gased_1", "ABI for \(self.abiMethodNameForLogout) is not available.")
-        }
-        
+        let abiObject: ABIObject = try! getABI(ABI_NAME, forMethod: self.abiMethodNameForLogout)!
+       
         let solidityHander = OstSolidityHandler()
-        let function = SolidityNonPayableFunction(abiObject: abiObject!, handler: solidityHander)
+        let function = SolidityNonPayableFunction(abiObject: abiObject, handler: solidityHander)
         let _invocation = function!.invoke()
         let ethereumData = _invocation.encodeABI();
         if (ethereumData == nil) {
-            throw OstError("u_ah_th_gased_2", OstErrorText.abiEncodeFailed)
+            throw OstError("u_ah_th_gased_2", .abiEncodeFailed)
         }
         
         return ethereumData!.hex()

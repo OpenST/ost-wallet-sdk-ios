@@ -54,7 +54,7 @@ class SoliditySha3 {
                     type = list.first as! String
                     value = list[1]
                 }else {
-                    throw OstError("u_s_ss_pa_1", "invalid argument passed")
+                    throw OstError("u_s_ss_pa_1", .sdkError)
                 }
             } else if (ele is [String: Any]) {
                 let dict: [String: Any] = ele as! [String: Any]
@@ -64,7 +64,7 @@ class SoliditySha3 {
                     value = dict["v"] ?? dict["value"] as Any
                     
                 }else {
-                    throw OstError("u_s_ss_pa_2", "invalid type or value passed")
+                    throw OstError("u_s_ss_pa_2", .sdkError)
                 }
             } else if (ele is String) {
                 let eleString = ele as! String
@@ -75,7 +75,7 @@ class SoliditySha3 {
                     return data.toHexString()
                 }
             }else {
-                throw OstError("u_s_ss_pa_3", "invalid argument passed")
+                throw OstError("u_s_ss_pa_3", .sdkError)
             }
             
             if (type.starts(with: SoliditySha3.TYPE_START_WITH_INT) || type.starts(with: SoliditySha3.TYPE_START_WITH_UINT)) &&
@@ -112,7 +112,7 @@ class SoliditySha3 {
         
         if ("bytes" == _type) {
             if (value as! String).count%2 != 0 {
-                throw OstError("u_s_ss_sp_1", "Invalid bytes character length \((value as! String).count)")
+                throw OstError("u_s_ss_sp_1", .sdkError)
             }
             return (value as! String).stripHexPrefix()
         }else if ("string" == _type) {
@@ -126,7 +126,7 @@ class SoliditySha3 {
                 size = 40
             }
             if (!(value as! String).isAddress) {
-                throw OstError("u_s_ss_sp_2", "\(value) is not a valid address, or the checksum is invalid.")
+                throw OstError("u_s_ss_sp_2", .sdkError)
             }
             return (value as! String).lowercased().stripHexPrefix().padLeft(totalWidth: size, with: "0")
         }
@@ -136,7 +136,7 @@ class SoliditySha3 {
         if (type.starts(with: "bytes")) {
             
             if (size == -1) {
-                throw OstError("u_s_ss_sp_3", "bytes[] not yet supported in solidity")
+                throw OstError("u_s_ss_sp_3", .sdkError)
             }
             
             // must be 32 byte slices when in an array
@@ -145,24 +145,24 @@ class SoliditySha3 {
             }
             
             if (size < 1 || size > 32 || size < ((value as! String).stripHexPrefix().count/2)) {
-                throw OstError("u_s_ss_sp_4", "Invalid bytes \(size) for \(value)")
+                throw OstError("u_s_ss_sp_4", .sdkError)
             }
             return (value as! String).stripHexPrefix().rightPad(totalWidth: size*2, with: "0")
             
         }else if (type.starts(with: "uint")) {
             if ((size % 8 != 0) || (size < 8) || (size > 256)) {
-                throw OstError("u_s_ss_sp_5", "Invalid uint \(size) size")
+                throw OstError("u_s_ss_sp_5", .sdkError)
             }
             
             do {
                 let num: BigInt = try parseNumber(value)
                 
                 if (num.bitWidth > size) {
-                    throw OstError("u_s_ss_sp_6", "Supplied uint exceeds width: \(size) vs \(num.bitWidth)")
+                    throw OstError("u_s_ss_sp_6", .sdkError)
                 }
                 
                 if (num<BigInt("0")) {
-                    throw OstError("u_s_ss_sp_7", "Supplied uint \(num) is negative")
+                    throw OstError("u_s_ss_sp_7", .sdkError)
                 }
                 return size != -1 ?
                     String(format: "%x", Int(num.description)!).padLeft(totalWidth: size / 8 * 2, with: "0") : String(format: "%x", Int(num.description)!)
@@ -185,7 +185,7 @@ class SoliditySha3 {
         }else if (value is BigInt) {
             return (value as! BigInt)
         }else {
-            throw OstError("u_s_ss_pn_1", "\(value) is not a number")
+            throw OstError("u_s_ss_pn_1", .sdkError)
         }
     }
     
@@ -204,19 +204,19 @@ class SoliditySha3 {
     
     fileprivate static func elementaryName(_ name: String) -> String {
         if (name.starts(with: "int[")) {
-            return "int256"+name.substring("int[".count)
+            return "int256"+name.substringAfter("int[".count)
         }else if ("int" == name) {
             return "int256"
         }else if (name.starts(with: "uint[")) {
-            return "uint256"+name.substring("uint[".count)
+            return "uint256"+name.substringAfter("uint[".count)
         }else if ("uint" == name) {
             return "uint256"
         }else if (name.starts(with: "fixed[")) {
-            return "fixed128x128"+name.substring("fixed[".count)
+            return "fixed128x128"+name.substringAfter("fixed[".count)
         }else if ("fixed" == name) {
             return "fixed128x128"
         }else if (name.starts(with: "ufixed[")) {
-            return "ufixed128x128"+name.substring("ufixed[".count)
+            return "ufixed128x128"+name.substringAfter("ufixed[".count)
         }else if ("ufixed" == name) {
             return "ufixed128x128"
         }

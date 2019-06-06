@@ -294,7 +294,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
     var ostValidateDataProtocol:OstValidateDataDelegate?;
     
     override func receivedSdkEvent(eventData: [String : Any]) {
-        let eventType:OstSdkInteract.WorkflowEventType = eventData["eventType"] as! OstSdkInteract.WorkflowEventType;
+        let eventType:OstSdkInteractOld.WorkflowEventType = eventData["eventType"] as! OstSdkInteractOld.WorkflowEventType;
         if (.flowInterrupt == eventType ) {
             let interuptedWorkflowContext = eventData["workflowContext"] as! OstWorkflowContext;
             if ( interuptedWorkflowContext.workflowType == .performQRAction ) {
@@ -342,7 +342,7 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
                 return;
             }
         }
-        else if (OstSdkInteract.WorkflowEventType.verifyQRCodeData != eventType ) {
+        else if (OstSdkInteractOld.WorkflowEventType.verifyQRCodeData != eventType ) {
             // Forward it to base class.
             return super.receivedSdkEvent(eventData: eventData);
         }
