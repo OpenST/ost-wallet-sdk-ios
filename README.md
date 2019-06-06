@@ -307,7 +307,7 @@ OstWalletSdk.abortDeviceRecovery(
 
 ###  Revoke Device
 
-To unauthorize device.<br/><br/>
+To revoke device access.<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_deviceAddressToRevoke: Device address to revoke_<br/>
