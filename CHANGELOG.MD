@@ -6,7 +6,7 @@
 * Biometric preferences are now saved in the SDK
 * Remove hard-coding of OST as the value token that backs Brand Tokens 
 * Now supports device access revocation via API
-* Added support for React Native and Objective-C applications
+* Now supports React Native and Objective-C applications
 
 ## Version 2.0.4
 ### Changes: 
