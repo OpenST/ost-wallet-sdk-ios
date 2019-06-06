@@ -26,7 +26,7 @@ class RecoverDeviceView: AddSessionView {
             recoverDeviceAddress: spendingLimitTestField.text!,
             userPin: expiresAfterTextField.text!,
             passphrasePrefix: currentUser.userPinSalt!,
-            delegate: self.sdkInteract)
+            delegate: self.workflowCallback)
     }
     
     override func viewDidAppearCallback() {

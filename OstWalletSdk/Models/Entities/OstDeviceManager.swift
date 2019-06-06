@@ -26,7 +26,8 @@ public class OstDeviceManager: OstBaseEntity {
             .sharedDeviceManager
             .insertOrUpdate(
                 entityData,
-                forIdentifierKey: ENTITY_IDENTIFIER
+                forIdentifierKey: ENTITY_IDENTIFIER,
+                isSynchronous: true
             )
     }
     

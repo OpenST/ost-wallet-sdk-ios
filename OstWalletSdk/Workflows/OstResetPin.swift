@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstResetPin: OstWorkflowBase {
+class OstResetPin: OstWorkflowEngine {
     static private let ostResetPinQueue = DispatchQueue(label: "com.ost.sdk.OstResetPin", qos: .userInitiated)
     
     private let workflowTransactionCountForPolling = 1
@@ -30,12 +30,14 @@ class OstResetPin: OstWorkflowBase {
          newUserPin: String,
          delegate: OstWorkflowDelegate) {
 
-        self.pinManager = OstPinManager(
-            userId: userId,
+        self.pinManager =
+            OstKeyManagerGateway.getOstPinManager(
+                userId: userId,
             passphrasePrefix: passphrasePrefix,
             userPin: oldUserPin,
             newUserPin: newUserPin
         )
+
         super.init(userId: userId, delegate: delegate)
     }
     
@@ -51,20 +53,33 @@ class OstResetPin: OstWorkflowBase {
     /// - Throws: OstError
     override func validateParams() throws {
         try super.validateParams()
-        try self.workFlowValidator!.isUserActivated()
         try self.pinManager.validateResetPin()
     }
     
-    /// Process reset pin
+    /// Perfrom user device validation
     ///
     /// - Throws: OstError
-    override func process() throws {
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        try isUserActivated()
+    }
+    
+    /// Should check whether current device authorized or not
+    ///
+    /// - Returns: `true` if check required, else `false`
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    /// Reset pin after device validated.
+    ///
+    /// - Throws: OstError
+    override func onDeviceValidated() throws {
         let recoveryOwnerEntity = try self.resetPin()
         self.postRequestAcknowledged(entity: recoveryOwnerEntity)
         self.pollingForResetPin(recoveryOwnerEntity)
     }
     
-   
     /// Reset pin
     ///
     /// - Returns: Recovery owner entity object
@@ -126,9 +141,7 @@ class OstResetPin: OstWorkflowBase {
     /// - Parameter entity: Recovery owner entity object
     private func pollingForResetPin(_ entity: OstRecoveryOwnerEntity) {
         let successCallback: ((OstRecoveryOwnerEntity) -> Void) = { ostRecoveryOwner in
-            OstSdkSync(userId: self.userId, forceSync: true, syncEntites: .User, onCompletion: { (_) in
-                self.postWorkflowComplete(entity: ostRecoveryOwner)
-            }).perform()
+            self.postWorkflowComplete(entity: ostRecoveryOwner)
         }
         
         let failureCallback:  ((OstError) -> Void) = { error in

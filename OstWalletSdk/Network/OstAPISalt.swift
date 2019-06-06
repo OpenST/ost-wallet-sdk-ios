@@ -41,7 +41,7 @@ class OstAPISalt: OstAPIBase {
                 if (resultType == "salt") {
                     onSuccess?(apiResponse![resultType] as! [String: Any])
                 }else {
-                    onFailure?(OstError.init("n_ap_grks_1", .unableToGetSalt))
+                    onFailure?(OstError("n_ap_grks_1", .unableToGetSalt))
                 }
             },
             onFailure: { (failureResponse) in

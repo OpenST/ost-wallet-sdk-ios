@@ -85,8 +85,9 @@ class OstSessionHelper: OstWorkflowHelperBase {
     ///
     /// - Throws: OstError
     private func createSessionKeys() throws {
-        let keyMananger = OstKeyManager(userId: self.userId)
-        self.sessionAddress = try keyMananger.createSessionKey()
+        self.sessionAddress = try OstKeyManagerGateway
+            .getOstKeyManager(userId: self.userId)
+            .createSessionKey()
     }
     
     /// Get session entity data

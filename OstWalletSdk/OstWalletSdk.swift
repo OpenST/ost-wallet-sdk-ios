@@ -10,14 +10,14 @@
 
 import Foundation
 
-public class OstWalletSdk {
+@objc public class OstWalletSdk: NSObject {
     
     /// Initialize SDK
     ///
     /// - Parameter apiEndPoint: API end point
     /// - Throws: OstError
+    @objc
     public class func initialize(apiEndPoint:String) throws {
-        
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);
@@ -27,14 +27,26 @@ public class OstWalletSdk {
     /// Get api end point
     ///
     /// - Returns: String
+    @objc
     public class func getApiEndPoint() -> String {
         return OstAPIBase.baseURL
+    }
+    
+    /// Get user biometric authentication status
+    ///
+    /// - Parameter userId: User Id
+    /// - Returns: Biomertric status
+    @objc 
+    public class func isBiometricEnabled(userId: String) -> Bool {
+        let keyManager = OstKeyManagerGateway.getOstKeyManager(userId: userId)
+        return keyManager.isBiometricEnabled()
     }
     
     /// Get user entity for given user id
     ///
     /// - Parameter id: User id
     /// - Returns: User entity
+    @objc
     public class func getUser(_ id: String) -> OstUser? {
         do {
             return try OstUser.getById(id)
@@ -47,6 +59,7 @@ public class OstWalletSdk {
     ///
     /// - Parameter id: Token id
     /// - Returns: Token entity
+    @objc
     public class func getToken( _ id: String) -> OstToken? {
         do {
             return try OstToken.getById(id)
@@ -81,5 +94,5 @@ public class OstWalletSdk {
         
         // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
-    }
+    }    
 }

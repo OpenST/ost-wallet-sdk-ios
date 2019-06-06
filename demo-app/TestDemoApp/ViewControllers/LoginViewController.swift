@@ -25,10 +25,8 @@ class LoginViewController: UIViewController {
 
   
   let titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    let titleLabel = OstUIKit.h1()
     titleLabel.text = "Sign in to continue"
-    titleLabel.sizeToFit()
     return titleLabel
   }()
 
@@ -36,12 +34,13 @@ class LoginViewController: UIViewController {
   let usernameTextField: MDCTextField = {
     let usernameTextField = MDCTextField()
     usernameTextField.translatesAutoresizingMaskIntoConstraints = false
-    usernameTextField.clearButtonMode = .unlessEditing
+    usernameTextField.clearButtonMode = .never
     return usernameTextField
   }()
   
   let mobileNumberTextField: MDCTextField = {
     let mobileNumberTextField = MDCTextField()
+    mobileNumberTextField.clearButtonMode = .never
     mobileNumberTextField.translatesAutoresizingMaskIntoConstraints = false
     mobileNumberTextField.isSecureTextEntry = false
     return mobileNumberTextField
@@ -57,25 +56,25 @@ class LoginViewController: UIViewController {
 
   
   // Add text field controllers
-  let usernameTextFieldController: MDCTextInputControllerOutlined
-  let mobileNumberTextFieldController: MDCTextInputControllerOutlined
-  let bioTextFieldController: MDCTextInputControllerOutlined
+    let usernameTextFieldController: MDCTextInputControllerOutlined
+    let mobileNumberTextFieldController: MDCTextInputControllerOutlined
+    let bioTextFieldController: MDCTextInputControllerOutlined
 
   // Add buttons
-  let toggleModeButton: MDCButton = {
-    let toggleModeButton = MDCButton()
-    toggleModeButton.translatesAutoresizingMaskIntoConstraints = false
-    toggleModeButton.setTitle("Create Account", for: .normal)
-    toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
-    return toggleModeButton
-  }()
-  let nextButton: MDCButton = {
-    let nextButton = MDCButton()
-    nextButton.translatesAutoresizingMaskIntoConstraints = false
-    nextButton.setTitle("NEXT", for: .normal)
-    nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
-    return nextButton
-  }()
+    let nextButton: UIButton = {
+        let nextButton = OstUIKit.primaryButton();
+        nextButton.setTitle("NEXT", for: .normal)
+        nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
+        return nextButton
+    }()
+
+    let toggleModeButton: UIButton = {
+        let toggleModeButton = OstUIKit.secondaryButton();
+        toggleModeButton.setTitle("Create Account", for: .normal)
+        toggleModeButton.addTarget(self, action: #selector(didToggleMode(sender:)), for: .touchUpInside)
+        return toggleModeButton
+    }()
+    
   
   let errorLabel: UILabel = {
     let errorLabel = UILabel()
@@ -85,7 +84,7 @@ class LoginViewController: UIViewController {
     errorLabel.sizeToFit()
     return errorLabel
   }()
-
+    
   let activityIndicator: MDCActivityIndicator = {
     let activityIndicator = MDCActivityIndicator()
     activityIndicator.indicatorMode = .indeterminate
@@ -108,8 +107,7 @@ class LoginViewController: UIViewController {
     logoImageView.translatesAutoresizingMaskIntoConstraints = false
     return logoImageView
   }()
-
-
+    
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     //Setup text field controllers
     usernameTextFieldController = MDCTextInputControllerOutlined(textInput: usernameTextField)
@@ -121,10 +119,10 @@ class LoginViewController: UIViewController {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
+    
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     view.tintColor = .black
     scrollView.backgroundColor = .white
 
@@ -154,6 +152,7 @@ class LoginViewController: UIViewController {
     scrollView.addSubview(mobileNumberTextField)
     scrollView.addSubview(bioTextField)
     
+    
     usernameTextFieldController.placeholderText = "Username"
     usernameTextField.delegate = self
     
@@ -172,6 +171,7 @@ class LoginViewController: UIViewController {
     scrollView.addSubview(nextButton)
     scrollView.addSubview(toggleModeButton)
     scrollView.sendSubviewToBack(self.activityIndicator);
+    
     
     
     // Error Label
@@ -275,74 +275,19 @@ class LoginViewController: UIViewController {
                                      metrics: nil,
                                      views: [ "bioTextField" : bioTextField]))
 
+    NSLayoutConstraint.activate(constraints);
+    
     // Buttons
-    // Setup button constraints
+    // Setup constraints new way
+    nextButton.placeBelow(toItem: bioTextField);
+    nextButton.applyBlockElementConstraints();
     
-    constraints.append(NSLayoutConstraint(item: toggleModeButton,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: bioTextField,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 8))
-    constraints.append(NSLayoutConstraint(item: toggleModeButton,
-                                          attribute: .centerY,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .centerY,
-                                          multiplier: 1,
-                                          constant: 0))
-    constraints.append(contentsOf:
-      NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
-                                     options: NSLayoutConstraint.FormatOptions(rawValue: 0),
-                                     metrics: nil,
-                                     views: [ "cancel" : toggleModeButton, "next" : nextButton]))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .height,
-                                          relatedBy: .equal,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: 50))
-    constraints.append(NSLayoutConstraint(item: nextButton,
-                                          attribute: .width,
-                                          relatedBy: .greaterThanOrEqual,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: 90))
+    toggleModeButton.placeBelow(toItem: nextButton);
+    toggleModeButton.applyBlockElementConstraints();
     
-    
-    // Error Label
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: nextButton,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 22))
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .centerX,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .centerX,
-                                          multiplier: 1,
-                                          constant: 0))
-    
-    constraints.append(NSLayoutConstraint(item: errorLabel,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: scrollView.contentLayoutGuide,
-                                          attribute: .bottomMargin,
-                                          multiplier: 1,
-                                          constant: -20))
-
-    
-    NSLayoutConstraint.activate(constraints)
-    
-    let appScheme = ApplicationScheme.shared;
-    MDCContainedButtonThemer.applyScheme(appScheme.buttonScheme, to: nextButton);
-    MDCTextButtonThemer.applyScheme(appScheme.buttonScheme, to: toggleModeButton);
+    errorLabel.placeBelow(toItem: toggleModeButton);
+    errorLabel.applyBlockElementConstraints();
+    errorLabel.bottomAlignWithParent(constant: -20);
     
   }
 
@@ -367,9 +312,9 @@ class LoginViewController: UIViewController {
           //Need to activate user.
           let rootViewController =  self.presentingViewController;
           self.dismiss(animated: true, completion: {
-            let setupWalletController = WalletViewController(nibName: nil, bundle: nil)
-            setupWalletController.showHeaderBackItem = false;
-            rootViewController?.present(setupWalletController, animated: true, completion: nil);
+            _ = OstSdkInteract.getInstance.activateUser(userId: ostUser.id,
+                                                        passphrasePrefixDelegate: CurrentUser.getInstance(),
+                                                        presenter: rootViewController!)
           });
           
         } else if ( ostUser.isStatusActivating ) {
@@ -478,12 +423,12 @@ class LoginViewController: UIViewController {
     }
     
     func validatePhoneNumber() -> Bool {
-        if (mobileNumberTextField.text!.count < 10) {
-            mobileNumberTextFieldController.setErrorText("Mobile Number is too short",
-                                                         errorAccessibilityValue: nil);
-            return false;
-        }
-        mobileNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
+//        if (mobileNumberTextField.text!.count < 10) {
+//            mobileNumberTextFieldController.setErrorText("Mobile Number is too short",
+//                                                         errorAccessibilityValue: nil);
+//            return false;
+//        }
+//        mobileNumberTextFieldController.setErrorText(nil,errorAccessibilityValue: nil);
         return true;
     }
 }
@@ -507,4 +452,12 @@ extension LoginViewController: UITextFieldDelegate {
 
     return false
   }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        let a = AuthorizeDeviceViewController()
+//        let n = UINavigationController(rootViewController: a)
+//        self.present(n, animated: true, completion: nil)
+    }
 }

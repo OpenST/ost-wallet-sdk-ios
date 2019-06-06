@@ -19,7 +19,7 @@ class AbortRevocerDeviceView: RecoverDeviceView {
             userId: currentUser.ostUserId!,
             userPin: spendingLimitTestField.text!,
             passphrasePrefix: currentUser.userPinSalt!,
-            delegate: self.sdkInteract)
+            delegate: self.workflowCallback)
     }
     
     override func viewDidAppearCallback() {

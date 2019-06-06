@@ -47,13 +47,13 @@ class OstBaseStorage {
             status = SecItemDelete(query as CFDictionary)
             guard status == errSecSuccess else {
                 // Logger.log(message: "Error while deleting from keychain.")
-                throw OstError.init("s_s_bs_hs_1", .keychainDeleteItemFail)
+                throw OstError("s_s_bs_hs_1", .keychainDeleteItemFail)
             }
             status = SecItemAdd(query as CFDictionary, nil)
         }
         guard status == errSecSuccess else {
             // Logger.log(message: "Error while adding item in keychain.")
-            throw OstError.init("s_s_bs_hs_2", .keychainAddItemFail)
+            throw OstError("s_s_bs_hs_2", .keychainAddItemFail)
         }
     }
     
@@ -79,7 +79,7 @@ class OstBaseStorage {
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess else {
             // Logger.log(message: "Error while deleting item from keychain.")
-            throw OstError.init("s_s_bs_dfkc_1", .keychainDeleteItemFail)
+            throw OstError("s_s_bs_dfkc_1", .keychainDeleteItemFail)
         }
     }
 }

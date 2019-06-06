@@ -13,34 +13,41 @@ import Foundation
 
 public class OstApiError: OstError {
 
-    override init(_ code: String, _ messageTextCode: OstErrorText) {
-        super.init(code, messageTextCode)
-        self.isApiError = true
+    override init(_ code: String, _ messageTextCode: OstErrorCodes.OstErrorCode,  _ errorInfo:[String:Any]? = nil) {
+        super.init(code, messageTextCode, errorInfo);
+        self.isApiError = true;
     }
     
-    override init(_ code: String, _ errorMessage: String) {
-        super.init(code, errorMessage)
-        self.isApiError = true
-    }
+//    override init(_ code: String, msg errorMessage: String) {
+//        super.init(code, msg: errorMessage)
+//        self.isApiError = true
+//    }
     
     override init(fromApiResponse response: [String: Any]) {
         super.init(fromApiResponse: response)
         self.isApiError = true
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
+    @objc
     public func getApiErrorCode() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["code"] as? String
     }
     
+    @objc
     public func getApiErrorMessage() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["msg"] as? String
     }
     
+    @objc
     public func getApiInternalId() -> String? {
         return (self.errorInfo?["err"] as? [String: Any])?["internal_id"] as? String
     }
     
+    @objc
     public func isBadRequest() -> Bool {
         guard let errorCode = getApiErrorCode() else {
             return false
@@ -48,6 +55,7 @@ public class OstApiError: OstError {
         return "BAD_REQUEST".caseInsensitiveCompare(errorCode) == .orderedSame
     }
 
+    @objc
     func isNotFound() -> Bool {
         guard let errorCode = getApiErrorCode() else {
             return false
@@ -55,10 +63,12 @@ public class OstApiError: OstError {
         return "NOT_FOUND".caseInsensitiveCompare(errorCode) == .orderedSame
     }
     
+    @objc
     public func isDeviceTimeOutOfSync() -> Bool{
         return isParameterIncludedInError(parameter: "api_request_timestamp");
     }
     
+    @objc
     public func isApiSignerUnauthorized() -> Bool{
         return isParameterIncludedInError(parameter: "api_key");    
     }

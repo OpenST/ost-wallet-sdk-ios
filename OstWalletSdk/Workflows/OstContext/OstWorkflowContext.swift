@@ -10,7 +10,7 @@
 
 import Foundation
 
-public enum OstWorkflowType {
+@objc public enum OstWorkflowType:Int {
     case setupDevice,
     activateUser,
     addSession,
@@ -23,12 +23,13 @@ public enum OstWorkflowType {
     abortDeviceRecovery,
     revokeDeviceWithQRCode,
     resetPin,
-    logoutAllSessions
+    logoutAllSessions,
+    updateBiometricPreference
 }
 
-public class OstWorkflowContext {    
-    public let workflowType: OstWorkflowType
-    init(workflowType: OstWorkflowType) {
+@objc public class OstWorkflowContext: NSObject {    
+    @objc public let workflowType: OstWorkflowType
+    @objc public init(workflowType: OstWorkflowType) {
         self.workflowType = workflowType
     }
 }

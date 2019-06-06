@@ -10,7 +10,7 @@
 
 import Foundation
 
-public class OstBaseEntity: NSObject {
+@objc public class OstBaseEntity: NSObject {
     // The table column names.
     static let ID = "id"
     static let PARENT_ID = "parent_id"
@@ -42,7 +42,7 @@ public class OstBaseEntity: NSObject {
         // Check if the id in entity data is valid.
         let isValid = isIdValid(entityData)
         if (!isValid) {
-            throw OstError.init("m_e_be_ved_1", .invalidId)
+            throw OstError("m_e_be_ved_1", .invalidId)
         }
         // Add more validation code here.
     }
@@ -143,7 +143,7 @@ public extension OstBaseEntity {
     }
     
     /// Get the entity data
-    var data: [String: Any] {
+    @objc var data: [String: Any] {
         return self.entityData as [String : Any]
     }
     
