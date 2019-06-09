@@ -27,6 +27,16 @@ class OstFontProvider {
         }
         return UIFont(name: self.fontName, size: size)!;
     }
+    
+    func getBlack(size:CGFloat) -> UIFont {
+        if ( self.useSystemFont ) {
+            return UIFont.systemFont(ofSize: size).bold();
+        }
+        if let font = UIFont(name: "\(self.fontName)-Black", size: size) {
+            return font
+        }
+        return UIFont.systemFont(ofSize: size).bold();
+    }
 }
 
 extension UIFont {

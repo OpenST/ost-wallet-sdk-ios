@@ -23,7 +23,7 @@ class OstPrimaryButton : OstButtonTheamer {
         //Background Images
         
         
-        let activeBgImg = UIImage.withColor(154, 204, 215);
+        let activeBgImg = UIImage.withColor(22, 141, 193);
         setBackgroundImage(image: activeBgImg, state: .normal);
         
         let highlightedBgImg = UIImage.withColor(128, 180, 191);

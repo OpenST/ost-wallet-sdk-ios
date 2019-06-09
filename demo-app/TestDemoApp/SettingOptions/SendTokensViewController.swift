@@ -16,7 +16,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     let sendTokensLable: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = OstFontProvider().get(size: 15)
+        label.font = OstTheme.fontProvider.get(size: 15).bold()
         label.textColor = UIColor.black.withAlphaComponent(0.4)
         label.text = "Send Tokens To"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +27,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     let balanceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = OstFontProvider().get(size: 15)
+        label.font = OstTheme.fontProvider.get(size: 15)
         label.textColor = UIColor.color(89, 122, 132)
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         view.sendButton?.setTitle("", for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.seperatorLine?.isHidden = true
-        view.backgroundColor = UIColor.color(239, 249, 250)
+        view.backgroundColor = UIColor.color(231, 243, 248)
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
         
@@ -67,7 +67,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.clearButtonMode = .never
         textField.keyboardType = .decimalPad
         textField.placeholderLabel.text = "Amount"
-        textField.font = OstFontProvider().get(size: 15)
+        textField.font = OstTheme.fontProvider.get(size: 15)
         textField.text = "1";
         return textField
     }()
@@ -79,7 +79,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
-        textField.font = OstFontProvider().get(size: 15)
+        textField.font = OstTheme.fontProvider.get(size: 15)
         return textField
     }()
     var tokenSpendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -90,7 +90,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.clearButtonMode = .never
         textField.keyboardType = .decimalPad
         textField.placeholderLabel.text = "Amount"
-        textField.font = OstFontProvider().get(size: 15)
+        textField.font = OstTheme.fontProvider.get(size: 15)
         return textField
     }()
     var usdAmountTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -101,7 +101,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = "USD";
-        textField.font = OstFontProvider().get(size: 15)
+        textField.font = OstTheme.fontProvider.get(size: 15)
         return textField
     }()
     var usdSpendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
@@ -119,7 +119,8 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     var userDetails: [String: Any]! {
         didSet {
             userInfoView.userData = userDetails
-            userInfoView.balanceLabel?.text = userDetails["token_holder_address"] as? String ?? ""
+//            userInfoView.balanceLabel?.text = userDetails["token_holder_address"] as? String ?? ""
+            userInfoView.sendButton?.isHidden = true
         }
     }
     
@@ -391,17 +392,21 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         tokenAmountTextFieldController?.setErrorText(nil,errorAccessibilityValue: nil);
-        if string == "." && (textField.text ?? "").contains(string) {
+        if (string == "." || string == ",")
+            && ((textField.text ?? "").contains(".")
+                || (textField.text ?? "").contains(",")) {
             return false
         }
-        if string == "," {
-            return false
-        }
+        
         return true
     }
     
     @objc func textFieldDidChange(textField: UITextField) {
-        let text = textField.text ?? ""
+        var text = textField.text ?? "0"
+        text = text.replacingOccurrences(of: ",", with: ".")
+        
+        textField.text = text
+        
         let values = text.components(separatedBy: ".")
         
         if values.count == 2
@@ -411,14 +416,14 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         }
         
         if textField == tokenAmountTextField {
-            let usdAmount = CurrentUserModel.getInstance.toUSD(value: textField.text ?? "0") ?? "0.00"
+            let usdAmount = CurrentUserModel.getInstance.toUSD(value: text) ?? "0.00"
             usdAmountTextField.text = usdAmount.toRoundUpTxValue()
         }
         else if textField == usdAmountTextField {
-            let transferVal = textField.text?.toSmallestUnit(isUSDTx: true) ?? "0"
+            let transferVal = text.toSmallestUnit(isUSDTx: true)
             let finalVal = CurrentUserModel.getInstance.toBt(value: transferVal)
             tokenAmountTextField.text = finalVal?.toRedableFormat().toRoundUpTxValue()
-        }
+        } 
     }
     
     func showUnitActionSheet() {
@@ -478,6 +483,11 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             self.tabbarController?.jumpToWalletVC(withWorkflowId: workflowId)
         })
+    }
+    
+    override func showFailureAlert(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+        progressIndicator?.hide()
+        progressIndicator = nil
     }
     
     func showWebViewForTransaction() {

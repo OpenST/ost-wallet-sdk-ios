@@ -31,7 +31,7 @@ class OstNotification: OstBaseView {
     var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = OstFontProvider().get(size: 14).bold()
+        label.font = OstTheme.fontProvider.get(size: 14).bold()
         label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 3
@@ -51,7 +51,7 @@ class OstNotification: OstBaseView {
         button.translatesAutoresizingMaskIntoConstraints = false
        
         let buttonThemer = OstTheme.linkButton
-        buttonThemer.fontProvider = OstFontProvider()
+        buttonThemer.fontProvider = OstTheme.fontProvider
         buttonThemer.borderColor = UIColor.clear.cgColor
         buttonThemer.titleFontSize = 14
         buttonThemer.setTitleColor(color: UIColor.white, state: .normal)

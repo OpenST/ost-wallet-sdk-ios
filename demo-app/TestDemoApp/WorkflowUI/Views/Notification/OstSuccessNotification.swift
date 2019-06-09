@@ -29,7 +29,7 @@ class OstSuccessNotification: OstNotification {
     }
     
     override func getContainerBackgorundColor() -> UIColor {
-        return UIColor.color(185, 209, 143)
+        return UIColor.color(22, 141, 193)
     }
     
     override func getImage() -> UIImage? {
@@ -49,7 +49,7 @@ class OstSuccessNotification: OstNotification {
             titleText = "Pin has been reset successfully."
         }
         else if workflowContext.workflowType == .activateUser {
-            titleText = "Congratulations! Your wallet is now ready!."
+            titleText = "Congratulations! Your wallet is now ready."
         }
         else if workflowContext.workflowType == .authorizeDeviceWithMnemonics {
             titleText = "Device authorized successfully."

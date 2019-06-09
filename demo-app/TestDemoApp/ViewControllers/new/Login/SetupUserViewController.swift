@@ -103,7 +103,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         view.numberOfLines = 1
         view.textAlignment = .center
         view.text = "a"
-        view.font = OstFontProvider().get(size: 14)
+        view.font = OstTheme.fontProvider.get(size: 14)
         view.textColor = UIColor.color(136, 136, 136)
         return view
     }()

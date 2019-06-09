@@ -80,7 +80,6 @@
 		00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
 		00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */; };
-		00ABD3FB22A72EA10080C4BB /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00ABD3FA22A72EA10080C4BB /* OstWalletSdk.framework */; };
 		00B943A822811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
 		00B943A922811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
 		00B943AA22811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */; };
@@ -102,7 +101,6 @@
 		00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
-		3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9414360E554341F818416A89 /* Pods_TestDemoApp.framework */; };
 		4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
@@ -128,6 +126,9 @@
 		4B214A8B228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A8A228D805E006825FE /* EmptyTransactionTableViewCell.swift */; };
 		4B214A8C228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A8A228D805E006825FE /* EmptyTransactionTableViewCell.swift */; };
 		4B214A8D228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A8A228D805E006825FE /* EmptyTransactionTableViewCell.swift */; };
+		4B402C9922AD0AE600ABDC2C /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B402C9822AD0AE600ABDC2C /* OstWalletSdk.framework */; };
+		4B402C9A22AD0AE600ABDC2C /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B402C9822AD0AE600ABDC2C /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B402C9D22AD0B1700ABDC2C /* Pods_TestDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B402C9C22AD0B1700ABDC2C /* Pods_TestDemoApp.framework */; };
 		4B464E772271CD8C00F1F4AF /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */; };
 		4B464E792271DE7000F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
 		4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */; };
@@ -397,8 +398,6 @@
 		4BFA1191228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
 		4BFA1192228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
 		4BFA1193228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
-		4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */; };
-		C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -417,6 +416,20 @@
 			remoteInfo = TestDemoApp;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4B402C9B22AD0AE600ABDC2C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4B402C9A22AD0AE600ABDC2C /* OstWalletSdk.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTokensToUserView.swift; sourceTree = "<group>"; };
@@ -442,8 +455,6 @@
 		00A76B262282E635009226B8 /* OstWrokflowUIDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWrokflowUIDelegates.swift; sourceTree = "<group>"; };
 		00A76B2A22834611009226B8 /* OstWFCPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWFCPinManager.swift; sourceTree = "<group>"; };
 		00A8D4DC2273179C00D33B0A /* BaseTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTheamer.swift; sourceTree = "<group>"; };
-		00ABD3F622A72E6A0080C4BB /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		00ABD3FA22A72EA10080C4BB /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstActivateUserWorkflowController.swift; sourceTree = "<group>"; };
 		00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConfirmNewPinViewController.swift; sourceTree = "<group>"; };
 		00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
@@ -454,7 +465,6 @@
 		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
-		4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSuccessNotification.swift; sourceTree = "<group>"; };
 		4B214A74228B4FAB006825FE /* OstErroNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstErroNotification.swift; sourceTree = "<group>"; };
@@ -463,6 +473,8 @@
 		4B214A86228D781F006825FE /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		4B214A8A228D805E006825FE /* EmptyTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B3416542296894E00F2CFFC /* TestDemoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestDemoApp.entitlements; sourceTree = "<group>"; };
+		4B402C9822AD0AE600ABDC2C /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B402C9C22AD0B1700ABDC2C /* Pods_TestDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_TestDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B464E762271CD8C00F1F4AF /* OstSdkInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
 		4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
 		4B464EBB2273122700F1F4AF /* OstSdkInteractDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSdkInteractDelegate.swift; sourceTree = "<group>"; };
@@ -502,7 +514,6 @@
 		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransactionViewController.swift; sourceTree = "<group>"; };
-		4B7BD94122A671B900849686 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -583,11 +594,9 @@
 		4BFA118C2287443B00A9F5A4 /* UserDetailsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCellViewModel.swift; sourceTree = "<group>"; };
 		4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
 		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
-		55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		8682D46B806542778C399400 /* Pods-TestDemoAppDevelopment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppDevelopment.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment.debug.xcconfig"; sourceTree = "<group>"; };
 		8DD78CEFFF49BC3F2F78300E /* Pods-TestDemoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9414360E554341F818416A89 /* Pods_TestDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A8C3D1ED10D665A21F19609 /* Pods-TestDemoAppStaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.release.xcconfig"; sourceTree = "<group>"; };
 		BCDFE4028326678854C86704 /* Pods-TestDemoAppDevelopment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppDevelopment.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment.release.xcconfig"; sourceTree = "<group>"; };
 		BDD3C43B22B7EA11E2F62572 /* Pods-TestDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppUITests/Pods-TestDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -600,8 +609,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C0A6F0CD8304B9BCA2AF7B7 /* Pods_TestDemoApp.framework in Frameworks */,
-				00ABD3FB22A72EA10080C4BB /* OstWalletSdk.framework in Frameworks */,
+				4B402C9D22AD0B1700ABDC2C /* Pods_TestDemoApp.framework in Frameworks */,
+				4B402C9922AD0AE600ABDC2C /* OstWalletSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,7 +618,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C76341ED1B2AFC426F2613F /* Pods_TestDemoAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +625,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4E21A473481A1127AE9A57D /* Pods_TestDemoAppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,7 +973,7 @@
 		4BF8FDAF2240FA7600519779 = {
 			isa = PBXGroup;
 			children = (
-				00ABD3F622A72E6A0080C4BB /* OstWalletSdk.framework */,
+				4B402C9822AD0AE600ABDC2C /* OstWalletSdk.framework */,
 				4BF8FDBA2240FA7600519779 /* TestDemoApp */,
 				4BF8FDCF2240FA7700519779 /* TestDemoAppTests */,
 				4BF8FDDA2240FA7700519779 /* TestDemoAppUITests */,
@@ -1195,11 +1202,7 @@
 		DB91270CD9213E4763882444 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4B7BD94122A671B900849686 /* BigInt.framework */,
-				00ABD3FA22A72EA10080C4BB /* OstWalletSdk.framework */,
-				9414360E554341F818416A89 /* Pods_TestDemoApp.framework */,
-				4227211CBE18A5739941717C /* Pods_TestDemoAppTests.framework */,
-				55314AD4EBC4EEEC1C6D5BA4 /* Pods_TestDemoAppUITests.framework */,
+				4B402C9C22AD0B1700ABDC2C /* Pods_TestDemoApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1217,6 +1220,7 @@
 				4BF8FDB62240FA7600519779 /* Resources */,
 				C7DD69526F5260DE45778FC0 /* [CP] Embed Pods Frameworks */,
 				4BF8FE392240FD3C00519779 /* ShellScript */,
+				4B402C9B22AD0AE600ABDC2C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

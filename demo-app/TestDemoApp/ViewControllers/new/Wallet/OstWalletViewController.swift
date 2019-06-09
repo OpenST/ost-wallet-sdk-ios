@@ -225,7 +225,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return self.view.frame.width * 0.5
+            return 160
         case 1:
             return 75.0
         case 2:
@@ -248,7 +248,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         if 1 == section {
             let sectionTitle = UILabel()
             sectionTitle.numberOfLines = 1
-            sectionTitle.textColor = UIColor.gray
+            sectionTitle.textColor = UIColor.color(52, 68, 91)
             sectionTitle.translatesAutoresizingMaskIntoConstraints = false
             sectionTitle.font = UIFont(name: "Lato", size: 13)?.bold()
             sectionTitle.text = "TRANSACTION HISTORY"
@@ -413,6 +413,11 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             self?.isFetchingUserBalance = false
             self?.isNewDataAvailable = isSuccess
             self?.reloadDataIfNeeded()
+            
+            weak var homeVC: OstHomeViewController? = self?.tabbarController?.getUsersVC()
+            if nil != homeVC {
+                homeVC?.updateViewForUserActivated()
+            }
         }
     }
     

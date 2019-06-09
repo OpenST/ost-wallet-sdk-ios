@@ -236,7 +236,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     let infoLabel: UILabel = {
         var view = OstUIKit.leadLabel();
-        view.font = OstFontProvider().get(size: 14)
+        view.font = OstTheme.fontProvider.get(size: 14)
         view.textColor = UIColor.color(136, 136, 136)
         view.text = "This beta release enables users to join Brand Token economies, to send and receive tokens, and to access wallet security and recovery features.";
         view.backgroundColor = .clear;

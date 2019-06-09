@@ -77,7 +77,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
         label.isEditable = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = OstFontProvider().get(size: 12)
+        label.font = OstTheme.fontProvider.get(size: 12)
         label.textColor = UIColor.color(136, 136, 136)
         
         return label
@@ -104,7 +104,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
     }
     
     func setupTermsAndConditionLabel() {
-        let attributes: [NSAttributedString.Key : Any] = [.font: OstFontProvider().get(size: 12),
+        let attributes: [NSAttributedString.Key : Any] = [.font: OstTheme.fontProvider.get(size: 12),
                                                           .foregroundColor: UIColor.color(136, 136, 136) ]
         
         let attributedString = NSMutableAttributedString(string: "By Creating Your Wallet, you Agree to our\n",
@@ -113,13 +113,13 @@ class OstGetPinViewController: OstBaseScrollViewController {
         var termsAttributes: [NSAttributedString.Key : Any]  = attributes
         termsAttributes[.init("action")] = #selector(self.termsLabelTapped(attributes:))
         termsAttributes[.init("url")] = "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
-        termsAttributes[.font] = OstFontProvider().get(size: 12).bold()
+        termsAttributes[.font] = OstTheme.fontProvider.get(size: 12).bold()
         let termsAttributedString = NSAttributedString(string: "Terms of Service", attributes: termsAttributes)
         
         var privacyAttributes: [NSAttributedString.Key : Any]  = attributes
         privacyAttributes[.init("action")] = #selector(self.privacyLabelTapped(attributes:))
         privacyAttributes[.init("url")] = "https://ost.com/privacy"
-        privacyAttributes[.font] = OstFontProvider().get(size: 12).bold()
+        privacyAttributes[.font] = OstTheme.fontProvider.get(size: 12).bold()
         let privacyAttributedString = NSAttributedString(string: "Privacy Policy", attributes: privacyAttributes)
         
         attributedString.append(termsAttributedString)

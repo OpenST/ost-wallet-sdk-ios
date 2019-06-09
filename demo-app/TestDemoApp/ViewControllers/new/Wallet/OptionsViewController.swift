@@ -14,19 +14,57 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
 
     //MAKR: - Components
     var tableView: UITableView?
-    var tableHeaderView: UsersTableViewCell = {
+    
+    var tableHeaderView: UsersTableViewCell? = nil
+    func getTableHeaderView() -> UsersTableViewCell {
+        
+        if nil != tableHeaderView {
+            return tableHeaderView!
+        }
+        
         let view = UsersTableViewCell()
         
         view.sendButton?.isHidden = true
         view.sendButton?.setTitle("", for: .normal)
-        //        view.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.seperatorLine?.isHidden = true
-        view.backgroundColor = UIColor.color(239, 249, 250)
+        view.backgroundColor = UIColor.color(231, 243, 248)
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
         
+        let userData = ["username": CurrentUserModel.getInstance.userName ?? ""]
+        view.userData = userData
+        view.balanceLabel?.text =  CurrentUserModel.getInstance.ostUserId ?? ""
+        view.sendButton?.isHidden = true
+        
+        tableHeaderView = view
         return view
-    }()
+    }
+    
+    func tableFooterView() -> UIView {
+        let customView = UIView(frame: .zero)
+        customView.backgroundColor = UIColor.clear
+       
+        let titleLabel = UILabel()
+        titleLabel.numberOfLines = 0;
+        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = UIColor.color(159, 159, 159)
+        titleLabel.font = OstTheme.fontProvider.get(size: 14)
+        titleLabel.text  = "This app version of OST Wallet is a test running on testnet, and transactions do not involve real money."
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(titleLabel)
+
+        titleLabel.topAlignWithParent(multiplier: 1, constant: 20)
+        titleLabel.leftAlignWithParent(multiplier: 1, constant: 20)
+        titleLabel.rightAlignWithParent(multiplier: 1, constant: -20)
+        titleLabel.bottomAlignWithParent(multiplier: 1, constant: -20)
+        
+        return customView
+    }
     
     //MARK: - Variables
     var generalOptions = [OptionVM]()
@@ -62,28 +100,37 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         super.viewWillAppear(animated)
         setupTableViewModels()
         self.tabbarController?.showTabBar()
-        
-        setupTableHeaderView()
     }
     
     @objc override func tappedBackButton() {
         self.dismiss(animated: true, completion: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateViewForUserActivated(_:)),
+            name: NSNotification.Name(rawValue: "userActivated"),
+            object: nil)
+    }
+    
+    @objc func updateViewForUserActivated(_ notification: Notification) {
+        setupTableViewModels()
+    }
+    
     //MARK: - Create Views
     
     override func addSubviews() {
         setupNavigationBar()
-        setupTableHeaderView()
         createTabelView()
+        self.view.addSubview(getTableHeaderView())
     }
     
-    func setupTableHeaderView() {
-        let userData = ["username": CurrentUserModel.getInstance.userName ?? ""]
-        tableHeaderView.userData = userData
-        tableHeaderView.balanceLabel?.text =  CurrentUserModel.getInstance.ostUserId ?? ""
-    }
-    
+
     func createTabelView() {
         let loTableView = UITableView(frame: .zero, style: .plain)
         loTableView.delegate = self
@@ -92,8 +139,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         loTableView.rowHeight = UITableView.automaticDimension
         loTableView.estimatedRowHeight = 100
         loTableView.translatesAutoresizingMaskIntoConstraints = false
-        loTableView.tableHeaderView = tableHeaderView
-        loTableView.tableHeaderView?.frame.size = CGSize(width: loTableView.frame.width, height: CGFloat(77))
+        loTableView.tableFooterView = tableFooterView()
+        loTableView.tableFooterView?.frame.size = CGSize(width: loTableView.frame.width, height: CGFloat(100))
         
         tableView = loTableView
         self.view.addSubview(loTableView)
@@ -107,11 +154,19 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     //MAKR: - Apply Constraints
     override func addLayoutConstraints() {
+        applyTableHeadreViewConstraints()
         applyTableViewConstraints()
     }
     
+    func applyTableHeadreViewConstraints() {
+        tableHeaderView?.topAlignWithParent()
+        tableHeaderView?.leftAlignWithParent()
+        tableHeaderView?.rightAlignWithParent()
+        tableHeaderView?.setFixedHeight(multiplier: 1, constant: 77)
+    }
+    
     func applyTableViewConstraints() {
-        tableView?.topAlignWithParent()
+        tableView?.placeBelow(toItem: tableHeaderView!, constant: 0)
         tableView?.leftAlignWithParent()
         tableView?.rightAlignWithParent()
         tableView?.bottomAlignWithParent()
@@ -191,7 +246,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     func createGeneralOptionsArray() {
         let currentUser = CurrentUserModel.getInstance;
-        guard let userDevice = currentUser.currentDevice else {
+        guard let _ = currentUser.currentDevice else {
             BaseAPI.logoutUnauthorizedUser()
             return
         }
@@ -417,7 +472,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                                    presenter: self)
                 self.tabbarController?.hideTabBar()
             }else {
-                showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+                showInfoAlert(title: "Recovery not initiated, Abort recovery applies only if recovery has been previously initiated.")
             }
             
         }
@@ -434,11 +489,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                                                        delegate: workflowDelegate)
                 
             }else {
-                showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings",
-                              actionButtonTitle: "Open Settings") { (_) in
-                                
-                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                }
+                showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings") 
             }
         }
         

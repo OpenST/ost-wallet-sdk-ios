@@ -23,7 +23,7 @@ class OstPinInput: UIView, UITextFieldDelegate {
     public let verticalPadding:CGFloat = 10.0;
     public let gutterWidth:CGFloat = 24.0;
     public let dotEmptyColor = UIColor.color(199, 199, 204);
-    public let dotFilledColor = UIColor.color(154, 204, 154);
+    public let dotFilledColor = UIColor.color(22, 141, 193);
     public let wrapBackgroundColor = UIColor.white;
     public let pinLength = 6;
     public var delegate:OstPinInputDelegate?
