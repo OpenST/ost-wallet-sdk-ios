@@ -123,13 +123,16 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
          toAddresses: [String],
          amounts: [String],
          transactionMeta: [String: String],
+         waitForFinalization: Bool,
          delegate: OstWorkflowDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
         self.transactionMeta = transactionMeta
-        super.init(userId: userId, delegate: delegate)
+        super.init(userId: userId,
+                   shouldPoll: waitForFinalization,
+                   delegate: delegate)
     }
     
     /// Get workflow Queue
@@ -270,15 +273,35 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             
             try? self.activeSession!.incrementNonce()
             
+            var err: OstError? = nil
+            var tx: OstTransaction? = nil
+            let group = DispatchGroup()
+            group.enter()
+            
             try OstAPITransaction(userId: self.userId)
                 .executeTransaction(
                     params: params,
                     onSuccess: { (ostTransaction) in
-                        self.postRequestAcknowledged(entity: ostTransaction)
-                        self.pollingForTransaction(transaction: ostTransaction)
+                        tx = ostTransaction
+                        group.leave()
+                        
                 }) { (error) in
-                    self.fetchAllSessions()
-                    self.postError(error)
+                    err = error
+                    group.leave()
+            }
+            group.wait()
+            
+            if (nil != err) {
+                self.fetchAllSessions()
+                self.postError(err!)
+                return
+            }
+            
+            self.postRequestAcknowledged(entity: tx!)
+            if shouldPoll {
+                self.pollingForTransaction(transaction: tx!)
+            }else {
+                self.postWorkflowComplete(entity: tx!)
             }
         }catch let error {
             self.fetchSession(error: error as! OstError)

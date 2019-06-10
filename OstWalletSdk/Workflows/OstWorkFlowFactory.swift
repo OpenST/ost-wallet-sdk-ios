@@ -270,6 +270,7 @@ extension OstWalletSdk {
         amounts: [String],
         transactionType: OstExecuteTransactionType,
         meta: [String: String],
+        waitForFinalization: Bool = true,
         delegate: OstWorkflowDelegate) {
         
         let ruleName = transactionType.getQRText();
@@ -279,6 +280,7 @@ extension OstWalletSdk {
             toAddresses: tokenHolderAddresses,
             amounts: amounts,
             transactionMeta: meta,
+            waitForFinalization: waitForFinalization,
             delegate: delegate)
         
         executeTransactionFlow.perform()

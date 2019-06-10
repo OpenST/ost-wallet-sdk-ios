@@ -12,7 +12,9 @@ import Foundation
 
 class OstWorkflowEngine {
     static private let ostWorkflowEngineQueue = DispatchQueue(label: "com.ost.sdk.OstWorkflowEngine", qos: .userInitiated)
+   
     let userId: String
+    let shouldPoll: Bool
     weak var delegate: OstWorkflowDelegate?
     let workflowStateManager: OstWorkflowStateManager
     
@@ -33,9 +35,11 @@ class OstWorkflowEngine {
     ///   - userId: User id
     ///   - delegate: Callback
     init(userId: String,
+         shouldPoll: Bool = true,
          delegate: OstWorkflowDelegate) {
         
         self.userId = userId
+        self.shouldPoll = shouldPoll
         self.delegate = delegate
         self.workflowStateManager = OstWorkflowStateManager()
         
