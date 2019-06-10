@@ -228,7 +228,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     /// Device register completion callback.
     ///
     /// - Parameter apiResponse: API response from server.
-    public func deviceRegistered(_ apiResponse: [String : Any]) {
+    public func deviceRegistered(_ apiResponse: [String : Any]) throws {
         self.performState(OstRegisterDevice.DEVICE_REGISTERED, withObject: apiResponse)
     }
 }

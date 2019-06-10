@@ -65,9 +65,15 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         // else do not do it. Logout the user.
 
         DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
-            try? delegate.deviceRegistered( apiResponse! );
+            try! delegate.deviceRegistered( apiResponse! );
         }) { (apiError) in
-            delegate.cancelFlow();
+            if ( "ALREADY_EXISTS".caseInsensitiveCompare((apiError!["code"] as? String ?? "")) == .orderedSame ) {
+                var device = apiParams;
+                device["status"] = "REGISTERED";
+                try! delegate.deviceRegistered( device );
+            } else {
+                delegate.cancelFlow();
+            }
         }
     }
 
