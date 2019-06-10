@@ -411,7 +411,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         isFetchingUserBalance = true
         CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isSuccess, _, _) in
             self?.isFetchingUserBalance = false
-            self?.isNewDataAvailable = isSuccess
+            self?.isNewDataAvailable = true
             self?.reloadDataIfNeeded()
             
             weak var homeVC: OstHomeViewController? = self?.tabbarController?.getUsersVC()
