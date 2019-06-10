@@ -10,9 +10,11 @@
 
 import Foundation
 
-public protocol OstApiDelegate: AnyObject {}
+@objc public protocol OstApiDelegate: AnyObject {
+    
+}
 
-public protocol OstJsonApiDelegate: OstApiDelegate {
+@objc public protocol OstJsonApiDelegate: OstApiDelegate {
     func onOstJsonApiSuccess(data:[String:Any]?);
     func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 }
@@ -20,11 +22,11 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
 
 @objc public class OstJsonApi:NSObject {
     
-    public class func getResultType(apiData data:[String:Any]?) -> String? {
+    @objc public class func getResultType(apiData data:[String:Any]?) -> String? {
         return data?["result_type"] as? String;
     }
     
-    public class func getResultAsDictionary(apiData data:[String:Any]?) -> [String:Any]? {
+    @objc public class func getResultAsDictionary(apiData data:[String:Any]?) -> [String:Any]? {
         if ( nil != data ) {
             let resultType:String? = data?["result_type"] as? String;
             if ( nil != resultType ) {
@@ -34,7 +36,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         return nil;
     }
     
-    public class func getResultAsArray(apiData data:[String:Any]?) -> [Any]? {
+    @objc public class func getResultAsArray(apiData data:[String:Any]?) -> [Any]? {
         if ( nil != data ) {
             let resultType:String? = data?["result_type"] as? String;
             if ( nil != resultType ) {
@@ -44,7 +46,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         return nil;
     }
     
-    public class func getBalance(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
+    @objc public class func getBalance(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
         do {
             try OstAPIUser.init(userId: userId)
                 .getBalance(onSuccess: self.getApiSuccessCallback(delegate: delegate),
@@ -54,7 +56,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         }
     }
 
-    public class func getBalanceWithPriceOracle(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
+    @objc public class func getBalanceWithPriceOracle(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
         do {
             let failureCallback = self.getApiErrorCallback(delegate: delegate);
             try OstAPIUser.init(userId: userId).getBalance(onSuccess: { (balanceData) in
@@ -78,7 +80,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         }
     }
     
-    public class func getTransactions(forUserId userId:String, params:[String:Any], delegate:OstJsonApiDelegate) {
+    @objc public class func getTransactions(forUserId userId:String, params:[String:Any], delegate:OstJsonApiDelegate) {
         do {
             try OstAPIUser.init(userId: userId)
                 .getTransactions(params:params,
@@ -89,14 +91,14 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         }
     }
     
-    public class func getApiSuccessCallback(delegate:OstJsonApiDelegate) -> (([String: Any]?) -> Void) {
+    @objc public class func getApiSuccessCallback(delegate:OstJsonApiDelegate) -> (([String: Any]?) -> Void) {
         let callback: (([String: Any]?) -> Void) = { (data) in
             delegate.onOstJsonApiSuccess(data: data);
         };
         return callback;
     }
     
-    public class func getApiErrorCallback(delegate:OstJsonApiDelegate) -> (([String: Any]?) -> Void) {
+    @objc public class func getApiErrorCallback(delegate:OstJsonApiDelegate) -> (([String: Any]?) -> Void) {
         let callback: (([String: Any]?) -> Void) = { (failureResponse) in
             let error = OstApiError.init(fromApiResponse: failureResponse!);
             var errorData:[String:Any]? = nil;
@@ -108,7 +110,7 @@ public protocol OstJsonApiDelegate: OstApiDelegate {
         return callback;
     }
     
-    public class func getPendingRecovery(forUserId userId:String, delegate:OstJsonApiDelegate) {
+    @objc public class func getPendingRecovery(forUserId userId:String, delegate:OstJsonApiDelegate) {
         do {
             try OstAPIDevice(userId: userId)
                 .getJsonPendingRecovery(params: nil,
