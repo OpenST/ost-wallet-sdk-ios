@@ -1,8 +1,8 @@
 # OST Wallet SDK Changelog
 
-# OST Wallet SDK 2.0.5
+## Version 2.0.5
 
-## Bug fixes
+### Changes:
 Remove `carthage copy-frameworks` script from the `Build Phases`.
 
 ## Version 2.0.4
