@@ -45,10 +45,10 @@ public class OstUtils {
         
         if val is String {
             let value = val as! String
-            if value == "true" || value == "YES" {
+            if value == "true" || value == "YES" || value == "1" {
                 return true
             }
-            else if value == "false" || value == "NO" {
+            else if value == "false" || value == "NO" || value == "0"{
                 return false
             }
         }

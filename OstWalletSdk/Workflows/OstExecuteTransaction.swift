@@ -161,7 +161,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         
         var waitForFinalization = true
         if let lWaitForFinalization = options[OstExecuteTransaction.WAIT_FOR_FINALIZATION] {
-            waitForFinalization = OstUtils.toBool(lWaitForFinalization) as! Bool
+            waitForFinalization = OstUtils.toBool(lWaitForFinalization)!
         }
         super.init(userId: userId,
                    shouldPoll: waitForFinalization,
