@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var temp:[UIApplication.LaunchOptionsKey: Any]? = nil;
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
+//        Fabric.with([Crashlytics.self])
         showIntroController(fetchUser: true)
         IQKeyboardManager.shared.enable = true
         temp = launchOptions;
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let urlPath = url.path;
             //1. Ensure path begins with /demo-wallet/
             //2. Ensure action is present.
-            if ( !urlPath.hasPrefix( "/demo-wallet/") || url.pathComponents.count < 3 ) {
+            if ( !urlPath.hasPrefix( "/ost-wallet/") || url.pathComponents.count < 3 ) {
                 return true;
             }
             webPageUrl = AppUrlData(url: url);

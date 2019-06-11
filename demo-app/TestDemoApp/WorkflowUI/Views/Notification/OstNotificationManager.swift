@@ -51,10 +51,15 @@ class OstNotificationManager {
         let workflowContext = notificationModel.workflowContext
         if let error = notificationModel.error,
             error.messageTextCode == .userCanceled {
+            
             return false
         }
         
         if workflowContext.workflowType == .activateUser {
+            return true
+        }
+        
+        if workflowContext.workflowType == .executeTransaction {
             return true
         }
         

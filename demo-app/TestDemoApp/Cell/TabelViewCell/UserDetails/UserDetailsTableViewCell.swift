@@ -19,7 +19,7 @@ class UserDetailsTableViewCell: BaseTableViewCell {
     //MARK: - Components
     var titleLabel: UILabel = {
         let view =  UILabel()
-        view.font = OstFontProvider().get(size: 13).bold()
+        view.font = OstTheme.fontProvider.get(size: 13).bold()
         view.textAlignment = .left
         view.textColor = UIColor.black.withAlphaComponent(0.4)
         
@@ -30,7 +30,7 @@ class UserDetailsTableViewCell: BaseTableViewCell {
     
     var infoText: UILabel = {
         let view =  UILabel()
-        view.font = OstFontProvider().get(size: 15)
+        view.font = OstTheme.fontProvider.get(size: 15)
         view.textAlignment = .left
         view.textColor = UIColor.color(52, 68, 91)
         

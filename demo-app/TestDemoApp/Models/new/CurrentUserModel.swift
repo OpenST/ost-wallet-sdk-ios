@@ -43,6 +43,8 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     func logoutUser() {
         self.userDetails = nil
+        pricePoint = nil
+        userBalanceDetails = nil
     }
     
     func logout() {
@@ -385,7 +387,7 @@ extension CurrentUserModel {
         
         let btToOstVal = (doubleValue/doubleConversionFactor)
     
-        return String(usdValue * btToOstVal)
+        return (usdValue * btToOstVal).avoidNotation
     }
     
     func toBt(value: String) -> String? {

@@ -48,6 +48,11 @@ class OptionTableViewCell: BaseTableViewCell {
             }else {
                 titleLabel.alpha = 0.3
             }
+            
+            self.seperatorLine.isHidden = false
+            if option.type == .logout {
+                self.seperatorLine.isHidden = true
+            }
         }
     }
     

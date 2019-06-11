@@ -57,17 +57,13 @@ class OstBundle {
     ///
     /// - Returns: version string
     class func getSdkVersion() -> String  {
-        do {
-            let ostBundle = OstBundle()
-            let bundleObj = ostBundle.getSdkBundle()
-            let version = try ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
-                                                       fromFile: "Info",
-                                                       withExtension: "plist",
-                                                       inBundle: bundleObj)
-            return (version as? String) ?? ""
-        }catch {
-            return ""
-        }
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getSdkBundle()
+        let version = ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
+                                                   fromFile: "Info",
+                                                   withExtension: "plist",
+                                                   inBundle: bundleObj)
+        return (version as? String) ?? ""
     }
     
     //MARK: Private Methods

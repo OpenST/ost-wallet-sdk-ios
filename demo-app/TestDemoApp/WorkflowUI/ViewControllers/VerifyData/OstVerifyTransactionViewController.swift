@@ -30,7 +30,15 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let currentUser = CurrentUserModel.getInstance
-
+        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
+            ruleType = OstExecuteTransactionType.DirectTransfer
+            self.balanceLabel.text = "Balance: \(currentUser.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
+        }
+        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
+            ruleType = OstExecuteTransactionType.Pay
+            let balance: String = currentUser.toUSD(value: currentUser.balance) ?? "0"
+            self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
+        }
         
         var transferBalance: Double = Double(0)
         
@@ -54,17 +62,13 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
             }
         }
         
-        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
-            ruleType = OstExecuteTransactionType.DirectTransfer
-            self.balanceLabel.text = "Balance: \(currentUser.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")";
-            self.ruleNameValueLabel.text = "Direct Transfer";
-            validateBalanceForDirectTransfer(transferBalance: transferBalance);
-        }
-        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
-            ruleType = OstExecuteTransactionType.Pay
-            let balance: String = currentUser.toUSD(value: currentUser.balance) ?? "0"
-            self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
-            self.ruleNameValueLabel.text = "Pricer";
+        switch ruleType! {
+        case .DirectTransfer:
+            self.ruleNameValueLabel.text = "Direct Transfer"
+            validateBalanceForDirectTransfer(transferBalance: transferBalance)
+            
+        case .Pay:
+            self.ruleNameValueLabel.text = "Pricer"
             validateBalanceForPricer(transferBalance: transferBalance)
         }
     }
@@ -98,7 +102,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let detailsLabel: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 15).bold()
+        view.font = OstTheme.fontProvider.get(size: 15).bold()
         view.textColor = UIColor.black.withAlphaComponent(0.4)
         view.text = "Details"
         view.textAlignment = .left
@@ -110,7 +114,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let balanceLabel: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 12)
+        view.font = OstTheme.fontProvider.get(size: 12)
         view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .right
         
@@ -121,7 +125,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let transferContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.color(239, 239, 239, 0.3)
+        view.backgroundColor = UIColor.color(231, 243, 248)
         view.layer.cornerRadius = 5
         view.clipsToBounds = true
         
@@ -132,7 +136,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let ruleNameLable: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 12)
+        view.font = OstTheme.fontProvider.get(size: 12)
         view.textColor = UIColor.color(155, 155, 155)
         view.text = "Rule Name"
         view.textAlignment = .right
@@ -144,7 +148,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let ruleNameValueLabel: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 12)
+        view.font = OstTheme.fontProvider.get(size: 12)
         view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .right
         
@@ -164,7 +168,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let sendToLable: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 12)
+        view.font = OstTheme.fontProvider.get(size: 12)
         view.textColor = UIColor.color(155, 155, 155)
         view.text = "Send to"
         view.textAlignment = .left
@@ -176,7 +180,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     let errorLabel: UILabel = {
         let view = UILabel()
-        view.font = OstFontProvider().get(size: 11)
+        view.font = OstTheme.fontProvider.get(size: 11)
         view.textColor = UIColor.color(222, 53, 11)
         view.textAlignment = .left
         
@@ -236,7 +240,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     func getAddressLabel() -> UILabel {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = OstFontProvider().get(size: 13)
+        view.font = OstTheme.fontProvider.get(size: 13)
         view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .left
         
@@ -248,7 +252,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     func getBalanceLabel() -> UILabel {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = OstFontProvider().get(size: 14).bold()
+        view.font = OstTheme.fontProvider.get(size: 14).bold()
         view.textColor = UIColor.color(52, 68, 91)
         view.textAlignment = .right
         
@@ -323,6 +327,8 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         addSubview(errorLabel)
         addSubview(authorizeButton)
         addSubview(denyButton)
+        
+        denyButton.isHidden = true
     }
     
     override func addLayoutConstraints() {
@@ -345,7 +351,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         addAuthorizeButtonLayoutConstraints()
         addDenyButtonLayoutConstraints()
         
-        let lastView = denyButton
+        let lastView = authorizeButton
         lastView.bottomAlignWithParent()
     }
     

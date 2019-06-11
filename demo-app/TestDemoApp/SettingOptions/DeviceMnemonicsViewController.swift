@@ -86,7 +86,7 @@ class DeviceMnemonicsViewController: BaseSettingOptionsSVViewController, UIColle
         label.text = tipLabelText
         label.textAlignment = .left
         label.textColor = UIColor.color(136, 136, 136)
-        label.font = OstFontProvider().get(size: 14)
+        label.font = OstTheme.fontProvider.get(size: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         tipLabel = label

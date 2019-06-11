@@ -18,7 +18,6 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -71,6 +70,10 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             selector: #selector(self.updateUserData(_:)),
             name: NSNotification.Name(rawValue: "updateUserDataForTransaction"),
             object: nil)
+    }
+    
+    func updateViewForUserActivated() {
+        self.usersTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -182,9 +185,13 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             if self.tableDataArray.count > indexPath.row {
                 let userDetails = self.tableDataArray[indexPath.row]
                 userCell.userData = userDetails
-                if let appUserId = ConversionHelper.toString(userDetails["app_user_id"]) {
+               
+                if isCurrentUser(userDetails) {
+                    userCell.userBalance = CurrentUserModel.getInstance.userBalanceDetails ?? [:]
+                }
+                else if let appUserId = ConversionHelper.toString(userDetails["app_user_id"]) {
                     userCell.userBalance = self.userBalances[appUserId] as? [String: Any] ?? [:]
-                }else {
+                } else {
                     userCell.userBalance = [:]
                 }
                 
@@ -235,6 +242,15 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
             }
         default:
             return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userData = tableDataArray[indexPath.row]
+        if let appUserId = ConversionHelper.toString(userData["app_user_id"]) {
+            if appUserId.caseInsensitiveCompare(CurrentUserModel.getInstance.appUserId ?? "")  == .orderedSame {
+                self.tabbarController?.jumpToWalletVC()
+            }
         }
     }
     
@@ -366,11 +382,15 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
                 let strAppUserId = ConversionHelper.toString(appUserId),
                 consumedUserData[strAppUserId] == nil {
                 
-                consumedUserData[strAppUserId] = user
-                newUsersData.append(user)
-                if let tokenHolderAddress = user["token_holder_address"] as? String,
+                if isCurrentUser(user) {
+                    consumedUserData[strAppUserId] = user
+                    newUsersData.append(user)
+                }
+                else if let tokenHolderAddress = user["token_holder_address"] as? String,
                     !["", "<null>"].contains(tokenHolderAddress) {
                     tokenHolderAddressesMap[tokenHolderAddress] = strAppUserId
+                    consumedUserData[strAppUserId] = user
+                    newUsersData.append(user)
                 }
             }
         }
@@ -486,5 +506,16 @@ class OstHomeViewController: OstBaseViewController, UITableViewDelegate, UITable
         sendTokendsVC.userDetails = userDetails
         tabbarController?.hideTabBar()
         sendTokendsVC.pushViewControllerOn(self, animated: true)
+    }
+    
+    func isCurrentUser(_ userData: [String: Any]) -> Bool {
+        if let appUserId = userData["app_user_id"],
+            let strAppUserId = ConversionHelper.toString(appUserId) {
+            
+            if strAppUserId.caseInsensitiveCompare(CurrentUserModel.getInstance.appUserId ?? "") == .orderedSame {
+               return true
+            }
+        }
+        return false
     }
 }

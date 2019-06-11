@@ -78,6 +78,7 @@ class TabBarViewController: UITabBarController {
         //SettingsVC
         let settingVC = OptionsViewController()
         settingVC.tabbarController = self
+        settingVC.registerObserver()
         let settingsNavController = UINavigationController(rootViewController: settingVC)
         settingsNavController.tabBarItem = UITabBarItem(title: "Settings",
                                                         image: UIImage(named: "settingImage"),

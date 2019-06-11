@@ -79,24 +79,22 @@ class BiometricIDAuth {
     ///
     /// - Returns: Boolean
     private func canEvaluatePolicy() -> Bool {
-        var canDeviceEvaluatePolicy: Bool = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        let canDeviceEvaluatePolicy: Bool = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
         if canDeviceEvaluatePolicy {
             if #available(iOS 11.0, *) {
                 switch self.context.biometryType {
                 case .none:
-                    canDeviceEvaluatePolicy = false
+                    return false
                     
                 case .faceID:
-                    do {
-                        _ = try OstBundle
-                            .getApplicationPlistContent(for: OstBundle.PermissionKey.NSFaceIDUsageDescription.rawValue,
+                    let content = OstBundle.getApplicationPlistContent(for: OstBundle.PermissionKey.NSFaceIDUsageDescription.rawValue,
                                                         fromFile: "Info")
-                    }catch {
-                        canDeviceEvaluatePolicy = false
+                    if ( nil == content ) {
+                        return false
                     }
-                    
+                    break;
                 case .touchID:
-                    canDeviceEvaluatePolicy = true
+                    return true
                 }
             }
         }

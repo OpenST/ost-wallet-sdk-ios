@@ -30,6 +30,14 @@ class UsersTableViewCell: BaseTableViewCell {
         
         let tokenHolderAddress: String? = userData["token_holder_address"] as? String
         self.sendButton?.isEnabled = tokenHolderAddress == nil ? false : true
+        
+        self.sendButton?.isHidden = false
+        if let appUserId = ConversionHelper.toString(userData["app_user_id"]) {
+            if appUserId.caseInsensitiveCompare(CurrentUserModel.getInstance.appUserId ?? "")  == .orderedSame {
+                 self.sendButton?.isHidden = true
+            }
+        }
+        
     }
     
     var userBalance: [String: Any]! {
@@ -71,6 +79,8 @@ class UsersTableViewCell: BaseTableViewCell {
         createDetailsContainerView()
         createDetailsContainerView()
         createSendButton()
+        
+        self.selectionStyle = .none
     }
     
     func createCircularView() {
@@ -87,7 +97,7 @@ class UsersTableViewCell: BaseTableViewCell {
         let letter = UILabel()
         letter.textColor = UIColor.color(136, 136, 136)
         letter.numberOfLines = 1
-        letter.font = OstFontProvider().get(size: 20).bold()
+        letter.font = OstTheme.fontProvider.get(size: 20).bold()
     
         self.initialLetter = letter
         circularView!.addSubview(letter)
@@ -105,8 +115,8 @@ class UsersTableViewCell: BaseTableViewCell {
         let nameLabel = UILabel()
         nameLabel.numberOfLines = 0
         nameLabel.textAlignment = .left
-        nameLabel.textColor = UIColor.black
-        nameLabel.font = OstFontProvider().get(size: 16)
+        nameLabel.textColor = UIColor.color(52, 68, 91)
+        nameLabel.font = OstTheme.fontProvider.get(size: 16)
         self.titleLabel = nameLabel
     }
     
@@ -115,7 +125,7 @@ class UsersTableViewCell: BaseTableViewCell {
         loBalanaceLabel.numberOfLines = 0
         loBalanaceLabel.textAlignment = .left
         loBalanaceLabel.textColor = UIColor.darkGray
-        loBalanaceLabel.font = OstFontProvider().get(size: 13)
+        loBalanaceLabel.font = OstTheme.fontProvider.get(size: 13)
         self.balanceLabel = loBalanaceLabel
     }
     
@@ -130,7 +140,7 @@ class UsersTableViewCell: BaseTableViewCell {
     }
     
     func createSendButton() {
-        let button = OstUIKit.secondaryButton()
+        let button = OstUIKit.primaryButton()
         button.setTitle("SEND", for: .normal)
         weak var weakSelf = self
         button.addTarget(weakSelf, action: #selector(weakSelf!.sendButtonTapped(_:)), for: .touchUpInside)

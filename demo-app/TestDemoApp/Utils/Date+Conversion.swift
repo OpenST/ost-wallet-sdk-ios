@@ -14,7 +14,7 @@ extension Date {
     
     func getFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
+//        dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         
         return dateFormatter

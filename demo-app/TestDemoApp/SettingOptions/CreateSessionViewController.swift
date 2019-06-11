@@ -31,7 +31,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         textField.clearButtonMode = .never
         textField.placeholderLabel.text = "Unit"
         textField.text = CurrentEconomy.getInstance.tokenSymbol ?? ""
-        textField.font = OstFontProvider().get(size: 15)
+        textField.font = OstTheme.fontProvider.get(size: 15)
         return textField
     }()
     var spendingUnitTextFieldController: MDCTextInputControllerOutlined? = nil
