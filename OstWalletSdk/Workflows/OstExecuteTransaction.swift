@@ -28,6 +28,7 @@ import BigInt
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
     static let CURRENCY_CODE = "currency_code"
+    static let WAIT_FOR_FINALIZATION = "waitForFinalization"
     
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
@@ -37,7 +38,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         addresses: [String],
         amounts: [String],
         tokenId: String,
-        ruleData: [String: String])
+        options: [String: Any])
     
     /// Rule name
     private static let PAYLOAD_RULE_NAME_KEY = "rn"
@@ -48,7 +49,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     /// Token id
     private static let PAYLOAD_TOKEN_ID_KEY = "tid"
     /// Rule data
-    private static let PAYLOAD_RULE_DATA_ID_KEY = "rd"
+    private static let PAYLOAD_OPTIONS_ID_KEY = "o"
    
     // Transaction
     private static let META_PAYLOAD_TRANSACTION_NAME_KEY = "tn"
@@ -81,18 +82,18 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         
-        var ruleData: [String: String] = [:]
-        if let ruleD = payload[OstExecuteTransaction.PAYLOAD_RULE_DATA_ID_KEY] as? [String: String],
-            let currencySymbol = ruleD[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+        var options: [String: String] = [:]
+        if let optionsD = payload[OstExecuteTransaction.PAYLOAD_OPTIONS_ID_KEY] as? [String: String],
+            let currencySymbol = optionsD[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
             
-            ruleData[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
+            options[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
         }
         
         return (ruleName,
                 addresses,
                 amounts,
                 tokenId,
-                ruleData)
+                options)
     }
     
     
@@ -123,7 +124,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let amounts: [String]
     private let ruleName: String
     private let transactionMeta: [String: String]
-    private let ruleData: [String: String]
+    private var currencyCode: String = OstConfig.getPricePointCurrencySymbol()
     
     private var rule: OstRule? = nil
     private var activeSession: OstSession? = nil
@@ -147,15 +148,21 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
          toAddresses: [String],
          amounts: [String],
          transactionMeta: [String: String],
-         ruleData: [String: String],
-         waitForFinalization: Bool,
+         options: [String: Any],
          delegate: OstWorkflowDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
         self.transactionMeta = transactionMeta
-        self.ruleData = ruleData
+        if let lCurrencyCode = options[OstExecuteTransaction.CURRENCY_CODE] {
+            self.currencyCode = OstUtils.toString(lCurrencyCode)!
+        }
+        
+        var waitForFinalization = true
+        if let lWaitForFinalization = options[OstExecuteTransaction.WAIT_FOR_FINALIZATION] {
+            waitForFinalization = OstUtils.toBool(lWaitForFinalization) as! Bool
+        }
         super.init(userId: userId,
                    shouldPoll: waitForFinalization,
                    delegate: delegate)
@@ -289,11 +296,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     ///
     /// - Returns: Currency symbol. default: value present for `PricePointCurrencySymbol` in `OstWalletSdk.plist`
     private func getPricePointCurrencySymbol() -> String {
-        if let currencySymbol: String = ruleData[OstExecuteTransaction.CURRENCY_CODE] {
-                return currencySymbol
-        }
-       
-        return OstConfig.getPricePointCurrencySymbol()
+       return currencyCode
     }
     
     /// Execute transaction.

@@ -158,8 +158,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                          toAddresses: executeTxPayloadParams.addresses,
                                          amounts: executeTxPayloadParams.amounts,
                                          transactionMeta: self.meta as! [String : String],
-                                         ruleData: executeTxPayloadParams.ruleData,
-                                         waitForFinalization: true,
+                                         options: executeTxPayloadParams.options,
                                          delegate: self.delegate!)
             
         default:

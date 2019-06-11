@@ -276,9 +276,8 @@ extension OstWalletSdk {
                                         tokenHolderAddresses: tokenHolderAddresses,
                                         amounts: amounts,
                                         transactionType: transactionType,
-                                        ruleData: [:],
                                         meta: meta,
-                                        waitForFinalization: true,
+                                        options: [:],
                                         delegate: delegate)
     }
     
@@ -303,10 +302,10 @@ extension OstWalletSdk {
     ///   - tokenHolderAddresses: Addresses to transfer fund
     ///   - amounts: Amounts to transfer
     ///   - transactionType: Type of transaction to execute. Either **ExecuteTransactionTypeDirectTransfer** or **ExecuteTransactionTypePay**.
-    ///   - ruleData: rule data to hold info of rule name. Refer `ruleData Discussion`
     ///   - meta: Refer `meta Discussion` for example
     ///     * name: Name of transaction
     ///     * type: It could be *user_to_user* or *company_to_user*
+    ///   - options: Options for execute transaction
     ///   - delegate: Callback
     @objc
     public class func executeTransaction(
@@ -314,9 +313,8 @@ extension OstWalletSdk {
         tokenHolderAddresses: [String],
         amounts: [String],
         transactionType: OstExecuteTransactionType,
-        ruleData: [String: String]? = nil,
         meta: [String: String],
-        waitForFinalization: Bool = true,
+        options: [String: Any],
         delegate: OstWorkflowDelegate) {
         
         let ruleName = transactionType.getQRText();
@@ -326,8 +324,7 @@ extension OstWalletSdk {
             toAddresses: tokenHolderAddresses,
             amounts: amounts,
             transactionMeta: meta,
-            ruleData: ruleData ?? [:],
-            waitForFinalization: waitForFinalization,
+            options: options,
             delegate: delegate)
         
         executeTransactionFlow.perform()
