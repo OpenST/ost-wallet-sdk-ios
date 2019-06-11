@@ -1,5 +1,10 @@
 # OST Wallet SDK Changelog
 
+## Version 2.0.5
+
+### Changes:
+Remove `carthage copy-frameworks` script from the `Build Phases`.
+
 ## Version 2.0.4
 ### Changes: 
 * Removed integer support for solidity SHA-3 to enable SDK compilation with Xcode 10.2.1
