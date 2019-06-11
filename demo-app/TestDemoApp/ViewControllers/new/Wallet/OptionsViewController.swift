@@ -320,13 +320,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             transactionViaQR.isEnable = false
         }
         
-        let initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: true)
-        if currentUser.isCurrentDeviceStatusAuthrozied
-            || currentUser.isCurrentDeviceStatusAuthrozied
-            || (currentUser.isCurrentUserStatusActivating ?? false)
-            || (currentUser.ostUser?.isStatusActivated ?? false) {
-            
-            initialRecovery.isEnable = false
+        let initialRecovery = OptionVM(type: .initiateDeviceRecovery, name: "Initiate Recovery", isEnable: false)
+        if (currentUser.currentDevice?.isStatusRegistered ?? false)
+            && ((currentUser.isCurrentUserStatusActivated ?? false) ) {
+            initialRecovery.isEnable = true
         }
         
         self.abortRecoveryOption?.isEnable = false
