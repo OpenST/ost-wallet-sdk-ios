@@ -11,7 +11,7 @@
 import Foundation
 import BigInt
 
-@objc public enum OstExecuteTransactionType:Int {
+@objc public enum OstExecuteTransactionType: Int {
     case DirectTransfer
     case Pay
     
@@ -27,26 +27,38 @@ import BigInt
 
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
+    static let CURRENCY_CODE = "currency_code"
+    
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
     typealias ExecuteTransactionPayloadParams =
-        (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
+        (ruleName: String,
+        addresses: [String],
+        amounts: [String],
+        tokenId: String,
+        ruleData: [String: String])
     
     /// Rule name
     private static let PAYLOAD_RULE_NAME_KEY = "rn"
     /// Token holder addresses
     private static let PAYLOAD_ADDRESSES_KEY = "ads"
-    /// amounts to transfer
+    /// Amounts to transfer
     private static let PAYLOAD_AMOUNTS_KEY = "ams"
-    /// token id
+    /// Token id
     private static let PAYLOAD_TOKEN_ID_KEY = "tid"
-    // transaction
+    /// Rule data
+    private static let PAYLOAD_RULE_DATA_ID_KEY = "rd"
+   
+    // Transaction
     private static let META_PAYLOAD_TRANSACTION_NAME_KEY = "tn"
-    // transaction type
+    // Transaction type
     private static let META_PAYLOAD_TRANSACTION_TYPE_KEY = "tt"
-    // transaction detail
+    // Transaction detail
     private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
+    
+    // currency symbol
+    private static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -69,7 +81,18 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         
-        return (ruleName, addresses, amounts, tokenId)
+        var ruleData: [String: String] = [:]
+        if let ruleD = payload[OstExecuteTransaction.PAYLOAD_RULE_DATA_ID_KEY] as? [String: String],
+            let currencySymbol = ruleD[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+            
+            ruleData[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
+        }
+        
+        return (ruleName,
+                addresses,
+                amounts,
+                tokenId,
+                ruleData)
     }
     
     
@@ -100,6 +123,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let amounts: [String]
     private let ruleName: String
     private let transactionMeta: [String: String]
+    private let ruleData: [String: String]
     
     private var rule: OstRule? = nil
     private var activeSession: OstSession? = nil
@@ -123,6 +147,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
          toAddresses: [String],
          amounts: [String],
          transactionMeta: [String: String],
+         ruleData: [String: String],
          waitForFinalization: Bool,
          delegate: OstWorkflowDelegate) {
         
@@ -130,6 +155,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         self.amounts = amounts
         self.ruleName = ruleName
         self.transactionMeta = transactionMeta
+        self.ruleData = ruleData
         super.init(userId: userId,
                    shouldPoll: waitForFinalization,
                    delegate: delegate)
@@ -257,6 +283,17 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         
         self.eip1077Hash = try self.activeSession!.getEIP1077Hash(transaction)
         self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
+    }
+    
+    /// Get price point currency symbol.
+    ///
+    /// - Returns: Currency symbol. default: value present for `PricePointCurrencySymbol` in `OstWalletSdk.plist`
+    private func getPricePointCurrencySymbol() -> String {
+        if let currencySymbol: String = ruleData[OstExecuteTransaction.CURRENCY_CODE] {
+                return currencySymbol
+        }
+       
+        return OstConfig.getPricePointCurrencySymbol()
     }
     
     /// Execute transaction.
@@ -470,7 +507,7 @@ extension OstExecuteTransaction {
                                                      from: self.currentUser!.tokenHolderAddress!,
                                                      toAddresses: self.toAddresses,
                                                      amounts: self.amounts,
-                                                     currencyCode: OstConfig.getPricePointCurrencySymbol(),
+                                                     currencyCode: getPricePointCurrencySymbol(),
                                                      currencyPrice: currencyPriceInWei.description
         )
     }
@@ -481,18 +518,22 @@ extension OstExecuteTransaction {
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
-            throw OstError("w_et_gcviw_1", .invalidAmount)
+            throw OstError("w_et_gppiw_1", .invalidAmount)
         }
         
         guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
-            throw OstError("w_et_gcviw_2", .pricePointNotFound)
+            throw OstError("w_et_gppiw_2", .pricePointNotFound)
         }
         
-        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePointValue = fiatPricePoint[getPricePointCurrencySymbol()] else {
+            throw OstError("w_et_gppiw_3", .invalidPricePointCurrencySymbol )
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePointValue as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
         guard let decimal = OstUtils.toInt(fiatPricePoint["decimals"] as Any) else {
-            throw OstError("w_et_gcviw_3", .callDataFormationFailed)
+            throw OstError("w_et_gppiw_4", .callDataFormationFailed)
         }
         
         let finalExponentComponent = decimal + components.exponent
@@ -523,7 +564,11 @@ extension OstExecuteTransaction {
         guard let fiatDecimal = OstUtils.toInt(fiatPricePoint["decimals"]) else {
             throw OstError("w_et_gtviwfp_5", .pricePointNotFound)
         }
-        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePointValue = fiatPricePoint[getPricePointCurrencySymbol()] else {
+            throw OstError("w_et_gtviwfp_6", .invalidPricePointCurrencySymbol)
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePointValue as! CVarArg)
         
         for amount in self.amounts {
             let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
@@ -546,7 +591,7 @@ extension OstExecuteTransaction {
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
                                                          self.toAddresses,
                                                          self.amounts,
-                                                         OstConfig.getPricePointCurrencySymbol(),
+                                                         getPricePointCurrencySymbol(),
                                                          currencyPriceInWei.description]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }

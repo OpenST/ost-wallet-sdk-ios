@@ -249,9 +249,9 @@ extension OstWalletSdk {
     ///````
     /// meta:
     /// [
-    ///   "name":"Thanks for like",
+    ///   "name":"like",
     ///   "type": "user_to_user",
-    ///   "details": "like"
+    ///   "details": "Thanks for like"
     /// ]
     ///````
     /// - Parameters:
@@ -270,6 +270,52 @@ extension OstWalletSdk {
         amounts: [String],
         transactionType: OstExecuteTransactionType,
         meta: [String: String],
+        delegate: OstWorkflowDelegate) {
+        
+        OstWalletSdk.executeTransaction(userId: userId,
+                                        tokenHolderAddresses: tokenHolderAddresses,
+                                        amounts: amounts,
+                                        transactionType: transactionType,
+                                        ruleData: [:],
+                                        meta: meta,
+                                        waitForFinalization: true,
+                                        delegate: delegate)
+    }
+    
+    /// Execute transaction
+    ///````
+    /// meta:
+    /// [
+    ///   "name":"like",
+    ///   "type": "user_to_user",
+    ///   "details": "Thanks for like"
+    /// ]
+    ///````
+    ///````
+    /// ruleData:
+    /// [
+    ///  "currency_code": "USD" //default 'USD'
+    /// ]
+    ///
+    ///````
+    /// - Parameters:
+    ///   - userId: User id
+    ///   - tokenHolderAddresses: Addresses to transfer fund
+    ///   - amounts: Amounts to transfer
+    ///   - transactionType: Type of transaction to execute. Either **ExecuteTransactionTypeDirectTransfer** or **ExecuteTransactionTypePay**.
+    ///   - ruleData: rule data to hold info of rule name. Refer `ruleData Discussion`
+    ///   - meta: Refer `meta Discussion` for example
+    ///     * name: Name of transaction
+    ///     * type: It could be *user_to_user* or *company_to_user*
+    ///   - delegate: Callback
+    @objc
+    public class func executeTransaction(
+        userId: String,
+        tokenHolderAddresses: [String],
+        amounts: [String],
+        transactionType: OstExecuteTransactionType,
+        ruleData: [String: String]? = nil,
+        meta: [String: String],
         waitForFinalization: Bool = true,
         delegate: OstWorkflowDelegate) {
         
@@ -280,6 +326,7 @@ extension OstWalletSdk {
             toAddresses: tokenHolderAddresses,
             amounts: amounts,
             transactionMeta: meta,
+            ruleData: ruleData ?? [:],
             waitForFinalization: waitForFinalization,
             delegate: delegate)
         
