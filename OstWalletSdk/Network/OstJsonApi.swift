@@ -90,7 +90,7 @@ import Foundation
         }
     }
     
-    @objc public class func getTransactions(forUserId userId:String, params:[String:Any], delegate:OstJsonApiDelegate) {
+    @objc public class func getTransactions(forUserId userId:String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
         do {
             try OstAPIUser.init(userId: userId)
                 .getTransactions(params:params,
