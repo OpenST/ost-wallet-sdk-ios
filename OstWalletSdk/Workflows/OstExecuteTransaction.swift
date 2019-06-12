@@ -27,7 +27,7 @@ import BigInt
 
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
-    static let CURRENCY_CODE = "currency_code"
+    static let CURRENCY_CODE = "currencyCode"
     static let WAIT_FOR_FINALIZATION = "waitForFinalization"
     
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
