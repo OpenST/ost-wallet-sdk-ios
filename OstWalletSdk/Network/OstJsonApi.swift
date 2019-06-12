@@ -46,7 +46,7 @@ import Foundation
         return nil;
     }
     
-    @objc public class func getBalance(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
+    @objc public class func getBalance(forUserId userId:String, delegate:OstJsonApiDelegate) {
         do {
             try OstAPIUser.init(userId: userId)
                 .getBalance(onSuccess: self.getApiSuccessCallback(delegate: delegate),
@@ -55,8 +55,18 @@ import Foundation
             delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
         }
     }
+    
+    @objc public class func getPricePoint(forUserId userId:String, delegate:OstJsonApiDelegate) {
+        do {
+            try OstAPIChain(userId: userId)
+                .getPricePointData(onSuccess: self.getApiSuccessCallback(delegate: delegate),
+                               onFailure: self.getApiErrorCallback(delegate: delegate))
+        } catch let error {
+            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+        }
+    }
 
-    @objc public class func getBalanceWithPriceOracle(forUserId userId:String, fetchPriceOracle:Bool = true, delegate:OstJsonApiDelegate) {
+    @objc public class func getBalanceWithPricePoint(forUserId userId:String, delegate:OstJsonApiDelegate) {
         do {
             let failureCallback = self.getApiErrorCallback(delegate: delegate);
             try OstAPIUser.init(userId: userId).getBalance(onSuccess: { (balanceData) in

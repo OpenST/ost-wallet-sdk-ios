@@ -21,6 +21,25 @@ class OstAPIChain: OstAPIBase {
         super.init(userId: userId)
     }
     
+    func getChainId() throws -> String {
+        // Get current user
+        guard let user: OstUser = try OstUser.getById(self.userId) else {
+            throw OstError("n_ac_gci_1", .sdkError)
+        }
+        
+        // Get token associated with the user
+        guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
+            throw OstError("n_ac_gci_2", .sdkError)
+        }
+        
+        let chainId: String? = token.auxiliaryChainId
+        if (chainId == nil || chainId!.isEmpty) {
+            throw OstError("n_ac_gci_3", .sdkError)
+        }
+        
+        return chainId!
+    }
+    
     /// Get chain. Make an API call and return data
     ///
     /// - Parameters:
@@ -28,22 +47,9 @@ class OstAPIChain: OstAPIBase {
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
     func getChain(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-        // Get current user
-        guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError("n_ac_gc_1", .sdkError)
-        }
         
-        // Get token associated with the user
-        guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError("n_ac_gc_2", .sdkError)
-        }
-        
-        let chainId: String? = token.auxiliaryChainId
-        if (chainId == nil || chainId!.isEmpty) {
-            throw OstError("n_ac_gc_3", .sdkError)
-        }
-        
-        resourceURL = chainApiResourceBase + "/" + chainId!
+        let chainId = try getChainId()
+        resourceURL = chainApiResourceBase + "/" + chainId
         var params: [String: Any] = [:]
         
         // Sign API resource
@@ -66,22 +72,9 @@ class OstAPIChain: OstAPIBase {
     }
     
     func getPricePoint(onSuccess: (([String: Any]) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
-        // Get current user
-        guard let user: OstUser = try OstUser.getById(self.userId) else {
-            throw OstError("n_ac_gpp_1", .sdkError)
-        }
+        let chainId = try getChainId()
         
-        // Get token associated with the user
-        guard let token: OstToken = try OstToken.getById(user.tokenId!) else {
-            throw OstError("n_ac_gpp_2", .sdkError);
-        }
-        
-        let chainId: String? = token.auxiliaryChainId
-        if (chainId == nil || chainId!.isEmpty) {
-            throw OstError("n_ac_gpp_3", .sdkError)
-        }
-        
-        resourceURL = "\(chainApiResourceBase)/\(chainId!)/price-points"
+        resourceURL = "\(chainApiResourceBase)/\(chainId)/price-points"
         var params: [String: Any] = [:]
         
         // Sign API resource
@@ -101,5 +94,21 @@ class OstAPIChain: OstAPIBase {
                 onFailure?(OstApiError.init(fromApiResponse: failureResponse!))
         }
         )
+    }
+    
+    func getPricePointData(onSuccess:@escaping (([String: Any]?) -> Void),
+                       onFailure:@escaping (([String: Any]?) -> Void)) throws {
+        
+        let chainId = try getChainId()
+        resourceURL = "\(chainApiResourceBase)/\(chainId)/price-points"
+        
+        var apiParams: [String : Any] = [:];
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
+        
+        get(params: apiParams as [String : AnyObject],
+            onSuccess: onSuccess,
+            onFailure:onFailure);
     }
 }
