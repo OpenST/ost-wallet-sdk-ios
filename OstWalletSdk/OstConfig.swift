@@ -108,7 +108,7 @@ class OstConfig {
     }
     
     class func getPricePointCurrencySymbol() -> String {
-        return pricePointCurrencySymbol!
+        return pricePointCurrencySymbol!.uppercased()
     }
     
     class func getRequestTimeoutDuration() -> Int {

@@ -156,7 +156,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         self.ruleName = ruleName
         self.transactionMeta = transactionMeta
         if let lCurrencyCode = options[OstExecuteTransaction.CURRENCY_CODE] {
-            self.currencyCode = OstUtils.toString(lCurrencyCode)!
+            self.currencyCode = OstUtils.toString(lCurrencyCode)!.uppercased()
         }
         
         var waitForFinalization = true
