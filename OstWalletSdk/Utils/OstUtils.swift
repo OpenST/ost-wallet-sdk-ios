@@ -43,6 +43,9 @@ public class OstUtils {
     
     class func toBool(_ val: Any) -> Bool? {
         
+        if val is Bool {
+            return val as? Bool
+        }
         if val is String {
             let value = val as! String
             if value == "true" || value == "YES" || value == "1" {

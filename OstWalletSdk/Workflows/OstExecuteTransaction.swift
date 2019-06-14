@@ -28,6 +28,7 @@ import BigInt
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
     static let CURRENCY_CODE = "currency_code"
+    static let SYMBOL = "symbol"
     static let WAIT_FOR_FINALIZATION = "wait_for_finalization"
     
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
@@ -60,6 +61,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
     // currency symbol
     private static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
+    //symbol
+    private static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -82,11 +85,9 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         
-        var options: [String: String] = [:]
-        if let optionsD = payload[OstExecuteTransaction.PAYLOAD_OPTIONS_ID_KEY] as? [String: String],
-            let currencySymbol = optionsD[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
-            
-            options[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
+        var options: [String: Any] = [:]
+        if let optionsD = payload[OstExecuteTransaction.PAYLOAD_OPTIONS_ID_KEY] as? [String: Any] {
+            options = getReadableDictionaryFor(optionsD)
         }
         
         return (ruleName,
@@ -94,6 +95,21 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
                 amounts,
                 tokenId,
                 options)
+    }
+    
+    class func getReadableDictionaryFor(_ options: [String: Any]) -> [String: Any] {
+        var readableDictionary: [String: Any] = options
+        
+        readableDictionary[OstExecuteTransaction.WAIT_FOR_FINALIZATION] = "true"
+        
+        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+            readableDictionary[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
+        }
+        if let symbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_SYMBOL_ID_KEY] {
+            readableDictionary[OstExecuteTransaction.SYMBOL] = symbol
+        }
+        
+        return readableDictionary
     }
     
     
@@ -124,6 +140,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let amounts: [String]
     private let ruleName: String
     private let transactionMeta: [String: String]
+    private let options: [String: Any]
     private var currencyCode: String = OstConfig.getPricePointCurrencySymbol()
     
     private var rule: OstRule? = nil
@@ -154,6 +171,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
+        self.options = options
         self.transactionMeta = transactionMeta
         if let lCurrencyCode = options[OstExecuteTransaction.CURRENCY_CODE] {
             self.currencyCode = OstUtils.toString(lCurrencyCode)!.uppercased()
@@ -429,7 +447,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             "rule_name": self.ruleName,
             "token_holder_addresses": self.toAddresses,
             "amounts": self.amounts,
-            "token_id": self.currentUser!.tokenId!
+            "token_id": self.currentUser!.tokenId!,
+            "options": self.options
         ]
         
         return OstContextEntity(entity: verifyData, entityType: .dictionary)
