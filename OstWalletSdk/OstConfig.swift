@@ -41,7 +41,16 @@ class OstConfig {
     private static var requestTimeoutDuration: Int?
     private static var pinMaxRetryCount: Int?
     private static var sessionBufferTime: Double?
-    private static var useSeedPassword: Bool = false
+    private static var useSeedPassword: Bool?
+    
+    //Defaults
+    private static let blockGenerationTimeDefault = 3
+    private static let pricePointCurrencySymbolDefault = "USD"
+    private static let requestTimeoutDurationDefault = 60
+    private static let pinMaxRetryCountDefault = 3
+    private static let sessionBufferTimeDefault = Double(3600)
+    private static let useSeedPasswordDefault = false
+    
     
     class func loadConfig() throws {
         
@@ -104,26 +113,26 @@ class OstConfig {
     
     //MARK: - Getter
     class func getBlockGenerationTime() -> Int {
-        return blockGenerationTime!
+        return blockGenerationTime ?? blockGenerationTimeDefault
     }
     
     class func getPricePointCurrencySymbol() -> String {
-        return pricePointCurrencySymbol!.uppercased()
+        return pricePointCurrencySymbol?.uppercased() ?? pricePointCurrencySymbolDefault.uppercased()
     }
     
     class func getRequestTimeoutDuration() -> Int {
-        return requestTimeoutDuration!
+        return requestTimeoutDuration ?? requestTimeoutDurationDefault
     }
     
     class func getPinMaxRetryCount() -> Int {
-        return pinMaxRetryCount!
+        return pinMaxRetryCount ?? pinMaxRetryCountDefault
     }
     
     class func getSessionBufferTime() -> Double {
-        return sessionBufferTime!
+        return sessionBufferTime ?? sessionBufferTimeDefault
     }
     
     class func shouldUseSeedPassword() -> Bool {
-        return useSeedPassword
+        return useSeedPassword ?? useSeedPasswordDefault
     }
 }
