@@ -79,6 +79,12 @@ class OstAPIUser: OstAPIBase {
         )
     }
     
+    /// Get balance for user
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
     func getBalance(onSuccess:@escaping (([String: Any]?) -> Void),
                     onFailure:@escaping (([String: Any]?) -> Void)) throws {
         resourceURL = userApiResourceBase + "/" + userId + "/balance/";
@@ -93,6 +99,13 @@ class OstAPIUser: OstAPIBase {
             onFailure:onFailure);
     }
     
+    /// Get transaction for user
+    ///
+    /// - Parameters:
+    ///   - params: Fetch transaction params
+    ///   - onSuccess: Success callback
+    ///   - onFailure: Failure callback
+    /// - Throws: OSTError
     func getTransactions(params:[String : Any]?,
                          onSuccess:@escaping (([String: Any]?) -> Void),
                          onFailure:@escaping (([String: Any]?) -> Void)) throws {

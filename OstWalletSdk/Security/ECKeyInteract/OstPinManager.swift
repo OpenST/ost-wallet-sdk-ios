@@ -90,21 +90,17 @@ class OstPinManager {
     /// Get recovery owner address
     ///
     /// - Returns: Recovery owner address
-    func getRecoveryOwnerAddress() -> String? {
-        do {
-            try self.validatePinLength()
-            try self.validatePassphrasePrefixLength()
-            try self.fetchSalt()
-            try self.validateSaltLength()
-            return try self.keyManagareDelegate
-                .getRecoveryOwnerAddressFrom(
-                    passphrasePrefix: self.passphrasePrefix,
-                    userPin: self.userPin,
-                    salt: self.salt!
-            )
-        }catch {
-            return nil
-        }
+    func getRecoveryOwnerAddress() throws -> String {
+        try self.validatePinLength()
+        try self.validatePassphrasePrefixLength()
+        try self.fetchSalt()
+        try self.validateSaltLength()
+        return try self.keyManagareDelegate
+            .getRecoveryOwnerAddressFrom(
+                passphrasePrefix: self.passphrasePrefix,
+                userPin: self.userPin,
+                salt: self.salt!
+        )
     }
     
     /// Get recovery owner address for new pin

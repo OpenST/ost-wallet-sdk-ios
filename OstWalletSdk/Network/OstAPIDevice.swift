@@ -224,6 +224,13 @@ class OstAPIDevice: OstAPIBase {
         }
     }
     
+    /// Get pending recovery from server
+    ///
+    /// - Parameters:
+    ///   - params: Pending recovery params
+    ///   - onSuccess: Success params
+    ///   - onFailure: Failure params
+    /// - Throws: OstError
     func getJsonPendingRecovery(params:[String : Any]?,
                             onSuccess:@escaping (([String: Any]?) -> Void),
                             onFailure:@escaping (([String: Any]?) -> Void)) throws {
