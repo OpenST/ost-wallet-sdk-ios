@@ -168,23 +168,38 @@ OstWalletSdk.addSession(
     )
 ```
 
-### Execute Transaction
+### Execute a transaction
 A transaction where Brand Tokens are transferred from a user to another actor within the Brand Token economy are signed using `sessionKey` if there is an active session. In the absence of an active session, a new session is authorized.<br/><br/>
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_transactionType: [OstExecuteTransactionType value](OstWalletSdk/Workflows/OstExecuteTransaction.swift#L14)_<br/>
+&nbsp;_meta: meta data of transaction to be associated_<br/>
+Example:-
+```json
+                           {"name": "transaction name",
+                           "type": "user-to-user",
+                           "details": "like"}
+```
+&nbsp;_options: Map containing options of transactions_<br/>
+Example:-
+```json
+                           {"currency_code": "USD",
+                           "wait_for_finalization": true}
+```
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
 OstWalletSdk.executeTransaction(
-    userId: String,
-    tokenHolderAddresses: [String],
-    amounts: [String],
-    transactionType: OstExecuteTransactionType,
-    delegate: OstWorkflowDelegate
-    )
+        userId: String,
+        tokenHolderAddresses: [String],
+        amounts: [String],
+        transactionType: OstExecuteTransactionType,
+        meta: [String: String],
+        options: [String: Any],
+        delegate: OstWorkflowDelegate)
 ```
 
 ### Get Mnemonic Phrase
