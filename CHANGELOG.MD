@@ -3,7 +3,7 @@
 
 ## Version 2.1.1
 ### Changes: 
-* App store update fix.
+* Remove `carthage copy-frameworks` script from the `Build Phases`.
 
 ## Version 2.1.0
 ### Changes: 
