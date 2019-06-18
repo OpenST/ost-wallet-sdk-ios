@@ -18,6 +18,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     /// Atto Value Array
     var transferAmounts: [String]? = nil
     var ruleName: String? = nil
+    var options: [String: Any]? = nil
     var ruleType: OstExecuteTransactionType? = nil
     var delegate: OstBaseDelegate?
     
@@ -42,6 +43,8 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         
         var transferBalance: Double = Double(0)
         
+        let symbol: String? = (options as? [String: String])?["symbol"] ?? nil
+        
         if nil != tokenHolderAddress && tokenHolderAddress!.count > 0 {
             let transferAmounts = self.transferAmounts ?? []
             
@@ -56,7 +59,9 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
                     amount = amount.toDisplayTxValue()
                     transferBalance += Double(amount)!
                 }
-                let transfer = getTransferView(forAddress: transferAddress, withValue: amount)
+                let transfer = getTransferView(forAddress: transferAddress,
+                                               withValue: amount,
+                                               transferUnit: symbol)
                 
                 stackView.addArrangedSubview(transfer)
             }
@@ -261,7 +266,9 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         return view
     }
     
-    func getTransferView(forAddress address: String, withValue value: String, transferUnit: String? = nil) -> UIView {
+    func getTransferView(forAddress address: String,
+                         withValue value: String,
+                         transferUnit: String? = nil) -> UIView {
         
         let balanceText: String
         switch ruleType! {
@@ -269,7 +276,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
             let symbol = CurrentEconomy.getInstance.tokenSymbol ?? ""
             balanceText = "\(value) \(symbol)"
         case .Pay:
-            balanceText = "$ \(value)"
+            balanceText = "\(transferUnit ?? "") \(value)"
         }
         
         let container = UIView()

@@ -97,6 +97,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.transferAmounts = entity["amounts"] as? [String]
             vc.tokenHolderAddress = entity["token_holder_addresses"] as? [String]
             vc.ruleName = entity["rule_name"] as? String
+            vc.options = entity["options"] as? [String: Any]
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
             

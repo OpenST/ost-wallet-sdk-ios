@@ -118,10 +118,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
             return
         }
         
-        self.recoveryAddress = self.pinManager?.getRecoveryOwnerAddress()
-        if (nil == self.recoveryAddress) {
-            throw OstError("w_au_odv_1", .sdkError)
-        }
+        self.recoveryAddress = try self.pinManager?.getRecoveryOwnerAddress()
         
         self.sessionData = try OstSessionHelper(
             userId: self.userId,

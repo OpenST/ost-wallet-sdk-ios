@@ -160,7 +160,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     var fetchUserBalanceCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil
     func fetchUserBalance(onCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil) {
         fetchUserBalanceCompletion = onCompletion
-        OstJsonApi.getBalanceWithPriceOracle(forUserId: ostUserId!, delegate: self)
+        OstJsonApi.getBalanceWithPricePoint(forUserId: ostUserId!, delegate: self)
     }
     
     //MAKR: Ost Json api Delegate
