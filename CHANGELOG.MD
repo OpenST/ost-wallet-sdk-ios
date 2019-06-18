@@ -1,6 +1,10 @@
 # OST Wallet SDK Changelog
 
 
+## Version 2.1.1
+### Changes: 
+* App store update fix.
+
 ## Version 2.1.0
 ### Changes: 
 * Biometric preferences are now saved in the SDK
