@@ -88,7 +88,7 @@ import Foundation
             let error = OstApiError.init(fromApiResponse: failureResponse!);
             var errorData:[String:Any]? = nil;
             if ( nil != failureResponse ) {
-                errorData = failureResponse?["error"] as? [String:Any];
+                errorData = failureResponse?["err"] as? [String:Any];
             }
             delegate.onOstJsonApiError(error: error, errorData: errorData);
         };
