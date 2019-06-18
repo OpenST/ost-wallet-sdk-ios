@@ -474,6 +474,102 @@ func requestAcknowledged(
 | **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow	|
 | **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
 
+
+## OST JSON APIs
+
+### User Balance
+
+Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalance(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Price Points
+
+Api to get price points. 
+It will provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Balance With Price Points
+
+Api to get user balance and price points. Balance of only current logged-in user can be fetched.
+It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalanceWithPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Transactions
+
+Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_requestPayload: request payload. Such as next-page payload, filters etc._<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalanceWithPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Pending Recovery
+
+Api to get pending recovery.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPendingRecovery(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+## Json Api Response Delegates
+
+```Swift
+/// Success callback for API
+///
+/// - Parameter data: Success API response
+func onOstJsonApiSuccess(data:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **data** <br> **[String: Any]?**	|	Json api success response	|
+
+
+```Swift
+/// Failure callback for API
+///
+/// - Parameters:
+///   - error: OstError
+///   - errorData: Failure API response
+func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
+| **data** <br> **[String: Any]?**	|	Json api failure response	|
+
 ## Reference
 
 For a sample implementation, please see the [Demo App](https://github.com/ostdotcom/ios-demo-app/tree/develop)
