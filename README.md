@@ -31,7 +31,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" == 2.1.0
+github "ostdotcom/ost-wallet-sdk-ios" == 2.2.0
 ```
 
 - Run `carthage update --platform iOS`
@@ -168,23 +168,38 @@ OstWalletSdk.addSession(
     )
 ```
 
-### Execute Transaction
+### Execute a transaction
 A transaction where Brand Tokens are transferred from a user to another actor within the Brand Token economy are signed using `sessionKey` if there is an active session. In the absence of an active session, a new session is authorized.<br/><br/>
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_tokenHolderAddresses: Token holder addresses of amount receiver_<br/>
 &nbsp;_amounts: Amounts corresponding to tokenHolderAddresses in wei to be transfered_<br/>
 &nbsp;_transactionType: [OstExecuteTransactionType value](OstWalletSdk/Workflows/OstExecuteTransaction.swift#L14)_<br/>
+&nbsp;_meta: meta data of transaction to be associated_<br/>
+Example:-
+```json
+                           {"name": "transaction name",
+                           "type": "user-to-user",
+                           "details": "like"}
+```
+&nbsp;_options: Map containing options of transactions_<br/>
+Example:-
+```json
+                           {"currency_code": "USD",
+                           "wait_for_finalization": true}
+```
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
 OstWalletSdk.executeTransaction(
-    userId: String,
-    tokenHolderAddresses: [String],
-    amounts: [String],
-    transactionType: OstExecuteTransactionType,
-    delegate: OstWorkflowDelegate
-    )
+        userId: String,
+        tokenHolderAddresses: [String],
+        amounts: [String],
+        transactionType: OstExecuteTransactionType,
+        meta: [String: String],
+        options: [String: Any],
+        delegate: OstWorkflowDelegate)
 ```
 
 ### Get Mnemonic Phrase
@@ -473,6 +488,102 @@ func requestAcknowledged(
 |---|---|
 | **ostWorkflowContext** <br> **OstWorkflowContext**	| Information about the workflow	|
 | **ostContextEntity** <br> **OstContextEntity**	| Information about the entity |
+
+
+## OST JSON APIs
+
+### User Balance
+
+Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalance(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Price Points
+
+Api to get price points. 
+It will provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Balance With Price Points
+
+Api to get user balance and price points. Balance of only current logged-in user can be fetched.
+It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalanceWithPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Transactions
+
+Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_requestPayload: request payload. Such as next-page payload, filters etc._<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalanceWithPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### Pending Recovery
+
+Api to get pending recovery.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPendingRecovery(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+## Json Api Response Delegates
+
+```Swift
+/// Success callback for API
+///
+/// - Parameter data: Success API response
+func onOstJsonApiSuccess(data:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **data** <br> **[String: Any]?**	|	Json api success response	|
+
+
+```Swift
+/// Failure callback for API
+///
+/// - Parameters:
+///   - error: OstError
+///   - errorData: Failure API response
+func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
+| **data** <br> **[String: Any]?**	|	Json api failure response	|
 
 ## Reference
 
