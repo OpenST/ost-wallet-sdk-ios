@@ -1,6 +1,13 @@
 # OST Wallet SDK Changelog
 
 
+## OstWallet v2.2.0
+### Changes: 
+1. Added Default values for mobile-sdk-config
+2. Multi Currency: Change from config driven to parameter driven.
+3. Parameter driven wait_for_finalization of Transaction or not.
+4. Added OstJsonApi to make direct calls to Ost Platform.
+
 ## Version 2.1.0
 ### Changes: 
 * Biometric preferences are now saved in the SDK
