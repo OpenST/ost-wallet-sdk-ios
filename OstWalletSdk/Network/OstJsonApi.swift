@@ -86,11 +86,7 @@ import Foundation
     @objc public class func getApiErrorCallback(delegate:OstJsonApiDelegate) -> (([String: Any]?) -> Void) {
         let callback: (([String: Any]?) -> Void) = { (failureResponse) in
             let error = OstApiError.init(fromApiResponse: failureResponse!);
-            var errorData:[String:Any]? = nil;
-            if ( nil != failureResponse ) {
-                errorData = failureResponse?["err"] as? [String:Any];
-            }
-            delegate.onOstJsonApiError(error: error, errorData: errorData);
+            delegate.onOstJsonApiError(error: error, errorData: failureResponse);
         };
         return callback;
     }
@@ -171,6 +167,7 @@ import Foundation
         }
     }
     
+
     /// Get pending recovery from server
     ///
     /// - Parameters:
