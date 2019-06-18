@@ -1,6 +1,10 @@
 # OST Wallet SDK Changelog
 
 
+## Version 2.1.1
+### Changes: 
+* Remove `carthage copy-frameworks` script from the `Build Phases`.
+
 ## Version 2.1.0
 ### Changes: 
 * Biometric preferences are now saved in the SDK
