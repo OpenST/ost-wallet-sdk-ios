@@ -216,6 +216,7 @@
 		00ABD3CF22A72BE90080C4BB /* OstErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FD22A72BE90080C4BB /* OstErrorCodes.swift */; };
 		00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FE22A72BE90080C4BB /* OstApiError.swift */; };
 		00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */; };
+		4B98377C22BBAFF800B9E6D4 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4B98377B22BBAFF800B9E6D4 /* server.cer */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
 		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
@@ -448,6 +449,7 @@
 		00ABD2FE22A72BE90080C4BB /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 		00ABD2FF22A72BE90080C4BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		4B98377B22BBAFF800B9E6D4 /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 		00ABD20922A72BE90080C4BB /* OstWalletSdk */ = {
 			isa = PBXGroup;
 			children = (
+				4B98377B22BBAFF800B9E6D4 /* server.cer */,
 				00ABD20A22A72BE90080C4BB /* Abis */,
 				00ABD20F22A72BE90080C4BB /* Database */,
 				00ABD22222A72BE90080C4BB /* OstWalletSdk.h */,
@@ -1124,6 +1127,7 @@
 				00ABD31322A72BE90080C4BB /* OST_MIGRATION_README.md in Resources */,
 				00ABD30322A72BE90080C4BB /* TokenHolder.abi.json in Resources */,
 				00ABD3AA22A72BE90080C4BB /* COPYRIGHT.txt in Resources */,
+				4B98377C22BBAFF800B9E6D4 /* server.cer in Resources */,
 				00ABD30222A72BE90080C4BB /* TokenRules.abi.json in Resources */,
 				00ABD30422A72BE90080C4BB /* GnosisSafe.abi.json in Resources */,
 				00ABD3A122A72BE90080C4BB /* LICENSE.txt in Resources */,

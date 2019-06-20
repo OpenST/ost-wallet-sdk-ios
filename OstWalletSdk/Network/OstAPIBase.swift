@@ -41,7 +41,11 @@ class OstAPIBase {
     /// - Parameter userId: User Id associated with the API requests
     init(userId: String) {
         self.userId = userId
-        self.manager = Alamofire.SessionManager.default
+        
+        let domain = OstAPIBase.getDomainFor(OstAPIBase.baseURL)
+        let policyManager = OstAPIBase.getServerTrustPolicyManager(for: domain!)
+        
+        self.manager = Alamofire.SessionManager(serverTrustPolicyManager: policyManager)
         manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
     }
     
@@ -171,6 +175,37 @@ class OstAPIBase {
             }
         }
         return false
+    }
+    
+    //MARK: - Private
+    private class func getDomainFor(_ urlString: String) -> String? {
+        let url = URL(string: urlString)
+        return url?.host
+    }
+    
+    private class func getServerTrustPolicyManager(for domain: String) -> ServerTrustPolicyManager {
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [
+            domain: .pinPublicKeys(publicKeys: getSavedPublicKeys(),
+                                   validateCertificateChain: true,
+                                   validateHost: true)
+        ]
+        
+        return ServerTrustPolicyManager(policies: serverTrustPolicies)
+    }
+    
+    /// Fetching public keys from avail Certificates.
+    private class  func getSavedPublicKeys() -> [SecKey]    {
+        var publicKeys:[SecKey] = []
+        let clientBundle:Bundle? = OstBundle.getSdkBundle()
+        
+        /// Reading Publickeys from Main Bundle using Alamofire method.
+        for localKey in ServerTrustPolicy.publicKeys(in: clientBundle!) {
+            publicKeys.append(localKey)
+        }
+        
+        Logger.log(message: "SDK public keys: ", parameterToPrint: publicKeys)
+        
+        return publicKeys
     }
 }
 
