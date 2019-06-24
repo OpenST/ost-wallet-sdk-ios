@@ -34,8 +34,8 @@ extension String {
     
     func toDisplayTxValue() -> String {
         var formattedDecimal: String = "00"
-        
-        let values = self.components(separatedBy: ".")
+        let commonStandardVal = self.replacingOccurrences(of: ",", with: ".")
+        let values = commonStandardVal.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]
         
@@ -51,8 +51,8 @@ extension String {
     
     func toRoundUpTxValue() -> String {
         var formattedDecimal: String = "00"
-        
-        let values = self.components(separatedBy: ".")
+        let commonStandardVal = self.replacingOccurrences(of: ",", with: ".")
+        let values = commonStandardVal.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]
             
