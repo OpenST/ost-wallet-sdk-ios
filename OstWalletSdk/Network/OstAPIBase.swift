@@ -10,6 +10,7 @@
 
 import Foundation
 import Alamofire
+import TrustKit
 
 /// Base class for all API calls
 class OstAPIBase {
@@ -36,16 +37,17 @@ class OstAPIBase {
     /// Session manager
     let manager: SessionManager
     
+    ///Trust kit for pinning
+    let trustKit: TrustKit
+    
     /// Initializer
     ///
     /// - Parameter userId: User Id associated with the API requests
     init(userId: String) {
         self.userId = userId
-        
-        let domain = OstAPIBase.getDomainFor(OstAPIBase.baseURL)
-        let policyManager = OstAPIBase.getServerTrustPolicyManager(for: domain!)
-        
-        self.manager = Alamofire.SessionManager(serverTrustPolicyManager: policyManager)
+        self.manager = Alamofire.SessionManager()
+        self.trustKit = OstAPIBase.getTrustKit()
+
         manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
     }
     
@@ -93,10 +95,18 @@ class OstAPIBase {
             return
         }
         
-//        Logger.log(message: "Request:- \(method.rawValue):- \(url)", parameterToPrint: params as Any)
+        let delegate: SessionDelegate = manager.delegate
+        delegate.sessionDidReceiveChallengeWithCompletion = {[weak self] (session, authenticationChallenge, completion:@escaping ((URLSession.AuthChallengeDisposition, URLCredential?) -> Void)) in
+            
+            if let strongSelf = self {
+                let pinningValidator: TSKPinningValidator = strongSelf.trustKit.pinningValidator
+                if !pinningValidator.handle(authenticationChallenge, completionHandler: completion) {
+                    completion(.performDefaultHandling, nil);
+                }
+            }
+        }
+        
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
-        // Status code in 200 range will be considered as correct response
-//        dataRequest?.validate(statusCode: 200..<300)
         dataRequest!.responseJSON { (httpResponse) in
 //            Logger.log(message: "Response:- \(method.rawValue):- \(httpResponse.response?.url?.relativePath ?? "")", parameterToPrint: httpResponse.result.value);
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
@@ -177,35 +187,44 @@ class OstAPIBase {
         return false
     }
     
+    //MARK: - TrustKit
+    /// Get `TrustKit` object for public key pinning.
+    class func getTrustKit() -> TrustKit {
+        let trustKitConfig: [String : Any] = [
+            kTSKSwizzleNetworkDelegates: false,
+            kTSKPinnedDomains: [
+                "api.ost.com": [
+                    kTSKPublicKeyHashes: [
+                        "s4vrk6by0cqKQ9p/mFOakoi0daivc7Le8q7fUuuo4/U=",
+                        "MvVeCJ2tAuJZmbqoXMqSNP2mKh+VjGiljvqWytjzasU=",
+                        "J+0IGhy08mkHR1Z1WbdrHEdHhXRohrdLHUYORlWGafA=",
+                        "aF+lKYb0WChlCTx5uPBw5ZWze/98vAXSzBBIrVSZWJE=",
+                        "efgWbb0q/zHFLub1SY5QpoQVlZp33QpLOj0EmhoK8tI=",
+                    ],
+                    kTSKIncludeSubdomains: false,
+                    kTSKEnforcePinning: true,
+                ],
+                "api.stagingost.com": [
+                    kTSKPublicKeyHashes: [
+                        "EB5U//Yqir8uZ9UgM+sVXBoOi+daBWlrjO1543RvDmk=",
+                        "VMqNElFr41WvPqW6DcYoVXGjW7u85pF2dGpuyxaAPAk=",
+                    ],
+                    kTSKIncludeSubdomains: false,
+                    kTSKEnforcePinning: true,
+                ]
+            ]
+        ]
+        return TrustKit(configuration: trustKitConfig)
+    }
+    
     //MARK: - Private
+    /// Get domain from given url string
+    ///
+    /// - Parameter urlString: URL
+    /// - Returns: Domain string
     private class func getDomainFor(_ urlString: String) -> String? {
         let url = URL(string: urlString)
         return url?.host
-    }
-    
-    private class func getServerTrustPolicyManager(for domain: String) -> ServerTrustPolicyManager {
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [
-            domain: .pinPublicKeys(publicKeys: getSavedPublicKeys(),
-                                   validateCertificateChain: true,
-                                   validateHost: true)
-        ]
-        
-        return ServerTrustPolicyManager(policies: serverTrustPolicies)
-    }
-    
-    /// Fetching public keys from avail Certificates.
-    private class  func getSavedPublicKeys() -> [SecKey]    {
-        var publicKeys:[SecKey] = []
-        let clientBundle:Bundle? = OstBundle.getSdkBundle()
-        
-        /// Reading Publickeys from Main Bundle using Alamofire method.
-        for localKey in ServerTrustPolicy.publicKeys(in: clientBundle!) {
-            publicKeys.append(localKey)
-        }
-        
-        Logger.log(message: "SDK public keys: ", parameterToPrint: publicKeys)
-        
-        return publicKeys
     }
 }
 

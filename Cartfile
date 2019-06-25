@@ -3,5 +3,5 @@ github "krzyzanowskim/CryptoSwift" == 0.15.0
 github "yuzushioh/EthereumKit" == 2.0.1
 github "Alamofire/Alamofire" == 4.8.1
 github "ccgus/fmdb" == 2.7.5
-
+gitHub "datatheorem/TrustKit" == 1.6.1
 
