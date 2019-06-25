@@ -1431,6 +1431,7 @@
 				./../Carthage/Build/iOS/FMDB.framework,
 				./../Carthage/Build/iOS/SipHash.framework,
 				./../Carthage/Build/iOS/Alamofire.framework,
+				./../Carthage/Build/iOS/TrustKit.framework,
 			);
 			outputFileListPaths = (
 			);
