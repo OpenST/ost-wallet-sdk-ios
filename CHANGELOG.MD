@@ -4,8 +4,6 @@
 ## Version 2.1.2
 ### Bug Fix:
 * Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
-### Security Enhancements:
-* Implemented public-key pinning for api.ost.com 
 
 ## Version 2.1.1
 ### Changes: 
