@@ -26,7 +26,8 @@ class OstAPIErrorHandler {
         GATEWAY_TIMEOUT,
         BAD_URL,
         NOT_CONNECTED_TO_INTERNET,
-        REQUEST_TIMED_OUT
+        REQUEST_TIMED_OUT,
+        INVALID_CERTIFICATE
     }
 
     /// Get the formated error response data
@@ -77,6 +78,9 @@ class OstAPIErrorHandler {
             case -1009:
                 code = APIErrorCode.NOT_CONNECTED_TO_INTERNET.rawValue
                 errorMessage = "The connection failed because the device is not connected to the internet."
+            case -999:
+                code = APIErrorCode.INVALID_CERTIFICATE.rawValue
+                errorMessage = "Certificate provided by Ost platform is invalid Or it has been compromised. Please re-try in some other network and if the problem persists contact support@ost.com."
             default:
                 code = APIErrorCode.SOMETHING_WENT_WRONG.rawValue
                 errorMessage = "Something went wrong."

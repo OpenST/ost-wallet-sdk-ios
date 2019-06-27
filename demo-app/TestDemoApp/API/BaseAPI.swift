@@ -11,6 +11,69 @@
 import Foundation
 import Alamofire
 
+class RequestManager {
+    static let shared = RequestManager()
+    init() {}
+    
+    var alamofireSessionManager: [SessionManager] = [SessionManager]()
+   
+    func getSessionManager(forURL url: String) -> SessionManager? {
+        
+        guard let domain = getDomainFor(url) else {
+            return nil
+        }
+        let policies = getServerTrustPolicies(for: domain)
+        
+        let sessionManager = SessionManager(serverTrustPolicyManager: policies)
+        insert(sessionManager: sessionManager)
+        return sessionManager
+    }
+    
+    func insert(sessionManager: SessionManager) {
+        alamofireSessionManager.append( sessionManager )
+    }
+    
+    func remove(sessionManager: SessionManager) {
+        for (index, alaSessionManager) in alamofireSessionManager.enumerated(){
+            if alaSessionManager === sessionManager {
+                alamofireSessionManager.remove(at: index)
+                break
+            }
+        }
+    }
+    
+    //MARK: - Private
+    private func getDomainFor(_ urlString: String) -> String? {
+        let url = URL(string: urlString)
+        return url?.host
+    }
+    
+    /// Fetching public keys from avail Certificates.
+    private func savedPublicKeys() -> [SecKey]    {
+        var publicKeys:[SecKey] = []
+        let clientBundle:Bundle? = Bundle.main
+        
+        /// Reading Publickeys from Main Bundle using Alamofire method.
+        for localKey in ServerTrustPolicy.publicKeys(in: clientBundle!) {
+            publicKeys.append(localKey)
+        }
+        
+        print("\n PUBLIC KEYS: \(publicKeys)")
+        
+        return publicKeys
+    }
+    
+    private func getServerTrustPolicies(for domain: String) -> ServerTrustPolicyManager {
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [
+            domain: .pinPublicKeys(publicKeys: savedPublicKeys(),
+                                   validateCertificateChain: true,
+                                   validateHost: true)
+        ]
+        
+        return ServerTrustPolicyManager(policies: serverTrustPolicies)
+    }
+}
+
 class BaseAPI {
     
     static var mappyServerURL: String {
@@ -28,8 +91,9 @@ class BaseAPI {
         let url = BaseAPI.mappyServerURL + resource
         
         let dataRequest = Alamofire.request(url, method: .post, parameters: params)
+        
         dataRequest.responseJSON { (httpResonse) in
-            print("POST: \(url)", httpResonse.result.value as AnyObject)
+//            print("POST: \(url)", httpResonse.result.value as AnyObject)
            
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
@@ -52,9 +116,9 @@ class BaseAPI {
         let url = BaseAPI.mappyServerURL + resource
         
         let dataRequest = Alamofire.request(url, method: .get, parameters: params)
+        
         dataRequest.responseJSON { (httpResonse) in
-            print("GET: \(url)", httpResonse.result.value as AnyObject)
-
+//            print("GET: \(url)", httpResonse.result.value as AnyObject)
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
                 onSuccess?(httpResonse.result.value as? [String: Any])

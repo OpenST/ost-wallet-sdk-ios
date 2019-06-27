@@ -71,10 +71,16 @@ class OstBundle {
     /// Initialize
     fileprivate init() { }
     
+    class func getSdkBundle() -> Bundle {
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getSdkBundle()
+        return bundleObj
+    }
+    
     /// Get Sdk bundle
     ///
     /// - Returns: Bundle
-    fileprivate func getSdkBundle() -> Bundle {
+    func getSdkBundle() -> Bundle {
         let bundle = Bundle(for: type(of: self))
         return bundle
     }
@@ -82,7 +88,7 @@ class OstBundle {
     /// Get Sdk bundle
     ///
     /// - Returns: Bundle
-    fileprivate func getApplicatoinBundle() -> Bundle {
+    func getApplicatoinBundle() -> Bundle {
         let bundle = Bundle.main
         return bundle
     }
