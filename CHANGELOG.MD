@@ -1,6 +1,12 @@
 # OST Wallet SDK Changelog
 
 
+## Version 2.1.2
+### Bug Fix:
+* Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
+### Security Enhancements:
+* Implemented public-key pinning for api.ost.com 
+
 ## Version 2.1.1
 ### Changes: 
 * Remove `carthage copy-frameworks` script from the `Build Phases`.
@@ -21,7 +27,6 @@
 * Fixed a bug that blocked PIN Reset during recovery.The PIN Reset now works during recovery
 
 ## Version 2.0.2
-
 ### Changes:
 * Added Dependencies to the Readme
 * Updated the recommended configurations
