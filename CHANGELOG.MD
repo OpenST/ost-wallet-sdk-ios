@@ -1,9 +1,13 @@
 # OST Wallet SDK Changelog
 
-## Version 2.0.5
 
+## Version 2.0.6
+### Bug Fix:
+* Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
+
+## Version 2.0.5
 ### Changes:
-Remove `carthage copy-frameworks` script from the `Build Phases`.
+* Remove `carthage copy-frameworks` script from the `Build Phases`.
 
 ## Version 2.0.4
 ### Changes: 
@@ -14,13 +18,11 @@ Remove `carthage copy-frameworks` script from the `Build Phases`.
 * Fixed a bug that blocked PIN Reset during recovery.The PIN Reset now works during recovery
 
 ## Version 2.0.2
-
 ### Changes:
 * Added Dependencies to the Readme
 * Updated the recommended configurations
 
 ## Version 2.0.1
-
 ### Changes:
 * Added CHANGELOG.md
 * Updated cartfile with CryptoSwift version that is compatible with swift-4
