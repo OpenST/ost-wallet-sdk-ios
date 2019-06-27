@@ -203,14 +203,6 @@ class OstAPIBase {
                     ],
                     kTSKIncludeSubdomains: false,
                     kTSKEnforcePinning: true,
-                ],
-                "api.stagingost.com": [
-                    kTSKPublicKeyHashes: [
-                        "EB5U//Yqir8uZ9UgM+sVXBoOi+daBWlrjO1543RvDmk=",
-                        "VMqNElFr41WvPqW6DcYoVXGjW7u85pF2dGpuyxaAPAk=",
-                    ],
-                    kTSKIncludeSubdomains: false,
-                    kTSKEnforcePinning: true,
                 ]
             ]
         ]
