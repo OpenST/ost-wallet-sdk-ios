@@ -90,15 +90,10 @@ class BaseAPI {
         
         let url = BaseAPI.mappyServerURL + resource
         
-        guard let sessionManager = RequestManager.shared.getSessionManager(forURL: url) else {
-            let error: [String: Any] = ["msg": "Invalid url passed", "internal_code": "a_ba_p_1", "url": url]
-            onFailure?(error)
-            return
-        }
         let dataRequest = Alamofire.request(url, method: .post, parameters: params)
         
         dataRequest.responseJSON { (httpResonse) in
-            print("POST: \(url)", httpResonse.result.value as AnyObject)
+//            print("POST: \(url)", httpResonse.result.value as AnyObject)
            
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
@@ -110,7 +105,6 @@ class BaseAPI {
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }
-            RequestManager.shared.remove(sessionManager: sessionManager)
         }
     }
     
@@ -121,15 +115,10 @@ class BaseAPI {
         
         let url = BaseAPI.mappyServerURL + resource
         
-        guard let sessionManager = RequestManager.shared.getSessionManager(forURL: url) else {
-            let error: [String: Any] = ["msg": "Invalid url passed", "internal_code": "a_ba_g_1", "url": url]
-            onFailure?(error)
-            return
-        }
         let dataRequest = Alamofire.request(url, method: .get, parameters: params)
         
         dataRequest.responseJSON { (httpResonse) in
-            print("GET: \(url)", httpResonse.result.value as AnyObject)
+//            print("GET: \(url)", httpResonse.result.value as AnyObject)
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
                 onSuccess?(httpResonse.result.value as? [String: Any])
@@ -140,8 +129,6 @@ class BaseAPI {
             } else {
                 onFailure?(httpResonse.result.value as? [String: Any])
             }
-            
-            RequestManager.shared.remove(sessionManager: sessionManager)
         }
     }
     
