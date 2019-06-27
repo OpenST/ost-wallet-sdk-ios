@@ -344,7 +344,7 @@ class OstProgressIndicator: OstBaseView {
 enum OstProgressIndicatorTextCode: String {
     case
     unknown = "Processing...",
-    activingUser = "Activiting user...",
+    activingUser = "Activating user...",
     executingTransaction = "Transaction processing...",
     fetchingUser = "Loading...",
     stopDeviceRecovery = "Aborting recovery...",

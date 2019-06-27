@@ -43,6 +43,8 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     
     func logoutUser() {
         self.userDetails = nil
+        pricePoint = nil
+        userBalanceDetails = nil
     }
     
     func logout() {
@@ -158,7 +160,7 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
     var fetchUserBalanceCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil
     func fetchUserBalance(onCompletion: ((Bool, [String : Any]?, [String : Any]?) -> Void)? = nil) {
         fetchUserBalanceCompletion = onCompletion
-        OstJsonApi.getBalanceWithPriceOracle(forUserId: ostUserId!, delegate: self)
+        OstJsonApi.getBalanceWithPricePoint(forUserId: ostUserId!, delegate: self)
     }
     
     //MAKR: Ost Json api Delegate
@@ -384,8 +386,8 @@ extension CurrentUserModel {
         }
         
         let btToOstVal = (doubleValue/doubleConversionFactor)
-    
-        return String(usdValue * btToOstVal)
+        let usdVal = (usdValue * btToOstVal).avoidNotation
+        return usdVal.replacingOccurrences(of: ",", with: ".")
     }
     
     func toBt(value: String) -> String? {

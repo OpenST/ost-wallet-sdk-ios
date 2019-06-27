@@ -57,11 +57,11 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         try super.validateParams()
         
         if !self.deviceAddress.isValidAddress {
-            throw OstError("w_adwqrd_fd_1", .wrongDeviceAddress)
+            throw OstError("w_adwqrd_vp_1", .wrongDeviceAddress)
         }
         
         if (self.deviceAddress.caseInsensitiveCompare(self.currentDevice!.address!) == .orderedSame){
-            throw OstError("w_adwqrd_fd_2", .wrongDeviceAddress)
+            throw OstError("w_adwqrd_vp_2", .wrongDeviceAddress)
         }
     }
     
@@ -98,10 +98,10 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
             throw OstError("w_adwqrd_fd_1", .deviceCanNotBeAuthorized)
         }
         if (!self.deviceToAdd!.isStatusRegistered) {
-            throw OstError("w_adwqrd_fd_1", .deviceCanNotBeAuthorized)
+            throw OstError("w_adwqrd_fd_2", .deviceCanNotBeAuthorized)
         }
         if (self.deviceToAdd!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-            throw OstError("w_adwqrd_fd_2", .deviceCanNotBeAuthorized)
+            throw OstError("w_adwqrd_fd_3", .deviceCanNotBeAuthorized)
         }
     }
     

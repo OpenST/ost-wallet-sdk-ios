@@ -73,7 +73,7 @@ class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDe
                                                                             workflowContext: workflowContext,
                                                                             error: error)
             })
-        }else {
+        } else {
             progressIndicator?.hide()
             self.onFlowInterrupted(workflowId: workflowId,
                                    workflowContext: workflowContext,

@@ -22,6 +22,7 @@ class WKWebViewController: OstBaseViewController  {
     let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .default)
         view.progressTintColor = UIColor.color(22, 141, 193)
+        view.trackTintColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view
@@ -45,10 +46,6 @@ class WKWebViewController: OstBaseViewController  {
         return title ?? ""
     }
     
-    override func configure() {
-        progressView.backgroundColor = UIColor.color(22, 141, 193)
-    }
-    
     override func addSubviews() {
         super.addSubviews()
         
@@ -66,9 +63,9 @@ class WKWebViewController: OstBaseViewController  {
     override func addLayoutConstraints() {
         super.addLayoutConstraints()
         
-        progressView.topAlignWithParent()
-        progressView.leftAlignWithParent()
-        progressView.rightAlignWithParent()
+        progressView.topAlignWithParent(multiplier: 1, constant: 0)
+        progressView.leftAlignWithParent(multiplier: 1, constant: 0)
+        progressView.rightAlignWithParent(multiplier: 1, constant: 0)
         progressView.setFixedHeight(multiplier: 1, constant: 4)
         
         webView.topAlignWithParent()

@@ -98,25 +98,25 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         do {
             jsonObj = try OstUtils.toJSONObject(self.payloadString!) as? [String : Any?];
         } catch {
-            throw OstError("w_p_pqrcs_1", .invalidQRCode);
+            throw OstError("w_p_vp_3", .invalidQRCode);
         }
         
         if ( nil == jsonObj) {
-            throw OstError("w_p_pqrcs_2", .invalidQRCode);
+            throw OstError("w_p_vp_4", .invalidQRCode);
         }
         //Make sure data defination is present and is correct data-defination.
         guard let dataDefination = (jsonObj!["dd"] as? String)?.uppercased() else {
-            throw OstError("w_p_pqrcs_3", .invalidQRCode);
+            throw OstError("w_p_vp_5", .invalidQRCode);
         }
         self.dataDefination = dataDefination;
         
         guard let _ = OstUtils.toString(jsonObj!["ddv"] as Any?)?.uppercased() else {
-            throw OstError("w_p_pqrcs_4", .invalidQRCode);
+            throw OstError("w_p_vp_6", .invalidQRCode);
         }
         
         //Make sure payload data is present.
         guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
-            throw OstError("w_p_pqrcs_5", .invalidQRCode);
+            throw OstError("w_p_vp_7", .invalidQRCode);
         }
         self.payloadData = payloadData;
         
@@ -149,7 +149,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
         case OstQRCodeDataDefination.TRANSACTION.rawValue:
              let executeTxPayloadParams = try OstExecuteTransaction.getExecuteTransactionParamsFromQRPayload(self.payloadData!)
              if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
-                 throw OstError("w_p_ssw_1", .invalidTokenId)
+                 throw OstError("w_p_gwfo_1", .invalidTokenId)
              }
              self.executeTxPayloadParams = executeTxPayloadParams
             
@@ -158,6 +158,7 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                          toAddresses: executeTxPayloadParams.addresses,
                                          amounts: executeTxPayloadParams.amounts,
                                          transactionMeta: self.meta as! [String : String],
+                                         options: executeTxPayloadParams.options,
                                          delegate: self.delegate!)
             
         default:

@@ -32,7 +32,7 @@ class OstVerifyAuthDeviceViewController: OstBaseViewController {
     let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.color(67, 139, 173, 0.1)
+        view.backgroundColor = UIColor.color(231, 243, 248)
         view.layer.cornerRadius = 5
         
         return view
@@ -64,6 +64,8 @@ class OstVerifyAuthDeviceViewController: OstBaseViewController {
         createCancelButton()
         
         addSubview(containerView)
+        
+        cancelButton?.isHidden = true
     }
     
     func createLeadLabel() {

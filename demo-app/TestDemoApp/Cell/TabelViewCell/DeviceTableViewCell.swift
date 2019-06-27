@@ -27,9 +27,9 @@ class DeviceTableViewCell: UsersTableViewCell {
     
     var tagLabel: UILabel = {
         let label = InsetLabel()
-        label.font = OstFontProvider().get(size: 11)
+        label.font = OstTheme.fontProvider.get(size: 11)
         label.textColor = UIColor.color(52, 68, 91)
-        label.backgroundColor = UIColor.color(239, 249, 250)
+        label.backgroundColor = UIColor.color(231, 243, 248)
         label.layer.cornerRadius = 5
         label.textAlignment = .center
         label.clipsToBounds = true

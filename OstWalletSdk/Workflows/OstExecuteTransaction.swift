@@ -11,7 +11,7 @@
 import Foundation
 import BigInt
 
-@objc public enum OstExecuteTransactionType:Int {
+@objc public enum OstExecuteTransactionType: Int {
     case DirectTransfer
     case Pay
     
@@ -27,26 +27,42 @@ import BigInt
 
 class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
+    static let CURRENCY_CODE = "currency_code"
+    static let SYMBOL = "symbol"
+    static let WAIT_FOR_FINALIZATION = "wait_for_finalization"
+    
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
     
     typealias ExecuteTransactionPayloadParams =
-        (ruleName:String, addresses:[String], amounts:[String], tokenId:String)
+        (ruleName: String,
+        addresses: [String],
+        amounts: [String],
+        tokenId: String,
+        options: [String: Any])
     
     /// Rule name
     private static let PAYLOAD_RULE_NAME_KEY = "rn"
     /// Token holder addresses
     private static let PAYLOAD_ADDRESSES_KEY = "ads"
-    /// amounts to transfer
+    /// Amounts to transfer
     private static let PAYLOAD_AMOUNTS_KEY = "ams"
-    /// token id
+    /// Token id
     private static let PAYLOAD_TOKEN_ID_KEY = "tid"
-    // transaction
+    /// Rule data
+    private static let PAYLOAD_OPTIONS_ID_KEY = "o"
+   
+    // Transaction
     private static let META_PAYLOAD_TRANSACTION_NAME_KEY = "tn"
-    // transaction type
+    // Transaction type
     private static let META_PAYLOAD_TRANSACTION_TYPE_KEY = "tt"
-    // transaction detail
+    // Transaction detail
     private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
+    
+    // currency symbol
+    private static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
+    //symbol
+    private static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -69,7 +85,31 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             throw OstError("w_et_getpfqrp_4", .invalidQRCode)
         }
         
-        return (ruleName, addresses, amounts, tokenId)
+        var options: [String: Any] = [:]
+        if let optionsD = payload[OstExecuteTransaction.PAYLOAD_OPTIONS_ID_KEY] as? [String: Any] {
+            options = getReadableDictionaryFor(optionsD)
+        }
+        
+        return (ruleName,
+                addresses,
+                amounts,
+                tokenId,
+                options)
+    }
+    
+    class func getReadableDictionaryFor(_ options: [String: Any]) -> [String: Any] {
+        var readableDictionary: [String: Any] = options
+        
+        readableDictionary[OstExecuteTransaction.WAIT_FOR_FINALIZATION] = "true"
+        
+        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+            readableDictionary[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
+        }
+        if let symbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_SYMBOL_ID_KEY] {
+            readableDictionary[OstExecuteTransaction.SYMBOL] = symbol
+        }
+        
+        return readableDictionary
     }
     
     
@@ -100,6 +140,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let amounts: [String]
     private let ruleName: String
     private let transactionMeta: [String: String]
+    private let options: [String: Any]
+    private var currencyCode: String = OstConfig.getPricePointCurrencySymbol()
     
     private var rule: OstRule? = nil
     private var activeSession: OstSession? = nil
@@ -123,13 +165,25 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
          toAddresses: [String],
          amounts: [String],
          transactionMeta: [String: String],
+         options: [String: Any],
          delegate: OstWorkflowDelegate) {
         
         self.toAddresses = toAddresses
         self.amounts = amounts
         self.ruleName = ruleName
+        self.options = options
         self.transactionMeta = transactionMeta
-        super.init(userId: userId, delegate: delegate)
+        if let lCurrencyCode = options[OstExecuteTransaction.CURRENCY_CODE] {
+            self.currencyCode = OstUtils.toString(lCurrencyCode)!.uppercased()
+        }
+        
+        var waitForFinalization = true
+        if let lWaitForFinalization = options[OstExecuteTransaction.WAIT_FOR_FINALIZATION] {
+            waitForFinalization = OstUtils.toBool(lWaitForFinalization)!
+        }
+        super.init(userId: userId,
+                   shouldPoll: waitForFinalization,
+                   delegate: delegate)
     }
     
     /// Get workflow Queue
@@ -256,6 +310,13 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         self.signature = try self.activeSession!.signTransaction(self.eip1077Hash!)
     }
     
+    /// Get price point currency symbol.
+    ///
+    /// - Returns: Currency symbol. default: value present for `PricePointCurrencySymbol` in `OstWalletSdk.plist`
+    private func getPricePointCurrencySymbol() -> String {
+       return currencyCode
+    }
+    
     /// Execute transaction.
     private func executeTransaction() {
         do {
@@ -270,15 +331,35 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             
             try? self.activeSession!.incrementNonce()
             
+            var err: OstError? = nil
+            var tx: OstTransaction? = nil
+            let group = DispatchGroup()
+            group.enter()
+            
             try OstAPITransaction(userId: self.userId)
                 .executeTransaction(
                     params: params,
                     onSuccess: { (ostTransaction) in
-                        self.postRequestAcknowledged(entity: ostTransaction)
-                        self.pollingForTransaction(transaction: ostTransaction)
+                        tx = ostTransaction
+                        group.leave()
+                        
                 }) { (error) in
-                    self.fetchAllSessions()
-                    self.postError(error)
+                    err = error
+                    group.leave()
+            }
+            group.wait()
+            
+            if (nil != err) {
+                self.fetchAllSessions()
+                self.postError(err!)
+                return
+            }
+            
+            self.postRequestAcknowledged(entity: tx!)
+            if shouldPoll {
+                self.pollingForTransaction(transaction: tx!)
+            }else {
+                self.postWorkflowComplete(entity: tx!)
             }
         }catch let error {
             self.fetchSession(error: error as! OstError)
@@ -366,7 +447,8 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             "rule_name": self.ruleName,
             "token_holder_addresses": self.toAddresses,
             "amounts": self.amounts,
-            "token_id": self.currentUser!.tokenId!
+            "token_id": self.currentUser!.tokenId!,
+            "options": self.options
         ]
         
         return OstContextEntity(entity: verifyData, entityType: .dictionary)
@@ -447,7 +529,7 @@ extension OstExecuteTransaction {
                                                      from: self.currentUser!.tokenHolderAddress!,
                                                      toAddresses: self.toAddresses,
                                                      amounts: self.amounts,
-                                                     currencyCode: OstConfig.getPricePointCurrencySymbol(),
+                                                     currencyCode: getPricePointCurrencySymbol(),
                                                      currencyPrice: currencyPriceInWei.description
         )
     }
@@ -458,18 +540,22 @@ extension OstExecuteTransaction {
     /// - Throws: OstError
     private func getPricePointInWei() throws -> BigInt {
         guard let token = try OstToken.getById(self.currentUser!.tokenId!) else {
-            throw OstError("w_et_gcviw_1", .invalidAmount)
+            throw OstError("w_et_gppiw_1", .invalidAmount)
         }
         
         guard let fiatPricePoint = self.pricePoint![token.baseToken] as? [String: Any] else {
-            throw OstError("w_et_gcviw_2", .pricePointNotFound)
+            throw OstError("w_et_gppiw_2", .pricePointNotFound)
         }
         
-        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePointValue = fiatPricePoint[getPricePointCurrencySymbol()] else {
+            throw OstError("w_et_gppiw_3", .invalidPricePointCurrencySymbol )
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePointValue as! CVarArg)
         let components = try OstConversion.getNumberComponents(fiatValInString)
         
         guard let decimal = OstUtils.toInt(fiatPricePoint["decimals"] as Any) else {
-            throw OstError("w_et_gcviw_3", .callDataFormationFailed)
+            throw OstError("w_et_gppiw_4", .callDataFormationFailed)
         }
         
         let finalExponentComponent = decimal + components.exponent
@@ -500,7 +586,11 @@ extension OstExecuteTransaction {
         guard let fiatDecimal = OstUtils.toInt(fiatPricePoint["decimals"]) else {
             throw OstError("w_et_gtviwfp_5", .pricePointNotFound)
         }
-        let fiatValInString = String(format: "%@", fiatPricePoint[OstConfig.getPricePointCurrencySymbol()] as! CVarArg)
+        guard let fiatPricePointValue = fiatPricePoint[getPricePointCurrencySymbol()] else {
+            throw OstError("w_et_gtviwfp_6", .invalidPricePointCurrencySymbol)
+        }
+        
+        let fiatValInString = String(format: "%@", fiatPricePointValue as! CVarArg)
         
         for amount in self.amounts {
             let btAmount = try OstConversion.fiatToBt(ostToBtConversionFactor: ostToBtConversionFactor,
@@ -523,7 +613,7 @@ extension OstExecuteTransaction {
                                           "parameters": [self.currentUser!.tokenHolderAddress!,
                                                          self.toAddresses,
                                                          self.amounts,
-                                                         OstConfig.getPricePointCurrencySymbol(),
+                                                         getPricePointCurrencySymbol(),
                                                          currencyPriceInWei.description]]
         self.rawCalldata = try OstUtils.toJSONString(rawCalldata)
     }

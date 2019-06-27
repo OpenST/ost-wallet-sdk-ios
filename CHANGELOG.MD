@@ -1,5 +1,16 @@
 # OST Wallet SDK Changelog
 
+## Version 2.2.1
+### Bug Fix:
+* Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
+### Security Enhancements
+* Implemented public-key pinning for api.ost.com 
+
+
+## Version 2.2.0
+### Changes: 
+* Added Multi Currency Feature which allows developers to specify fiat-currency at runtime while executing a transaction.
+* Added OstJsonApi that allows developers to fetch data from Ost Platform. Please see README.MD for supported Api(s).
 
 ## Version 2.1.0
 ### Changes: 

@@ -41,6 +41,32 @@ public class OstUtils {
         return nil
     }
     
+    class func toBool(_ val: Any) -> Bool? {
+        
+        if val is Bool {
+            return val as? Bool
+        }
+        if val is String {
+            let value = val as! String
+            if value == "true" || value == "YES" || value == "1" {
+                return true
+            }
+            else if value == "false" || value == "NO" || value == "0"{
+                return false
+            }
+        }
+        if val is NSNumber {
+            let value = val as! NSNumber
+            if value == 1 {
+                return true
+            }
+            else if value == 0 {
+                return false
+            }
+        }
+        return nil
+    }
+    
     public class func toJSONString(_ val: Any) throws -> String? {
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: val,

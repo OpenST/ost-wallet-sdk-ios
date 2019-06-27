@@ -16,5 +16,5 @@ import Foundation
     /// SDK user will use it to acknowledge device registration.
     ///
     /// - Parameter apiResponse: Response for registerUser
-    @objc func deviceRegistered(_ apiResponse: [String: Any]) throws
+    @objc func deviceRegistered(_ apiResponse: [String: Any])
 }

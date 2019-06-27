@@ -57,17 +57,13 @@ class OstBundle {
     ///
     /// - Returns: version string
     class func getSdkVersion() -> String  {
-        do {
-            let ostBundle = OstBundle()
-            let bundleObj = ostBundle.getSdkBundle()
-            let version = try ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
-                                                       fromFile: "Info",
-                                                       withExtension: "plist",
-                                                       inBundle: bundleObj)
-            return (version as? String) ?? ""
-        }catch {
-            return ""
-        }
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getSdkBundle()
+        let version = ostBundle.getDescription(for: PermissionKey.CFBundleShortVersionString.rawValue,
+                                                   fromFile: "Info",
+                                                   withExtension: "plist",
+                                                   inBundle: bundleObj)
+        return (version as? String) ?? ""
     }
     
     //MARK: Private Methods
@@ -75,10 +71,16 @@ class OstBundle {
     /// Initialize
     fileprivate init() { }
     
+    class func getSdkBundle() -> Bundle {
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getSdkBundle()
+        return bundleObj
+    }
+    
     /// Get Sdk bundle
     ///
     /// - Returns: Bundle
-    fileprivate func getSdkBundle() -> Bundle {
+    func getSdkBundle() -> Bundle {
         let bundle = Bundle(for: type(of: self))
         return bundle
     }
@@ -86,7 +88,7 @@ class OstBundle {
     /// Get Sdk bundle
     ///
     /// - Returns: Bundle
-    fileprivate func getApplicatoinBundle() -> Bundle {
+    func getApplicatoinBundle() -> Bundle {
         let bundle = Bundle.main
         return bundle
     }

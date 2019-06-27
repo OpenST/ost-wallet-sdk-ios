@@ -25,7 +25,7 @@ class EconomyScannerViewController: OstBaseViewController {
     var leadLabel: UILabel = {
        let view = OstUIKit.leadLabel()
         view.textAlignment = .center
-        view.text = "Scan the QR code available on the OST Platform to select your economy.  (Your app won’t require this step)"
+        view.text = "Please scan the QR code or click on the \"Connect to Economy\" button in your invitation email"
         return view
     }()
     

@@ -63,7 +63,7 @@ class TransactionTableViewCell: UsersTableViewCell {
         let label = UILabel()
         label.numberOfLines = 1
         label.textAlignment = .right
-        label.font = OstFontProvider().get(size: 15).bold()
+        label.font = OstTheme.fontProvider.get(size: 15).bold()
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
