@@ -54,6 +54,7 @@ $(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/EthereumKit.framework
 $(SRCROOT)/Carthage/Build/iOS/FMDB.framework
 $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
+$(SRCROOT)/Carthage/Build/iOS/TrustKit.framework
 $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
 ```
 
