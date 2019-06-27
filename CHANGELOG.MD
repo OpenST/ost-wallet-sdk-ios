@@ -1,5 +1,11 @@
 # OST Wallet SDK Changelog
 
+## Version 2.2.1
+### Bug Fix:
+* Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
+### Security Enhancements
+* Implemented public-key pinning for api.ost.com 
+
 
 ## Version 2.2.0
 ### Changes: 
