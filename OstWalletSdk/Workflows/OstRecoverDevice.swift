@@ -66,10 +66,7 @@ class OstRecoverDevice: OstWorkflowBase {
     ///
     /// - Throws: OstError
     override func process() throws {
-        self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
-        if (nil == self.deviceToRecover) {
-            try self.fetchDevice()
-        }
+        try self.fetchDevice()
         if (!self.deviceToRecover!.isStatusAuthorized) {
             throw OstError("w_rd_p_1", OstErrorText.deviceNotAuthorized)
         }
