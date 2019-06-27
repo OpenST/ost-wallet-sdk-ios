@@ -178,7 +178,6 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
         
         let usdAmount = CurrentUserModel.getInstance.toUSD(value: tokenAmountTextField.text ?? "0") ?? "0.00"
         usdAmountTextField.text = usdAmount.toRoundUpTxValue()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

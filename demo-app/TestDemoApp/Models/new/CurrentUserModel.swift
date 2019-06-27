@@ -386,8 +386,8 @@ extension CurrentUserModel {
         }
         
         let btToOstVal = (doubleValue/doubleConversionFactor)
-    
-        return (usdValue * btToOstVal).avoidNotation
+        let usdVal = (usdValue * btToOstVal).avoidNotation
+        return usdVal.replacingOccurrences(of: ",", with: ".")
     }
     
     func toBt(value: String) -> String? {

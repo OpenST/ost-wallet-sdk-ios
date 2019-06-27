@@ -81,10 +81,7 @@ class OstRecoverDevice: OstWorkflowEngine {
     ///
     /// - Throws: OstError
     override func onDeviceValidated() throws {
-        self.deviceToRecover = try OstDevice.getById(self.deviceAddressToRecover)
-        if (nil == self.deviceToRecover) {
-            try self.fetchDevice()
-        }
+        try self.fetchDevice()
         if (!self.deviceToRecover!.isStatusAuthorized) {
             throw OstError("w_rd_p_1", .invalidRecoverDeviceAddress)
         }

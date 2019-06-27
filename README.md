@@ -22,6 +22,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - [EthereumKit](https://github.com/D-Technologies/EthereumKit)
 - [FMDB](https://github.com/ccgus/fmdb)
 - [BigInt](https://github.com/attaswift/BigInt)
+- [TrustKit](https://github.com/datatheorem/TrustKit)
 
 
 ## Setup

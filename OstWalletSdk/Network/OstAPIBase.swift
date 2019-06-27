@@ -10,6 +10,7 @@
 
 import Foundation
 import Alamofire
+import TrustKit
 
 /// Base class for all API calls
 class OstAPIBase {
@@ -36,12 +37,17 @@ class OstAPIBase {
     /// Session manager
     let manager: SessionManager
     
+    ///Trust kit for pinning
+    let trustKit: TrustKit
+    
     /// Initializer
     ///
     /// - Parameter userId: User Id associated with the API requests
     init(userId: String) {
         self.userId = userId
-        self.manager = Alamofire.SessionManager.default
+        self.manager = Alamofire.SessionManager()
+        self.trustKit = OstAPIBase.getTrustKit()
+
         manager.session.configuration.timeoutIntervalForRequest = TimeInterval(requestTimeout)
     }
     
@@ -89,10 +95,18 @@ class OstAPIBase {
             return
         }
         
-//        Logger.log(message: "Request:- \(method.rawValue):- \(url)", parameterToPrint: params as Any)
+        let delegate: SessionDelegate = manager.delegate
+        delegate.sessionDidReceiveChallengeWithCompletion = {[weak self] (session, authenticationChallenge, completion:@escaping ((URLSession.AuthChallengeDisposition, URLCredential?) -> Void)) in
+            
+            if let strongSelf = self {
+                let pinningValidator: TSKPinningValidator = strongSelf.trustKit.pinningValidator
+                if !pinningValidator.handle(authenticationChallenge, completionHandler: completion) {
+                    completion(.performDefaultHandling, nil);
+                }
+            }
+        }
+        
         dataRequest = manager.request(url, method: method, parameters: params, headers: getHeader())
-        // Status code in 200 range will be considered as correct response
-//        dataRequest?.validate(statusCode: 200..<300)
         dataRequest!.responseJSON { (httpResponse) in
 //            Logger.log(message: "Response:- \(method.rawValue):- \(httpResponse.response?.url?.relativePath ?? "")", parameterToPrint: httpResponse.result.value);
             let isSuccess: Bool = self.isResponseSuccess(httpResponse.result.value)
@@ -171,6 +185,38 @@ class OstAPIBase {
             }
         }
         return false
+    }
+    
+    //MARK: - TrustKit
+    /// Get `TrustKit` object for public key pinning.
+    class func getTrustKit() -> TrustKit {
+        let trustKitConfig: [String : Any] = [
+            kTSKSwizzleNetworkDelegates: false,
+            kTSKPinnedDomains: [
+                "api.ost.com": [
+                    kTSKPublicKeyHashes: [
+                        "s4vrk6by0cqKQ9p/mFOakoi0daivc7Le8q7fUuuo4/U=",
+                        "MvVeCJ2tAuJZmbqoXMqSNP2mKh+VjGiljvqWytjzasU=",
+                        "J+0IGhy08mkHR1Z1WbdrHEdHhXRohrdLHUYORlWGafA=",
+                        "aF+lKYb0WChlCTx5uPBw5ZWze/98vAXSzBBIrVSZWJE=",
+                        "efgWbb0q/zHFLub1SY5QpoQVlZp33QpLOj0EmhoK8tI=",
+                    ],
+                    kTSKIncludeSubdomains: false,
+                    kTSKEnforcePinning: true,
+                ]
+            ]
+        ]
+        return TrustKit(configuration: trustKitConfig)
+    }
+    
+    //MARK: - Private
+    /// Get domain from given url string
+    ///
+    /// - Parameter urlString: URL
+    /// - Returns: Domain string
+    private class func getDomainFor(_ urlString: String) -> String? {
+        let url = URL(string: urlString)
+        return url?.host
     }
 }
 
