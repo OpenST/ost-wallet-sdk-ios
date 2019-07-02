@@ -351,7 +351,7 @@ OstWalletSdk.updateBiometricPreference(
 ```
 
 ### Get User 
-Get user entity for given userId
+Get user entity for given userId<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_returns: User entity_<br/>
@@ -360,7 +360,7 @@ OstWalletSdk.getUser(userId: String)
 ```
 
 ### Get Token 
-Get token entity for given tokenId
+Get token entity for given tokenId<br/><br/>
 **Parameters**<br/>
 &nbsp;_tokenId: Token id provided by application server_<br/>
 &nbsp;_returns: Token entity_<br/>
@@ -369,14 +369,14 @@ OstWalletSdk.getToken(tokenId: String)
 ```
 
 ### Get Current Device
-Get current device of user
+Get current device of user<br/><br/>
 ```Swift
 let user: OstUser = OstWalletSdk.getUser(userId: String)
 let device: OstCurrentDevice = user.getCurrentDevice()
 ```
 
 ### Get Biometric preference
-Get biometric preference for user
+Get biometric preference for user<br/><br/>
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_returns: Boolean_<br/>
