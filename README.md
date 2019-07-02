@@ -381,7 +381,7 @@ Get biometric preference for user
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_returns: Boolean_<br/>
 ```Swift
-OstWalletSdk.getToken(tokenId: String) 
+OstWalletSdk.isBiometricEnabled(userId: String) 
 ```
 
 ## Workflow Callbacks
