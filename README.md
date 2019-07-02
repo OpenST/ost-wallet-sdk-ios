@@ -350,6 +350,40 @@ OstWalletSdk.updateBiometricPreference(
     delegate: OstWorkflowDelegate) 
 ```
 
+### Get User 
+Get user entity for given userId
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_returns: User entity_<br/>
+```Swift
+OstWalletSdk.getUser(userId: String) 
+```
+
+### Get Token 
+Get token entity for given tokenId
+**Parameters**<br/>
+&nbsp;_tokenId: Token id provided by application server_<br/>
+&nbsp;_returns: Token entity_<br/>
+```Swift
+OstWalletSdk.getToken(tokenId: String) 
+```
+
+### Get Current Device
+Get current device of user
+```Swift
+let user: OstUser = OstWalletSdk.getUser(userId: String)
+let device: OstCurrentDevice = user.getCurrentDevice()
+```
+
+### Get Biometric preference
+Get biometric preference for user
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_returns: Boolean_<br/>
+```Swift
+OstWalletSdk.getToken(tokenId: String) 
+```
+
 ## Workflow Callbacks
 
 ```Swift
@@ -542,8 +576,9 @@ Api to get user transactions. Transactions of only current logged-in user can be
 &nbsp;_delegate: Callback implementation object for application communication_<br/>
 
 ```Swift
-OstJsonApi.getBalanceWithPricePoint(
+OstJsonApi.getTransaction(
     forUserId userId: String,
+    params: [String: Any]?,
     delegate: OstJsonApiDelegate) 
 ```
 
