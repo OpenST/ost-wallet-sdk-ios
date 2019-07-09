@@ -32,7 +32,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" == 2.2.1
+github "ostdotcom/ost-wallet-sdk-ios" == 2.2.2
 ```
 
 - Run `carthage update --platform iOS`
@@ -624,7 +624,7 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 
 ## Reference
 
-For a sample implementation, please see the [Demo App](https://github.com/ostdotcom/ios-demo-app/tree/develop)
+For a sample implementation, please see the [Demo App](demo-app)
 
 There are other references are listed below:
 
