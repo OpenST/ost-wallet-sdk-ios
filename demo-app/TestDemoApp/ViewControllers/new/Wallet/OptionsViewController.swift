@@ -270,9 +270,16 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
+        let optionOptInForCrash: OptionVM
+        if UserSetting.shared.isOptInForCrashReport() {
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt-out For Crash Report", isEnable: true)
+        }else {
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt-in For Crash Report", isEnable: true)
+        }
+        
         let optionSupport = OptionVM(type: .contactSupport, name: "Contact Support", isEnable: true)
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionSupport]
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionOptInForCrash, optionSupport]
         generalOptions = userOptions
     }
     
@@ -368,6 +375,20 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         if CurrentUserModel.getInstance.isCurrentDeviceStatusAuthorizing {
             showDeviceIsAuthroizingAlert()
+            return
+        }
+        
+        if option.type == .crashReportPreference {
+            let stateText = UserSetting.shared.isOptInForCrashReport() ? "Opt-out" : "Opt-in"
+            let alertTitleText = stateText + " For Crash Report"
+            
+            showInfoAlert(title: alertTitleText,
+                          message: "To activate this setting, Please completely quit the app",
+                          actionButtonTitle: stateText,
+                          actionButtonTapped: {(_) in
+                            
+                            UserSetting.shared.updateCrashReportPreference()
+            })
             return
         }
         

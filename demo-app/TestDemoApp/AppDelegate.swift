@@ -46,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var temp:[UIApplication.LaunchOptionsKey: Any]? = nil;
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
+        
+        if UserSetting.shared.isOptInForCrashReport() {
+            Fabric.with([Crashlytics.self])
+        }
         showIntroController(fetchUser: true)
         IQKeyboardManager.shared.enable = true
         temp = launchOptions;
