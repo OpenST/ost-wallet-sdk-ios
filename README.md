@@ -624,7 +624,7 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 
 ## Reference
 
-For a sample implementation, please see the [Demo App](https://github.com/ostdotcom/ios-demo-app/tree/develop)
+For a sample implementation, please see the [Demo App](demo-app)
 
 There are other references are listed below:
 
