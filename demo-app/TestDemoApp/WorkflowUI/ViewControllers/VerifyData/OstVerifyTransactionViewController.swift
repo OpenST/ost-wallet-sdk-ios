@@ -21,7 +21,8 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     var options: [String: Any]? = nil
     var ruleType: OstExecuteTransactionType? = nil
     var delegate: OstBaseDelegate?
-    
+    var transferBalance: Double = Double(0)
+    var progressIndicator: OstProgressIndicator? = nil
     //MARK: - View LC
     
     override func viewDidLoad() {
@@ -40,8 +41,6 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
             let balance: String = currentUser.toUSD(value: currentUser.balance) ?? "0"
             self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
         }
-        
-        var transferBalance: Double = Double(0)
         
         let symbol: String? = (options as? [String: String])?["symbol"] ?? nil
         
@@ -66,7 +65,25 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
                 stackView.addArrangedSubview(transfer)
             }
         }
-        
+        self.errorLabel.isHidden = true
+        self.authorizeButton.isEnabled = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchUserBalance()
+    }
+    
+    func fetchUserBalance() {
+        progressIndicator = OstProgressIndicator(textCode: .fetchingUserBalance)
+        progressIndicator?.show()
+        CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isFetched, _, _) in
+            self?.progressIndicator?.hide()
+            self?.validateBalance()
+        }
+    }
+    
+    func validateBalance() {
         switch ruleType! {
         case .DirectTransfer:
             self.ruleNameValueLabel.text = "Direct Transfer"
@@ -80,7 +97,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     func validateBalanceForDirectTransfer(transferBalance: Double) {
         
-        let availableBalance = Double(CurrentUserModel.getInstance.balance)!
+        let availableBalance = Double(CurrentUserModel.getInstance.balance) ?? Double(0)
         if transferBalance <= availableBalance {
             self.errorLabel.isHidden = true
             authorizeButton.isEnabled = true

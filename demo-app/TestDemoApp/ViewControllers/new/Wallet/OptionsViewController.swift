@@ -272,9 +272,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         
         let optionOptInForCrash: OptionVM
         if UserSetting.shared.isOptInForCrashReport() {
-            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt-out For Crash Report", isEnable: true)
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt out from crash reporting", isEnable: true)
         }else {
-            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt-in For Crash Report", isEnable: true)
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt in to crash reporting", isEnable: true)
         }
         
         let optionSupport = OptionVM(type: .contactSupport, name: "Contact Support", isEnable: true)
@@ -379,19 +379,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if option.type == .crashReportPreference {
-            let stateText = UserSetting.shared.isOptInForCrashReport() ? "Opt-out" : "Opt-in"
-            let alertTitleText = stateText + " For Crash Report"
-            
+            UserSetting.shared.updateCrashReportPreference()
+            let isOptInForCrashReport = UserSetting.shared.isOptInForCrashReport()
+            let alertTitleText = isOptInForCrashReport ? "Opt out from crash reporting" : "Opt in to crash reporting"
             showInfoAlert(title: alertTitleText,
-                          message: "To activate this setting, Please completely quit the app",
-                          actionButtonTitle: stateText,
-                          actionButtonTapped: {(_) in
-                            
-                            UserSetting.shared.updateCrashReportPreference()
-            })
+                          message: "For the changes to take effect, please exit the app and re-launch it")
+            setupTableViewModels()
             return
         }
-        
         
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
