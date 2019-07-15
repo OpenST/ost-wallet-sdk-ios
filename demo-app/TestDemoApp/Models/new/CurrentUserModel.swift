@@ -45,6 +45,8 @@ class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowComplet
         self.userDetails = nil
         pricePoint = nil
         userBalanceDetails = nil
+        UserCrashlyticsSetting.shared.isUserOptInForFabric = nil
+        UserCrashlyticsSetting.shared.isRequestInProgress = false
     }
     
     func logout() {

@@ -116,6 +116,40 @@ class UserAPI: BaseAPI {
             onFailure: onFailure)
     }
     
+    class func updateCrashlyticsPreference(userId: String,
+                                           params: [String: Any]?,
+                                           onSuccess: (([String: Any]?) -> Void)? = nil,
+                                           onFailure: (([String: Any]?) -> Void)? = nil) {
+        
+        self.post(resource: "/users/\(userId)/set-preference",
+            params: params as [String: AnyObject]?,
+            onSuccess: { (apiParams) in
+                guard let data = (apiParams?["data"] as? [String: Any]) else {
+                    onFailure?(nil)
+                    return
+                }
+                onSuccess?(data)
+        },
+            onFailure: onFailure)
+    }
+    
+    class func getCrashlyticsPreference(userId: String,
+                                        params: [String: Any]?,
+                                        onSuccess: (([String: Any]?) -> Void)? = nil,
+                                        onFailure: (([String: Any]?) -> Void)? = nil) {
+        
+        self.get(resource: "/users/\(userId)/get-preference",
+            params: params as [String: AnyObject]?,
+            onSuccess: { (apiParams) in
+                guard let data = (apiParams?["data"] as? [String: Any]) else {
+                    onFailure?(nil)
+                    return
+                }
+                onSuccess?(data)
+        },
+            onFailure: onFailure)
+    }
+    
     class func getUserDetails(onSuccess: (([String: Any]?) -> Void)? = nil,
                               onFailure: (([String: Any]?) -> Void)? = nil) {
         self.get(resource: "/users/current-user",

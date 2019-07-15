@@ -30,17 +30,26 @@ class TransactionQRScanner: QRScannerViewController {
                 self?.scanner?.startScanning()
             }))
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] (alertAction) in
+                self?.navigationController?.popViewController(animated: true)
+            }))
             self.present(alert, animated: true, completion: nil)
         }
     }
     
     func isValidQRdata(_ qrData: String) -> Bool {
         guard let payloadData = getpaylaodDataFromQR(qrData),
+            let ruleName = payloadData["rn"] as? String,
             let addresses =  payloadData["ads"] as? [String],
             let amounts = payloadData["ams"] as? [String] else{
                 
                 return false
+        }
+        
+        if ![OstExecuteTransactionType.DirectTransfer.getQRText().lowercased(),
+            OstExecuteTransactionType.Pay.getQRText().lowercased()].contains(ruleName.lowercased()) {
+            
+            return false
         }
         
         let filteredAddress = addresses.filter({
