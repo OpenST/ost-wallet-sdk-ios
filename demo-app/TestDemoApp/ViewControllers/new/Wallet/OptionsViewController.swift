@@ -9,6 +9,8 @@
 import UIKit
 import OstWalletSdk
 import LocalAuthentication
+import Crashlytics
+
 
 class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
 
@@ -94,6 +96,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if nil == UserCrashlyticsSetting.shared.getCrashReportPreference() {
+            UserCrashlyticsSetting.shared.fetchPreferenceFromServer {[weak self] in
+                self?.setupTableViewModels()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -271,7 +279,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         let optionOptInForCrash: OptionVM
-        if UserSetting.shared.isOptInForCrashReport() {
+        if UserCrashlyticsSetting.shared.isOptInForCrashReport(){
             optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt out from crash reporting", isEnable: true)
         }else {
             optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt in to crash reporting", isEnable: true)
@@ -379,12 +387,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if option.type == .crashReportPreference {
-            UserSetting.shared.updateCrashReportPreference()
-            let isOptInForCrashReport = UserSetting.shared.isOptInForCrashReport()
-            let alertTitleText = isOptInForCrashReport ? "Opt out from crash reporting" : "Opt in to crash reporting"
-            showInfoAlert(title: alertTitleText,
-                          message: "For the changes to take effect, please exit the app and re-launch it")
-            setupTableViewModels()
+            showCrashlyticsAlertIfRequired()
             return
         }
         
@@ -574,7 +577,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func showInfoAlert(title: String,
                        message: String? = nil,
                        actionButtonTitle: String? = nil,
-                       actionButtonTapped: ((UIAlertAction) -> Void)? = nil) {
+                       actionButtonTapped: ((UIAlertAction) -> Void)? = nil,
+                       cancelButtonTitle: String = "Dismiss",
+                       cancelButtonTapped: ((UIAlertAction) -> Void)? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -582,7 +587,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: actionButtonTapped))
         }
         
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: cancelButtonTapped))
         alert.show()
     }
     
@@ -608,6 +613,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.show()
+    }
+    
+    func showCrashlyticsAlertIfRequired() {
+        let isOptInForCrashReport = UserCrashlyticsSetting.shared.isOptInForCrashReport()
+        UserCrashlyticsSetting.shared.updateCrashReportPreference(!isOptInForCrashReport, completion: {[weak self] () in
+            self?.setupTableViewModels()
+        })
     }
     
     func logoutSessions() {

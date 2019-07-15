@@ -101,9 +101,9 @@
 		00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
 		00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FF2332226F5B2C009C2945 /* OstTheme.swift */; };
-		4B09CB5C22D4C58000A8A6A0 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserSetting.swift */; };
-		4B09CB5D22D4C93800A8A6A0 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserSetting.swift */; };
-		4B09CB5E22D4C93D00A8A6A0 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserSetting.swift */; };
+		4B09CB5C22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
+		4B09CB5D22D4C93800A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
+		4B09CB5E22D4C93D00A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
 		4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
@@ -470,7 +470,7 @@
 		0CEFF3E9CBB09B688FC63E52 /* Pods-TestDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
-		4B09CB5B22D4C58000A8A6A0 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCrashlyticsSetting.swift; sourceTree = "<group>"; };
 		4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSuccessNotification.swift; sourceTree = "<group>"; };
 		4B214A74228B4FAB006825FE /* OstErroNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstErroNotification.swift; sourceTree = "<group>"; };
@@ -958,7 +958,7 @@
 				4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */,
 				4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */,
 				4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */,
-				4B09CB5B22D4C58000A8A6A0 /* UserSetting.swift */,
+				4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -1234,6 +1234,7 @@
 				C7DD69526F5260DE45778FC0 /* [CP] Embed Pods Frameworks */,
 				4BF8FE392240FD3C00519779 /* ShellScript */,
 				4B402CB422AE94A300ABDC2C /* Embed Frameworks */,
+				4B09CB8622D60E1200A8A6A0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1420,6 +1421,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4B09CB8622D60E1200A8A6A0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\" b1cee059338e782f66f0ca351766f2d09c751c29 addd64163c69c90c642d331f600c733df315fe174b0565db277dfa65e4425c01\n";
 		};
 		4BF8FE392240FD3C00519779 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1622,7 +1641,7 @@
 				4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4BFA11712286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
-				4B09CB5C22D4C58000A8A6A0 /* UserSetting.swift in Sources */,
+				4B09CB5C22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift in Sources */,
 				4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */,
 				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
 				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
@@ -1704,7 +1723,7 @@
 				00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00A76B282282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BFA118922873C3900A9F5A4 /* UserDetailsWithLinkTableViewCell.swift in Sources */,
-				4B09CB5D22D4C93800A8A6A0 /* UserSetting.swift in Sources */,
+				4B09CB5D22D4C93800A8A6A0 /* UserCrashlyticsSetting.swift in Sources */,
 				4BA4CB7F228133A600A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB863227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB762280BC8A00A623ED /* CurrentEconomy.swift in Sources */,
@@ -1820,7 +1839,7 @@
 				00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */,
 				00A76B292282E635009226B8 /* OstWrokflowUIDelegates.swift in Sources */,
 				4BFA118A22873C3900A9F5A4 /* UserDetailsWithLinkTableViewCell.swift in Sources */,
-				4B09CB5E22D4C93D00A8A6A0 /* UserSetting.swift in Sources */,
+				4B09CB5E22D4C93D00A8A6A0 /* UserCrashlyticsSetting.swift in Sources */,
 				4BA4CB80228133A700A623ED /* SendTokensViewController.swift in Sources */,
 				00ECB864227727310085E4AB /* OstBaseViewController.swift in Sources */,
 				4BA4CB752280BC8900A623ED /* CurrentEconomy.swift in Sources */,

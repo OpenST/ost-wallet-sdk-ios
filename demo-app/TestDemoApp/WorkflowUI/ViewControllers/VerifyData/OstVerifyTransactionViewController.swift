@@ -31,16 +31,7 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let currentUser = CurrentUserModel.getInstance
-        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
-            ruleType = OstExecuteTransactionType.DirectTransfer
-            self.balanceLabel.text = "Balance: \(currentUser.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
-        }
-        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
-            ruleType = OstExecuteTransactionType.Pay
-            let balance: String = currentUser.toUSD(value: currentUser.balance) ?? "0"
-            self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
-        }
+        setBalance()
         
         let symbol: String? = (options as? [String: String])?["symbol"] ?? nil
         
@@ -78,8 +69,23 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
         progressIndicator = OstProgressIndicator(textCode: .fetchingUserBalance)
         progressIndicator?.show()
         CurrentUserModel.getInstance.fetchUserBalance {[weak self] (isFetched, _, _) in
+            self?.setBalance()
             self?.progressIndicator?.hide()
             self?.validateBalance()
+        }
+    }
+    
+    func setBalance() {
+        let currentUser = CurrentUserModel.getInstance
+        
+        if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.DirectTransfer.getQRText()) == .orderedSame {
+            ruleType = OstExecuteTransactionType.DirectTransfer
+            self.balanceLabel.text = "Balance: \(currentUser.balance) \(CurrentEconomy.getInstance.tokenSymbol ?? "")"
+        }
+        else if ruleName?.caseInsensitiveCompare(OstExecuteTransactionType.Pay.getQRText()) == .orderedSame {
+            ruleType = OstExecuteTransactionType.Pay
+            let balance: String = currentUser.toUSD(value: currentUser.balance) ?? ""
+            self.balanceLabel.text = "Balance: $ \(balance.toDisplayTxValue())"
         }
     }
     
@@ -97,26 +103,33 @@ class OstVerifyTransactionViewController: OstBaseScrollViewController {
     
     func validateBalanceForDirectTransfer(transferBalance: Double) {
         
-        let availableBalance = Double(CurrentUserModel.getInstance.balance) ?? Double(0)
-        if transferBalance <= availableBalance {
-            self.errorLabel.isHidden = true
-            authorizeButton.isEnabled = true
+        if let availableBalance = Double(CurrentUserModel.getInstance.balance) {
+            if transferBalance <= availableBalance {
+                self.errorLabel.isHidden = true
+                authorizeButton.isEnabled = true
+            }else {
+                self.errorLabel.isHidden = false
+                authorizeButton.isEnabled = false
+            }
         }else {
             self.errorLabel.isHidden = false
-            authorizeButton.isEnabled = false
         }
+      
     }
     
     func validateBalanceForPricer(transferBalance: Double) {
         let currentUser = CurrentUserModel.getInstance
-        let balance = currentUser.toUSD(value: currentUser.balance) ?? "0"
-        
-        if transferBalance < Double(balance)! {
-            self.errorLabel.isHidden = true
-            authorizeButton.isEnabled = true
+        if let balance = currentUser.toUSD(value: currentUser.balance),
+            let balanceInDouble =  Double(balance) {
+            if transferBalance < balanceInDouble {
+                self.errorLabel.isHidden = true
+                authorizeButton.isEnabled = true
+            }else {
+                self.errorLabel.isHidden = false
+                authorizeButton.isEnabled = false
+            }
         }else {
             self.errorLabel.isHidden = false
-            authorizeButton.isEnabled = false
         }
     }
     
