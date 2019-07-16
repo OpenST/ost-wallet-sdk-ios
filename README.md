@@ -622,6 +622,34 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 | **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
 | **data** <br> **[String: Any]?**	|	Json api failure response	|
 
+## Application development supporting doc
+
+### Entities status on User Activities
+|User Activity |App State|User Status|Device Status|Session status|
+| --- | --- | :---: | :---: | :---: |
+|Installs app for the first time|Not Login|CREATED|UNREGISTED| `NA`|
+|Login in the app for the first time|Log In|CREATED|REGISTERED| `NA`|
+|Initiate Activate Wallet by entering pin|Activating Wallet|ACTIVATING|AUTHORIZING|INITIALIZING|
+|Activates Wallet after waiting|Activated Wallet|ACTIVATED|AUTHORIZED|AUTHORISED|
+|Performs transactions|Activated Wallet|ACTIVATED|AUTHORIZED|AUTHORISED|
+|Session get expired|Activated Wallet|ACTIVATED|AUTHORIZED|EXPIRED|
+|Logout all Sessions|Activated Wallet|ACTIVATED|AUTHORIZED|REVOKING -> REVOKED|
+|Add Session|Activated Wallet|ACTIVATED|AUTHORIZED|INITIALIZING -> AUTHORISED|
+|Log out from app|Not Login|ACTIVATED|AUTHORIZED|AUTHORISED|
+|Log in back to App|Activated Wallet|ACTIVATED|AUTHORIZED|AUTHORISED|
+|Reinstall the App|No Login|CREATED|UNREGISTED| `NA`|
+|Login in the app|Log In|ACTIVATED|REGISTERED| `NA`|
+|Recover Wallet Or Add Wallet|Activating Wallet|ACTIVATED|AUTHORIZING -> AUTHORISED| `NA`|
+|Revoked Device from other device|Activated Wallet|ACTIVATED|REVOKING -> REVOKED| `NA`|
+
+### Get Entity status updates
+To get real time updates of entities like ongoing activation Or transactions, server side sdk's [WebHooks](https://dev.ost.com/platform/docs/api/#webhooks) services can be used.
+
+### Balance calculation
+* TokenHolder Balance can be shown in Token currency or in Fiat currency.
+* For Token currency conversion, the fetched balance is in Wei unit, which needs to be converted to Base unit.
+* For Fiat currency conversion, the fetched balance first need to be converted to fiat equivalent using current converion rate from price points and then to its Base unit.
+
 ## Reference
 
 For a sample implementation, please see the [Demo App](demo-app)
