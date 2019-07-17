@@ -649,6 +649,29 @@ To get real time updates of entities like ongoing activation Or transactions, se
 * TokenHolder Balance can be shown in Token currency or in Fiat currency.
 * For Token currency conversion, the fetched balance is in Wei unit, which needs to be converted to Base unit.
 * For Fiat currency conversion, the fetched balance first need to be converted to fiat equivalent using current converion rate from price points and then to its Base unit.
+```Swift
+
+class OstJsonApiDelegateHelper: OstJsonApiDelegate {
+    func onOstJsonApiSuccess(data: [String : Any]?) {
+        let apiData = data
+        let resultType: String = OstJsonApi.getResultType(apiData: data) ?? ""
+
+        if "balance".caseInsensitiveCompare(resultType) == .orderedSame,
+            let balanceData = OstJsonApi.getResultAsDictionary(apiData: apiData) {
+
+                let availabelBalance: String = balanceData["available_balance"] as! String;
+                let pricePoint: [String: Any] = apiData!["price_point"] as! [String: Any];
+        }
+    }
+
+    func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
+        //Show error while fetcing data.
+    }
+}
+
+OstJsonApi.getBalanceWithPricePoint(forUserId: ostUserId!, delegate: OstJsonApiDelegateHelper())
+
+```
 
 ## Reference
 
