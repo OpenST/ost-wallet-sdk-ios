@@ -82,6 +82,8 @@ struct EthMetaMapping {
 
 /// Class for managing the ethereum keys.
 private class OstInternalKeyManager : OstKeyManagerDelegate {
+    let PRIVATE_KEY_LENGTH = 64
+    
 //    typealias SignedData = (address: String, signature: String)
     
     // MARK: - Instance varaibles
@@ -915,7 +917,8 @@ private extension OstInternalKeyManager {
         )
         
         let privateKey = wallet.privateKey()
-        let signedMessage = try signTx(tx, withPrivatekey: privateKey.toHexString())
+        let privateKeyWithPadding = getPaddedPrivateKey(privateKey: privateKey.toHexString())
+        let signedMessage = try signTx(tx, withPrivatekey: privateKeyWithPadding)
         return (wallet.address(), signedMessage)
     }
 
@@ -925,8 +928,9 @@ private extension OstInternalKeyManager {
     /// - Returns: Signed message
     /// - Throws: OstError
     private func sign(_ message: String, withPrivatekey key: String) throws -> String {
+        let privateKeyWithPadding = getPaddedPrivateKey(privateKey: key)
         let wallet : Wallet = Wallet(network: OstConstants.OST_WALLET_NETWORK,
-                                     privateKey: key,
+                                     privateKey: privateKeyWithPadding,
                                      debugPrints: OstConstants.PRINT_DEBUG)
         
         var singedData: String
@@ -946,7 +950,8 @@ private extension OstInternalKeyManager {
     /// - Returns: Signed transaction string
     /// - Throws: OSTError
     private func signTx(_ tx: String, withPrivatekey privateKey: String) throws -> String {
-        let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKey))
+        let privateKeyWithPadding = getPaddedPrivateKey(privateKey: privateKey)
+        let priKey : PrivateKey = PrivateKey(raw: Data(hex: privateKeyWithPadding))
         
         var singedData: Data
         do {
@@ -957,6 +962,16 @@ private extension OstInternalKeyManager {
         singedData[64] += 27
         let singedTx = singedData.toHexString().addHexPrefix();
         return singedTx
+    }
+
+    /// Get padded private key
+    ///
+    /// - Parameter privateKey: Private key
+    /// - Returns: String of padded private key with length 64
+    private func getPaddedPrivateKey(privateKey: String) -> String {
+        let privateKeyHex = privateKey.stripHexPrefix()
+        let privateKeyWithPadding = privateKeyHex.padLeft(totalWidth: PRIVATE_KEY_LENGTH, with: "0")
+        return privateKeyWithPadding
     }
 }
 
