@@ -917,8 +917,7 @@ private extension OstInternalKeyManager {
         )
         
         let privateKey = wallet.privateKey()
-        let privateKeyWithPadding = getPaddedPrivateKey(privateKey: privateKey.toHexString())
-        let signedMessage = try signTx(tx, withPrivatekey: privateKeyWithPadding)
+        let signedMessage = try signTx(tx, withPrivatekey: privateKey.toHexString())
         return (wallet.address(), signedMessage)
     }
 
