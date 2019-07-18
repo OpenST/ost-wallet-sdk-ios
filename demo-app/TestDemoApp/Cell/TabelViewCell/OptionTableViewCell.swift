@@ -23,7 +23,8 @@ enum OptionType {
     abortRecovery,
     revokeAllSessions,
     logout,
-    contactSupport
+    contactSupport,
+    crashReportPreference
 }
 
 class OptionVM {

@@ -14,16 +14,10 @@ class CurrentEconomy: OstBaseModel {
     static let userDefaultsId = "CurrentEconomy"
     static let getInstance = CurrentEconomy()
     
-    private var economyDecimals: Int? = nil
     func getEconomyDecimals() -> Int {
-        if nil == economyDecimals {
-            if let currentToken = OstWalletSdk.getToken(tokenId!) {
-                let decimals = currentToken.decimals ?? 18
-                economyDecimals = decimals
-            }
-        }
-
-        return economyDecimals ?? 18
+        let currentToken = OstWalletSdk.getToken(tokenId!)!
+        let decimals = currentToken.decimals
+        return decimals!
     }
     
     private override init() {

@@ -151,13 +151,15 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
              if (self.currentUser!.tokenId! != executeTxPayloadParams.tokenId) {
                  throw OstError("w_p_gwfo_1", .invalidTokenId)
              }
+             let metaParam = OstExecuteTransaction.getTransactionMetaFromFromQRPayload(self.meta)
+             
              self.executeTxPayloadParams = executeTxPayloadParams
             
             return OstExecuteTransaction(userId: self.userId,
                                          ruleName: executeTxPayloadParams.ruleName,
                                          toAddresses: executeTxPayloadParams.addresses,
                                          amounts: executeTxPayloadParams.amounts,
-                                         transactionMeta: self.meta as! [String : String],
+                                         transactionMeta: metaParam,
                                          options: executeTxPayloadParams.options,
                                          delegate: self.delegate!)
             

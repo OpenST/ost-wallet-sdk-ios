@@ -9,6 +9,8 @@
 import UIKit
 import OstWalletSdk
 import LocalAuthentication
+import Crashlytics
+
 
 class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
 
@@ -94,6 +96,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if nil == UserCrashlyticsSetting.shared.getCrashReportPreference() {
+            UserCrashlyticsSetting.shared.fetchPreferenceFromServer {[weak self] in
+                self?.setupTableViewModels()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -270,9 +278,16 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             optionMnemonics.isEnable = false
         }
         
+        let optionOptInForCrash: OptionVM
+        if UserCrashlyticsSetting.shared.isOptInForCrashReport(){
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt out from crash reporting", isEnable: true)
+        }else {
+            optionOptInForCrash = OptionVM(type: .crashReportPreference, name: "Opt in to crash reporting", isEnable: true)
+        }
+        
         let optionSupport = OptionVM(type: .contactSupport, name: "Contact Support", isEnable: true)
         
-        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionSupport]
+        let userOptions = [optionDetail, optionSession, optionResetPin, optionMnemonics, optionOptInForCrash, optionSupport]
         generalOptions = userOptions
     }
     
@@ -332,8 +347,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if nil != userDevice
-            || !userDevice!.isStatusRevoked
-            || !(currentUser.isCurrentUserStatusActivating ?? true) {
+            && !userDevice!.isStatusRevoked
+            && !(currentUser.isCurrentUserStatusActivating ?? true) {
             
             fetchPendingRecovery()
         }
@@ -371,6 +386,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             return
         }
         
+        if option.type == .crashReportPreference {
+            showCrashlyticsAlertIfRequired()
+            return
+        }
         
         var destinationSVVC: BaseSettingOptionsSVViewController? = nil
         var destinationVC: BaseSettingOptionsViewController? = nil
@@ -558,7 +577,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     func showInfoAlert(title: String,
                        message: String? = nil,
                        actionButtonTitle: String? = nil,
-                       actionButtonTapped: ((UIAlertAction) -> Void)? = nil) {
+                       actionButtonTapped: ((UIAlertAction) -> Void)? = nil,
+                       cancelButtonTitle: String = "Dismiss",
+                       cancelButtonTapped: ((UIAlertAction) -> Void)? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -566,7 +587,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: actionButtonTapped))
         }
         
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: cancelButtonTapped))
         alert.show()
     }
     
@@ -592,6 +613,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.show()
+    }
+    
+    func showCrashlyticsAlertIfRequired() {
+        let isOptInForCrashReport = UserCrashlyticsSetting.shared.isOptInForCrashReport()
+        UserCrashlyticsSetting.shared.updateCrashReportPreference(!isOptInForCrashReport, completion: {[weak self] () in
+            self?.setupTableViewModels()
+        })
     }
     
     func logoutSessions() {
