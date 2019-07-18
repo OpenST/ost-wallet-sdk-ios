@@ -2,7 +2,7 @@
 
 ## Version 2.2.3
 ### Bug Fix:
-* Inconsistant signature generation fix.
+* Inconsistent signature generation fix.
 
 ## Version 2.2.2
 ### Bug Fix:
