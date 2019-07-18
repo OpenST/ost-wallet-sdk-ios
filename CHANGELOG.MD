@@ -1,6 +1,10 @@
 # OST Wallet SDK Changelog
 
 
+## Version 2.1.3
+### Bug Fix:
+* Inconsistent signature generation fix.
+
 ## Version 2.1.2
 ### Bug Fix:
 * Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
