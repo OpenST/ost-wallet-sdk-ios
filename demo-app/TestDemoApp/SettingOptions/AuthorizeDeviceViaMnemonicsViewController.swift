@@ -88,6 +88,8 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         
         let workflowDelegate = self.workflowDelegate
         subscribeToCallback?(workflowDelegate)
+        progressIndicator = OstProgressIndicator(textCode: .authorizingDevice)
+        progressIndicator?.show()
         OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId: currentUser.ostUserId!,
                                                          mnemonics: mnemonics,
                                                          delegate: workflowDelegate)
@@ -108,5 +110,15 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         wordsTextController?.setErrorText("Invalid Mnemonics passed.",
                                           errorAccessibilityValue: nil);
         return false
+    }
+    
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        progressIndicator?.hide()
+        progressIndicator = nil
+    }
+    
+    override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        progressIndicator?.hide()
+        progressIndicator = nil
     }
 }
