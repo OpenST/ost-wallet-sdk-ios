@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.2.3
+### Bug Fix:
+* Inconsistant signature generation fix.
+
 ## Version 2.2.2
 ### Bug Fix:
 * Scanning unrecognized QR codes no longer causes the SDK to crash

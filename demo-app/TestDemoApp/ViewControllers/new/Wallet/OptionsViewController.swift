@@ -347,8 +347,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
         
         if nil != userDevice
-            || !userDevice!.isStatusRevoked
-            || !(currentUser.isCurrentUserStatusActivating ?? true) {
+            && !userDevice!.isStatusRevoked
+            && !(currentUser.isCurrentUserStatusActivating ?? true) {
             
             fetchPendingRecovery()
         }
