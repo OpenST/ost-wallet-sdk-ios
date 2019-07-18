@@ -65,6 +65,11 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         fetchUserWalletData(hardRefresh: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UserCrashlyticsSetting.shared.verifyUserCrashlyticsPreferenceIfRequired()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

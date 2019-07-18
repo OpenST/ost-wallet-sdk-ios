@@ -147,10 +147,11 @@ class OstProgressIndicator: OstBaseView {
             }
             
             strongSelf.alert?.show()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
-                 self?.hide(onCompletion: onCompletion)
-            })
+            if duration > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
+                    self?.hide(onCompletion: onCompletion)
+                })
+            }
         }
     }
     
