@@ -596,6 +596,21 @@ OstJsonApi.getPendingRecovery(
     forUserId userId: String,
     delegate: OstJsonApiDelegate) 
 ```
+
+### Device List
+
+Api to get device list.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_params: request payload. Such as next-page payload, filters etc._<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getDeviceList(
+    forUserId userId: String,
+    params: [String: Any]?,
+    delegate: OstJsonApiDelegate) 
+```
 ## Json Api Response Delegates
 
 ```Swift
