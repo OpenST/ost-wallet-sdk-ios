@@ -288,16 +288,16 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     }
     
     func initiateDeviceRecovery(entity: [String: Any]) {
-        let workflowId = OstWalletSdkUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+        let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                   recoverDeviceAddress: entity["address"] as! String,
                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance)
-        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self)
+        OstWalletUI.subscribe(workflowId: workflowId, listner: self)
     }
     
     func abortDeviceRecovery() {
-        let workflowId = OstWalletSdkUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+        let workflowId = OstWalletUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                         passphrasePrefixDelegate: CurrentUserModel.getInstance)
-        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self)
+        OstWalletUI.subscribe(workflowId: workflowId, listner: self)
     }
     
     func revokeDevice(deviceAddress: String) {

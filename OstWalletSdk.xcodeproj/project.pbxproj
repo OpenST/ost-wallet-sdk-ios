@@ -233,7 +233,7 @@
 		4B9433AE22F07AB700966372 /* OstDeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337322F07AB700966372 /* OstDeviceListViewController.swift */; };
 		4B9433AF22F07AB700966372 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337422F07AB700966372 /* WKWebViewController.swift */; };
 		4B9433B022F07AB700966372 /* OstBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337522F07AB700966372 /* OstBaseViewController.swift */; };
-		4B9433B122F07AB700966372 /* OstWalletSdkUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337622F07AB700966372 /* OstWalletSdkUI.swift */; };
+		4B9433B122F07AB700966372 /* OstWalletUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337622F07AB700966372 /* OstWalletUI.swift */; };
 		4B9433B222F07AB700966372 /* OstDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */; };
 		4B9433B322F07AB700966372 /* OstBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */; };
 		4B9433B422F07AB700966372 /* OstPaginationLoaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */; };
@@ -512,7 +512,7 @@
 		4B94337322F07AB700966372 /* OstDeviceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceListViewController.swift; sourceTree = "<group>"; };
 		4B94337422F07AB700966372 /* WKWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
 		4B94337522F07AB700966372 /* OstBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseViewController.swift; sourceTree = "<group>"; };
-		4B94337622F07AB700966372 /* OstWalletSdkUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdkUI.swift; sourceTree = "<group>"; };
+		4B94337622F07AB700966372 /* OstWalletUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletUI.swift; sourceTree = "<group>"; };
 		4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseTableViewCell.swift; sourceTree = "<group>"; };
 		4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -1095,7 +1095,7 @@
 				4B94337D22F07AB700966372 /* Delegates */,
 				4B94338922F07AB700966372 /* Interact */,
 				4B94337C22F07AB700966372 /* OstAssets.xcassets */,
-				4B94337622F07AB700966372 /* OstWalletSdkUI.swift */,
+				4B94337622F07AB700966372 /* OstWalletUI.swift */,
 				4B94335E22F07AB700966372 /* UIComponents */,
 				4B94339222F07AB700966372 /* Utils */,
 				4B94336C22F07AB700966372 /* ViewController */,
@@ -1619,7 +1619,7 @@
 				00ABD38A22A72BE90080C4BB /* Exports+Web3.swift in Sources */,
 				00ABD34A22A72BE90080C4BB /* OstRevokeDeviceWithQRData.swift in Sources */,
 				4B9433B822F07AB700966372 /* OstContent.swift in Sources */,
-				4B9433B122F07AB700966372 /* OstWalletSdkUI.swift in Sources */,
+				4B9433B122F07AB700966372 /* OstWalletUI.swift in Sources */,
 				4B9433BB22F07AB700966372 /* OstLabelConfig.swift in Sources */,
 				00ABD35A22A72BE90080C4BB /* OstDeviceRegisteredDelegate.swift in Sources */,
 				00ABD39D22A72BE90080C4BB /* ABI.swift in Sources */,

@@ -380,13 +380,12 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             let currentUse = CurrentUserModel.getInstance
             CurrentUserModel.shouldPerfromActivateUserAfterDelay = true
             
-            let workflowId = OstWalletSdkUI.activateUser(userId: currentUse.ostUserId!,
+            let workflowId = OstWalletUI.activateUser(userId: currentUse.ostUserId!,
                                                          expireAfterInSec: TimeInterval(Double(14*24*60*60)),
                                                           spendingLimit: OstUtils.toAtto("15"),
                                                           passphrasePrefixDelegate: currentUse)
 
-            OstWalletSdkUI.subscribe(workflowId: workflowId, listner: currentUse)
-            OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self!)
+            OstWalletUI.subscribe(workflowId: workflowId, listner: currentUse)
         }
         
         continueWorkflow(nil)

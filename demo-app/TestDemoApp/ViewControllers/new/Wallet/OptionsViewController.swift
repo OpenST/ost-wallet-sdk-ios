@@ -456,9 +456,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if  option.type  == .manageDevices {
             if option.isEnable {
                 
-                let workflowId = OstWalletSdkUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                       passphrasePrefixDelegate: CurrentUserModel.getInstance)
-                OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 return
             }else {
                 showInfoAlert(title: "Once")
@@ -486,7 +486,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .abortRecovery {
             if option.isEnable {
-                _ = OstWalletSdkUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                _ = OstWalletUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance)
             }else {
                 showInfoAlert(title: "Recovery not initiated, Abort recovery applies only if recovery has been previously initiated.")

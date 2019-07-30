@@ -351,11 +351,11 @@ class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWR
         q.async {
             
         
-        let workflowId = OstWalletSdkUI.activateUser(userId: currentUse.ostUserId!,
+        let workflowId = OstWalletUI.activateUser(userId: currentUse.ostUserId!,
                                                      expireAfterInSec: TimeInterval(Double(14*24*60*60)),
                                                      spendingLimit: OstUtils.toAtto("15"),
                                                      passphrasePrefixDelegate: currentUse)
-        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: currentUse)
+        OstWalletUI.subscribe(workflowId: workflowId, listner: currentUse)
         }
     }
     

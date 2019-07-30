@@ -10,7 +10,7 @@
 
 import UIKit
 
-@objc public class OstWalletSdkUI: NSObject {
+@objc public class OstWalletUI: NSObject {
     
 
     /// Set theme config for OstWalletUI
