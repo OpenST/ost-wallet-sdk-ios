@@ -23,6 +23,7 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         // Do any additional setup after loading the view.
@@ -44,6 +45,17 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear( animated );
         self.resignFirstResponder();
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
     
     override func viewDidDisappear(_ animated: Bool) {

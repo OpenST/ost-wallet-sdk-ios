@@ -16,7 +16,7 @@ public extension UIAlertController {
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.alert + 1
+        win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
         vc.present(self, animated: true, completion: nil)
     }
@@ -28,7 +28,7 @@ public extension UIViewController {
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.alert + 1
+        win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
         let navC = UINavigationController(rootViewController: self)
         vc.present(navC, animated: true, completion: nil)
@@ -39,7 +39,7 @@ public extension UIViewController {
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.alert + 1
+        win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
         vc.present(self, animated: true, completion: nil)
     }
