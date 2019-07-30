@@ -147,7 +147,7 @@ class OstPinViewController: OstBaseScrollViewController {
         attributedString.append(termsAttributedString)
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
+        paragraphStyle.lineSpacing = 1
         paragraphStyle.alignment = .center
         attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         

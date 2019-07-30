@@ -256,6 +256,9 @@
 		4B9433E422F07C9A00966372 /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DB22F07C9A00966372 /* CanConfigureEconomyProtocol.swift */; };
 		4B9433E522F07C9A00966372 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DC22F07C9A00966372 /* IntroViewController.swift */; };
 		4B9433E622F07C9A00966372 /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DD22F07C9A00966372 /* SetupUserViewController.swift */; };
+		4B9433E822F08DAF00966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
+		4B9433E922F08DD700966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
+		4B9433EA22F08DD700966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
 		4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
@@ -505,6 +508,7 @@
 		4B9433DB22F07C9A00966372 /* CanConfigureEconomyProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanConfigureEconomyProtocol.swift; sourceTree = "<group>"; };
 		4B9433DC22F07C9A00966372 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		4B9433DD22F07C9A00966372 /* SetupUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupUserViewController.swift; sourceTree = "<group>"; };
+		4B9433E722F08DAF00966372 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -945,6 +949,7 @@
 		4BA4CB07227DEE5B00A623ED /* new */ = {
 			isa = PBXGroup;
 			children = (
+				4B9433E722F08DAF00966372 /* AppConfig.swift */,
 				4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */,
 				4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */,
 				4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */,
@@ -1599,6 +1604,7 @@
 				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
 				4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4B9433E822F08DAF00966372 /* AppConfig.swift in Sources */,
 				002EAF4822720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
@@ -1672,6 +1678,7 @@
 				4B214A72228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
+				4B9433E922F08DD700966372 /* AppConfig.swift in Sources */,
 				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
@@ -1779,6 +1786,7 @@
 				4B214A73228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
+				4B9433EA22F08DD700966372 /* AppConfig.swift in Sources */,
 				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
 				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,

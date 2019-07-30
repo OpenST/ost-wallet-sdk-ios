@@ -46,8 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var temp:[UIApplication.LaunchOptionsKey: Any]? = nil;
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        OstWalletSdkUI.setThemeConfig(AppConfig.appThemeConfig)
-//        OstWalletSdkUI.setContentConfig(AppConfig.appContentConfig)
+        OstWalletUI.setThemeConfig(AppConfig.appThemeConfig)
+        OstWalletUI.setContentConfig(AppConfig.appContentConfig)
         
         showIntroController(fetchUser: true)
         IQKeyboardManager.shared.enable = true
