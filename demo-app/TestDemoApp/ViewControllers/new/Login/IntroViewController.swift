@@ -7,9 +7,10 @@
 //
 
 import UIKit
+
 import OstWalletSdk
 
-class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
+class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OWFlowCompleteDelegate, CanConfigureEconomyProtocol {
 
     
 
@@ -345,11 +346,17 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     func activateUser() {
         removeProgressIndicator()
         let currentUse = CurrentUserModel.getInstance
-        let workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                                   passphrasePrefixDelegate: currentUse,
-                                                                   presenter: self)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
-                                             listner: self)
+        
+        let q = DispatchQueue(label: "test")
+        q.async {
+            
+        
+        let workflowId = OstWalletSdkUI.activateUser(userId: currentUse.ostUserId!,
+                                                     expireAfterInSec: TimeInterval(Double(14*24*60*60)),
+                                                     spendingLimit: OstUtils.toAtto("15"),
+                                                     passphrasePrefixDelegate: currentUse)
+        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: currentUse)
+        }
     }
     
     func onLoginSuccess() {

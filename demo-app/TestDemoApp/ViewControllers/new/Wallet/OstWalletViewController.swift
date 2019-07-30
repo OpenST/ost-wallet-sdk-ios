@@ -9,7 +9,8 @@
 import UIKit
 import OstWalletSdk
 
-class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
+
+class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OWFlowInterruptedDelegate, OWFlowCompleteDelegate, OWRequestAcknowledgedDelegate, OstJsonApiDelegate {
 
     //MARK: - Components
     var walletTableView: UITableView = {
@@ -63,6 +64,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             subscribeToWorkflowId(workflowCallbacks!.workflowId)
         }
         fetchUserWalletData(hardRefresh: true)
+        registerObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +77,12 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     }
     
     func registerObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.onUserActivatedNotification(_:)),
+            name: NSNotification.Name(rawValue: "userActivated"),
+            object: nil)
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.updateUserDataForTrasaction(_:)),
@@ -354,6 +362,10 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
             }
             self.walletTableView.reloadSections(IndexSet(integer: 3), with: .automatic)
         }
+    }
+    
+    @objc func onUserActivatedNotification(_ notification: Notification) {
+        self.fetchUserWalletData(hardRefresh: true)
     }
     
     func fetchUserWalletData(hardRefresh: Bool = false) {

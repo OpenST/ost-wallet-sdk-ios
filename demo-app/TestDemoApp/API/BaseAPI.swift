@@ -93,7 +93,7 @@ class BaseAPI {
         let dataRequest = Alamofire.request(url, method: .post, parameters: params)
         
         dataRequest.responseJSON { (httpResonse) in
-//            print("POST: \(url)", httpResonse.result.value as AnyObject)
+            print("POST: \(url)", httpResonse.result.value as AnyObject)
            
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
@@ -118,7 +118,7 @@ class BaseAPI {
         let dataRequest = Alamofire.request(url, method: .get, parameters: params)
         
         dataRequest.responseJSON { (httpResonse) in
-//            print("GET: \(url)", httpResonse.result.value as AnyObject)
+            print("GET: \(url)", httpResonse.result.value as AnyObject)
             if (httpResonse.result.isSuccess && httpResonse.response!.statusCode >= 200 && httpResonse.response!.statusCode < 300) {
                 // Call Success
                 onSuccess?(httpResonse.result.value as? [String: Any])

@@ -10,7 +10,7 @@
 
 import Foundation;
 import OstWalletSdk
-class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate {
+class CurrentUser: BaseModel, OWFlowInterruptedDelegate, OWFlowCompleteDelegate, OWPassphrasePrefixDelegate {
 
   static var sharedInstance:CurrentUser?;
   
@@ -229,7 +229,7 @@ class CurrentUser: BaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegat
         setupDeviceOnComplete?(true);
     }
     
-    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
+    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OWPassphrasePrefixAcceptDelegate) {
         ostPassphrasePrefixAcceptDelegate.setPassphrase(ostUserId: ostUserId, passphrase: self.userPinSalt!);
     }
 }

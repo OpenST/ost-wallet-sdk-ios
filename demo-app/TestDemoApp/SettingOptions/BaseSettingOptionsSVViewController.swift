@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import OstWalletSdk
 
-class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
+class BaseSettingOptionsSVViewController: OstBaseScrollViewController, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate {
     
     //MAKR: - Components
     let leadLabel: UILabel = {

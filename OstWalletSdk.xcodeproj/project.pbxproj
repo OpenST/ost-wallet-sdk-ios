@@ -216,6 +216,52 @@
 		00ABD3CF22A72BE90080C4BB /* OstErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FD22A72BE90080C4BB /* OstErrorCodes.swift */; };
 		00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FE22A72BE90080C4BB /* OstApiError.swift */; };
 		00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */; };
+		4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336022F07AB700966372 /* OstNavigation.swift */; };
+		4B9433A122F07AB700966372 /* OstLabel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336222F07AB700966372 /* OstLabel1.swift */; };
+		4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336322F07AB700966372 /* OstH3Label.swift */; };
+		4B9433A322F07AB700966372 /* OstH1Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336422F07AB700966372 /* OstH1Label.swift */; };
+		4B9433A422F07AB700966372 /* OstC2Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336522F07AB700966372 /* OstC2Label.swift */; };
+		4B9433A522F07AB700966372 /* OstH4Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336622F07AB700966372 /* OstH4Label.swift */; };
+		4B9433A622F07AB700966372 /* OstC1Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336722F07AB700966372 /* OstC1Label.swift */; };
+		4B9433A722F07AB700966372 /* OstH2Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336822F07AB700966372 /* OstH2Label.swift */; };
+		4B9433A822F07AB700966372 /* OstB1Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336A22F07AB700966372 /* OstB1Button.swift */; };
+		4B9433A922F07AB700966372 /* OstBaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336B22F07AB700966372 /* OstBaseButton.swift */; };
+		4B9433AA22F07AB700966372 /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336E22F07AB700966372 /* OstPinVCConfig.swift */; };
+		4B9433AB22F07AB700966372 /* OstPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336F22F07AB700966372 /* OstPinViewController.swift */; };
+		4B9433AC22F07AB700966372 /* OstBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337022F07AB700966372 /* OstBaseScrollViewController.swift */; };
+		4B9433AD22F07AB700966372 /* OstInitiateRecoveryDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337222F07AB700966372 /* OstInitiateRecoveryDLViewController.swift */; };
+		4B9433AE22F07AB700966372 /* OstDeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337322F07AB700966372 /* OstDeviceListViewController.swift */; };
+		4B9433AF22F07AB700966372 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337422F07AB700966372 /* WKWebViewController.swift */; };
+		4B9433B022F07AB700966372 /* OstBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337522F07AB700966372 /* OstBaseViewController.swift */; };
+		4B9433B122F07AB700966372 /* OstWalletSdkUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337622F07AB700966372 /* OstWalletSdkUI.swift */; };
+		4B9433B222F07AB700966372 /* OstDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */; };
+		4B9433B322F07AB700966372 /* OstBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */; };
+		4B9433B422F07AB700966372 /* OstPaginationLoaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */; };
+		4B9433B522F07AB700966372 /* OstAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B94337C22F07AB700966372 /* OstAssets.xcassets */; };
+		4B9433B622F07AB700966372 /* OstPassphrasePrefixDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337E22F07AB700966372 /* OstPassphrasePrefixDelegate.swift */; };
+		4B9433B722F07AB700966372 /* OstWorkflowUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337F22F07AB700966372 /* OstWorkflowUIDelegate.swift */; };
+		4B9433B822F07AB700966372 /* OstContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338222F07AB700966372 /* OstContent.swift */; };
+		4B9433B922F07AB700966372 /* OstButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338522F07AB700966372 /* OstButtonConfig.swift */; };
+		4B9433BA22F07AB700966372 /* OstBaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338622F07AB700966372 /* OstBaseConfig.swift */; };
+		4B9433BB22F07AB700966372 /* OstLabelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338722F07AB700966372 /* OstLabelConfig.swift */; };
+		4B9433BC22F07AB700966372 /* OstTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338822F07AB700966372 /* OstTheme.swift */; };
+		4B9433BD22F07AB700966372 /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338A22F07AB700966372 /* OstWorkflowCallbacks.swift */; };
+		4B9433BE22F07AB700966372 /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338C22F07AB700966372 /* OstInitiateDeviceRecoveryWorkflowController.swift */; };
+		4B9433BF22F07AB700966372 /* OstAbortDeviceWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338D22F07AB700966372 /* OstAbortDeviceWorkflowController.swift */; };
+		4B9433C022F07AB700966372 /* OstBaseWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338E22F07AB700966372 /* OstBaseWorkflowController.swift */; };
+		4B9433C122F07AB700966372 /* OstActivateUserWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94338F22F07AB700966372 /* OstActivateUserWorkflowController.swift */; };
+		4B9433C222F07AB700966372 /* OstWFCPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339022F07AB700966372 /* OstWFCPinManager.swift */; };
+		4B9433C322F07AB700966372 /* OstSdkInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339122F07AB700966372 /* OstSdkInteract.swift */; };
+		4B9433C422F07AB700966372 /* UIImage+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339322F07AB700966372 /* UIImage+Helper.swift */; };
+		4B9433C522F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339422F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift */; };
+		4B9433C622F07AB700966372 /* UIFont+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339522F07AB700966372 /* UIFont+Helpers.swift */; };
+		4B9433C722F07AB700966372 /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339622F07AB700966372 /* UIColor+Helper.swift */; };
+		4B9433C822F07AB700966372 /* UIController+Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339722F07AB700966372 /* UIController+Presenter.swift */; };
+		4B9433C922F07AB700966372 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339822F07AB700966372 /* Notification+Name.swift */; };
+		4B9433CA22F07AB700966372 /* OstPinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339B22F07AB700966372 /* OstPinInput.swift */; };
+		4B9433CB22F07AB700966372 /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339C22F07AB700966372 /* OstBaseView.swift */; };
+		4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339E22F07AB700966372 /* InsetLabel.swift */; };
+		4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339F22F07AB700966372 /* OstProgressIndicator.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
@@ -449,6 +495,52 @@
 		00ABD2FE22A72BE90080C4BB /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 		00ABD2FF22A72BE90080C4BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		4B94336022F07AB700966372 /* OstNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
+		4B94336222F07AB700966372 /* OstLabel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabel1.swift; sourceTree = "<group>"; };
+		4B94336322F07AB700966372 /* OstH3Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH3Label.swift; sourceTree = "<group>"; };
+		4B94336422F07AB700966372 /* OstH1Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH1Label.swift; sourceTree = "<group>"; };
+		4B94336522F07AB700966372 /* OstC2Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstC2Label.swift; sourceTree = "<group>"; };
+		4B94336622F07AB700966372 /* OstH4Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH4Label.swift; sourceTree = "<group>"; };
+		4B94336722F07AB700966372 /* OstC1Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstC1Label.swift; sourceTree = "<group>"; };
+		4B94336822F07AB700966372 /* OstH2Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH2Label.swift; sourceTree = "<group>"; };
+		4B94336A22F07AB700966372 /* OstB1Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstB1Button.swift; sourceTree = "<group>"; };
+		4B94336B22F07AB700966372 /* OstBaseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseButton.swift; sourceTree = "<group>"; };
+		4B94336E22F07AB700966372 /* OstPinVCConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
+		4B94336F22F07AB700966372 /* OstPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinViewController.swift; sourceTree = "<group>"; };
+		4B94337022F07AB700966372 /* OstBaseScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseScrollViewController.swift; sourceTree = "<group>"; };
+		4B94337222F07AB700966372 /* OstInitiateRecoveryDLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstInitiateRecoveryDLViewController.swift; sourceTree = "<group>"; };
+		4B94337322F07AB700966372 /* OstDeviceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceListViewController.swift; sourceTree = "<group>"; };
+		4B94337422F07AB700966372 /* WKWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
+		4B94337522F07AB700966372 /* OstBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseViewController.swift; sourceTree = "<group>"; };
+		4B94337622F07AB700966372 /* OstWalletSdkUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdkUI.swift; sourceTree = "<group>"; };
+		4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstDeviceTableViewCell.swift; sourceTree = "<group>"; };
+		4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseTableViewCell.swift; sourceTree = "<group>"; };
+		4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
+		4B94337C22F07AB700966372 /* OstAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OstAssets.xcassets; sourceTree = "<group>"; };
+		4B94337E22F07AB700966372 /* OstPassphrasePrefixDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPassphrasePrefixDelegate.swift; sourceTree = "<group>"; };
+		4B94337F22F07AB700966372 /* OstWorkflowUIDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowUIDelegate.swift; sourceTree = "<group>"; };
+		4B94338222F07AB700966372 /* OstContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstContent.swift; sourceTree = "<group>"; };
+		4B94338522F07AB700966372 /* OstButtonConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstButtonConfig.swift; sourceTree = "<group>"; };
+		4B94338622F07AB700966372 /* OstBaseConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseConfig.swift; sourceTree = "<group>"; };
+		4B94338722F07AB700966372 /* OstLabelConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabelConfig.swift; sourceTree = "<group>"; };
+		4B94338822F07AB700966372 /* OstTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstTheme.swift; sourceTree = "<group>"; };
+		4B94338A22F07AB700966372 /* OstWorkflowCallbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWorkflowCallbacks.swift; sourceTree = "<group>"; };
+		4B94338C22F07AB700966372 /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
+		4B94338D22F07AB700966372 /* OstAbortDeviceWorkflowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceWorkflowController.swift; sourceTree = "<group>"; };
+		4B94338E22F07AB700966372 /* OstBaseWorkflowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseWorkflowController.swift; sourceTree = "<group>"; };
+		4B94338F22F07AB700966372 /* OstActivateUserWorkflowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstActivateUserWorkflowController.swift; sourceTree = "<group>"; };
+		4B94339022F07AB700966372 /* OstWFCPinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWFCPinManager.swift; sourceTree = "<group>"; };
+		4B94339122F07AB700966372 /* OstSdkInteract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkInteract.swift; sourceTree = "<group>"; };
+		4B94339322F07AB700966372 /* UIImage+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Helper.swift"; sourceTree = "<group>"; };
+		4B94339422F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIVIew+NSLayoutConstraintHelper.swift"; sourceTree = "<group>"; };
+		4B94339522F07AB700966372 /* UIFont+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Helpers.swift"; sourceTree = "<group>"; };
+		4B94339622F07AB700966372 /* UIColor+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helper.swift"; sourceTree = "<group>"; };
+		4B94339722F07AB700966372 /* UIController+Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIController+Presenter.swift"; sourceTree = "<group>"; };
+		4B94339822F07AB700966372 /* Notification+Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
+		4B94339B22F07AB700966372 /* OstPinInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinInput.swift; sourceTree = "<group>"; };
+		4B94339C22F07AB700966372 /* OstBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseView.swift; sourceTree = "<group>"; };
+		4B94339E22F07AB700966372 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		4B94339F22F07AB700966372 /* OstProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -491,6 +583,7 @@
 		00ABD20922A72BE90080C4BB /* OstWalletSdk */ = {
 			isa = PBXGroup;
 			children = (
+				4B94335822F078EE00966372 /* UI */,
 				00ABD20A22A72BE90080C4BB /* Abis */,
 				00ABD20F22A72BE90080C4BB /* Database */,
 				00ABD22222A72BE90080C4BB /* OstWalletSdk.h */,
@@ -994,6 +1087,219 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		4B94335822F078EE00966372 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4B94337722F07AB700966372 /* Cells */,
+				4B94338022F07AB700966372 /* Config */,
+				4B94337D22F07AB700966372 /* Delegates */,
+				4B94338922F07AB700966372 /* Interact */,
+				4B94337C22F07AB700966372 /* OstAssets.xcassets */,
+				4B94337622F07AB700966372 /* OstWalletSdkUI.swift */,
+				4B94335E22F07AB700966372 /* UIComponents */,
+				4B94339222F07AB700966372 /* Utils */,
+				4B94336C22F07AB700966372 /* ViewController */,
+				4B94339922F07AB700966372 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4B94335E22F07AB700966372 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				4B94335F22F07AB700966372 /* Navigation */,
+				4B94336122F07AB700966372 /* Label */,
+				4B94336922F07AB700966372 /* Button */,
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		4B94335F22F07AB700966372 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				4B94336022F07AB700966372 /* OstNavigation.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4B94336122F07AB700966372 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				4B94336222F07AB700966372 /* OstLabel1.swift */,
+				4B94336322F07AB700966372 /* OstH3Label.swift */,
+				4B94336422F07AB700966372 /* OstH1Label.swift */,
+				4B94336522F07AB700966372 /* OstC2Label.swift */,
+				4B94336622F07AB700966372 /* OstH4Label.swift */,
+				4B94336722F07AB700966372 /* OstC1Label.swift */,
+				4B94336822F07AB700966372 /* OstH2Label.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
+		4B94336922F07AB700966372 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				4B94336A22F07AB700966372 /* OstB1Button.swift */,
+				4B94336B22F07AB700966372 /* OstBaseButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		4B94336C22F07AB700966372 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4B94336D22F07AB700966372 /* pin */,
+				4B94337022F07AB700966372 /* OstBaseScrollViewController.swift */,
+				4B94337122F07AB700966372 /* DeviceList */,
+				4B94337422F07AB700966372 /* WKWebViewController.swift */,
+				4B94337522F07AB700966372 /* OstBaseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4B94336D22F07AB700966372 /* pin */ = {
+			isa = PBXGroup;
+			children = (
+				4B94336E22F07AB700966372 /* OstPinVCConfig.swift */,
+				4B94336F22F07AB700966372 /* OstPinViewController.swift */,
+			);
+			path = pin;
+			sourceTree = "<group>";
+		};
+		4B94337122F07AB700966372 /* DeviceList */ = {
+			isa = PBXGroup;
+			children = (
+				4B94337222F07AB700966372 /* OstInitiateRecoveryDLViewController.swift */,
+				4B94337322F07AB700966372 /* OstDeviceListViewController.swift */,
+			);
+			path = DeviceList;
+			sourceTree = "<group>";
+		};
+		4B94337722F07AB700966372 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4B94337822F07AB700966372 /* TableCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4B94337822F07AB700966372 /* TableCell */ = {
+			isa = PBXGroup;
+			children = (
+				4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */,
+				4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */,
+				4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */,
+			);
+			path = TableCell;
+			sourceTree = "<group>";
+		};
+		4B94337D22F07AB700966372 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				4B94337E22F07AB700966372 /* OstPassphrasePrefixDelegate.swift */,
+				4B94337F22F07AB700966372 /* OstWorkflowUIDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		4B94338022F07AB700966372 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338122F07AB700966372 /* Content */,
+				4B94338322F07AB700966372 /* Theme */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		4B94338122F07AB700966372 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338222F07AB700966372 /* OstContent.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		4B94338322F07AB700966372 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338422F07AB700966372 /* Models */,
+				4B94338822F07AB700966372 /* OstTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		4B94338422F07AB700966372 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338522F07AB700966372 /* OstButtonConfig.swift */,
+				4B94338622F07AB700966372 /* OstBaseConfig.swift */,
+				4B94338722F07AB700966372 /* OstLabelConfig.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4B94338922F07AB700966372 /* Interact */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338A22F07AB700966372 /* OstWorkflowCallbacks.swift */,
+				4B94338B22F07AB700966372 /* WorkflowController */,
+				4B94339022F07AB700966372 /* OstWFCPinManager.swift */,
+				4B94339122F07AB700966372 /* OstSdkInteract.swift */,
+			);
+			path = Interact;
+			sourceTree = "<group>";
+		};
+		4B94338B22F07AB700966372 /* WorkflowController */ = {
+			isa = PBXGroup;
+			children = (
+				4B94338C22F07AB700966372 /* OstInitiateDeviceRecoveryWorkflowController.swift */,
+				4B94338D22F07AB700966372 /* OstAbortDeviceWorkflowController.swift */,
+				4B94338E22F07AB700966372 /* OstBaseWorkflowController.swift */,
+				4B94338F22F07AB700966372 /* OstActivateUserWorkflowController.swift */,
+			);
+			path = WorkflowController;
+			sourceTree = "<group>";
+		};
+		4B94339222F07AB700966372 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4B94339322F07AB700966372 /* UIImage+Helper.swift */,
+				4B94339422F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift */,
+				4B94339522F07AB700966372 /* UIFont+Helpers.swift */,
+				4B94339622F07AB700966372 /* UIColor+Helper.swift */,
+				4B94339722F07AB700966372 /* UIController+Presenter.swift */,
+				4B94339822F07AB700966372 /* Notification+Name.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		4B94339922F07AB700966372 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4B94339A22F07AB700966372 /* PinInput */,
+				4B94339C22F07AB700966372 /* OstBaseView.swift */,
+				4B94339D22F07AB700966372 /* Labels */,
+				4B94339F22F07AB700966372 /* OstProgressIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4B94339A22F07AB700966372 /* PinInput */ = {
+			isa = PBXGroup;
+			children = (
+				4B94339B22F07AB700966372 /* OstPinInput.swift */,
+			);
+			path = PinInput;
+			sourceTree = "<group>";
+		};
+		4B94339D22F07AB700966372 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				4B94339E22F07AB700966372 /* InsetLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
 		EC38BE0822413992006F8DA2 = {
 			isa = PBXGroup;
 			children = (
@@ -1124,6 +1430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00ABD3A022A72BE90080C4BB /* README.md in Resources */,
+				4B9433B522F07AB700966372 /* OstAssets.xcassets in Resources */,
 				00ABD30122A72BE90080C4BB /* PricerRule.abi.json in Resources */,
 				00ABD31322A72BE90080C4BB /* OST_MIGRATION_README.md in Resources */,
 				00ABD30322A72BE90080C4BB /* TokenHolder.abi.json in Resources */,
@@ -1148,6 +1455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B9433C522F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				00ABD31022A72BE90080C4BB /* OstSdkDatabase.swift in Sources */,
 				00ABD34D22A72BE90080C4BB /* OstBasePollingService.swift in Sources */,
 				00ABD3C122A72BE90080C4BB /* OstDeviceRepository.swift in Sources */,
@@ -1155,16 +1463,22 @@
 				00ABD33322A72BE90080C4BB /* OstAPISalt.swift in Sources */,
 				00ABD38522A72BE90080C4BB /* String+Conversion.swift in Sources */,
 				00ABD35222A72BE90080C4BB /* OstDevicePollingService.swift in Sources */,
+				4B9433C722F07AB700966372 /* UIColor+Helper.swift in Sources */,
+				4B9433AA22F07AB700966372 /* OstPinVCConfig.swift in Sources */,
 				00ABD33222A72BE90080C4BB /* OstAPITokens.swift in Sources */,
 				00ABD36922A72BE90080C4BB /* Web3Provider.swift in Sources */,
 				00ABD36E22A72BE90080C4BB /* RLPDecoder.swift in Sources */,
+				4B9433C622F07AB700966372 /* UIFont+Helpers.swift in Sources */,
 				00ABD38922A72BE90080C4BB /* Bytes+UInt.swift in Sources */,
 				00ABD39F22A72BE90080C4BB /* ABIConvertible.swift in Sources */,
 				00ABD30922A72BE90080C4BB /* OstTransactionDbQueries.swift in Sources */,
+				4B9433C022F07AB700966372 /* OstBaseWorkflowController.swift in Sources */,
 				00ABD32F22A72BE90080C4BB /* OstAPIHelper.swift in Sources */,
 				00ABD32722A72BE90080C4BB /* OstAPITokenHolder.swift in Sources */,
 				00ABD36822A72BE90080C4BB /* EthereumTransaction.swift in Sources */,
 				00ABD35C22A72BE90080C4BB /* TokenRule.swift in Sources */,
+				4B9433BD22F07AB700966372 /* OstWorkflowCallbacks.swift in Sources */,
+				4B9433BC22F07AB700966372 /* OstTheme.swift in Sources */,
 				00ABD30D22A72BE90080C4BB /* OstTokenDbQueries.swift in Sources */,
 				00ABD32022A72BE90080C4BB /* OstAuthorizeDeviceWithQRSigner.swift in Sources */,
 				00ABD3C022A72BE90080C4BB /* OstSessionRepository.swift in Sources */,
@@ -1176,14 +1490,18 @@
 				00ABD39C22A72BE90080C4BB /* SolidityWrappedValue.swift in Sources */,
 				00ABD35622A72BE90080C4BB /* OstBaseDelegate.swift in Sources */,
 				00ABD3BC22A72BE90080C4BB /* OstDeviceManagerRepository.swift in Sources */,
+				4B9433BA22F07AB700966372 /* OstBaseConfig.swift in Sources */,
 				00ABD30522A72BE90080C4BB /* OstMigration_1.swift in Sources */,
 				00ABD32C22A72BE90080C4BB /* OstAPIDevice.swift in Sources */,
 				00ABD36322A72BE90080C4BB /* Decimal+Extension.swift in Sources */,
 				00ABD38F22A72BE90080C4BB /* UnsignedInteger+Shifting.swift in Sources */,
+				4B9433AB22F07AB700966372 /* OstPinViewController.swift in Sources */,
 				00ABD34822A72BE90080C4BB /* OstBiometricPreference.swift in Sources */,
+				4B9433C122F07AB700966372 /* OstActivateUserWorkflowController.swift in Sources */,
 				00ABD3B222A72BE90080C4BB /* String+Operations.swift in Sources */,
 				00ABD30C22A72BE90080C4BB /* OstRuleDbQueries.swift in Sources */,
 				00ABD33522A72BE90080C4BB /* OstAPIChain.swift in Sources */,
+				4B9433A822F07AB700966372 /* OstB1Button.swift in Sources */,
 				00ABD36622A72BE90080C4BB /* EthereumAddress.swift in Sources */,
 				00ABD37222A72BE90080C4BB /* EthereumData.swift in Sources */,
 				00ABD34622A72BE90080C4BB /* OstAddDeviceWithMnemonics.swift in Sources */,
@@ -1192,7 +1510,9 @@
 				00ABD38622A72BE90080C4BB /* Data+BytesConvertible.swift in Sources */,
 				00ABD34222A72BE90080C4BB /* OstSessionHelper.swift in Sources */,
 				00ABD39922A72BE90080C4BB /* ABIDecoder.swift in Sources */,
+				4B9433AD22F07AB700966372 /* OstInitiateRecoveryDLViewController.swift in Sources */,
 				00ABD31822A72BE90080C4BB /* OstKeychainHelper.swift in Sources */,
+				4B9433B922F07AB700966372 /* OstButtonConfig.swift in Sources */,
 				00ABD34922A72BE90080C4BB /* OstGetDeviceMnemonics.swift in Sources */,
 				00ABD3C822A72BE90080C4BB /* OstDeviceManager.swift in Sources */,
 				00ABD32E22A72BE90080C4BB /* OstAPIErrorHandler.swift in Sources */,
@@ -1201,9 +1521,13 @@
 				00ABD35022A72BE90080C4BB /* OstTransactionPollingService.swift in Sources */,
 				00ABD39B22A72BE90080C4BB /* SolidityType+Codable.swift in Sources */,
 				00ABD34E22A72BE90080C4BB /* OstLogoutPollingService.swift in Sources */,
+				4B9433B322F07AB700966372 /* OstBaseTableViewCell.swift in Sources */,
 				00ABD39222A72BE90080C4BB /* ABIObject.swift in Sources */,
 				00ABD3A722A72BE90080C4BB /* Data+Conversion.swift in Sources */,
+				4B9433AF22F07AB700966372 /* WKWebViewController.swift in Sources */,
+				4B9433BE22F07AB700966372 /* OstInitiateDeviceRecoveryWorkflowController.swift in Sources */,
 				00ABD36122A72BE90080C4BB /* SoliditySha3.swift in Sources */,
+				4B9433C322F07AB700966372 /* OstSdkInteract.swift in Sources */,
 				00ABD37822A72BE90080C4BB /* EthereumValue.swift in Sources */,
 				00ABD37F22A72BE90080C4BB /* Bytes+HexString.swift in Sources */,
 				00ABD3BA22A72BE90080C4BB /* OstBaseModelRepository.swift in Sources */,
@@ -1215,12 +1539,16 @@
 				00ABD3C622A72BE90080C4BB /* OstDevice.swift in Sources */,
 				00ABD34C22A72BE90080C4BB /* OstWorkflowEngine+Validator.swift in Sources */,
 				00ABD38022A72BE90080C4BB /* UInt+BytesRepresentable.swift in Sources */,
+				4B9433C822F07AB700966372 /* UIController+Presenter.swift in Sources */,
+				4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */,
 				00ABD38422A72BE90080C4BB /* BytesConvertible.swift in Sources */,
 				00ABD37422A72BE90080C4BB /* EthereumSyncStatusObject.swift in Sources */,
 				00ABD32A22A72BE90080C4BB /* OstAPITransaction.swift in Sources */,
 				00ABD32622A72BE90080C4BB /* OstKeyManagerDelegate.swift in Sources */,
 				00ABD33022A72BE90080C4BB /* OstJsonApi.swift in Sources */,
+				4B9433A922F07AB700966372 /* OstBaseButton.swift in Sources */,
 				00ABD3CE22A72BE90080C4BB /* OstError.swift in Sources */,
+				4B9433AE22F07AB700966372 /* OstDeviceListViewController.swift in Sources */,
 				00ABD37322A72BE90080C4BB /* RPCRequest.swift in Sources */,
 				00ABD37C22A72BE90080C4BB /* Types+EthereumValueConvertible.swift in Sources */,
 				00ABD37A22A72BE90080C4BB /* EthereumCall.swift in Sources */,
@@ -1234,6 +1562,7 @@
 				00ABD3CB22A72BE90080C4BB /* OstToken.swift in Sources */,
 				00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */,
 				00ABD37022A72BE90080C4BB /* EthereumBlockObject.swift in Sources */,
+				4B9433A622F07AB700966372 /* OstC1Label.swift in Sources */,
 				00ABD36722A72BE90080C4BB /* EthereumPrivateKey.swift in Sources */,
 				00ABD38D22A72BE90080C4BB /* UnsignedInteger+BytesConvertible.swift in Sources */,
 				00ABD35122A72BE90080C4BB /* OstUserPollingService.swift in Sources */,
@@ -1253,15 +1582,18 @@
 				00ABD39822A72BE90080C4BB /* ABIEncoder.swift in Sources */,
 				00ABD33A22A72BE90080C4BB /* OstRecoverDevice.swift in Sources */,
 				00ABD32D22A72BE90080C4BB /* OstAPIRule.swift in Sources */,
+				4B9433B222F07AB700966372 /* OstDeviceTableViewCell.swift in Sources */,
 				00ABD30F22A72BE90080C4BB /* OstDeviceManagerDbQueries.swift in Sources */,
 				00ABD36422A72BE90080C4BB /* Logger.swift in Sources */,
 				00ABD32422A72BE90080C4BB /* OstKeyManager.swift in Sources */,
 				00ABD34B22A72BE90080C4BB /* OstPerform.swift in Sources */,
 				00ABD33722A72BE90080C4BB /* OstResetPin.swift in Sources */,
 				00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */,
+				4B9433B622F07AB700966372 /* OstPassphrasePrefixDelegate.swift in Sources */,
 				00ABD33822A72BE90080C4BB /* OstAddDeviceWithQRData.swift in Sources */,
 				00ABD32822A72BE90080C4BB /* OstAPISession.swift in Sources */,
 				00ABD35922A72BE90080C4BB /* OstValidateDataDelegate.swift in Sources */,
+				4B9433AC22F07AB700966372 /* OstBaseScrollViewController.swift in Sources */,
 				00ABD31922A72BE90080C4BB /* OstSecureEnclaveHelper.swift in Sources */,
 				00ABD34722A72BE90080C4BB /* OstAddSession.swift in Sources */,
 				00ABD35D22A72BE90080C4BB /* PricerRule.swift in Sources */,
@@ -1272,10 +1604,13 @@
 				00ABD37B22A72BE90080C4BB /* EthereumQuantityTag.swift in Sources */,
 				00ABD3CD22A72BE90080C4BB /* OstConfig.swift in Sources */,
 				00ABD31122A72BE90080C4BB /* OstSdkBaseDatabase.swift in Sources */,
+				4B9433CB22F07AB700966372 /* OstBaseView.swift in Sources */,
+				4B9433BF22F07AB700966372 /* OstAbortDeviceWorkflowController.swift in Sources */,
 				00ABD39422A72BE90080C4BB /* SolidityFunction.swift in Sources */,
 				00ABD36F22A72BE90080C4BB /* Types+RLPItemConvertible.swift in Sources */,
 				00ABD3C422A72BE90080C4BB /* OstRule.swift in Sources */,
 				00ABD32B22A72BE90080C4BB /* OstAPIBase.swift in Sources */,
+				4B9433B422F07AB700966372 /* OstPaginationLoaderTableViewCell.swift in Sources */,
 				00ABD39022A72BE90080C4BB /* Eth+Contract.swift in Sources */,
 				00ABD37922A72BE90080C4BB /* RPCResponse.swift in Sources */,
 				00ABD3AB22A72BE90080C4BB /* insecure_memzero.c in Sources */,
@@ -1283,22 +1618,30 @@
 				00ABD36C22A72BE90080C4BB /* RLPEncoder.swift in Sources */,
 				00ABD38A22A72BE90080C4BB /* Exports+Web3.swift in Sources */,
 				00ABD34A22A72BE90080C4BB /* OstRevokeDeviceWithQRData.swift in Sources */,
+				4B9433B822F07AB700966372 /* OstContent.swift in Sources */,
+				4B9433B122F07AB700966372 /* OstWalletSdkUI.swift in Sources */,
+				4B9433BB22F07AB700966372 /* OstLabelConfig.swift in Sources */,
 				00ABD35A22A72BE90080C4BB /* OstDeviceRegisteredDelegate.swift in Sources */,
 				00ABD39D22A72BE90080C4BB /* ABI.swift in Sources */,
 				00ABD3A522A72BE90080C4BB /* OstSolidityHandler.swift in Sources */,
 				00ABD3C222A72BE90080C4BB /* OstTransaction.swift in Sources */,
 				00ABD36B22A72BE90080C4BB /* RLPItem.swift in Sources */,
 				00ABD31A22A72BE90080C4BB /* OstCrypto.swift in Sources */,
+				4B9433B022F07AB700966372 /* OstBaseViewController.swift in Sources */,
 				00ABD35322A72BE90080C4BB /* OstResetPinPollingService.swift in Sources */,
 				00ABD30A22A72BE90080C4BB /* OstUserDbQueries.swift in Sources */,
 				00ABD35F22A72BE90080C4BB /* TokenHolder.swift in Sources */,
+				4B9433C222F07AB700966372 /* OstWFCPinManager.swift in Sources */,
+				4B9433C422F07AB700966372 /* UIImage+Helper.swift in Sources */,
 				00ABD33422A72BE90080C4BB /* OstAPIDeviceManager.swift in Sources */,
 				00ABD3BF22A72BE90080C4BB /* OstTransactionRepository.swift in Sources */,
 				00ABD35822A72BE90080C4BB /* OstDataDefinitionWorkflow.swift in Sources */,
+				4B9433C922F07AB700966372 /* Notification+Name.swift in Sources */,
 				00ABD3B622A72BE90080C4BB /* TypedDataForResetPin.swift in Sources */,
 				00ABD39322A72BE90080C4BB /* ContractPromiseExtensions.swift in Sources */,
 				00ABD37E22A72BE90080C4BB /* String+BytesConvertible.swift in Sources */,
 				00ABD32222A72BE90080C4BB /* OstAPISigner.swift in Sources */,
+				4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */,
 				00ABD3BD22A72BE90080C4BB /* OstBaseModelCacheRepository.swift in Sources */,
 				00ABD38E22A72BE90080C4BB /* Secp256k1+CTXCreator.swift in Sources */,
 				00ABD33122A72BE90080C4BB /* OstAPIUser.swift in Sources */,
@@ -1306,9 +1649,12 @@
 				00ABD34022A72BE90080C4BB /* OstActivateUser.swift in Sources */,
 				00ABD39122A72BE90080C4BB /* SolidityEvent.swift in Sources */,
 				00ABD39722A72BE90080C4BB /* Eth+ABI.swift in Sources */,
+				4B9433A422F07AB700966372 /* OstC2Label.swift in Sources */,
 				00ABD31622A72BE90080C4BB /* OstCryptoImpls.swift in Sources */,
 				00ABD3B122A72BE90080C4BB /* crypto_scrypt.c in Sources */,
 				00ABD3A222A72BE90080C4BB /* OstConversion.swift in Sources */,
+				4B9433A322F07AB700966372 /* OstH1Label.swift in Sources */,
+				4B9433B722F07AB700966372 /* OstWorkflowUIDelegate.swift in Sources */,
 				00ABD3B022A72BE90080C4BB /* sha256.c in Sources */,
 				00ABD33D22A72BE90080C4BB /* OstWorkflowStateManager.swift in Sources */,
 				00ABD36A22A72BE90080C4BB /* Web3.swift in Sources */,
@@ -1316,6 +1662,7 @@
 				00ABD34122A72BE90080C4BB /* OstWorkflowHelperBase.swift in Sources */,
 				00ABD38B22A72BE90080C4BB /* Int+ETH.swift in Sources */,
 				00ABD3A322A72BE90080C4BB /* OstBundle.swift in Sources */,
+				4B9433A522F07AB700966372 /* OstH4Label.swift in Sources */,
 				00ABD33922A72BE90080C4BB /* OstAbortDeviceRecovery.swift in Sources */,
 				00ABD31D22A72BE90080C4BB /* OstRevokeDeviceSigner.swift in Sources */,
 				00ABD32122A72BE90080C4BB /* OstDeviceManagerSignerBase.swift in Sources */,
@@ -1323,6 +1670,7 @@
 				00ABD30722A72BE90080C4BB /* OstBaseDbQueries.swift in Sources */,
 				00ABD3CC22A72BE90080C4BB /* OstUser.swift in Sources */,
 				00ABD3B322A72BE90080C4BB /* Extension+OstQRCode.swift in Sources */,
+				4B9433CA22F07AB700966372 /* OstPinInput.swift in Sources */,
 				00ABD38322A72BE90080C4BB /* String+HexBytes.swift in Sources */,
 				00ABD35722A72BE90080C4BB /* OstWorkflowDelegate.swift in Sources */,
 				00ABD3B722A72BE90080C4BB /* OstUtils.swift in Sources */,
@@ -1337,13 +1685,17 @@
 				00ABD3C322A72BE90080C4BB /* OstCurrentDevice.swift in Sources */,
 				00ABD31E22A72BE90080C4BB /* OstAuthorizeDeviceWithMnemonicsSigner.swift in Sources */,
 				00ABD3BE22A72BE90080C4BB /* OstTokenHolderRepository.swift in Sources */,
+				4B9433A122F07AB700966372 /* OstLabel1.swift in Sources */,
 				00ABD31B22A72BE90080C4BB /* OstPinManager.swift in Sources */,
+				4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */,
 				00ABD37D22A72BE90080C4BB /* EthereumLogObject.swift in Sources */,
 				00ABD34422A72BE90080C4BB /* OstExecuteTransaction.swift in Sources */,
 				00ABD38122A72BE90080C4BB /* Bytes+TrimLeadingZeros.swift in Sources */,
 				00ABD30E22A72BE90080C4BB /* OstDeviceDbQueries.swift in Sources */,
 				00ABD31222A72BE90080C4BB /* OstMigrationManager.swift in Sources */,
 				00ABD37622A72BE90080C4BB /* EthereumQuantity.swift in Sources */,
+				4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */,
+				4B9433A722F07AB700966372 /* OstH2Label.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

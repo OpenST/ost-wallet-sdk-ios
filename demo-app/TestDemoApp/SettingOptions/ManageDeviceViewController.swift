@@ -11,7 +11,8 @@
 import UIKit
 import OstWalletSdk
 
-class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource {
+
+class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource, OstWorkflowUIDelegate {
     
     var subscribeToCallback: ((OstWorkflowCallbacks) ->Void)? = nil
     
@@ -287,17 +288,16 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
     }
     
     func initiateDeviceRecovery(entity: [String: Any]) {
-        let workflowCallback = OstSdkInteract.getInstance.initateDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                             passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                             presenter: self,
-                                                             recoverDeviceAddress: entity["address"] as! String)
-        subscribeToCallback?(workflowCallback)
+        let workflowId = OstWalletSdkUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                  recoverDeviceAddress: entity["address"] as! String,
+                                                  passphrasePrefixDelegate: CurrentUserModel.getInstance)
+        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self)
     }
     
     func abortDeviceRecovery() {
-       _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                          passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                          presenter: self)
+        let workflowId = OstWalletSdkUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                        passphrasePrefixDelegate: CurrentUserModel.getInstance)
+        OstWalletSdkUI.subscribe(workflowId: workflowId, listner: self)
     }
     
     func revokeDevice(deviceAddress: String) {
