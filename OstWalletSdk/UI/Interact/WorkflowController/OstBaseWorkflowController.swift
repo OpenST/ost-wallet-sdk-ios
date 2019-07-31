@@ -23,7 +23,7 @@ import OstWalletSdk
             setVariables()
             
             self.observeViewControllerIsMovingFromParent()
-            try? performUserDeviceValidation()
+            try performUserDeviceValidation()
             performUIActions()
         }catch let err {
             postFlowInterrupted(error: err as! OstError)

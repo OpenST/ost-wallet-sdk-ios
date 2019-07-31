@@ -99,6 +99,29 @@ import Foundation
         return  OstButtonConfig(config: themeConfig["b2"] as? [String: Any],
                                 defaultConfig: OstDefaultTheme.theme["b2"] as! [String: Any])
     }
+    
+    /// Get navigation bar logo
+    ///
+    /// - Returns: Image
+    func getNavBarLogo() -> UIImage {
+        if let navLogoDict = themeConfig["nav_bar_logo_image"] as? [String: Any],
+            let imageName = navLogoDict["asset_name"] as? String {
+            
+            return UIImage(named: imageName)!
+        }
+        
+        let imageName = (OstDefaultContent.content["nav_bar_logo_image"] as! [String: Any])["asset_name"] as! String
+        
+        return getImageFromFramework(imageName: imageName)
+    }
+    
+    /// get image from framework
+    ///
+    /// - Parameter imageName: Image name
+    /// - Returns: Image
+    func getImageFromFramework(imageName: String) -> UIImage {
+        return UIImage(named: imageName, in: Bundle(for: type(of: self)), compatibleWith: nil)!
+    }
 }
 
 

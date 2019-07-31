@@ -30,10 +30,10 @@ class OstNavigation {
     let navLogo: UIImage
     
     //Logo Padding
-    let navLogoHeightPadding: CGFloat = 15
+    let navLogoHeightPadding: CGFloat = 20
     
     init() {
-        self.navLogo = OstContent.getInstance().getNavBarLogo()
+        self.navLogo = OstTheme.getInstance().getNavBarLogo()
     }
     
     /// Apply style to navigation bar
@@ -77,9 +77,9 @@ class OstNavigation {
     func setBackBarButtonImage(navController: UINavigationController) {
         let navViewControllers = navController.viewControllers
         if navViewControllers.last === navViewControllers.first {
-            backBarButtonImage = OstContent.getInstance().getImageFromFramework(imageName: "ost_close")
+            backBarButtonImage = OstTheme.getInstance().getImageFromFramework(imageName: "ost_close")
         }else {
-            backBarButtonImage = OstContent.getInstance().getImageFromFramework(imageName: "ost_back_arrow")
+            backBarButtonImage = OstTheme.getInstance().getImageFromFramework(imageName: "ost_back_arrow")
         }
     }
     
