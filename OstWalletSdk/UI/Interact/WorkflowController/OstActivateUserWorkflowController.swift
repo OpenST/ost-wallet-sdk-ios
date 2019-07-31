@@ -45,7 +45,7 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
         }
         
         if !self.currentDevice!.isStatusRegistered {
-            throw OstError("i_wc_auwc_pudv_2", .deviceCanNotBeAuthorized);
+            throw OstError("i_wc_auwc_pudv_2", .deviceNotRegistered);
         }
     }
     

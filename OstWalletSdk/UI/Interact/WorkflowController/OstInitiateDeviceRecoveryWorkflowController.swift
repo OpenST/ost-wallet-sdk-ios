@@ -40,17 +40,12 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
-        if self.currentDevice!.isStatusAuthorized
-            || self.currentDevice!.isStatusRecovering {
-            
-            throw OstError("i_wc_idrwc_pudv_1", .deviceCanNotBeAuthorized);
+        if !self.currentUser!.isStatusActivated {
+            throw OstError("i_wc_idrwc_pudv_1", .userNotActivated);
         }
-        
-        if (!self.currentDevice!.isStatusRegistered
-            && (self.currentDevice!.isStatusRevoking
-                || self.currentDevice!.isStatusRevoked)) {
-            
-            throw OstError("i_wc_idrwc_pudv_2", .deviceNotSet);
+      
+        if (!self.currentDevice!.isStatusRegistered) {
+            throw OstError("i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
         }
     }
     

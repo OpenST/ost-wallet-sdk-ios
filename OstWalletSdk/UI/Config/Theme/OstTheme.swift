@@ -104,15 +104,19 @@ import Foundation
     ///
     /// - Returns: Image
     func getNavBarLogo() -> UIImage {
+        var finalImage: UIImage?
         if let navLogoDict = themeConfig["nav_bar_logo_image"] as? [String: Any],
             let imageName = navLogoDict["asset_name"] as? String {
             
-            return UIImage(named: imageName)!
+            finalImage = UIImage(named: imageName)
         }
         
-        let imageName = (OstDefaultContent.content["nav_bar_logo_image"] as! [String: Any])["asset_name"] as! String
+        if nil == finalImage {
+            let imageName = (OstDefaultTheme.theme["nav_bar_logo_image"] as! [String: Any])["asset_name"] as! String
+            finalImage = getImageFromFramework(imageName: imageName)
+        }
         
-        return getImageFromFramework(imageName: imageName)
+        return finalImage!
     }
     
     /// get image from framework
@@ -129,7 +133,7 @@ import Foundation
     static let theme: [String: Any] = [
         
         "nav_bar_logo_image": [
-            "asset_name": "ostLogoBlue",
+            "asset_name": "ost_nav_bar_logo",
         ],
         
         "h1": ["size": 20,
