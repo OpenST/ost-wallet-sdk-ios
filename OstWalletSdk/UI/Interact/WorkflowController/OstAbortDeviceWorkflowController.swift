@@ -9,7 +9,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     

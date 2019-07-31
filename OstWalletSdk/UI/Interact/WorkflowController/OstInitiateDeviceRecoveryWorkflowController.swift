@@ -9,7 +9,7 @@
  */
 
 import UIKit
-import OstWalletSdk
+
 
 class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     

@@ -9,7 +9,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 @objc public protocol OstWorkflowUIDelegate: AnyObject {
     

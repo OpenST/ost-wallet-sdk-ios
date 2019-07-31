@@ -10,7 +10,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstJsonApiDelegate  {
     var onCellSelected: (([String: Any]?) ->Void)? = nil

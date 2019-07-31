@@ -9,8 +9,6 @@
  */
 
 import UIKit
-import OstWalletSdk;
-
 
 class OstPinViewController: OstBaseScrollViewController {
     

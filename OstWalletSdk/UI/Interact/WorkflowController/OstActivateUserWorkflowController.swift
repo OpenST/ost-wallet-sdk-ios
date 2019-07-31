@@ -10,7 +10,7 @@
 
 import Foundation
 import UIKit
-import OstWalletSdk
+
 
 class OstActivateUserWorkflowController: OstBaseWorkflowController {
 

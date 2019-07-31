@@ -10,7 +10,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 @objc class OstBaseWorkflowController: OstWorkflowCallbacks {
     

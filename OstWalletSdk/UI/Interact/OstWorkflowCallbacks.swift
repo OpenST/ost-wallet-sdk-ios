@@ -9,7 +9,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 @objc public class OstWorkflow: NSObject {
     private weak var workflowCallbacks: OstWorkflowCallbacks?

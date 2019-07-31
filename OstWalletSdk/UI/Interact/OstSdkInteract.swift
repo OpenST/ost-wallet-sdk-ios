@@ -9,7 +9,7 @@
  */
 
 import Foundation
-import OstWalletSdk
+
 
 class OstWeakRef<T> where T: AnyObject {
     

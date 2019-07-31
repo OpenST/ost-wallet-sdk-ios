@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import OstWalletSdk
+
 
 class OstDeviceTableViewCell: OstBaseTableViewCell {
     
