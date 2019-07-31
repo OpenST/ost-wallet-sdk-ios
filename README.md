@@ -32,7 +32,7 @@ We use open-source code from the projects listed below. The `Setup` section belo
 - Specify OstWalletSdk in [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile)
 
 ```
-github "ostdotcom/ost-wallet-sdk-ios" == 2.2.3
+github "ostdotcom/ost-wallet-sdk-ios" == 2.3.0-beta.1
 ```
 
 - Run `carthage update --platform iOS`

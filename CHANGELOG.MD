@@ -2,7 +2,7 @@
 
 ## Version 2.3.0-beta.1
 ### Changes:
-* OstWalletSdk  
+* UI for OstWalletSdk is integrated.
 
 ## Version 2.2.3
 ### Bug Fix:
