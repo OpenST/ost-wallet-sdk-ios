@@ -15,7 +15,17 @@ To use OstWalletUI `import OstWalletSdk`
 
 Theme for OstWalletUI can be initialized by calling `setThemeConfig` API which setup OstWalletUI theme config
 
+`nav_bar_logo_image` is used to show image on navigation bar.
+
+**Parameters**<br/>
+&nbsp;_config: Config to use for UI_<br/>
+
 ```Swift
+let config: [String: Any] = [
+    "nav_bar_logo_image": [
+        "asset_name": "nav_bar_logo"
+    ]
+]
 OstWalletUI.setThemeConfig(config)
 ```
 
@@ -23,7 +33,7 @@ OstWalletUI.setThemeConfig(config)
 
 Content for OstWalletUI can be initialized by calling `setContentConfig` API which  setup OstWalletUI content config
 
-While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions. While confirming pin `terms_and_condition_url["terms_and_condition_url"]` url is used to open.
+While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
 
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>

@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.0-beta.1
+### Changes:
+* OstWalletSdk  
+
 ## Version 2.2.3
 ### Bug Fix:
 * Inconsistent signature generation fix.
