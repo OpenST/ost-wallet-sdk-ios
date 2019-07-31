@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Wallet UI SDK is useful to integrate OstWalletSdk in application with availabel UI components.
+Wallet UI SDK is useful to integrate OstWalletSdk in application with available UI components.
 
 ## Setup
 
