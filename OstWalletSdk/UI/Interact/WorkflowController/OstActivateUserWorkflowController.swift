@@ -40,7 +40,7 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     }
     
     override func performUserDeviceValidation() throws {
-        if self.currentUser!.isStatusActivated {
+        if !self.currentUser!.isStatusCreated {
             throw OstError("i_wc_auwc_pudv_1", .userAlreadyActivated)
         }
         

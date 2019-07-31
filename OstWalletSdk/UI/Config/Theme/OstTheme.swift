@@ -127,6 +127,11 @@ import Foundation
 
 @objc class OstDefaultTheme: NSObject {
     static let theme: [String: Any] = [
+        
+        "nav_bar_logo_image": [
+            "asset_name": "ostLogoBlue",
+        ],
+        
         "h1": ["size": 20,
                "font": "SFProDisplay",
                "color": "#438bad",
