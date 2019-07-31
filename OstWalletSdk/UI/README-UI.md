@@ -23,10 +23,10 @@ OstWalletUI.setThemeConfig(config)
 
 Content for OstWalletUI can be initialized by calling `setContentConfig` API which  setup OstWalletUI content config
 
+While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions. While confirming pin `terms_and_condition_url["terms_and_condition_url"]` url is used to open.
+
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
-
-While activating user  `create_pin["terms_and_condition_url"]` url is used to show terms and conditions. While confirming pin `terms_and_condition_url["terms_and_condition_url"]` url is used to open.
 
 ```Swift
 let config: [String: Any] = [
