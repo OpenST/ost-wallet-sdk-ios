@@ -640,7 +640,7 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 
 ## OstWalletUI
 
-You can use available UI from OstWalletSdk. Please refer [OstWalletUI](OstWalletSdk/UI/README.md).
+You can use available UI from OstWalletSdk. Please refer [OstWalletUI](OstWalletSdk/UI/README.md) - `Beta Version`
 
 ## Reference
 
