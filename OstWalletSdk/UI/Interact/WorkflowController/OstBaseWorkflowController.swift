@@ -29,9 +29,7 @@ import Foundation
             postFlowInterrupted(error: err as! OstError)
         }
     }
-    
-    
-    
+
     func setVariables() throws {
         guard let user = OstWalletSdk.getUser(self.userId) else {
             throw OstError("i_wc_bwc_sv_1", .deviceNotSet)

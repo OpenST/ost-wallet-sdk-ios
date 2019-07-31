@@ -13,22 +13,26 @@ import UIKit
 class OstPinViewController: OstBaseScrollViewController {
     
     public class func newInstance(pinInputDelegate: OstPinInputDelegate,
-                                  pinVCConfig: OstPinVCConfig) -> OstPinViewController {
+                                  pinVCConfig: OstPinVCConfig,
+                                  contentConfig: [String: Any]? = nil) -> OstPinViewController {
         
         let instance = OstPinViewController()
         setEssentials(instance: instance,
                       pinInputDelegate: pinInputDelegate,
-                      pinVCConfig: pinVCConfig)
+                      pinVCConfig: pinVCConfig,
+                      contentConfig: contentConfig)
         
         return instance
     }
     
     class func setEssentials(instance: OstPinViewController,
                              pinInputDelegate:OstPinInputDelegate,
-                             pinVCConfig: OstPinVCConfig) {
+                             pinVCConfig: OstPinVCConfig,
+                             contentConfig: [String: Any]?) {
         
         instance.pinInputDelegate = pinInputDelegate
         instance.pinVCConfig = pinVCConfig
+        instance.contentConfig = contentConfig
     }
     
     //MAKR: - Components
@@ -62,6 +66,7 @@ class OstPinViewController: OstBaseScrollViewController {
         return label
     }()
     
+    internal var contentConfig: [String: Any]?
     internal var pinInputDelegate:OstPinInputDelegate?;
     private var pinVCConfig: OstPinVCConfig? = nil
     private var contentViewHeightConstraint: NSLayoutConstraint? = nil
@@ -133,12 +138,12 @@ class OstPinViewController: OstBaseScrollViewController {
         let attributes: [NSAttributedString.Key : Any] = [.font: OstTheme.getInstance().getH4Config().getFont(),
                                                           .foregroundColor: OstTheme.getInstance().getH4Config().getColor() ]
         
-        let attributedString = NSMutableAttributedString(string: "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet.",
+        let attributedString = NSMutableAttributedString(string: pinVCConfig?.tcLabelText ?? "",
                                                          attributes: attributes)
         
         var termsAttributes: [NSAttributedString.Key : Any]  = attributes
         termsAttributes[.init("action")] = #selector(self.LinkLabelTapped(attributes:))
-        termsAttributes[.init("url")] = OstContent.getInstance().getTCURL()
+        termsAttributes[.init("url")] = self.contentConfig?["terms_and_condition_url"] as? String ?? ""
         termsAttributes[.foregroundColor] = UIColor.color(0, 118, 255)
         let termsAttributedString = NSAttributedString(string: " T&C Apply", attributes: termsAttributes)
         

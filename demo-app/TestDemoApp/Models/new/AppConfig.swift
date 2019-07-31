@@ -82,8 +82,13 @@ class AppConfig: NSObject {
     ]
     
     static let appContentConfig: [String: Any] = [
-        "terms_and_condition": [
-            "url": "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
+        "activate_user": [
+            "create_pin": [
+                "terms_and_condition_url": "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
+            ],
+            "confirm_pin": [
+                "terms_and_condition_url": "https://ost.com/terms"
+            ]
         ]
     ]
 }

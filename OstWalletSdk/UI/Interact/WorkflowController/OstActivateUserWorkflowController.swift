@@ -104,18 +104,26 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     
     func showCreatePinViewController() {
         DispatchQueue.main.async {
+            let config = OstContent.getInstance().getControllerConfig(for: "create_pin",
+                                                                      inWorkflow: .activateUser)
+            
             self.createPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig())
+                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig(),
+                             contentConfig: config)
             
             self.createPinViewController!.presentVCWithNavigation()
         }
     }
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
+            let config = OstContent.getInstance().getControllerConfig(for: "confirm_pin",
+                                                                      inWorkflow: .activateUser)
+            
             self.confirmPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig());
+                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig(),
+                             contentConfig: config);
             
             self.confirmPinViewController?.pushViewControllerOn(self.createPinViewController!);
         }

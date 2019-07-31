@@ -13,11 +13,13 @@ import Foundation
 
 @objc class OstContent: NSObject {
     private static var instance: OstContent? = nil
+    @objc
     var contentConfig: [String: Any] = [:]
     
     /// Get Instance for OstContent class
     ///
     /// - Returns: OstContent
+    @objc
     class func getInstance() -> OstContent {
         var instance = OstContent.instance
         if nil == instance {
@@ -26,31 +28,77 @@ import Foundation
         return instance!
     }
     
+    @objc enum WorkflowType: Int {
+        case activateUser
+        
+        func getWorkflowName() -> String {
+            switch self {
+            case .activateUser:
+                return "activate_user"
+            }
+        }
+    }
+    
     /// Initialize
     ///
     /// - Parameter contentConfig: Config
+    @objc
     init(contentConfig: [String: Any]) {
         self.contentConfig = contentConfig
         super.init()
         OstContent.instance = self
     }
     
-    /// Get url for terms and conditions
+    /// Get workflow config
     ///
-    /// - Returns: String
-    func getTCURL() -> String {
-        if let urlTC = contentConfig["terms_and_condition"] as? [String: Any],
-            let url = urlTC["url"] as? String {
-                return url
+    /// - Parameter name: workflow name
+    /// - Returns: Config dictionary
+    @objc
+    func getWorkflowConfig(for type: WorkflowType) -> [String: Any] {
+        var config: [String: Any]? = nil
+        if let workflowConfig = contentConfig[type.getWorkflowName()] as? [String: Any] {
+            config = workflowConfig
         }
-        return (OstDefaultContent.content["terms_and_condition"] as! [String: Any])["url"] as! String
+        
+        if nil == config {
+            config = (OstDefaultContent.content[type.getWorkflowName()] as! [String : Any])
+        }
+        return config!
+    }
+    
+
+    /// Get controller config for provided controller name in workflow
+    ///
+    /// - Parameters:
+    ///   - name: Controller name
+    ///   - workflowName: Workflow name
+    /// - Returns: Controller config dictionary
+    @objc
+    func getControllerConfig(for name: String, inWorkflow type: WorkflowType) -> [String: Any] {
+        let workflowConfig = getWorkflowConfig(for: type)
+        
+        var controllerConfig: [String: Any]? = nil
+        if let config = workflowConfig[name] {
+            controllerConfig = (config as! [String : Any])
+        }
+        
+        if nil == controllerConfig {
+            controllerConfig = ((OstDefaultContent.content[type.getWorkflowName()] as! [String : Any])[name] as! [String : Any])
+        }
+        
+        return controllerConfig!
     }
 }
 
 @objc class OstDefaultContent: NSObject {
     static let content: [String: Any] = [
-        "terms_and_condition": [
-            "url": "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
+        "activate_user": [
+            "create_pin": [
+                "terms_and_condition_url": "https://ost.com/terms"
+            ],
+            "confirm_pin": [
+                "terms_and_condition_url": "https://ost.com/terms"
+            ]
         ]
     ]
 }
