@@ -20,7 +20,7 @@ import Foundation
     func perform() {
         do {
             //Set user and device
-            setVariables()
+            try setVariables()
             
             self.observeViewControllerIsMovingFromParent()
             try performUserDeviceValidation()
@@ -32,9 +32,16 @@ import Foundation
     
     
     
-    func setVariables() {
-        self.currentUser = OstWalletSdk.getUser(self.userId)
-        self.currentDevice = self.currentUser?.getCurrentDevice()
+    func setVariables() throws {
+        guard let user = OstWalletSdk.getUser(self.userId) else {
+            throw OstError("i_wc_bwc_sv_1", .deviceNotSet)
+        }
+        self.currentUser = user
+        
+        guard let userDevice = self.currentUser!.getCurrentDevice() else {
+            throw OstError("i_wc_bwc_sv_2", .deviceNotSet)
+        }
+        self.currentDevice = userDevice
     }
     
     func performUserDeviceValidation() throws {
