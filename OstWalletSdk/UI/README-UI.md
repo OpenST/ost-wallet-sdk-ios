@@ -135,3 +135,68 @@ OstWalletUI.subscribe(
     workflowId: String,
     listner: OstWorkflowUIDelegate)
 ```
+
+
+## Workflow Delegates
+
+### OstPassphrasePrefixDelegate
+
+```Swift
+/// Get passphrase prefix from application
+///
+/// - Parameters:
+///   - ostUserId: Ost user id
+///   - workflowContext: Workflow context
+///   - delegate: Passphrase prefix accept delegate
+@objc
+func getPassphrase(
+    ostUserId:String,
+    workflowContext: OstWorkflowContext,
+    delegate: OstPassphrasePrefixAcceptDelegate)
+```
+
+### OstWorkflowUIDelegate
+
+```Swift
+
+/// Acknowledge user about the request which is going to make by SDK.
+///
+/// - Parameters:
+///   - workflowId: Workflow id
+///   - workflowContext: A context that describes the workflow for which the callback was triggered.
+///   - contextEntity: Context Entity
+@objc
+func requestAcknowledged(
+    workflowId: String,
+    workflowContext: OstWorkflowContext,
+    contextEntity: OstContextEntity)
+```
+
+```Swift
+/// Inform SDK user the the flow is complete.
+///
+/// - Parameters:
+///   - workflowId: Workflow id
+///   - workflowContext: A context that describes the workflow for which the callback was triggered.
+///   - contextEntity: Context Entity
+@objc
+func flowComplete(
+    workflowId: String,
+    workflowContext: OstWorkflowContext,
+    contextEntity: OstContextEntity)
+```
+
+```Swift
+/// Inform SDK user that flow is interrupted with errorCode.
+/// Developers should dismiss pin dialog (if open) on this callback.
+///
+/// - Parameters:
+///   - workflowId: Workflow id
+///   - workflowContext: A context that describes the workflow for which the callback was triggered.
+///   - error: Error Entity
+@objc
+func flowInterrupted(
+    workflowId: String,
+    workflowContext: OstWorkflowContext,
+    error: OstError)
+```
