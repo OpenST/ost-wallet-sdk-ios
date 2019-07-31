@@ -6,7 +6,7 @@ Wallet UI SDK is useful to integrate OstWalletSdk in application with availabel 
 
 ## Setup
 
-To setup OstWalletUI, please refer [setup]().
+To setup OstWalletUI, please refer [setup](https://github.com/ostdotcom/ost-wallet-sdk-ios#setup).
 
 ## OstWalletUI SDK APIs
 To use OstWalletUI `import OstWalletSdk`
