@@ -637,6 +637,11 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 | **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
 | **data** <br> **[String: Any]?**	|	Json api failure response	|
 
+
+## OstWalletUI
+
+You can use available UI from OstWalletSdk. Please refer [OstWalletUI](OstWalletSdk/UI/README.md).
+
 ## Reference
 
 For a sample implementation, please see the [Demo App](demo-app)
