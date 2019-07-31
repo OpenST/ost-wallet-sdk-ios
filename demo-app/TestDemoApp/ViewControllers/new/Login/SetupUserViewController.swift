@@ -13,7 +13,7 @@ import MaterialComponents
 import OstWalletSdk
 import LocalAuthentication
 
-class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OWFlowCompleteDelegate, CanConfigureEconomyProtocol, OstWorkflowUIDelegate {
+class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
     
     var appUrlData:AppUrlData? {
         let delegate = UIApplication.shared.delegate as! AppDelegate;
@@ -378,14 +378,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         
         let continueWorkflow: ((UIAlertAction?) -> Void) = {[weak self] (_) in
             let currentUse = CurrentUserModel.getInstance
-            CurrentUserModel.shouldPerfromActivateUserAfterDelay = true
-            
-            let workflowId = OstWalletUI.activateUser(userId: currentUse.ostUserId!,
-                                                         expireAfterInSec: TimeInterval(Double(14*24*60*60)),
-                                                          spendingLimit: OstUtils.toAtto("15"),
-                                                          passphrasePrefixDelegate: currentUse)
-
-            OstWalletUI.subscribe(workflowId: workflowId, listner: currentUse)
+            self!.workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
+                                                                       passphrasePrefixDelegate: currentUse,
+                                                                       presenter: self!)
+            OstSdkInteract.getInstance.subscribe(forWorkflowId: self!.workflowCallback!.workflowId,
+                                                 listner: self!)
         }
         
         continueWorkflow(nil)
@@ -486,11 +483,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     //MARK: - OstSdkInteract Delegate
     
-    @objc func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         
     }
     
-    @objc func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if nil != CurrentUserModel.getInstance.ostUser
             && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
             
@@ -500,7 +497,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             }
     }
     
-    @objc func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
     }
     

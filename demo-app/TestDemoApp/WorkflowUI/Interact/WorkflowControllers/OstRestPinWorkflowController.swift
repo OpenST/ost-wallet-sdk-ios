@@ -21,7 +21,7 @@ class OstRestPinWorkflowController: OstWorkflowCallbacks {
     var confirmNewPinViewController: OstConfirmNewPinViewController? = nil;
 
     init(userId: String,
-         passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
          presenter:UIViewController) {
         
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);

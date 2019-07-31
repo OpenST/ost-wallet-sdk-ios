@@ -11,29 +11,10 @@
 import Foundation
 import OstWalletSdk
 
-
-class CurrentUserModel: OstBaseModel, OWFlowInterruptedDelegate, OWFlowCompleteDelegate, OWPassphrasePrefixDelegate, OstJsonApiDelegate, OstPassphrasePrefixDelegate, OstWorkflowUIDelegate {
-    
-    //MARK: - OstPassphrasePrefixDelegate
-    func getPassphrase(ostUserId: String,
-                       workflowContext: OstWorkflowContext,
-                       delegate: OstPassphrasePrefixAcceptDelegate) {
-        
-        if ( nil == self.ostUserId || self.ostUserId!.compare(ostUserId) != .orderedSame ) {
-            var error:[String:Any] = [:];
-            error["display_message"] = "Something went wrong. Please re-launch the application and try again.";
-            error["extra_info"] = "Sdk requested for passphrase of user-id which is not logged-in.";
-            delegate.cancelFlow();
-            return;
-        }
-        
-        UserAPI.getCurrentUserSalt(meta: nil, onSuccess: {[weak self, delegate] (userPinSalt, data) in
-            delegate.setPassphrase(ostUserId: self!.ostUserId!, passphrase: userPinSalt);
-            }, onFailure: {[weak self, delegate] (error) in
-                delegate.cancelFlow();
-        });
-    }
+class CurrentUserModel: OstBaseModel, OstFlowInterruptedDelegate, OstFlowCompleteDelegate, OstPassphrasePrefixDelegate, OstJsonApiDelegate {
   
+    
+
     static let getInstance = CurrentUserModel()
     
     static var shouldPerfromActivateUserAfterDelay: Bool = false
@@ -146,50 +127,23 @@ class CurrentUserModel: OstBaseModel, OWFlowInterruptedDelegate, OWFlowCompleteD
     
     
     //MARK: - OstWorkflow Delegate
-    @objc func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-    
-    }
-    
-    @objc func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         setupDeviceOnFailure?(error.errorInfo);
-        if workflowContext.workflowType == OstWorkflowType.activateUser {
-            CurrentUserModel.shouldPerfromActivateUserAfterDelay = false
-        }
     }
     
-    @objc func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
             print("onSuccess triggered for ", workflowContext.workflowType);
            
                 setupDeviceOnSuccess?(self.ostUser!, self.currentDevice!)
            
-        }else if workflowContext.workflowType == OstWorkflowType.activateUser {
-            
-            let user: OstUser = contextEntity.entity as! OstUser
-            if user.isStatusActivated {
-                UserAPI.notifyUserActivated()
-            }
-            
-            if  CurrentUserModel.shouldPerfromActivateUserAfterDelay {
-                DispatchQueue.main.asyncAfter(deadline: .now() + CurrentUserModel.artificalDelayForActivateUser) {[weak self] in
-                    self?.performFlowComplete(workflowContext: workflowContext, contextEntity: contextEntity)
-                }
-            }
         }else {
              setupDeviceOnFailure?(nil);
         }
     }
     
-    func performFlowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        OstNotificationManager.getInstance.show(withWorkflowContext: workflowContext,
-                                                contextEntity: contextEntity,
-                                                error: nil)
-        CurrentUserModel.shouldPerfromActivateUserAfterDelay = false
-        NotificationCenter.default.post(name: NSNotification.Name("userActivated"), object: nil)
-    }
-    
-    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OWPassphrasePrefixAcceptDelegate) {
+    func getPassphrase(ostUserId: String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate) {
         if ( nil == self.ostUserId || self.ostUserId!.compare(ostUserId) != .orderedSame ) {
             var error:[String:Any] = [:];
             error["display_message"] = "Something went wrong. Please re-launch the application and try again.";

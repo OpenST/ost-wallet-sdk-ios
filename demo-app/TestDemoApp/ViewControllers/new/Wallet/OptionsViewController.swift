@@ -11,7 +11,8 @@ import OstWalletSdk
 import LocalAuthentication
 import Crashlytics
 
-class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OstJsonApiDelegate, OstWorkflowUIDelegate {
+
+class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
 
     //MAKR: - Components
     var tableView: UITableView?
@@ -455,11 +456,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if  option.type  == .manageDevices {
             if option.isEnable {
-                
-                let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                      passphrasePrefixDelegate: CurrentUserModel.getInstance)
-                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
-                return
+                destinationVC = ManageDeviceViewController()
             }else {
                 showInfoAlert(title: "Once")
             }
@@ -486,8 +483,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .abortRecovery {
             if option.isEnable {
-                _ = OstWalletUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                       passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance,
+                                                                   presenter: self)
+                self.tabbarController?.hideTabBar()
             }else {
                 showInfoAlert(title: "Recovery not initiated, Abort recovery applies only if recovery has been previously initiated.")
             }
@@ -550,6 +549,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     //MARK: - OstSdkInteract Delegate
+    
     func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice
             || workflowContext.workflowType == .updateBiometricPreference {

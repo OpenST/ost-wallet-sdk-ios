@@ -11,12 +11,12 @@
 import Foundation
 import OstWalletSdk
 
-class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
+class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
     
     /// Mark - Pin extension variables
     var userPin:String? = nil;
-    var sdkPinAcceptDelegate: OstPinAcceptDelegate? = nil;
-    var passphrasePrefixDelegate:OWPassphrasePrefixDelegate?;
+    var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;
+    var passphrasePrefixDelegate:OstPassphrasePrefixDelegate?;
     var getPinViewController:OstGetPinViewController? = nil;
 
     /// Mark - Workflow callback vars.
@@ -43,7 +43,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcc
         return OstSdkInteract.getInstance
     }
 
-    init(userId: String, passphrasePrefixDelegate:OWPassphrasePrefixDelegate) {
+    init(userId: String, passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         self.userId = userId;
         self.workflowId = UUID().uuidString;
         self.passphrasePrefixDelegate = passphrasePrefixDelegate;
