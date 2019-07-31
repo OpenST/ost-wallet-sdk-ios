@@ -132,11 +132,4 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
         self.progressIndicator = nil
         NotificationCenter.default.removeObserver(self);
     }
-    
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        
-        hideLoader()
-        cleanUp()
-    }
 }

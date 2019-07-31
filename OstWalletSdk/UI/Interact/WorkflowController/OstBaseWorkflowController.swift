@@ -53,4 +53,25 @@ import Foundation
                                  error: error)
         }
     }
+    
+    @objc func cleanUpWorkflowController() {
+        self.hideLoader();
+        self.cleanUpPinViewController();
+        self.cleanUp();
+    }
+    
+    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
+        cleanUpWorkflowController()
+    }
+    
+    override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
+        super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
+        cleanUpWorkflowController()
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        super.flowInterrupted(workflowContext: workflowContext, error: error)
+        cleanUpWorkflowController()
+    }
 }

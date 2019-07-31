@@ -39,16 +39,16 @@ import Foundation
     
     class func getCreatePinVCConfig() -> OstPinVCConfig {
         return OstPinVCConfig(titleText: "Create PIN",
-                              leadLabelText: "Add a 6-digit PIN to secure your wallet. ",
-                              infoLabelText: "(PIN helps you recover your wallet if the phone is lost or stolen)",
-                              tcLabelText: "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet")
+                              leadLabelText: "Add a 6-digit PIN to secure your wallet",
+                              infoLabelText: "PIN helps to recover your wallet if your phone is lost or stolen",
+                              tcLabelText: "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet.")
     }
     
     class func getConfirmPinVCConfig() -> OstPinVCConfig {
         return OstPinVCConfig(titleText: "Confirm PIN",
-                              leadLabelText: "If you forget your PIN, you cannot recover your wallet.",
-                              infoLabelText: "(So please be sure to remember it)",
-                              tcLabelText: "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet")
+                              leadLabelText: "If you forget your PIN, you cannot recover your wallet",
+                              infoLabelText: "So please be sure to remember it",
+                              tcLabelText: "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet.")
     }
     
     class func getRecoveryAccessPinVCConfig() -> OstPinVCConfig {

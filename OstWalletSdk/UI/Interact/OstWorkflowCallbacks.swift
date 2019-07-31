@@ -117,22 +117,6 @@ import Foundation
         eventData.workflowContext = workflowContext
         
         self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
-
-        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
-            self?.hideLoader();
-            self?.cleanUpPinViewController();
-            self?.cleanUp();
-        }
-        
-        if nil != progressIndicator
-            && workflowContext.workflowType != .getDeviceMnemonics {
-            
-            progressIndicator?.showSuccessAlert(forWorkflowType: workflowContext.workflowType,
-                                                onCompletion: onComplete)
-            return
-        }
-        
-        onComplete(true)
     }
     
     @objc public func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
@@ -141,26 +125,7 @@ import Foundation
         eventData.workflowContext = workflowContext
         eventData.error = error
         
-        let onComplete: ((Bool) -> Void) = {[weak self] (isComplete) in
-            self?.hideLoader();
-            self?.cleanUpPinViewController();
-            self?.cleanUp();
-        }
-        
-        if error.messageTextCode == .deviceNotSet {
-            onComplete(true)
-            return
-        }
-        
         self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
-        
-        if nil != progressIndicator && error.messageTextCode != .userCanceled {
-            progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
-                                                error: error,
-                                                onCompletion: onComplete)
-            return
-        }
-        onComplete(true)
     }
     
     @objc public func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
@@ -168,10 +133,8 @@ import Foundation
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
         eventData.workflowContext = workflowContext
+
         interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
-        
-        progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
-        
     }
     
     @objc public func pinValidated(_ userId: String) {

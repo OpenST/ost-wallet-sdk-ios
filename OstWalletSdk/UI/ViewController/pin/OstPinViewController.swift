@@ -189,19 +189,19 @@ class OstPinViewController: OstBaseScrollViewController {
         super.addLayoutConstraints();
         
         titleLabel.topAlignWithParent(multiplier: 1, constant: 20.0)
-        titleLabel.applyBlockElementConstraints()
+        titleLabel.applyBlockElementConstraints(horizontalMargin: 40)
         
         leadLabel.placeBelow(toItem: titleLabel)
-        leadLabel.applyBlockElementConstraints()
+        leadLabel.applyBlockElementConstraints(horizontalMargin: 40)
         
         h3Label.placeBelow(toItem: leadLabel, constant: 4.0)
-        h3Label.applyBlockElementConstraints()
+        h3Label.applyBlockElementConstraints(horizontalMargin: 40)
         
         pinInput.placeBelow(toItem: h3Label, constant: 20.0);
         pinInput.centerXAlignWithParent();
         
         
-        termsAndConditionLabel.applyBlockElementConstraints();
+        termsAndConditionLabel.applyBlockElementConstraints(horizontalMargin: 40);
         termsAndConditionLabel.setFixedHeight(constant: 45)
         termsAndConditionLabel.bottomAlignWithParent()
         

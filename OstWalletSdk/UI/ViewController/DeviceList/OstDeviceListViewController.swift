@@ -136,7 +136,7 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
     
     func addLeadLabelLayoutConstraints() {
         leadLabel.placeBelow(toItem: titleLabel)
-        leadLabel.applyBlockElementConstraints()
+        leadLabel.applyBlockElementConstraints(horizontalMargin: 40)
     }
     
     func addDeviceTableConstraitns() {
@@ -170,12 +170,12 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
             if tableDataArray.count > indexPath.row {
                 let deviceDetails = tableDataArray[indexPath.row]
                 
-                deviceTableViewCell.setDeviceDetails(deviceDetails, forIndex: indexPath.row)
+                deviceTableViewCell.setDeviceDetails(deviceDetails, forIndex: indexPath.row+1)
                 deviceTableViewCell.onActionPressed = {[weak self] (deviceDetails) in
                     self?.onCellSelected?(deviceDetails)
                 }
             }else {
-                deviceTableViewCell.setDeviceDetails(nil, forIndex: indexPath.row)
+                deviceTableViewCell.setDeviceDetails(nil, forIndex: indexPath.row+0)
                 deviceTableViewCell.onActionPressed = nil
             }
             

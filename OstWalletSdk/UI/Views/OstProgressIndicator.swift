@@ -96,7 +96,9 @@ class OstProgressIndicator: OstBaseView {
                           onCompletion:((Bool) -> Void)? = nil) {
         
         let title = getWorkflowCompleteText(workflowType: type)
+        let message = getWorkflowCompleteMessage(workflowType: type)
         showSuccessAlert(withTitle: title,
+                         message: message,
                          duration: duration,
                          actionButtonTitle: btnTitle,
                          actionButtonTapped: actionButtonTapped,
@@ -117,27 +119,9 @@ class OstProgressIndicator: OstBaseView {
                 return
             }
             
-            strongSelf.alert = UIAlertController(title: """
-                
-                
-                
-                \(title)
-                """,
-                message: msg,
-                preferredStyle: .alert)
-            
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFit
-            imageView.image = UIImage(named: "transactionCheckmark")
-            
-            strongSelf.alert?.view.addSubview(imageView)
-            
-            let parent = imageView.superview!
-            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
-            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+            strongSelf.alert = UIAlertController(title: title,
+                                                 message: msg,
+                                                 preferredStyle: .alert)
             
             if nil != btnTitle {
                 strongSelf.alert?.addAction(UIAlertAction(title: btnTitle, style: .default, handler: {[weak self] (actionButton) in
@@ -170,27 +154,10 @@ class OstProgressIndicator: OstBaseView {
                           onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
-            self?.alert = UIAlertController(title: """
-                
-                
-                
-                \(title)
-                """,
-                message: msg,
-                preferredStyle: .alert)
+            self?.alert = UIAlertController(title: title,
+                                            message: msg,
+                                            preferredStyle: .alert)
             
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFit
-            imageView.image = UIImage(named: "CrossIcon")
-            
-            self?.alert?.view.addSubview(imageView)
-            
-            let parent = imageView.superview!
-            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 28).isActive = true
-            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            imageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
             self?.alert?.show()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
@@ -275,7 +242,7 @@ class OstProgressIndicator: OstBaseView {
             return "This device is now authorized to access your Wallet "
             
         case .initiateDeviceRecovery:
-            return "Wallet recovery has been initiated. Unless interrupted, your device will authorized in about 12 hours"
+            return "Recovery Request Placed Successfully"
             
         case .abortDeviceRecovery:
             return "Recovery has been successfully aborted. Existing authorized devices may be used."
@@ -291,6 +258,15 @@ class OstProgressIndicator: OstBaseView {
             
         case .updateBiometricPreference:
             return "Biometric preference updated"
+        }
+    }
+    
+    func getWorkflowCompleteMessage(workflowType: OstWorkflowType) -> String {
+        switch workflowType {
+        case .initiateDeviceRecovery:
+            return "Your Wallet recovery has commenced. This process usually takes about 12 hours. You'll be notified when the wallet recovery is ready."
+        default:
+            return ""
         }
     }
     

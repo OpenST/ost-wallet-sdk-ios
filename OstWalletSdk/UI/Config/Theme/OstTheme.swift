@@ -133,7 +133,7 @@ import Foundation
     static let theme: [String: Any] = [
         
         "nav_bar_logo_image": [
-            "asset_name": "ost_nav_bar_logo",
+            "asset_name": "ost_nav_bar_logo"
         ],
         
         "h1": ["size": 20,

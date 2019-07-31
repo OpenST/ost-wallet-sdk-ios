@@ -34,6 +34,6 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
         super.configure()
         
         titleLabel.text = "Device Recovery"
-        leadLabel.text = "This is an authorized device, recovery applies only to cases where a user has no authorized device"
+        leadLabel.text = "Once recovered, the device that initiated recovery will be revoked"
     }
 }

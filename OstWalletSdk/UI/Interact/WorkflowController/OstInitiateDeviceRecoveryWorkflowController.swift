@@ -131,13 +131,6 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        
-        hideLoader()
-        cleanUp()
-    }
-    
     @objc public override func cleanUpPinViewController() {
         self.sdkPinAcceptDelegate = nil;
     }
