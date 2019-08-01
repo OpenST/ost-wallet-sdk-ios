@@ -78,7 +78,7 @@ open Carthage/Build/iOS
 
 Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
 
-![copy-framework-file](/platform/docs/sdk/assets/copy-framework-file.png)
+![copy-framework-file](https://dev.ost.com/platform/docs/sdk/assets/copy-framework-file.png)
 
 #### iv). Adding the `OstWalletSdk` dependencies in your Xcode project
 We need to add the `.framework` files of dependencies present inside `Carthage/Build/iOS`.
@@ -105,7 +105,7 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
 
 <br>
 
-![copy-framework-file](/platform/docs/sdk/assets/add-dependency-framework-files.png)
+![copy-framework-file](https://dev.ost.com/platform/docs/sdk/assets/add-dependency-framework-files.png)
 
 
 
