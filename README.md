@@ -591,7 +591,7 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 
 
 
-## Workflow Callbacks
+## Protocol (Workflow Callback)
 
 
 ### 1. flowComplete
@@ -866,13 +866,14 @@ func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
 
 <br>
 
-## Error Classes
-There two error classes. 
+## Classes
+
 
 1. OstApiError
 2. OstError
+3. OstContextEntity
 
-### i). OstApiError
+### 1. OstApiError
 This class is used to provide API related error details in [flowInterrupt](/platform/docs/sdk/references/wallet_sdk/iOS/latest/protocols/#2-flowinterrupt) callback function. 
 
 
@@ -888,7 +889,7 @@ You can call following [methods](#i-methods) on the object of this class to get 
 6. `public func isApiSignerUnauthorized() -> Bool`
 
 
-### ii). OstError
+### 2. OstError
 This class is used to provide error details in [flowInterrupt](/platform/docs/sdk/references/wallet_sdk/iOS/latest/protocols/#2-flowinterrupt) callback function. 
 
 You can read following properties on the object of this class to get more details about the error.
@@ -903,8 +904,8 @@ You can read following properties on the object of this class to get more detail
 
 <br>
 
-## OstContextEntity
-
+### 3. OstContextEntity
+ 
 This class provides context about the `entity` that is being changed during a [workflow](/platform/docs/sdk/references/wallet_sdk/iOS/latest/methods/#workflows). Callback functions that needs to know about the `entity` will receive an object of this class as an argument. 
 
 
