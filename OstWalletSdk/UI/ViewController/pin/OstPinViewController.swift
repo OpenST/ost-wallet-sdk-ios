@@ -58,6 +58,7 @@ class OstPinViewController: OstBaseScrollViewController {
         let label = UITextView()
         let h4Config = OstTheme.getInstance().getH4Config()
         label.isEditable = false
+        label.isSelectable = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = h4Config.getFont()
@@ -207,7 +208,7 @@ class OstPinViewController: OstBaseScrollViewController {
         
         
         termsAndConditionLabel.applyBlockElementConstraints(horizontalMargin: 40);
-        termsAndConditionLabel.setFixedHeight(constant: 45)
+        termsAndConditionLabel.setFixedHeight(constant: 55)
         termsAndConditionLabel.bottomAlignWithParent()
         
         contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())
