@@ -11,8 +11,7 @@
 import Foundation
 import UIKit
 
-
-class OstActivateUserWorkflowController: OstBaseWorkflowController {
+@objc class OstActivateUserWorkflowController: OstBaseWorkflowController {
 
     let spendingLimit: String
     let expireAfterInSec:TimeInterval
@@ -25,13 +24,14 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     ///
     /// - Parameters:
     ///   - userId: Ost user id
-    ///   - spendingLimit: Spending limit for transaction
     ///   - expireAfterInSec: Relative time
+    ///   - spendingLimit: Spending limit for transaction
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc
     init(userId: String,
-         spendingLimit: String = OstUtils.toAtto("15"),
-         expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60)),
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate){
+         expireAfterInSec: TimeInterval,
+         spendingLimit: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.spendingLimit = spendingLimit
         self.expireAfterInSec = expireAfterInSec
@@ -48,11 +48,11 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     
     override func performUserDeviceValidation() throws {
         if !self.currentUser!.isStatusCreated {
-            throw OstError("i_wc_auwc_pudv_1", .userAlreadyActivated)
+            throw OstError("ui_i_wc_auwc_pudv_1", .userAlreadyActivated)
         }
         
         if !self.currentDevice!.isStatusRegistered {
-            throw OstError("i_wc_auwc_pudv_2", .deviceNotRegistered);
+            throw OstError("ui_i_wc_auwc_pudv_2", .deviceNotRegistered);
         }
     }
     
@@ -66,35 +66,20 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
         } else if ( notification.object is OstPinViewController ) {
             self.createPinViewController = nil;
             //The workflow has been cancled by user.
-            
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
     
-    /// Mark - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            /// TODO: (Future) Do Something here. May be cancel workflow?
-            return;
-        }
-        
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.activateUser(userId: self.userId,
                                   userPin: self.userPin!,
                                   passphrasePrefix: passphrase,
                                   spendingLimit: self.spendingLimit,
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
-        self.userPin = nil;
         showLoader(progressText: .activingUser);
     }
     
-
     /// Mark - OstPinAcceptDelegate
     override func pinProvided(pin: String) {
         if ( nil == self.userPin || nil == self.confirmPinViewController ) {

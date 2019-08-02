@@ -496,14 +496,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .biomerticStatus {
             if option.isEnable {
-                let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
-                OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
-                                                     listner: self)
-                
                 let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
-                OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                       enable: !isEnabled,
-                                                       delegate: workflowDelegate)
+                let workflowId = OstWalletUI
+                    .updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
+                                               enable: !isEnabled,
+                                               passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 
             }else {
                 showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings") 

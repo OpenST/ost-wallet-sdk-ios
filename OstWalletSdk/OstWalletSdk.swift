@@ -100,6 +100,7 @@ import Foundation
 
 public extension OstWalletUI {
     
+    /// Show Components with config.
     class func showComponentSheet() {
         OstComponentSheet.showComponentSheet()
     }

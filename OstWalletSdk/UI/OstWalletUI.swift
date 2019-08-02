@@ -47,8 +47,8 @@ import UIKit
         
         let workflowController = OstActivateUserWorkflowController(
             userId: userId,
-            spendingLimit: spendingLimit,
             expireAfterInSec: expireAfterInSec,
+            spendingLimit: spendingLimit,
             passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
@@ -62,6 +62,7 @@ import UIKit
     ///   - userId: Ost user identifier
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func initaiteDeviceRecovery(
         userId: String,
@@ -84,6 +85,7 @@ import UIKit
     /// - Parameters:
     ///   - userId: Ost user identifier
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func abortDeviceRecovery(
         userId: String,
@@ -99,8 +101,15 @@ import UIKit
         workflowController.perform()
         return workflowController.workflowId
     }
-    
-    
+
+    /// Add session for user.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - expireAfterInSec: Seconds after which the session key should expire.
+    ///   - spendingLimit: Amount user can spend in a transaction
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func addSession(
         userId: String,
@@ -119,6 +128,30 @@ import UIKit
         workflowController.perform()
         return workflowController.workflowId
     }
+    
+    /// Update biometric preference
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - enable: Biomertic authentication allowed
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc
+    public class func updateBiometricPreference(
+        userId: String,
+        enable: Bool,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstBiomatricPerferenceWorkflowController(
+            userId: userId,
+            enable: enable,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
     
     /// Subscribe to receive workflow events.
     ///

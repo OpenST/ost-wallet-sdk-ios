@@ -10,38 +10,7 @@
 
 import Foundation
 
-
-@objc public class OstWorkflow: NSObject {
-    private weak var workflowCallbacks: OstWorkflowCallbacks?
-
-    @objc
-    public var workflowId: String? {
-        return workflowCallbacks?.workflowId
-    }
-    
-    init(workflowCallbacks: OstWorkflowCallbacks) {
-        self.workflowCallbacks = workflowCallbacks
-    }
-    
-    @objc
-    public func subscribe(workflowDelegate: OstWorkflowUIDelegate) {
-        if let workflowIdStr = self.workflowId {
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowIdStr,
-                                                listner: workflowDelegate)
-        }
-    }
-    
-    @objc 
-    public func unsubscribe(workflowDelegate: OstWorkflowUIDelegate) {
-        if let workflowIdStr = self.workflowId {
-            OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowIdStr,
-                                                   listner: workflowDelegate)
-        }
-    }
-}
-
 @objc public class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
-    
     /// Mark - Pin extension variables
     var userPin:String? = nil;
     var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;

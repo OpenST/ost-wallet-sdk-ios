@@ -10,11 +10,10 @@
 
 import Foundation
 
-class OstAddSessionWorkflowController: OstBaseWorkflowController {
+@objc class OstAddSessionWorkflowController: OstBaseWorkflowController {
     
     private let spendingLimit: String
     private let expireAfter: TimeInterval
-    private var pinAcceptDelegate: OstPinAcceptDelegate? = nil
     
     /// Initialize
     ///
@@ -23,6 +22,7 @@ class OstAddSessionWorkflowController: OstBaseWorkflowController {
     ///   - expireAfter: Relative time
     ///   - spendingLimit: Spending limit for transaction
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc 
     init(userId: String,
          expireAfter: TimeInterval,
          spendingLimit: String,
@@ -35,12 +35,10 @@ class OstAddSessionWorkflowController: OstBaseWorkflowController {
     }
     
     override func performUserDeviceValidation() throws {
-        if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_adswc_pudv_1", .userNotActivated);
-        }
+        try super.performUserDeviceValidation()
         
         if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("i_wc_adswc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
+            throw OstError("ui_i_wc_aswc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
         }
     }
     
@@ -56,40 +54,14 @@ class OstAddSessionWorkflowController: OstBaseWorkflowController {
         
         self.progressIndicator = OstProgressIndicator(textCode: .creatingSession)
         self.progressIndicator?.show()
-        
     }
     
-    override func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.progressIndicator?.hide()
-        self.progressIndicator = nil
-        
-        self.pinAcceptDelegate = delegate
-        
-        if nil == getPinViewController {
-            self.getPinViewController = OstPinViewController
-                .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getAddSessinoPinVCConfig())
-        }
-        
-        self.getPinViewController?.presentVCWithNavigation()
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig.getAddSessinoPinVCConfig()
     }
     
-    /// Mark - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .addSession),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            return;
-        }
-        
-        
-        self.pinAcceptDelegate?.pinEntered(self.userPin!,
-                                           passphrasePrefix: passphrase)
-        
-        self.userPin = nil;
+    override func onPassphrasePrefixSet(passphrase: String) {
+        super.onPassphrasePrefixSet(passphrase: passphrase)
         showLoader(progressText: .creatingSession)
     }
-    
 }

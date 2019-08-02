@@ -10,8 +10,7 @@
 
 import Foundation
 
-
-class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
+@objc class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     /// Mark - View Controllers.
     
@@ -20,6 +19,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     /// - Parameters:
     ///   - userId: Ost user id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc 
     override init(userId: String,
                   passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         
@@ -34,7 +34,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         try super.performUserDeviceValidation()
         
         if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_adwc_pudv_1", .userNotActivated);
+            throw OstError("ui_i_wc_adwc_pudv_1", .userNotActivated);
         }
     }
     
@@ -55,31 +55,16 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         if ( notification.object is OstPinViewController ) {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
-            
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
-    
-    /// Mark - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            /// TODO: (Future) Do Something here. May be cancel workflow?
-            return;
-        }
-        
-        showLoader(progressText: .stopDeviceRecovery)
+
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.abortDeviceRecovery(userId: self.userId,
                                          userPin: self.userPin!,
                                          passphrasePrefix: passphrase,
                                          delegate: self)
-        self.userPin = nil;
-        
+        showLoader(progressText: .stopDeviceRecovery)
     }
     
     public override func cleanUpPinViewController() {

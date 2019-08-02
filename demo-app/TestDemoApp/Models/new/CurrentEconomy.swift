@@ -25,7 +25,7 @@ class CurrentEconomy: OstBaseModel {
         if let economy = testEconomy,
 
 //        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
-            let qrJsonData = CurrentEconomy.getQRJsonData(economy) {
+             let qrJsonData = CurrentEconomy.getQRJsonData(economy) {
             _economyDetails = qrJsonData as [String : Any]
         }
     }

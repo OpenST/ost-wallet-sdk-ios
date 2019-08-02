@@ -11,7 +11,7 @@
 import UIKit
 
 
-class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
+@objc class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     var recoverDeviceAddress: String?
     var deviceListController: OstInitiateRecoveryDLViewController? = nil
@@ -22,6 +22,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     ///   - userId: Ost user id
     ///   - recoverDeviceAddress: Device address to recover
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc
     init(userId: String,
          recoverDeviceAddress: String?,
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
@@ -46,11 +47,11 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         try super.performUserDeviceValidation()
         
         if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_idrwc_pudv_1", .userNotActivated);
+            throw OstError("ui_i_wc_idrwc_pudv_1", .userNotActivated);
         }
       
         if (!self.currentDevice!.isStatusRegistered) {
-            throw OstError("i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
+            throw OstError("ui_i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
         }
     }
     
@@ -68,9 +69,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         }
         
         if ( isFlowCancelled ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
     
@@ -105,23 +104,12 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         }
     }
     
-    //MARK: - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            return;
-        }
-        
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.initiateDeviceRecovery(userId: self.userId,
                                             recoverDeviceAddress: self.recoverDeviceAddress!,
                                             userPin: self.userPin!,
                                             passphrasePrefix: passphrase,
                                             delegate: self)
-        self.userPin = nil;
         showLoader(progressText: .initiateDeviceRecovery);
     }
     

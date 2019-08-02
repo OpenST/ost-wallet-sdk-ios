@@ -224,14 +224,6 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
                                                 passphrasePrefixDelegate: CurrentUserModel.getInstance)
         
         OstWalletUI.subscribe(workflowId: workflowId, listner: self)
-        
-//        OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
-//                                spendingLimit: finalSpendingLimit,
-//                                expireAfterInSec: Double(expireAfter),
-//                                delegate: self.workflowDelegate)
-//
-//        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
-//        progressIndicator?.show()
     }
     
     func isCorrectInputPassed() -> Bool {
@@ -256,6 +248,8 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     //MARK: - Workflow Delegate
     
     override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
         super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        progressIndicator?.show()
     }
 }

@@ -71,4 +71,11 @@ import Foundation
                               infoLabelText: nil,
                               tcLabelText:  nil)
     }
+    
+    class func getUpdateBiometricPreferencePinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig(titleText: "Update Biometric Preference",
+                              leadLabelText: "Enter your 6-digit PIN to upadte biometric preference",
+                              infoLabelText: nil,
+                              tcLabelText:  nil)
+    }
 }
