@@ -39,15 +39,6 @@ import Foundation
         OstWalletSdk.updateBiometricPreference(userId: self.userId,
                                                enable: self.enable,
                                                delegate: self)
-        
-//        DispatchQueue.main.async {
-//            if nil == self.getPinViewController {
-//                self.getPinViewController = OstPinViewController
-//                    .newInstance(pinInputDelegate: self,
-//                                 pinVCConfig: OstPinVCConfig.getUpdateBiometricPreferencePinVCConfig())
-//            }
-//            self.getPinViewController?.presentVCWithNavigation()
-//        }
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {

@@ -15,11 +15,14 @@ extension OstWorkflowCallbacks {
     
     public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
         self.sdkPinAcceptDelegate = delegate;
-        self.getPinViewController = OstPinViewController
-            .newInstance(pinInputDelegate: self,
-                         pinVCConfig: getPinVCConfig());
         
-        self.getPinViewController?.presentVCWithNavigation()
+        DispatchQueue.main.async {
+            self.getPinViewController = OstPinViewController
+                .newInstance(pinInputDelegate: self,
+                             pinVCConfig: self.getPinVCConfig());
+            
+            self.getPinViewController?.presentVCWithNavigation()
+        }
     }
     
     @objc func getPinVCConfig() -> OstPinVCConfig {

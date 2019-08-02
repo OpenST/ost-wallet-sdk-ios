@@ -51,7 +51,6 @@ import UIKit
             spendingLimit: spendingLimit,
             passphrasePrefixDelegate: passphrasePrefixDelegate)
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -75,7 +74,6 @@ import UIKit
             recoverDeviceAddress: recoverDeviceAddress,
             passphrasePrefixDelegate: passphrasePrefixDelegate)
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -97,7 +95,6 @@ import UIKit
             passphrasePrefixDelegate: passphrasePrefixDelegate
         )
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -123,8 +120,7 @@ import UIKit
             expireAfter: expireAfterInSec,
             spendingLimit: spendingLimit,
             passphrasePrefixDelegate: passphrasePrefixDelegate)
-            
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
+        
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -147,7 +143,6 @@ import UIKit
             enable: enable,
             passphrasePrefixDelegate: passphrasePrefixDelegate)
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }

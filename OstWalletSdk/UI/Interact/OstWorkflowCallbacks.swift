@@ -41,6 +41,11 @@ import Foundation
         return OstSdkInteract.getInstance
     }
 
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost use id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
          passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         

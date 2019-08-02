@@ -19,6 +19,20 @@ import Foundation
     
     private var pinAcceptDelegate: OstPinAcceptDelegate? = nil
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost use id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    override init(userId: String,
+                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+        
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: self)
+    }
+    
     func perform() {
         do {
             //Set user and device
