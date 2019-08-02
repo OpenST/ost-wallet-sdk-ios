@@ -221,6 +221,8 @@
 		4B54586022F3073F0092E533 /* OstB3Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585F22F3073F0092E533 /* OstB3Button.swift */; };
 		4B54586222F411CC0092E533 /* OstAddSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */; };
 		4B54586422F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54586322F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift */; };
+		4B54587522F45B1F0092E533 /* OstThemeConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B54587422F45B1F0092E533 /* OstThemeConfig.json */; };
+		4B54587722F46ECD0092E533 /* OstContentConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B54587622F46ECD0092E533 /* OstContentConfig.json */; };
 		4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336022F07AB700966372 /* OstNavigation.swift */; };
 		4B9433A122F07AB700966372 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336222F07AB700966372 /* OstLabel.swift */; };
 		4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336322F07AB700966372 /* OstH3Label.swift */; };
@@ -505,6 +507,8 @@
 		4B54585F22F3073F0092E533 /* OstB3Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstB3Button.swift; sourceTree = "<group>"; };
 		4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B54586322F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBiomatricPerferenceWorkflowController.swift; sourceTree = "<group>"; };
+		4B54587422F45B1F0092E533 /* OstThemeConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = OstThemeConfig.json; sourceTree = "<group>"; };
+		4B54587622F46ECD0092E533 /* OstContentConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = OstContentConfig.json; sourceTree = "<group>"; };
 		4B94336022F07AB700966372 /* OstNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
 		4B94336222F07AB700966372 /* OstLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
 		4B94336322F07AB700966372 /* OstH3Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH3Label.swift; sourceTree = "<group>"; };
@@ -1220,6 +1224,8 @@
 			children = (
 				4B94338122F07AB700966372 /* Content */,
 				4B94338322F07AB700966372 /* Theme */,
+				4B54587422F45B1F0092E533 /* OstThemeConfig.json */,
+				4B54587622F46ECD0092E533 /* OstContentConfig.json */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1449,6 +1455,8 @@
 				00ABD30122A72BE90080C4BB /* PricerRule.abi.json in Resources */,
 				00ABD31322A72BE90080C4BB /* OST_MIGRATION_README.md in Resources */,
 				00ABD30322A72BE90080C4BB /* TokenHolder.abi.json in Resources */,
+				4B54587522F45B1F0092E533 /* OstThemeConfig.json in Resources */,
+				4B54587722F46ECD0092E533 /* OstContentConfig.json in Resources */,
 				00ABD3AA22A72BE90080C4BB /* COPYRIGHT.txt in Resources */,
 				00ABD30222A72BE90080C4BB /* TokenRules.abi.json in Resources */,
 				00ABD30422A72BE90080C4BB /* GnosisSafe.abi.json in Resources */,

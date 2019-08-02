@@ -44,7 +44,8 @@ import Foundation
     /// - Parameter contentConfig: Config
     @objc
     init(contentConfig: [String: Any]? = nil) {
-        var finalConfig = OstDefaultContent.content
+        let data = OstBundle.getContentOf(file: "OstContentConfig", fileExtension: "json")
+        var finalConfig = try! OstUtils.toJSONObject(data!) as! [String: Any]
         OstUtils.deepMerge(contentConfig ?? [:], into: &finalConfig)
         
         self.contentConfig = finalConfig
@@ -75,17 +76,4 @@ import Foundation
         let config = workflowConfig[name]
         return config as! [String: Any]
     }
-}
-
-@objc class OstDefaultContent: NSObject {
-    static let content: [String: Any] = [
-        "activate_user": [
-            "create_pin": [
-                "terms_and_condition_url": "https://ost.com/terms"
-            ],
-            "confirm_pin": [
-                "terms_and_condition_url": "https://ost.com/terms"
-            ]
-        ]
-    ]
 }

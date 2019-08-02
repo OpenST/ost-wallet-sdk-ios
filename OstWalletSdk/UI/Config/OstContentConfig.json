@@ -1,0 +1,10 @@
+{
+    "activate_user": {
+        "create_pin": {
+            "terms_and_condition_url": "https://ost.com/terms"
+        },
+        "confirm_pin": {
+            "terms_and_condition_url": "https://ost.com/terms"
+        }
+    }
+}

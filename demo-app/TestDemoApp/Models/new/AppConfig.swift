@@ -17,10 +17,10 @@ class AppConfig: NSObject {
         ],
         
         "h1": ["size": 20,
-               "font": "Lato-Bold",
+               "font": "SFProDisplay",
                "color": "#438bad",
                "font_style": "semi_bold",
-               "alignment": "left"
+               "alignment": "center"
         ],
         
         "h2": ["size": 17,
