@@ -14,4 +14,18 @@ import Foundation
 
 @objc class OstLabelConfig: OstBaseConfig {
     
+    let alignment: String
+    
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - config: Config
+    override init(config: [String: Any]) {
+        self.alignment = config["alignment"] as! String
+        super.init(config: config)
+    }
+    
+    func getAlignment() -> NSTextAlignment {
+        return UIFont.getAlignmentFromString(alignment)
+    }
 }

@@ -216,8 +216,12 @@
 		00ABD3CF22A72BE90080C4BB /* OstErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FD22A72BE90080C4BB /* OstErrorCodes.swift */; };
 		00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FE22A72BE90080C4BB /* OstApiError.swift */; };
 		00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */; };
+		4B54585C22F2FD7F0092E533 /* OstComponentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */; };
+		4B54585E22F306FC0092E533 /* OstB2Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585D22F306FC0092E533 /* OstB2Button.swift */; };
+		4B54586022F3073F0092E533 /* OstB3Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585F22F3073F0092E533 /* OstB3Button.swift */; };
+		4B54586222F411CC0092E533 /* OstAddSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */; };
 		4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336022F07AB700966372 /* OstNavigation.swift */; };
-		4B9433A122F07AB700966372 /* OstLabel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336222F07AB700966372 /* OstLabel1.swift */; };
+		4B9433A122F07AB700966372 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336222F07AB700966372 /* OstLabel.swift */; };
 		4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336322F07AB700966372 /* OstH3Label.swift */; };
 		4B9433A322F07AB700966372 /* OstH1Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336422F07AB700966372 /* OstH1Label.swift */; };
 		4B9433A422F07AB700966372 /* OstC2Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336522F07AB700966372 /* OstC2Label.swift */; };
@@ -495,8 +499,12 @@
 		00ABD2FE22A72BE90080C4BB /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 		00ABD2FF22A72BE90080C4BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstComponentSheet.swift; sourceTree = "<group>"; };
+		4B54585D22F306FC0092E533 /* OstB2Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstB2Button.swift; sourceTree = "<group>"; };
+		4B54585F22F3073F0092E533 /* OstB3Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstB3Button.swift; sourceTree = "<group>"; };
+		4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B94336022F07AB700966372 /* OstNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
-		4B94336222F07AB700966372 /* OstLabel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabel1.swift; sourceTree = "<group>"; };
+		4B94336222F07AB700966372 /* OstLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
 		4B94336322F07AB700966372 /* OstH3Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH3Label.swift; sourceTree = "<group>"; };
 		4B94336422F07AB700966372 /* OstH1Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH1Label.swift; sourceTree = "<group>"; };
 		4B94336522F07AB700966372 /* OstC2Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstC2Label.swift; sourceTree = "<group>"; };
@@ -1125,7 +1133,7 @@
 		4B94336122F07AB700966372 /* Label */ = {
 			isa = PBXGroup;
 			children = (
-				4B94336222F07AB700966372 /* OstLabel1.swift */,
+				4B94336222F07AB700966372 /* OstLabel.swift */,
 				4B94336322F07AB700966372 /* OstH3Label.swift */,
 				4B94336422F07AB700966372 /* OstH1Label.swift */,
 				4B94336522F07AB700966372 /* OstC2Label.swift */,
@@ -1141,6 +1149,8 @@
 			children = (
 				4B94336A22F07AB700966372 /* OstB1Button.swift */,
 				4B94336B22F07AB700966372 /* OstBaseButton.swift */,
+				4B54585D22F306FC0092E533 /* OstB2Button.swift */,
+				4B54585F22F3073F0092E533 /* OstB3Button.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1153,6 +1163,7 @@
 				4B94337122F07AB700966372 /* DeviceList */,
 				4B94337422F07AB700966372 /* WKWebViewController.swift */,
 				4B94337522F07AB700966372 /* OstBaseViewController.swift */,
+				4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1256,6 +1267,7 @@
 				4B94338D22F07AB700966372 /* OstAbortDeviceWorkflowController.swift */,
 				4B94338E22F07AB700966372 /* OstBaseWorkflowController.swift */,
 				4B94338F22F07AB700966372 /* OstActivateUserWorkflowController.swift */,
+				4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */,
 			);
 			path = WorkflowController;
 			sourceTree = "<group>";
@@ -1606,6 +1618,7 @@
 				00ABD31122A72BE90080C4BB /* OstSdkBaseDatabase.swift in Sources */,
 				4B9433CB22F07AB700966372 /* OstBaseView.swift in Sources */,
 				4B9433BF22F07AB700966372 /* OstAbortDeviceWorkflowController.swift in Sources */,
+				4B54585E22F306FC0092E533 /* OstB2Button.swift in Sources */,
 				00ABD39422A72BE90080C4BB /* SolidityFunction.swift in Sources */,
 				00ABD36F22A72BE90080C4BB /* Types+RLPItemConvertible.swift in Sources */,
 				00ABD3C422A72BE90080C4BB /* OstRule.swift in Sources */,
@@ -1638,12 +1651,14 @@
 				00ABD35822A72BE90080C4BB /* OstDataDefinitionWorkflow.swift in Sources */,
 				4B9433C922F07AB700966372 /* Notification+Name.swift in Sources */,
 				00ABD3B622A72BE90080C4BB /* TypedDataForResetPin.swift in Sources */,
+				4B54585C22F2FD7F0092E533 /* OstComponentSheet.swift in Sources */,
 				00ABD39322A72BE90080C4BB /* ContractPromiseExtensions.swift in Sources */,
 				00ABD37E22A72BE90080C4BB /* String+BytesConvertible.swift in Sources */,
 				00ABD32222A72BE90080C4BB /* OstAPISigner.swift in Sources */,
 				4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */,
 				00ABD3BD22A72BE90080C4BB /* OstBaseModelCacheRepository.swift in Sources */,
 				00ABD38E22A72BE90080C4BB /* Secp256k1+CTXCreator.swift in Sources */,
+				4B54586022F3073F0092E533 /* OstB3Button.swift in Sources */,
 				00ABD33122A72BE90080C4BB /* OstAPIUser.swift in Sources */,
 				00ABD3B922A72BE90080C4BB /* OstRuleModelRepository.swift in Sources */,
 				00ABD34022A72BE90080C4BB /* OstActivateUser.swift in Sources */,
@@ -1680,12 +1695,13 @@
 				00ABD36522A72BE90080C4BB /* EthereumPublicKey.swift in Sources */,
 				00ABD31C22A72BE90080C4BB /* OstMnemonicsKeyManager.swift in Sources */,
 				00ABD34322A72BE90080C4BB /* OstUserAuthenticatorWorkflow.swift in Sources */,
+				4B54586222F411CC0092E533 /* OstAddSessionWorkflowController.swift in Sources */,
 				00ABD33B22A72BE90080C4BB /* OstWorkFlowFactory.swift in Sources */,
 				00ABD3A622A72BE90080C4BB /* EIP1077.swift in Sources */,
 				00ABD3C322A72BE90080C4BB /* OstCurrentDevice.swift in Sources */,
 				00ABD31E22A72BE90080C4BB /* OstAuthorizeDeviceWithMnemonicsSigner.swift in Sources */,
 				00ABD3BE22A72BE90080C4BB /* OstTokenHolderRepository.swift in Sources */,
-				4B9433A122F07AB700966372 /* OstLabel1.swift in Sources */,
+				4B9433A122F07AB700966372 /* OstLabel.swift in Sources */,
 				00ABD31B22A72BE90080C4BB /* OstPinManager.swift in Sources */,
 				4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */,
 				00ABD37D22A72BE90080C4BB /* EthereumLogObject.swift in Sources */,

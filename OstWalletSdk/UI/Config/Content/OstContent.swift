@@ -23,7 +23,7 @@ import Foundation
     class func getInstance() -> OstContent {
         var instance = OstContent.instance
         if nil == instance {
-            instance = OstContent(contentConfig: [:])
+            instance = OstContent()
         }
         return instance!
     }
@@ -43,8 +43,12 @@ import Foundation
     ///
     /// - Parameter contentConfig: Config
     @objc
-    init(contentConfig: [String: Any]) {
-        self.contentConfig = contentConfig
+    init(contentConfig: [String: Any]? = nil) {
+        var finalConfig = OstDefaultContent.content
+        OstUtils.deepMerge(contentConfig ?? [:], into: &finalConfig)
+        
+        self.contentConfig = finalConfig
+        
         super.init()
         OstContent.instance = self
     }
@@ -55,18 +59,10 @@ import Foundation
     /// - Returns: Config dictionary
     @objc
     func getWorkflowConfig(for type: WorkflowType) -> [String: Any] {
-        var config: [String: Any]? = nil
-        if let workflowConfig = contentConfig[type.getWorkflowName()] as? [String: Any] {
-            config = workflowConfig
-        }
-        
-        if nil == config {
-            config = (OstDefaultContent.content[type.getWorkflowName()] as! [String : Any])
-        }
-        return config!
+        let workflowConfig = contentConfig[type.getWorkflowName()] as! [String: Any]
+        return workflowConfig
     }
     
-
     /// Get controller config for provided controller name in workflow
     ///
     /// - Parameters:
@@ -76,17 +72,8 @@ import Foundation
     @objc
     func getControllerConfig(for name: String, inWorkflow type: WorkflowType) -> [String: Any] {
         let workflowConfig = getWorkflowConfig(for: type)
-        
-        var controllerConfig: [String: Any]? = nil
-        if let config = workflowConfig[name] {
-            controllerConfig = (config as! [String : Any])
-        }
-        
-        if nil == controllerConfig {
-            controllerConfig = ((OstDefaultContent.content[type.getWorkflowName()] as! [String : Any])[name] as! [String : Any])
-        }
-        
-        return controllerConfig!
+        let config = workflowConfig[name]
+        return config as! [String: Any]
     }
 }
 

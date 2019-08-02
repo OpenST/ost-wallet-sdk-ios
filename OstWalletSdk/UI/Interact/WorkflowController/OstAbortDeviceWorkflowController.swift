@@ -15,6 +15,11 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     /// Mark - View Controllers.
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     override init(userId: String,
                   passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         
@@ -37,7 +42,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         DispatchQueue.main.async {
             self.getPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getAbortRecoveryPinVCConfig());
+                             pinVCConfig: OstPinVCConfig.getAbortRecoveryPinVCConfig())
             self.getPinViewController!.presentVCWithNavigation()
         }
     }

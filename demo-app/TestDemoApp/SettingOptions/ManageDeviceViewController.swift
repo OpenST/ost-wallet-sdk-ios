@@ -12,7 +12,7 @@ import UIKit
 import OstWalletSdk
 
 
-class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource, OstWorkflowUIDelegate {
+class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewDelegate, UITableViewDataSource {
     
     var subscribeToCallback: ((OstWorkflowCallbacks) ->Void)? = nil
     

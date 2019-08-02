@@ -385,6 +385,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
                                                           spendingLimit: OstUtils.toAtto("15"),
                                                           passphrasePrefixDelegate: currentUse)
 
+            OstWalletUI.subscribe(workflowId: workflowId, listner: self!)
             OstWalletUI.subscribe(workflowId: workflowId, listner: currentUse)
         }
         

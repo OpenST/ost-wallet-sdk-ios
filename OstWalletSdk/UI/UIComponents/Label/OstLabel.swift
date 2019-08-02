@@ -11,7 +11,7 @@
 
 import Foundation
 
-@objc class OstLabel1: UILabel {
+@objc class OstLabel: UILabel {
    
     //Label config
     var labelConfig: OstLabelConfig? = nil
@@ -73,7 +73,7 @@ import Foundation
         
         self.numberOfLines = 0
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.textAlignment = .center
+        self.textAlignment = labelConfig!.getAlignment()
         
         self.font = labelConfig!.getFont()
         self.textColor = self.labelConfig!.getColor()

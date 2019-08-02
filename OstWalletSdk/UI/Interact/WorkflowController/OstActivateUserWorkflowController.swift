@@ -21,11 +21,18 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     var createPinViewController: OstPinViewController? = nil
     var confirmPinViewController: OstPinViewController?;
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - spendingLimit: Spending limit for transaction
+    ///   - expireAfterInSec: Relative time
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
          spendingLimit: String = OstUtils.toAtto("15"),
-         expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
-    ) {
+         expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60)),
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate){
+        
         self.spendingLimit = spendingLimit
         self.expireAfterInSec = expireAfterInSec
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)

@@ -18,14 +18,12 @@ import Foundation
     ///
     /// - Parameters:
     ///   - config: Config
-    ///   - defaultConfig: Fallback config
-    override init(config: [String: Any]?,
-                  defaultConfig: [String: Any]) {
+    override init(config: [String: Any]) {
 
-        let colorStr = (config?["background_color"] as? String) ?? (defaultConfig["background_color"] as! String)
+        let colorStr = config["background_color"] as! String
         self.backgroundColor = UIColor.color(hex: colorStr)
         
-        super.init(config: config, defaultConfig: defaultConfig)
+        super.init(config: config)
     }
     
     func getBackgroundColor() -> UIColor {

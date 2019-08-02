@@ -1,4 +1,3 @@
-//
 /*
  Copyright © 2019 OST.com Inc
  
@@ -11,15 +10,15 @@
 
 import Foundation
 
-class OstB1Button: OstBaseButton {
+class OstB2Button: OstBaseButton {
     
     /// Set theme config for button
     override func setThemeConfig() {
-        self.buttonConfig = OstTheme.getInstance().getB1Config()
+        self.buttonConfig = OstTheme.getInstance().getB2Config()
         
         let activeBgImg = UIImage.withColor(color: buttonConfig!.getBackgroundColor());
         setBackgroundImage(image: activeBgImg, state: .normal);
-        
+    
         self.cEdgeInsets = UIEdgeInsets(top: 5, left: 14, bottom: 5, right: 14);
         self.cornerRadius = 5
         

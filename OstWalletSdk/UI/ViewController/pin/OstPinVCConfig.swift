@@ -65,4 +65,10 @@ import Foundation
                               tcLabelText: nil)
     }
 
+    class func getAddSessinoPinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig(titleText: "Add Session",
+                              leadLabelText: "Enter your 6-digit PIN to add session",
+                              infoLabelText: nil,
+                              tcLabelText:  nil)
+    }
 }

@@ -15,11 +15,16 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     var recoverDeviceAddress: String?
     var deviceListController: OstInitiateRecoveryDLViewController? = nil
-    /// Mark - View Controllers.
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - recoverDeviceAddress: Device address to recover
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
-         recoverDeviceAddress: String?) {
+         recoverDeviceAddress: String?,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);

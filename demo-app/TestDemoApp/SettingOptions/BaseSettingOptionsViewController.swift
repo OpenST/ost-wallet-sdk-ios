@@ -11,7 +11,7 @@
 import Foundation
 import OstWalletSdk
 
-class BaseSettingOptionsViewController: OstBaseViewController, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate {
+class BaseSettingOptionsViewController: OstBaseViewController, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OstWorkflowUIDelegate {
     
     //MAKR: - Components
     let leadLabel: UILabel = {

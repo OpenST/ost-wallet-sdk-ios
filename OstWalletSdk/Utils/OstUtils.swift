@@ -119,6 +119,21 @@ public class OstUtils {
         return params
     }
     
+    public class func deepMerge(_ dict: [String: Any], into mergerDict: inout [String: Any]) {
+        for (key, val) in dict {
+            if var avaDict = mergerDict[key] as? [String: Any] {
+                if val is [String: Any] {
+                    deepMerge(val as! [String : Any], into: &avaDict)
+                    mergerDict[key] = avaDict
+                }else {
+                    avaDict[key] = val
+                }
+            }else {
+                mergerDict[key] = val
+            }
+        }
+    }
+    
     static let WEI_EXPONENT = 18
     typealias NumberComponents = (number: BigInt, exponent: Int)
     

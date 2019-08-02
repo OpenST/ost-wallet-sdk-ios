@@ -31,7 +31,6 @@ class OstBaseButton: UIButton {
     
     public let buttonTitleText: String
     
-    
     /// Initialize
     ///
     /// - Parameter frame: frame
@@ -39,6 +38,9 @@ class OstBaseButton: UIButton {
         self.buttonTitleText = ""
         
         super.init(frame: .zero)
+    
+        setThemeConfig()
+        self.apply(self)
     }
     
     /// Initialize
@@ -46,9 +48,23 @@ class OstBaseButton: UIButton {
     /// - Parameter title: String
     init(title: String) {
         self.buttonTitleText = title
+        
         super.init(frame: .zero)
         
+        setThemeConfig()
         self.apply(self)
+    }
+    
+    /// Set theme config for button
+    func setThemeConfig() {
+        setTitleColors()
+    }
+    
+    /// Set title color for state
+    func setTitleColors() {
+        setTitleColor(color: buttonConfig!.getColor(), state: .normal);
+        setTitleColor(color: buttonConfig!.getColor(), state: .highlighted);
+        setTitleColor(color: buttonConfig!.getColor(), state: .disabled);
     }
     
     /// Initialize
@@ -105,8 +121,6 @@ class OstBaseButton: UIButton {
     /// - Parameter button: Button
     func apply(_ button:UIButton) {
         
-        setThemeConfig()
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.setTitle(buttonTitleText, for: .normal)
@@ -146,10 +160,5 @@ class OstBaseButton: UIButton {
             button.layer.borderWidth = borderWidth;
             button.layer.borderColor = borderColor;
         }
-    }
-    
-    /// Set theme config for button
-    func setThemeConfig() {
-        fatalError("setThemeConfig did not override")
     }
 }

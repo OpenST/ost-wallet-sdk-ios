@@ -455,9 +455,5 @@ extension LoginViewController: UITextFieldDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-//        let a = AuthorizeDeviceViewController()
-//        let n = UINavigationController(rootViewController: a)
-//        self.present(n, animated: true, completion: nil)
     }
 }

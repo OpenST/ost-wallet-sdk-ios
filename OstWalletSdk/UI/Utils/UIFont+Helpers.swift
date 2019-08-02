@@ -43,4 +43,19 @@ extension UIFont {
         
         return .regular
     }
+    
+    class func getAlignmentFromString(_ alignement: String) -> NSTextAlignment {
+        switch alignement {
+        case "left":
+            return .left
+            
+        case "center":
+            return .center
+            
+        case "right":
+            return .right
+        default:
+            return .center
+        }
+    }
 }

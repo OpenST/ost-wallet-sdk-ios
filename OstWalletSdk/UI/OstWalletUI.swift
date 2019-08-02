@@ -47,9 +47,9 @@ import UIKit
         
         let workflowController = OstActivateUserWorkflowController(
             userId: userId,
-            passphrasePrefixDelegate: passphrasePrefixDelegate,
             spendingLimit: spendingLimit,
-            expireAfterInSec: expireAfterInSec)
+            expireAfterInSec: expireAfterInSec,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
@@ -71,8 +71,8 @@ import UIKit
         
         let workflowController = OstInitiateDeviceRecoveryWorkflowController(
             userId: userId,
-            passphrasePrefixDelegate: passphrasePrefixDelegate,
-            recoverDeviceAddress: recoverDeviceAddress)
+            recoverDeviceAddress: recoverDeviceAddress,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
@@ -100,6 +100,25 @@ import UIKit
         return workflowController.workflowId
     }
     
+    
+    @objc
+    public class func addSession(
+        userId: String,
+        expireAfterInSec: TimeInterval,
+        spendingLimit: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAddSessionWorkflowController(
+            userId: userId,
+            expireAfter: expireAfterInSec,
+            spendingLimit: spendingLimit,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+            
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
     /// Subscribe to receive workflow events.
     ///
