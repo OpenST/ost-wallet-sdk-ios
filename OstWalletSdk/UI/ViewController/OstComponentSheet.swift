@@ -13,8 +13,10 @@ import Foundation
 class OstComponentSheet: OstBaseScrollViewController {
     
     class func showComponentSheet() {
-        let componentSheet = getInstance()
-        componentSheet.presentVCWithNavigation()
+        DispatchQueue.main.async {
+            let componentSheet = OstComponentSheet.getInstance()
+            componentSheet.presentVCWithNavigation()
+        }
     }
     
     class func getInstance() -> OstComponentSheet {
