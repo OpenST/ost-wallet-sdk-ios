@@ -101,6 +101,7 @@ import Foundation
 public extension OstWalletUI {
     
     /// Show Components with config.
+    @objc
     class func showComponentSheet() {
         OstComponentSheet.showComponentSheet()
     }

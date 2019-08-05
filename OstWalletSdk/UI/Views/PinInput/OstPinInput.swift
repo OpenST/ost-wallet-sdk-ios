@@ -233,7 +233,4 @@ class OstPinInput: UIView, UITextFieldDelegate {
             self?.updateDots(currentPinLength: 0);
         }
     }
-    
 }
-
-
