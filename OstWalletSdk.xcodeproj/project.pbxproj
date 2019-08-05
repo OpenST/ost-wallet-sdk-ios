@@ -234,7 +234,6 @@
 		4B9433A722F07AB700966372 /* OstH2Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336822F07AB700966372 /* OstH2Label.swift */; };
 		4B9433A822F07AB700966372 /* OstB1Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336A22F07AB700966372 /* OstB1Button.swift */; };
 		4B9433A922F07AB700966372 /* OstBaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336B22F07AB700966372 /* OstBaseButton.swift */; };
-		4B9433AA22F07AB700966372 /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336E22F07AB700966372 /* OstPinVCConfig.swift */; };
 		4B9433AB22F07AB700966372 /* OstPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336F22F07AB700966372 /* OstPinViewController.swift */; };
 		4B9433AC22F07AB700966372 /* OstBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337022F07AB700966372 /* OstBaseScrollViewController.swift */; };
 		4B9433AD22F07AB700966372 /* OstInitiateRecoveryDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94337222F07AB700966372 /* OstInitiateRecoveryDLViewController.swift */; };
@@ -271,6 +270,7 @@
 		4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339E22F07AB700966372 /* InsetLabel.swift */; };
 		4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339F22F07AB700966372 /* OstProgressIndicator.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
+		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
 		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
@@ -521,7 +521,6 @@
 		4B94336822F07AB700966372 /* OstH2Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH2Label.swift; sourceTree = "<group>"; };
 		4B94336A22F07AB700966372 /* OstB1Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstB1Button.swift; sourceTree = "<group>"; };
 		4B94336B22F07AB700966372 /* OstBaseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseButton.swift; sourceTree = "<group>"; };
-		4B94336E22F07AB700966372 /* OstPinVCConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		4B94336F22F07AB700966372 /* OstPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinViewController.swift; sourceTree = "<group>"; };
 		4B94337022F07AB700966372 /* OstBaseScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseScrollViewController.swift; sourceTree = "<group>"; };
 		4B94337222F07AB700966372 /* OstInitiateRecoveryDLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstInitiateRecoveryDLViewController.swift; sourceTree = "<group>"; };
@@ -558,6 +557,7 @@
 		4B94339E22F07AB700966372 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		4B94339F22F07AB700966372 /* OstProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
+		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -1179,8 +1179,8 @@
 		4B94336D22F07AB700966372 /* pin */ = {
 			isa = PBXGroup;
 			children = (
-				4B94336E22F07AB700966372 /* OstPinVCConfig.swift */,
 				4B94336F22F07AB700966372 /* OstPinViewController.swift */,
+				4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */,
 			);
 			path = pin;
 			sourceTree = "<group>";
@@ -1490,8 +1490,8 @@
 				00ABD38522A72BE90080C4BB /* String+Conversion.swift in Sources */,
 				00ABD35222A72BE90080C4BB /* OstDevicePollingService.swift in Sources */,
 				4B9433C722F07AB700966372 /* UIColor+Helper.swift in Sources */,
-				4B9433AA22F07AB700966372 /* OstPinVCConfig.swift in Sources */,
 				00ABD33222A72BE90080C4BB /* OstAPITokens.swift in Sources */,
+				4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */,
 				00ABD36922A72BE90080C4BB /* Web3Provider.swift in Sources */,
 				00ABD36E22A72BE90080C4BB /* RLPDecoder.swift in Sources */,
 				4B9433C622F07AB700966372 /* UIFont+Helpers.swift in Sources */,

@@ -35,10 +35,11 @@ import Foundation
     ///
     /// - Parameter weight: Font weight
     /// - Returns: Font
-    func getFont(weight: UIFont.Weight? = nil) -> UIFont {
+    func getFont(font: String? = nil, weight: UIFont.Weight? = nil) -> UIFont {
+        
         let fontWeight = (nil != weight) ? weight! : UIFont.getFontWeight(fontStyle)
         
-        var font: UIFont? = UIFont(name: self.fontName, size: CGFloat(truncating: self.size))
+        var font: UIFont? = UIFont(name: font ?? self.fontName, size: CGFloat(truncating: self.size))
         
         if nil == font {
             font = UIFont.systemFont(ofSize: CGFloat(truncating: self.size), weight: fontWeight)

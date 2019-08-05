@@ -45,7 +45,7 @@ class OstPinViewController: OstBaseScrollViewController {
         return OstH2Label(text: "")
     }()
     
-    let h3Label: OstH3Label = {
+    let infoLabel: OstH3Label = {
         return OstH3Label(text: "")
     }()
     
@@ -54,16 +54,8 @@ class OstPinViewController: OstBaseScrollViewController {
         return view;
     }();
     
-    let termsAndConditionLabel: UITextView = {
-        let label = UITextView()
-        let h4Config = OstTheme.getInstance().getH4Config()
-        label.isEditable = false
-        label.isSelectable = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = h4Config.getFont()
-        label.textColor = h4Config.getColor()
-        
+    let termsAndConditionLabel: OstH4Label = {
+        let label = OstH4Label()
         return label
     }()
     
@@ -104,78 +96,48 @@ class OstPinViewController: OstBaseScrollViewController {
         super.configure();
         self.shouldFireIsMovingFromParent = true;
         
-        self.titleLabel.labelText = getTitleLabelText()
-        self.leadLabel.labelText = getLeadLabelText()
-        self.h3Label.labelText = getH3LabelText()
-    }
-    
-    func getTitleLabelText() -> String {
-        return pinVCConfig?.titleText ?? ""
-    }
-    
-    func getLeadLabelText() -> String {
-        return pinVCConfig?.leadLabelText ?? ""
-    }
-    
-    func getH3LabelText() -> String {
-        return pinVCConfig?.infoLabelText ?? ""
+        pinVCConfig?.updateLabelWithAttributedText(label: titleLabel, data: pinVCConfig!.titleLabelData)
+        pinVCConfig?.updateLabelWithAttributedText(label: leadLabel, data: pinVCConfig!.leadLabelData)
+        pinVCConfig?.updateLabelWithAttributedText(label: infoLabel, data: pinVCConfig!.infoLabelData)
+        pinVCConfig?.updateLabelWithAttributedText(label: termsAndConditionLabel, data: pinVCConfig!.tcLabelData)
     }
     
     override func addSubviews() {
         super.addSubviews();
-        self.addSubview(titleLabel)
-        self.addSubview(leadLabel);
-        self.addSubview(h3Label);
-        self.addSubview( pinInput );
-        self.addSubview(termsAndConditionLabel)
         
-        if nil != pinVCConfig?.tcLabelText {
-            setupTermsAndConditionLabel()
+        let labelArray = [titleLabel, leadLabel, infoLabel, termsAndConditionLabel]
+        
+        for label in labelArray {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_ :)))
+            tapGesture.numberOfTapsRequired = 1
+            tapGesture.delegate = self
+            
+            label.addGestureRecognizer(tapGesture)
+            
+            self.addSubview(label)
+        }
+        
+        self.addSubview( pinInput );
+    }
+    
+    @objc func linkLabelTapped(attributes: [NSAttributedString.Key: Any]) {
+        if let urlString = attributes[NSAttributedString.Key(rawValue: "url")] as? String {
+            let webview = WKWebViewController()
+            webview.urlString = urlString
+            webview.presentVCWithNavigation()
         }
     }
     
-    func setupTermsAndConditionLabel() {
+    @objc func labelTapped(_ recognizer: UITapGestureRecognizer) {
         
-        let attributes: [NSAttributedString.Key : Any] = [.font: OstTheme.getInstance().getH4Config().getFont(),
-                                                          .foregroundColor: OstTheme.getInstance().getH4Config().getColor() ]
-        
-        let attributedString = NSMutableAttributedString(string: pinVCConfig?.tcLabelText ?? "",
-                                                         attributes: attributes)
-        
-        var termsAttributes: [NSAttributedString.Key : Any]  = attributes
-        termsAttributes[.init("action")] = #selector(self.LinkLabelTapped(attributes:))
-        termsAttributes[.init("url")] = self.contentConfig?["terms_and_condition_url"] as? String ?? ""
-        termsAttributes[.foregroundColor] = UIColor.color(0, 118, 255)
-        let termsAttributedString = NSAttributedString(string: " T&C Apply", attributes: termsAttributes)
-        
-        attributedString.append(termsAttributedString)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 1
-        paragraphStyle.alignment = .center
-        attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        
-        termsAndConditionLabel.attributedText = attributedString
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tncLabelTapped(_ :)))
-        tapGesture.numberOfTapsRequired = 1
-        tapGesture.delegate = self
-        termsAndConditionLabel.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func LinkLabelTapped(attributes: [NSAttributedString.Key: Any]) {
-        let webview = WKWebViewController()
-        webview.urlString = attributes[NSAttributedString.Key(rawValue: "url")] as! String
-        webview.presentVCWithNavigation()
-    }
-    
-    @objc func tncLabelTapped(_ recognizer: UITapGestureRecognizer) {
-        let textView: UITextView = recognizer.view as! UITextView
+        let label = recognizer.view as! UILabel
+        let textView: UITextView = UITextView(frame: label.frame)
+        textView.attributedText = label.attributedText
         
         let layoutManager: NSLayoutManager = textView.layoutManager
-        var location = recognizer.location(in: textView)
+        var location = recognizer.location(in: label)
         location.x -= textView.textContainerInset.left;
-        location.y -= textView.textContainerInset.top;
+//        location.y -= textView.textContainerInset.top;
         
         let characterIndex: Int = layoutManager.characterIndex(for: location,
                                                                in: textView.textContainer,
@@ -183,11 +145,7 @@ class OstPinViewController: OstBaseScrollViewController {
         
         if (characterIndex < textView.textStorage.length) {
             let attributes = textView.textStorage.attributes(at: characterIndex, effectiveRange: nil)
-            if let action = attributes[NSAttributedString.Key(rawValue: "action")] as? Selector,
-                self.responds(to: action){
-                
-                self.perform(action, with: attributes)
-            }
+            linkLabelTapped(attributes: attributes)
         }
     }
     
@@ -200,15 +158,15 @@ class OstPinViewController: OstBaseScrollViewController {
         leadLabel.placeBelow(toItem: titleLabel)
         leadLabel.applyBlockElementConstraints(horizontalMargin: 40)
         
-        h3Label.placeBelow(toItem: leadLabel, constant: 4.0)
-        h3Label.applyBlockElementConstraints(horizontalMargin: 40)
+        infoLabel.placeBelow(toItem: leadLabel, constant: 4.0)
+        infoLabel.applyBlockElementConstraints(horizontalMargin: 40)
         
-        pinInput.placeBelow(toItem: h3Label, constant: 20.0);
+        pinInput.placeBelow(toItem: infoLabel, constant: 20.0);
         pinInput.centerXAlignWithParent();
         
         
         termsAndConditionLabel.applyBlockElementConstraints(horizontalMargin: 40);
-        termsAndConditionLabel.setFixedHeight(constant: 55)
+//        termsAndConditionLabel.setFixedHeight(constant: 55)
         termsAndConditionLabel.bottomAlignWithParent()
         
         contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())

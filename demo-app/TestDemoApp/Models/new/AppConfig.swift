@@ -107,10 +107,48 @@ class AppConfig: NSObject {
     static let appContentConfig: [String: Any] = [
         "activate_user": [
             "create_pin": [
-                "terms_and_condition_url": "https://drive.google.com/file/d/1QTZ7_EYpbo5Cr7sLdqkKbuwZu-tmZHzD/view"
+                "title_label": [
+                    "text": "Create Pin"
+                ],
+                "lead_label": [
+                    "text": "Add a 6-digit PIN to secure your wallet."
+                ],
+                "info_label":[
+                    "text":  "(PIN helps you recover your wallet if the phone is lost or stolen)"
+                ],
+                "terms_and_condition_label": [
+                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
+                ],
+                "placeholders": [
+                    "terms_and_condition": [
+                        "url": "https://ost.com/terms",
+                        "text": "T&C Apply",
+                        "font": "SFProDisplay",
+                        "color": "#0076FF"
+                    ]
+                ]
             ],
             "confirm_pin": [
-                "terms_and_condition_url": "https://ost.com/terms"
+                "title_label": [
+                    "text": "Confirm PIN"
+                ],
+                "lead_label": [
+                    "text": "If you forget your PIN, you cannot recover your wallet."
+                ],
+                "info_label":[
+                    "text":  "(So please be sure to remember it)"
+                ],
+                "terms_and_condition_label": [
+                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
+                ],
+                "placeholders": [
+                    "terms_and_condition": [
+                        "url": "https://ost.com/terms",
+                        "text": "T&C Apply",
+                        "font": "SFProDisplay",
+                        "color": "#0076FF"
+                    ]
+                ]
             ]
         ]
     ]

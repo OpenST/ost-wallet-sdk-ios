@@ -28,13 +28,67 @@ import Foundation
         return instance!
     }
     
-    @objc enum WorkflowType: Int {
-        case activateUser
+    @objc enum OstContnetWorkflowType: Int {
+        case activateUser,
+        updateBiometricPreference
         
         func getWorkflowName() -> String {
             switch self {
             case .activateUser:
                 return "activate_user"
+            case .updateBiometricPreference:
+                return "biometric_preference"
+                
+            default:
+                return ""
+            }
+        }
+    }
+    
+    @objc enum OstContentControllerType: Int {
+        case createPin,
+        confirmPin
+        
+        func getControllerName() -> String {
+            switch self {
+            case .createPin:
+                return "create_pin"
+                
+            case .confirmPin:
+                return "confirm_pin"
+                
+            default:
+                return ""
+            }
+        }
+    }
+    
+    @objc enum OstContentComponentType: Int {
+        case titleLabel,
+        leadLabel,
+        infoLabel,
+        tcLabel,
+        placeholders
+        
+        func getCompnentName() -> String {
+            switch self {
+            case .titleLabel:
+                return "title_label"
+                
+            case .leadLabel:
+                return "lead_label"
+                
+            case .infoLabel:
+                return "info_label"
+                
+            case .tcLabel:
+                return "terms_and_condition_label"
+                
+            case .placeholders:
+                return "placeholders"
+                
+            default:
+                return ""
             }
         }
     }
@@ -56,10 +110,11 @@ import Foundation
     
     /// Get workflow config
     ///
-    /// - Parameter name: workflow name
+    /// - Parameter name: workflow type
     /// - Returns: Config dictionary
     @objc
-    func getWorkflowConfig(for type: WorkflowType) -> [String: Any] {
+    func getWorkflowConfig(for type: OstContnetWorkflowType) -> [String: Any] {
+        
         let workflowConfig = contentConfig[type.getWorkflowName()] as! [String: Any]
         return workflowConfig
     }
@@ -67,13 +122,32 @@ import Foundation
     /// Get controller config for provided controller name in workflow
     ///
     /// - Parameters:
-    ///   - name: Controller name
-    ///   - workflowName: Workflow name
+    ///   - name: Controller type
+    ///   - workflowName: Workflow type
     /// - Returns: Controller config dictionary
     @objc
-    func getControllerConfig(for name: String, inWorkflow type: WorkflowType) -> [String: Any] {
+    func getControllerConfig(for name: OstContentControllerType,
+                             inWorkflow type: OstContnetWorkflowType) -> [String: Any] {
+        
         let workflowConfig = getWorkflowConfig(for: type)
-        let config = workflowConfig[name]
+        let config = workflowConfig[name.getControllerName()]
         return config as! [String: Any]
+    }
+    
+    @objc
+    /// Get component data from OstContent provided by user
+    ///
+    /// - Parameters:
+    ///   - component: Component name
+    ///   - controller: Controller Type
+    ///   - workflow: Workflow Type
+    /// - Returns: Component config.
+    func getComponentData(component: OstContentComponentType,
+                          inController controller: OstContentControllerType,
+                          forWorkflow workflow: OstContnetWorkflowType) -> [String: Any]? {
+        
+        let controllerConfig = getControllerConfig(for: controller, inWorkflow: workflow)
+        let component = controllerConfig[component.getCompnentName()]
+        return component as? [String: Any]
     }
 }

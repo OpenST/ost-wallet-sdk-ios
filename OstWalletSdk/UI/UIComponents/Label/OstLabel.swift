@@ -72,6 +72,7 @@ import Foundation
         self.setThemeConfig()
         
         self.numberOfLines = 0
+        self.isUserInteractionEnabled = true
         self.translatesAutoresizingMaskIntoConstraints = false
         self.textAlignment = labelConfig!.getAlignment()
         

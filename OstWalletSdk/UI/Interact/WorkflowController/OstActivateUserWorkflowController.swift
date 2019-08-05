@@ -96,7 +96,7 @@ import UIKit
     
     func showCreatePinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: "create_pin",
+            let config = OstContent.getInstance().getControllerConfig(for: .createPin,
                                                                       inWorkflow: .activateUser)
             
             self.createPinViewController = OstPinViewController
@@ -109,7 +109,7 @@ import UIKit
     }
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: "confirm_pin",
+            let config = OstContent.getInstance().getControllerConfig(for: .confirmPin,
                                                                       inWorkflow: .activateUser)
             
             self.confirmPinViewController = OstPinViewController

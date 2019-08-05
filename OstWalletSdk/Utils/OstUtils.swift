@@ -125,12 +125,10 @@ public class OstUtils {
                 if val is [String: Any] {
                     deepMerge(val as! [String : Any], into: &avaDict)
                     mergerDict[key] = avaDict
-                }else {
-                    avaDict[key] = val
+                    continue
                 }
-            }else {
-                mergerDict[key] = val
             }
+            mergerDict[key] = val
         }
     }
     
