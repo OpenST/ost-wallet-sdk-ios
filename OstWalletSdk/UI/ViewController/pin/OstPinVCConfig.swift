@@ -78,4 +78,25 @@ import Foundation
                               infoLabelText: nil,
                               tcLabelText:  nil)
     }
+    
+    class func getPinForResetPinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig(titleText: "Reset Pin",
+                              leadLabelText: "Enter your 6-digit PIN to upadte biometric preference",
+                              infoLabelText: nil,
+                              tcLabelText:  nil)
+    }
+    
+    class func getSetNewPinForResetPinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig(titleText: "Set New Pin",
+                              leadLabelText: "Enter your 6-digit PIN to upadte biometric preference",
+                              infoLabelText: nil,
+                              tcLabelText:  nil)
+    }
+    
+    class func getConfirnNewPinForResetPinVCConfig() -> OstPinVCConfig {
+        return OstPinVCConfig(titleText: "Set New Pin",
+                              leadLabelText: "Enter your 6-digit PIN to upadte biometric preference",
+                              infoLabelText: nil,
+                              tcLabelText:  nil)
+    }
 }

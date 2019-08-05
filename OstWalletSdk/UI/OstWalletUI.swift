@@ -131,6 +131,7 @@ import UIKit
     ///   - userId: Ost user id
     ///   - enable: Biomertic authentication allowed
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func updateBiometricPreference(
         userId: String,
@@ -147,6 +148,28 @@ import UIKit
         return workflowController.workflowId
     }
     
+    
+    
+   
+    /// Reset Pin
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func resetPin(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstResetPinWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
     /// Subscribe to receive workflow events.
     ///

@@ -223,6 +223,7 @@
 		4B54586422F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54586322F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift */; };
 		4B54587522F45B1F0092E533 /* OstThemeConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B54587422F45B1F0092E533 /* OstThemeConfig.json */; };
 		4B54587722F46ECD0092E533 /* OstContentConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B54587622F46ECD0092E533 /* OstContentConfig.json */; };
+		4B54587922F8038C0092E533 /* OstResetPinWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54587822F8038C0092E533 /* OstResetPinWorkflowController.swift */; };
 		4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336022F07AB700966372 /* OstNavigation.swift */; };
 		4B9433A122F07AB700966372 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336222F07AB700966372 /* OstLabel.swift */; };
 		4B9433A222F07AB700966372 /* OstH3Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94336322F07AB700966372 /* OstH3Label.swift */; };
@@ -509,6 +510,7 @@
 		4B54586322F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBiomatricPerferenceWorkflowController.swift; sourceTree = "<group>"; };
 		4B54587422F45B1F0092E533 /* OstThemeConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = OstThemeConfig.json; sourceTree = "<group>"; };
 		4B54587622F46ECD0092E533 /* OstContentConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = OstContentConfig.json; sourceTree = "<group>"; };
+		4B54587822F8038C0092E533 /* OstResetPinWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstResetPinWorkflowController.swift; sourceTree = "<group>"; };
 		4B94336022F07AB700966372 /* OstNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
 		4B94336222F07AB700966372 /* OstLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
 		4B94336322F07AB700966372 /* OstH3Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstH3Label.swift; sourceTree = "<group>"; };
@@ -1277,6 +1279,7 @@
 				4B94338F22F07AB700966372 /* OstActivateUserWorkflowController.swift */,
 				4B54586122F411CC0092E533 /* OstAddSessionWorkflowController.swift */,
 				4B54586322F43A8A0092E533 /* OstBiomatricPerferenceWorkflowController.swift */,
+				4B54587822F8038C0092E533 /* OstResetPinWorkflowController.swift */,
 			);
 			path = WorkflowController;
 			sourceTree = "<group>";
@@ -1514,6 +1517,7 @@
 				00ABD35622A72BE90080C4BB /* OstBaseDelegate.swift in Sources */,
 				00ABD3BC22A72BE90080C4BB /* OstDeviceManagerRepository.swift in Sources */,
 				4B9433BA22F07AB700966372 /* OstBaseConfig.swift in Sources */,
+				4B54587922F8038C0092E533 /* OstResetPinWorkflowController.swift in Sources */,
 				00ABD30522A72BE90080C4BB /* OstMigration_1.swift in Sources */,
 				00ABD32C22A72BE90080C4BB /* OstAPIDevice.swift in Sources */,
 				00ABD36322A72BE90080C4BB /* Decimal+Extension.swift in Sources */,
