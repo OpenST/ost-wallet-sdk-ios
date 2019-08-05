@@ -96,13 +96,3 @@ import Foundation
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
     }    
 }
-
-
-public extension OstWalletUI {
-    
-    /// Show Components with config.
-    @objc
-    class func showComponentSheet() {
-        OstComponentSheet.showComponentSheet()
-    }
-}

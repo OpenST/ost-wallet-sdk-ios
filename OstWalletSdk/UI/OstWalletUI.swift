@@ -148,9 +148,6 @@ import UIKit
         return workflowController.workflowId
     }
     
-    
-    
-   
     /// Reset Pin
     ///
     /// - Parameters:
@@ -195,5 +192,14 @@ import UIKit
         
         OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowId,
                                                listner: listner)
+    }
+}
+
+public extension OstWalletUI {
+    
+    /// Show Components with config.
+    @objc
+    class func showComponentSheet() {
+        OstComponentSheet.showComponentSheet()
     }
 }
