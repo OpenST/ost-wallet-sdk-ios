@@ -31,9 +31,7 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
     }
     
     override func configure() {
+        pageConfig = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "initiate_recovery")
         super.configure()
-        
-        titleLabel.text = "Device Recovery"
-        leadLabel.text = "Once recovered, the device that initiated recovery will be revoked"
     }
 }

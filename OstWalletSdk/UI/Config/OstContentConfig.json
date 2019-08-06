@@ -64,23 +64,16 @@
     },
     
     "initiate_recovery": {
-        
         "device_list": {
             "title_label": {
-                "text": "Recover Access to Your Wallet"
+                "text": "Device Recovery"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to recover access to your wallet"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
+                "text": "This is an authorized device, recovery applies only to cases where a user has no authorized device"
             },
             "cell": {
-                "title": {
-                    "text": "TBD"
+                "action_button": {
+                    "text": "Start Recovery"
                 }
             }
         },
@@ -118,7 +111,6 @@
     },
     
     "revoke_device": {
-        
         "device_list": {
             "title_label": {
                 "text": "Recover Access to Your Wallet"
@@ -126,15 +118,9 @@
             "lead_label": {
                 "text": "Enter your 6-digit PIN to recover access to your wallet"
             },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            },
             "cell": {
-                "title": {
-                    "text": "TBD"
+                "action_button": {
+                    "text": "Revoke Device"
                 }
             }
         },

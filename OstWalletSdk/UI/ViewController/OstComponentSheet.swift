@@ -25,18 +25,17 @@ class OstComponentSheet: OstBaseScrollViewController {
     }
     
     //Labels
-    let h1 = OstH1Label(text: "This is h1 label")
-    let h2 = OstH2Label(text: "This is h2 label")
-    let h3 = OstH3Label(text: "This is h3 label")
-    let h4 = OstH4Label(text: "This is h4 label")
+    let h1 = OstH1Label(text: "H1: Quick Brown Fox Jumps Over The Lazy Dog")
+    let h2 = OstH2Label(text: "H2: Quick Brown Fox Jumps Over The Lazy Dog")
+    let h3 = OstH3Label(text: "H3: Quick Brown Fox Jumps Over The Lazy Dog")
+    let h4 = OstH4Label(text: "H4: Quick Brown Fox Jumps Over The Lazy Dog")
     
-    let c1 = OstC1Label(text: "This is c1 label")
-    let c2 = OstC2Label(text: "This is c2 label")
+    let c1 = OstC1Label(text: "C1: Quick Brown Fox Jumps Over The Lazy Dog")
+    let c2 = OstC2Label(text: "C2: Quick Brown Fox Jumps Over The Lazy Dog")
     
-    let b1 = OstB1Button(title: "This is b1 button")
-    let b2 = OstB2Button(title: "This is b2 button")
-    let b3 = OstB3Button(title: "This is b3 button")
-    let b4 = OstB1Button(title: "This is b4 button (Not Present Yet)")
+    let b1 = OstB1Button(title: "B1: Quick Brown Fox Jumps Over The Lazy Dog")
+    let b2 = OstB2Button(title: "B2: Quick Brown Fox Jumps Over The Lazy Dog")
+    let b3 = OstB3Button(title: "B3: Quick Brown Fox Jumps Over The Lazy Dog")
     
     override func addSubviews() {
         super.addSubviews()
@@ -50,7 +49,6 @@ class OstComponentSheet: OstBaseScrollViewController {
         self.addSubview(b1)
         self.addSubview(b2)
         self.addSubview(b3)
-        self.addSubview(b4)
     }
     
     override func addLayoutConstraints() {
@@ -83,10 +81,7 @@ class OstComponentSheet: OstBaseScrollViewController {
         b3.placeBelow(toItem: b2)
         b3.centerXAlignWithParent()
         
-        b4.placeBelow(toItem: b3)
-        b4.centerXAlignWithParent()
-        
-        let lastView = b4
+        let lastView = b3
         lastView.bottomAlignWithParent()
     }
 }

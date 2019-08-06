@@ -67,9 +67,49 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
     var updatedTableArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
+    var pageConfig: [String: Any]? = nil
+    
     override func configure() {
         super.configure();
+        
+        titleLabel.text = getTitleLabelText()
+        leadLabel.text = getLeadLabelText()
+        
         self.shouldFireIsMovingFromParent = true;
+    }
+    
+    func getTitleLabelText() -> String {
+        if nil != pageConfig {
+            if let titleLabel = pageConfig!["title_label"] as? [String: Any],
+                let text = titleLabel["text"] as? String {
+            
+                return text
+            }
+        }
+        return ""
+    }
+    
+    func getLeadLabelText() -> String {
+        if nil != pageConfig {
+            if let titleLabel = pageConfig!["lead_label"] as? [String: Any],
+                let text = titleLabel["text"] as? String {
+                
+                return text
+            }
+        }
+        return ""
+    }
+    
+    func getActionButtonText() -> String {
+        if nil != pageConfig {
+            if let cell = pageConfig!["cell"] as? [String: Any],
+                let actionButton = cell["action_button"] as? [String: Any],
+                let text = actionButton["text"] as? String {
+                
+                return text
+            }
+        }
+        return ""
     }
     
     override func viewDidLoad() {
@@ -167,6 +207,7 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
         switch indexPath.section {
         case 0:
             let deviceTableViewCell = getTableViewCell(tableView, forIndexPath: indexPath) as! OstDeviceTableViewCell
+            deviceTableViewCell.setActionButtonText(getActionButtonText())
             if tableDataArray.count > indexPath.row {
                 let deviceDetails = tableDataArray[indexPath.row]
                 

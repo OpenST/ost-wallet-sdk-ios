@@ -28,6 +28,10 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     
     var onActionPressed: (([String: Any]?) -> Void)? = nil
     
+    func setActionButtonText(_ text: String) {
+        self.actionButton.setTitle(text, for: .normal)
+    }
+    
     //MARK: - Components
     let deviceCellBackgroundView: UIView = {
        
@@ -106,7 +110,6 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
                                        in: Bundle(for: type(of: self)),
                                        compatibleWith: nil)!
         
-        self.actionButton.setTitle("Start Recovery", for: .normal)
         self.actionButton.addTarget(self, action: #selector(actionButtonTapped(_ :)), for: .touchUpInside)
     }
     
