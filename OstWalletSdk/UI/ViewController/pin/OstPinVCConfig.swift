@@ -201,32 +201,32 @@ extension OstPinVCConfig {
     }
     
     class func getRecoveryAccessPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "initiate_recovery")
         return getPinVCConfigObj(componentData)
     }
     
     class func getAddSessinoPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_session")
         return getPinVCConfigObj(componentData)
     }
     
     class func getAbortRecoveryPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "abort_recovery")
         return getPinVCConfigObj(componentData)
     }
     
     class func getPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "reset_pin")
         return getPinVCConfigObj(componentData)
     }
     
     class func getSetNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let componentData = getComponentData(inController: "set_new_pin", forWorkflow: "reset_pin")
         return getPinVCConfigObj(componentData)
     }
     
-    class func getConfirnNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+    class func getConfirmNewPinForResetPinVCConfig() -> OstPinVCConfig {
+        let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: "reset_pin")
         return getPinVCConfigObj(componentData)
     }
 }

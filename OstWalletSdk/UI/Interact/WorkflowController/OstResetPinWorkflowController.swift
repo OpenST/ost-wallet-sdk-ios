@@ -12,7 +12,6 @@ import Foundation
 
 @objc class OstResetPinWorkflowController: OstBaseWorkflowController {
     
-    var oldPin: String? = nil
     var newPin: String? = nil
     
     var setNewPinViewController: OstPinViewController? = nil
@@ -60,9 +59,9 @@ import Foundation
             if nil == self.confirmNewPinViewController {
                 self.confirmNewPinViewController = OstPinViewController
                     .newInstance(pinInputDelegate: self,
-                                 pinVCConfig: OstPinVCConfig.getConfirnNewPinForResetPinVCConfig())
-
+                                 pinVCConfig: OstPinVCConfig.getConfirmNewPinForResetPinVCConfig())
             }
+            self.confirmNewPinViewController!.pushViewControllerOn(self.setNewPinViewController!)
         }
     }
     
@@ -112,7 +111,7 @@ import Foundation
         
         OstWalletSdk.resetPin(userId: self.userId,
                               passphrasePrefix: passphrase,
-                              oldUserPin: self.oldPin!,
+                              oldUserPin: self.userPin!,
                               newUserPin: self.newPin!,
                               delegate: self)
         showLoader(progressText: .resetPin);
@@ -120,5 +119,17 @@ import Foundation
     
     override func getWorkflowContext() -> OstWorkflowContext {
         return OstWorkflowContext(workflowType: .resetPin)
+    }
+    
+    override func cleanUp() {
+        super.cleanUp();
+        if ( nil != self.getPinViewController ) {
+            self.getPinViewController!.removeViewController(flowEnded: true)
+        }
+        self.setNewPinViewController = nil;
+        self.confirmNewPinViewController = nil;
+        self.passphrasePrefixDelegate = nil;
+        self.progressIndicator = nil
+        NotificationCenter.default.removeObserver(self);
     }
 }

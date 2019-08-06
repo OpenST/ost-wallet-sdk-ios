@@ -77,8 +77,8 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
         return view
     }()
     
-    let actionButton: OstB1Button = {
-        let view = OstB1Button(title: "")
+    let actionButton: OstB3Button = {
+        let view = OstB3Button(title: "")
         
         return view
     }()

@@ -65,4 +65,10 @@ import Foundation
         super.onPassphrasePrefixSet(passphrase: passphrase)
         showLoader(progressText: .creatingSession)
     }
+    
+    /// Mark - OstPinAcceptDelegate
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
+    }
 }

@@ -475,10 +475,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .resetPin {
             if option.isEnable {
-                _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                        presenter: self)
-                self.tabbarController?.hideTabBar()
+                let workflowId = OstWalletUI.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                      passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                
+//                _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+//                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance,
+//                                                        presenter: self)
+//                self.tabbarController?.hideTabBar()
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }
