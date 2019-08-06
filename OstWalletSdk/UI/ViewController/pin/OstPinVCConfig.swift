@@ -42,11 +42,31 @@ import Foundation
         return ""
     }
     
+    func getFont(from data: Any?, ofSize size: CGFloat) -> UIFont? {
+        if let dict = data as? [String: Any],
+            let fontName = dict["font"] as? String {
+            return UIFont(name: fontName, size: size)
+        }
+        return nil
+    }
+    
+    func getForegroundColor(from data: Any?) -> UIColor? {
+        if let dict = data as? [String: Any],
+            let colorHex = dict["color"] as? String {
+            return UIColor.color(hex: colorHex)
+        }
+        return nil
+    }
+    
     func updateLabelWithAttributedText(label: OstLabel, data: Any?) {
+        //Get text from config
         let labelText = getText(from: data)
+        //Get font from. config if font is not present, default would be label config font.
+        let labelFont = getFont(from: data, ofSize: CGFloat(truncating: label.labelConfig!.size)) ?? label.labelConfig!.getFont()
+        //Get foreground color from config. if foreground is not present, default would be label config foreground.
+        let labelForegroundColor = getForegroundColor(from: data) ?? label.labelConfig!.getColor()
         
-        let labelFont = label.labelConfig!.getFont()
-        let labelForegroundColor = label.labelConfig!.getColor()
+        //Defaut text attribute
         let attributes: [NSAttributedString.Key : Any] = [.font: labelFont,
                                                           .foregroundColor: labelForegroundColor]
         
@@ -56,44 +76,48 @@ import Foundation
         
         var combinedWords: String = ""
         for word in splitWords {
+            //chekc whether word has {{ and }}
             if word.hasPrefix("{{") && word.hasSuffix("}}") {
-                
+                //clear {{ and }}
                 var newAttributedText: String = String(word.replacingOccurrences(of: "{{", with: ""))
                 newAttributedText = String(newAttributedText.replacingOccurrences(of: "}}", with: ""))
                 
+                //Get data for placeholder text from {{KEY_FOR_TEXT}}
                 var placeHoderDict: [String: Any]? = nil
                 if let dict = placeholders as? [String: Any] {
                     placeHoderDict = dict[newAttributedText] as? [String: Any]
                 }
+                
                 if nil != placeHoderDict {
-                    
-                    //craete attributed text
+                    //Assign attributed text.
                     let attibutedString = NSAttributedString(string: combinedWords,
                                                              attributes: attributes)
                     finalAttributedText.append(attibutedString)
                     
                     combinedWords = ""
                     
+                    //Set fonts for placeholder. default is label font
                     var font = labelFont
+                    
+                    //Set foregroundColor for placeholder. default is label foregroundColor
                     var foregroundColor = labelForegroundColor
-                    if let placeHolderFont = placeHoderDict!["font"] as? String {
-                        font = label.labelConfig!.getFont(font: placeHolderFont)
-                        placeHoderDict!["font"] = nil
+                    if let placeHolderFont =  getFont(from: placeHoderDict, ofSize: CGFloat(truncating: label.labelConfig!.size)) {
+                        font = placeHolderFont
                     }
                     
-                    if let placeHoderForegroundColor = placeHoderDict!["color"] as? String {
-                        foregroundColor = UIColor.color(hex: placeHoderForegroundColor)
+                    if let placeHoderForegroundColor = getForegroundColor(from: placeHoderDict) {
+                        foregroundColor = placeHoderForegroundColor
                         placeHoderDict!["color"] = nil
                     }
-                    
+                    //Create new attriutes for placeholder.
                     var newAttributes: [NSAttributedString.Key : Any] = [.font: font,
                                                                          .foregroundColor: foregroundColor]
-                    
+                    //Set extra keys in attributes
                     for (key, val) in placeHoderDict! {
                         newAttributes[.init(key)] = val
                     }
                     let text = getText(from: placeHoderDict!)
-                    let newAttributedString = NSAttributedString(string: " \(text) ", attributes: newAttributes)
+                    let newAttributedString = NSAttributedString(string: "\(text) ", attributes: newAttributes)
                 
                     finalAttributedText.append(newAttributedString)
                 }
