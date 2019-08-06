@@ -96,26 +96,19 @@ import UIKit
     
     func showCreatePinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: .createPin,
-                                                                      inWorkflow: .activateUser)
             
             self.createPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig(),
-                             contentConfig: config)
+                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig())
             
             self.createPinViewController!.presentVCWithNavigation()
         }
     }
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: .confirmPin,
-                                                                      inWorkflow: .activateUser)
-            
-            self.confirmPinViewController = OstPinViewController
+           self.confirmPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig(),
-                             contentConfig: config);
+                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig())
             
             self.confirmPinViewController?.pushViewControllerOn(self.createPinViewController!);
         }

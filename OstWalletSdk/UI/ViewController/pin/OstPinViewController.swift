@@ -13,26 +13,22 @@ import UIKit
 class OstPinViewController: OstBaseScrollViewController {
     
     public class func newInstance(pinInputDelegate: OstPinInputDelegate,
-                                  pinVCConfig: OstPinVCConfig,
-                                  contentConfig: [String: Any]? = nil) -> OstPinViewController {
+                                  pinVCConfig: OstPinVCConfig) -> OstPinViewController {
         
         let instance = OstPinViewController()
         setEssentials(instance: instance,
                       pinInputDelegate: pinInputDelegate,
-                      pinVCConfig: pinVCConfig,
-                      contentConfig: contentConfig)
+                      pinVCConfig: pinVCConfig)
         
         return instance
     }
     
     class func setEssentials(instance: OstPinViewController,
                              pinInputDelegate:OstPinInputDelegate,
-                             pinVCConfig: OstPinVCConfig,
-                             contentConfig: [String: Any]?) {
+                             pinVCConfig: OstPinVCConfig) {
         
         instance.pinInputDelegate = pinInputDelegate
         instance.pinVCConfig = pinVCConfig
-        instance.contentConfig = contentConfig
     }
     
     //MAKR: - Components
@@ -59,7 +55,6 @@ class OstPinViewController: OstBaseScrollViewController {
         return label
     }()
     
-    internal var contentConfig: [String: Any]?
     internal var pinInputDelegate:OstPinInputDelegate?;
     private var pinVCConfig: OstPinVCConfig? = nil
     private var contentViewHeightConstraint: NSLayoutConstraint? = nil

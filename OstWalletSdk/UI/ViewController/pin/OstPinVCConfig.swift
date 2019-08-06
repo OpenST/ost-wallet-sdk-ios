@@ -148,8 +148,8 @@ extension OstPinVCConfig {
         tcLabel: [String: Any]?,
         placeholders: [String: Any]?)
     
-    class func getComponentData(inController controllerType: OstContent.OstContentControllerType,
-                                forWorkflow workflowType: OstContent.OstContnetWorkflowType) -> OstComponentData {
+    class func getComponentData(inController controllerType: String,
+                                forWorkflow workflowType: String) -> OstComponentData {
         
         let contentObj = OstContent.getInstance()
         
@@ -186,47 +186,47 @@ extension OstPinVCConfig {
     
     
     class func getCreatePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .createPin, forWorkflow: .activateUser)
+        let componentData = getComponentData(inController: "create_pin", forWorkflow: "activate_user")
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirmPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .activateUser)
+        let componentData = getComponentData(inController: "confirm_pin", forWorkflow: "activate_user")
         return getPinVCConfigObj(componentData)
     }
     
     class func getUpdateBiometricPreferencePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getRecoveryAccessPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getAddSessinoPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getAbortRecoveryPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getSetNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirnNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: .confirmPin, forWorkflow: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
         return getPinVCConfigObj(componentData)
     }
 }
