@@ -457,7 +457,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             if option.isEnable {
                 
                 let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                      passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 return
             }else {

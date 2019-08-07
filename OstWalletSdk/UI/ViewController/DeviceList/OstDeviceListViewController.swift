@@ -69,6 +69,8 @@ import Foundation
     
     var pageConfig: [String: Any]? = nil
     
+    let MIN_REQUIRED_DEVICE_LIST = 5
+    
     override func configure() {
         super.configure();
         
@@ -356,7 +358,6 @@ import Foundation
     }
     
     func onFetchDeviceSuccess(_ apiResponse: [String: Any]?) {
-        progressIndicator?.hide()
         isApiCallInProgress = false
         
         let currentUser = OstWalletSdk.getUser(self.userId!)
@@ -381,8 +382,15 @@ import Foundation
         }
         
         updatedTableArray.append(contentsOf: newDevices)
-        self.isNewDataAvailable = true
         
+        if updatedTableArray.count < MIN_REQUIRED_DEVICE_LIST && isNextPageAvailable() {
+            getDeviceList()
+            return
+        }
+        
+        self.isNewDataAvailable = true
+        progressIndicator?.hide()
+    
         reloadDataIfNeeded()
     }
     
