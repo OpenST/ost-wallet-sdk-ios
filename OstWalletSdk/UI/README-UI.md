@@ -65,7 +65,7 @@ OstWalletUI.setContentConfig(config)
 
 ### Activate User
 
-User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.<br/><br/>
+User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
@@ -87,7 +87,7 @@ OstWalletUI.activateUser(
 
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user.
 
-The device manager, which controls the tokens, authorizes sessions. <br/><br/>
+The device manager, which controls the tokens, authorizes sessions.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
@@ -109,7 +109,7 @@ OstWalletUI.addSession(
 ### Reset a User's PIN
 
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
-<br/><br/>
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
@@ -125,7 +125,8 @@ OstWalletUI.resetPin(
 
 ### Initialize Recovery
 
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .<br/><br/>
+A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
@@ -145,7 +146,8 @@ OstWalletUI.initiateDeviceRecovery(
 
 ### Abort Device Recovery
 
-To abort initiated device recovery.<br/><br/>
+To abort initiated device recovery.
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
@@ -161,7 +163,8 @@ OstWalletUI.abortDeviceRecovery(
 
 ###  Update Biometric Preference
 
-This method can be used to enable or disable the biometric.<br/><br/>
+This method can be used to enable or disable the biometric.
+
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_enable: Preference to use biometric_<br/>
