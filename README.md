@@ -5,7 +5,7 @@
 Wallet SDK is a mobile application development SDK that enables developers to integrate the functionality of a non-custodial crypto-wallet into consumer applications. The SDK:
 
 - Safely generates and stores keys on the user's mobile device
-- Signs Ethereum transactions and data as defined by contracts using EIP-1077
+- Signs data as defined by contracts using EIP-1077 and EIP-712
 - Enables users to recover access to their Brand Tokens in case the user loses their authorized device</br>
 
 
@@ -148,7 +148,7 @@ Copy paste this configuration file.
 3. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
 4. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
 5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
-6. SessionBufferTime: Buffer expiration time for session keys in seconds. 3600 seconds are added to this value. Example: If you pass 7200 then SDK would add 3600 secods to it and then `SessionBufferTime` would be 10800 seconds.
+6. SessionBufferTime: Buffer expiration time for session keys in seconds. Default value is 3600 seconds.
 7. UseSeedPassword: The seed password is salt to PBKDF2 used to generate seed from the mnemonic. When `UseSeedPassword` set to true, different deterministic salts are used for different keys.
 
 **These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
