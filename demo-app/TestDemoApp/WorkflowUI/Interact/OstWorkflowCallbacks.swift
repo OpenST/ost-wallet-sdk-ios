@@ -67,7 +67,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcc
         DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
             delegate.deviceRegistered( apiResponse! );
         }) { (apiError) in
-            if ( "ALREADY_EXISTS".caseInsensitiveCompare((apiError!["code"] as? String ?? "")) == .orderedSame ) {
+            let code = (apiError?["code"] as? String) ?? ""
+            if ( "ALREADY_EXISTS".caseInsensitiveCompare(code) == .orderedSame ) {
                 var device = apiParams;
                 device["status"] = "REGISTERED";
                 delegate.deviceRegistered( device );

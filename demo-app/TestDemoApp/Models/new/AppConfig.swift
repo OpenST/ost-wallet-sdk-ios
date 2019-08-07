@@ -101,6 +101,11 @@ class AppConfig: NSObject {
             "back":[
                 "tint_color": "#438bad"
             ]
+        ],
+        
+        "pin_input": [
+            "empty_color": "#c7c7cc",
+            "filled_color": "#FF004C"
         ]
     ]
     

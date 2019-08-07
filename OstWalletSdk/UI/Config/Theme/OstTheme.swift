@@ -141,6 +141,10 @@ import Foundation
         return UIColor.color(hex: tintColor)
     }
     
+    func getPinInput() -> [String: Any] {
+        return themeConfig["pin_input"] as! [String: Any]
+    }
+    
     /// get image from framework
     ///
     /// - Parameter imageName: Image name
