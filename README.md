@@ -160,26 +160,23 @@ The iOS Wallet SDK can use FaceID in lieu of fingerprint if the hardware support
 **Note: [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsfaceidusagedescription) key is supported in iOS 11 and later.**
 
 
-## OST Wallet SDK APIs
+#### vii). Initialize the Wallet SDK
+SDK initialization should happen before calling any other `workflow`. To initialize the SDK, we need to call `init` workflow of Wallet SDK. It initializes all the required instances and run db migrations.
 
-### Types of Methods
+Recommended location to call **OstWalletSdk.initialize()** is in [application](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application) method of [UIApplicationDelegate](https://developer.apple.com/documentation/uikit/uiapplicationdelegate).
 
-1. `Workflows`: Workflows are the core functions provided by wallet SDK to do wallet related actions. Workflows can be called directly by importing the SDK.
+```swift
+func application(_ application: UIApplication,
+                didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    do {
+        try OstWalletSdk.init(apiEndPoint: <OST_PLATFORM_API_ENDPOINT>)
+     } catch let ostError {
+           // Handle error here
+     }
+     return true
+}
+```
 
-	* Application must confirm to `OstWorkflowDelegate` protocol. The `OstWorkflowDelegate` protocol defines methods that allow application to interact with `OstWalletSdk`.
-
-
-2. `Getters`: These functions are synchronous and will return the value when requested.
-
-
-
-## Workflows
-
-### 1. initialize
-
-You must initialize the SDK before start using it.
-
-Recommended location to call **OstWalletSdk.initialize()** is in [application](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application) method of [UIApplicationDelegate](https://developer.apple.com/documentation/uikit/uiapplicationdelegate). 
 
 ```
 OstWalletSdk.initialize(apiEndPoint: String)
@@ -190,10 +187,24 @@ OstWalletSdk.initialize(apiEndPoint: String)
 | **apiEndPoint** <br> **String**	| OST PLATFORM API ENDPOINT: <br> 1. Sandbox Environment: `https://api.ost.com/testnet/v2/` <br> 2. Production Environment: `https://api.ost.com/mainnet/v2/` |
 
 
+## OST Wallet SDK APIs
 
-<br>
+### Types of Methods
 
-### 2. setupDevice
+1. `Workflows`: Workflows are the core functions provided by wallet SDK to do wallet related actions. Workflows can be called directly by importing the SDK.
+
+	* Callbacks must confirm to `OstWorkflowDelegate` protocol. The `OstWorkflowDelegate` protocol defines methods that allow application to interact with `OstWalletSdk`.
+
+
+2. `Getters`: These functions are synchronous and will return the value when requested.
+
+3. `JSON APIs`: Methods that allows application to access OST Platform APIs. 
+
+
+
+## Workflows
+
+### 1. setupDevice
 This workflow needs `userId` and `tokenId` so `setupDevice` should be called when the application has determined that the user is logged in state. Using the mapping between userId in OST Platform and your app user, you have access to `userId` and `tokenId`.
 
 **If the user is logged in, then `setupDevice` should be called every time the app launches, this ensures that the current device is registered before communicating with OST Platform server.**
@@ -215,7 +226,7 @@ OstWalletSdk.setupDevice(
 
 <br>
 
-### 3. activateUser
+### 2. activateUser
 It `authorizes` the registered device and activates the user. User activation deploys  **TokenHolder**, Device manager  contracts on blockchain. Session keys are also created and authorized during `activateUser` workflow. So after `user activation`, users can perform wallet actions like executing transactions and reset pin. `activateUser` needs to be executed once for a user in an economy.
 
 ```
@@ -242,7 +253,7 @@ OstWalletSdk.activateUser(
 
 <br>
 
-### 4. addSession
+### 3. addSession
 This workflow will create and authorize the session key that is needed to do the transactions. This flow should be called if the session key is expired or not present. 
 
 ```
@@ -257,7 +268,7 @@ OstWalletSdk.addSession(
 | Parameter | Description |
 |---|---|
 | **userId** <br> **String**	|  Unique identifier of the user stored in OST Platform|
-| **spendingLimit** <br> **String**	| Spending limit of session key in [atto BT](/platform/docs/sdk/guides/execute_transaction/#converting-brand-token-to-atto-brand-token).   |
+| **spendingLimit** <br> **String**	| Spending limit of session key in [atto BT](https://dev.ost.com/platform/docs/guides/execute-transactions/).   |
 | **expiresAfterInSecs** <br> **long**	| Expire time of session key in seconds.  |
 | **delegate** <br> **OstWorkflowDelegate**	| An instance of a class that implements the callback function available in `OstWorkflowDelegate` protocol. These callback functions are needed for communication between app and wallet SDK. Implement `flowComplete` and `flowInterrupt` callback functions to get the workflow status. Details about other callback function can be found in [OstWorkflowDelegate protocol reference](#protocol-workflow-callback). |
 
@@ -267,7 +278,7 @@ OstWalletSdk.addSession(
 
 <br>
 
-### 5. perfromQRAction
+### 4. perfromQRAction
 This workflow will perform operations after reading data from a QRCode. This workflow can be used to add a new device and to do the transactions.
 
 ```
@@ -288,7 +299,7 @@ OstWalletSdk.perfromQRAction(
 
 <br>
 
-### 6. getDeviceMnemonics
+### 5. getDeviceMnemonics
 To get the 12 words recovery phrase of the current device key. Users will use it to prove that it is their wallet.  
 
 ```
@@ -307,8 +318,8 @@ OstWalletSdk.getDeviceMnemonics(
 
 <br>
 
-### 7. executeTransaction
-Workflow should be used to do the `user-to-company` and `user-to-user` transactions.
+### 6. executeTransaction
+Workflow should be used when user wants to transfer tokens.
 
 ```
 OstWalletSdk.executeTransaction(
@@ -337,7 +348,7 @@ OstWalletSdk.executeTransaction(
 
 <br>
 
-### 8. authorizeCurrentDeviceWithMnemonics
+### 7. authorizeCurrentDeviceWithMnemonics
 This workflow should be used to add a new device using 12 words recovery phrase. 
 
 ```
@@ -364,7 +375,7 @@ OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
 
 <br>   
 
-### 9. resetPin
+### 8. resetPin
 This workflow can be used to change the PIN.
 
 **User will have to provide the current PIN in order to change it.**
@@ -390,7 +401,7 @@ OstWalletSdk.resetPin(
 
 
 
-### 10. initiateDeviceRecovery
+### 9. initiateDeviceRecovery
 A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their Brand Tokens by authorizing a new device by initiating the recovery process.
 
 ```swift
@@ -414,7 +425,7 @@ OstWalletSdk.initiateDeviceRecovery(
 
 
 
-### 11. abortDeviceRecovery
+### 10. abortDeviceRecovery
 This workflow can be used to abort the initiated device recovery.
 
 ```swift
@@ -434,7 +445,7 @@ OstWalletSdk.abortDeviceRecovery(
 
 
 
-### 12. logoutAllSessions
+### 11. logoutAllSessions
 This workflow will revoke all the sessions associated with the provided userId.
 
 ```swift
@@ -452,7 +463,7 @@ OstWalletSdk.logoutAllSessions(
 
 
 
-### 13. revokeDevice
+### 12. revokeDevice
 
 To revoke device access.
 
@@ -473,7 +484,7 @@ OstWalletSdk.revokeDevice(
 
 
 
-### 14. updateBiometricPreference
+### 13. updateBiometricPreference
 
 This method can be used to enable or disable the biometric.
 
@@ -598,9 +609,113 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 | **Preference** <br> **Bool**  	| [TODO] description |
 
 
+## OST JSON APIs
+
+### 1. getBalance
+
+Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalance(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### 2. getPricePoint
+
+Api to get price points. 
+It will provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### 3. getBalanceWithPricePoint
+
+Api to get user balance and price points. Balance of only current logged-in user can be fetched.
+It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getBalanceWithPricePoint(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+### 4. getTransaction
+
+Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_requestPayload: request payload. Such as next-page payload, filters etc._<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getTransaction(
+    forUserId userId: String,
+    params: [String: Any]?,
+    delegate: OstJsonApiDelegate) 
+```
+
+### 5. getPendingRecovery
+
+Api to get pending recovery.<br/><br/>
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_delegate: Callback implementation object for application communication_<br/>
+
+```Swift
+OstJsonApi.getPendingRecovery(
+    forUserId userId: String,
+    delegate: OstJsonApiDelegate) 
+```
+
+<br>
+
+## Json Api Response Delegates
+
+### 1. onOstJsonApiSuccess
+
+```Swift
+/// Success callback for API
+///
+/// - Parameter data: Success API response
+func onOstJsonApiSuccess(data:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **data** <br> **[String: Any]?**	|	Json api success response	|
 
 
-## Protocol (Workflow Callback)
+### 2. onOstJsonApiError
+
+```Swift
+/// Failure callback for API
+///
+/// - Parameters:
+///   - error: OstError
+///   - errorData: Failure API response
+func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
+```
+| Argument | Description |
+|---|---|
+| **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
+| **data** <br> **[String: Any]?**	|	Json api failure response	|
+
+<br>
+
+
+## OstWorkflowDelegate Protocol
 
 
 ### 1. flowComplete
@@ -770,110 +885,7 @@ func verifyData(
 
 
 
-## OST JSON APIs
 
-### 1. getBalance
-
-Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getBalance(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 2. getPricePoint
-
-Api to get price points. 
-It will provide latest conversion rates of base token to fiat currency.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getPricePoint(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 3. getBalanceWithPricePoint
-
-Api to get user balance and price points. Balance of only current logged-in user can be fetched.
-It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getBalanceWithPricePoint(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 4. getTransaction
-
-Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_requestPayload: request payload. Such as next-page payload, filters etc._<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getTransaction(
-    forUserId userId: String,
-    params: [String: Any]?,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 5. getPendingRecovery
-
-Api to get pending recovery.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getPendingRecovery(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-<br>
-
-## Json Api Response Delegates
-
-### 1. onOstJsonApiSuccess
-
-```Swift
-/// Success callback for API
-///
-/// - Parameter data: Success API response
-func onOstJsonApiSuccess(data:[String:Any]?);
-```
-| Argument | Description |
-|---|---|
-| **data** <br> **[String: Any]?**	|	Json api success response	|
-
-
-### 2. onOstJsonApiError
-
-```Swift
-/// Failure callback for API
-///
-/// - Parameters:
-///   - error: OstError
-///   - errorData: Failure API response
-func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
-```
-| Argument | Description |
-|---|---|
-| **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
-| **data** <br> **[String: Any]?**	|	Json api failure response	|
-
-<br>
 
 ## Classes
 
