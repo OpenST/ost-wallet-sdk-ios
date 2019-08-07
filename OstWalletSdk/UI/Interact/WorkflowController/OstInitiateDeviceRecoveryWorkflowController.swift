@@ -104,6 +104,11 @@ import UIKit
         }
     }
     
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
+    }
+    
     override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.initiateDeviceRecovery(userId: self.userId,
                                             recoverDeviceAddress: self.recoverDeviceAddress!,
@@ -114,14 +119,16 @@ import UIKit
     }
     
     override func cleanUp() {
-        super.cleanUp();
         if ( nil != self.deviceListController ) {
             self.deviceListController?.removeViewController(flowEnded: true)
+        }else if ( nil != self.getPinViewController )  {
+            self.getPinViewController?.removeViewController(flowEnded: true)
         }
         self.getPinViewController = nil
         self.passphrasePrefixDelegate = nil
         self.deviceListController = nil
         NotificationCenter.default.removeObserver(self)
+        super.cleanUp();
     }
     
     @objc public override func cleanUpPinViewController() {

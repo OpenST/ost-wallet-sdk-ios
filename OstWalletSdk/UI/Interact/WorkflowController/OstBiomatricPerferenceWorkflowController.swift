@@ -31,7 +31,16 @@ import Foundation
     }
     
     override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
         
+        if !self.currentDevice!.isStatusAuthorized {
+            throw OstError("ui_i_wc_bpwc_pudv_1", .deviceNotAuthorized)
+        }
+    }
+    
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
     }
     
     override func performUIActions() {

@@ -58,6 +58,11 @@ import Foundation
             self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
+    
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
+    }
 
     override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.abortDeviceRecovery(userId: self.userId,

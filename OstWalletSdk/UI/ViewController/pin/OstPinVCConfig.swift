@@ -229,4 +229,9 @@ extension OstPinVCConfig {
         let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: "reset_pin")
         return getPinVCConfigObj(componentData)
     }
+    
+    class func getRevokeDevicePinVCConfig() -> OstPinVCConfig {
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "revoke_device")
+        return getPinVCConfigObj(componentData)
+    }
 }

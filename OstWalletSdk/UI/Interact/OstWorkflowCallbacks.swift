@@ -129,15 +129,17 @@ import Foundation
     }
     
     func showLoader(progressText: OstProgressIndicatorTextCode) {
-        if ( nil != progressIndicator ) {
-            if ( nil != progressIndicator!.alert ) {
-                //progressIndicator is showing.
-                progressIndicator?.textCode = progressText
-                return;
+        DispatchQueue.main.async {
+            if ( nil != self.progressIndicator ) {
+                if ( nil != self.progressIndicator!.alert ) {
+                    //progressIndicator is showing.
+                    self.progressIndicator?.textCode = progressText
+                    return;
+                }
             }
+            self.progressIndicator = OstProgressIndicator(textCode: progressText)
+            self.progressIndicator?.show()
         }
-        progressIndicator = OstProgressIndicator(textCode: progressText)
-        progressIndicator?.show()
     }
     
     func hideLoader() {

@@ -372,10 +372,10 @@ import Foundation
                 if let deviceAddress = device["address"] as? String,
                     consumedDevices[deviceAddress] == nil {
                     
-//                    if currentDevice!.address!.caseInsensitiveCompare(deviceAddress) != .orderedSame {
+                    if currentDevice!.address!.caseInsensitiveCompare(deviceAddress) != .orderedSame {
                         newDevices.append(device)
                         consumedDevices[deviceAddress] = device
-//                    }
+                    }
                 }
             }
         }

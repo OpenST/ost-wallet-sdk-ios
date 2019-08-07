@@ -78,6 +78,29 @@ import UIKit
         return workflowController.workflowId
     }
     
+    /// Revoke Device
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier
+    ///   - revokeDeviceAddress: Device address of device tobe revoked.
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func revokeDevice(
+        userId: String,
+        revokeDeviceAddress: String? = nil,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstRevokeDeviceWorkflowController(
+            userId: userId,
+            revokeDeviceAddress: revokeDeviceAddress,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
     /// Abort device recovery.
     ///
     /// - Parameters:
@@ -167,6 +190,8 @@ import UIKit
         workflowController.perform()
         return workflowController.workflowId
     }
+    
+    
     
     /// Subscribe to receive workflow events.
     ///
