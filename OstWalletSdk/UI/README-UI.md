@@ -205,7 +205,13 @@ OstWalletUI.subscribe(
     workflowId: String,
     listner: OstWorkflowUIDelegate)
 ```
+### View Component Sheet
 
+Component sheet is collection of all components present in OstWalletUI. Developers can verify how components are going to look with provied theme.
+
+```Swift
+OstWalletUI.showComponentSheet()
+```
 
 ## Workflow Delegates
 

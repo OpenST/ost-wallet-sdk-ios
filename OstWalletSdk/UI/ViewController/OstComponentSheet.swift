@@ -24,7 +24,7 @@ class OstComponentSheet: OstBaseScrollViewController {
         return componentSheet
     }
     
-    //Labels
+    //MARK:- Labels
     let h1 = OstH1Label(text: "H1: Quick Brown Fox Jumps Over The Lazy Dog")
     let h2 = OstH2Label(text: "H2: Quick Brown Fox Jumps Over The Lazy Dog")
     let h3 = OstH3Label(text: "H3: Quick Brown Fox Jumps Over The Lazy Dog")
@@ -33,9 +33,21 @@ class OstComponentSheet: OstBaseScrollViewController {
     let c1 = OstC1Label(text: "C1: Quick Brown Fox Jumps Over The Lazy Dog")
     let c2 = OstC2Label(text: "C2: Quick Brown Fox Jumps Over The Lazy Dog")
     
+    //MARK:- Buttons
     let b1 = OstB1Button(title: "B1: Quick Brown Fox Jumps Over The Lazy Dog")
     let b2 = OstB2Button(title: "B2: Quick Brown Fox Jumps Over The Lazy Dog")
     let b3 = OstB3Button(title: "B3: Quick Brown Fox Jumps Over The Lazy Dog")
+    
+    //MARK:- Pin Input
+    let pinInput: OstPinInput = OstPinInput()
+    
+    
+    override func configure() {
+        super.configure()
+        
+        pinInput.isUserInteractionEnabled = false
+        pinInput.updateDots(currentPinLength: 3)
+    }
     
     override func addSubviews() {
         super.addSubviews()
@@ -49,6 +61,7 @@ class OstComponentSheet: OstBaseScrollViewController {
         self.addSubview(b1)
         self.addSubview(b2)
         self.addSubview(b3)
+        self.addSubview(pinInput)
     }
     
     override func addLayoutConstraints() {
@@ -81,7 +94,10 @@ class OstComponentSheet: OstBaseScrollViewController {
         b3.placeBelow(toItem: b2)
         b3.centerXAlignWithParent()
         
-        let lastView = b3
+        pinInput.placeBelow(toItem: b3)
+        pinInput.centerXAlignWithParent()
+        
+        let lastView = pinInput
         lastView.bottomAlignWithParent()
     }
 }

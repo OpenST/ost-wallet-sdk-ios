@@ -105,7 +105,7 @@ class AppConfig: NSObject {
         
         "pin_input": [
             "empty_color": "#c7c7cc",
-            "filled_color": "#FF004C"
+            "filled_color": "#438bad"
         ]
     ]
     
