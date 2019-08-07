@@ -12,7 +12,7 @@
 import Foundation
 
 
-class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstJsonApiDelegate  {
+@objc class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstJsonApiDelegate  {
     var onCellSelected: (([String: Any]?) ->Void)? = nil
     
     enum DeviceStatus: String {

@@ -205,23 +205,6 @@
         }
     },
     
-    "logout_all_sessions": {
-        "get_pin": {
-            "title_label": {
-                "text": "Logout all sessions"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-    
     "view_mnemonics": {
         "get_pin": {
             "title_label": {

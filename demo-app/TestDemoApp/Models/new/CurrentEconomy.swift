@@ -21,7 +21,10 @@ class CurrentEconomy: OstBaseModel {
     }
     
     private override init() {
-        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
+        var testEconomy: String? = "{\"token_id\": 1129,\"token_name\":\"T21054\",\"token_symbol\":\"T214\",\"url_id\":\"3213e2cfeed268d4ff0e067aa9f5f528d85bdf577e30e3a266f22556865db23a\",\"mappy_api_endpoint\":\"https://demo-mappy.stagingost.com/demo/\",\"saas_api_endpoint\":\"https://api.stagingost.com/testnet/v2/\",\"view_api_endpoint\":\"https://view.stagingost.com/testnet/\"}"
+        if let economy = testEconomy,
+
+//        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
              let qrJsonData = CurrentEconomy.getQRJsonData(economy) {
             _economyDetails = qrJsonData as [String : Any]
         }
