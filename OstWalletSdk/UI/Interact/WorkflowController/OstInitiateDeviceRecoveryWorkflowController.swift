@@ -37,7 +37,7 @@ import UIKit
         
     override func performUIActions() {
         if nil == recoverDeviceAddress {
-            self.openAuthorizeDeviceListController()
+            self.openAuthorizedDeviceListController()
         } else {
             self.openGetPinViewController()
         }
@@ -79,7 +79,7 @@ import UIKit
                          pinVCConfig: OstPinVCConfig.getRecoveryAccessPinVCConfig());
     }
     
-    func openAuthorizeDeviceListController() {
+    func openAuthorizedDeviceListController() {
         
         DispatchQueue.main.async {
             self.deviceListController = OstInitiateRecoveryDLViewController

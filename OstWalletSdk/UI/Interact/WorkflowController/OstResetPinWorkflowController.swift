@@ -17,18 +17,9 @@ import Foundation
     var setNewPinViewController: OstPinViewController? = nil
     var confirmNewPinViewController: OstPinViewController? = nil
     
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_rpwc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
-        }
-    }
-    
     override func performUIActions() {
         openGetPinViewController()
     }
-    
     
     //MAKR: - Open View Controller
     func openGetPinViewController() {
