@@ -59,7 +59,6 @@ import Foundation
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
-        return OstPinVCConfig.getUpdateBiometricPreferencePinVCConfig()
+        return OstContent.getUpdateBiometricPreferencePinVCConfig()
     }
 }
-

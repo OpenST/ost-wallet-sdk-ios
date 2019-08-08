@@ -58,7 +58,7 @@ import Foundation
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
-        return OstPinVCConfig.getAddSessinoPinVCConfig()
+        return OstContent.getAddSessinoPinVCConfig()
     }
     
     override func onPassphrasePrefixSet(passphrase: String) {

@@ -28,7 +28,7 @@ import Foundation
     }
     
     override func configure() {
-        pageConfig = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "revoke_device")
+        pageConfig = OstContent.getRevokeDeviceVCConfig()
         super.configure()
     }
 }

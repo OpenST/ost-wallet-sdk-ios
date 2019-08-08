@@ -55,7 +55,7 @@ class OstDeviceMnemonicsViewController: OstBaseScrollViewController {
     override func configure() {
         super.configure()
         
-        let deviceMnemonoicsVCConfig = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: "view_mnemonics")
+        let deviceMnemonoicsVCConfig = OstContent.getShowDeviceMnemonicsVCConfig()
         
         titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig["title_label"],
                                         placeholders: deviceMnemonoicsVCConfig["placeholders"])

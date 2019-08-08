@@ -12,8 +12,6 @@ import Foundation
 
 @objc class OstGetMnemonicsWorkflowController: OstBaseWorkflowController {
  
-    var deviceMnemonicsViewController: OstDeviceMnemonicsViewController? = nil
-    
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
@@ -27,7 +25,7 @@ import Foundation
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
-        return OstPinVCConfig.getDeviceMnemonicsPinVCConfig()
+        return OstContent.getDeviceMnemonicsPinVCConfig()
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
@@ -46,49 +44,26 @@ import Foundation
     
     override func vcIsMovingFromParent(_ notification: Notification) {
         if nil != notification.object {
-            if ((notification.object! as? OstBaseViewController) === self.deviceMnemonicsViewController) {
-                OstSdkInteract.getInstance.removeEventListners(forWorkflowId: self.workflowId)
-                cleanUp()
-            }else if ((notification.object! as? OstBaseViewController) === self.getPinViewController) {
+            if ((notification.object! as? OstBaseViewController) === self.getPinViewController) {
                 self.postFlowInterrupted(error: OstError("ui_i_wc_gmwc_vimfp_1", .userCanceled))
             }
         }
     }
     
     override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
-        hideLoader()
         if workflowContext.workflowType == .getDeviceMnemonics {
             openDeviceMnemonicsViewController(contextEntity: ostContextEntity)
         }
+        
+        super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
     }
     
     func openDeviceMnemonicsViewController(contextEntity: OstContextEntity) {
         DispatchQueue.main.async {
-            self.deviceMnemonicsViewController = OstDeviceMnemonicsViewController
-                .newInstance(mnemonics: contextEntity.entity as! [String],
-                             onClose: {[weak self] in
-                                self?.cleanUp()
-                })
+            let deviceMnemonicsViewController = OstDeviceMnemonicsViewController
+                .newInstance(mnemonics: contextEntity.entity as! [String])
             
-            if nil == self.getPinViewController {
-                self.deviceMnemonicsViewController?.presentVCWithNavigation()
-            }else {
-                self.deviceMnemonicsViewController?.pushViewControllerOn(self.getPinViewController!)
-            }
+            deviceMnemonicsViewController.presentVCWithNavigation()
         }
-    }
-    
-    override func cleanUp() {
-        if nil != deviceMnemonicsViewController {
-            deviceMnemonicsViewController?.removeViewController(flowEnded: true)
-        }else if nil != getPinViewController {
-            getPinViewController?.removeViewController(flowEnded: true)
-        }
-        
-        deviceMnemonicsViewController = nil
-        getPinViewController = nil
-        passphrasePrefixDelegate = nil
-        NotificationCenter.default.removeObserver(self)
-        super.cleanUp()
     }
 }

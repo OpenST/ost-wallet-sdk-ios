@@ -27,7 +27,7 @@ import Foundation
             if nil == self.getPinViewController {
                 self.getPinViewController = OstPinViewController
                     .newInstance(pinInputDelegate: self,
-                                 pinVCConfig: OstPinVCConfig.getPinForResetPinVCConfig())
+                                 pinVCConfig: OstContent.getPinForResetPinVCConfig())
             }
             
             self.getPinViewController!.presentVCWithNavigation()
@@ -39,7 +39,7 @@ import Foundation
             if nil == self.setNewPinViewController {
                 self.setNewPinViewController = OstPinViewController
                     .newInstance(pinInputDelegate: self,
-                                 pinVCConfig: OstPinVCConfig.getSetNewPinForResetPinVCConfig())
+                                 pinVCConfig: OstContent.getSetNewPinForResetPinVCConfig())
             }
             self.setNewPinViewController!.pushViewControllerOn(self.getPinViewController!)
         }
@@ -50,7 +50,7 @@ import Foundation
             if nil == self.confirmNewPinViewController {
                 self.confirmNewPinViewController = OstPinViewController
                     .newInstance(pinInputDelegate: self,
-                                 pinVCConfig: OstPinVCConfig.getConfirmNewPinForResetPinVCConfig())
+                                 pinVCConfig: OstContent.getConfirmNewPinForResetPinVCConfig())
             }
             self.confirmNewPinViewController!.pushViewControllerOn(self.setNewPinViewController!)
         }
@@ -114,13 +114,7 @@ import Foundation
     
     override func cleanUp() {
         super.cleanUp();
-        if ( nil != self.getPinViewController ) {
-            self.getPinViewController!.removeViewController(flowEnded: true)
-        }
         self.setNewPinViewController = nil;
         self.confirmNewPinViewController = nil;
-        self.passphrasePrefixDelegate = nil;
-        self.progressIndicator = nil
-        NotificationCenter.default.removeObserver(self);
     }
 }

@@ -89,6 +89,13 @@ import Foundation
         self.cleanUp();
     }
     
+    override func cleanUp() {
+        self.passphrasePrefixDelegate = nil;
+        NotificationCenter.default.removeObserver(self);
+        self.hideLoader();
+        super.cleanUp()
+    }
+    
     /// Mark - OstPassphrasePrefixAcceptDelegate
     override func setPassphrase(ostUserId: String, passphrase: String) {
         if ( self.userId.compare(ostUserId) != .orderedSame ) {

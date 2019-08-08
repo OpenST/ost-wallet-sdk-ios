@@ -99,30 +99,28 @@ import UIKit
             
             self.createPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig())
+                             pinVCConfig: OstContent.getCreatePinVCConfig())
             
             self.createPinViewController!.presentVCWithNavigation()
         }
     }
+
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
            self.confirmPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig())
+                             pinVCConfig: OstContent.getConfirmPinVCConfig())
             
             self.confirmPinViewController?.pushViewControllerOn(self.createPinViewController!);
         }
     }
     
     override func cleanUp() {
-        super.cleanUp();
         if ( nil != self.createPinViewController ) {
            self.createPinViewController?.removeViewController(flowEnded: true)
         }
         self.createPinViewController = nil;
         self.confirmPinViewController = nil;
-        self.passphrasePrefixDelegate = nil;
-        self.progressIndicator = nil
-        NotificationCenter.default.removeObserver(self);
+        super.cleanUp();
     }
 }

@@ -42,9 +42,13 @@ import Foundation
         DispatchQueue.main.async {
             self.getPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getAbortRecoveryPinVCConfig())
+                             pinVCConfig: self.getPinVCConfig())
             self.getPinViewController!.presentVCWithNavigation()
         }
+    }
+    
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getAbortRecoveryPinVCConfig()
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
@@ -74,15 +78,5 @@ import Foundation
     
     public override func cleanUpPinViewController() {
         self.sdkPinAcceptDelegate = nil;
-    }
-    
-    override func cleanUp() {
-        super.cleanUp();
-        if ( nil != self.getPinViewController ) {
-            self.getPinViewController?.removeViewController();
-        }
-        self.getPinViewController = nil;
-        self.passphrasePrefixDelegate = nil;
-        NotificationCenter.default.removeObserver(self);
     }
 }

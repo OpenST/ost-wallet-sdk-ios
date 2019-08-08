@@ -75,7 +75,6 @@ class OstPinViewController: OstBaseScrollViewController {
                                                object: nil)
         
         pinInput.delegate = self.pinInputDelegate!;
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,10 +90,22 @@ class OstPinViewController: OstBaseScrollViewController {
         super.configure();
         self.shouldFireIsMovingFromParent = true;
         
-        pinVCConfig?.updateLabelWithAttributedText(label: titleLabel, data: pinVCConfig!.titleLabelData)
-        pinVCConfig?.updateLabelWithAttributedText(label: leadLabel, data: pinVCConfig!.leadLabelData)
-        pinVCConfig?.updateLabelWithAttributedText(label: infoLabel, data: pinVCConfig!.infoLabelData)
-        pinVCConfig?.updateLabelWithAttributedText(label: termsAndConditionLabel, data: pinVCConfig!.tcLabelData)
+        titleLabel.updateAttributedText(data: pinVCConfig?.titleLabelData, placeholders: pinVCConfig?.placeholders)
+        titleLabel.onLableTapped = {[weak self] (attributes) in
+            self?.linkLabelTapped(attributes: attributes!)
+        }
+        leadLabel.updateAttributedText(data: pinVCConfig?.leadLabelData, placeholders: pinVCConfig?.placeholders)
+        leadLabel.onLableTapped = {[weak self] (attributes) in
+            self?.linkLabelTapped(attributes: attributes!)
+        }
+        infoLabel.updateAttributedText(data: pinVCConfig?.infoLabelData, placeholders: pinVCConfig?.placeholders)
+        infoLabel.onLableTapped = {[weak self] (attributes) in
+            self?.linkLabelTapped(attributes: attributes!)
+        }
+        termsAndConditionLabel.updateAttributedText(data: pinVCConfig?.tcLabelData, placeholders: pinVCConfig?.placeholders)
+        termsAndConditionLabel.onLableTapped = {[weak self] (attributes) in
+            self?.linkLabelTapped(attributes: attributes!)
+        }
     }
     
     override func addSubviews() {
@@ -103,12 +114,7 @@ class OstPinViewController: OstBaseScrollViewController {
         let labelArray = [titleLabel, leadLabel, infoLabel, termsAndConditionLabel]
         
         for label in labelArray {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_ :)))
-            tapGesture.numberOfTapsRequired = 1
-            tapGesture.delegate = self
-            
-            label.addGestureRecognizer(tapGesture)
-            
+
             self.addSubview(label)
         }
         
@@ -120,27 +126,6 @@ class OstPinViewController: OstBaseScrollViewController {
             let webview = WKWebViewController()
             webview.urlString = urlString
             webview.presentVCWithNavigation()
-        }
-    }
-    
-    @objc func labelTapped(_ recognizer: UITapGestureRecognizer) {
-        
-        let label = recognizer.view as! UILabel
-        let textView: UITextView = UITextView(frame: label.frame)
-        textView.attributedText = label.attributedText
-        
-        let layoutManager: NSLayoutManager = textView.layoutManager
-        var location = recognizer.location(in: label)
-        location.x -= textView.textContainerInset.left;
-//        location.y -= textView.textContainerInset.top;
-        
-        let characterIndex: Int = layoutManager.characterIndex(for: location,
-                                                               in: textView.textContainer,
-                                                               fractionOfDistanceBetweenInsertionPoints: nil)
-        
-        if (characterIndex < textView.textStorage.length) {
-            let attributes = textView.textStorage.attributes(at: characterIndex, effectiveRange: nil)
-            linkLabelTapped(attributes: attributes)
         }
     }
     
@@ -159,9 +144,7 @@ class OstPinViewController: OstBaseScrollViewController {
         pinInput.placeBelow(toItem: infoLabel, constant: 20.0);
         pinInput.centerXAlignWithParent();
         
-        
         termsAndConditionLabel.applyBlockElementConstraints(horizontalMargin: 40);
-//        termsAndConditionLabel.setFixedHeight(constant: 55)
         termsAndConditionLabel.bottomAlignWithParent()
         
         contentViewHeightConstraint = svContentView.heightAnchor.constraint(equalToConstant: getContentViewHeight())

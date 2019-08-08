@@ -50,7 +50,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
-        return OstPinVCConfig.getRevokeDevicePinVCConfig()
+        return OstContent.getRevokeDevicePinVCConfig()
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
@@ -132,13 +132,8 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     override func cleanUp() {
         if ( nil != self.deviceListController ) {
             self.deviceListController?.removeViewController(flowEnded: true)
-        }else if ( nil != self.getPinViewController )  {
-            self.getPinViewController?.removeViewController(flowEnded: true)
         }
-        self.getPinViewController = nil
-        self.passphrasePrefixDelegate = nil
         self.deviceListController = nil
-        NotificationCenter.default.removeObserver(self)
         super.cleanUp()
     }
 }

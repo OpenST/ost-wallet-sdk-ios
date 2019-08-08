@@ -31,7 +31,7 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
     }
     
     override func configure() {
-        pageConfig = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "initiate_recovery")
+        pageConfig = OstContent.getInitiateDeviceVCConfig()
         super.configure()
     }
 }

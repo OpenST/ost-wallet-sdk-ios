@@ -76,7 +76,7 @@ import UIKit
     func setGetPinViewController() {
         self.getPinViewController = OstPinViewController
             .newInstance(pinInputDelegate: self,
-                         pinVCConfig: OstPinVCConfig.getRecoveryAccessPinVCConfig());
+                         pinVCConfig: OstContent.getRecoveryAccessPinVCConfig());
     }
     
     func openAuthorizedDeviceListController() {
@@ -124,10 +124,7 @@ import UIKit
         }else if ( nil != self.getPinViewController )  {
             self.getPinViewController?.removeViewController(flowEnded: true)
         }
-        self.getPinViewController = nil
-        self.passphrasePrefixDelegate = nil
         self.deviceListController = nil
-        NotificationCenter.default.removeObserver(self)
         super.cleanUp();
     }
     
