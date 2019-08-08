@@ -76,32 +76,13 @@ import Foundation
     override func configure() {
         super.configure();
         
-        titleLabel.text = getTitleLabelText()
-        leadLabel.text = getLeadLabelText()
+        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getCompnentName()],
+                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        
+        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.leadLabel.getCompnentName()],
+                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
         
         self.shouldFireIsMovingFromParent = true;
-    }
-    
-    func getTitleLabelText() -> String {
-        if nil != pageConfig {
-            if let titleLabel = pageConfig!["title_label"] as? [String: Any],
-                let text = titleLabel["text"] as? String {
-            
-                return text
-            }
-        }
-        return ""
-    }
-    
-    func getLeadLabelText() -> String {
-        if nil != pageConfig {
-            if let titleLabel = pageConfig!["lead_label"] as? [String: Any],
-                let text = titleLabel["text"] as? String {
-                
-                return text
-            }
-        }
-        return ""
     }
     
     func getActionButtonText() -> String {

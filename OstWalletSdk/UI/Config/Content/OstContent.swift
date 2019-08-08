@@ -28,7 +28,7 @@ import Foundation
         return instance!
     }
     
-    @objc enum OstContentComponentType: Int {
+    @objc enum OstComponentType: Int {
         case titleLabel,
         leadLabel,
         infoLabel,
@@ -107,7 +107,7 @@ import Foundation
     ///   - controller: Controller Type
     ///   - workflow: Workflow Type
     /// - Returns: Component config.
-    func getComponentData(component: OstContentComponentType,
+    func getComponentData(component: OstComponentType,
                           inController controller: String,
                           forWorkflow workflow: String) -> [String: Any]? {
         

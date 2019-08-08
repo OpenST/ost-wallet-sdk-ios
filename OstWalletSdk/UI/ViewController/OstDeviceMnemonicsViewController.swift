@@ -57,14 +57,14 @@ class OstDeviceMnemonicsViewController: OstBaseScrollViewController {
         
         let deviceMnemonoicsVCConfig = OstContent.getShowDeviceMnemonicsVCConfig()
         
-        titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig["title_label"],
-                                        placeholders: deviceMnemonoicsVCConfig["placeholders"])
+        titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
+                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
         
-        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig["lead_label"],
-                                        placeholders: deviceMnemonoicsVCConfig["placeholders"])
+        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.leadLabel.getCompnentName()],
+                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
         
-        tcLabel.updateAttributedText(data: deviceMnemonoicsVCConfig["terms_and_condition_label"],
-                                       placeholders: deviceMnemonoicsVCConfig["placeholders"])
+        tcLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.tcLabel.getCompnentName()],
+                                       placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
     }
     
     
