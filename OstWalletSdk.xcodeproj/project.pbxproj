@@ -273,6 +273,7 @@
 		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
 		4BE90D8022FAAD32002886BC /* OstRevokeDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */; };
 		4BE90D8422FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D8322FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift */; };
+		4BE90F5022FBFB94002886BC /* OstEmptyDLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
 		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
@@ -562,6 +563,7 @@
 		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDLViewController.swift; sourceTree = "<group>"; };
 		4BE90D8322FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWorkflowController.swift; sourceTree = "<group>"; };
+		4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstEmptyDLTableViewCell.swift; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -1213,6 +1215,7 @@
 				4B94337922F07AB700966372 /* OstDeviceTableViewCell.swift */,
 				4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */,
 				4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */,
+				4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */,
 			);
 			path = TableCell;
 			sourceTree = "<group>";
@@ -1579,6 +1582,7 @@
 				00ABD32A22A72BE90080C4BB /* OstAPITransaction.swift in Sources */,
 				00ABD32622A72BE90080C4BB /* OstKeyManagerDelegate.swift in Sources */,
 				00ABD33022A72BE90080C4BB /* OstJsonApi.swift in Sources */,
+				4BE90F5022FBFB94002886BC /* OstEmptyDLTableViewCell.swift in Sources */,
 				4B9433A922F07AB700966372 /* OstBaseButton.swift in Sources */,
 				00ABD3CE22A72BE90080C4BB /* OstError.swift in Sources */,
 				4B9433AE22F07AB700966372 /* OstDeviceListViewController.swift in Sources */,

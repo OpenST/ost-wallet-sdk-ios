@@ -71,6 +71,8 @@ import Foundation
     
     let MIN_REQUIRED_DEVICE_LIST = 5
     
+    var canShowEmptyScreen: Bool = false
+    
     override func configure() {
         super.configure();
         
@@ -152,6 +154,9 @@ import Foundation
         
         self.deviceTableView.register(OstPaginationLoaderTableViewCell.self,
                                       forCellReuseIdentifier: OstPaginationLoaderTableViewCell.paginationCellIdentifier)
+        
+        self.deviceTableView.register(OstEmptyDLTableViewCell.self,
+                                      forCellReuseIdentifier: OstEmptyDLTableViewCell.emptyDLCellIdentifier)
     }
     
     func setupRefreshControl() {
@@ -189,7 +194,7 @@ import Foundation
     
     //MARK: - Table View Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -197,6 +202,11 @@ import Foundation
             return self.tableDataArray.count
         case 1:
             return self.paginatingViewCount
+        case 2:
+            if canShowEmptyScreen && self.tableDataArray.count == 0 {
+                return 1
+            }
+            return 0
         default:
             return 0
         }
@@ -241,6 +251,10 @@ import Foundation
             }
             
             cell = pCell
+            
+        case 2:
+            cell = tableView.dequeueReusableCell(withIdentifier: OstEmptyDLTableViewCell.emptyDLCellIdentifier,
+                                                 for: indexPath) as! OstEmptyDLTableViewCell
         default:
             cell = OstBaseTableViewCell()
         }
@@ -258,6 +272,13 @@ import Foundation
             if !isNextPageAvailable() && !self.isNewDataAvailable && !self.shouldReloadData {
                 return 0
             }
+        }
+        
+        if (indexPath.section == 2) {
+            if canShowEmptyScreen && tableDataArray.count == 0 {
+                return tableView.frame.size.height
+            }
+            return 0
         }
         
         return UITableView.automaticDimension
@@ -358,6 +379,7 @@ import Foundation
     }
     
     func onFetchDeviceSuccess(_ apiResponse: [String: Any]?) {
+        canShowEmptyScreen = true
         isApiCallInProgress = false
         
         let currentUser = OstWalletSdk.getUser(self.userId!)
