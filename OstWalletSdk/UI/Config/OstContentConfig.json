@@ -208,7 +208,7 @@
     "view_mnemonics": {
         "get_pin": {
             "title_label": {
-                "text": "Logout all sessions"
+                "text": "View Mnemoncs"
             },
             "lead_label": {
                 "text": "Enter your 6-digit PIN"

@@ -234,4 +234,9 @@ extension OstPinVCConfig {
         let componentData = getComponentData(inController: "get_pin", forWorkflow: "revoke_device")
         return getPinVCConfigObj(componentData)
     }
+    
+    class func getDeviceMnemonicsPinVCConfig() -> OstPinVCConfig {
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "view_mnemonics")
+        return getPinVCConfigObj(componentData)
+    }
 }

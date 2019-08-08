@@ -399,7 +399,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .viewMnemonics {
             if option.isEnable {
-                destinationSVVC = DeviceMnemonicsViewController()
+                let workflowId = OstWalletUI.getDeviceMnemonics(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                       passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                return
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }

@@ -122,10 +122,8 @@ import Foundation
     }
     
     func cleanUp() {
-        progressIndicator?.hide()
         self.cleanUpPinViewController();
-        progressIndicator = nil
-        uiWindow = nil
+        hideLoader()
     }
     
     func showLoader(progressText: OstProgressIndicatorTextCode) {

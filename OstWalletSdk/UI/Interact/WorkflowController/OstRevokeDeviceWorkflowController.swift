@@ -125,8 +125,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
                 
             super.flowInterrupted(workflowContext: workflowContext, error: error)
         }else {
-            progressIndicator?.hide()
-            progressIndicator = nil
+            hideLoader()
         }
     }
     

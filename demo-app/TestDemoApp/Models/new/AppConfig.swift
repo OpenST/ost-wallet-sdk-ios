@@ -122,7 +122,7 @@ class AppConfig: NSObject {
                     "text":  "PIN helps you recover your wallet if the phone is lost or stolen"
                 ],
                 "terms_and_condition_label": [
-                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. [[terms_and_condition]]"
+                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
                 ],
                 "placeholders": [
                     "terms_and_condition": [
@@ -144,7 +144,7 @@ class AppConfig: NSObject {
                     "text":  "(So please be sure to remember it)"
                 ],
                 "terms_and_condition_label": [
-                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. [[terms_and_condition]]"
+                    "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
                 ],
                 "placeholders": [
                     "terms_and_condition": [

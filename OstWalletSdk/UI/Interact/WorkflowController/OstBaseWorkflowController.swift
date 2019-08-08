@@ -73,8 +73,7 @@ import Foundation
     }
     
     override func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.progressIndicator?.hide()
-        self.progressIndicator = nil
+        hideLoader()
         super.getPin(userId, delegate: delegate)
     }
     

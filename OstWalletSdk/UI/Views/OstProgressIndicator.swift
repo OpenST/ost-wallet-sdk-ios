@@ -336,5 +336,6 @@ enum OstProgressIndicatorTextCode: String {
     authorizingDevice = "Authorizing Device....",
     revokingDevice = "Revoking Device...",
     revokingAllSessions = "Revoking all sessions...",
-    fetchingDeviceList = "Fetching device list..."
+    fetchingDeviceList = "Fetching device list...",
+    fetchingDeviceMnemonics = "Fetching device mnemonics..."
 }

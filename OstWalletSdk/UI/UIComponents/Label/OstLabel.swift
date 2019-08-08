@@ -11,7 +11,7 @@
 
 import Foundation
 
-@objc class OstLabel: UILabel {
+@objc class OstLabel: UILabel, UIGestureRecognizerDelegate {
    
     //Label config
     var labelConfig: OstLabelConfig? = nil
@@ -24,6 +24,7 @@ import Foundation
     }
     var labelAttributedText: NSAttributedString? = nil
     
+    var onLableTapped: (([NSAttributedString.Key: Any]?) -> Void)? = nil
     
     //MARK: - Initialize
     /// Initialize
@@ -89,6 +90,144 @@ import Foundation
     /// Set theme config for button
     func setThemeConfig() {
         fatalError("setThemeConfig did not override")
+    }
+    
+    func getText(from data: Any?) -> String {
+        if let dict = data as? [String: Any],
+            let text = dict["text"] as? String {
+            return text
+        }
+        
+        return ""
+    }
+    
+    func getFont(from data: Any?, ofSize size: CGFloat) -> UIFont? {
+        if let dict = data as? [String: Any],
+            let fontName = dict["font"] as? String {
+            return UIFont(name: fontName, size: size)
+        }
+        return nil
+    }
+    
+    func getForegroundColor(from data: Any?) -> UIColor? {
+        if let dict = data as? [String: Any],
+            let colorHex = dict["color"] as? String {
+            return UIColor.color(hex: colorHex)
+        }
+        return nil
+    }
+    
+    func updateAttributedText(data: Any?, placeholders: Any?) {
+        //Get text from config
+        let labelText = getText(from: data)
+        //Get font from. config if font is not present, default would be label config font.
+        let labelFont = getFont(from: data, ofSize: CGFloat(truncating: labelConfig!.size)) ?? labelConfig!.getFont()
+        //Get foreground color from config. if foreground is not present, default would be label config foreground.
+        let labelForegroundColor = getForegroundColor(from: data) ?? labelConfig!.getColor()
+        
+        //Defaut text attribute
+        let attributes: [NSAttributedString.Key : Any] = [.font: labelFont,
+                                                          .foregroundColor: labelForegroundColor]
+        
+        let finalAttributedText: NSMutableAttributedString = NSMutableAttributedString()
+        
+        let splitWords = labelText.split(separator: " ")
+        
+        var combinedWords: String = ""
+        for word in splitWords {
+            //chekc whether word has {{ and }}
+            if word.hasPrefix("{{") && word.hasSuffix("}}") {
+                //clear {{ and }}
+                var newAttributedText: String = String(word.replacingOccurrences(of: "{{", with: ""))
+                newAttributedText = String(newAttributedText.replacingOccurrences(of: "}}", with: ""))
+                
+                //Get data for placeholder text from {{KEY_FOR_TEXT}}
+                var placeHoderDict: [String: Any]? = nil
+                if let dict = placeholders as? [String: Any] {
+                    placeHoderDict = dict[newAttributedText] as? [String: Any]
+                }
+                
+                if nil != placeHoderDict {
+                    //Assign attributed text.
+                    let attibutedString = NSAttributedString(string: combinedWords,
+                                                             attributes: attributes)
+                    finalAttributedText.append(attibutedString)
+                    
+                    combinedWords = ""
+                    
+                    //Set fonts for placeholder. default is label font
+                    var font = labelFont
+                    
+                    //Set foregroundColor for placeholder. default is label foregroundColor
+                    var foregroundColor = labelForegroundColor
+                    if let placeHolderFont =  getFont(from: placeHoderDict, ofSize: CGFloat(truncating: self.labelConfig!.size)) {
+                        font = placeHolderFont
+                    }
+                    
+                    if let placeHoderForegroundColor = getForegroundColor(from: placeHoderDict) {
+                        foregroundColor = placeHoderForegroundColor
+                        placeHoderDict!["color"] = nil
+                    }
+                    //Create new attriutes for placeholder.
+                    var newAttributes: [NSAttributedString.Key : Any] = [.font: font,
+                                                                         .foregroundColor: foregroundColor]
+                    //Set extra keys in attributes
+                    for (key, val) in placeHoderDict! {
+                        newAttributes[.init(key)] = val
+                    }
+                    let text = getText(from: placeHoderDict!)
+                    let newAttributedString = NSAttributedString(string: "\(text) ", attributes: newAttributes)
+                    
+                    finalAttributedText.append(newAttributedString)
+                }
+            }else {
+                combinedWords += "\(word) "
+            }
+        }
+        
+        if combinedWords.count > 0 {
+            let attibutedString = NSAttributedString(string: combinedWords,
+                                                     attributes: attributes)
+            finalAttributedText.append(attibutedString)
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 1
+        paragraphStyle.alignment = .center
+        finalAttributedText.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, finalAttributedText.length))
+        
+        self.attributedText = finalAttributedText
+        
+        addTapGesture()
+    }
+    
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_ :)))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.delegate = self
+    
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func labelTapped(_ recognizer: UITapGestureRecognizer) {
+        
+        let label = recognizer.view as! UILabel
+        let textView: UITextView = UITextView(frame: label.frame)
+        textView.attributedText = label.attributedText
+        
+        let layoutManager: NSLayoutManager = textView.layoutManager
+        var location = recognizer.location(in: label)
+        location.x -= textView.textContainerInset.left;
+        //        location.y -= textView.textContainerInset.top;
+        
+        let characterIndex: Int = layoutManager.characterIndex(for: location,
+                                                               in: textView.textContainer,
+                                                               fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        if (characterIndex < textView.textStorage.length) {
+            let attributes = textView.textStorage.attributes(at: characterIndex, effectiveRange: nil)
+            onLableTapped?(attributes)
+        }
     }
     
 }
