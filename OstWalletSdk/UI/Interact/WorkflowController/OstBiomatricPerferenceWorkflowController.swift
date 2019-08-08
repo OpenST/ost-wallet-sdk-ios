@@ -43,8 +43,12 @@ import Foundation
         super.pinProvided(pin: pin)
     }
     
+    override func onPassphrasePrefixSet(passphrase: String) {
+        super.onPassphrasePrefixSet(passphrase: passphrase)
+        showLoader(progressText: .updatingBiometricPreference)
+    }
+    
     override func performUIActions() {
-        
         OstWalletSdk.updateBiometricPreference(userId: self.userId,
                                                enable: self.enable,
                                                delegate: self)
