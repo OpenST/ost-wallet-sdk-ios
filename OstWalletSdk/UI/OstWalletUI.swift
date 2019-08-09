@@ -168,6 +168,26 @@ import UIKit
         return workflowController.workflowId
     }
     
+    /// Authorize current device via mnemonics
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func authorizeCurrentDeviceWithMnemonics(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAddDeviceViaMnemonicsWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
     /// Update biometric preference
     ///
     /// - Parameters:

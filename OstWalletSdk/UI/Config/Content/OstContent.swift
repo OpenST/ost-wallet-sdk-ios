@@ -230,4 +230,14 @@ extension OstContent {
         let config = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: "view_mnemonics")
         return config
     }
+    
+    class func getAddDeviceViaMnemonicsVCConfig() -> [String: Any] {
+        let config = OstContent.getInstance().getControllerConfig(for: "provide_mnemonics", inWorkflow: "add_current_device_with_mnemonics")
+        return config
+    }
+    
+    class func getAddDeviceViaMnemonicsPinVCConfig() -> OstPinVCConfig {
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_current_device_with_mnemonics")
+        return getPinVCConfigObj(componentData)
+    }
 }

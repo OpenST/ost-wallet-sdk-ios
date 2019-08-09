@@ -400,7 +400,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if option.type == .viewMnemonics {
             if option.isEnable {
                 let workflowId = OstWalletUI.getDeviceMnemonics(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                       passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 return
             }else {
@@ -410,7 +410,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .authorizeViaMnemonics {
             if option.isEnable {
-                destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+//                destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+                let workflowId = OstWalletUI
+                    .authorizeCurrentDeviceWithMnemonics(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                         passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                return
             }else {
                 showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
             }

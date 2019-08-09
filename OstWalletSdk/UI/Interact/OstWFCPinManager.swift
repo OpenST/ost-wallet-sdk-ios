@@ -21,8 +21,12 @@ extension OstWorkflowCallbacks {
                 .newInstance(pinInputDelegate: self,
                              pinVCConfig: self.getPinVCConfig());
             
-            self.getPinViewController?.presentVCWithNavigation()
+            self.showPinViewController()
         }
+    }
+    
+    @objc func showPinViewController() {
+        self.getPinViewController?.presentVCWithNavigation()
     }
     
     @objc func getPinVCConfig() -> OstPinVCConfig {

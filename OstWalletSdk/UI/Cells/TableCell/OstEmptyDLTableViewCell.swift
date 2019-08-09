@@ -35,7 +35,7 @@ class OstEmptyDLTableViewCell: OstBaseTableViewCell {
     
     //MARK: - Create views
     override func setValuesForComponents() {
-        let image = UIImage(named: "empty_drawer", in: Bundle(for: type(of: self)), compatibleWith: nil)!
+        let image = UIImage(named: "ost_empty_drawer", in: Bundle(for: type(of: self)), compatibleWith: nil)!
         emptyDrawerImageView.image = image
     }
     

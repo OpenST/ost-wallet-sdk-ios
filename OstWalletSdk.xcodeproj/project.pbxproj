@@ -276,6 +276,9 @@
 		4BE90F5022FBFB94002886BC /* OstEmptyDLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */; };
 		4BE9101922FC0F0D002886BC /* OstDeviceMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9101822FC0F0D002886BC /* OstDeviceMnemonicsViewController.swift */; };
 		4BE9101B22FC1016002886BC /* OstGetMnemonicsWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9101A22FC1016002886BC /* OstGetMnemonicsWorkflowController.swift */; };
+		4BE9103B22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9103A22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift */; };
+		4BE9103D22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9103C22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift */; };
+		4BE9104022FD64CB002886BC /* OstTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9103F22FD64CB002886BC /* OstTextView.swift */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
 		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
@@ -568,6 +571,9 @@
 		4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstEmptyDLTableViewCell.swift; sourceTree = "<group>"; };
 		4BE9101822FC0F0D002886BC /* OstDeviceMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceMnemonicsViewController.swift; sourceTree = "<group>"; };
 		4BE9101A22FC1016002886BC /* OstGetMnemonicsWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstGetMnemonicsWorkflowController.swift; sourceTree = "<group>"; };
+		4BE9103A22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceViaMnemonicsWorkflowController.swift; sourceTree = "<group>"; };
+		4BE9103C22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddDeviceViaMnemonicsViewController.swift; sourceTree = "<group>"; };
+		4BE9103F22FD64CB002886BC /* OstTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTextView.swift; sourceTree = "<group>"; };
 		EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38BE1B22413992006F8DA2 /* OstWalletSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstWalletSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC38C01022413C93006F8DA2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -1133,6 +1139,7 @@
 		4B94335E22F07AB700966372 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4BE9103E22FD64B3002886BC /* TextView */,
 				4B94335F22F07AB700966372 /* Navigation */,
 				4B94336122F07AB700966372 /* Label */,
 				4B94336922F07AB700966372 /* Button */,
@@ -1183,6 +1190,7 @@
 				4B94337522F07AB700966372 /* OstBaseViewController.swift */,
 				4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */,
 				4BE9101822FC0F0D002886BC /* OstDeviceMnemonicsViewController.swift */,
+				4BE9103C22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1295,6 +1303,7 @@
 				4B54587822F8038C0092E533 /* OstResetPinWorkflowController.swift */,
 				4BE90D8322FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift */,
 				4BE9101A22FC1016002886BC /* OstGetMnemonicsWorkflowController.swift */,
+				4BE9103A22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift */,
 			);
 			path = WorkflowController;
 			sourceTree = "<group>";
@@ -1337,6 +1346,14 @@
 				4B94339E22F07AB700966372 /* InsetLabel.swift */,
 			);
 			path = Labels;
+			sourceTree = "<group>";
+		};
+		4BE9103E22FD64B3002886BC /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				4BE9103F22FD64CB002886BC /* OstTextView.swift */,
+			);
+			path = TextView;
 			sourceTree = "<group>";
 		};
 		EC38BE0822413992006F8DA2 = {
@@ -1640,6 +1657,7 @@
 				4B9433AC22F07AB700966372 /* OstBaseScrollViewController.swift in Sources */,
 				00ABD31922A72BE90080C4BB /* OstSecureEnclaveHelper.swift in Sources */,
 				00ABD34722A72BE90080C4BB /* OstAddSession.swift in Sources */,
+				4BE9103D22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift in Sources */,
 				00ABD35D22A72BE90080C4BB /* PricerRule.swift in Sources */,
 				00ABD36D22A72BE90080C4BB /* RLPItemConvertible.swift in Sources */,
 				00ABD3A422A72BE90080C4BB /* Dictionary+Conversion.swift in Sources */,
@@ -1702,6 +1720,7 @@
 				00ABD39722A72BE90080C4BB /* Eth+ABI.swift in Sources */,
 				4B9433A422F07AB700966372 /* OstC2Label.swift in Sources */,
 				00ABD31622A72BE90080C4BB /* OstCryptoImpls.swift in Sources */,
+				4BE9103B22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift in Sources */,
 				00ABD3B122A72BE90080C4BB /* crypto_scrypt.c in Sources */,
 				00ABD3A222A72BE90080C4BB /* OstConversion.swift in Sources */,
 				4B9433A322F07AB700966372 /* OstH1Label.swift in Sources */,
@@ -1747,6 +1766,7 @@
 				00ABD31222A72BE90080C4BB /* OstMigrationManager.swift in Sources */,
 				00ABD37622A72BE90080C4BB /* EthereumQuantity.swift in Sources */,
 				4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */,
+				4BE9104022FD64CB002886BC /* OstTextView.swift in Sources */,
 				4B9433A722F07AB700966372 /* OstH2Label.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

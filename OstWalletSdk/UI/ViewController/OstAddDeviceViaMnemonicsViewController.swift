@@ -1,0 +1,144 @@
+/*
+ Copyright © 2019 OST.com Inc
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+import Foundation
+
+class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITextViewDelegate {
+    
+    class func newInstance(onActionTapped: ((String) -> Void)?) -> OstAddDeviceViaMnemonicsViewController {
+        
+        let instance = OstAddDeviceViaMnemonicsViewController()
+        instance.onActionTapped = onActionTapped
+        return instance
+    }
+    
+    var onActionTapped: ((String) -> Void)? = nil
+    
+    
+    //MARK: - Components
+    let titleLabel: OstH1Label = OstH1Label()
+    let infoLabel: OstH3Label = OstH3Label()
+    let tcLabel: OstH4Label = OstH4Label()
+    let actionButton: OstB1Button = OstB1Button()
+    let textView: OstTextView = OstTextView()
+
+    override func configure() {
+        super.configure()
+
+        let viewConfig = OstContent.getAddDeviceViaMnemonicsVCConfig()
+
+        titleLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
+                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+
+        infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
+                                       placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+
+        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.tcLabel.getCompnentName()],
+                                     placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+
+        setActionButtonText(pageConfig: viewConfig)
+
+        weak var weakSelf = self
+        textView.delegate = weakSelf
+        actionButton.addTarget(weakSelf, action: #selector(weakSelf!.recoverWalletButtonTapped(_:)), for: .touchUpInside)
+
+        self.shouldFireIsMovingFromParent = true;
+    }
+
+    func setActionButtonText(pageConfig: [String: Any]) {
+        var buttonTitle = ""
+        if let actionButton = pageConfig["action_button"] as? [String: Any],
+            let text = actionButton["text"] as? String {
+
+            buttonTitle = text
+        }
+
+        actionButton.setTitle(buttonTitle, for: .normal)
+    }
+
+    //MAKR: - Add Subviews
+    override func addSubviews() {
+        super.addSubviews()
+
+        self.addSubview(titleLabel)
+        self.addSubview(infoLabel)
+        self.addSubview(tcLabel)
+        self.addSubview(actionButton)
+        self.addSubview(textView)
+    }
+
+    //MAKR: - Apply Constraints
+    override func addLayoutConstraints() {
+        super.addLayoutConstraints()
+
+        addTitleLableConstraints()
+        addInfoLabelConstraints()
+        applyTextViewConstraints()
+        addActionButtonConstraints()
+        addTCLabelConstraints()
+
+        let last = tcLabel
+        last.bottomAlignWithParent()
+    }
+
+    func addTitleLableConstraints() {
+        titleLabel.topAlignWithParent(multiplier: 1, constant: 20)
+        titleLabel.applyBlockElementConstraints(horizontalMargin: 40)
+    }
+
+    func addInfoLabelConstraints() {
+        infoLabel.placeBelow(toItem: titleLabel)
+        infoLabel.applyBlockElementConstraints(horizontalMargin: 40)
+    }
+
+    func applyTextViewConstraints() {
+        textView.placeBelow(toItem: infoLabel)
+        textView.applyBlockElementConstraints(horizontalMargin: 25)
+    }
+
+    func addActionButtonConstraints() {
+        actionButton.placeBelow(toItem: textView, constant: 30)
+        actionButton.applyBlockElementConstraints(horizontalMargin: 25)
+    }
+
+    func addTCLabelConstraints() {
+        tcLabel.placeBelow(toItem: actionButton)
+        tcLabel.applyBlockElementConstraints(horizontalMargin: 40)
+    }
+
+    //MARK: - TextViewDelegate
+    func textViewDidChange(_ textView: UITextView) {
+
+    }
+
+    func isValidInput() -> Bool {
+        var mnemonics: [String] = self.textView.text.components(separatedBy: " ")
+        mnemonics = mnemonics.filter({
+            let text = $0.replacingOccurrences(of: " ", with: "")
+            return !text.isEmpty
+        })
+
+        if mnemonics.count == 12 {
+            textView.setErrorText(nil);
+            return true
+        }
+
+        textView.setErrorText("Invalid Mnemonics passed.");
+        self.view.layoutIfNeeded()
+        return false
+    }
+
+    //MARK: - Action
+    @objc func recoverWalletButtonTapped(_ sender: Any?) {
+        if isValidInput() {
+           onActionTapped?(self.textView.text)
+        }
+    }
+}

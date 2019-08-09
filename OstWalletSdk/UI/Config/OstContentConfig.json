@@ -281,10 +281,16 @@
         
         "provide_mnemonics": {
             "title_label": {
-                "text": "Add device with QR"
+                "text": "Enter Recovery Phrase"
             },
             "lead_label": {
                 "text": ""
+            },
+            "info_label": {
+                "text": "Please enter the 12-word recovery phrase that you wrote down."
+            },
+            "terms_and_condition_label": {
+                "text": "If you don’t have the recovery phrase, try using PIN or a second authorized device."
             },
             "action_button": {
                 "text": "Authorize Device"

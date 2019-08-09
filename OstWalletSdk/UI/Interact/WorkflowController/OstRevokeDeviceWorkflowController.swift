@@ -81,23 +81,15 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     
     
     override public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.sdkPinAcceptDelegate = delegate;
-        
-        progressIndicator?.hide()
-        progressIndicator = nil
-        
         self.getPinViewController = nil
-        
-        DispatchQueue.main.async {
-            self.getPinViewController = OstPinViewController
-                .newInstance(pinInputDelegate: self,
-                             pinVCConfig: self.getPinVCConfig());
-            
-            if nil == self.deviceListController {
-                self.getPinViewController?.presentVCWithNavigation()
-            }else {
-                self.getPinViewController?.pushViewControllerOn(self.deviceListController!)
-            }
+        super.getPin(userId, delegate: delegate)
+    }
+    
+    @objc override func showPinViewController() {
+        if nil == self.deviceListController {
+            self.getPinViewController?.presentVCWithNavigation()
+        }else {
+            self.getPinViewController?.pushViewControllerOn(self.deviceListController!)
         }
     }
     
