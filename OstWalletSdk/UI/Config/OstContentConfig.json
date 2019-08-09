@@ -161,10 +161,10 @@
     "reset_pin": {
         "get_pin": {
             "title_label": {
-                "text": "Enter Old Pin"
+                "text": "Enter Current PIN"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN"
+                "text": "Enter your current 6-digit PIN to reset"
             },
             "info_label":{
                 "text":  ""
@@ -176,10 +176,10 @@
         
         "set_new_pin": {
             "title_label": {
-                "text": "New Pin"
+                "text": "Enter New Pin"
             },
             "lead_label": {
-                "text": "Enter your new 6-digit PIN."
+                "text": "Add a 6-digit PIN to secure your wallet"
             },
             "info_label":{
                 "text":  ""
@@ -194,7 +194,7 @@
                 "text": "Confirm New Pin"
             },
             "lead_label": {
-                "text": "Enter your new 6-digit PIN."
+                "text": "If you forget your PIN, you cannot recover your wallet"
             },
             "info_label":{
                 "text":  ""
@@ -211,7 +211,7 @@
                 "text": "View Mnemoncs"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN"
+                "text": "Enter your 6-digit PIN to View Mnemonic Phrase"
             },
             "info_label":{
                 "text":  ""
@@ -223,10 +223,13 @@
         
         "show_mnemonics": {
             "title_label": {
-                "text": "Write these words down"
+                "text": "Your Mnemonic Phrase"
             },
             "lead_label": {
-                "text": "Your 12-word Mnemonic Phrase"
+                "text": ""
+            },
+            "info_label": {
+                "text": "Please write down your 12-word mnemonic phrase and store safely."
             },
             "terms_and_condition_label": {
                 "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."

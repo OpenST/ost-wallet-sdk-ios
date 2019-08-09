@@ -60,7 +60,7 @@ class OstDeviceMnemonicsViewController: OstBaseScrollViewController {
         titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
                                         placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
         
-        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.leadLabel.getCompnentName()],
+        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
                                         placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
         
         tcLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.tcLabel.getCompnentName()],

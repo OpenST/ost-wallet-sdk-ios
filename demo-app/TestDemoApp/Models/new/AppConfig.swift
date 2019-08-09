@@ -272,10 +272,10 @@ class AppConfig: NSObject {
         "reset_pin": [
             "get_pin": [
                 "title_label": [
-                    "text": "Enter Old Pin"
+                    "text": "Enter Current PIN"
                 ],
                 "lead_label": [
-                    "text": "Enter your 6-digit PIN"
+                    "text": "Enter your current 6-digit PIN to reset"
                 ],
                 "info_label":[
                     "text":  ""
@@ -287,10 +287,10 @@ class AppConfig: NSObject {
             
             "set_new_pin": [
                 "title_label": [
-                    "text": "New Pin"
+                    "text": "Enter New Pin"
                 ],
                 "lead_label": [
-                    "text": "Enter your new 6-digit PIN."
+                    "text": "Add a 6-digit PIN to secure your wallet"
                 ],
                 "info_label":[
                     "text":  ""
@@ -305,24 +305,7 @@ class AppConfig: NSObject {
                     "text": "Confirm New Pin"
                 ],
                 "lead_label": [
-                    "text": "Enter your new 6-digit PIN."
-                ],
-                "info_label":[
-                    "text":  ""
-                ],
-                "terms_and_condition_label": [
-                    "text": ""
-                ]
-            ]
-        ],
-        
-        "logout_all_sessions": [
-            "get_pin": [
-                "title_label": [
-                    "text": "Logout all sessions"
-                ],
-                "lead_label": [
-                    "text": "Enter your 6-digit PIN"
+                    "text": "If you forget your PIN, you cannot recover your wallet"
                 ],
                 "info_label":[
                     "text":  ""
@@ -336,10 +319,10 @@ class AppConfig: NSObject {
         "view_mnemonics": [
             "get_pin": [
                 "title_label": [
-                    "text": "Logout all sessions"
+                    "text": "View Mnemoncs"
                 ],
                 "lead_label": [
-                    "text": "Enter your 6-digit PIN"
+                    "text": "Enter your 6-digit PIN to View Mnemonic Phrase"
                 ],
                 "info_label":[
                     "text":  ""
@@ -351,10 +334,13 @@ class AppConfig: NSObject {
             
             "show_mnemonics": [
                 "title_label": [
-                    "text": "Write these words down"
+                    "text": "Your Mnemonic Phrase"
                 ],
                 "lead_label": [
-                    "text": "Your 12-word Mnemonic Phrase"
+                    "text": ""
+                ],
+                "info_label": [
+                    "text": "Please write down your 12-word mnemonic phrase and store safely."
                 ],
                 "terms_and_condition_label": [
                     "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
@@ -409,10 +395,16 @@ class AppConfig: NSObject {
             
             "provide_mnemonics": [
                 "title_label": [
-                    "text": "Add device with QR"
+                    "text": "Enter Recovery Phrase"
                 ],
                 "lead_label": [
                     "text": ""
+                ],
+                "info_label": [
+                    "text": "Please enter the 12-word recovery phrase that you wrote down."
+                ],
+                "terms_and_condition_label": [
+                    "text": "If you don’t have the recovery phrase, try using PIN or a second authorized device."
                 ],
                 "action_button": [
                     "text": "Authorize Device"
