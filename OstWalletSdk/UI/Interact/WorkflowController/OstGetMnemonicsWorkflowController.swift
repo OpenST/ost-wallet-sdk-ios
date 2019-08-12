@@ -22,6 +22,7 @@ import Foundation
     override func performUIActions() {
         OstWalletSdk.getDeviceMnemonics(userId: self.userId,
                                         delegate: self)
+        showLoader(progressText: .fetchingDeviceMnemonics)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

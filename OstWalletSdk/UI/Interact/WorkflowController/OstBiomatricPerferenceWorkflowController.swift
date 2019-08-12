@@ -52,6 +52,7 @@ import Foundation
         OstWalletSdk.updateBiometricPreference(userId: self.userId,
                                                enable: self.enable,
                                                delegate: self)
+        showLoader(progressText: .updatingBiometricPreference)
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {
