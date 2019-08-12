@@ -17,7 +17,6 @@
                 "terms_and_condition": {
                     "url": "https://ost.com/terms",
                     "text": "T&C Apply",
-                    "font": "SFProDisplay",
                     "color": "#0076FF"
                 }
             }
@@ -30,7 +29,7 @@
                 "text": "If you forget your PIN, you cannot recover your wallet"
             },
             "info_label":{
-                "text":  "(So please be sure to remember it)"
+                "text":  "So please be sure to remember it"
             },
             "terms_and_condition_label": {
                 "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
@@ -39,7 +38,6 @@
                 "terms_and_condition": {
                     "url": "https://ost.com/terms",
                     "text": "T&C Apply",
-                    "font": "SFProDisplay",
                     "color": "#0076FF"
                 }
             }
@@ -52,7 +50,7 @@
                 "text": "Create Session"
             },
             "lead_label": {
-                "text": "Add a 6-digit PIN to secure your wallet."
+                "text": "Add a 6-digit PIN to secure your wallet"
             },
             "info_label":{
                 "text":  ""
@@ -69,7 +67,7 @@
                 "text": "Device Recovery"
             },
             "lead_label": {
-                "text": "This is an authorized device, recovery applies only to cases where a user has no authorized device"
+                "text": "This is a list of all the devices that are authorized to access your wallet"
             },
             "cell": {
                 "action_button": {
@@ -113,10 +111,10 @@
     "revoke_device": {
         "device_list": {
             "title_label": {
-                "text": "Recover Access to Your Wallet"
+                "text": "Revoke Device"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to recover access to your wallet"
+                "text": "This is a list of all the devices that are authorized to access your wallet"
             },
             "cell": {
                 "action_button": {
@@ -127,10 +125,10 @@
         
         "get_pin": {
             "title_label": {
-                "text": "Revoke Access to Your Wallet"
+                "text": "Revoke Device"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN"
+                "text": "Enter your 6-digit PIN to authorize your action"
             },
             "info_label":{
                 "text":  ""
@@ -144,10 +142,10 @@
     "biometric_preference": {
         "get_pin": {
             "title_label": {
-                "text": "Update Biometric Preference"
+                "text": "Biometric Preference"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to update biometric preference"
+                "text": "Enter your 6-digit PIN to authorize your action"
             },
             "info_label":{
                 "text":  ""
@@ -164,7 +162,7 @@
                 "text": "Enter Current PIN"
             },
             "lead_label": {
-                "text": "Enter your current 6-digit PIN to reset"
+                "text": "Enter your current 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -176,7 +174,7 @@
         
         "set_new_pin": {
             "title_label": {
-                "text": "Enter New Pin"
+                "text": "Add New Pin"
             },
             "lead_label": {
                 "text": "Add a 6-digit PIN to secure your wallet"
@@ -208,10 +206,10 @@
     "view_mnemonics": {
         "get_pin": {
             "title_label": {
-                "text": "View Mnemoncs"
+                "text": "View Mnemonics"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to View Mnemonic Phrase"
+                "text": "Enter your 6-digit PIN to authorize your action"
             },
             "info_label":{
                 "text":  ""
@@ -223,45 +221,16 @@
         
         "show_mnemonics": {
             "title_label": {
-                "text": "Your Mnemonic Phrase"
+                "text": "View Mnemonics"
             },
             "lead_label": {
                 "text": ""
             },
             "info_label": {
-                "text": "Please write down your 12-word mnemonic phrase and store safely."
+                "text": "Write down your 12-word mnemonic phrase and store them securely"
             },
             "terms_and_condition_label": {
                 "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
-            }
-        }
-    },
-    
-    "add_device_with_qr": {
-        "get_pin": {
-            "title_label": {
-                "text": "Add device with QR"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        },
-        
-        "verify_device_address": {
-            "title_label": {
-                "text": "Add device with QR"
-            },
-            "lead_label": {
-                "text": "Please verify device address which is going to be authorized."
-            },
-            "action_button": {
-                "text": "Authorize Device"
             }
         }
     },
@@ -272,7 +241,7 @@
                 "text": "Add device with QR"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN"
+                "text": "Enter your 6-digit PIN to authorize your action"
             },
             "info_label":{
                 "text":  ""
@@ -294,6 +263,35 @@
             },
             "terms_and_condition_label": {
                 "text": "If you don’t have the recovery phrase, try using PIN or a second authorized device."
+            },
+            "action_button": {
+                "text": "Authorize Device"
+            }
+        }
+    },
+    
+    "add_device_with_qr": {
+        "get_pin": {
+            "title_label": {
+                "text": "Add device with QR"
+            },
+            "lead_label": {
+                "text": "Enter your 6-digit PIN to authorize your action"
+            },
+            "info_label":{
+                "text":  ""
+            },
+            "terms_and_condition_label": {
+                "text": ""
+            }
+        },
+        
+        "verify_device_address": {
+            "title_label": {
+                "text": "Add device with QR"
+            },
+            "lead_label": {
+                "text": "Please verify device address which is going to be authorized."
             },
             "action_button": {
                 "text": "Authorize Device"
