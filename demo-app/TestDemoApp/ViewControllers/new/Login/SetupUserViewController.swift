@@ -487,11 +487,11 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
     
     //MARK: - OstSdkInteract Delegate
     
-    @objc func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    @objc func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         
     }
     
-    @objc func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    @objc func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if nil != CurrentUserModel.getInstance.ostUser
             && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
             
@@ -501,7 +501,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
             }
     }
     
-    @objc func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    @objc func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
     }
     

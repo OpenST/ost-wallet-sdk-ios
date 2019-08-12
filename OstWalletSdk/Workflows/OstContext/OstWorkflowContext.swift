@@ -21,7 +21,7 @@ import Foundation
     authorizeDeviceWithMnemonics,
     initiateDeviceRecovery,
     abortDeviceRecovery,
-    revokeDeviceWithQRCode,
+    revokeDevice,
     resetPin,
     logoutAllSessions,
     updateBiometricPreference
@@ -38,5 +38,11 @@ import Foundation
     
     @objc public func getWorkflowId() -> String {
         return self.workflowId;
+    }
+    
+    @available(*, deprecated, message: "Please use init(workflowId: String, workflowType: OstWorkflowType)")
+    @objc public init(workflowType: OstWorkflowType) {
+        self.workflowType = workflowType
+        self.workflowId = "UNDEFINED";
     }
 }

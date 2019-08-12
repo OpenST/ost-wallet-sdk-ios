@@ -146,18 +146,18 @@ class CurrentUserModel: OstBaseModel, OWFlowInterruptedDelegate, OWFlowCompleteD
     
     
     //MARK: - OstWorkflow Delegate
-    @objc func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    @objc func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
     
     }
     
-    @objc func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    @objc func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         setupDeviceOnFailure?(error.errorInfo);
         if workflowContext.workflowType == OstWorkflowType.activateUser {
             CurrentUserModel.shouldPerfromActivateUserAfterDelay = false
         }
     }
     
-    @objc func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    @objc func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
         if ( workflowContext.workflowType == OstWorkflowType.setupDevice ) {
             print("onSuccess triggered for ", workflowContext.workflowType);

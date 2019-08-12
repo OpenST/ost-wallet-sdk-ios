@@ -247,9 +247,9 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     //MARK: - Workflow Delegate
     
-    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         progressIndicator = OstProgressIndicator(textCode: .creatingSession)
-        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+        super.requestAcknowledged(workflowContext: workflowContext, contextEntity: contextEntity)
         progressIndicator?.show()
     }
 }

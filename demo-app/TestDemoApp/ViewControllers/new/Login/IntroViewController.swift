@@ -396,11 +396,11 @@ class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWR
     
     //MARK: - OstSdkInteract Delegate
     
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         
     }
     
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if nil != CurrentUserModel.getInstance.ostUser
             && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
             
@@ -410,7 +410,7 @@ class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWR
         }
     }
     
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
     }
 }

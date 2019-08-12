@@ -455,13 +455,14 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
     }
     
     //MARK: - Workflow Delegate
-    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        let workflowId = workflowContext.getWorkflowId();
+        super.requestAcknowledged(workflowContext: workflowContext, contextEntity: contextEntity)
         showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
-    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        super.flowComplete(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
+    override func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.flowComplete(workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
     override func showSuccessAlert(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {

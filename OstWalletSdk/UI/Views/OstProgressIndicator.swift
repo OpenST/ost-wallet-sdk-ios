@@ -200,7 +200,7 @@ class OstProgressIndicator: OstBaseView {
         case .abortDeviceRecovery:
             return "Request to abort recovery received"
             
-        case .revokeDeviceWithQRCode:
+        case .revokeDevice:
             return "Revocation request received"
             
         case .resetPin:
@@ -247,7 +247,7 @@ class OstProgressIndicator: OstBaseView {
         case .abortDeviceRecovery:
             return "Recovery has been successfully aborted. Existing authorized devices may be used."
             
-        case .revokeDeviceWithQRCode:
+        case .revokeDevice:
             return "The chosen device has been revoked. It can no longer access your Wallet"
             
         case .resetPin:
@@ -303,7 +303,7 @@ class OstProgressIndicator: OstBaseView {
         case .abortDeviceRecovery:
             return "Abort recovery failed. Unauthorized attempt "
             
-        case .revokeDeviceWithQRCode:
+        case .revokeDevice:
             return "Revokation failed. A device cannot revoke itself "
             
         case .resetPin:

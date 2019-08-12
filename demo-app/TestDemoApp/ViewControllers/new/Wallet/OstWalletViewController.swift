@@ -443,11 +443,11 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
     }
     
     //MARK: - OstSdkInteract Delegate
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
          workflowCallbacks = nil
     }
     
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if nil != workflowCallbacks {
             OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowCallbacks!.workflowId, listner: self)
             workflowCallbacks = nil
@@ -460,7 +460,7 @@ class OstWalletViewController: OstBaseViewController, UITableViewDelegate, UITab
         workflowCallbacks = nil
     }
     
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
          workflowCallbacks = nil
     }
     

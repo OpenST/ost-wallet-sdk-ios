@@ -556,7 +556,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     //MARK: - OstSdkInteract Delegate
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice
             || workflowContext.workflowType == .updateBiometricPreference {
             
@@ -568,13 +568,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if workflowContext.workflowType == .logoutAllSessions {
             progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
             progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
         }

@@ -13,20 +13,17 @@ protocol OstSdkInteractDelegate: AnyObject {
 }
 
 protocol OWFlowCompleteDelegate: OstSdkInteractDelegate{
-    func flowComplete(workflowId: String,
-                      workflowContext: OstWorkflowContext,
+    func flowComplete(workflowContext: OstWorkflowContext,
                       contextEntity: OstContextEntity)
 }
 
 protocol OWFlowInterruptedDelegate: OstSdkInteractDelegate{
-    func flowInterrupted(workflowId: String,
-                         workflowContext: OstWorkflowContext,
+    func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
 }
 
 protocol OWRequestAcknowledgedDelegate: OstSdkInteractDelegate{
-    func requestAcknowledged(workflowId: String,
-                             workflowContext: OstWorkflowContext,
+    func requestAcknowledged(workflowContext: OstWorkflowContext,
                              contextEntity: OstContextEntity)
 }
 
