@@ -127,8 +127,4 @@ import UIKit
         self.deviceListController = nil
         super.cleanUp();
     }
-    
-    @objc public override func cleanUpPinViewController() {
-        self.sdkPinAcceptDelegate = nil;
-    }
 }

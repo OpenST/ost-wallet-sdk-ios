@@ -98,10 +98,11 @@ class OstSdkInteract {
     }
     
     func broadcaseEvent(workflowId: String, eventType: OstInteractEventType, eventHandler: OstInteractEventData) {
-        guard let eventListners =
-            getEventListner(forWorkflowId: workflowId)
-            else {
-                return
+        guard let eventListners = getEventListner(forWorkflowId: workflowId) else {
+            if eventType == .flowComplete || eventType == .flowInterrupted {
+                removeEventListners(forWorkflowId: workflowId)
+            }
+            return
         }
         
         for eventListner in eventListners {

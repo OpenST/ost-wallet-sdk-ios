@@ -92,7 +92,6 @@ import Foundation
     override func cleanUp() {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
-        self.hideLoader();
         super.cleanUp()
     }
     

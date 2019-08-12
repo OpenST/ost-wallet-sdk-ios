@@ -127,6 +127,7 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
 
         if mnemonics.count == 12 {
             textView.setErrorText(nil);
+            self.view.layoutIfNeeded()
             return true
         }
 

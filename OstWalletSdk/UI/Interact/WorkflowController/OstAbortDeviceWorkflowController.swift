@@ -75,8 +75,4 @@ import Foundation
                                          delegate: self)
         showLoader(progressText: .stopDeviceRecovery)
     }
-    
-    public override func cleanUpPinViewController() {
-        self.sdkPinAcceptDelegate = nil;
-    }
 }
