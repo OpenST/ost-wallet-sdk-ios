@@ -55,7 +55,7 @@ import Foundation
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .updateBiometricPreference)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .updateBiometricPreference)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

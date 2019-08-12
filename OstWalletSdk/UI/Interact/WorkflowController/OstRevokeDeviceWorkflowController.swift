@@ -54,7 +54,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .revokeDeviceWithQRCode)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .revokeDeviceWithQRCode)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {

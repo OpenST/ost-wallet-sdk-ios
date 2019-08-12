@@ -88,27 +88,33 @@ import Foundation
         
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
-        eventData.workflowContext = workflowContext
         
-        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
+        
+        self.interact.broadcaseEvent(eventType: .flowComplete, eventHandler: eventData);
     }
     
     @objc public func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
     
         var eventData = OstInteractEventData()
-        eventData.workflowContext = workflowContext
         eventData.error = error
         
-        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
+        
+        self.interact.broadcaseEvent(eventType: .flowInterrupted, eventHandler: eventData);
     }
     
     @objc public func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
-        eventData.workflowContext = workflowContext
+        
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
 
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
+        interact.broadcaseEvent(eventType: .requestAcknowledged, eventHandler: eventData)
     }
     
     @objc public func pinValidated(_ userId: String) {

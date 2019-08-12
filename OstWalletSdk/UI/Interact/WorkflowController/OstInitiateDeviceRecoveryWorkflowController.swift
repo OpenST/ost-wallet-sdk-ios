@@ -56,7 +56,7 @@ import UIKit
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .initiateDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .initiateDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

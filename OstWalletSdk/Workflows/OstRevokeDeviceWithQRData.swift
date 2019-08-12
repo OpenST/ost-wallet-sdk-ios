@@ -160,7 +160,7 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .revokeDeviceWithQRCode)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .revokeDeviceWithQRCode)
     }
 
     /// Get context entity

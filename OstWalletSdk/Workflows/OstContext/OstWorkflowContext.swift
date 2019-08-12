@@ -29,7 +29,14 @@ import Foundation
 
 @objc public class OstWorkflowContext: NSObject {    
     @objc public let workflowType: OstWorkflowType
-    @objc public init(workflowType: OstWorkflowType) {
+    let workflowId: String
+    
+    @objc public init(workflowId: String, workflowType: OstWorkflowType) {
         self.workflowType = workflowType
+        self.workflowId = workflowId
+    }
+    
+    @objc public func getWorkflowId() -> String {
+        return self.workflowId;
     }
 }

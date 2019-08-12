@@ -97,7 +97,13 @@ class OstSdkInteract {
         }
     }
     
-    func broadcaseEvent(workflowId: String, eventType: OstInteractEventType, eventHandler: OstInteractEventData) {
+    func getWorkflowId(eventData: OstInteractEventData) -> String {
+        let workflowContext = eventData.workflowContext! as OstWorkflowContext;
+        return workflowContext.getWorkflowId();
+    }
+    
+    func broadcaseEvent(eventType: OstInteractEventType, eventHandler: OstInteractEventData) {
+        let workflowId = getWorkflowId(eventData: eventHandler);
         guard let eventListners = getEventListner(forWorkflowId: workflowId) else {
             if eventType == .flowComplete || eventType == .flowInterrupted {
                 removeEventListners(forWorkflowId: workflowId)
@@ -108,18 +114,15 @@ class OstSdkInteract {
         for eventListner in eventListners {
             switch eventType {
             case .flowComplete:
-                (eventListner.value as? OstWorkflowUIDelegate)?.flowComplete(workflowId: workflowId,
-                                                                             workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OstWorkflowUIDelegate)?.flowComplete(workflowContext: eventHandler.workflowContext!,
                                                                              contextEntity: eventHandler.contextEntity!)
                 
             case .flowInterrupted:
-                (eventListner.value as? OstWorkflowUIDelegate)?.flowInterrupted(workflowId: workflowId,
-                                                                                workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OstWorkflowUIDelegate)?.flowInterrupted(workflowContext: eventHandler.workflowContext!,
                                                                                 error: eventHandler.error!)
                 
             case .requestAcknowledged:
-                (eventListner.value as? OstWorkflowUIDelegate)?.requestAcknowledged(workflowId: workflowId,
-                                                                                    workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OstWorkflowUIDelegate)?.requestAcknowledged(workflowContext: eventHandler.workflowContext!,
                                                                                     contextEntity: eventHandler.contextEntity!)
             default:
                 continue

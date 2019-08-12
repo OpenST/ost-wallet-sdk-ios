@@ -215,7 +215,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .activateUser)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .activateUser)
     }
     
     /// Get context entity

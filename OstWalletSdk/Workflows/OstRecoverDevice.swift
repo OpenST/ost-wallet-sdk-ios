@@ -141,7 +141,7 @@ class OstRecoverDevice: OstWorkflowEngine {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .initiateDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .initiateDeviceRecovery)
     }
     
     /// Get context entity

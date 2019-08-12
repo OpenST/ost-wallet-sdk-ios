@@ -29,7 +29,7 @@ import Foundation
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .getDeviceMnemonics)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .getDeviceMnemonics)
     }
     
     override func pinProvided(pin: String) {

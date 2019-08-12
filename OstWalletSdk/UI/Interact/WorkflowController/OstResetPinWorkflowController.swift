@@ -109,7 +109,7 @@ import Foundation
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .resetPin)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .resetPin)
     }
     
     override func cleanUp() {

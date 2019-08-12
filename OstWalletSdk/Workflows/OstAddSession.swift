@@ -118,7 +118,7 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .addSession)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .addSession)
     }
     
     /// Get context entity

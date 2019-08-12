@@ -74,7 +74,7 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .authorizeDeviceWithMnemonics)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .authorizeDeviceWithMnemonics)
     }
     
     override func cleanUp() {

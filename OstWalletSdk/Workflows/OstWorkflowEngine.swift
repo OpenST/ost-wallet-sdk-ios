@@ -15,6 +15,7 @@ class OstWorkflowEngine {
    
     let userId: String
     let shouldPoll: Bool
+    let workflowId: String
     weak var delegate: OstWorkflowDelegate?
     let workflowStateManager: OstWorkflowStateManager
     
@@ -42,6 +43,7 @@ class OstWorkflowEngine {
         self.shouldPoll = shouldPoll
         self.delegate = delegate
         self.workflowStateManager = OstWorkflowStateManager()
+        self.workflowId = UUID().uuidString;
         
         self.workflowStateManager.setOrderedStates(
             getOrderedStates()

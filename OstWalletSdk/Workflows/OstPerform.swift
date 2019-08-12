@@ -190,6 +190,6 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .performQRAction)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .performQRAction)
     }
 }

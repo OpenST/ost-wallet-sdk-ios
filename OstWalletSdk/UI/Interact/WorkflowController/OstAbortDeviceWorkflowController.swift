@@ -52,7 +52,7 @@ import Foundation
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .abortDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .abortDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

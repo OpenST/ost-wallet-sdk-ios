@@ -57,7 +57,7 @@ import UIKit
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .activateUser)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .activateUser)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
