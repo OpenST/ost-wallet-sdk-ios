@@ -111,16 +111,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         showLoader(progressText: .unknown)
     }
     
-    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && nil == getPinViewController {
-                
-            super.flowInterrupted(workflowContext: workflowContext, error: error)
-        }else {
-            hideLoader()
-        }
-    }
-    
     override func cleanUp() {
         if ( nil != self.deviceListController ) {
             self.deviceListController?.removeViewController(flowEnded: true)
