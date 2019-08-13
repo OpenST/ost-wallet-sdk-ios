@@ -73,6 +73,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.onDeviceAddressSet()
+                                self?.showLoader(progressText: .revokingDevice)
                 })
             
             self.deviceListController!.presentVCWithNavigation()
