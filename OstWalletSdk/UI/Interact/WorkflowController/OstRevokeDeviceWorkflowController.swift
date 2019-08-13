@@ -107,8 +107,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         OstWalletSdk.revokeDevice(userId: self.userId,
                                   deviceAddressToRevoke: revokeDeviceAddress!,
                                   delegate: self)
-        
-        showLoader(progressText: .unknown)
     }
     
     override func cleanUp() {

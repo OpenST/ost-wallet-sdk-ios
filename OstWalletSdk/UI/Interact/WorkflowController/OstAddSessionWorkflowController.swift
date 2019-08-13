@@ -51,7 +51,6 @@ import Foundation
                                 spendingLimit: self.spendingLimit,
                                 expireAfterInSec: self.expireAfter,
                                 delegate: self)
-        showLoader(progressText: .creatingSession)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
