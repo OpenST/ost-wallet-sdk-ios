@@ -33,6 +33,7 @@ import Foundation
         leadLabel,
         infoLabel,
         tcLabel,
+        bottomLabel,
         placeholders
         
         func getCompnentName() -> String {
@@ -51,6 +52,9 @@ import Foundation
                 
             case .placeholders:
                 return "placeholders"
+                
+            case .bottomLabel:
+                return "bottom_label"
                 
             default:
                 return ""

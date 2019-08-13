@@ -79,7 +79,7 @@ import Foundation
         titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getCompnentName()],
                                         placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
         
-        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.leadLabel.getCompnentName()],
+        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getCompnentName()],
                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
         
         self.shouldFireIsMovingFromParent = true;

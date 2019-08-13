@@ -40,7 +40,7 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
         infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
 
-        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.tcLabel.getCompnentName()],
+        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.bottomLabel.getCompnentName()],
                                      placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
 
         setActionButtonText(pageConfig: viewConfig)
