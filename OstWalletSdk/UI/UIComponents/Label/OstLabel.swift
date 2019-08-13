@@ -231,7 +231,15 @@ import Foundation
         
         if (characterIndex < textView.textStorage.length) {
             let attributes = textView.textStorage.attributes(at: characterIndex, effectiveRange: nil)
-            onLableTapped?(attributes)
+            labelTapped(attributes: attributes)
+        }
+    }
+    
+    func labelTapped(attributes: [NSAttributedString.Key: Any]) {
+        if let urlString = attributes[NSAttributedString.Key(rawValue: "url")] as? String {
+            let webview = WKWebViewController()
+            webview.urlString = urlString
+            webview.presentVCWithNavigation()
         }
     }
     
