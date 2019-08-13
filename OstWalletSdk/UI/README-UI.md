@@ -106,20 +106,37 @@ OstWalletUI.addSession(
 ) -> String
 ```
 
+### Get Mnemonic Phrase
+
+The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.getDeviceMnemonics(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String
+```
+
 ### Reset a User's PIN
 
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_passphrasePrefix: Passphrase prefix provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
 
 ```Swift
 OstWalletUI.resetPin(
     userId: String,
-    passphrasePrefix: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String
 ```
 
@@ -156,6 +173,44 @@ To abort initiated device recovery.
 
 ```Swift
 OstWalletUI.abortDeviceRecovery(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String
+```
+
+###  Revoke Device
+
+To revoke device access.
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_revokeDeviceAddress: Device address to revoke_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to revoke device. Else it displays authorized device list for given `userId` to select device from. 
+
+```Swift
+OstWalletUI.revokeDevice(
+    userId: String,
+    revokeDeviceAddress: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String
+```
+
+### Add a device using mnemonics
+
+A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.authorizeCurrentDeviceWithMnemonics(
     userId: String,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String
