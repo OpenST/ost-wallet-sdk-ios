@@ -19,42 +19,42 @@ class AppConfig: NSObject {
         "h1": ["size": 20,
                "font": "SFProDisplay",
                "color": "#438bad",
-               "font_style": "semi_bold",
+               "system_font_weight": "semi_bold",
                "alignment": "center"
         ],
         
         "h2": ["size": 17,
                "font": "SFProDisplay",
                "color": "#666666",
-               "font_style": "medium",
+               "system_font_weight": "medium",
                "alignment": "center"
         ],
         
         "h3": ["size": 15,
                "font": "SFProDisplay",
                "color": "#888888",
-               "font_style": "regular",
+               "system_font_weight": "regular",
                "alignment": "center"
         ],
         
         "h4": ["size": 12,
                "font": "SFProDisplay",
                "color": "#888888",
-               "font_style": "regular",
+               "system_font_weight": "regular",
                "alignment": "center"
         ],
         
         "c1": ["size": 14,
                "font": "SFProDisplay",
                "color": "#484848",
-               "font_style": "bold",
+               "system_font_weight": "bold",
                "alignment": "left"
         ],
         
         "c2": ["size": 12,
                "font": "SFProDisplay",
                "color": "#6F6F6F",
-               "font_style": "regular",
+               "system_font_weight": "regular",
                "alignment": "left"
         ],
         
@@ -63,7 +63,7 @@ class AppConfig: NSObject {
             "font": "SFProDisplay",
             "color": "#ffffff",
             "background_color": "#438bad",
-            "font_style": "medium"
+            "system_font_weight": "medium"
         ],
         
         "b2": [
@@ -71,7 +71,7 @@ class AppConfig: NSObject {
             "font": "SFProDisplay",
             "color": "#438bad",
             "background_color": "#ffffff",
-            "font_style": "medium"
+            "system_font_weight": "medium"
         ],
         
         "b3": [
@@ -79,7 +79,7 @@ class AppConfig: NSObject {
             "font": "SFProDisplay",
             "color": "#ffffff",
             "background_color": "#438bad",
-            "font_style": "medium"
+            "system_font_weight": "medium"
         ],
         
         "b4": [
@@ -87,7 +87,7 @@ class AppConfig: NSObject {
             "font": "SFProDisplay",
             "color": "#438bad",
             "background_color": "#ffffff",
-            "font_style": "medium"
+            "system_font_weight": "medium"
         ],
         
         "navigation_bar": [

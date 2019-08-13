@@ -167,6 +167,9 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     func actionButtonApplyConstraitns() {
         actionButton.placeBelow(toItem: deviceAddressLabel, multiplier: 1, constant: 15)
         actionButton.leftAlignWithParent()
+        actionButton.rightAlign(toItem: actionButton.superview!,
+                                multiplier: 1, constant: -10,
+                                relatedBy: .lessThanOrEqual)
         actionButton.bottomAlignWithParent()
     }
     

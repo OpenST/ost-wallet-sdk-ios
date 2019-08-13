@@ -51,10 +51,6 @@ import Foundation
                                 spendingLimit: self.spendingLimit,
                                 expireAfterInSec: self.expireAfter,
                                 delegate: self)
-        DispatchQueue.main.async {
-            self.progressIndicator = OstProgressIndicator(textCode: .creatingSession)
-            self.progressIndicator?.show()
-        }
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

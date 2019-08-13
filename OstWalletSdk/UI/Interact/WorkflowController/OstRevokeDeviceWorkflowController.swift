@@ -107,18 +107,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         OstWalletSdk.revokeDevice(userId: self.userId,
                                   deviceAddressToRevoke: revokeDeviceAddress!,
                                   delegate: self)
-        
-        showLoader(progressText: .unknown)
-    }
-    
-    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && nil == getPinViewController {
-                
-            super.flowInterrupted(workflowContext: workflowContext, error: error)
-        }else {
-            hideLoader()
-        }
     }
     
     override func cleanUp() {

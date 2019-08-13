@@ -48,12 +48,13 @@ extension UIFont {
         switch alignement {
         case "left":
             return .left
-            
+        
         case "center":
             return .center
             
         case "right":
             return .right
+        
         default:
             return .center
         }
