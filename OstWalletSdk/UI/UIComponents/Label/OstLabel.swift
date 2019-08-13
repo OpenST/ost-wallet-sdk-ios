@@ -125,6 +125,8 @@ import Foundation
         let labelText = getText(from: data)
         //Get font from. config if font is not present, default would be label config font.
         let labelFont = getFont(from: data, ofSize: CGFloat(truncating: labelConfig!.size)) ?? labelConfig!.getFont()
+        //get Alignment
+        let labelAlignment = labelConfig!.getAlignment()
         //Get foreground color from config. if foreground is not present, default would be label config foreground.
         let labelForegroundColor = getForegroundColor(from: data) ?? labelConfig!.getColor()
         
@@ -196,7 +198,7 @@ import Foundation
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1
-        paragraphStyle.alignment = .center
+        paragraphStyle.alignment = labelAlignment
         finalAttributedText.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, finalAttributedText.length))
         
         self.attributedText = finalAttributedText
