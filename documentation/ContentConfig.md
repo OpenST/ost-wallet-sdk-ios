@@ -9,13 +9,13 @@ The default configuration can be found [here](../OstWalletSdk/UI/Config/OstConte
 Here is the small sample `json` representation of the configuration.
 ```json
 {
-    "activate_user": {
-        "create_pin": {
-            "title_label": {
-                "text": "Activate Your Wallet"
-            }
-        }
+  "activate_user": {
+    "create_pin": {
+      "title_label": {
+        "text": "Activate Your Wallet"
+      }
     }
+  }
 }
 ```
 
@@ -123,24 +123,25 @@ Here is PIN Input View looks like:
 Below is a sample configuration to achive the same:
 ```json
 {
-    "activate_user": {
-        "create_pin": {
-            "terms_and_condition_label": {
-                "text": "Please refer our {{t_and_c}} and {{privacy_policy}}"
-            },
-            "placeholders": {
-                "t_and_c": {
-                    "url": "https://ost.com/terms",
-                    "text": "Terms and Conditions",
-                    "color": "#0076FF"
-                },
-                "privacy_policy": {
-                    "url": "https://ost.com/privacy",
-                    "text": "Privacy Policy",
-                    "color": "#0076FF"
-                }
-            }        
+  "activate_user": {
+    "create_pin": {
+      "terms_and_condition_label": {
+        "text": "Please refer our {{t_and_c}} and {{privacy_policy}}"
+      },
+      "placeholders": {
+        "t_and_c": {
+          "url": "https://ost.com/terms",
+          "text": "Terms and Conditions",
+          "color": "#0076FF"
+        },
+        "privacy_policy": {
+          "url": "https://ost.com/privacy",
+          "text": "Privacy Policy",
+          "color": "#0076FF"
         }
+      }
+    }
+  }
 }
 ```
 **NOTE:** As of now, `placeholder` is only applicable to `terms_and_condition_label` and is NOT supported by other labels.
