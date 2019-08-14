@@ -16,7 +16,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     /// Mark - View Controllers.
     
     init(userId: String,
-         passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
          presenter: UIViewController) {
         
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);

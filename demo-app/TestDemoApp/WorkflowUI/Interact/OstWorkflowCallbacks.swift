@@ -11,12 +11,12 @@
 import Foundation
 import OstWalletSdk
 
-class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
+class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
     
     /// Mark - Pin extension variables
     var userPin:String? = nil;
-    var sdkPinAcceptDelegate: OstPinAcceptDelegate? = nil;
-    var passphrasePrefixDelegate:OWPassphrasePrefixDelegate?;
+    var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;
+    var passphrasePrefixDelegate:OstPassphrasePrefixDelegate?;
     var getPinViewController:OstGetPinViewController? = nil;
 
     /// Mark - Workflow callback vars.
@@ -43,7 +43,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcc
         return OstSdkInteract.getInstance
     }
 
-    init(userId: String, passphrasePrefixDelegate:OWPassphrasePrefixDelegate) {
+    init(userId: String, passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         self.userId = userId;
         self.workflowId = UUID().uuidString;
         self.passphrasePrefixDelegate = passphrasePrefixDelegate;
@@ -67,8 +67,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcc
         DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
             delegate.deviceRegistered( apiResponse! );
         }) { (apiError) in
-            let code = (apiError?["code"] as? String) ?? ""
-            if ( "ALREADY_EXISTS".caseInsensitiveCompare(code) == .orderedSame ) {
+            if ( "ALREADY_EXISTS".caseInsensitiveCompare((apiError!["code"] as? String ?? "")) == .orderedSame ) {
                 var device = apiParams;
                 device["status"] = "REGISTERED";
                 delegate.deviceRegistered( device );
@@ -88,7 +87,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcc
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
             
-        }else if workflowContext.workflowType == .revokeDevice {
+        }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
             delegate.dataVerified()
             
         }else if workflowContext.workflowType == .executeTransaction {

@@ -217,13 +217,13 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
         
         let expireAfter = (self.expiresAfterSelectedIndex + 1) * 24 * 60 * 60;
         let finalSpendingLimit: String = OstUtils.toAtto(self.spendingLimitTestField.text!)
+        OstWalletSdk.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
+                                spendingLimit: finalSpendingLimit,
+                                expireAfterInSec: Double(expireAfter),
+                                delegate: self.workflowDelegate)
         
-        let workflowId = OstWalletUI.addSession(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                expireAfterInSec: Double(expireAfter),
-                                                spendingLimit: finalSpendingLimit,
-                                                passphrasePrefixDelegate: CurrentUserModel.getInstance)
-        
-        OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
+        progressIndicator?.show()
     }
     
     func isCorrectInputPassed() -> Bool {
@@ -247,9 +247,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
     
     //MARK: - Workflow Delegate
     
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        progressIndicator = OstProgressIndicator(textCode: .creatingSession)
-        super.requestAcknowledged(workflowContext: workflowContext, contextEntity: contextEntity)
-        progressIndicator?.show()
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
 }
