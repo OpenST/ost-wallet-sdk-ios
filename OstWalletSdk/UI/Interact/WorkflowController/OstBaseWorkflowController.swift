@@ -17,6 +17,22 @@ import Foundation
     var currentUser: OstUser? = nil
     var currentDevice: OstDevice? = nil
     
+    private var pinAcceptDelegate: OstPinAcceptDelegate? = nil
+    
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost use id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    override init(userId: String,
+                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+        
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        OstSdkInteract.getInstance.retainWorkflowCallback(callback: self)
+    }
+    
     func perform() {
         do {
             //Set user and device
@@ -32,24 +48,33 @@ import Foundation
 
     func setVariables() throws {
         guard let user = OstWalletSdk.getUser(self.userId) else {
-            throw OstError("i_wc_bwc_sv_1", .deviceNotSet)
+            throw OstError("ui_i_wc_bwc_sv_1", .deviceNotSet)
         }
         self.currentUser = user
         
         guard let userDevice = self.currentUser!.getCurrentDevice() else {
-            throw OstError("i_wc_bwc_sv_2", .deviceNotSet)
+            throw OstError("ui_i_wc_bwc_sv_2", .deviceNotSet)
         }
         self.currentDevice = userDevice
     }
     
     func performUserDeviceValidation() throws {
         if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_bwc_pudv_1", .userNotActivated)
+            throw OstError("ui_i_wc_bwc_pudv_1", .userNotActivated)
         }
     }
     
     func performUIActions() {
-        fatalError("performUIActions did not override")
+        fatalError("performUIActions did not override in \(String(describing: self))")
+    }
+    
+    override func getPinVCConfig() -> OstPinVCConfig {
+        fatalError("getPinVCConfig did not override in \(String(describing: self))")
+    }
+    
+    override func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
+        hideLoader()
+        super.getPin(userId, delegate: delegate)
     }
     
     func postFlowInterrupted(error: OstError) {
@@ -61,10 +86,36 @@ import Foundation
     
     @objc func cleanUpWorkflowController() {
         self.hideLoader();
-        self.cleanUpPinViewController();
         self.cleanUp();
     }
     
+    override func cleanUp() {
+        self.passphrasePrefixDelegate = nil;
+        NotificationCenter.default.removeObserver(self);
+        super.cleanUp()
+    }
+    
+    /// Mark - OstPassphrasePrefixAcceptDelegate
+    override func setPassphrase(ostUserId: String, passphrase: String) {
+        if ( self.userId.compare(ostUserId) != .orderedSame ) {
+            postFlowInterrupted(error: OstError("ui_i_wc_bwc_sp_1", .pinValidationFailed))
+            return
+        }
+        
+        onPassphrasePrefixSet(passphrase: passphrase)
+        super.setPassphrase(ostUserId: ostUserId, passphrase: passphrase)
+    }
+    
+    @objc func onPassphrasePrefixSet(passphrase: String) {
+        if nil == self.sdkPinAcceptDelegate {
+            fatalError("onPassphrasePrefixSet did not override in \(String(describing: self))")
+        }
+        
+        self.sdkPinAcceptDelegate?.pinEntered(self.userPin!,
+                                           passphrasePrefix: passphrase)
+    }
+    
+    //MARK: - OstWorkflowUIDelegaete
     override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
         cleanUpWorkflowController()

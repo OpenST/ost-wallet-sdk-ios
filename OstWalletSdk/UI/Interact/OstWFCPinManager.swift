@@ -13,17 +13,26 @@ import UIKit
 
 extension OstWorkflowCallbacks {
     
-    func showGetPinViewController() {
+    public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
+        self.sdkPinAcceptDelegate = delegate;
         
-        let win = getWindow()
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        observeViewControllerIsMovingFromParent()
-        let navC = UINavigationController(rootViewController: self.getPinViewController!);
-        vc.present(navC, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.getPinViewController = OstPinViewController
+                .newInstance(pinInputDelegate: self,
+                             pinVCConfig: self.getPinVCConfig());
+            
+            self.showPinViewController()
+        }
     }
     
+    @objc func showPinViewController() {
+        self.getPinViewController?.presentVCWithNavigation()
+    }
+    
+    @objc func getPinVCConfig() -> OstPinVCConfig {
+        fatalError("getPinVCConfig did not override in \(String(describing: self))")
+    }
+
     @objc public func cleanUpPinViewController() {
         self.getPinViewController?.removeViewController()
         self.sdkPinAcceptDelegate = nil;
@@ -35,8 +44,12 @@ extension OstWorkflowCallbacks {
         self.cancelPinAcceptor();
     }
     
+    func cancelPinAcceptor() {
+        self.sdkPinAcceptDelegate?.cancelFlow();
+        self.sdkPinAcceptDelegate = nil;
+    }
+    
     @objc public func pinProvided(pin: String) {
-        userPin = pin;
         self.showLoader(progressText: .unknown);
         self.passphrasePrefixDelegate?.getPassphrase(ostUserId: self.userId,
                                                      workflowContext: getWorkflowContext(),
@@ -44,27 +57,12 @@ extension OstWorkflowCallbacks {
     }
     
     @objc func getWorkflowContext() -> OstWorkflowContext {
-        fatalError("getWorkflowContext is not override.")
-    }
-    
-    func cancelPinAcceptor() {
-        self.sdkPinAcceptDelegate?.cancelFlow();
-        self.sdkPinAcceptDelegate = nil;
+        fatalError("getWorkflowContext is not override in \(String(describing: self))")
     }
     
     @objc public func setPassphrase(ostUserId: String, passphrase: String) {
-        self.sdkPinAcceptDelegate?.pinEntered(self.userPin!, passphrasePrefix: passphrase);
         self.sdkPinAcceptDelegate = nil;
         self.userPin = nil;
-        self.showLoader(progressText: .unknown);
-    }
-    
-    public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.sdkPinAcceptDelegate = delegate;
-        self.getPinViewController = OstPinViewController
-            .newInstance(pinInputDelegate: self,
-                         pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig());
-        showGetPinViewController();
     }
     
     public func invalidPin(_ userId: String, delegate: OstPinAcceptDelegate) {

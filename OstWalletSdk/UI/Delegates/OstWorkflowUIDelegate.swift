@@ -20,8 +20,7 @@ import Foundation
     ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
     ///   - contextEntity: Context Entity
     @objc
-    func requestAcknowledged(workflowId: String,
-                             workflowContext: OstWorkflowContext,
+    func requestAcknowledged(workflowContext: OstWorkflowContext,
                              contextEntity: OstContextEntity)
     
     
@@ -32,8 +31,7 @@ import Foundation
     ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
     ///   - contextEntity: Context Entity
     @objc
-    func flowComplete(workflowId: String,
-                      workflowContext: OstWorkflowContext,
+    func flowComplete(workflowContext: OstWorkflowContext,
                       contextEntity: OstContextEntity)
     
     
@@ -45,8 +43,7 @@ import Foundation
     ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
     ///   - error: Error Entity
     @objc
-    func flowInterrupted(workflowId: String,
-                         workflowContext: OstWorkflowContext,
+    func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
     
 }

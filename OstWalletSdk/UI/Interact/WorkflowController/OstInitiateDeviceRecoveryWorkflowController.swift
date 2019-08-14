@@ -11,15 +11,21 @@
 import UIKit
 
 
-class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
+@objc class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     var recoverDeviceAddress: String?
     var deviceListController: OstInitiateRecoveryDLViewController? = nil
-    /// Mark - View Controllers.
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - recoverDeviceAddress: Device address to recover
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc
     init(userId: String,
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
-         recoverDeviceAddress: String?) {
+         recoverDeviceAddress: String?,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.recoverDeviceAddress = recoverDeviceAddress
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
@@ -31,7 +37,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         
     override func performUIActions() {
         if nil == recoverDeviceAddress {
-            self.openAuthorizeDeviceListController()
+            self.openAuthorizedDeviceListController()
         } else {
             self.openGetPinViewController()
         }
@@ -41,16 +47,16 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         try super.performUserDeviceValidation()
         
         if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_idrwc_pudv_1", .userNotActivated);
+            throw OstError("ui_i_wc_idrwc_pudv_1", .userNotActivated);
         }
       
         if (!self.currentDevice!.isStatusRegistered) {
-            throw OstError("i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
+            throw OstError("ui_i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
         }
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .initiateDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .initiateDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
@@ -63,19 +69,17 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         }
         
         if ( isFlowCancelled ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
     
     func setGetPinViewController() {
         self.getPinViewController = OstPinViewController
             .newInstance(pinInputDelegate: self,
-                         pinVCConfig: OstPinVCConfig.getRecoveryAccessPinVCConfig());
+                         pinVCConfig: OstContent.getRecoveryAccessPinVCConfig());
     }
     
-    func openAuthorizeDeviceListController() {
+    func openAuthorizedDeviceListController() {
         
         DispatchQueue.main.async {
             self.deviceListController = OstInitiateRecoveryDLViewController
@@ -100,38 +104,27 @@ class OstInitiateDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         }
     }
     
-    //MARK: - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .initiateDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            return;
-        }
-        
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
+    }
+    
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.initiateDeviceRecovery(userId: self.userId,
                                             recoverDeviceAddress: self.recoverDeviceAddress!,
                                             userPin: self.userPin!,
                                             passphrasePrefix: passphrase,
                                             delegate: self)
-        self.userPin = nil;
         showLoader(progressText: .initiateDeviceRecovery);
     }
     
     override func cleanUp() {
-        super.cleanUp();
         if ( nil != self.deviceListController ) {
             self.deviceListController?.removeViewController(flowEnded: true)
+        }else if ( nil != self.getPinViewController )  {
+            self.getPinViewController?.removeViewController(flowEnded: true)
         }
-        self.getPinViewController = nil
-        self.passphrasePrefixDelegate = nil
         self.deviceListController = nil
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc public override func cleanUpPinViewController() {
-        self.sdkPinAcceptDelegate = nil;
+        super.cleanUp();
     }
 }

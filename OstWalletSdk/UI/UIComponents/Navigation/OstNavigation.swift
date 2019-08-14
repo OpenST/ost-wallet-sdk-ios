@@ -15,7 +15,10 @@ class OstNavigation {
     var fontSize: CGFloat = 16;
     
     //Tint Color
-    var barTintColor: UIColor = .white
+    var barTintColor: UIColor
+    
+    //Back button tint color
+    var backButtonTintColor: UIColor? = nil
     
     //Title Color
     var barTextColor: UIColor = .black
@@ -34,6 +37,7 @@ class OstNavigation {
     
     init() {
         self.navLogo = OstTheme.getInstance().getNavBarLogo()
+        self.barTintColor = OstTheme.getInstance().getNavBarTintColor()
     }
     
     /// Apply style to navigation bar
@@ -76,10 +80,13 @@ class OstNavigation {
     /// - Parameter navController: UINavigationController
     func setBackBarButtonImage(navController: UINavigationController) {
         let navViewControllers = navController.viewControllers
+        let themeConfig = OstTheme.getInstance()
         if navViewControllers.last === navViewControllers.first {
-            backBarButtonImage = OstTheme.getInstance().getImageFromFramework(imageName: "ost_close")
+            backBarButtonImage = themeConfig.getImageFromFramework(imageName: "ost_close")
+            self.backButtonTintColor = themeConfig.getCloseTintColor()
         }else {
-            backBarButtonImage = OstTheme.getInstance().getImageFromFramework(imageName: "ost_back_arrow")
+            backBarButtonImage = themeConfig.getImageFromFramework(imageName: "ost_back_arrow")
+            self.backButtonTintColor = themeConfig.getBackTintColor()
         }
     }
     
@@ -94,17 +101,13 @@ class OstNavigation {
                                target: AnyObject?,
                                action: Selector) -> [UIBarButtonItem] {
         
-        // recommended maximum image height 22 points (i.e. 22 @1x, 44 @2x, 66 @3x)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8
         
-        let backImageView = UIImageView(image: image)
-        let customBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        backImageView.frame = CGRect(x: 0, y: 16, width: 16, height: 16)
-        backImageView.contentMode = .scaleAspectFit
-        customBarButton.addSubview(backImageView)
-        customBarButton.addTarget(target, action: action, for: .touchUpInside)
         
-        return [negativeSpacer, UIBarButtonItem(customView: customBarButton)]
+        let backButton = UIBarButtonItem(image: backBarButtonImage, style: .plain, target: target, action: action)
+        backButton.tintColor = backButtonTintColor
+        
+        return [negativeSpacer, backButton]
     }
 }

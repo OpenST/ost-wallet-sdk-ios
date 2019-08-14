@@ -20,7 +20,9 @@ class OstB1Button: OstBaseButton {
         let activeBgImg = UIImage.withColor(color: buttonConfig!.getBackgroundColor());
         setBackgroundImage(image: activeBgImg, state: .normal);
         
-        self.cEdgeInsets = UIEdgeInsets(top: 5, left: 14, bottom: 5, right: 14);
+        self.cEdgeInsets = UIEdgeInsets(top: 15, left: 14, bottom: 15, right: 14);
         self.cornerRadius = 5
+        
+        super.setThemeConfig()
     }
 }

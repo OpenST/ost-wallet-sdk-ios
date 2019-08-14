@@ -11,8 +11,7 @@
 import Foundation
 import UIKit
 
-
-class OstActivateUserWorkflowController: OstBaseWorkflowController {
+@objc class OstActivateUserWorkflowController: OstBaseWorkflowController {
 
     let spendingLimit: String
     let expireAfterInSec:TimeInterval
@@ -21,11 +20,19 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     var createPinViewController: OstPinViewController? = nil
     var confirmPinViewController: OstPinViewController?;
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - expireAfterInSec: Relative time
+    ///   - spendingLimit: Spending limit for transaction
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc
     init(userId: String,
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
-         spendingLimit: String = OstUtils.toAtto("15"),
-         expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
-    ) {
+         expireAfterInSec: TimeInterval,
+         spendingLimit: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+        
         self.spendingLimit = spendingLimit
         self.expireAfterInSec = expireAfterInSec
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
@@ -41,16 +48,16 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     
     override func performUserDeviceValidation() throws {
         if !self.currentUser!.isStatusCreated {
-            throw OstError("i_wc_auwc_pudv_1", .userAlreadyActivated)
+            throw OstError("ui_i_wc_auwc_pudv_1", .userAlreadyActivated)
         }
         
         if !self.currentDevice!.isStatusRegistered {
-            throw OstError("i_wc_auwc_pudv_2", .deviceNotRegistered);
+            throw OstError("ui_i_wc_auwc_pudv_2", .deviceNotRegistered);
         }
     }
     
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .activateUser)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .activateUser)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
@@ -59,35 +66,20 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
         } else if ( notification.object is OstPinViewController ) {
             self.createPinViewController = nil;
             //The workflow has been cancled by user.
-            
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
     
-    /// Mark - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .activateUser),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            /// TODO: (Future) Do Something here. May be cancel workflow?
-            return;
-        }
-        
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.activateUser(userId: self.userId,
                                   userPin: self.userPin!,
                                   passphrasePrefix: passphrase,
                                   spendingLimit: self.spendingLimit,
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
-        self.userPin = nil;
         showLoader(progressText: .activingUser);
     }
     
-
     /// Mark - OstPinAcceptDelegate
     override func pinProvided(pin: String) {
         if ( nil == self.userPin || nil == self.confirmPinViewController ) {
@@ -104,40 +96,31 @@ class OstActivateUserWorkflowController: OstBaseWorkflowController {
     
     func showCreatePinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: "create_pin",
-                                                                      inWorkflow: .activateUser)
             
             self.createPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getCreatePinVCConfig(),
-                             contentConfig: config)
+                             pinVCConfig: OstContent.getCreatePinVCConfig())
             
             self.createPinViewController!.presentVCWithNavigation()
         }
     }
+
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
-            let config = OstContent.getInstance().getControllerConfig(for: "confirm_pin",
-                                                                      inWorkflow: .activateUser)
-            
-            self.confirmPinViewController = OstPinViewController
+           self.confirmPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getConfirmPinVCConfig(),
-                             contentConfig: config);
+                             pinVCConfig: OstContent.getConfirmPinVCConfig())
             
             self.confirmPinViewController?.pushViewControllerOn(self.createPinViewController!);
         }
     }
     
     override func cleanUp() {
-        super.cleanUp();
         if ( nil != self.createPinViewController ) {
            self.createPinViewController?.removeViewController(flowEnded: true)
         }
         self.createPinViewController = nil;
         self.confirmPinViewController = nil;
-        self.passphrasePrefixDelegate = nil;
-        self.progressIndicator = nil
-        NotificationCenter.default.removeObserver(self);
+        super.cleanUp();
     }
 }

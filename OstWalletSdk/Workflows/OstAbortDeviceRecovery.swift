@@ -195,7 +195,7 @@ class OstAbortDeviceRecovery: OstWorkflowEngine {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .abortDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .abortDeviceRecovery)
     }
     
     /// Get context entity

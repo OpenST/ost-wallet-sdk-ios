@@ -47,11 +47,10 @@ import UIKit
         
         let workflowController = OstActivateUserWorkflowController(
             userId: userId,
-            passphrasePrefixDelegate: passphrasePrefixDelegate,
+            expireAfterInSec: expireAfterInSec,
             spendingLimit: spendingLimit,
-            expireAfterInSec: expireAfterInSec)
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -62,6 +61,7 @@ import UIKit
     ///   - userId: Ost user identifier
     ///   - recoverDeviceAddress: Device address of device tobe recovered.
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func initaiteDeviceRecovery(
         userId: String,
@@ -71,10 +71,32 @@ import UIKit
         
         let workflowController = OstInitiateDeviceRecoveryWorkflowController(
             userId: userId,
-            passphrasePrefixDelegate: passphrasePrefixDelegate,
-            recoverDeviceAddress: recoverDeviceAddress)
+            recoverDeviceAddress: recoverDeviceAddress,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Revoke Device
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user identifier
+    ///   - revokeDeviceAddress: Device address of device tobe revoked.
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func revokeDevice(
+        userId: String,
+        revokeDeviceAddress: String? = nil,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstRevokeDeviceWorkflowController(
+            userId: userId,
+            revokeDeviceAddress: revokeDeviceAddress,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
         workflowController.perform()
         return workflowController.workflowId
     }
@@ -84,6 +106,7 @@ import UIKit
     /// - Parameters:
     ///   - userId: Ost user identifier
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func abortDeviceRecovery(
         userId: String,
@@ -95,10 +118,119 @@ import UIKit
             passphrasePrefixDelegate: passphrasePrefixDelegate
         )
         
-        OstSdkInteract.getInstance.retainWorkflowCallback(callback: workflowController)
         workflowController.perform()
         return workflowController.workflowId
     }
+
+    /// Add session for user.
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - expireAfterInSec: Seconds after which the session key should expire.
+    ///   - spendingLimit: Amount user can spend in a transaction
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func addSession(
+        userId: String,
+        expireAfterInSec: TimeInterval,
+        spendingLimit: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAddSessionWorkflowController(
+            userId: userId,
+            expireAfter: expireAfterInSec,
+            spendingLimit: spendingLimit,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Get device mnemonics
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func getDeviceMnemonics(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstGetMnemonicsWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Authorize current device via mnemonics
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func authorizeCurrentDeviceWithMnemonics(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAddDeviceViaMnemonicsWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Update biometric preference
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - enable: Biomertic authentication allowed
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func updateBiometricPreference(
+        userId: String,
+        enable: Bool,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstBiomatricPerferenceWorkflowController(
+            userId: userId,
+            enable: enable,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Reset Pin
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func resetPin(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstResetPinWorkflowController(
+            userId: userId,
+            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
     
     
     /// Subscribe to receive workflow events.
@@ -125,5 +257,14 @@ import UIKit
         
         OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowId,
                                                listner: listner)
+    }
+}
+
+public extension OstWalletUI {
+    
+    /// Show Components with config.
+    @objc
+    class func showComponentSheet() {
+        OstComponentSheet.showComponentSheet()
     }
 }

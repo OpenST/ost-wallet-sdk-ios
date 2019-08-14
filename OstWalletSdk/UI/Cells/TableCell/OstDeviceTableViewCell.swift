@@ -28,6 +28,10 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     
     var onActionPressed: (([String: Any]?) -> Void)? = nil
     
+    func setActionButtonText(_ text: String) {
+        self.actionButton.setTitle(text, for: .normal)
+    }
+    
     //MARK: - Components
     let deviceCellBackgroundView: UIView = {
        
@@ -77,8 +81,8 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
         return view
     }()
     
-    let actionButton: OstB1Button = {
-        let view = OstB1Button(title: "")
+    let actionButton: OstB3Button = {
+        let view = OstB3Button(title: "")
         
         return view
     }()
@@ -106,7 +110,6 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
                                        in: Bundle(for: type(of: self)),
                                        compatibleWith: nil)!
         
-        self.actionButton.setTitle("Start Recovery", for: .normal)
         self.actionButton.addTarget(self, action: #selector(actionButtonTapped(_ :)), for: .touchUpInside)
     }
     
@@ -164,6 +167,9 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     func actionButtonApplyConstraitns() {
         actionButton.placeBelow(toItem: deviceAddressLabel, multiplier: 1, constant: 15)
         actionButton.leftAlignWithParent()
+        actionButton.rightAlign(toItem: actionButton.superview!,
+                                multiplier: 1, constant: -10,
+                                relatedBy: .lessThanOrEqual)
         actionButton.bottomAlignWithParent()
     }
     

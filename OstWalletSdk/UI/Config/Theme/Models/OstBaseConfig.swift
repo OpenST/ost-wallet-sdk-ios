@@ -16,29 +16,36 @@ import Foundation
     let fontName: String
     let size: NSNumber
     let colorHex: String
-    let fontStyle: String
+    let fontWeight: String
+    
     
     /// Initialize
     ///
     /// - Parameters:
     ///   - config: Config
-    ///   - defaultConfig: Fallback config
-    init(config: [String: Any]?,
-         defaultConfig: [String: Any]) {
+    init(config: [String: Any]) {
         
-        self.fontName = (config?["font"] as? String) ?? ""
-        self.size = (config?["size"] as? NSNumber) ?? (defaultConfig["size"] as! NSNumber)
-        self.colorHex = (config?["color"] as? String) ?? (defaultConfig["color"] as! String)
-        self.fontStyle = (config?["font_style"] as? String) ?? (defaultConfig["font_style"] as! String)
+        self.fontName = config["font"] as? String ?? ""
+        self.size = config["size"] as! NSNumber
+        self.colorHex = config["color"] as! String
+        self.fontWeight = config["system_font_weight"] as! String
     }
     
     /// Get font for provided config
     ///
     /// - Parameter weight: Font weight
     /// - Returns: Font
-    func getFont(weight: UIFont.Weight? = nil) -> UIFont {
-        let fontWeight = (nil != weight) ? weight! : UIFont.getFontWeight(fontStyle)
-        return UIFont(name: self.fontName, size: CGFloat(truncating: self.size)) ?? UIFont.systemFont(ofSize: CGFloat(truncating: self.size), weight: fontWeight)
+    func getFont(font: String? = nil, weight: UIFont.Weight? = nil) -> UIFont {
+        
+        let fontWeightVal = (nil != weight) ? weight! : UIFont.getFontWeight(fontWeight)
+        
+        var font: UIFont? = UIFont(name: font ?? self.fontName, size: CGFloat(truncating: self.size))
+        
+        if nil == font {
+            font = UIFont.systemFont(ofSize: CGFloat(truncating: self.size), weight: fontWeightVal)
+        }
+        
+        return font!
     }
     
     /// Get color from hex color code

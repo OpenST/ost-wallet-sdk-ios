@@ -10,38 +10,7 @@
 
 import Foundation
 
-
-@objc public class OstWorkflow: NSObject {
-    private weak var workflowCallbacks: OstWorkflowCallbacks?
-
-    @objc
-    public var workflowId: String? {
-        return workflowCallbacks?.workflowId
-    }
-    
-    init(workflowCallbacks: OstWorkflowCallbacks) {
-        self.workflowCallbacks = workflowCallbacks
-    }
-    
-    @objc
-    public func subscribe(workflowDelegate: OstWorkflowUIDelegate) {
-        if let workflowIdStr = self.workflowId {
-            OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowIdStr,
-                                                listner: workflowDelegate)
-        }
-    }
-    
-    @objc 
-    public func unsubscribe(workflowDelegate: OstWorkflowUIDelegate) {
-        if let workflowIdStr = self.workflowId {
-            OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowIdStr,
-                                                   listner: workflowDelegate)
-        }
-    }
-}
-
 @objc public class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
-    
     /// Mark - Pin extension variables
     var userPin:String? = nil;
     var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;
@@ -72,6 +41,11 @@ import Foundation
         return OstSdkInteract.getInstance
     }
 
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost use id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
          passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         
@@ -114,27 +88,33 @@ import Foundation
         
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
-        eventData.workflowContext = workflowContext
         
-        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowComplete, eventHandler: eventData);
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
+        
+        self.interact.broadcaseEvent(eventType: .flowComplete, eventHandler: eventData);
     }
     
     @objc public func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
     
         var eventData = OstInteractEventData()
-        eventData.workflowContext = workflowContext
         eventData.error = error
         
-        self.interact.broadcaseEvent(workflowId: self.workflowId, eventType: .flowInterrupted, eventHandler: eventData);
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
+        
+        self.interact.broadcaseEvent(eventType: .flowInterrupted, eventHandler: eventData);
     }
     
     @objc public func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         
         var eventData = OstInteractEventData()
         eventData.contextEntity = ostContextEntity
-        eventData.workflowContext = workflowContext
+        
+        let uiWorkflowId = self.workflowId;
+        eventData.workflowContext = OstUIWorkflowContext(context: workflowContext, uiWorkflowId:  uiWorkflowId);
 
-        interact.broadcaseEvent(workflowId: self.workflowId, eventType: .requestAcknowledged, eventHandler: eventData)
+        interact.broadcaseEvent(eventType: .requestAcknowledged, eventHandler: eventData)
     }
     
     @objc public func pinValidated(_ userId: String) {
@@ -148,22 +128,22 @@ import Foundation
     }
     
     func cleanUp() {
-        progressIndicator?.hide()
         self.cleanUpPinViewController();
-        progressIndicator = nil
-        uiWindow = nil
+        hideLoader()
     }
     
     func showLoader(progressText: OstProgressIndicatorTextCode) {
-        if ( nil != progressIndicator ) {
-            if ( nil != progressIndicator!.alert ) {
-                //progressIndicator is showing.
-                progressIndicator?.textCode = progressText
-                return;
+        DispatchQueue.main.async {
+            if ( nil != self.progressIndicator ) {
+                if ( nil != self.progressIndicator!.alert ) {
+                    //progressIndicator is showing.
+                    self.progressIndicator?.textCode = progressText
+                    return;
+                }
             }
+            self.progressIndicator = OstProgressIndicator(textCode: progressText)
+            self.progressIndicator?.show()
         }
-        progressIndicator = OstProgressIndicator(textCode: progressText)
-        progressIndicator?.show()
     }
     
     func hideLoader() {

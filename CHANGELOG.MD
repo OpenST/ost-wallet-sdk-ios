@@ -1,8 +1,19 @@
 # OST Wallet SDK Changelog
 
-## Version 2.3.0-beta.1
-### Changes:
-* UI for OstWalletSdk is integrated.
+## Version 2.3.0
+### Feature:
+* OstWalletSdk now contains UI.
+* UI components can be modified.
+* Languages for UI workflow components can be modified.
+* OstWalletUI now supports
+    - activate user
+    - create session
+    - get device mnemonics
+    - revoke device
+    - reset pin
+    - initiate device recovery
+    - abort device recovery
+    - update biometric preference
 
 ## Version 2.2.3
 ### Bug Fix:

@@ -31,9 +31,7 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
     }
     
     override func configure() {
+        pageConfig = OstContent.getInitiateDeviceVCConfig()
         super.configure()
-        
-        titleLabel.text = "Device Recovery"
-        leadLabel.text = "Once recovered, the device that initiated recovery will be revoked"
     }
 }

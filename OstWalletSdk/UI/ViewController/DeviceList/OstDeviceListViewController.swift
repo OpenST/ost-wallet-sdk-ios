@@ -12,7 +12,7 @@
 import Foundation
 
 
-class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstJsonApiDelegate  {
+@objc class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstJsonApiDelegate  {
     var onCellSelected: (([String: Any]?) ->Void)? = nil
     
     enum DeviceStatus: String {
@@ -67,9 +67,34 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
     var updatedTableArray: [[String: Any]] = [[String: Any]]()
     var meta: [String: Any]? = nil
     
+    var pageConfig: [String: Any]? = nil
+    
+    let MIN_REQUIRED_DEVICE_LIST = 5
+    
+    var canShowEmptyScreen: Bool = false
+    
     override func configure() {
         super.configure();
+        
+        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getCompnentName()],
+                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        
+        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getCompnentName()],
+                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        
         self.shouldFireIsMovingFromParent = true;
+    }
+    
+    func getActionButtonText() -> String {
+        if nil != pageConfig {
+            if let cell = pageConfig!["cell"] as? [String: Any],
+                let actionButton = cell["action_button"] as? [String: Any],
+                let text = actionButton["text"] as? String {
+                
+                return text
+            }
+        }
+        return ""
     }
     
     override func viewDidLoad() {
@@ -110,6 +135,9 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
         
         self.deviceTableView.register(OstPaginationLoaderTableViewCell.self,
                                       forCellReuseIdentifier: OstPaginationLoaderTableViewCell.paginationCellIdentifier)
+        
+        self.deviceTableView.register(OstEmptyDLTableViewCell.self,
+                                      forCellReuseIdentifier: OstEmptyDLTableViewCell.emptyDLCellIdentifier)
     }
     
     func setupRefreshControl() {
@@ -147,7 +175,7 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
     
     //MARK: - Table View Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -155,6 +183,11 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
             return self.tableDataArray.count
         case 1:
             return self.paginatingViewCount
+        case 2:
+            if canShowEmptyScreen && self.tableDataArray.count == 0 {
+                return 1
+            }
+            return 0
         default:
             return 0
         }
@@ -167,6 +200,7 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
         switch indexPath.section {
         case 0:
             let deviceTableViewCell = getTableViewCell(tableView, forIndexPath: indexPath) as! OstDeviceTableViewCell
+            deviceTableViewCell.setActionButtonText(getActionButtonText())
             if tableDataArray.count > indexPath.row {
                 let deviceDetails = tableDataArray[indexPath.row]
                 
@@ -198,6 +232,10 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
             }
             
             cell = pCell
+            
+        case 2:
+            cell = tableView.dequeueReusableCell(withIdentifier: OstEmptyDLTableViewCell.emptyDLCellIdentifier,
+                                                 for: indexPath) as! OstEmptyDLTableViewCell
         default:
             cell = OstBaseTableViewCell()
         }
@@ -215,6 +253,13 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
             if !isNextPageAvailable() && !self.isNewDataAvailable && !self.shouldReloadData {
                 return 0
             }
+        }
+        
+        if (indexPath.section == 2) {
+            if canShowEmptyScreen && tableDataArray.count == 0 {
+                return tableView.frame.size.height
+            }
+            return 0
         }
         
         return UITableView.automaticDimension
@@ -315,7 +360,7 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
     }
     
     func onFetchDeviceSuccess(_ apiResponse: [String: Any]?) {
-        progressIndicator?.hide()
+        canShowEmptyScreen = true
         isApiCallInProgress = false
         
         let currentUser = OstWalletSdk.getUser(self.userId!)
@@ -331,17 +376,24 @@ class OstDeviceListViewController: OstBaseViewController, UITableViewDelegate, U
                 if let deviceAddress = device["address"] as? String,
                     consumedDevices[deviceAddress] == nil {
                     
-//                    if currentDevice!.address!.caseInsensitiveCompare(deviceAddress) != .orderedSame {
+                    if currentDevice!.address!.caseInsensitiveCompare(deviceAddress) != .orderedSame {
                         newDevices.append(device)
                         consumedDevices[deviceAddress] = device
-//                    }
+                    }
                 }
             }
         }
         
         updatedTableArray.append(contentsOf: newDevices)
-        self.isNewDataAvailable = true
         
+        if updatedTableArray.count < MIN_REQUIRED_DEVICE_LIST && isNextPageAvailable() {
+            getDeviceList()
+            return
+        }
+        
+        self.isNewDataAvailable = true
+        progressIndicator?.hide()
+    
         reloadDataIfNeeded()
     }
     

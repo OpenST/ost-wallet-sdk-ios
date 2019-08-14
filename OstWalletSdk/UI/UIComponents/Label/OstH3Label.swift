@@ -11,7 +11,7 @@
 
 import Foundation
 
-@objc class OstH3Label: OstLabel1 {
+@objc class OstH3Label: OstLabel {
     
     /// Set theme config for button
     override func setThemeConfig() {

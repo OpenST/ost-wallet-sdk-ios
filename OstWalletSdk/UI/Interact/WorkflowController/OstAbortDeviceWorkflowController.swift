@@ -10,11 +10,16 @@
 
 import Foundation
 
-
-class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
+@objc class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
     
     /// Mark - View Controllers.
     
+    /// Initialize
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    @objc 
     override init(userId: String,
                   passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
         
@@ -29,7 +34,7 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         try super.performUserDeviceValidation()
         
         if !self.currentUser!.isStatusActivated {
-            throw OstError("i_wc_adwc_pudv_1", .userNotActivated);
+            throw OstError("ui_i_wc_adwc_pudv_1", .userNotActivated);
         }
     }
     
@@ -37,57 +42,37 @@ class OstAbortDeviceRecoveryWorkflowController: OstBaseWorkflowController {
         DispatchQueue.main.async {
             self.getPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstPinVCConfig.getAbortRecoveryPinVCConfig());
+                             pinVCConfig: self.getPinVCConfig())
             self.getPinViewController!.presentVCWithNavigation()
         }
     }
     
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getAbortRecoveryPinVCConfig()
+    }
+    
     @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .abortDeviceRecovery)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .abortDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
         if ( notification.object is OstPinViewController ) {
             self.getPinViewController = nil;
             //The workflow has been cancled by user.
-            
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_vmfp_1", .userCanceled)
-            );
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
     }
     
-    /// Mark - OstPassphrasePrefixAcceptDelegate
-    fileprivate var userPassphrasePrefix:String?
-    override func setPassphrase(ostUserId: String, passphrase: String) {
-        if ( self.userId.compare(ostUserId) != .orderedSame ) {
-            self.flowInterrupted(workflowContext: OstWorkflowContext(workflowType: .abortDeviceRecovery),
-                                 error: OstError("wui_i_wfc_auwc_gp_1", .pinValidationFailed)
-            );
-            /// TODO: (Future) Do Something here. May be cancel workflow?
-            return;
-        }
-        
-        showLoader(progressText: .stopDeviceRecovery)
+    override func pinProvided(pin: String) {
+        self.userPin = pin
+        super.pinProvided(pin: pin)
+    }
+
+    override func onPassphrasePrefixSet(passphrase: String) {
         OstWalletSdk.abortDeviceRecovery(userId: self.userId,
                                          userPin: self.userPin!,
                                          passphrasePrefix: passphrase,
                                          delegate: self)
-        self.userPin = nil;
-        
-    }
-    
-    public override func cleanUpPinViewController() {
-        self.sdkPinAcceptDelegate = nil;
-    }
-    
-    override func cleanUp() {
-        super.cleanUp();
-        if ( nil != self.getPinViewController ) {
-            self.getPinViewController?.removeViewController();
-        }
-        self.getPinViewController = nil;
-        self.passphrasePrefixDelegate = nil;
-        NotificationCenter.default.removeObserver(self);
+        showLoader(progressText: .stopDeviceRecovery)
     }
 }

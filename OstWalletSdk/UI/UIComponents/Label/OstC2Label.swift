@@ -11,7 +11,7 @@
 
 import Foundation
 
-class OstC2Label: OstLabel1 {
+class OstC2Label: OstLabel {
     
     /// Set theme config for button
     override func setThemeConfig() {

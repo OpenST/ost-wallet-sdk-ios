@@ -15,17 +15,26 @@ class OstBaseView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
+        createViews()
+        applyConstraints()
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        configure()
         createViews()
         applyConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        configure()
         createViews()
         applyConstraints()
-        
     }
     
+    func configure() {}
     func createViews() {}
     func applyConstraints() {}
     
