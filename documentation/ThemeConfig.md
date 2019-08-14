@@ -1,7 +1,7 @@
 # Theme Config
 ## Config Structure
 * First level of json is `component name`.
-* Values for component key are properties which applies to respective components.
+* Values for component are properties which applies to respective components.
 ```json
 {
     "COMPONENT_NAME": {
