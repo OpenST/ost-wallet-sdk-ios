@@ -1,18 +1,18 @@
 # Theme Config
 ## Config Structure
-* First level of json is `component name`
-* Values for `component name` are properties which applies on the respective component.
+* First level of json is `component name`.
+* Values for component key are properties which applies to respective components.
 ```json
 {
-    COMPONENT_NAME: {
-        PROPERTY: <VALUE>
+    "COMPONENT_NAME": {
+        "PROPERTY": "<VALUE>"
     }
 }
 ```
 > **important**
 > 1. Application navigation bar logo image should be added in `assets` folder for iOS/android.
 > 2. Value for `nav_bar_logo_image -> asset_name` should be updated with *asset_name* else OST placehoder image will be applied.
-> 3. Incase of missing properties, default values will be applied to the respective component.
+> 3. Incase of missing properties, default values will be applied to respective components.
 
 ## Components
 
@@ -29,10 +29,10 @@ OstWalletUI containts 4 kind of UI components.
 
  **Customizable Properties**<br/>
  &nbsp;_size: Label size_<br/>
- &nbsp;_font: Font for label_<br/>
+ &nbsp;_font: Font for label. If Font is not found or not provied, system font will be applied with `system_font_weight` value._<br/>
  &nbsp;_color: Color of label_<br/>
  &nbsp;_alignment: Alignment for label_<br/>
- &nbsp;_system_font_weight: Weight of system font. Fallback incase value for `font` unable to extaract or not found._<br/>
+ &nbsp;_system_font_weight: Weight of system font._<br/>
  
  ### Button
  
@@ -44,10 +44,10 @@ OstWalletUI containts 4 kind of UI components.
  
  **Customizable Properties**<br/>
  &nbsp;_size: Button text size_<br/>
- &nbsp;_font: Font for button text_<br/>
+ &nbsp;_font: Font for button text. If Font is not found or not provied, system font will be applied with `system_font_weight` value._<br/>_<br/>
  &nbsp;_color: Title color of button_<br/>
  &nbsp;_background_color: Button background color_<br/>
- &nbsp;_system_font_weight: Weight of system font. Fallback incase value for `font` unable to extaract or not found._<br/>
+ &nbsp;_system_font_weight: Weight of system font._<br/>
  
  ### Navigation Bar
  
