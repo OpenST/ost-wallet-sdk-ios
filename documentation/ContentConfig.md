@@ -115,7 +115,7 @@ The following UI components are supported by Pin Input views.
 
 Here is PIN Input View looks like:
 
-![copy-framework-file](images/PinView.png)
+![copy-framework-file](images/PinViewLabelTypes.png)
 
 ### Adding links to `terms_and_condition_label`
 `terms_and_condition_label` is a special label that supports inline links using `placeholder` within the text.
@@ -163,7 +163,7 @@ The following UI components are supported by Device List Views.
 
 Here is Device List View looks like:
 
-![copy-framework-file](images/PinView.png)
+![copy-framework-file](images/DeviceListLabelTypes.png)
 
 ## Supported UI Components in Show Mnemonics Views(show_mnemonics)
 
@@ -175,6 +175,4 @@ The following UI components are supported by Show Mnemonics Views.
 | info_label                | label          |
 | bottom_label              | label          |
 
-![copy-framework-file](images/PinView.png)
-
-
+![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
