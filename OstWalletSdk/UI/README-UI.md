@@ -28,7 +28,7 @@ Theme for OstWalletUI can be initialized by calling `setThemeConfig` API
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
 
-*Create config file by title `ThemeConfig.json`
+* Create config file by title `ThemeConfig.json`
 
 ```Swift
 let bundle  = Bundle.main
@@ -48,7 +48,7 @@ Content for OstWalletUI can be initialized by calling `setContentConfig` API.
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
 
-*Create config file by title `ContentConfig.json`
+* Create config file by title `ContentConfig.json`
 
 ```Swift
 let bundle  = Bundle.main
