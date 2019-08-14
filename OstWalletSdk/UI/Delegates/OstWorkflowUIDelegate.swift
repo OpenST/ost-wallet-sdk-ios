@@ -41,7 +41,7 @@ import Foundation
     /// - Parameters:
     ///   - workflowId: Workflow id
     ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
-    ///   - error: Context Entity
+    ///   - error: Error Entity
     @objc
     func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)

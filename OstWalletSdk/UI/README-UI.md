@@ -41,7 +41,7 @@ OstWalletUI.setThemeConfig(config)
 
 ### Set Content Config
 
-Content for OstWalletUI can be initialized by calling `setContentConfig` API 
+Content for OstWalletUI can be initialized by calling `setContentConfig` API.
 
 While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
 
@@ -260,6 +260,7 @@ OstWalletUI.subscribe(
     workflowId: String,
     listner: OstWorkflowUIDelegate)
 ```
+
 ### View Component Sheet
 
 Component sheet is collection of all components present in OstWalletUI. Developers can verify how components are going to look with provied theme.
