@@ -70,6 +70,9 @@ OstWalletUI containts 4 kind of UI components.
  &nbsp;_filled_color: Filled dot color_<br/>
     
 ## Theme JSON
+
+To support custom font for application, please refer [apple documentation](https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_app)
+
 ```json
 {
     "nav_bar_logo_image": {
@@ -78,6 +81,7 @@ OstWalletUI containts 4 kind of UI components.
 
     "h1": {
         "size": 20,
+        "font": "Lato",
         "color": "#438bad",
         "system_font_weight": "semi_bold",
         "alignment": "center"
@@ -86,6 +90,7 @@ OstWalletUI containts 4 kind of UI components.
     "h2": {
         "size": 17,
         "color": "#666666",
+        "font": "Lato",
         "system_font_weight": "medium",
         "alignment": "center"
     },
@@ -93,6 +98,7 @@ OstWalletUI containts 4 kind of UI components.
     "h3": {
         "size": 15,
         "color": "#888888",
+        "font": "Lato",
         "system_font_weight": "regular",
         "alignment": "center"
     },
@@ -100,6 +106,7 @@ OstWalletUI containts 4 kind of UI components.
     "h4": {
         "size": 12,
         "color": "#888888",
+        "font": "Lato",
         "system_font_weight": "regular",
         "alignment": "center"
     },
@@ -107,6 +114,7 @@ OstWalletUI containts 4 kind of UI components.
     "c1": {
         "size": 14,
         "color": "#484848",
+        "font": "Lato",
         "system_font_weight": "bold",
         "alignment": "left"
     },
@@ -114,6 +122,7 @@ OstWalletUI containts 4 kind of UI components.
     "c2": {
         "size": 12,
         "color": "#6F6F6F",
+        "font": "Lato",
         "system_font_weight": "regular",
         "alignment": "left"
     },
@@ -121,6 +130,7 @@ OstWalletUI containts 4 kind of UI components.
     "b1": {
         "size": 17,
         "color": "#ffffff",
+        "font": "Lato",
         "background_color": "#438bad",
         "system_font_weight": "medium"
     },
@@ -128,6 +138,7 @@ OstWalletUI containts 4 kind of UI components.
     "b2": {
         "size": 17,
         "color": "#438bad",
+        "font": "Lato",
         "background_color": "#f8f8f8",
         "system_font_weight": "semi_bold"
     },
@@ -135,6 +146,7 @@ OstWalletUI containts 4 kind of UI components.
     "b3": {
         "size": 12,
         "color": "#ffffff",
+        "font": "Lato",
         "background_color": "#438bad",
         "system_font_weight": "medium"
     }, 
@@ -142,6 +154,7 @@ OstWalletUI containts 4 kind of UI components.
     "b4": {
         "size": 12,
         "color": "#438bad",
+        "font": "Lato",
         "background_color": "#ffffff",
         "system_font_weight": "medium"
     },
