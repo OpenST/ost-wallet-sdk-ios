@@ -1,7 +1,9 @@
 # OstWalletUI Content Config
 App developers can configure the text shown on various views displayed by OstWalletUI.
-To configure the content, the sdk needs to be provided with `Dictionary`.
-The default configuration can be found here.
+
+To configure the content, the sdk needs to be provided with [`Dictionary`](https://developer.apple.com/documentation/swift/dictionary).
+
+The default configuration can be found [here](../OstWalletSdk/UI/Config/OstContentConfig.json).
 
 ## Dictionary Data Structure
 Here is the small sample `json` representation of the configuration.
