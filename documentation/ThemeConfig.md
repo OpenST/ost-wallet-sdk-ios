@@ -1,5 +1,62 @@
 # Theme Config
+## Config Structure
 
+## Components
+
+OstWalletUI containts 4 kind of UI components. 
+
+ ### Label
+ Label is categorized as :
+ * H1
+ * H2
+ * H3
+ * H4
+ * C1
+ * C2
+
+ **Customizable Properties**<br/>
+ &nbsp;_size: Label size_<br/>
+ &nbsp;_font: Font for label_<br/>
+ &nbsp;_color: Color of label_<br/>
+ &nbsp;_alignment: Alignment for label_<br/>
+ &nbsp;_system_font_weight: Weight of system font. Fallback incase value for `font` unable to extaract or not found._<br/>
+ 
+ ### Button
+ 
+ Button is categorized as :
+ * B1
+ * B2
+ * B3
+ * B4
+ 
+ **Customizable Properties**<br/>
+ &nbsp;_size: Button text size_<br/>
+ &nbsp;_font: Font for button text<br/>
+ &nbsp;_color: Title color of button_<br/>
+ &nbsp;_background_color: Button background color_<br/>
+ &nbsp;_system_font_weight: Weight of system font. Fallback incase value for `font` unable to extaract or not found._<br/>
+ 
+ ### Navigation Bar
+ 
+ **Customizable Properties**<br/>
+ * Navigation bar logo:
+ Set value for key `nav_bar_logo_image -> asset_name` 
+ * Navigation bar tint color:
+ Set value for key `navigation_bar -> tint_color`
+ *  Close icon tint color:
+ Set value for key `icons -> close -> tint_color` 
+ * Back icon tint color:
+ Set value for key `icons -> back -> tint_color`
+ 
+ ### Pin Input
+ 
+ Style for pin input can be modified by updating values for key `pin_input`.
+ 
+ **Customizable Properties**<br/>
+ &nbsp;_empty_color: Empty dot color_<br/>
+ &nbsp;_filled_color: Filled dot color_<br/>
+    
+## Theme JSON
 ```json
 {
     "nav_bar_logo_image": {
