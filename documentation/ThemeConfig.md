@@ -14,6 +14,14 @@
 > 2. Value for `nav_bar_logo_image -> asset_name` should be updated with *asset_name* else OST placehoder image will be applied.
 > 3. Incase of missing properties, default values will be applied to respective components.
 
+## UI Components 
+
+![copy-framework-file](images/nav.png)
+
+![copy-framework-file](images/PinView.png)
+
+![copy-framework-file](images/Card.png)
+
 ## Components
 
 OstWalletUI containts 4 kind of UI components. 
