@@ -7,7 +7,7 @@ The default configuration can be found [here](../OstWalletSdk/UI/Config/OstConte
 
 ## Dictionary Data Structure
 Here is the small sample `json` representation of the configuration.
-```json
+```js
 {
   "activate_user": {
     "create_pin": {
@@ -117,11 +117,11 @@ Here is PIN Input View looks like:
 
 ![copy-framework-file](images/PinView.png)
 
-### `terms_and_condition_label` and `placeholder`
+### Adding links to `terms_and_condition_label`
 `terms_and_condition_label` is a special label that supports inline links using `placeholder` within the text.
 
 Below is a sample configuration to achive the same:
-```json
+```js
 {
   "activate_user": {
     "create_pin": {
@@ -144,8 +144,11 @@ Below is a sample configuration to achive the same:
   }
 }
 ```
-**NOTE:** As of now, `placeholder` is only applicable to `terms_and_condition_label` and is NOT supported by other labels.
-
+#### NOTE
+```
+As of now, `placeholder` is only applicable to `terms_and_condition_label` 
+and is NOT supported by other labels.
+```
 
 
 ## Supported UI Components in Device List Views (device_list)
