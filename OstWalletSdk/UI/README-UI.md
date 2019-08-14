@@ -25,42 +25,40 @@ import OstWalletSdk
 
 Theme for OstWalletUI can be initialized by calling `setThemeConfig` API
 
-`nav_bar_logo_image` is used to show image on navigation bar.
-
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
 
+*Create config file by title `ThemeConfig.json`
+
 ```Swift
-let config: [String: Any] = [
-    "nav_bar_logo_image": [
-        "asset_name": "nav_bar_logo"
-    ]
-]
-OstWalletUI.setThemeConfig(config)
+let bundle  = Bundle.main
+gaurd let filepath = bundle.path(forResource: "ThemeConfig", ofType: "json"),
+    let content = try? String(contentsOfFile: filepath),
+    let contentData = content.data(using: .utf8) else {
+        return 
+}
+let themeConfig = try JSONSerialization.jsonObject(with: contentData, options: [])
+OstWalletUI.setThemeConfig(themeConfig)
 ```
 
 ### Set Content Config
 
 Content for OstWalletUI can be initialized by calling `setContentConfig` API.
 
-While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
-
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
 
-```Swift
-let config: [String: Any] = [
-    "activate_user": [
-        "create_pin": [
-            "terms_and_condition_url": "https://ost.com/terms"
-        ],
-        "confirm_pin": [
-            "terms_and_condition_url": "https://ost.com/terms"
-        ]
-    ]
-]
+*Create config file by title `ContentConfig.json`
 
-OstWalletUI.setContentConfig(config)
+```Swift
+let bundle  = Bundle.main
+gaurd let filepath = bundle.path(forResource: "ContentConfig", ofType: "json"),
+    let content = try? String(contentsOfFile: filepath),
+    let contentData = content.data(using: .utf8) else {
+    return 
+}
+let contentConfig = try JSONSerialization.jsonObject(with: contentData, options: [])
+OstWalletUI.setContentConfig(contentConfig)
 ```
 
 ### Activate User
