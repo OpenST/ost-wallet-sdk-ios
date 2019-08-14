@@ -16,7 +16,7 @@
 
 ## UI Components 
 
-![copy-framework-file](images/nav.png)
+![copy-framework-file](images/NavBar.png)
 
 ![copy-framework-file](images/PinView.png)
 
