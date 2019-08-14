@@ -1,54 +1,103 @@
-# Content Config
+# OstWalletUI Content Config
+App developers can configure the text shown on various views displayed by OstWalletUI.
+To configure the content, the sdk needs to be provided with `Dictionary`.
 
-## Config Structure
-* First level of json is `workflow`.
-* Value for workflow are the `pages` which wokflow contains.
-* Customizable `Components` are present under key pages.
-* Componet contaisn customizable `property`.
-
+## Dictionary Data Structure
+Here is the small sample `json` representation of the configuration.
 ```json
 {
-    "WORKFLOW": {
-        "PAGE": {
-            "COMPONENT": {
-                "PROPERTY": <VALUE>
+    "activate_user": {
+        "create_pin": {
+            "title_label": {
+                "text": "Activate Your Wallet"
             }
         }
     }
 }
 ```
 
-## Config Info
-OstWalletUI supports 8 workflows:
-* actiavte user
-* create session
-* get device mnemonis
-* revoke device
-* reset pin
-* initiate device recovery
-* abort device recovery
-* update biometric preference
+In the above example:
+* The first-level key `activate_user` corresponds to `Activate User` workflow.
+* The second-level key `create_pin` corresponds to `Create Pin` view.
+* The third-level key `title_label` corresponds to label that displays the title of the view.
+* The fourth-level key `text` is corresponds to diplay text to the title label.
 
-### Page
-Properties which can be editable from config are:
+## Supported Workflows
+OstWalletUI supports 8 workflows
 
-**Pin View**
-* title_label
-* lead_label
-* info_label
-* terms_and_condition_label
+| Configuration Keys   | Workflows                   |
+| -------------------- |:---------------------------:|
+| activate_user        | Activate User               |
+| add_session          | Add Session                 |
+| initiate_recovery    | Initialize Recovery         |
+| abort_recovery       | Abort Device Recovery       |
+| revoke_device        | Revoke Device               |
+| biometric_preference | Update Biometric Preference |
+| reset_pin            | Reset a User's PIN          |
+| view_mnemonics       | Get Mnemonic Phrase         |
 
-**Device List**
-* title_label
-* info_label
-* action_button_text: Set value for key `cell -> action_button -> text` 
+## Supported Views
+### Activate User Workflow Views
 
-**Show Mnemonics**
-* title_label
-* info_label
-* bottom_label
+| Configuration Keys   | Views                                                       |
+| -------------------- | ----------------------------------------------------------- |
+| create_pin           | Create Pin View where user sets the pin for first time      |
+| confirm_pin          | Confirm Pin View where user confirms the pin again          |
 
-### Component
+### Add Session Views
+
+| Configuration Keys   | Views                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| get_pin              | Get Pin View where user provides pin for authentication    |
+
+### Initialize Recovery Views
+
+| Configuration Keys   | Views                                                       |
+| -------------------- | ----------------------------------------------------------- |
+| device_list          | Displays list of authorized devices for user to choose from |
+| get_pin              | Get Pin View where user provides pin for authentication     |
+
+
+### Abort Device Recovery Views
+
+| Configuration Keys   | Views                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| get_pin              | Get Pin View where user provides pin for authentication    |
+
+### Revoke Device Views
+
+| Configuration Keys   | Views                                                       |
+| -------------------- | ----------------------------------------------------------- |
+| device_list          | Displays list of authorized devices for user to choose from |
+| get_pin              | Get Pin View where user provides pin for authentication     |
+
+### Update Biometric Preferences Views
+
+| Configuration Keys   | Views                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| get_pin              | Get Pin View where user provides pin for authentication    |
+
+### Reset a User's PIN Views
+
+| Configuration Keys   | Views                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| get_pin              | Get Pin View where user provides current pin               |
+| set_new_pin          | View where user sets the new pin                           |
+| confirm_new_pin      | Confirm Pin View where user confirms the new pin again     |
+
+### Get Mnemonic Phrase Views
+
+| Configuration Keys   | Views                                                      |
+| -------------------- | ---------------------------------------------------------- |
+| get_pin              | Get Pin View where user provides pin for authentication    |
+
+## Supported Elements in PIN Input Views
+Here, we refer follwing views as 'Pin Input' views:
+* create_pin
+* confirm_pin
+* get_pin
+* set_new_pin
+* confirm_new_pin
 
 
 ## Content JSON
