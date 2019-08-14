@@ -39,8 +39,17 @@ OstWalletUI containts 4 kind of UI components.
  &nbsp;_size: Label size_<br/>
  &nbsp;_font: Font for label. If Font is not found or not provied, system font will be applied with `system_font_weight` value._<br/>
  &nbsp;_color: Color of label_<br/>
- &nbsp;_alignment: Alignment for label_<br/>
+ &nbsp;_alignment: Alignment for label._<br/>
+ Supported Values for *alignment* are:
+    * left
+    * right
+    * center
  &nbsp;_system_font_weight: Weight of system font._<br/>
+ Supported Values for *system_font_weight* are:
+    * bold
+    * regular
+    * medium
+    * semi_bold
  
  ### Button
  
@@ -56,6 +65,11 @@ OstWalletUI containts 4 kind of UI components.
  &nbsp;_color: Title color of button_<br/>
  &nbsp;_background_color: Button background color_<br/>
  &nbsp;_system_font_weight: Weight of system font._<br/>
+ Supported Values for *system_font_weight* are:
+* bold
+ * regular
+ * medium
+ * semi_bold
  
  ### Navigation Bar
  
