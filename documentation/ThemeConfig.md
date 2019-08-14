@@ -44,7 +44,7 @@ OstWalletUI containts 4 kind of UI components.
  
  **Customizable Properties**<br/>
  &nbsp;_size: Button text size_<br/>
- &nbsp;_font: Font for button text. If Font is not found or not provied, system font will be applied with `system_font_weight` value._<br/>_<br/>
+ &nbsp;_font: Font for button. If Font is not found or not provied, system font will be applied with `system_font_weight` value._<br/>_<br/>
  &nbsp;_color: Title color of button_<br/>
  &nbsp;_background_color: Button background color_<br/>
  &nbsp;_system_font_weight: Weight of system font._<br/>
