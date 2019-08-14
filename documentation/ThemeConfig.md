@@ -20,12 +20,12 @@ OstWalletUI containts 4 kind of UI components.
 
  ### Label
  Label is categorized as :
- * H1
- * H2
- * H3
- * H4
- * C1
- * C2
+ * [H1](ThemeConfig.md#theme-json)
+ * [H2](ThemeConfig.md#theme-json)
+ * [H3](ThemeConfig.md#theme-json)
+ * [H4](ThemeConfig.md#theme-json)
+ * [C1](ThemeConfig.md#theme-json)
+ * [C2](ThemeConfig.md#theme-json)
 
  **Customizable Properties**<br/>
  &nbsp;_size: Label size_<br/>
@@ -37,10 +37,10 @@ OstWalletUI containts 4 kind of UI components.
  ### Button
  
  Button is categorized as :
- * B1
- * B2
- * B3
- * B4
+ * [B1](ThemeConfig.md#theme-json)
+ * [B2](ThemeConfig.md#theme-json)
+ * [B3](ThemeConfig.md#theme-json)
+ * [B4](ThemeConfig.md#theme-json)
  
  **Customizable Properties**<br/>
  &nbsp;_size: Button text size_<br/>
