@@ -1,6 +1,7 @@
 # OstWalletUI Content Config
 App developers can configure the text shown on various views displayed by OstWalletUI.
 To configure the content, the sdk needs to be provided with `Dictionary`.
+The default configuration can be found here.
 
 ## Dictionary Data Structure
 Here is the small sample `json` representation of the configuration.
@@ -90,8 +91,10 @@ OstWalletUI supports 8 workflows
 | Configuration Keys   | Views                                                      |
 | -------------------- | ---------------------------------------------------------- |
 | get_pin              | Get Pin View where user provides pin for authentication    |
+| show_mnemonics       | Displays 12 word mnemonics of device                       |
 
-## Supported Elements in PIN Input Views
+
+## Supported UI Components in PIN Input Views
 Here, we refer follwing views as 'Pin Input' views:
 * create_pin
 * confirm_pin
@@ -99,242 +102,73 @@ Here, we refer follwing views as 'Pin Input' views:
 * set_new_pin
 * confirm_new_pin
 
+The following UI components are supported by Pin Input views.
 
-## Content JSON
+| Configuration Keys        | Component Type | 
+| ------------------------- |:--------------:|
+| title_label               | label          |
+| lead_label                | label          |
+| info_label                | label          |
+| terms_and_condition_label | label          |
 
+Here is PIN Input View looks like:
+
+![copy-framework-file](images/PinView.png)
+
+### `terms_and_condition_label` and `placeholder`
+`terms_and_condition_label` is a special label that supports inline links using `placeholder` within the text.
+
+Below is a sample configuration to achive the same:
 ```json
 {
     "activate_user": {
         "create_pin": {
-            "title_label": {
-                "text": "Create Pin"
-            },
-            "lead_label": {
-                "text": "Add a 6-digit PIN to secure your wallet"
-            },
-            "info_label":{
-                "text":  "PIN helps you recover your wallet if the phone is lost or stolen"
-            },
             "terms_and_condition_label": {
-                "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
+                "text": "Please refer our {{t_and_c}} and {{privacy_policy}}"
             },
             "placeholders": {
-                "terms_and_condition": {
+                "t_and_c": {
                     "url": "https://ost.com/terms",
-                    "text": "T&C Apply",
+                    "text": "Terms and Conditions",
+                    "color": "#0076FF"
+                },
+                "privacy_policy": {
+                    "url": "https://ost.com/privacy",
+                    "text": "Privacy Policy",
                     "color": "#0076FF"
                 }
             }        
-        },
-        "confirm_pin": {
-            "title_label": {
-                "text": "Confirm PIN"
-            },
-            "lead_label": {
-                "text": "If you forget your PIN, you cannot recover your wallet"
-            },  
-            "info_label":{
-                "text":  "So please be sure to remember it"
-            },
-            "terms_and_condition_label": {
-                "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
-            },
-            "placeholders": {
-                "terms_and_condition": {
-                    "url": "https://ost.com/terms",
-                    "text": "T&C Apply",
-                    "color": "#0076FF"
-                }
-            }
         }
-    },
-
-    "add_session": {
-        "get_pin": {
-            "title_label": {
-                "text": "Create Session"
-            },
-            "lead_label": {
-                "text": "Add a 6-digit PIN to secure your wallet"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "initiate_recovery": {
-        "device_list": {
-            "title_label": {
-                "text": "Device Recovery"
-            },
-            "info_label": {
-                "text": "This is a list of all the devices that are authorized to access your wallet"
-            },
-            "cell": {
-                "action_button": {
-                    "text": "Start Recovery"
-                }
-            }
-        },
-        "get_pin": {
-            "title_label": {
-                "text": "Recover Access to Your Wallet"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN to recover access to your wallet"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "abort_recovery": {
-        "get_pin": {
-            "title_label": {
-                "text": "Abort Recovery"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN to abort recovery"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "revoke_device": {
-        "device_list": {
-            "title_label": {
-                "text": "Revoke Device"
-            },
-            "info_label": {
-                "text": "This is a list of all the devices that are authorized to access your wallet"
-            },
-            "cell": {
-                "action_button": {
-                    "text": "Revoke Device"
-                }
-            }
-        },
-
-        "get_pin": {
-            "title_label": {
-                "text": "Revoke Device"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "biometric_preference": {
-        "get_pin": {
-            "title_label": {
-                "text": "Biometric Preference"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "reset_pin": {
-        "get_pin": {
-            "title_label": {
-                "text": "Enter Current PIN"
-            },
-            "lead_label": {
-                "text": "Enter your current 6-digit PIN"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        },
-
-        "set_new_pin": {
-            "title_label": {
-                "text": "Add New Pin"
-            },
-            "lead_label": {
-                "text": "Add a 6-digit PIN to secure your wallet"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        },
-
-        "confirm_new_pin": {
-            "title_label": {
-                "text": "Confirm New Pin"
-            },
-            "lead_label": {
-                "text": "If you forget your PIN, you cannot recover your wallet"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        }
-    },
-
-    "view_mnemonics": {
-        "get_pin": {
-            "title_label": {
-                "text": "View Mnemonics"
-            },
-            "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
-            },
-            "info_label":{
-                "text":  ""
-            },
-            "terms_and_condition_label": {
-                "text": ""
-            }
-        },
-
-        "show_mnemonics": {
-            "title_label": {
-                "text": "View Mnemonics"
-            },
-            "info_label": {
-                "text": "Write down your 12-word mnemonic phrase and store them securely"
-            },
-            "bottom_label": {
-                "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
-            }
-        }
-    }
 }
 ```
+**NOTE:** As of now, `placeholder` is only applicable to `terms_and_condition_label` and is NOT supported by other labels.
+
+
+
+## Supported UI Components in Device List Views (device_list)
+
+The following UI components are supported by Device List Views.
+
+| Configuration Keys        | Component Type | 
+| ------------------------- |:--------------:|
+| title_label               | label          |
+| info_label                | label          |
+| action_button             | button text    |
+
+Here is Device List View looks like:
+
+![copy-framework-file](images/PinView.png)
+
+## Supported UI Components in Show Mnemonics Views(show_mnemonics)
+
+The following UI components are supported by Show Mnemonics Views.
+
+| Configuration Keys        | Component Type | 
+| ------------------------- |:--------------:|
+| title_label               | label          |
+| info_label                | label          |
+| bottom_label              | label          |
+
+![copy-framework-file](images/PinView.png)
+
+
