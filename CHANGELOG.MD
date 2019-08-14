@@ -2,9 +2,9 @@
 
 ## Version 2.3.0
 ### Feature:
+* OstWalletSdk now contains UI.
 * UI components can be modified.
 * Languages for UI workflow components can be modified.
-* UI for OstWalletSdk is integrated.
 * OstWalletUI now supports
     - activate user
     - create session
