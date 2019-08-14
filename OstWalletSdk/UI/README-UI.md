@@ -3,12 +3,10 @@
 ## Introduction
 
 Wallet UI SDK is useful to integrate OstWalletSdk in application with available UI components.
-Please note, at the moment, UI features are only available in <em><b>beta</b></em> release.
 
 ## Setup
 
 To setup OstWalletUI, please refer [setup](../../README.md#setup).
-
 
 ## OstWalletUI SDK APIs
 ### Important Notes
@@ -198,23 +196,6 @@ If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to revo
 OstWalletUI.revokeDevice(
     userId: String,
     revokeDeviceAddress: String,
-    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
-) -> String
-```
-
-### Add a device using mnemonics
-
-A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.
-
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
-
-&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
-
-```Swift
-OstWalletUI.authorizeCurrentDeviceWithMnemonics(
-    userId: String,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String
 ```
