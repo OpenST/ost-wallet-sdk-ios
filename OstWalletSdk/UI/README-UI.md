@@ -38,6 +38,9 @@ gaurd let filepath = bundle.path(forResource: "ThemeConfig", ofType: "json"),
         return 
 }
 let themeConfig = try JSONSerialization.jsonObject(with: contentData, options: [])
+```
+
+```Swift
 OstWalletUI.setThemeConfig(themeConfig)
 ```
 
@@ -58,6 +61,8 @@ gaurd let filepath = bundle.path(forResource: "ContentConfig", ofType: "json"),
     return 
 }
 let contentConfig = try JSONSerialization.jsonObject(with: contentData, options: [])
+```
+```Swift
 OstWalletUI.setContentConfig(contentConfig)
 ```
 
