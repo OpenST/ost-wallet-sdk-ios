@@ -1,5 +1,18 @@
 # Theme Config
 ## Config Structure
+* First level of json is `component name`
+* Values for `component name` are properties which applies on the respective component.
+```json
+{
+    COMPONENT_NAME: {
+        PROPERTY: <VALUE>
+    }
+}
+```
+> **important**
+> 1. Application navigation bar logo image should be added in `assets` folder for iOS/android.
+> 2. Value for `nav_bar_logo_image -> asset_name` should be updated with *asset_name* else OST placehoder image will be applied.
+> 3. Incase of missing properties, default values will be applied to the respective component.
 
 ## Components
 
