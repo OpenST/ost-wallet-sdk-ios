@@ -1,7 +1,7 @@
 # OST Wallet UI iOS
 
 ## Introduction
-For quick and easy integration with SDK, developers can use built-in User Interface Components which are theamable and support content customization.
+For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization.
 
 ## Setup
 
