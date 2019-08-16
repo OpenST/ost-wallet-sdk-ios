@@ -21,7 +21,7 @@ import OstWalletSdk
 
 ### Set Theme Config
 
-Theme for OstWalletUI can be initialized by calling `setThemeConfig` API
+Theme for OstWalletUI can be initialized by calling `setThemeConfig` API. To define custom theme config, please refer [ThemeConfig](./ThemeConfig.md) documentation.
 
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
@@ -44,7 +44,7 @@ OstWalletUI.setThemeConfig(themeConfig)
 
 ### Set Content Config
 
-Content for OstWalletUI can be initialized by calling `setContentConfig` API.
+Content for OstWalletUI can be initialized by calling `setContentConfig` API. To define custom content config, please refer [ContentConfig](./ContentConfig.md) documentation. 
 
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
@@ -319,7 +319,6 @@ func flowComplete(
 
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
-/// Developers should dismiss pin dialog (if open) on this callback.
 ///
 /// - Parameters:
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
