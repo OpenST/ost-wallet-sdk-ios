@@ -1053,15 +1053,3 @@ public let workflowType: OstWorkflowType
 ## Demo App
 
 For a sample implementation, please see the [Demo App](demo-app)
-
-
-## Reference
-
-There are other references are listed below:
-
-- [OstWorkflowContext](OstWalletSdk/Workflows/OstContext/OstContextEntity.swift)
-
-- [OstContextEntity](OstWalletSdk/Workflows/OstContext/OstWorkflowContext.swift)
-
-- [OstError](OstWalletSdk/Errors)
-
