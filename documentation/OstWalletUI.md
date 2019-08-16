@@ -1,8 +1,7 @@
 # OST Wallet UI iOS
 
 ## Introduction
-
-Wallet UI SDK is useful to integrate OstWalletSdk in application with available UI components.
+For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization.
 
 ## Setup
 
@@ -21,7 +20,7 @@ import OstWalletSdk
 
 ### Set Theme Config
 
-Theme for OstWalletUI can be initialized by calling `setThemeConfig` API
+Theme for OstWalletUI can be initialized by calling `setThemeConfig` API. To define custom theme config, please refer [ThemeConfig](./ThemeConfig.md) documentation.
 
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
@@ -44,7 +43,7 @@ OstWalletUI.setThemeConfig(themeConfig)
 
 ### Set Content Config
 
-Content for OstWalletUI can be initialized by calling `setContentConfig` API.
+Content for OstWalletUI can be initialized by calling `setContentConfig` API. To define custom content config, please refer [ContentConfig](./ContentConfig.md) documentation. 
 
 **Parameters**<br/>
 &nbsp;_config: Config to use for UI_<br/>
@@ -143,11 +142,11 @@ OstWalletUI.resetPin(
 
 ### Initialize Recovery
 
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .
+A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process. To use built-in device list UI, pass `recoverDeviceAddress` as `nil`.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
+&nbsp;_recoverDeviceAddress: Device address which wants to recover. When nil is passed, the user is asked to choose a device. _<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -181,11 +180,11 @@ OstWalletUI.abortDeviceRecovery(
 
 ###  Revoke Device
 
-To revoke device access.
+To revoke device access. To use built-in device list UI, pass `revokeDeviceAddress` as `nil`.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_revokeDeviceAddress: Device address to revoke_<br/>
+&nbsp;_revokeDeviceAddress: Device address to revoke. When nil is passed, the user is asked to choose a device._<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -253,7 +252,7 @@ Component sheet is collection of all components present in OstWalletUI. Develope
 OstWalletUI.showComponentSheet()
 ```
 
-## Workflow Delegates
+## UI Workflow Delegates
 
 ### OstPassphrasePrefixDelegate
 
@@ -269,50 +268,66 @@ func getPassphrase(
     ostUserId:String,
     workflowContext: OstWorkflowContext,
     delegate: OstPassphrasePrefixAcceptDelegate)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
 
 ### OstWorkflowUIDelegate
+
+
+#### requestAcknowledged
 
 ```Swift
 
 /// Acknowledge user about the request which is going to make by SDK.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - contextEntity: Context Entity
 @objc
 func requestAcknowledged(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     contextEntity: OstContextEntity)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
+
+#### flowComplete
 
 ```Swift
 /// Inform SDK user the the flow is complete.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - contextEntity: Context Entity
 @objc
 func flowComplete(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     contextEntity: OstContextEntity)
+
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
+
+#### flowInterrupted
 
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
-/// Developers should dismiss pin dialog (if open) on this callback.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - error: Error Entity
 @objc
 func flowInterrupted(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     error: OstError)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
