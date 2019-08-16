@@ -167,7 +167,6 @@ import Foundation
         }
     }
     
-
     /// Get pending recovery from server
     ///
     /// - Parameters:
@@ -180,6 +179,23 @@ import Foundation
                                         onSuccess: self.getApiSuccessCallback(delegate: delegate),
                                         onFailure: self.getApiErrorCallback(delegate: delegate))
             
+        } catch let error {
+            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+        }
+    }
+    
+    /// Get device list from server
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - params: transaction params
+    ///   - delegate: Callback
+    @objc public class func getDeviceList(forUserId userId:String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
+        do {
+            try OstAPIDevice(userId: userId)
+                .getDeviceList(params: params,
+                               onSuccess: self.getApiSuccessCallback(delegate: delegate),
+                               onFailure: self.getApiErrorCallback(delegate: delegate));
         } catch let error {
             delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
         }

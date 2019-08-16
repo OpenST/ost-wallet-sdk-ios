@@ -87,7 +87,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
             
-        }else if workflowContext.workflowType == .revokeDeviceWithQRCode {
+        }else if workflowContext.workflowType == .revokeDevice {
             delegate.dataVerified()
             
         }else if workflowContext.workflowType == .executeTransaction {

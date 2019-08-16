@@ -51,7 +51,7 @@ class OstBiometricPreference: OstUserAuthenticatorWorkflow {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .updateBiometricPreference)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .updateBiometricPreference)
     }
     
     /// Get context entity

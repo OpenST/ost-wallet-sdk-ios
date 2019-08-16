@@ -154,7 +154,7 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .authorizeDeviceWithMnemonics)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .authorizeDeviceWithMnemonics)
     }
     
     /// Get context entity

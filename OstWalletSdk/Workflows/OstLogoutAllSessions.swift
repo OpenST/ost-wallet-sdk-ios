@@ -110,7 +110,7 @@ class OstLogoutAllSessions: OstWorkflowEngine {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .logoutAllSessions)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .logoutAllSessions)
     }
     
     /// Get context entity
