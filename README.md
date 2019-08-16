@@ -117,6 +117,59 @@ Starting version `2.3.0` the SDK also provides built-in User Interface Component
 
 
 
+# Table of Contents:
+
+- [OST Wallet SDK iOS](#ost-wallet-sdk-ios)
+	- [Support](#support)
+	- [Dependencies](#dependencies)
+	- [Setup](#setup)
+		- [A). Installing iOS Wallet SDK using Carthage](#a-installing-ios-wallet-sdk-using-carthage)
+			- [i). Installing Carthage](#i-installing-carthage)
+			- [ii). Installing wallet SDK using Carthage](#ii-installing-wallet-sdk-using-carthage)
+			- [iii). Copying the `OstWalletSdk.framework` file in your Xcode project](#iii-copying-the-ostwalletsdkframework-file-in-your-xcode-project)
+			- [iv). Adding the `OstWalletSdk` dependencies in your Xcode project](#iv-adding-the-ostwalletsdk-dependencies-in-your-xcode-project)
+			- [v). Adding SDK configuration file](#v-adding-sdk-configuration-file)
+			- [vi). Add `NSFaceIDUsageDescription` description in `info.plist`](#vi-add-nsfaceidusagedescription-description-in-infoplist)
+			- [vii). Initialize the Wallet SDK](#vii-initialize-the-wallet-sdk)
+	- [OST Wallet SDK APIs](#ost-wallet-sdk-apis)
+		- [Types of Methods](#types-of-methods)
+	- [Workflows](#workflows)
+		- [1. setupDevice](#1-setupdevice)
+		- [2. activateUser](#2-activateuser)
+		- [3. addSession](#3-addsession)
+		- [4. perfromQRAction](#4-perfromqraction)
+		- [5. getDeviceMnemonics](#5-getdevicemnemonics)
+		- [6. executeTransaction](#6-executetransaction)
+		- [7. authorizeCurrentDeviceWithMnemonics](#7-authorizecurrentdevicewithmnemonics)
+		- [8. resetPin](#8-resetpin)
+		- [9. initiateDeviceRecovery](#9-initiatedevicerecovery)
+		- [10. abortDeviceRecovery](#10-abortdevicerecovery)
+		- [11. logoutAllSessions](#11-logoutallsessions)
+		- [12. revokeDevice](#12-revokedevice)
+	- [Getters](#getters)
+		- [1. getAddDeviceQRCode](#1-getadddeviceqrcode)
+		- [2. getUser](#2-getuser)
+		- [4. getCurrentDevice](#4-getcurrentdevice)
+	- [OST JSON APIs](#ost-json-apis)
+		- [1. getBalance](#1-getbalance)
+		- [3. getBalanceWithPricePoint](#3-getbalancewithpricepoint)
+		- [5. getPendingRecovery](#5-getpendingrecovery)
+		- [2. onOstJsonApiError](#2-onostjsonapierror)
+	- [Classes](#classes)
+		- [1. OstApiError](#1-ostapierror)
+			- [A). Methods](#a-methods)
+		- [2. OstError](#2-osterror)
+			- [A). Properties](#a-properties)
+		- [3. OstContextEntity](#3-ostcontextentity)
+			- [i) Properties](#i-properties)
+		- [OstWorkflowContext](#ostworkflowcontext)
+			- [i) Properties](#i-properties-1)
+			- [a) workflowType](#a-workflowtype)
+- [Demo App](#demo-app)
+
+
+
+
 
 ## Support
 
@@ -191,7 +244,6 @@ open Carthage/Build/iOS
 Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
 
 ![copy-framework-file](https://dev.ost.com/platform/docs/sdk/assets/copy-framework-file.png)
-
 
 #### iv). Adding the `OstWalletSdk` dependencies in your Xcode project
 We need to add the `.framework` files of dependencies present inside `Carthage/Build/iOS`.
@@ -345,7 +397,7 @@ OstWalletSdk.activateUser(
     userPin: String,
     passphrasePrefix: String,
     spendingLimit: String,
-    expiresAfterInSecs: TimeInterval,
+    expireAfterInSecs: TimeInterval,
     delegate: OstWorkflowDelegate
 )
 ```
@@ -370,7 +422,7 @@ This workflow will create and authorize the session key that is needed to do the
 OstWalletSdk.addSession(
     userId: String,
     spendingLimit: String,
-    expiresAfterInSecs: TimeInterval,
+    expireAfterInSecs: TimeInterval,
     delegate: OstWorkflowDelegate
 )
 ```
@@ -379,7 +431,7 @@ OstWalletSdk.addSession(
 |---|---|
 | **userId** <br> **String**	|  Unique identifier of the user stored in OST Platform|
 | **spendingLimit** <br> **String**	| Spending limit of session key in [atto BT](https://dev.ost.com/platform/docs/guides/execute-transactions/).   |
-| **expiresAfterInSecs** <br> **long**	| Expire time of session key in seconds.  |
+| **expireAfterInSecs** <br> **long**	| Expire time of session key in seconds.  |
 | **delegate** <br> **OstWorkflowDelegate**	| An instance of a class that implements the callback function available in `OstWorkflowDelegate` protocol. These callback functions are needed for communication between app and wallet SDK. Implement `flowComplete` and `flowInterrupt` callback functions to get the workflow status. Details about other callback function can be found in [OstWorkflowDelegate protocol reference](#ostworkflowdelegate-protocol). |
 
 
@@ -479,10 +531,6 @@ OstWalletSdk.authorizeCurrentDeviceWithMnemonics(
 
 
 
-
-
-
-
 <br>   
 
 ### 8. resetPin
@@ -552,7 +600,6 @@ OstWalletSdk.abortDeviceRecovery(
 | **userPin** <br> **String**	| User's Wallet PIN  |
 | **passPhrasePrefix** <br> **String**	| A constant unique identifier for a your user. |
 | **delegate** <br> **OstWorkflowDelegate**	| An instance of a class that implements the callback function available in `OstWorkflowDelegate` protocol. These callback functions are needed for communication between app and wallet SDK. Implement `flowComplete` and `flowInterrupt` callback functions to get the workflow status. Details about other callback function can be found in [OstWorkflowDelegate protocol reference](#ostworkflowdelegate-protocol).  |
-
 
 
 
@@ -665,19 +712,16 @@ OstWalletSdk.getUser(userId: String)
 ### 3. getToken 
 Get token entity for given tokenId.
 
-### 3. getToken 
-Get token entity for given tokenId.
-
 ```Swift
 OstWalletSdk.getToken(tokenId: String) 
 ```
 
 | Parameter | Description |
 |---|---|
-| **userId** <br> **String**	| Unique identifier of the user stored in OST Platform |
-
+| **tokenId** <br> **String**	| Unique identifier of the token |
 
 **Returns**
+
 
 | Type      | Description      |
 |-----------|------------------|
@@ -703,7 +747,6 @@ let device: OstCurrentDevice = user.getCurrentDevice()
 |-------------|-------------------|
 | **device**	| The device object |
 
-
 ### 5. isBiometricEnabled
 Get biometric preference of the user.
 
@@ -721,7 +764,6 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 | Type                            | Description |
 |---------------------------------|---------------------------------------------------|
 | **Preference** <br> **Bool**  	| `true` if user has enabled biometric verfication. |
-
 
 ## OST JSON APIs
 
