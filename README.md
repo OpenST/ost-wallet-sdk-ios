@@ -8,7 +8,7 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Signs data as defined by contracts using EIP-1077 and EIP-712
 - Enables users to recover access to their Brand Tokens in case the user loses their authorized device</br>
 
-Starting version `2.3.0` the SDK also provides built-in User Interface Components which are theamable and support content customization. Please refer [OstWalletUI](./documentation/OstWalletUI.md)
+Starting version `2.3.0` the SDK also provides built-in User Interface Components which are themeable and support content customization. Please refer [OstWalletUI](./documentation/OstWalletUI.md)
 
 
 # Table of Contents:
