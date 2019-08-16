@@ -1,8 +1,7 @@
 # OST Wallet UI iOS
 
 ## Introduction
-
-Wallet UI SDK is useful to integrate OstWalletSdk in application with available UI components.
+To enable quick integration with SDK, the SDK also provides built-in User Interface Components which are theamable and support content customization.
 
 ## Setup
 
@@ -143,11 +142,11 @@ OstWalletUI.resetPin(
 
 ### Initialize Recovery
 
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .
+A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process. To use built-in device list UI, pass `recoverDeviceAddress` as `nil`.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_recoverDeviceAddress: Device address which wants to recover_<br/>
+&nbsp;_recoverDeviceAddress: Device address which wants to recover. When nil is passed, the user is asked to choose a device. _<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -181,11 +180,11 @@ OstWalletUI.abortDeviceRecovery(
 
 ###  Revoke Device
 
-To revoke device access.
+To revoke device access. To use built-in device list UI, pass `revokeDeviceAddress` as `nil`.
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_revokeDeviceAddress: Device address to revoke_<br/>
+&nbsp;_revokeDeviceAddress: Device address to revoke. When nil is passed, the user is asked to choose a device._<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
