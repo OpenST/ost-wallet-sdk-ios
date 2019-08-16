@@ -8,6 +8,8 @@ Wallet SDK is a mobile application development SDK that enables developers to in
 - Signs data as defined by contracts using EIP-1077 and EIP-712
 - Enables users to recover access to their Brand Tokens in case the user loses their authorized device</br>
 
+Starting version `2.3.0` the SDK also provides built-in User Interface Components which are theamable and support content customization. Please refer [OstWalletUI](./documentation/OstWalletUI.md)
+
 
 # Table of Contents:
 
@@ -600,7 +602,7 @@ OstWalletSdk.getUser(userId: String)
 
 | Type | Description |
 |---|---|
-| **User**	| [TODO] description |
+| **User**	| The user object |
 
 
 
@@ -620,10 +622,10 @@ OstWalletSdk.getToken(tokenId: String)
 
 | Type | Description |
 |---|---|
-| **Token**	| [TODO] description |
+| **Token**	| The token object |
 
 
-### 4. getCurrentDevice
+### 4. user.getCurrentDevice
 Get current device of user.
 
 ```Swift
@@ -640,7 +642,7 @@ let device: OstCurrentDevice = user.getCurrentDevice()
 
 | Type | Description |
 |---|---|
-| **device**	| [TODO] description |
+| **device**	| The device object |
 
 
 ### 5. isBiometricEnabled
@@ -659,7 +661,7 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 
 | Type | Description |
 |---|---|
-| **Preference** <br> **Bool**  	| [TODO] description |
+| **Preference** <br> **Bool**  	| `true` if user has enabled biometric verfication. |
 
 
 ## OST JSON APIs
@@ -1048,10 +1050,18 @@ You can read the following properties to get more details about the current [wor
 public let workflowType: OstWorkflowType
 ```
 
-
-
-
 ## Demo App
 
 For a sample implementation, please see the [Demo App](demo-app)
+
+
+## Reference
+
+There are other references are listed below:
+
+- [OstWorkflowContext](OstWalletSdk/Workflows/OstContext/OstContextEntity.swift)
+
+- [OstContextEntity](OstWalletSdk/Workflows/OstContext/OstWorkflowContext.swift)
+
+- [OstError](OstWalletSdk/Errors)
 
