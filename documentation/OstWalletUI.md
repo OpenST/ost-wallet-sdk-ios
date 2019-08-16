@@ -253,7 +253,7 @@ Component sheet is collection of all components present in OstWalletUI. Develope
 OstWalletUI.showComponentSheet()
 ```
 
-## Workflow Delegates
+## UI Workflow Delegates
 
 ### OstPassphrasePrefixDelegate
 
@@ -269,50 +269,67 @@ func getPassphrase(
     ostUserId:String,
     workflowContext: OstWorkflowContext,
     delegate: OstPassphrasePrefixAcceptDelegate)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
 
 ### OstWorkflowUIDelegate
+
+
+#### requestAcknowledged
 
 ```Swift
 
 /// Acknowledge user about the request which is going to make by SDK.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - contextEntity: Context Entity
 @objc
 func requestAcknowledged(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     contextEntity: OstContextEntity)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
+
+#### flowComplete
 
 ```Swift
 /// Inform SDK user the the flow is complete.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - contextEntity: Context Entity
 @objc
 func flowComplete(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     contextEntity: OstContextEntity)
+
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
+
+#### flowInterrupted
 
 ```Swift
 /// Inform SDK user that flow is interrupted with errorCode.
 /// Developers should dismiss pin dialog (if open) on this callback.
 ///
 /// - Parameters:
-///   - workflowId: Workflow id
 ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
 ///   - error: Error Entity
 @objc
 func flowInterrupted(
-    workflowId: String,
     workflowContext: OstWorkflowContext,
     error: OstError)
+    
+//To get workflowId call workflowContext.getWorkflowId method.
+//To identify the workflow type, use workflowContext.workflowType property.
+
 ```
