@@ -44,7 +44,7 @@ class OstGetDeviceMnemonics: OstUserAuthenticatorWorkflow {
     ///
     /// - Returns: OstWorkflowContext
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowType: .getDeviceMnemonics)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .getDeviceMnemonics)
     }
     
     /// Get context entity
