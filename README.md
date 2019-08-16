@@ -64,6 +64,59 @@ Starting version `2.3.0` the SDK also provides built-in User Interface Component
 
 
 
+# Table of Contents:
+
+- [OST Wallet SDK iOS](#ost-wallet-sdk-ios)
+	- [Support](#support)
+	- [Dependencies](#dependencies)
+	- [Setup](#setup)
+		- [A). Installing iOS Wallet SDK using Carthage](#a-installing-ios-wallet-sdk-using-carthage)
+			- [i). Installing Carthage](#i-installing-carthage)
+			- [ii). Installing wallet SDK using Carthage](#ii-installing-wallet-sdk-using-carthage)
+			- [iii). Copying the `OstWalletSdk.framework` file in your Xcode project](#iii-copying-the-ostwalletsdkframework-file-in-your-xcode-project)
+			- [iv). Adding the `OstWalletSdk` dependencies in your Xcode project](#iv-adding-the-ostwalletsdk-dependencies-in-your-xcode-project)
+			- [v). Adding SDK configuration file](#v-adding-sdk-configuration-file)
+			- [vi). Add `NSFaceIDUsageDescription` description in `info.plist`](#vi-add-nsfaceidusagedescription-description-in-infoplist)
+			- [vii). Initialize the Wallet SDK](#vii-initialize-the-wallet-sdk)
+	- [OST Wallet SDK APIs](#ost-wallet-sdk-apis)
+		- [Types of Methods](#types-of-methods)
+	- [Workflows](#workflows)
+		- [1. setupDevice](#1-setupdevice)
+		- [2. activateUser](#2-activateuser)
+		- [3. addSession](#3-addsession)
+		- [4. perfromQRAction](#4-perfromqraction)
+		- [5. getDeviceMnemonics](#5-getdevicemnemonics)
+		- [6. executeTransaction](#6-executetransaction)
+		- [7. authorizeCurrentDeviceWithMnemonics](#7-authorizecurrentdevicewithmnemonics)
+		- [8. resetPin](#8-resetpin)
+		- [9. initiateDeviceRecovery](#9-initiatedevicerecovery)
+		- [10. abortDeviceRecovery](#10-abortdevicerecovery)
+		- [11. logoutAllSessions](#11-logoutallsessions)
+		- [12. revokeDevice](#12-revokedevice)
+	- [Getters](#getters)
+		- [1. getAddDeviceQRCode](#1-getadddeviceqrcode)
+		- [2. getUser](#2-getuser)
+		- [4. getCurrentDevice](#4-getcurrentdevice)
+	- [OST JSON APIs](#ost-json-apis)
+		- [1. getBalance](#1-getbalance)
+		- [3. getBalanceWithPricePoint](#3-getbalancewithpricepoint)
+		- [5. getPendingRecovery](#5-getpendingrecovery)
+		- [2. onOstJsonApiError](#2-onostjsonapierror)
+	- [Classes](#classes)
+		- [1. OstApiError](#1-ostapierror)
+			- [A). Methods](#a-methods)
+		- [2. OstError](#2-osterror)
+			- [A). Properties](#a-properties)
+		- [3. OstContextEntity](#3-ostcontextentity)
+			- [i) Properties](#i-properties)
+		- [OstWorkflowContext](#ostworkflowcontext)
+			- [i) Properties](#i-properties-1)
+			- [a) workflowType](#a-workflowtype)
+- [Demo App](#demo-app)
+
+
+
+
 
 ## Support
 
@@ -103,7 +156,8 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 Add following entry in your `Cartfile`
 
 ```bash
-github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.0-beta.2
+github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.0
+
 ```
 
 Now to actually install everything run the following in your terminal:
@@ -137,6 +191,7 @@ open Carthage/Build/iOS
 Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
 
 ![copy-framework-file](https://dev.ost.com/platform/docs/sdk/assets/copy-framework-file.png)
+
 
 #### iv). Adding the `OstWalletSdk` dependencies in your Xcode project
 We need to add the `.framework` files of dependencies present inside `Carthage/Build/iOS`.
@@ -500,6 +555,7 @@ OstWalletSdk.abortDeviceRecovery(
 
 
 
+
 ### 11. logoutAllSessions
 This workflow will revoke all the sessions associated with the provided userId.
 
@@ -609,6 +665,9 @@ OstWalletSdk.getUser(userId: String)
 ### 3. getToken 
 Get token entity for given tokenId.
 
+### 3. getToken 
+Get token entity for given tokenId.
+
 ```Swift
 OstWalletSdk.getToken(tokenId: String) 
 ```
@@ -620,8 +679,8 @@ OstWalletSdk.getToken(tokenId: String)
 
 **Returns**
 
-| Type | Description |
-|---|---|
+| Type      | Description      |
+|-----------|------------------|
 | **Token**	| The token object |
 
 
@@ -640,8 +699,8 @@ let device: OstCurrentDevice = user.getCurrentDevice()
 
 **Returns**
 
-| Type | Description |
-|---|---|
+| Type        | Description       |
+|-------------|-------------------|
 | **device**	| The device object |
 
 
@@ -659,8 +718,8 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 
 **Returns**
 
-| Type | Description |
-|---|---|
+| Type                            | Description |
+|---------------------------------|---------------------------------------------------|
 | **Preference** <br> **Bool**  	| `true` if user has enabled biometric verfication. |
 
 
@@ -1053,3 +1112,4 @@ public let workflowType: OstWorkflowType
 ## Demo App
 
 For a sample implementation, please see the [Demo App](demo-app)
+
