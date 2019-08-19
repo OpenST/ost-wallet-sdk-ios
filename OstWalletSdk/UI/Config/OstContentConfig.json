@@ -260,6 +260,9 @@
             },
             "action_button": {
                 "text": "Authorize Device"
+            },
+            "placeholder": {
+                "text": "Enter Recovery Phrase..."
             }
         }
     }

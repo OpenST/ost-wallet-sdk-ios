@@ -84,5 +84,17 @@
     "pin_input": {
         "empty_color": "#c7c7cc",
         "filled_color": "#438bad"
+    },
+    
+    "edit_text": {
+        "size": 15,
+        "color": "#101010",
+        "background_color": "#ffffff",
+        "system_font_weight": "regular",
+        "placeholder": {
+            "size": 15,
+            "color": "#888888",
+            "system_font_weight": "regular"
+        }
     }
 }

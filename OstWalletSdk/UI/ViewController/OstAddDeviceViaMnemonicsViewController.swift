@@ -44,12 +44,23 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
                                      placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
 
         setActionButtonText(pageConfig: viewConfig)
+        
+        textView.setPlaceholderText(getPlaceholderText(pageConfig: viewConfig))
 
         weak var weakSelf = self
         textView.delegate = weakSelf
         actionButton.addTarget(weakSelf, action: #selector(weakSelf!.recoverWalletButtonTapped(_:)), for: .touchUpInside)
 
         self.shouldFireIsMovingFromParent = true;
+    }
+    
+    func getPlaceholderText(pageConfig: [String: Any]) -> String {
+        if let placeholder = pageConfig["placeholder"] as? [String: Any],
+            let text = placeholder["text"] as? String {
+            return text
+        }
+        
+        return ""
     }
 
     func setActionButtonText(pageConfig: [String: Any]) {
@@ -61,6 +72,18 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
         }
 
         actionButton.setTitle(buttonTitle, for: .normal)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        _ = textView.resignFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = textView.becomeFirstResponder()
     }
 
     //MAKR: - Add Subviews

@@ -1,4 +1,3 @@
-//
 /*
  Copyright © 2019 OST.com Inc
  
@@ -9,23 +8,26 @@
  http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import UIKit
 import Foundation
 
-@objc class OstLabelConfig: OstBaseConfig {
+class OstTextViewConfig: OstBaseConfig {
     
-    let alignment: String
-    
+    private let backgroundColor: String
     /// Initialize
     ///
     /// - Parameters:
     ///   - config: Config
     override init(config: [String: Any]) {
-        self.alignment = config["alignment"] as? String ?? "left"
+        self.backgroundColor = config["background_color"] as! String
         super.init(config: config)
     }
     
-    func getAlignment() -> NSTextAlignment {
-        return UIFont.getAlignmentFromString(alignment)
+    //MARK: - Getter
+    
+    /// Get background color
+    ///
+    /// - Returns: Color
+    func getBackgroundColor() -> UIColor {
+        return UIColor.color(hex: backgroundColor)
     }
 }

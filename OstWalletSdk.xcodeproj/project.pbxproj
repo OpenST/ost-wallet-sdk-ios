@@ -217,6 +217,7 @@
 		00ABD3CF22A72BE90080C4BB /* OstErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FD22A72BE90080C4BB /* OstErrorCodes.swift */; };
 		00ABD3D022A72BE90080C4BB /* OstApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD2FE22A72BE90080C4BB /* OstApiError.swift */; };
 		00ABD3D222A72BE90080C4BB /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */; };
+		4B4D9379230A9331004EFC9B /* OstTextViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4D9378230A9331004EFC9B /* OstTextViewConfig.swift */; };
 		4B54585C22F2FD7F0092E533 /* OstComponentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */; };
 		4B54585E22F306FC0092E533 /* OstB2Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585D22F306FC0092E533 /* OstB2Button.swift */; };
 		4B54586022F3073F0092E533 /* OstB3Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B54585F22F3073F0092E533 /* OstB3Button.swift */; };
@@ -513,6 +514,7 @@
 		00ABD2FE22A72BE90080C4BB /* OstApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstApiError.swift; sourceTree = "<group>"; };
 		00ABD2FF22A72BE90080C4BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00ABD30022A72BE90080C4BB /* OstWalletSdk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		4B4D9378230A9331004EFC9B /* OstTextViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTextViewConfig.swift; sourceTree = "<group>"; };
 		4B54585B22F2FD7F0092E533 /* OstComponentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstComponentSheet.swift; sourceTree = "<group>"; };
 		4B54585D22F306FC0092E533 /* OstB2Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstB2Button.swift; sourceTree = "<group>"; };
 		4B54585F22F3073F0092E533 /* OstB3Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstB3Button.swift; sourceTree = "<group>"; };
@@ -1278,6 +1280,7 @@
 				4B94338522F07AB700966372 /* OstButtonConfig.swift */,
 				4B94338622F07AB700966372 /* OstBaseConfig.swift */,
 				4B94338722F07AB700966372 /* OstLabelConfig.swift */,
+				4B4D9378230A9331004EFC9B /* OstTextViewConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1764,6 +1767,7 @@
 				00ABD31B22A72BE90080C4BB /* OstPinManager.swift in Sources */,
 				4B9433A022F07AB700966372 /* OstNavigation.swift in Sources */,
 				00ABD37D22A72BE90080C4BB /* EthereumLogObject.swift in Sources */,
+				4B4D9379230A9331004EFC9B /* OstTextViewConfig.swift in Sources */,
 				00ABD34422A72BE90080C4BB /* OstExecuteTransaction.swift in Sources */,
 				00ABD38122A72BE90080C4BB /* Bytes+TrimLeadingZeros.swift in Sources */,
 				00ABD30E22A72BE90080C4BB /* OstDeviceDbQueries.swift in Sources */,
