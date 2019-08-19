@@ -59,7 +59,7 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .creatingSession)
+        showLoader(progressText:  OstContent.getLoaderText(for: .addSession))
     }
     
     /// Mark - OstPinAcceptDelegate

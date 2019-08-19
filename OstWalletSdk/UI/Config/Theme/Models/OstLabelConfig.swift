@@ -21,7 +21,7 @@ import Foundation
     /// - Parameters:
     ///   - config: Config
     override init(config: [String: Any]) {
-        self.alignment = config["alignment"] as? String ?? "left"
+        self.alignment = config["alignment"] as! String
         super.init(config: config)
     }
     

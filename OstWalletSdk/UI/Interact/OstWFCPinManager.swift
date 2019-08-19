@@ -50,7 +50,7 @@ extension OstWorkflowCallbacks {
     }
     
     @objc public func pinProvided(pin: String) {
-        self.showLoader(progressText: .unknown);
+        self.showLoader(progressTextCode: .unknown);
         self.passphrasePrefixDelegate?.getPassphrase(ostUserId: self.userId,
                                                      workflowContext: getWorkflowContext(),
                                                      delegate: self);

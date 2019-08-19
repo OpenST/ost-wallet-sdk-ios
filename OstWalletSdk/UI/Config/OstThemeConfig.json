@@ -90,10 +90,12 @@
         "size": 15,
         "color": "#101010",
         "background_color": "#ffffff",
+        "alignment": "left",
         "system_font_weight": "regular",
         "placeholder": {
             "size": 15,
             "color": "#888888",
+            "alignment": "left",
             "system_font_weight": "regular"
         }
     }

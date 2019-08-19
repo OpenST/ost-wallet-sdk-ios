@@ -26,12 +26,23 @@ class OstTextView: OstBaseView, UITextViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autocapitalizationType = .none
         view.backgroundColor = .clear
-    
+        
+        let textViewTheme = OstTheme.getInstance().getTextViewConfig()
+        view.textColor = textViewTheme.getColor()
+        view.font = textViewTheme.getFont()
+        view.textAlignment = textViewTheme.getAlignment()
+        
         return view
     }()
     
     let placeholderLabel: OstLabel  = {
         let view = OstLabel()
+        
+        let textViewTheme = OstTheme.getInstance().getTextViewConfig()
+        let placeholderConfig = OstLabelConfig(config: textViewTheme.config["placeholder"] as! [String: Any])
+
+        view.labelConfig = placeholderConfig
+        view.applyTheme()
         
         return view
     }()
@@ -77,14 +88,6 @@ class OstTextView: OstBaseView, UITextViewDelegate {
     
     func configureTheme() {
         let textViewTheme = OstTheme.getInstance().getTextViewConfig()
-        
-        textView.textColor = textViewTheme.getColor()
-        textView.font = textViewTheme.getFont()
-        
-        let placeholderConfig = OstLabelConfig(config: textViewTheme.config["placeholder"] as! [String: Any])
-        placeholderLabel.font = placeholderConfig.getFont()
-        placeholderLabel.textColor = placeholderConfig.getColor()
-        
         textViewContainer.backgroundColor = textViewTheme.getBackgroundColor()
     }
     
@@ -117,7 +120,7 @@ class OstTextView: OstBaseView, UITextViewDelegate {
     func applyPlaceholderLabelConstraints() {
         placeholderLabel.topAlign(toItem: textView, constant:8)
         placeholderLabel.leftAlign(toItem: textView,  constant:4)
-        placeholderLabel.rightAlign(toItem: textView, multiplier: 1, constant: -10, relatedBy: .lessThanOrEqual)
+        placeholderLabel.rightAlign(toItem: textView, constant:-4)
         placeholderLabel.bottomAlign(toItem: textView, multiplier: 1, constant: 0, relatedBy: .lessThanOrEqual)
     }
     

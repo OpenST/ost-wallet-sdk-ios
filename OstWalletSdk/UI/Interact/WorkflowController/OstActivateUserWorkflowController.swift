@@ -77,7 +77,8 @@ import UIKit
                                   spendingLimit: self.spendingLimit,
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
-        showLoader(progressText: .activingUser);
+        
+        showLoader(progressText: OstContent.getLoaderText(for: .activateUser));
     }
     
     /// Mark - OstPinAcceptDelegate

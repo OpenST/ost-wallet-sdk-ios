@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstTextViewConfig: OstBaseConfig {
+class OstTextViewConfig: OstLabelConfig {
     
     private let backgroundColor: String
     /// Initialize

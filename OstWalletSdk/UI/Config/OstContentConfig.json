@@ -41,6 +41,12 @@
                     "color": "#0076FF"
                 }
             }
+        },
+        "loader": {
+            "text": "Activating User..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -58,6 +64,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Creating Session..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -88,6 +100,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Recovering Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -105,6 +123,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Aborting Recovery..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -136,6 +160,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Revoking Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -153,6 +183,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Updating Preference..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -200,6 +236,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Resetting Pin..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -229,6 +271,12 @@
             "bottom_label": {
                 "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
             }
+        },
+        "loader": {
+            "text": "Getting Mnemonics..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -264,6 +312,12 @@
             "placeholder": {
                 "text": "Enter Recovery Phrase..."
             }
+        },
+        "loader": {
+            "text": "Authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     }
 }

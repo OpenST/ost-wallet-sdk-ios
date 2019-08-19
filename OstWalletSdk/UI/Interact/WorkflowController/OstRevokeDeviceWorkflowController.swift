@@ -73,7 +73,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.onDeviceAddressSet()
-                                self?.showLoader(progressText: .revokingDevice)
+                                self?.showLoader(progressText: OstContent.getLoaderText(for: .revokeDevice))
                 })
             
             self.deviceListController!.presentVCWithNavigation()
@@ -101,7 +101,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .revokingDevice)
+        showLoader(progressText: OstContent.getLoaderText(for: .revokeDevice))
     }
     
     func onDeviceAddressSet() {

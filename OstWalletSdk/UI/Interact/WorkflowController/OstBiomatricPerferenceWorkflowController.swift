@@ -45,7 +45,7 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .updatingBiometricPreference)
+        showLoader(progressText: OstContent.getLoaderText(for: .updateBiometricPreference))
     }
     
     override func performUIActions() {

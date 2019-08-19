@@ -166,82 +166,158 @@ extension OstContent {
     
     
     class func getCreatePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "create_pin", forWorkflow: "activate_user")
+        let workflowName = getWorkflowName(for: .activateUser)
+        let componentData = getComponentData(inController: "create_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirmPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "confirm_pin", forWorkflow: "activate_user")
+        let workflowName = getWorkflowName(for: .activateUser)
+        let componentData = getComponentData(inController: "confirm_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getUpdateBiometricPreferencePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let workflowName = getWorkflowName(for: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getRecoveryAccessPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "initiate_recovery")
+        let workflowName = getWorkflowName(for: .initiateDeviceRecovery)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getAddSessinoPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_session")
+        let workflowName = getWorkflowName(for: .addSession)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getAbortRecoveryPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "abort_recovery")
+        let workflowName = getWorkflowName(for: .abortDeviceRecovery)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getSetNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "set_new_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "set_new_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirmNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
-    }
-    
-    class func getRevokeDevicePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "revoke_device")
-        return getPinVCConfigObj(componentData)
-    }
-    
-    class func getDeviceMnemonicsPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "view_mnemonics")
-        return getPinVCConfigObj(componentData)
-    }
-    
-    class func getInitiateDeviceVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "initiate_recovery")
-        return config
     }
     
     class func getRevokeDeviceVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "revoke_device")
+        let workflowName = getWorkflowName(for: .revokeDevice)
+        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: workflowName)
         return config
     }
     
+    class func getRevokeDevicePinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .revokeDevice)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+
+    class func getInitiateDeviceVCConfig() -> [String: Any] {
+        let workflowName = getWorkflowName(for: .initiateDeviceRecovery)
+        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: workflowName)
+        return config
+    }
+    
+    class func getDeviceMnemonicsPinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .getDeviceMnemonics)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+
     class func getShowDeviceMnemonicsVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: "view_mnemonics")
+        let workflowName = getWorkflowName(for: .getDeviceMnemonics)
+        let config = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: workflowName)
         return config
     }
     
     class func getAddDeviceViaMnemonicsVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "provide_mnemonics", inWorkflow: "add_current_device_with_mnemonics")
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithMnemonics)
+        let config = OstContent.getInstance().getControllerConfig(for: "provide_mnemonics", inWorkflow: workflowName)
         return config
     }
     
     class func getAddDeviceViaMnemonicsPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_current_device_with_mnemonics")
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithMnemonics)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
+    }
+    
+    class func getLoaderText(for type: OstWorkflowType) -> String {
+        
+        let content = OstContent.getInstance()
+        let workflowName = getWorkflowName(for: type)
+        
+        let loaderConfig = content.getControllerConfig(for: "loader", inWorkflow: workflowName)
+        if let text = loaderConfig["text"] as? String {
+            
+            return text
+        }
+        return ""
+    }
+    
+    class func getInitialLoaderText(for type: OstWorkflowType) -> String {
+        
+        let content = OstContent.getInstance()
+        let workflowName = getWorkflowName(for: type)
+        
+        let loaderConfig = content.getControllerConfig(for: "loader", inWorkflow: workflowName)
+        if let text = loaderConfig["text"] as? String {
+            
+            return text
+        }
+        return ""
+    }
+    
+    class func getWorkflowName(for workflowType: OstWorkflowType) -> String {
+        switch workflowType {
+        case .activateUser:
+            return "activate_user"
+            
+        case .addSession:
+            return "add_session"
+            
+        case .abortDeviceRecovery:
+            return "abort_recovery"
+            
+        case .getDeviceMnemonics:
+            return "view_mnemonics"
+            
+        case .initiateDeviceRecovery:
+            return "initiate_recovery"
+            
+        case .resetPin:
+            return "reset_pin"
+
+        case .revokeDevice:
+            return "revoke_device"
+            
+        case .updateBiometricPreference:
+            return "biometric_preference"
+            
+        case .authorizeDeviceWithMnemonics:
+            return "add_current_device_with_mnemonics"
+            
+        default:
+            return ""
+        }
     }
 }

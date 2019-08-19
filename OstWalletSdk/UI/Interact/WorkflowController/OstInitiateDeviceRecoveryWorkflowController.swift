@@ -115,7 +115,7 @@ import UIKit
                                             userPin: self.userPin!,
                                             passphrasePrefix: passphrase,
                                             delegate: self)
-        showLoader(progressText: .initiateDeviceRecovery);
+        showLoader(progressText:  OstContent.getLoaderText(for: .initiateDeviceRecovery));
     }
     
     override func cleanUp() {

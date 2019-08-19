@@ -51,7 +51,7 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
                                                          mnemonics: mnemonicsArray,
                                                          delegate: self)
         
-        showLoader(progressText: .unknown)
+        showLoader(progressText: OstContent.getLoaderText(for: .authorizeDeviceWithMnemonics))
     }
     
     
@@ -66,7 +66,7 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .authorizingDevice)
+        showLoader(progressText: OstContent.getLoaderText(for: .authorizeDeviceWithMnemonics))
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

@@ -39,7 +39,7 @@ import Foundation
     
     @objc override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .fetchingDeviceMnemonics)
+        showLoader(progressText: OstContent.getLoaderText(for: .getDeviceMnemonics))
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {
