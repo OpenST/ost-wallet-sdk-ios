@@ -45,13 +45,14 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: OstContent.getLoaderText(for: .updateBiometricPreference))
+        showLoader(for: .updateBiometricPreference)
     }
     
     override func performUIActions() {
         OstWalletSdk.updateBiometricPreference(userId: self.userId,
                                                enable: self.enable,
                                                delegate: self)
+        showLoader(for: .updateBiometricPreference)
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {

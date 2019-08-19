@@ -78,7 +78,7 @@ import UIKit
                                   expireAfterInSec: self.expireAfterInSec,
                                   delegate: self);
         
-        showLoader(progressText: OstContent.getLoaderText(for: .activateUser));
+        showLoader(for: .activateUser)
     }
     
     /// Mark - OstPinAcceptDelegate

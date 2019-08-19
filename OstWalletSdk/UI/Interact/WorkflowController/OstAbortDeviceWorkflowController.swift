@@ -73,6 +73,6 @@ import Foundation
                                          userPin: self.userPin!,
                                          passphrasePrefix: passphrase,
                                          delegate: self)
-        showLoader(progressText:  OstContent.getLoaderText(for: .abortDeviceRecovery))
+        showLoader(for: .abortDeviceRecovery)
     }
 }

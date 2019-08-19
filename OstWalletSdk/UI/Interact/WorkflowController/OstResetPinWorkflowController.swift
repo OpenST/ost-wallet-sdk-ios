@@ -105,7 +105,7 @@ import Foundation
                               oldUserPin: self.userPin!,
                               newUserPin: self.newPin!,
                               delegate: self)
-        showLoader(progressText: OstContent.getLoaderText(for: .resetPin))
+        showLoader(for: .resetPin)
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {

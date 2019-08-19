@@ -51,9 +51,8 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
                                                          mnemonics: mnemonicsArray,
                                                          delegate: self)
         
-        showLoader(progressText: OstContent.getLoaderText(for: .authorizeDeviceWithMnemonics))
+        showLoader(for: .authorizeDeviceWithMnemonics)
     }
-    
     
     @objc override func showPinViewController() {
         self.getPinViewController?.pushViewControllerOn(self.addDeviceViaMnemonicsViewController!)
@@ -66,7 +65,7 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: OstContent.getLoaderText(for: .authorizeDeviceWithMnemonics))
+        showLoader(for: .authorizeDeviceWithMnemonics)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

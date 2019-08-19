@@ -39,6 +39,7 @@ import UIKit
         if nil == recoverDeviceAddress {
             self.openAuthorizedDeviceListController()
         } else {
+            self.showLoader(for: .initiateDeviceRecovery)
             self.openGetPinViewController()
         }
     }
@@ -88,7 +89,6 @@ import UIKit
                                 self?.recoverDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.openGetPinViewController()
                 })
-            
             self.deviceListController!.presentVCWithNavigation()
         }
     }
@@ -115,7 +115,7 @@ import UIKit
                                             userPin: self.userPin!,
                                             passphrasePrefix: passphrase,
                                             delegate: self)
-        showLoader(progressText:  OstContent.getLoaderText(for: .initiateDeviceRecovery));
+        showLoader(for: .initiateDeviceRecovery)
     }
     
     override func cleanUp() {

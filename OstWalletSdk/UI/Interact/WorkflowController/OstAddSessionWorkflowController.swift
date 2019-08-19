@@ -51,6 +51,7 @@ import Foundation
                                 spendingLimit: self.spendingLimit,
                                 expireAfterInSec: self.expireAfter,
                                 delegate: self)
+        showLoader(for: .addSession)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
@@ -59,7 +60,7 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText:  OstContent.getLoaderText(for: .addSession))
+        showLoader(for: .addSession)
     }
     
     /// Mark - OstPinAcceptDelegate

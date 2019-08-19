@@ -22,6 +22,7 @@ import Foundation
     override func performUIActions() {
         OstWalletSdk.getDeviceMnemonics(userId: self.userId,
                                         delegate: self)
+        showLoader(for: .getDeviceMnemonics)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
@@ -39,7 +40,7 @@ import Foundation
     
     @objc override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: OstContent.getLoaderText(for: .getDeviceMnemonics))
+        showLoader(for: .getDeviceMnemonics)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {
