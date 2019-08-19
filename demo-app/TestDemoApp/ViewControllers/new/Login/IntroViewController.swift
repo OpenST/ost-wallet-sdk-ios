@@ -7,9 +7,10 @@
 //
 
 import UIKit
+
 import OstWalletSdk
 
-class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstFlowCompleteDelegate, CanConfigureEconomyProtocol {
+class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OWFlowCompleteDelegate, CanConfigureEconomyProtocol {
 
     
 
@@ -345,11 +346,17 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     func activateUser() {
         removeProgressIndicator()
         let currentUse = CurrentUserModel.getInstance
-        let workflowCallback = OstSdkInteract.getInstance.activateUser(userId: currentUse.ostUserId!,
-                                                                   passphrasePrefixDelegate: currentUse,
-                                                                   presenter: self)
-        OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowCallback.workflowId,
-                                             listner: self)
+        
+        let q = DispatchQueue(label: "test")
+        q.async {
+            
+        
+        let workflowId = OstWalletUI.activateUser(userId: currentUse.ostUserId!,
+                                                     expireAfterInSec: TimeInterval(Double(14*24*60*60)),
+                                                     spendingLimit: OstUtils.toAtto("15"),
+                                                     passphrasePrefixDelegate: currentUse)
+        OstWalletUI.subscribe(workflowId: workflowId, listner: currentUse)
+        }
     }
     
     func onLoginSuccess() {
@@ -389,11 +396,11 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
     
     //MARK: - OstSdkInteract Delegate
     
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         
     }
     
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if nil != CurrentUserModel.getInstance.ostUser
             && CurrentUserModel.getInstance.isCurrentUserStatusActivating! {
             
@@ -403,7 +410,7 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         }
     }
     
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         
     }
 }

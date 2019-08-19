@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00031EE5227860EB00A7FF80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
 		00031EE6227860EB00A7FF80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
-		00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */; };
 		002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF3022719ED800B48F1D /* OstPrimaryButton.swift */; };
 		002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF352271AAFD00B48F1D /* OstFontProvider.swift */; };
 		002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */; };
@@ -49,9 +48,6 @@
 		00361878229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
 		00361879229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
 		0036187A229DA4760042377F /* AppUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00361877229DA4760042377F /* AppUrlData.swift */; };
-		0036187C229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
-		0036187D229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
-		0036187E229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */; };
 		0041A65922807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
 		0041A65A22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
 		0041A65B22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */; };
@@ -89,9 +85,6 @@
 		00C1345F2278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
 		00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
 		00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */; };
-		00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
-		00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
-		00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB858227726D40085E4AB /* IntroViewController.swift */; };
 		00ECB85E227727170085E4AB /* OstBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */; };
 		00ECB85F227727170085E4AB /* OstBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */; };
 		00ECB860227727170085E4AB /* OstBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */; };
@@ -183,8 +176,6 @@
 		4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464E782271DE7000F1F4AF /* OstWorkflowCallbacks.swift */; };
 		4B464EFF227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
 		4B464F00227835C800F1F4AF /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
-		4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
-		4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
 		4B464F03227835CE00F1F4AF /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
 		4B464F04227835CF00F1F4AF /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
 		4B464F0D227850C300F1F4AF /* OstBlueNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */; };
@@ -193,11 +184,6 @@
 		4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
 		4B464F142278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
 		4B464F152278516B00F1F4AF /* OstNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F122278516B00F1F4AF /* OstNavigation.swift */; };
-		4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
-		4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
-		4B464F232278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
-		4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
-		4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F222278C99F00F1F4AF /* OptionsViewController.swift */; };
 		4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
 		4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
 		4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */; };
@@ -219,10 +205,6 @@
 		4B464F42227A0CA200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F43227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F44227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
-		4B464F45227AC6EA00F1F4AF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
-		4B464F46227AC6EA00F1F4AF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
-		4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
-		4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
 		4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
 		4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
@@ -238,22 +220,11 @@
 		4B464F5A227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
 		4B464F5B227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
 		4B464F5C227B40A900F1F4AF /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B464F56227B40A900F1F4AF /* FONTLOG.txt */; };
-		4B464F5D227B730E00F1F4AF /* OstSdkInteractOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteractOld.swift */; };
-		4B464F5E227B730F00F1F4AF /* OstSdkInteractOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteractOld.swift */; };
 		4B464F5F227B750500F1F4AF /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
 		4B464F60227B750500F1F4AF /* IconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF92240FD1300519779 /* IconGenerator.swift */; };
 		4B464F62227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */; };
 		4B464F63227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */; };
 		4B464F64227C383900F1F4AF /* AuthorizeDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */; };
-		4B464FB0227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */; };
-		4B464FB1227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */; };
-		4B464FB2227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */; };
-		4B464FB6227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */; };
-		4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */; };
-		4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */; };
-		4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
-		4B464FBA227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
-		4B464FBB227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */; };
 		4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
 		4B4EB870228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
 		4B4EB871228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */; };
@@ -263,8 +234,20 @@
 		4B4EB878228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */; };
 		4B4EB879228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */; };
 		4B4EB87A228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */; };
-		4B9835BC22B9332500B9E6D4 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9835BB22B9332500B9E6D4 /* OstWalletSdk.framework */; };
-		4B9835BD22B9332500B9E6D4 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9835BB22B9332500B9E6D4 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B9433CF22F07AF600966372 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9433CE22F07AF600966372 /* OstWalletSdk.framework */; };
+		4B9433D022F07AF600966372 /* OstWalletSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9433CE22F07AF600966372 /* OstWalletSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B9433DE22F07C9A00966372 /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D322F07C9A00966372 /* EconomyScannerViewController.swift */; };
+		4B9433DF22F07C9A00966372 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D422F07C9A00966372 /* WKWebViewController.swift */; };
+		4B9433E022F07C9A00966372 /* OstWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D622F07C9A00966372 /* OstWalletViewController.swift */; };
+		4B9433E122F07C9A00966372 /* OstHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D722F07C9A00966372 /* OstHomeViewController.swift */; };
+		4B9433E222F07C9A00966372 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D822F07C9A00966372 /* OptionsViewController.swift */; };
+		4B9433E322F07C9A00966372 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433D922F07C9A00966372 /* TabBarViewController.swift */; };
+		4B9433E422F07C9A00966372 /* CanConfigureEconomyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DB22F07C9A00966372 /* CanConfigureEconomyProtocol.swift */; };
+		4B9433E522F07C9A00966372 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DC22F07C9A00966372 /* IntroViewController.swift */; };
+		4B9433E622F07C9A00966372 /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433DD22F07C9A00966372 /* SetupUserViewController.swift */; };
+		4B9433E822F08DAF00966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
+		4B9433E922F08DD700966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
+		4B9433EA22F08DD700966372 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9433E722F08DAF00966372 /* AppConfig.swift */; };
 		4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7371227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
 		4B9E7372227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */; };
@@ -328,25 +311,16 @@
 		4BA4CB9A228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
 		4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */; };
-		4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
-		4BA4CB9F22855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
-		4BA4CBA022855D3900A623ED /* SetupUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */; };
-		4BA4CBA32285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
-		4BA4CBA42285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
-		4BA4CBA52285826000A623ED /* EconomyScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */; };
 		4BA4CBA72285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
 		4BA4CBA82285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
 		4BA4CBA92285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
-		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
 		4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
 		4BF8FDD12240FA7700519779 /* TestDemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDD02240FA7700519779 /* TestDemoAppTests.swift */; };
 		4BF8FDDC2240FA7700519779 /* TestDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDDB2240FA7700519779 /* TestDemoAppUITests.swift */; };
 		4BF8FE182240FD1400519779 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDED2240FD1300519779 /* Users.swift */; };
-		4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEE2240FD1300519779 /* CurrentUser.swift */; };
 		4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDEF2240FD1300519779 /* BaseModel.swift */; };
-		4BF8FE1B2240FD1400519779 /* OstSdkInteractOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF12240FD1300519779 /* OstSdkInteractOld.swift */; };
 		4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */; };
 		4BF8FE1E2240FD1400519779 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF52240FD1300519779 /* Main.storyboard */; };
 		4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDF72240FD1300519779 /* UIColorExtension.swift */; };
@@ -356,24 +330,7 @@
 		4BF8FE232240FD1400519779 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFB2240FD1300519779 /* README.md */; };
 		4BF8FE242240FD1400519779 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFD2240FD1300519779 /* Shapes.swift */; };
 		4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */; };
-		4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE002240FD1400519779 /* WalletViewController.swift */; };
-		4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE012240FD1400519779 /* HomeViewController.swift */; };
-		4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE022240FD1400519779 /* UserActionsViewController.swift */; };
-		4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE032240FD1400519779 /* LoginViewController.swift */; };
 		4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE052240FD1400519779 /* UserCell.swift */; };
-		4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE082240FD1400519779 /* ResetPinView.swift */; };
-		4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE092240FD1400519779 /* UserDetailsView.swift */; };
-		4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */; };
-		4BF8FE2E2240FD1400519779 /* BaseWalletWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */; };
-		4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */; };
-		4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */; };
-		4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE0F2240FD1400519779 /* AddSessionView.swift */; };
-		4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE102240FD1400519779 /* SetupWalletView.swift */; };
-		4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */; };
-		4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE122240FD1400519779 /* ShowQRView.swift */; };
-		4BF8FE352240FD1400519779 /* ScanQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */; };
-		4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
-		4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
 		4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
 		4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
@@ -398,9 +355,6 @@
 		4BFA118D2287443B00A9F5A4 /* UserDetailsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA118C2287443B00A9F5A4 /* UserDetailsCellViewModel.swift */; };
 		4BFA118E2287443B00A9F5A4 /* UserDetailsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA118C2287443B00A9F5A4 /* UserDetailsCellViewModel.swift */; };
 		4BFA118F2287443B00A9F5A4 /* UserDetailsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA118C2287443B00A9F5A4 /* UserDetailsCellViewModel.swift */; };
-		4BFA1191228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
-		4BFA1192228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
-		4BFA1193228753FC00A9F5A4 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */; };
 		50D2EB6E58E0A202344CDBD5 /* Pods_TestDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E74D587B147CD5572714BF1E /* Pods_TestDemoAppUITests.framework */; };
 		C5A561FA3E7159409D730CCB /* Pods_TestDemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D052BED830748372D2F2B688 /* Pods_TestDemoAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -429,7 +383,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4B9835BD22B9332500B9E6D4 /* OstWalletSdk.framework in Embed Frameworks */,
+				4B9433D022F07AF600966372 /* OstWalletSdk.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,7 +391,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTokensToUserView.swift; sourceTree = "<group>"; };
 		002EAF3022719ED800B48F1D /* OstPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPrimaryButton.swift; sourceTree = "<group>"; };
 		002EAF352271AAFD00B48F1D /* OstFontProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstFontProvider.swift; sourceTree = "<group>"; };
 		002EAF372271F2A400B48F1D /* UIFont+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Helpers.swift"; sourceTree = "<group>"; };
@@ -451,7 +404,6 @@
 		002EAF65227275F000B48F1D /* OstUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIKit.swift; sourceTree = "<group>"; };
 		002EAF6922727C8100B48F1D /* OstLeadLabelTheamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLeadLabelTheamer.swift; sourceTree = "<group>"; };
 		00361877229DA4760042377F /* AppUrlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUrlData.swift; sourceTree = "<group>"; };
-		0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanConfigureEconomyProtocol.swift; sourceTree = "<group>"; };
 		0041A65822807D15007A52A8 /* OstSdkInteract+Workflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OstSdkInteract+Workflow.swift"; sourceTree = "<group>"; };
 		0041A65C2280BF43007A52A8 /* OstSetNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSetNewPinViewController.swift; sourceTree = "<group>"; };
 		0041A6602280C07F007A52A8 /* OstGetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstGetPinViewController.swift; sourceTree = "<group>"; };
@@ -463,7 +415,6 @@
 		00B943A722811B9C0084635A /* OstActivateUserWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstActivateUserWorkflowController.swift; sourceTree = "<group>"; };
 		00B943AB22812C250084635A /* OstConfirmNewPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstConfirmNewPinViewController.swift; sourceTree = "<group>"; };
 		00C1345E2278AF5B00D6E7B8 /* OstLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLabel.swift; sourceTree = "<group>"; };
-		00ECB858227726D40085E4AB /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		00ECB85D227727170085E4AB /* OstBaseScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseScrollViewController.swift; sourceTree = "<group>"; };
 		00ECB861227727310085E4AB /* OstBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseViewController.swift; sourceTree = "<group>"; };
 		00FF2332226F5B2C009C2945 /* OstTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstTheme.swift; sourceTree = "<group>"; };
@@ -499,7 +450,6 @@
 		4B464EF322782AE300F1F4AF /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		4B464F0C227850C300F1F4AF /* OstBlueNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBlueNavigation.swift; sourceTree = "<group>"; };
 		4B464F122278516B00F1F4AF /* OstNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstNavigation.swift; sourceTree = "<group>"; };
-		4B464F222278C99F00F1F4AF /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		4B464F272278CBA700F1F4AF /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		4B464F2B2278CBE900F1F4AF /* OptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionTableViewCell.swift; sourceTree = "<group>"; };
 		4B464F3022794E9500F1F4AF /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -513,13 +463,20 @@
 		4B464F55227B40A900F1F4AF /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		4B464F56227B40A900F1F4AF /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
 		4B464F61227C383900F1F4AF /* AuthorizeDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceViewController.swift; sourceTree = "<group>"; };
-		4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletViewController.swift; sourceTree = "<group>"; };
-		4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstHomeViewController.swift; sourceTree = "<group>"; };
 		4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeDeviceQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQRScanner.swift; sourceTree = "<group>"; };
 		4B4EB877228FE17D001605DE /* OstVerifyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransactionViewController.swift; sourceTree = "<group>"; };
-		4B9835BB22B9332500B9E6D4 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B9433CE22F07AF600966372 /* OstWalletSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OstWalletSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B9433D322F07C9A00966372 /* EconomyScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EconomyScannerViewController.swift; sourceTree = "<group>"; };
+		4B9433D422F07C9A00966372 /* WKWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
+		4B9433D622F07C9A00966372 /* OstWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstWalletViewController.swift; sourceTree = "<group>"; };
+		4B9433D722F07C9A00966372 /* OstHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstHomeViewController.swift; sourceTree = "<group>"; };
+		4B9433D822F07C9A00966372 /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		4B9433D922F07C9A00966372 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		4B9433DB22F07C9A00966372 /* CanConfigureEconomyProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanConfigureEconomyProtocol.swift; sourceTree = "<group>"; };
+		4B9433DC22F07C9A00966372 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		4B9433DD22F07C9A00966372 /* SetupUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupUserViewController.swift; sourceTree = "<group>"; };
+		4B9433E722F08DAF00966372 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		4B9E736E227D9BF8009E1094 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E736F227D9BF8009E1094 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
 		4B9E7376227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginationLoaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -541,10 +498,7 @@
 		4BA4CB91228440CC00A623ED /* OstInitiateDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstInitiateDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
 		4BA4CB9522846FF100A623ED /* OstRestPinWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRestPinWorkflowController.swift; sourceTree = "<group>"; };
 		4BA4CB99228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAbortDeviceRecoveryWorkflowController.swift; sourceTree = "<group>"; };
-		4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupUserViewController.swift; sourceTree = "<group>"; };
-		4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EconomyScannerViewController.swift; sourceTree = "<group>"; };
 		4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsViewController.swift; sourceTree = "<group>"; };
-		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BF8FDBD2240FA7600519779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -557,9 +511,7 @@
 		4BF8FDDB2240FA7700519779 /* TestDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDemoAppUITests.swift; sourceTree = "<group>"; };
 		4BF8FDDD2240FA7700519779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BF8FDED2240FD1300519779 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
-		4BF8FDEE2240FD1300519779 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		4BF8FDEF2240FD1300519779 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
-		4BF8FDF12240FD1300519779 /* OstSdkInteractOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkInteractOld.swift; sourceTree = "<group>"; };
 		4BF8FDF42240FD1300519779 /* HomeCustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCustomLayout.swift; sourceTree = "<group>"; };
 		4BF8FDF52240FD1300519779 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4BF8FDF72240FD1300519779 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -570,24 +522,7 @@
 		4BF8FDFC2240FD1300519779 /* JdenticonSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JdenticonSwift.h; sourceTree = "<group>"; };
 		4BF8FDFD2240FD1300519779 /* Shapes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 		4BF8FDFE2240FD1300519779 /* CGContextExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContextExtension.swift; sourceTree = "<group>"; };
-		4BF8FE002240FD1400519779 /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
-		4BF8FE012240FD1400519779 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		4BF8FE022240FD1400519779 /* UserActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActionsViewController.swift; sourceTree = "<group>"; };
-		4BF8FE032240FD1400519779 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4BF8FE052240FD1400519779 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
-		4BF8FE082240FD1400519779 /* ResetPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPinView.swift; sourceTree = "<group>"; };
-		4BF8FE092240FD1400519779 /* UserDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
-		4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbortRevocerDeviceView.swift; sourceTree = "<group>"; };
-		4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletWorkflowView.swift; sourceTree = "<group>"; };
-		4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverDeviceView.swift; sourceTree = "<group>"; };
-		4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRInfoLabel.swift; sourceTree = "<group>"; };
-		4BF8FE0F2240FD1400519779 /* AddSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSessionView.swift; sourceTree = "<group>"; };
-		4BF8FE102240FD1400519779 /* SetupWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupWalletView.swift; sourceTree = "<group>"; };
-		4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDeviceWithMnemonics.swift; sourceTree = "<group>"; };
-		4BF8FE122240FD1400519779 /* ShowQRView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowQRView.swift; sourceTree = "<group>"; };
-		4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanQRCodeView.swift; sourceTree = "<group>"; };
-		4BF8FE142240FD1400519779 /* PaperWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperWalletView.swift; sourceTree = "<group>"; };
-		4BF8FE152240FD1400519779 /* BaseWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletView.swift; sourceTree = "<group>"; };
 		4BF8FE162240FD1400519779 /* ApplicationScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationScheme.swift; sourceTree = "<group>"; };
 		4BF8FE3C2241004600519779 /* OstWalletSdk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OstWalletSdk.plist; sourceTree = "<group>"; };
 		4BF8FF17224A5D6E00519779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -598,7 +533,6 @@
 		4BFA118322873C1F00A9F5A4 /* UserDetailsWithCopyBtnTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsWithCopyBtnTableViewCell.swift; sourceTree = "<group>"; };
 		4BFA118722873C3900A9F5A4 /* UserDetailsWithLinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsWithLinkTableViewCell.swift; sourceTree = "<group>"; };
 		4BFA118C2287443B00A9F5A4 /* UserDetailsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCellViewModel.swift; sourceTree = "<group>"; };
-		4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
 		529214F8DA75A200DC090531 /* Pods-TestDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoApp.release.xcconfig"; path = "Target Support Files/Pods-TestDemoApp/Pods-TestDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		5E0A0F4E51DA07B1DABA9317 /* Pods-TestDemoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTests/Pods-TestDemoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		8682D46B806542778C399400 /* Pods-TestDemoAppDevelopment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppDevelopment.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppDevelopment/Pods-TestDemoAppDevelopment.debug.xcconfig"; sourceTree = "<group>"; };
@@ -618,7 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B402C9D22AD0B1700ABDC2C /* Pods_TestDemoApp.framework in Frameworks */,
-				4B9835BC22B9332500B9E6D4 /* OstWalletSdk.framework in Frameworks */,
+				4B9433CF22F07AF600966372 /* OstWalletSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,27 +711,6 @@
 			path = Labels;
 			sourceTree = "<group>";
 		};
-		00ECB856227724D90085E4AB /* new */ = {
-			isa = PBXGroup;
-			children = (
-				4BA4CBA12285824B00A623ED /* EconomyScanner */,
-				4B464FAB227D9A5500F1F4AF /* Wallet */,
-				00ECB8572277269A0085E4AB /* Login */,
-				4BFA1190228753FC00A9F5A4 /* WKWebViewController.swift */,
-			);
-			path = new;
-			sourceTree = "<group>";
-		};
-		00ECB8572277269A0085E4AB /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				00ECB858227726D40085E4AB /* IntroViewController.swift */,
-				4BA4CB9D22855D3900A623ED /* SetupUserViewController.swift */,
-				0036187B229DDC4B0042377F /* CanConfigureEconomyProtocol.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		00ECB865227730340085E4AB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -911,17 +824,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		4B464FAB227D9A5500F1F4AF /* Wallet */ = {
-			isa = PBXGroup;
-			children = (
-				4B464FAE227D9ABE00F1F4AF /* TabBarViewController.swift */,
-				4B464FAF227D9ABE00F1F4AF /* OstHomeViewController.swift */,
-				4B464FAC227D9ABE00F1F4AF /* OstWalletViewController.swift */,
-				4B464F222278C99F00F1F4AF /* OptionsViewController.swift */,
-			);
-			path = Wallet;
-			sourceTree = "<group>";
-		};
 		4B4EB86D228E8799001605DE /* QRScan */ = {
 			isa = PBXGroup;
 			children = (
@@ -941,6 +843,46 @@
 			path = VerifyData;
 			sourceTree = "<group>";
 		};
+		4B9433D122F07C9A00966372 /* new */ = {
+			isa = PBXGroup;
+			children = (
+				4B9433D222F07C9A00966372 /* EconomyScanner */,
+				4B9433D422F07C9A00966372 /* WKWebViewController.swift */,
+				4B9433D522F07C9A00966372 /* Wallet */,
+				4B9433DA22F07C9A00966372 /* Login */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
+		4B9433D222F07C9A00966372 /* EconomyScanner */ = {
+			isa = PBXGroup;
+			children = (
+				4B9433D322F07C9A00966372 /* EconomyScannerViewController.swift */,
+			);
+			path = EconomyScanner;
+			sourceTree = "<group>";
+		};
+		4B9433D522F07C9A00966372 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				4B9433D622F07C9A00966372 /* OstWalletViewController.swift */,
+				4B9433D722F07C9A00966372 /* OstHomeViewController.swift */,
+				4B9433D822F07C9A00966372 /* OptionsViewController.swift */,
+				4B9433D922F07C9A00966372 /* TabBarViewController.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		4B9433DA22F07C9A00966372 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4B9433DB22F07C9A00966372 /* CanConfigureEconomyProtocol.swift */,
+				4B9433DC22F07C9A00966372 /* IntroViewController.swift */,
+				4B9433DD22F07C9A00966372 /* SetupUserViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		4BA4CAFF227DA51600A623ED /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,6 +897,7 @@
 		4BA4CB07227DEE5B00A623ED /* new */ = {
 			isa = PBXGroup;
 			children = (
+				4B9433E722F08DAF00966372 /* AppConfig.swift */,
 				4BA4CB0A227DEE8400A623ED /* OstBaseModel.swift */,
 				4BA4CB0C227DF2B300A623ED /* CurrentEconomy.swift */,
 				4BA4CB712280B5FB00A623ED /* CurrentUserModel.swift */,
@@ -973,18 +916,10 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		4BA4CBA12285824B00A623ED /* EconomyScanner */ = {
-			isa = PBXGroup;
-			children = (
-				4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */,
-			);
-			path = EconomyScanner;
-			sourceTree = "<group>";
-		};
 		4BF8FDAF2240FA7600519779 = {
 			isa = PBXGroup;
 			children = (
-				4B9835BB22B9332500B9E6D4 /* OstWalletSdk.framework */,
+				4B9433CE22F07AF600966372 /* OstWalletSdk.framework */,
 				4BF8FDBA2240FA7600519779 /* TestDemoApp */,
 				4BF8FDCF2240FA7700519779 /* TestDemoAppTests */,
 				4BF8FDDA2240FA7700519779 /* TestDemoAppUITests */,
@@ -1020,9 +955,7 @@
 				4BF8FDF62240FD1300519779 /* Jdenticon */,
 				4BF8FDF32240FD1300519779 /* Layouts */,
 				4BF8FDEC2240FD1300519779 /* Models */,
-				4BF8FDF02240FD1300519779 /* OstSdkInteractOld */,
 				4BF8FDFF2240FD1400519779 /* ViewControllers */,
-				4BF8FE062240FD1400519779 /* Views */,
 				4BF8FDBB2240FA7600519779 /* AppDelegate.swift */,
 				4BF8FDBD2240FA7600519779 /* ViewController.swift */,
 				4BF8FE162240FD1400519779 /* ApplicationScheme.swift */,
@@ -1066,18 +999,9 @@
 			children = (
 				4BA4CB07227DEE5B00A623ED /* new */,
 				4BF8FDED2240FD1300519779 /* Users.swift */,
-				4BF8FDEE2240FD1300519779 /* CurrentUser.swift */,
 				4BF8FDEF2240FD1300519779 /* BaseModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		4BF8FDF02240FD1300519779 /* OstSdkInteractOld */ = {
-			isa = PBXGroup;
-			children = (
-				4BF8FDF12240FD1300519779 /* OstSdkInteractOld.swift */,
-			);
-			path = OstSdkInteractOld;
 			sourceTree = "<group>";
 		};
 		4BF8FDF32240FD1300519779 /* Layouts */ = {
@@ -1106,11 +1030,7 @@
 		4BF8FDFF2240FD1400519779 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				00ECB856227724D90085E4AB /* new */,
-				4BF8FE002240FD1400519779 /* WalletViewController.swift */,
-				4BF8FE012240FD1400519779 /* HomeViewController.swift */,
-				4BF8FE022240FD1400519779 /* UserActionsViewController.swift */,
-				4BF8FE032240FD1400519779 /* LoginViewController.swift */,
+				4B9433D122F07C9A00966372 /* new */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1121,44 +1041,6 @@
 				4BF8FE052240FD1400519779 /* UserCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		4BF8FE062240FD1400519779 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4BF8FE072240FD1400519779 /* Wallet */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		4BF8FE072240FD1400519779 /* Wallet */ = {
-			isa = PBXGroup;
-			children = (
-				4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */,
-				4BF8FE082240FD1400519779 /* ResetPinView.swift */,
-				4BF8FE092240FD1400519779 /* UserDetailsView.swift */,
-				4BF8FE0A2240FD1400519779 /* AbortRevocerDeviceView.swift */,
-				4BF8FE0B2240FD1400519779 /* BaseWalletWorkflowView.swift */,
-				4BF8FE0C2240FD1400519779 /* RecoverDeviceView.swift */,
-				4BF8FE0D2240FD1400519779 /* subViews */,
-				4BF8FE0F2240FD1400519779 /* AddSessionView.swift */,
-				4BF8FE102240FD1400519779 /* SetupWalletView.swift */,
-				4BF8FE112240FD1400519779 /* AddDeviceWithMnemonics.swift */,
-				4BF8FE122240FD1400519779 /* ShowQRView.swift */,
-				4BF8FE132240FD1400519779 /* ScanQRCodeView.swift */,
-				4BF8FE152240FD1400519779 /* BaseWalletView.swift */,
-				4BF8FE142240FD1400519779 /* PaperWalletView.swift */,
-				00138FD8224A8EBB004F96EA /* SendTokensToUserView.swift */,
-			);
-			path = Wallet;
-			sourceTree = "<group>";
-		};
-		4BF8FE0D2240FD1400519779 /* subViews */ = {
-			isa = PBXGroup;
-			children = (
-				4BF8FE0E2240FD1400519779 /* QRInfoLabel.swift */,
-			);
-			path = subViews;
 			sourceTree = "<group>";
 		};
 		4BFA11752287387300A9F5A4 /* Notification */ = {
@@ -1539,9 +1421,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BF8FE2E2240FD1400519779 /* BaseWalletWorkflowView.swift in Sources */,
 				4B464F3122794E9500F1F4AF /* String+Extension.swift in Sources */,
 				4BFA118022873BF100A9F5A4 /* UserDetailsTableViewCell.swift in Sources */,
+				4B9433E222F07C9A00966372 /* OptionsViewController.swift in Sources */,
 				002EAF66227275F000B48F1D /* OstUIKit.swift in Sources */,
 				4BA4CB10227DF31600A623ED /* Dictionary+Extension.swift in Sources */,
 				4B4EB878228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */,
@@ -1549,21 +1431,21 @@
 				4B464F3522796F3F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				00A8D4DD2273179C00D33B0A /* BaseTheamer.swift in Sources */,
 				0041A65922807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
+				4B9433E622F07C9A00966372 /* SetupUserViewController.swift in Sources */,
 				4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */,
 				4BF8FE222240FD1400519779 /* ColorTheme.swift in Sources */,
 				0041A6612280C07F007A52A8 /* OstGetPinViewController.swift in Sources */,
 				0041A6662280CE14007A52A8 /* OstPinInput.swift in Sources */,
+				4B9433E022F07C9A00966372 /* OstWalletViewController.swift in Sources */,
 				4BF8FE212240FD1400519779 /* IconGenerator.swift in Sources */,
 				002EAF4C2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
-				4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */,
+				4B9433E522F07C9A00966372 /* IntroViewController.swift in Sources */,
 				4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */,
-				4B464F232278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
+				4B9433E422F07C9A00966372 /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B464E772271CD8C00F1F4AF /* OstSdkInteract.swift in Sources */,
-				4BF8FE322240FD1400519779 /* SetupWalletView.swift in Sources */,
 				4BF8FE182240FD1400519779 /* Users.swift in Sources */,
-				4BF8FE312240FD1400519779 /* AddSessionView.swift in Sources */,
+				4B9433DE22F07C9A00966372 /* EconomyScannerViewController.swift in Sources */,
 				4BA4CB9622846FF100A623ED /* OstRestPinWorkflowController.swift in Sources */,
-				4BF8FE262240FD1400519779 /* WalletViewController.swift in Sources */,
 				4B214A79228BE89D006825FE /* OstNotificationManager.swift in Sources */,
 				002EAF3C2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
 				4B214A75228B4FAB006825FE /* OstErroNotification.swift in Sources */,
@@ -1573,17 +1455,12 @@
 				4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */,
 				4BFA11772287388800A9F5A4 /* OstNotification.swift in Sources */,
 				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
-				4BF8FE2C2240FD1400519779 /* UserDetailsView.swift in Sources */,
-				4B464FB6227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4BA4CB18228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				4BA4CB14227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
-				00ECB859227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B9E7377227D9CDA009E1094 /* PaginationLoaderTableViewCell.swift in Sources */,
 				4BA4CB8A2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B4EB873228F49D5001605DE /* TransactionQRScanner.swift in Sources */,
-				4BFA1191228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */,
-				0036187C229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B9E7370227D9BF8009E1094 /* TransactionTableViewCell.swift in Sources */,
 				00B943AC22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				002EAF3122719ED800B48F1D /* OstPrimaryButton.swift in Sources */,
@@ -1599,8 +1476,6 @@
 				0041A65D2280BF43007A52A8 /* OstSetNewPinViewController.swift in Sources */,
 				00361878229DA4760042377F /* AppUrlData.swift in Sources */,
 				4BFA118422873C1F00A9F5A4 /* UserDetailsWithCopyBtnTableViewCell.swift in Sources */,
-				4BF8FE272240FD1400519779 /* HomeViewController.swift in Sources */,
-				4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */,
 				002EAF6A22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4BF8FE1D2240FD1400519779 /* HomeCustomLayout.swift in Sources */,
 				4B214A7D228C17CF006825FE /* Date+Conversion.swift in Sources */,
@@ -1611,26 +1486,20 @@
 				4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
 				00A76B2B22834611009226B8 /* OstWFCPinManager.swift in Sources */,
 				0075ED0E227B4F6700FADF23 /* OstButton.swift in Sources */,
-				4BF8FE302240FD1400519779 /* QRInfoLabel.swift in Sources */,
+				4B9433DF22F07C9A00966372 /* WKWebViewController.swift in Sources */,
 				002EAF362271AAFD00B48F1D /* OstFontProvider.swift in Sources */,
 				4BF8FE1F2240FD1400519779 /* UIColorExtension.swift in Sources */,
 				4B464F132278516B00F1F4AF /* OstNavigation.swift in Sources */,
+				4B9433E822F08DAF00966372 /* AppConfig.swift in Sources */,
 				002EAF4822720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				002EAF622272752E00B48F1D /* OstH1Theamer.swift in Sources */,
 				4B464F2C2278CBEA00F1F4AF /* OptionTableViewCell.swift in Sources */,
-				4B464FB9227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4BFA11712286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8E22832AA700A623ED /* InitiateDeviceRecoveryViewController.swift in Sources */,
 				4B09CB5C22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift in Sources */,
-				4BA4CB9E22855D3900A623ED /* SetupUserViewController.swift in Sources */,
-				4BF8FE192240FD1400519779 /* CurrentUser.swift in Sources */,
-				4BF8FE2D2240FD1400519779 /* AbortRevocerDeviceView.swift in Sources */,
-				00138FD9224A8EBB004F96EA /* SendTokensToUserView.swift in Sources */,
 				4B214A8B228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */,
 				002EAF5E227272B600B48F1D /* OstLabelTheamer.swift in Sources */,
-				4B464FB0227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
-				4BF8FE1B2240FD1400519779 /* OstSdkInteractOld.swift in Sources */,
 				4B464F3E2279A2B000F1F4AF /* ShowQRCodeViewController.swift in Sources */,
 				4B464EF222782A2100F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				002EAF382271F2A400B48F1D /* UIFont+Helpers.swift in Sources */,
@@ -1641,30 +1510,23 @@
 				4BFA118D2287443B00A9F5A4 /* UserDetailsCellViewModel.swift in Sources */,
 				4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */,
 				4B464F0D227850C300F1F4AF /* OstBlueNavigation.swift in Sources */,
-				4BF8FE2F2240FD1400519779 /* RecoverDeviceView.swift in Sources */,
-				4BF8FE2B2240FD1400519779 /* ResetPinView.swift in Sources */,
+				4B9433E322F07C9A00966372 /* TabBarViewController.swift in Sources */,
 				4BA4CB03227DA56A00A623ED /* UserAPI.swift in Sources */,
 				4BA4CB9A228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
-				4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */,
-				4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */,
 				4B464F42227A0CA200F1F4AF /* QRScannerViewController.swift in Sources */,
 				4BF8FE242240FD1400519779 /* Shapes.swift in Sources */,
+				4B9433E122F07C9A00966372 /* OstHomeViewController.swift in Sources */,
 				00ECB862227727310085E4AB /* OstBaseViewController.swift in Sources */,
-				4BF8FE352240FD1400519779 /* ScanQRCodeView.swift in Sources */,
 				00B943A822811B9C0084635A /* OstActivateUserWorkflowController.swift in Sources */,
 				00FF2333226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				002EAF502272321500B48F1D /* OstSecondaryButton.swift in Sources */,
-				4BF8FE292240FD1400519779 /* LoginViewController.swift in Sources */,
 				002EAF54227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */,
-				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
 				4B464EE822773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */,
 				4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */,
 				4BA4CB12227DF42200A623ED /* Conversion+Helper.swift in Sources */,
 				4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BA4CBA72285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
-				4BF8FE332240FD1400519779 /* AddDeviceWithMnemonics.swift in Sources */,
-				4BA4CBA32285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4B214A87228D781F006825FE /* InsetLabel.swift in Sources */,
 				4BF8FE1A2240FD1400519779 /* BaseModel.swift in Sources */,
 				4BF8FE252240FD1400519779 /* CGContextExtension.swift in Sources */,
@@ -1676,9 +1538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B464F1622785CE000F1F4AF /* LoginViewController.swift in Sources */,
 				00A76B2C22834611009226B8 /* OstWFCPinManager.swift in Sources */,
-				4B464F242278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				4BFA117C228739D000A9F5A4 /* UserDetailsViewController.swift in Sources */,
 				002EAF67227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4DE22731ADA00D33B0A /* BaseTheamer.swift in Sources */,
@@ -1691,12 +1551,11 @@
 				4B214A72228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFD2278320400F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
+				4B9433E922F08DD700966372 /* AppConfig.swift in Sources */,
 				4BA4CB732280BC8700A623ED /* CurrentUserModel.swift in Sources */,
-				4B464F01227835CB00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF55227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BA4CB6F2280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3222794E9500F1F4AF /* String+Extension.swift in Sources */,
-				0036187D229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B464F3C22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF522782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				4BA4CB7A2280BC9000A623ED /* OstBaseModel.swift in Sources */,
@@ -1723,7 +1582,6 @@
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7374227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
-				4BA4CBA42285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B214A7A228BE89D006825FE /* OstNotificationManager.swift in Sources */,
@@ -1759,32 +1617,23 @@
 				002EAF512272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB19228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				4B214A6A228AA859006825FE /* AppDelegate.swift in Sources */,
-				4BFA1192228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				002EAF4922720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8B2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B214A76228B4FAB006825FE /* OstErroNotification.swift in Sources */,
-				4B464FB7227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F362279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BFA11722286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8322828EE800A623ED /* DeviceAPI.swift in Sources */,
-				4B464FBA227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4B464F3F2279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,
-				4B464F5D227B730E00F1F4AF /* OstSdkInteractOld.swift in Sources */,
-				4B464F45227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				4BA4CB15227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
 				0041A6672280CE14007A52A8 /* OstPinInput.swift in Sources */,
 				00B943AD22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				00FF2334226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				0041A65A22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
 				4B214A8C228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */,
-				4B464F47227AC73500F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3D2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
-				4B464FB1227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
 				4BA4CB9B228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
-				00ECB85A227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B4EB879228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */,
 				00C134602278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
-				4BA4CB9F22855D3900A623ED /* SetupUserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1792,9 +1641,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B464F1722785CE000F1F4AF /* LoginViewController.swift in Sources */,
 				00A76B2D22834611009226B8 /* OstWFCPinManager.swift in Sources */,
-				4B464F252278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
 				4BFA117D228739D000A9F5A4 /* UserDetailsViewController.swift in Sources */,
 				002EAF68227275F000B48F1D /* OstUIKit.swift in Sources */,
 				00A8D4E022731ADD00D33B0A /* BaseTheamer.swift in Sources */,
@@ -1807,12 +1654,11 @@
 				4B214A73228B4F9E006825FE /* OstSuccessNotification.swift in Sources */,
 				4B464EFE2278320500F1F4AF /* OstWorkflowCallbacks.swift in Sources */,
 				4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */,
+				4B9433EA22F08DD700966372 /* AppConfig.swift in Sources */,
 				4BA4CB742280BC8800A623ED /* CurrentUserModel.swift in Sources */,
-				4B464F02227835CC00F1F4AF /* CurrentUser.swift in Sources */,
 				002EAF56227251E400B48F1D /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				4BA4CB702280B58F00A623ED /* BaseAPI.swift in Sources */,
 				4B464F3322794E9500F1F4AF /* String+Extension.swift in Sources */,
-				0036187E229DDC4B0042377F /* CanConfigureEconomyProtocol.swift in Sources */,
 				4B464F3B22798B4C00F1F4AF /* OstVerifyAuthDeviceViewController.swift in Sources */,
 				4B464EF622782C5500F1F4AF /* MnemonicsCollectionViewCell.swift in Sources */,
 				4BA4CB792280BC8F00A623ED /* OstBaseModel.swift in Sources */,
@@ -1839,7 +1685,6 @@
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7375227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
 				4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
-				4BA4CBA52285826000A623ED /* EconomyScannerViewController.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B214A7B228BE89D006825FE /* OstNotificationManager.swift in Sources */,
@@ -1875,32 +1720,23 @@
 				002EAF522272321500B48F1D /* OstSecondaryButton.swift in Sources */,
 				4BA4CB1A228006F900A623ED /* CreateSessionViewController.swift in Sources */,
 				4B214A6B228AA859006825FE /* AppDelegate.swift in Sources */,
-				4BFA1193228753FC00A9F5A4 /* WKWebViewController.swift in Sources */,
 				002EAF4A22720EB200B48F1D /* UIImage+Helper.swift in Sources */,
 				4BA4CB8C2282B83300A623ED /* DeviceTableViewCell.swift in Sources */,
 				4B214A77228B4FAB006825FE /* OstErroNotification.swift in Sources */,
-				4B464FB8227D9ABE00F1F4AF /* TabBarViewController.swift in Sources */,
 				4B464F372279730F00F1F4AF /* AuthorizeDeviceViaMnemonicsViewController.swift in Sources */,
 				4BFA11732286CF2700A9F5A4 /* OstLinkButton.swift in Sources */,
 				4BA4CB8422828EE900A623ED /* DeviceAPI.swift in Sources */,
-				4B464FBB227D9ABE00F1F4AF /* OstHomeViewController.swift in Sources */,
 				4B464F402279A54900F1F4AF /* ShowQRCodeViewController.swift in Sources */,
-				4B464F5E227B730F00F1F4AF /* OstSdkInteractOld.swift in Sources */,
-				4B464F46227AC6EA00F1F4AF /* WalletViewController.swift in Sources */,
 				4BA4CB16227F466300A623ED /* WalletValueTableViewCell.swift in Sources */,
 				0041A6682280CE14007A52A8 /* OstPinInput.swift in Sources */,
 				00B943AE22812C260084635A /* OstConfirmNewPinViewController.swift in Sources */,
 				00FF2335226F5B2C009C2945 /* OstTheme.swift in Sources */,
 				0041A65B22807D15007A52A8 /* OstSdkInteract+Workflow.swift in Sources */,
 				4B214A8D228D805E006825FE /* EmptyTransactionTableViewCell.swift in Sources */,
-				4B464F48227AC73600F1F4AF /* BaseWalletView.swift in Sources */,
 				002EAF3E2271F8B700B48F1D /* UIColor+Helper.swift in Sources */,
-				4B464FB2227D9ABE00F1F4AF /* OstWalletViewController.swift in Sources */,
 				4BA4CB9C228497D400A623ED /* OstAbortDeviceRecoveryWorkflowController.swift in Sources */,
-				00ECB85B227726D40085E4AB /* IntroViewController.swift in Sources */,
 				4B4EB87A228FE17D001605DE /* OstVerifyTransactionViewController.swift in Sources */,
 				00C134612278AF5B00D6E7B8 /* OstLabel.swift in Sources */,
-				4BA4CBA022855D3900A623ED /* SetupUserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

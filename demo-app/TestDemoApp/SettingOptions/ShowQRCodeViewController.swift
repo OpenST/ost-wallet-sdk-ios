@@ -151,7 +151,7 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
     }
     
     //MAKR: - OstSdkInteract Delegate
-    override func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         progressIndicator?.hide()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {[weak self] in
             let alert = UIAlertController(title: "Something went wrong",
@@ -162,11 +162,11 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
         }
     }
     
-    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         processIfRequired(workflowContext: workflowContext, contextEntity: contextEntity)
     }
     
-    override func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    override func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         processIfRequired(workflowContext: workflowContext, contextEntity: contextEntity)
     }
     

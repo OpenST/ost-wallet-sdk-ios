@@ -12,21 +12,18 @@ import OstWalletSdk
 protocol OstSdkInteractDelegate: AnyObject {
 }
 
-protocol OstFlowCompleteDelegate: OstSdkInteractDelegate{
-    func flowComplete(workflowId: String,
-                      workflowContext: OstWorkflowContext,
+protocol OWFlowCompleteDelegate: OstSdkInteractDelegate{
+    func flowComplete(workflowContext: OstWorkflowContext,
                       contextEntity: OstContextEntity)
 }
 
-protocol OstFlowInterruptedDelegate: OstSdkInteractDelegate{
-    func flowInterrupted(workflowId: String,
-                         workflowContext: OstWorkflowContext,
+protocol OWFlowInterruptedDelegate: OstSdkInteractDelegate{
+    func flowInterrupted(workflowContext: OstWorkflowContext,
                          error: OstError)
 }
 
-protocol OstRequestAcknowledgedDelegate: OstSdkInteractDelegate{
-    func requestAcknowledged(workflowId: String,
-                             workflowContext: OstWorkflowContext,
+protocol OWRequestAcknowledgedDelegate: OstSdkInteractDelegate{
+    func requestAcknowledged(workflowContext: OstWorkflowContext,
                              contextEntity: OstContextEntity)
 }
 

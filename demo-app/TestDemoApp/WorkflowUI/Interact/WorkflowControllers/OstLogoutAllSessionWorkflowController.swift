@@ -15,7 +15,7 @@ import OstWalletSdk
 class OstLogoutAllSessionWorkflowController: OstWorkflowCallbacks {
    
     init(userId: String,
-         passphrasePrefixDelegate: OstPassphrasePrefixDelegate,
+         passphrasePrefixDelegate: OWPassphrasePrefixDelegate,
          presenter: UIViewController) {
         
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);

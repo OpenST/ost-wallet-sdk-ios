@@ -11,8 +11,7 @@ import OstWalletSdk
 import LocalAuthentication
 import Crashlytics
 
-
-class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate, OstJsonApiDelegate {
+class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITableViewDataSource, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OstJsonApiDelegate, OstWorkflowUIDelegate {
 
     //MAKR: - Components
     var tableView: UITableView?
@@ -400,7 +399,10 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .viewMnemonics {
             if option.isEnable {
-                destinationSVVC = DeviceMnemonicsViewController()
+                let workflowId = OstWalletUI.getDeviceMnemonics(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                return
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }
@@ -408,7 +410,12 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .authorizeViaMnemonics {
             if option.isEnable {
-                destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+//                destinationSVVC = AuthorizeDeviceViaMnemonicsViewController()
+                let workflowId = OstWalletUI
+                    .authorizeCurrentDeviceWithMnemonics(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                         passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                return
             }else {
                 showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
             }
@@ -456,7 +463,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if  option.type  == .manageDevices {
             if option.isEnable {
-                destinationVC = ManageDeviceViewController()
+                
+                let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                return
             }else {
                 showInfoAlert(title: "Once")
             }
@@ -472,10 +483,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .resetPin {
             if option.isEnable {
-                _ = OstSdkInteract.getInstance.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                        passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                        presenter: self)
-                self.tabbarController?.hideTabBar()
+                let workflowId = OstWalletUI.resetPin(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                      passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }
@@ -483,10 +493,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .abortRecovery {
             if option.isEnable {
-                _ = OstSdkInteract.getInstance.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance,
-                                                                   presenter: self)
-                self.tabbarController?.hideTabBar()
+                _ = OstWalletUI.abortDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                       passphrasePrefixDelegate: CurrentUserModel.getInstance)
             }else {
                 showInfoAlert(title: "Recovery not initiated, Abort recovery applies only if recovery has been previously initiated.")
             }
@@ -495,14 +503,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .biomerticStatus {
             if option.isEnable {
-                let workflowDelegate = OstSdkInteract.getInstance.getWorkflowCallback(forUserId: CurrentUserModel.getInstance.ostUserId!)
-                OstSdkInteract.getInstance.subscribe(forWorkflowId: workflowDelegate.workflowId,
-                                                     listner: self)
-                
                 let isEnabled = OstWalletSdk.isBiometricEnabled(userId: CurrentUserModel.getInstance.ostUserId!)
-                OstWalletSdk.updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                       enable: !isEnabled,
-                                                       delegate: workflowDelegate)
+                let workflowId = OstWalletUI
+                    .updateBiometricPreference(userId: CurrentUserModel.getInstance.ostUserId!,
+                                               enable: !isEnabled,
+                                               passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 
             }else {
                 showInfoAlert(title: "No biometrics available on this device. Please enable via your device settings") 
@@ -549,8 +556,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
     }
     
     //MARK: - OstSdkInteract Delegate
-    
-    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .setupDevice
             || workflowContext.workflowType == .updateBiometricPreference {
             
@@ -562,13 +568,13 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         }
     }
     
-    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
+    func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if workflowContext.workflowType == .logoutAllSessions {
             progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType)
         }
     }
     
-    func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         if workflowContext.workflowType == .logoutAllSessions {
             progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
         }

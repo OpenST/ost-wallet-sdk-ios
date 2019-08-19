@@ -17,7 +17,7 @@ class OstInitiateDeviceRecoveryWorkflowController: OstWorkflowCallbacks {
     /// Mark - View Controllers.
     
     init(userId: String,
-         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+         passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
          presenter:UIViewController,
          recoverDeviceAddress: String) {
        
