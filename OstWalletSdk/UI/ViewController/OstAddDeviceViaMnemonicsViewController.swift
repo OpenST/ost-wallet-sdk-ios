@@ -34,14 +34,14 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
 
         let viewConfig = OstContent.getAddDeviceViaMnemonicsVCConfig()
 
-        titleLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
-                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        titleLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
-        infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
-                                       placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getComponentName()],
+                                       placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
-        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.bottomLabel.getCompnentName()],
-                                     placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.bottomLabel.getComponentName()],
+                                     placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
         setActionButtonText(pageConfig: viewConfig)
         

@@ -24,7 +24,8 @@ import Foundation
     revokeDevice,
     resetPin,
     logoutAllSessions,
-    updateBiometricPreference
+    updateBiometricPreference,
+    showDeviceQR
 }
 
 @objc public class OstWorkflowContext: NSObject {    

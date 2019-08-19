@@ -36,7 +36,7 @@ import Foundation
         bottomLabel,
         placeholders
         
-        func getCompnentName() -> String {
+        func getComponentName() -> String {
             switch self {
             case .titleLabel:
                 return "title_label"
@@ -116,7 +116,7 @@ import Foundation
                           forWorkflow workflow: String) -> [String: Any]? {
         
         let controllerConfig = getControllerConfig(for: controller, inWorkflow: workflow)
-        let component = controllerConfig[component.getCompnentName()]
+        let component = controllerConfig[component.getComponentName()]
         return component as? [String: Any]
     }
 }
@@ -261,6 +261,12 @@ extension OstContent {
         return getPinVCConfigObj(componentData)
     }
     
+    class func getShowDeviceQRVCConfig() -> [String: Any]{
+        let workflowName = getWorkflowName(for: .showDeviceQR)
+        let config = OstContent.getInstance().getControllerConfig(for: "show_qr", inWorkflow: workflowName)
+        return config
+    }
+    
     class func getLoaderText(for type: OstWorkflowType) -> String {
         
         let content = OstContent.getInstance()
@@ -316,6 +322,8 @@ extension OstContent {
         case .authorizeDeviceWithMnemonics:
             return "add_current_device_with_mnemonics"
             
+        case .showDeviceQR:
+            return "show_add_device_qr"
         default:
             return ""
         }

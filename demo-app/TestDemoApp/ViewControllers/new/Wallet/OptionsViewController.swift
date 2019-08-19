@@ -423,7 +423,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .showDeviceQR {
             if option.isEnable {
-                destinationVC = ShowQRCodeViewController()
+                let workflowId = OstWalletUI.getAddDeviceQRCode(userId: CurrentUserModel.getInstance.ostUserId!)
+                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+//                destinationVC = ShowQRCodeViewController()
             }else {
                 let currentUser = CurrentUserModel.getInstance
                 let userDevice = currentUser.currentDevice

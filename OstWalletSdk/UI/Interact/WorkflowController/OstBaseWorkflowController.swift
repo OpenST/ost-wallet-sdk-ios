@@ -25,7 +25,7 @@ import Foundation
     ///   - userId: Ost use id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     override init(userId: String,
-                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
         
         super.init(userId: userId,
                    passphrasePrefixDelegate: passphrasePrefixDelegate)

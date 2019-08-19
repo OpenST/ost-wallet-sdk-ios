@@ -76,11 +76,11 @@ import Foundation
     override func configure() {
         super.configure();
         
-        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getCompnentName()],
-                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getComponentName()])
         
-        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getCompnentName()],
-                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getComponentName()],
+                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getComponentName()])
         
         self.shouldFireIsMovingFromParent = true;
     }

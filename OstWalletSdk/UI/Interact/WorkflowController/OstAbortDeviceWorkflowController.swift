@@ -21,7 +21,7 @@ import Foundation
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     @objc 
     override init(userId: String,
-                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
         
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
     }

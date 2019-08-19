@@ -231,6 +231,17 @@ import UIKit
         return workflowController.workflowId
     }
     
+    @objc
+    public class func getAddDeviceQRCode (
+        userId: String
+        ) -> String {
+     
+        let workflowController = OstShowDeviceQRWorkflowController(userId: userId,
+                                                                   passphrasePrefixDelegate: nil)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
     
     /// Subscribe to receive workflow events.

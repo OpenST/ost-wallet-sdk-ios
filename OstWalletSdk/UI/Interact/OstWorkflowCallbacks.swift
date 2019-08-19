@@ -47,7 +47,7 @@ import Foundation
     ///   - userId: Ost use id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
-         passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
         
         self.userId = userId;
         self.workflowId = UUID().uuidString;

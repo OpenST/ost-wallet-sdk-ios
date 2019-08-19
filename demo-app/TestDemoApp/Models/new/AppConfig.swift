@@ -171,6 +171,12 @@ class AppConfig: NSObject {
                 "terms_and_condition_label": [
                     "text": ""
                 ]
+            ],
+            "loader": [
+                "text": "Creating Se..."
+            ],
+            "initial_loader": [
+                "text": "Initializing..."
             ]
         ],
         
@@ -345,6 +351,12 @@ class AppConfig: NSObject {
                 "terms_and_condition_label": [
                     "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
                 ]
+            ],
+            "loader": [
+                "text": "Getting Mnemonics..."
+            ],
+            "initial_loader": [
+                "text": "Initializing..."
             ]
         ],
         

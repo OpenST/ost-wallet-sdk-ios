@@ -319,5 +319,16 @@
         "initial_loader": {
             "text": "Initializing..."
         }
+    },
+    
+    "show_add_device_qr": {
+        "show_qr": {
+            "title_label": {
+                "text": "Scan QR to Authorize"
+            },
+            "lead_label": {
+                "text": "Please scan the QR Code from your old device to authorize this device"
+            },
+        }
     }
 }
