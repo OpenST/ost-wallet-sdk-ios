@@ -324,6 +324,9 @@ extension OstContent {
             
         case .showDeviceQR:
             return "show_add_device_qr"
+            
+        case .authorizeDeviceWithQRCode:
+            return "authorize_device_via_qr"
         default:
             return ""
         }

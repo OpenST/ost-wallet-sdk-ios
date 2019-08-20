@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstDeviceQRViewController: OstBaseViewController {
+class OstDeviceQRViewController: OstBaseScrollViewController {
     
     class func newInstance(qrCode: CIImage, for userId: String) -> OstDeviceQRViewController {
         let vc = OstDeviceQRViewController()
@@ -34,14 +34,17 @@ class OstDeviceQRViewController: OstBaseViewController {
     let addressContainer: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
         view.backgroundColor = UIColor.color(248, 248, 248)
         return view
     }()
     
     let addressTextLabel: OstH2Label = OstH2Label(text: "Device Address")
     let deviceAddressLabel: OstH3Label = OstH3Label()
+    let checkDeviceStatusButton: OstB1Button = OstB1Button(title: "Verify Device Status")
+    
     var qrCode: CIImage? = nil
-    var bottomConstraints: NSLayoutConstraint? = nil
     
     //MARK: - View LC
     override func configure() {
@@ -54,7 +57,13 @@ class OstDeviceQRViewController: OstBaseViewController {
         leadLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.leadLabel.getComponentName()],
                                         placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
         
+        checkDeviceStatusButton.addTarget(self, action: #selector(checkDeviceStatusButtonTapped(_:)), for: .touchUpInside)
+        
         self.shouldFireIsMovingFromParent = true;
+    }
+    
+    @objc func checkDeviceStatusButtonTapped(_ sender: Any) {
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +91,11 @@ class OstDeviceQRViewController: OstBaseViewController {
         self.addSubview(addressContainer)
         addressContainer.addSubview(addressTextLabel)
         addressContainer.addSubview(deviceAddressLabel)
+        
+        self.addSubview(checkDeviceStatusButton)
+        
+        let lastView = checkDeviceStatusButton
+        lastView.bottomAlignWithParent()
     }
     
     //MARK: - Apply Constraints
@@ -96,6 +110,8 @@ class OstDeviceQRViewController: OstBaseViewController {
 
         addDeviceAddressConstraints()
         addAddressLabelConstraints()
+        
+        addCheckDeviceStatusConstraints()
     }
     
     func addTitleLabelConstraints() {
@@ -109,38 +125,34 @@ class OstDeviceQRViewController: OstBaseViewController {
     }
     
     func addQRImageConstraints() {
-        qrImageView.topAlign(toItem: leadLabel, multiplier: 1, constant: 10, relatedBy: .greaterThanOrEqual)
+        qrImageView.placeBelow(toItem: leadLabel, multiplier: 1, constant: 25)
         qrImageView.centerXAlignWithParent()
-        qrImageView.centerYAlignWithParent()
-        qrImageView.setW375Width(width: 200)
+        qrImageView.setW375Width(width: 150)
         qrImageView.setAspectRatio(widthByHeight: 1)
-        qrImageView.bottomAlign(toItem: addressContainer, multiplier: 1, constant: -10, relatedBy: .lessThanOrEqual)
     }
     
     func addAddressContainerConstraints() {
-        addressContainer.topAlign(toItem: addressTextLabel, constant: -25)
-        addressContainer.bottomAlignWithParent()
-        addressContainer.leftAlignWithParent()
-        addressContainer.rightAlignWithParent()
-    }
-    
-    func addDeviceAddressConstraints() {
-        if #available(iOS 11.0, *) {
-            let safeArea = view.safeAreaLayoutGuide
-            bottomConstraints = deviceAddressLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,
-                                                                           constant: -25)
-            bottomConstraints!.isActive = true
-        }else {
-            deviceAddressLabel.bottomAlignWithParent(constant: -25)
-        }
-            
-        deviceAddressLabel.leftAlignWithParent(multiplier: 1.0, constant: 20)
-        deviceAddressLabel.rightAlignWithParent(multiplier: 1.0, constant: -20)
+        addressContainer.placeBelow(toItem: qrImageView, constant: 25)
+        addressContainer.leftAlignWithParent(multiplier: 1, constant: 25)
+        addressContainer.rightAlignWithParent(multiplier: 1, constant: -25)
     }
     
     func addAddressLabelConstraints() {
-        addressTextLabel.bottomFromTopAlign(toItem: deviceAddressLabel, constant: -4)
-        addressTextLabel.leftAlignWithParent(multiplier: 1.0, constant: 40)
-        addressTextLabel.rightAlignWithParent(multiplier: 1.0, constant: -40)
+        addressTextLabel.topAlign(toItem: addressContainer, constant: 25)
+        addressTextLabel.leftAlignWithParent(multiplier: 1.0, constant: 10)
+        addressTextLabel.rightAlignWithParent(multiplier: 1.0, constant: -10)
+    }
+    
+    func addDeviceAddressConstraints() {
+        deviceAddressLabel.placeBelow(toItem: addressTextLabel, constant: 4)
+        deviceAddressLabel.leftAlignWithParent(multiplier: 1.0, constant: 10)
+        deviceAddressLabel.rightAlignWithParent(multiplier: 1.0, constant: -10)
+        deviceAddressLabel.bottomAlignWithParent(constant: -25)
+    }
+    
+    func addCheckDeviceStatusConstraints() {
+        checkDeviceStatusButton.placeBelow(toItem: addressContainer, constant: 25)
+        checkDeviceStatusButton.leftAlignWithParent(multiplier: 1, constant: 25)
+        checkDeviceStatusButton.rightAlignWithParent(multiplier: 1, constant: -25)
     }
 }

@@ -14,7 +14,7 @@ import OstWalletSdk
 class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     //MARK: - Components
-    var scanner: OstScannerView? = nil
+    var scanner: OWScannerView? = nil
     
     override func getNavBarTitle() -> String {
         return "Scan QR"
@@ -59,7 +59,7 @@ class QRScannerViewController: BaseSettingOptionsViewController, AVCaptureMetada
     }
     
     func addScannerView() {
-        let viewPreview = OstScannerView(completion: {[weak self] (values) in
+        let viewPreview = OWScannerView(completion: {[weak self] (values) in
             guard let strongSelf = self else {return}
             if (nil != values) && !values!.isEmpty {
                 guard let qrData = values!.first else {

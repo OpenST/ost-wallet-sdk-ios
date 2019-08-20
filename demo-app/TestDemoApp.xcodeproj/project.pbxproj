@@ -205,9 +205,9 @@
 		4B464F42227A0CA200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F43227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
 		4B464F44227A118200F1F4AF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */; };
-		4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
-		4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
-		4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OstScannerView.swift */; };
+		4B464F4A227AC9E700F1F4AF /* OWScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OWScannerView.swift */; };
+		4B464F4B227ACE8000F1F4AF /* OWScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OWScannerView.swift */; };
+		4B464F4C227ACE8000F1F4AF /* OWScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F49227AC9E700F1F4AF /* OWScannerView.swift */; };
 		4B464F4E227AED2A00F1F4AF /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */; };
 		4B464F50227AED7300F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
 		4B464F51227AED7D00F1F4AF /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B464F4F227AED7300F1F4AF /* OstBaseView.swift */; };
@@ -457,7 +457,7 @@
 		4B464F392279863700F1F4AF /* OstVerifyAuthDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyAuthDeviceViewController.swift; sourceTree = "<group>"; };
 		4B464F3D2279A2B000F1F4AF /* ShowQRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRCodeViewController.swift; sourceTree = "<group>"; };
 		4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
-		4B464F49227AC9E700F1F4AF /* OstScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstScannerView.swift; sourceTree = "<group>"; };
+		4B464F49227AC9E700F1F4AF /* OWScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OWScannerView.swift; sourceTree = "<group>"; };
 		4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B464F4F227AED7300F1F4AF /* OstBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstBaseView.swift; sourceTree = "<group>"; };
 		4B464F55227B40A900F1F4AF /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
@@ -696,7 +696,7 @@
 				0075ED0C227B4F3C00FADF23 /* Buttons */,
 				00C1345D2278AF2300D6E7B8 /* Labels */,
 				4B464F4F227AED7300F1F4AF /* OstBaseView.swift */,
-				4B464F49227AC9E700F1F4AF /* OstScannerView.swift */,
+				4B464F49227AC9E700F1F4AF /* OWScannerView.swift */,
 				4B464F4D227AED2A00F1F4AF /* OstProgressIndicator.swift */,
 			);
 			path = Views;
@@ -1451,7 +1451,7 @@
 				4B214A75228B4FAB006825FE /* OstErroNotification.swift in Sources */,
 				4B464F4E227AED2A00F1F4AF /* OstProgressIndicator.swift in Sources */,
 				4B464EEC2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
-				4B464F4A227AC9E700F1F4AF /* OstScannerView.swift in Sources */,
+				4B464F4A227AC9E700F1F4AF /* OWScannerView.swift in Sources */,
 				4B4EB86F228E87B8001605DE /* AuthorizeDeviceQRScanner.swift in Sources */,
 				4BFA11772287388800A9F5A4 /* OstNotification.swift in Sources */,
 				4B464F282278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
@@ -1581,7 +1581,7 @@
 				0041A66E2280D60D007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6B22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7374227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
-				4B464F4B227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
+				4B464F4B227ACE8000F1F4AF /* OWScannerView.swift in Sources */,
 				4B464EED2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F292278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B214A7A228BE89D006825FE /* OstNotificationManager.swift in Sources */,
@@ -1684,7 +1684,7 @@
 				0041A66F2280D60E007A52A8 /* SendTokensViewController.swift in Sources */,
 				002EAF6C22727C8100B48F1D /* OstLeadLabelTheamer.swift in Sources */,
 				4B9E7375227D9BF8009E1094 /* UsersTableViewCell.swift in Sources */,
-				4B464F4C227ACE8000F1F4AF /* OstScannerView.swift in Sources */,
+				4B464F4C227ACE8000F1F4AF /* OWScannerView.swift in Sources */,
 				4B464EEE2277423500F1F4AF /* DeviceMnemonicsViewController.swift in Sources */,
 				4B464F2A2278CBA700F1F4AF /* BaseTableViewCell.swift in Sources */,
 				4B214A7B228BE89D006825FE /* OstNotificationManager.swift in Sources */,

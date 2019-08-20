@@ -53,6 +53,16 @@ class OstBundle {
         )
     }
     
+    /// Get content from application Info.plist.
+    ///
+    /// - Parameter key: Key name
+    /// - Returns: Content for key.
+    class func getApplictionInfoPlistContent(for key: String) -> Any? {
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getApplicatoinBundle()
+        return bundleObj.object(forInfoDictionaryKey: key)
+    }
+    
     /// Get Sdk version
     ///
     /// - Returns: version string

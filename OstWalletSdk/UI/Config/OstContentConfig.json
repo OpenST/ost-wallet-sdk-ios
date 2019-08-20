@@ -330,5 +330,14 @@
                 "text": "Please scan the QR Code from your old device to authorize this device"
             },
         }
+    },
+    
+    "authorize_device_via_qr": {
+        "loader": {
+            "text": "Authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
     }
 }

@@ -231,6 +231,10 @@ import UIKit
         return workflowController.workflowId
     }
     
+    /// Get add device qr code
+    ///
+    /// - Parameter userId: Ost user id
+    /// - Returns: Workflow id
     @objc
     public class func getAddDeviceQRCode (
         userId: String
@@ -243,6 +247,19 @@ import UIKit
         return workflowController.workflowId
     }
     
+    
+    @objc
+    public class func authorizeDeviceViaQR(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
+                                                                           passphrasePrefixDelegate: nil)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
     /// Subscribe to receive workflow events.
     ///

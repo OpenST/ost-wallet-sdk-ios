@@ -440,7 +440,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .authorizeViaQR {
             if option.isEnable {
-                destinationVC = AuthorizeDeviceQRScanner()
+                
+                let workflowId = OstWalletUI.authorizeDeviceViaQR(userId: CurrentUserModel.getInstance.ostUserId!, passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                
+//                destinationVC = AuthorizeDeviceQRScanner()
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }
