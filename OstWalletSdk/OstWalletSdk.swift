@@ -94,5 +94,19 @@ import Foundation
         
         // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
-    }    
+    }
+    
+    /// Get session addresses from keymanager and fetch session data from db.
+    @objc
+    public func getActiveSessions(userId: String, spendingLimit: String?) -> [OstSession] {
+        var minSpendingLimit:BigInt = BigInt(0);
+        if ( nil != spendingLimit ) {
+            let convertedVal = BigInt(spendingLimit!);
+            if ( nil != convertedVal ) {
+                minSpendingLimit = convertedVal!;
+            }
+        }
+        return OstSession.getActiveSessions(userId: userId, minSpendingLimit: minSpendingLimit);
+    }
+    
 }
