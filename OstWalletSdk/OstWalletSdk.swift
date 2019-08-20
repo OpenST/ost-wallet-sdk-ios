@@ -98,7 +98,7 @@ import Foundation
     
     /// Get session addresses from keymanager and fetch session data from db.
     @objc
-    public func getActiveSessions(userId: String, spendingLimit: String?) -> [OstSession] {
+    public class func getActiveSessions(userId: String, spendingLimit: String?) -> [OstSession] {
         var minSpendingLimit:BigInt = BigInt(0);
         if ( nil != spendingLimit ) {
             let convertedVal = BigInt(spendingLimit!);
