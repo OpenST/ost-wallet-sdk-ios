@@ -271,7 +271,7 @@
 		4B9433C922F07AB700966372 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339822F07AB700966372 /* Notification+Name.swift */; };
 		4B9433CA22F07AB700966372 /* OstPinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339B22F07AB700966372 /* OstPinInput.swift */; };
 		4B9433CB22F07AB700966372 /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339C22F07AB700966372 /* OstBaseView.swift */; };
-		4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339E22F07AB700966372 /* InsetLabel.swift */; };
+		4B9433CC22F07AB700966372 /* OstInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339E22F07AB700966372 /* OstInsetLabel.swift */; };
 		4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339F22F07AB700966372 /* OstProgressIndicator.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
 		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
@@ -570,7 +570,7 @@
 		4B94339822F07AB700966372 /* Notification+Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
 		4B94339B22F07AB700966372 /* OstPinInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstPinInput.swift; sourceTree = "<group>"; };
 		4B94339C22F07AB700966372 /* OstBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseView.swift; sourceTree = "<group>"; };
-		4B94339E22F07AB700966372 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		4B94339E22F07AB700966372 /* OstInsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstInsetLabel.swift; sourceTree = "<group>"; };
 		4B94339F22F07AB700966372 /* OstProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
 		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
@@ -1355,7 +1355,7 @@
 		4B94339D22F07AB700966372 /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				4B94339E22F07AB700966372 /* InsetLabel.swift */,
+				4B94339E22F07AB700966372 /* OstInsetLabel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -1781,7 +1781,7 @@
 				00ABD30E22A72BE90080C4BB /* OstDeviceDbQueries.swift in Sources */,
 				00ABD31222A72BE90080C4BB /* OstMigrationManager.swift in Sources */,
 				00ABD37622A72BE90080C4BB /* EthereumQuantity.swift in Sources */,
-				4B9433CC22F07AB700966372 /* InsetLabel.swift in Sources */,
+				4B9433CC22F07AB700966372 /* OstInsetLabel.swift in Sources */,
 				4BE9104022FD64CB002886BC /* OstTextView.swift in Sources */,
 				4B9433A722F07AB700966372 /* OstH2Label.swift in Sources */,
 			);
