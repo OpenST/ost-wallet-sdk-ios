@@ -278,24 +278,11 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
     /// Get session addresses from keymanager and fetch session data from db.
     private func getActiveSession() throws -> OstSession? {
-        var ostSession: OstSession?  = nil
-        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
-        
-        let sessionAddresses = try keyManager.getSessions()
-        for sessionAddress in sessionAddresses {
-            if let session: OstSession = try OstSession.getById(sessionAddress) {
-                if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
-                    let spendingLimit = BigInt(session.spendingLimit ?? "0")
-                    if spendingLimit >= self.transactionValueInWei! {
-                        ostSession = session
-                        break
-                    }
-                }else {
-                    try? keyManager.deleteSessionKey(sessionAddress: sessionAddress)
-                }
-            }
+        let availableSessions: [OstSession] = OstSession.getActiveSessions(userId: self.userId, minSpendingLimit: self.transactionValueInWei!);
+        if ( availableSessions.count > 0 ) {
+            return availableSessions[0];
         }
-        return ostSession
+        return nil
     }
     
     /// Generate EIP1077 hash.
