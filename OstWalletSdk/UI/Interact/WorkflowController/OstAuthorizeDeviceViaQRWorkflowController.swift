@@ -15,6 +15,14 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     var authorizeDeviceQRScannerVC: OstAuthorizeDeviceQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
     
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        if !currentDevice!.isStatusAuthorized {
+            throw OstError("ui_i_wc_adqrwc_pudv_1", .deviceNotAuthorized)
+        }
+    }
+    
     override func performUIActions() {
         openScanQRForAuthorizeDeviceVC()
     }
@@ -87,18 +95,20 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     }
     
     func openVerifyAuthDeviceVC(ostContextEntity: OstContextEntity) {
-        hideLoader()
-        let verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
-            .newInstance(device: ostContextEntity.entity as! OstDevice,
-                         authorizeCallback: {[weak self] (_) in
-                            
-                            self?.showLoader(for: .authorizeDeviceWithQRCode)
-                            self?.validateDataDelegate?.dataVerified()
-                            
-            }) {[weak self] in
-              self?.validateDataDelegate?.cancelFlow()
+        DispatchQueue.main.async {
+            self.hideLoader()
+            let verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
+                .newInstance(device: ostContextEntity.entity as! OstDevice,
+                             authorizeCallback: {[weak self] (_) in
+                                
+                                self?.showLoader(for: .authorizeDeviceWithQRCode)
+                                self?.validateDataDelegate?.dataVerified()
+                                
+                }) {[weak self] in
+                    self?.validateDataDelegate?.cancelFlow()
+            }
+            
+            verfiyAuthDeviceVC.presentVC(animate: false)
         }
-        
-        verfiyAuthDeviceVC.presentVC(animate: false)
     }
 }
