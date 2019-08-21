@@ -266,4 +266,36 @@ class OstAPIDevice: OstAPIBase {
             onSuccess: onSuccess,
             onFailure:onFailure);
     }
+    
+    /// Get current device from server
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Success params
+    ///   - onFailure: Failure params
+    /// - Throws: OstError
+    func getCurrentDeviceJsonApi(onSuccess:@escaping (([String: Any]?) -> Void),
+                                 onFailure:@escaping (([String: Any]?) -> Void)) throws {
+        
+        let user = try OstUser.getById(self.userId)
+        if let currentDevice = user?.getCurrentDevice() {
+            resourceURL = deviceApiResourceBase + "/" + currentDevice.address!
+        }
+        
+        var params: [String: Any] = [:]
+        
+        // Sign API resource
+        try OstAPIHelper.sign(apiResource: getResource, andParams: &params, withUserId: self.userId)
+        
+        // Make an API call and store the data in database.
+        get(params: params as [String : AnyObject],
+            onSuccess: { (apiResponse) in
+                do {
+                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
+                    onSuccess((entity as! OstDevice).data)
+                }catch let error{
+                    onFailure((error as! OstError).errorInfo)
+                }
+        },
+            onFailure: onFailure)
+    }
 }
