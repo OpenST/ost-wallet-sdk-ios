@@ -54,14 +54,12 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-//        containerTopAnchor?.isActive = false
-//        containerBottomAnchor?.isActive = true
-        
-        deviceAddressView.setDeviceDetails(device?.data, forIndex: 1)
-        
+        containerTopAnchor?.isActive = false
+        containerBottomAnchor?.isActive = true
+
         UIView.animate(withDuration: 0.3, animations: {[weak self] in
             self?.view.backgroundColor = UIColor.color(0, 0, 0, 0.5)
-//            self?.view.layoutIfNeeded()
+            self?.view.layoutIfNeeded()
         }, completion: nil)
     }
     
@@ -69,7 +67,12 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
         super.configure()
         
         actionButton.addTarget(self, action: #selector(actionButtonTapped(_:)), for: .touchUpInside)
-        cancelButton.addTarget(self, action: #selector(actionButtonTapped(_:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
+        
+        deviceAddressView.contentView.translatesAutoresizingMaskIntoConstraints = false
+        deviceAddressView.actionButton.isHidden = true
+        
+        deviceAddressView.setDeviceDetails(device?.data, forIndex: 1)
     }
 
     //MARK: - Add Subviews
@@ -80,7 +83,7 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
         containerView.addSubview(leadLabel)
         containerView.addSubview(actionButton)
         containerView.addSubview(cancelButton)
-        containerView.addSubview(deviceAddressView)
+        containerView.addSubview(deviceAddressView.contentView)
     }
     
     override func addLayoutConstraints() {
@@ -96,30 +99,30 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
     func addContainerViewConstraints() {
         containerView.leftAlignWithParent()
         containerView.rightAlignWithParent()
-        
-//        containerTopAnchor = containerView.topAnchor.constraint(equalTo: containerView.superview!.bottomAnchor)
-//        containerTopAnchor?.isActive = true
+        containerTopAnchor = containerView.topAnchor.constraint(equalTo: containerView.superview!.bottomAnchor)
+        containerTopAnchor?.isActive = true
         
         containerBottomAnchor = containerView.bottomAnchor.constraint(equalTo: containerView.superview!.bottomAnchor)
-        containerBottomAnchor?.isActive = true
+        containerBottomAnchor?.isActive = false
     }
     func addLeadLabelConstraints() {
-        leadLabel.topAlign(toItem: containerView, constant: 25)
+        leadLabel.topAlignWithParent(multiplier: 1, constant: 25)
         leadLabel.applyBlockElementConstraints(horizontalMargin: 40)
     }
     
     func addDeviceAddressViewConstraints() {
-        deviceAddressView.placeBelow(toItem: leadLabel, constant: 25)
-        deviceAddressView.leftAlignWithParent()
-        deviceAddressView.rightAlignWithParent()
+        deviceAddressView.contentView.placeBelow(toItem: leadLabel, constant: 25)
+        deviceAddressView.contentView.leftAlignWithParent()
+        deviceAddressView.contentView.rightAlignWithParent()
     }
     
     func addActionButtonConstraints() {
+        actionButton.placeBelow(toItem: deviceAddressView.contentView, constant: 25)
         actionButton.applyBlockElementConstraints()
-        actionButton.bottomFromTopAlign(toItem: cancelButton, constant: -25)
     }
     
     func addCancelButtonConstraints() {
+        cancelButton.placeBelow(toItem: actionButton, constant: 25)
         cancelButton.applyBlockElementConstraints()
         if #available(iOS 11.0, *) {
             cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25).isActive = true
@@ -130,11 +133,18 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
     
     //MARK: - Action
     @objc func actionButtonTapped(_ sender: Any) {
+        if nil != device {
+            authorizeCallback?(device!)
+        }else {
+           cancelCallback?()
+        }
         
+        self.dismiss(animated: false, completion: nil)
     }
     
     @objc func cancelButtonTapped(_ sender: Any) {
-        
+        cancelCallback?()
+        self.dismiss(animated: false, completion: nil)
     }
     
 }

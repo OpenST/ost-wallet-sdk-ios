@@ -151,21 +151,80 @@ class OstProgressIndicator: OstBaseView {
     func showFailureAlert(withTitle title: String = "",
                           message msg: String = "",
                           duration: Double = 3,
+                          actionButtonTitle btnTitle: String? = nil,
+                          actionButtonTapped: ((UIAlertAction?) -> Void)? = nil,
                           onCompletion:((Bool) -> Void)? = nil) {
         
         self.hide {[weak self] _ in
-            self?.alert = UIAlertController(title: title,
-                                            message: msg,
-                                            preferredStyle: .alert)
             
-            self?.alert?.show()
+            guard let strongSelf = self else {
+                onCompletion?(true)
+                return
+            }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                self?.hide(onCompletion: onCompletion)
-            })
+            strongSelf.alert = UIAlertController(title: title,
+                                                 message: msg,
+                                                 preferredStyle: .alert)
+            
+            if nil != btnTitle {
+                strongSelf.alert?.addAction(UIAlertAction(title: btnTitle, style: .default, handler: {[weak self] (actionButton) in
+                    actionButtonTapped?(nil)
+                    self?.hide()
+                }))
+            }
+            
+            strongSelf.alert?.show()
+            if duration > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
+                    self?.hide(onCompletion: onCompletion)
+                })
+            }
         }
     }
     
+    
+    func showAlert(withTitle title: String = "",
+                   message msg: String = "",
+                   duration: Double = 3,
+                   actionButtonTitle btnTitle: String? = nil,
+                   actionButtonTapped: ((UIAlertAction?) -> Void)? = nil,
+                   cancelButtonTitle cancelTitle: String? = nil,
+                   cancelButtonTapped: ((UIAlertAction?) -> Void)? = nil,
+                   onHideAnimationCompletion: ((Bool) -> Void)? = nil) {
+        
+        self.hide {[weak self] _ in
+            
+            guard let strongSelf = self else {
+                onHideAnimationCompletion?(false)
+                return
+            }
+            
+            strongSelf.alert = UIAlertController(title: title,
+                                                 message: msg,
+                                                 preferredStyle: .alert)
+            
+            if nil != btnTitle {
+                strongSelf.alert?.addAction(UIAlertAction(title: btnTitle, style: .default, handler: {[weak self] (actionButton) in
+                    actionButtonTapped?(actionButton)
+                    self?.hide(onCompletion: onHideAnimationCompletion)
+                }))
+            }
+            
+            if nil != cancelTitle {
+                strongSelf.alert?.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: {[weak self] (cancelButton) in
+                    cancelButtonTapped?(cancelButton)
+                    self?.hide(onCompletion: onHideAnimationCompletion)
+                }))
+            }
+            
+            strongSelf.alert?.show()
+            if duration > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration , execute: {
+                    self?.hide(onCompletion: onHideAnimationCompletion)
+                })
+            }
+        }
+    }
     
     //MARK: - Alert Text
     func getAcknowledgementText(workflowType: OstWorkflowType) -> String {

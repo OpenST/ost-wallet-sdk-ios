@@ -255,7 +255,7 @@ import UIKit
         ) -> String {
         
         let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
-                                                                           passphrasePrefixDelegate: nil)
+                                                                           passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         workflowController.perform()
         return workflowController.workflowId

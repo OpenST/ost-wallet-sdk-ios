@@ -12,10 +12,13 @@ import Foundation
 
 class OstDeviceQRViewController: OstBaseScrollViewController {
     
-    class func newInstance(qrCode: CIImage, for userId: String) -> OstDeviceQRViewController {
+    class func newInstance(qrCode: CIImage,
+                           for userId: String,
+                           checkStatusCallback: (() -> Void)?) -> OstDeviceQRViewController {
         let vc = OstDeviceQRViewController()
         vc.qrCode = qrCode
         vc.userId = userId
+        vc.checkStatusCallback = checkStatusCallback
         
         return vc
     }
@@ -40,11 +43,16 @@ class OstDeviceQRViewController: OstBaseScrollViewController {
         return view
     }()
     
-    let addressTextLabel: OstH2Label = OstH2Label(text: "Device Address")
-    let deviceAddressLabel: OstH3Label = OstH3Label()
-    let checkDeviceStatusButton: OstB1Button = OstB1Button(title: "Verify Device Status")
+    let addressTextLabel: OstC1Label = {
+        let view =  OstC1Label(text: "Device Address")
+        view.textAlignment = .center
+        return view
+    }()
+    let deviceAddressLabel: OstH4Label = OstH4Label()
+    let checkDeviceStatusButton: OstB1Button = OstB1Button(title: "")
     
     var qrCode: CIImage? = nil
+    var checkStatusCallback: (() -> Void)? = nil
     
     //MARK: - View LC
     override func configure() {
@@ -57,13 +65,23 @@ class OstDeviceQRViewController: OstBaseScrollViewController {
         leadLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.leadLabel.getComponentName()],
                                         placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
         
+        checkDeviceStatusButton.setTitle(getActionButtonText(viewConfig), for: .normal)
         checkDeviceStatusButton.addTarget(self, action: #selector(checkDeviceStatusButtonTapped(_:)), for: .touchUpInside)
         
         self.shouldFireIsMovingFromParent = true;
     }
     
+    func getActionButtonText(_ viewConfig: [String: Any]) -> String {
+        if let actionButton = viewConfig["action_button"] as? [String: Any],
+            let text = actionButton["text"] as? String {
+                
+            return text
+        }
+        return ""
+    }
+    
     @objc func checkDeviceStatusButtonTapped(_ sender: Any) {
-       
+       checkStatusCallback?()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +145,7 @@ class OstDeviceQRViewController: OstBaseScrollViewController {
     func addQRImageConstraints() {
         qrImageView.placeBelow(toItem: leadLabel, multiplier: 1, constant: 25)
         qrImageView.centerXAlignWithParent()
-        qrImageView.setW375Width(width: 150)
+        qrImageView.setW375Width(width: 200)
         qrImageView.setAspectRatio(widthByHeight: 1)
     }
     
@@ -138,7 +156,7 @@ class OstDeviceQRViewController: OstBaseScrollViewController {
     }
     
     func addAddressLabelConstraints() {
-        addressTextLabel.topAlign(toItem: addressContainer, constant: 25)
+        addressTextLabel.topAlign(toItem: addressContainer, constant: 10)
         addressTextLabel.leftAlignWithParent(multiplier: 1.0, constant: 10)
         addressTextLabel.rightAlignWithParent(multiplier: 1.0, constant: -10)
     }
@@ -147,7 +165,7 @@ class OstDeviceQRViewController: OstBaseScrollViewController {
         deviceAddressLabel.placeBelow(toItem: addressTextLabel, constant: 4)
         deviceAddressLabel.leftAlignWithParent(multiplier: 1.0, constant: 10)
         deviceAddressLabel.rightAlignWithParent(multiplier: 1.0, constant: -10)
-        deviceAddressLabel.bottomAlignWithParent(constant: -25)
+        deviceAddressLabel.bottomAlignWithParent(constant: -10)
     }
     
     func addCheckDeviceStatusConstraints() {

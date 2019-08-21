@@ -26,7 +26,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
                     if nil != scannedData {
                         self?.onScanndedDataReceived(scannedData!)
                     }
-            })
+                    })
             
             self.authorizeDeviceQRScannerVC?.presentVCWithNavigation()
         }
@@ -37,9 +37,22 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         showLoader(for: .authorizeDeviceWithQRCode)
     }
     
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getAuthorizeDeviceViaQRPinVCConfig()
+    }
+    
+    @objc override func showPinViewController() {
+        self.getPinViewController?.pushViewControllerOn(self.authorizeDeviceQRScannerVC!)
+    }
+    
     override func pinProvided(pin: String) {
         self.userPin = pin
         super.pinProvided(pin: pin)
+    }
+    
+    override func onPassphrasePrefixSet(passphrase: String) {
+        super.onPassphrasePrefixSet(passphrase: passphrase)
+        showLoader(for: .authorizeDeviceWithQRCode)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {

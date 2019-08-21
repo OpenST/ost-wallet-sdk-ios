@@ -329,10 +329,41 @@
             "lead_label": {
                 "text": "Please scan the QR Code from your old device to authorize this device"
             },
+            "action_button": {
+                "text": "Verify Device Status"
+            },
+            "api_failure_alert": {
+                "title": "Unable to Fetch Device",
+                "message": "Unable to fetch device. Please try again."
+            },
+            "unauthorized_alert": {
+                "title": "Device not Authorized",
+                "message": "Please scan device QR-Code from authorized device and verify device status"
+            }
+        },
+        "loader": {
+            "text": "Verifying Device Status..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
     "authorize_device_via_qr": {
+        "get_pin": {
+            "title_label": {
+                "text": "Authorize Device with QR"
+            },
+            "lead_label": {
+                "text": "Enter your 6-digit PIN to authorize device"
+            },
+            "info_label":{
+                "text":  ""
+            },
+            "terms_and_condition_label": {
+                "text": ""
+            }
+        },
         "loader": {
             "text": "Authorizing Device..."
         },

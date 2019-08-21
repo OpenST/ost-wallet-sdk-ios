@@ -267,6 +267,12 @@ extension OstContent {
         return config
     }
     
+    class func getAuthorizeDeviceViaQRPinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+    
     class func getLoaderText(for type: OstWorkflowType) -> String {
         
         let content = OstContent.getInstance()
