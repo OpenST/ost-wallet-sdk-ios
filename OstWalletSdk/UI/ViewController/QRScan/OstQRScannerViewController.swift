@@ -18,6 +18,8 @@ class OstBaseQRScannerViewController: OstBaseViewController {
     var onCancelScanning: (() -> Void)? = nil
     
     var qrDataString: [String]? = nil
+    var qrPayloadData: [String: Any?]? = nil
+    var qrMeta: [String: Any?]? = nil
     
     override func configure() {
         super.configure()
@@ -94,6 +96,10 @@ class OstBaseQRScannerViewController: OstBaseViewController {
         guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
             return nil
         }
+        self.qrPayloadData = payloadData
+        
+        let payloadMeta = jsonObj!["m"] as? [String: Any?]
+        self.qrMeta = payloadMeta
         
         return payloadData
     }

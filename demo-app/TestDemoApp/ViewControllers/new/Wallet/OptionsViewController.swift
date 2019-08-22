@@ -444,7 +444,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                 let workflowId = OstWalletUI.authorizeDeviceViaQR(userId: CurrentUserModel.getInstance.ostUserId!,
                                                                   passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
-                
+                return
 //                destinationVC = AuthorizeDeviceQRScanner()
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
@@ -453,8 +453,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .transactionViaQR {
             if option.isEnable {
-                destinationVC = TransactionQRScanner()
-                (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
+                let workflowId = OstWalletUI.executeTransactionViaQR(userId: CurrentUserModel.getInstance.ostUserId!)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
+                
+//                destinationVC = TransactionQRScanner()
+//                (destinationVC as! TransactionQRScanner).tabBarVC = self.tabbarController
             }else {
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }

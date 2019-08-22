@@ -279,6 +279,8 @@
 		4B9433CB22F07AB700966372 /* OstBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339C22F07AB700966372 /* OstBaseView.swift */; };
 		4B9433CC22F07AB700966372 /* OstInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339E22F07AB700966372 /* OstInsetLabel.swift */; };
 		4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339F22F07AB700966372 /* OstProgressIndicator.swift */; };
+		4B97428E230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */; };
+		4B974290230E84E100174220 /* OstVerifyTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B97428F230E84E100174220 /* OstVerifyTransaction.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
 		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
 		4BE90D8022FAAD32002886BC /* OstRevokeDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */; };
@@ -584,6 +586,8 @@
 		4B94339C22F07AB700966372 /* OstBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstBaseView.swift; sourceTree = "<group>"; };
 		4B94339E22F07AB700966372 /* OstInsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstInsetLabel.swift; sourceTree = "<group>"; };
 		4B94339F22F07AB700966372 /* OstProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
+		4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstExecuteTransactionViaQRWorkflowController.swift; sourceTree = "<group>"; };
+		4B97428F230E84E100174220 /* OstVerifyTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransaction.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
 		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDLViewController.swift; sourceTree = "<group>"; };
@@ -1153,6 +1157,7 @@
 			isa = PBXGroup;
 			children = (
 				4B4D93F6230C2A5E004EFC9B /* OstVerifyAuthorizeDevice.swift */,
+				4B97428F230E84E100174220 /* OstVerifyTransaction.swift */,
 			);
 			path = VerifyData;
 			sourceTree = "<group>";
@@ -1349,6 +1354,7 @@
 				4BE9103A22FD5271002886BC /* OstAddDeviceViaMnemonicsWorkflowController.swift */,
 				4B4D938B230AEC27004EFC9B /* OstShowDeviceQRWorkflowController.swift */,
 				4B4D93B4230C0619004EFC9B /* OstAuthorizeDeviceViaQRWorkflowController.swift */,
+				4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */,
 			);
 			path = WorkflowController;
 			sourceTree = "<group>";
@@ -1612,6 +1618,7 @@
 				00ABD34622A72BE90080C4BB /* OstAddDeviceWithMnemonics.swift in Sources */,
 				00ABD36022A72BE90080C4BB /* OstConnectivity.swift in Sources */,
 				00ABD32322A72BE90080C4BB /* OstBiometricManager.swift in Sources */,
+				4B974290230E84E100174220 /* OstVerifyTransaction.swift in Sources */,
 				00ABD38622A72BE90080C4BB /* Data+BytesConvertible.swift in Sources */,
 				00ABD34222A72BE90080C4BB /* OstSessionHelper.swift in Sources */,
 				00ABD39922A72BE90080C4BB /* ABIDecoder.swift in Sources */,
@@ -1757,6 +1764,7 @@
 				4B9433C922F07AB700966372 /* Notification+Name.swift in Sources */,
 				00ABD3B622A72BE90080C4BB /* TypedDataForResetPin.swift in Sources */,
 				4B54585C22F2FD7F0092E533 /* OstComponentSheet.swift in Sources */,
+				4B97428E230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift in Sources */,
 				00ABD39322A72BE90080C4BB /* ContractPromiseExtensions.swift in Sources */,
 				00ABD37E22A72BE90080C4BB /* String+BytesConvertible.swift in Sources */,
 				00ABD32222A72BE90080C4BB /* OstAPISigner.swift in Sources */,

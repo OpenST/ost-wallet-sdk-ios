@@ -27,4 +27,17 @@ extension Formatter {
         formatter.numberStyle = .none
         return formatter
     }()
+    
+    static let avoidNotation: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 18
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter
+    }()
+}
+
+extension FloatingPoint {
+    var avoidNotation: String {
+        return Formatter.avoidNotation.string(for: self) ?? ""
+    }
 }

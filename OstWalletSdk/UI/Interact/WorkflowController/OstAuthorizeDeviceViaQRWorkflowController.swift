@@ -101,10 +101,10 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
             let verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
                 .newInstance(device: ostContextEntity.entity as! OstDevice,
                              authorizeCallback: {[weak self] (_) in
-                                
+
                                 self?.showLoader(for: .authorizeDeviceWithQRCode)
                                 self?.validateDataDelegate?.dataVerified()
-                                
+
                 }) {[weak self] in
                     self?.validateDataDelegate?.cancelFlow()
             }

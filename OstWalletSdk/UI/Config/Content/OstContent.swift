@@ -273,6 +273,18 @@ extension OstContent {
         return getPinVCConfigObj(componentData)
     }
     
+    class func getAuthorizeDeviceVerifyDataVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_device", inWorkflow: workflowName)
+        return viewConfig
+    }
+    
+    class func getExecuteTransactionVerifyDataVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .executeTransaction)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_transaction", inWorkflow: workflowName)
+        return viewConfig
+    }
+    
     class func getLoaderText(for type: OstWorkflowType) -> String {
         
         let content = OstContent.getInstance()
@@ -291,7 +303,7 @@ extension OstContent {
         let content = OstContent.getInstance()
         let workflowName = getWorkflowName(for: type)
         
-        let loaderConfig = content.getControllerConfig(for: "loader", inWorkflow: workflowName)
+        let loaderConfig = content.getControllerConfig(for: "initial_loader", inWorkflow: workflowName)
         if let text = loaderConfig["text"] as? String {
             
             return text
@@ -333,6 +345,9 @@ extension OstContent {
             
         case .authorizeDeviceWithQRCode:
             return "authorize_device_via_qr"
+        
+        case .executeTransaction:
+            return "execute_transaction_via_qr"
         default:
             return ""
         }

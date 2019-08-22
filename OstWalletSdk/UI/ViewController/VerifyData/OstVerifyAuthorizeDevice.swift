@@ -36,9 +36,9 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let leadLabel: OstH2Label = OstH2Label(text: "Authorize New Device")
-    let actionButton: OstB1Button = OstB1Button(title: "Authorize Device")
-    let cancelButton: OstB2Button = OstB2Button(title: "Deny Request")
+    let leadLabel: OstH2Label = OstH2Label()
+    let actionButton: OstB1Button = OstB1Button()
+    let cancelButton: OstB2Button = OstB2Button()
     var deviceAddressView = OstDeviceTableViewCell(frame: .zero)
     
     var containerTopAnchor: NSLayoutConstraint? = nil
@@ -66,15 +66,47 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
     override func configure() {
         super.configure()
         
+        
+        let viewConfig = OstContent.getAuthorizeDeviceVerifyDataVCConfig()
+        
+        leadLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.leadLabel.getComponentName()],
+                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
+        
         actionButton.addTarget(self, action: #selector(actionButtonTapped(_:)), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
+        
+        setActionButtonText(pageConfig: viewConfig)
+        setCancelButtonText(pageConfig: viewConfig)
         
         deviceAddressView.contentView.translatesAutoresizingMaskIntoConstraints = false
         deviceAddressView.actionButton.isHidden = true
         
         deviceAddressView.setDeviceDetails(device?.data, forIndex: 1)
     }
-
+    
+    func setActionButtonText(pageConfig: [String: Any]) {
+        var buttonTitle = ""
+        if let actionButton = pageConfig["accept_button"] as? [String: Any],
+            let text = actionButton["text"] as? String {
+            
+            buttonTitle = text
+        }
+        
+        actionButton.setTitle(buttonTitle, for: .normal)
+    }
+    
+    func setCancelButtonText(pageConfig: [String: Any]) {
+        var buttonTitle = ""
+        if let actionButton = pageConfig["reject_button"] as? [String: Any],
+            let text = actionButton["text"] as? String {
+            
+            buttonTitle = text
+        }
+        
+        cancelButton.setTitle(buttonTitle, for: .normal)
+    }
+    
+    
     //MARK: - Add Subviews
     override func addSubviews() {
         super.addSubviews()

@@ -350,9 +350,20 @@
     },
     
     "authorize_device_via_qr": {
+        "verify_device": {
+            "lead_label": {
+                "text": "Authorize New Device"
+            },
+            "accept_button": {
+                "text": "Authorize Device"
+            },
+            "reject_button": {
+                "text": "Deny Request"
+            }
+        },
         "get_pin": {
             "title_label": {
-                "text": "Authorize Device with QR"
+                "text": "Authorize Device"
             },
             "lead_label": {
                 "text": "Enter your 6-digit PIN to authorize device"
@@ -365,7 +376,30 @@
             }
         },
         "loader": {
-            "text": "Authorizing Device..."
+            "text": "Authoring Device..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
+    },
+    
+    "execute_transaction_via_qr": {
+        "verify_transaction": {
+            "lead_label": {
+                "text": "Transaction Details"
+            },
+            "info_label": {
+                "text": "This is a one-time transaction approval. Further purchases will be asked for a confirmation again."
+            },
+            "accept_button": {
+                "text": "Confirm Transaction"
+            },
+            "reject_button": {
+                "text": "Decline"
+            }
+        },
+        "loader": {
+            "text": "Executing Transaction..."
         },
         "initial_loader": {
             "text": "Initializing..."

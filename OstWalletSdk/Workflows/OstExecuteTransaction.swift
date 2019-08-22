@@ -60,7 +60,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
     
     // currency symbol
-    private static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
+    static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
     //symbol
     private static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
     
