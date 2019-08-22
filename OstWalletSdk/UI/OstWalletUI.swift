@@ -266,6 +266,10 @@ import UIKit
         return workflowController.workflowId
     }
     
+    /// Execute transaction via QR
+    ///
+    /// - Parameter userId: Ost user id
+    /// - Returns: Workflow id
     @objc
     public class func executeTransactionViaQR(
         userId: String

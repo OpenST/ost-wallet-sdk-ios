@@ -29,6 +29,14 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
         }
     }
     
+    override func vcIsMovingFromParent(_ notification: Notification) {
+        if nil != notification.object {
+            if ((notification.object! as? OstBaseViewController) === self.executeTransactionQRScannerVC) {
+                self.postFlowInterrupted(error: OstError("ui_i_wc_etvqrwc_vimfp_1", .userCanceled))
+            }
+        }
+    }
+    
     override func performUIActions() {
         openScanQRForExecuteTransctionVC()
     }
