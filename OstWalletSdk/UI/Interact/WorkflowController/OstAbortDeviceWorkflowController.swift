@@ -20,10 +20,12 @@ import Foundation
     ///   - userId: Ost user id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     @objc 
-    override init(userId: String,
-                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
+    init(userId: String,
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .abortDeviceRecovery);
     }
     
     deinit {
@@ -49,10 +51,6 @@ import Foundation
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getAbortRecoveryPinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .abortDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

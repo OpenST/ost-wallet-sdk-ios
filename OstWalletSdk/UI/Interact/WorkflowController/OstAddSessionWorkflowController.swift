@@ -31,7 +31,7 @@ import Foundation
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .addSession)
     }
     
     override func performUserDeviceValidation() throws {
@@ -40,10 +40,6 @@ import Foundation
         if !self.currentDevice!.isStatusAuthorized {
             throw OstError("ui_i_wc_aswc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
         }
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .addSession)
     }
     
     override func performUIActions() {

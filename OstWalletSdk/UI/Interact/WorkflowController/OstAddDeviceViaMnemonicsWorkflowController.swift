@@ -14,6 +14,15 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     var addDeviceViaMnemonicsViewController: OstAddDeviceViaMnemonicsViewController? = nil
     
+    @objc
+    init(userId: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .authorizeDeviceWithMnemonics)
+    }
+    
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
@@ -70,10 +79,6 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getAddDeviceViaMnemonicsPinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .authorizeDeviceWithMnemonics)
     }
     
     override func cleanUp() {

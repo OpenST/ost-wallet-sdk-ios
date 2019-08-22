@@ -26,7 +26,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.revokeDeviceAddress = revokeDeviceAddress
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .revokeDevice);
     }
     
     deinit {
@@ -51,10 +51,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getRevokeDevicePinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .revokeDevice)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {

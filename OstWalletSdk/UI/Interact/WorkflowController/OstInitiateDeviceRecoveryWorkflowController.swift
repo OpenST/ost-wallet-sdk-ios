@@ -28,7 +28,9 @@ import UIKit
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.recoverDeviceAddress = recoverDeviceAddress
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .initiateDeviceRecovery);
     }
     
     deinit {
@@ -54,10 +56,6 @@ import UIKit
         if (!self.currentDevice!.isStatusRegistered) {
             throw OstError("ui_i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
         }
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .initiateDeviceRecovery)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

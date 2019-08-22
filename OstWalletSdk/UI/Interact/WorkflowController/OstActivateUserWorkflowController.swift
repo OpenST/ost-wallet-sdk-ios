@@ -35,7 +35,9 @@ import UIKit
         
         self.spendingLimit = spendingLimit
         self.expireAfterInSec = expireAfterInSec
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .activateUser)
     }
     
     deinit {
@@ -54,10 +56,6 @@ import UIKit
         if !self.currentDevice!.isStatusRegistered {
             throw OstError("ui_i_wc_auwc_pudv_2", .deviceNotRegistered);
         }
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .activateUser)
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {

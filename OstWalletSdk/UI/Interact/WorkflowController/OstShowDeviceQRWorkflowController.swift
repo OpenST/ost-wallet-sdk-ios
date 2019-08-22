@@ -14,6 +14,11 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
 
     var deviceQRVC: OstDeviceQRViewController? = nil
     
+    @objc
+    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .showDeviceQR)
+    }
+    
     override func performUIActions() {
         do {
             let qr = try OstWalletSdk.getAddDeviceQRCode(userId: self.userId)
@@ -50,10 +55,6 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
         OstJsonApi.getCurrentDevice(forUserId: self.userId, delegate: self)
     }
     
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .showDeviceQR)
-    }
-    
     override func cleanUp() {
         deviceQRVC?.removeViewController(flowEnded: true)
         deviceQRVC = nil
@@ -64,8 +65,10 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     func onOstJsonApiSuccess(data: [String : Any]?) {
         var device: OstDevice? = nil
         var deviceAddress: String? = nil
-        if nil != data {
-            device = try? OstDevice(data!)
+        let resultData = OstJsonApi.getResultAsDictionary(apiData: data)
+        
+        if nil != resultData {
+            device = try? OstDevice(resultData!)
             deviceAddress = device?.address
         }
      

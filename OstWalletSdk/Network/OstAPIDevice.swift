@@ -290,8 +290,8 @@ class OstAPIDevice: OstAPIBase {
         get(params: params as [String : AnyObject],
             onSuccess: { (apiResponse) in
                 do {
-                    let entity = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
-                    onSuccess((entity as! OstDevice).data)
+                    _ = try OstAPIHelper.syncEntityWithAPIResponse(apiResponse: apiResponse)
+                    onSuccess(apiResponse)
                 }catch let error{
                     onFailure((error as! OstError).errorInfo)
                 }

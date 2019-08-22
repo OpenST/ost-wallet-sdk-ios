@@ -247,7 +247,12 @@ import UIKit
         return workflowController.workflowId
     }
     
-    
+    /// Authorize device via QR
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
     @objc
     public class func authorizeDeviceViaQR(
         userId: String,
@@ -256,6 +261,18 @@ import UIKit
         
         let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
                                                                            passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    @objc
+    public class func executeTransactionViaQR(
+        userId: String
+        ) -> String {
+        
+        let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
+                                                                           passphrasePrefixDelegate: nil)
         
         workflowController.perform()
         return workflowController.workflowId

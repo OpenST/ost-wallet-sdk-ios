@@ -19,14 +19,17 @@ import Foundation
     
     private var pinAcceptDelegate: OstPinAcceptDelegate? = nil
     
+    var workflowType: OstWorkflowType
     /// Initialize
     ///
     /// - Parameters:
     ///   - userId: Ost use id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
-    override init(userId: String,
-                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+    init(userId: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate?,
+         workflowType: OstWorkflowType) {
         
+        self.workflowType = workflowType
         super.init(userId: userId,
                    passphrasePrefixDelegate: passphrasePrefixDelegate)
         
@@ -66,6 +69,10 @@ import Foundation
     
     func performUIActions() {
         fatalError("performUIActions did not override in \(String(describing: self))")
+    }
+    
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: workflowType)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

@@ -17,6 +17,11 @@ import Foundation
     var setNewPinViewController: OstPinViewController? = nil
     var confirmNewPinViewController: OstPinViewController? = nil
     
+    @objc
+    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .resetPin)
+    }
+    
     override func performUIActions() {
         openGetPinViewController()
     }
@@ -106,10 +111,6 @@ import Foundation
                               newUserPin: self.newPin!,
                               delegate: self)
         showLoader(for: .resetPin)
-    }
-    
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .resetPin)
     }
     
     override func cleanUp() {

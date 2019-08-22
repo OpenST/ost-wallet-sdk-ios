@@ -15,6 +15,11 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     var authorizeDeviceQRScannerVC: OstAuthorizeDeviceQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
     
+    @objc
+    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .authorizeDeviceWithQRCode)
+    }
+    
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
@@ -71,10 +76,6 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         }
     }
 
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .authorizeDeviceWithQRCode)
-    }
-    
     override func cleanUp() {
         authorizeDeviceQRScannerVC?.removeViewController(flowEnded: true)
         authorizeDeviceQRScannerVC = nil

@@ -12,6 +12,12 @@ import Foundation
 
 @objc class OstGetMnemonicsWorkflowController: OstBaseWorkflowController {
  
+    
+    @objc
+    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .getDeviceMnemonics)
+    }
+    
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
@@ -19,6 +25,8 @@ import Foundation
             throw OstError("ui_u_wc_gmwc_pudv_1", .deviceNotAuthorized)
         }
     }
+    
+    
     override func performUIActions() {
         OstWalletSdk.getDeviceMnemonics(userId: self.userId,
                                         delegate: self)
@@ -27,10 +35,6 @@ import Foundation
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getDeviceMnemonicsPinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .getDeviceMnemonics)
     }
     
     override func pinProvided(pin: String) {

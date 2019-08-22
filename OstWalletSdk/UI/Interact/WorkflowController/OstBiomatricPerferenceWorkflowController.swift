@@ -27,7 +27,7 @@ import Foundation
         
         self.enable = enable
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .updateBiometricPreference)
     }
     
     override func performUserDeviceValidation() throws {
@@ -53,10 +53,6 @@ import Foundation
                                                enable: self.enable,
                                                delegate: self)
         showLoader(for: .updateBiometricPreference)
-    }
-    
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .updateBiometricPreference)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
