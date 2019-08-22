@@ -55,8 +55,10 @@ class OstTransactionQRScanner: OstBaseQRScannerViewController {
             if nil == executeTxPayloadParams || nil == currentUser {
                 return false
             }
-        
-            if (currentUser!.tokenId! != executeTxPayloadParams!.tokenId) {
+            let validRuleNames = [OstExecuteTransactionType.DirectTransfer.getQRText().lowercased(),
+                                  OstExecuteTransactionType.Pay.getQRText().lowercased()]
+            
+            if !validRuleNames.contains(executeTxPayloadParams!.ruleName.lowercased()) {
                 return false
             }
             
