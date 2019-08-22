@@ -58,7 +58,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     func onScanndedDataReceived(_ data: String) {
         OstWalletSdk.performQRAction(userId: self.userId, payload: data, delegate: self)
-        showLoader(for: .authorizeDeviceWithQRCode)
+        showLoader(for: .executeTransaction)
     }
     
     override func verifyData(workflowContext: OstWorkflowContext,
