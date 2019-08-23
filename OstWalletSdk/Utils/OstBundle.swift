@@ -95,7 +95,16 @@ class OstBundle {
         return bundle
     }
     
-    /// Get Sdk bundle
+    /// Get application bundle
+    ///
+    /// - Returns: Bundle
+    class func getApplicationBundle() -> Bundle {
+        let ostBundle = OstBundle()
+        let bundleObj = ostBundle.getApplicatoinBundle()
+        return bundleObj
+    }
+    
+    /// Get application bundle
     ///
     /// - Returns: Bundle
     func getApplicatoinBundle() -> Bundle {
@@ -146,5 +155,30 @@ class OstBundle {
                           format: &propertyListForamt) as! [String : AnyObject]
         
         return plistData?[key];
+    }
+    
+    
+    /// Get plist data
+    ///
+    /// - Parameters:
+    ///   - fileName: File name
+    ///   - bundle: Bundle
+    /// - Returns: Data
+    class func getPlistFileData(fromFile fileName: String,
+                                inBundle bundle: Bundle) -> [String: AnyObject]? {
+        
+        if let plistPath: String = bundle.path(forResource: fileName, ofType: "plist"),
+            let plistXML = FileManager.default.contents(atPath: plistPath) {
+        
+            var propertyListForamt =  PropertyListSerialization.PropertyListFormat.xml //Format of the Property List.
+            
+            let plistData: [String: AnyObject]? = try? PropertyListSerialization
+                .propertyList(from: plistXML,
+                              options: .mutableContainersAndLeaves,
+                              format: &propertyListForamt) as! [String : AnyObject]
+            
+            return plistData
+        }
+        return nil
     }
 }
