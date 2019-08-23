@@ -11,7 +11,7 @@ import AVFoundation
 
 class OstBaseQRScannerViewController: OstBaseViewController {
     
-    let titleLabel: OstH1Label = OstH1Label(text: "Scan QR code")
+    let titleLabel: OstH1Label = OstH1Label()
     var scannerView: OstScannerView? = nil
     
     var onSuccessScanning: ((String?) -> Void)? = nil

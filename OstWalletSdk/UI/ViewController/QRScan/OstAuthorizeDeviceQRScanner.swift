@@ -18,6 +18,14 @@ class OstAuthorizeDeviceQRScanner: OstBaseQRScannerViewController {
         return vc
     }
     
+    override func configure() {
+        let pageConfig = OstContent.getScanQRForAuthorizeDeviceVCConfig()
+        titleLabel.updateAttributedText(data: pageConfig[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: pageConfig[OstContent.OstComponentType.placeholders.getComponentName()])
+        
+        super.configure()
+    }
+    
     override func onQRCodeDataReceived(_ data:[String]?) {
         super.onQRCodeDataReceived(data)
         

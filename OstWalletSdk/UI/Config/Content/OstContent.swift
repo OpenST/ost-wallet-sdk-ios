@@ -291,6 +291,18 @@ extension OstContent {
         return workflowConfig
     }
     
+    class func getScanQRForAuthorizeDeviceVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
+    class func getScanQRForExecuteTransactionVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .executeTransaction)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
     class func getLoaderText(for type: OstWorkflowType) -> String {
         
         let content = OstContent.getInstance()
