@@ -40,12 +40,14 @@ import UIKit
                    workflowType: .activateUser)
     }
     
-    deinit {
-        print("OstActivateUserWorkflowController :: I am deinit ");
-    }
-    
-    override func performUIActions() {
-        self.showCreatePinViewController()
+    @objc override func vcIsMovingFromParent(_ notification: Notification) {
+        if (nil != self.confirmPinViewController && notification.object is OstPinViewController ) {
+            self.confirmPinViewController = nil;
+        } else if ( notification.object is OstPinViewController ) {
+            self.createPinViewController = nil;
+            //The workflow has been cancled by user.
+            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
+        }
     }
     
     override func performUserDeviceValidation() throws {
@@ -58,25 +60,19 @@ import UIKit
         }
     }
     
-    @objc override func vcIsMovingFromParent(_ notification: Notification) {
-        if (nil != self.confirmPinViewController && notification.object is OstPinViewController ) {
-            self.confirmPinViewController = nil;
-        } else if ( notification.object is OstPinViewController ) {
-            self.createPinViewController = nil;
-            //The workflow has been cancled by user.
-            self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
-        }
+    override func performUIActions() {
+        self.showCreatePinViewController()
     }
     
-    override func onPassphrasePrefixSet(passphrase: String) {
-        OstWalletSdk.activateUser(userId: self.userId,
-                                  userPin: self.userPin!,
-                                  passphrasePrefix: passphrase,
-                                  spendingLimit: self.spendingLimit,
-                                  expireAfterInSec: self.expireAfterInSec,
-                                  delegate: self);
-        
-        showLoader(for: .activateUser)
+    func showCreatePinViewController() {
+        DispatchQueue.main.async {
+            
+            self.createPinViewController = OstPinViewController
+                .newInstance(pinInputDelegate: self,
+                             pinVCConfig: OstContent.getCreatePinVCConfig())
+            
+            self.createPinViewController!.presentVCWithNavigation()
+        }
     }
     
     /// Mark - OstPinAcceptDelegate
@@ -93,25 +89,25 @@ import UIKit
         }
     }
     
-    func showCreatePinViewController() {
-        DispatchQueue.main.async {
-            
-            self.createPinViewController = OstPinViewController
-                .newInstance(pinInputDelegate: self,
-                             pinVCConfig: OstContent.getCreatePinVCConfig())
-            
-            self.createPinViewController!.presentVCWithNavigation()
-        }
-    }
-
     func showConfirmPinViewController() {
         DispatchQueue.main.async {
-           self.confirmPinViewController = OstPinViewController
+            self.confirmPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
                              pinVCConfig: OstContent.getConfirmPinVCConfig())
             
             self.confirmPinViewController?.pushViewControllerOn(self.createPinViewController!);
         }
+    }
+    
+    override func onPassphrasePrefixSet(passphrase: String) {
+        OstWalletSdk.activateUser(userId: self.userId,
+                                  userPin: self.userPin!,
+                                  passphrasePrefix: passphrase,
+                                  spendingLimit: self.spendingLimit,
+                                  expireAfterInSec: self.expireAfterInSec,
+                                  delegate: self);
+        
+        showLoader(for: .activateUser)
     }
     
     override func cleanUp() {

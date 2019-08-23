@@ -134,17 +134,12 @@ import Foundation
     
     func showLoader(for workflowType: OstWorkflowType) {
         let progressText = OstContent.getLoaderText(for: workflowType)
-        DispatchQueue.main.async {
-            if ( nil != self.progressIndicator ) {
-                if ( nil != self.progressIndicator!.alert ) {
-                    //progressIndicator is showing.
-                    self.progressIndicator?.progressText = progressText
-                    return;
-                }
-            }
-            self.progressIndicator = OstProgressIndicator(progressText: progressText)
-            self.progressIndicator?.show()
-        }
+        showLoader(progressText: progressText)
+    }
+    
+    func showInitialLoader(for workflowType: OstWorkflowType) {
+        let progressText = OstContent.getInitialLoaderText(for: workflowType)
+        showLoader(progressText: progressText)
     }
     
     func showLoader(progressText: String) {

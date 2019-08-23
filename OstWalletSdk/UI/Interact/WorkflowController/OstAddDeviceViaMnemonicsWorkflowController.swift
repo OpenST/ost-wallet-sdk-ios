@@ -23,17 +23,6 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
                    workflowType: .authorizeDeviceWithMnemonics)
     }
     
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusRegistered {
-            throw OstError("ui_i_wc_advmwc_pudv_1", .deviceCanNotBeAuthorized)
-        }
-    }
-    override func performUIActions() {
-        openGetMnemonicsViewController()
-    }
-    
     override func vcIsMovingFromParent(_ notification: Notification) {
         if nil != notification.object {
             if ((notification.object! as? OstBaseViewController) === self.addDeviceViaMnemonicsViewController) {
@@ -42,6 +31,14 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
         }
     }
     
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    override func performUIActions() {
+        openGetMnemonicsViewController()
+    }
+
     func openGetMnemonicsViewController() {
         DispatchQueue.main.async {
             self.addDeviceViaMnemonicsViewController = OstAddDeviceViaMnemonicsViewController

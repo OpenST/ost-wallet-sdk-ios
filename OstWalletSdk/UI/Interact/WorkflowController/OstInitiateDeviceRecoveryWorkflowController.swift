@@ -33,15 +33,10 @@ import UIKit
                    workflowType: .initiateDeviceRecovery);
     }
     
-    deinit {
-        print("OstInitiateDeviceRecoveryWorkflowController :: I am deinit ");
-    }
-        
     override func performUIActions() {
         if nil == recoverDeviceAddress {
             self.openAuthorizedDeviceListController()
         } else {
-            self.showLoader(for: .initiateDeviceRecovery)
             self.openGetPinViewController()
         }
     }
@@ -49,13 +44,13 @@ import UIKit
     override func performUserDeviceValidation() throws {
         try super.performUserDeviceValidation()
         
-        if !self.currentUser!.isStatusActivated {
-            throw OstError("ui_i_wc_idrwc_pudv_1", .userNotActivated);
-        }
-      
         if (!self.currentDevice!.isStatusRegistered) {
             throw OstError("ui_i_wc_idrwc_pudv_2", .deviceCanNotBeAuthorized);
         }
+    }
+    
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
@@ -72,14 +67,19 @@ import UIKit
         }
     }
     
-    func setGetPinViewController() {
-        self.getPinViewController = OstPinViewController
-            .newInstance(pinInputDelegate: self,
-                         pinVCConfig: OstContent.getRecoveryAccessPinVCConfig());
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getRecoveryAccessPinVCConfig()
+    }
+    
+    override func showPinViewController() {
+        if nil == self.deviceListController {
+            self.getPinViewController!.presentVCWithNavigation()
+        }else {
+            self.getPinViewController!.pushViewControllerOn(self.deviceListController!)
+        }
     }
     
     func openAuthorizedDeviceListController() {
-        
         DispatchQueue.main.async {
             self.deviceListController = OstInitiateRecoveryDLViewController
                 .newInstance(userId: self.userId,
@@ -88,17 +88,6 @@ import UIKit
                                 self?.openGetPinViewController()
                 })
             self.deviceListController!.presentVCWithNavigation()
-        }
-    }
-    
-    func openGetPinViewController() {
-        DispatchQueue.main.async {
-            self.setGetPinViewController()
-            if nil == self.deviceListController {
-                self.getPinViewController!.presentVCWithNavigation()
-            }else {
-                self.getPinViewController!.pushViewControllerOn(self.deviceListController!)
-            }
         }
     }
     

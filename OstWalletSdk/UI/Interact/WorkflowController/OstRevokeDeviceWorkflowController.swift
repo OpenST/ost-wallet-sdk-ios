@@ -26,31 +26,9 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.revokeDeviceAddress = revokeDeviceAddress
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .revokeDevice);
-    }
-    
-    deinit {
-        print("OstRevokeDeviceWorkflowController :: I am deinit");
-    }
-    
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_rdwc_pudv_1", .deviceNotAuthorized)
-        }
-    }
-    
-    override func performUIActions() {
-        if nil == revokeDeviceAddress {
-            self.openAuthorizedDeviceListController()
-        }else {
-            onDeviceAddressSet()
-        }
-    }
-    
-    override func getPinVCConfig() -> OstPinVCConfig {
-        return OstContent.getRevokeDevicePinVCConfig()
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .revokeDevice);
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {
@@ -62,23 +40,31 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         }
     }
     
+    override func performUIActions() {
+        if nil == revokeDeviceAddress {
+            self.openAuthorizedDeviceListController()
+        }else {
+            showInitialLoader(for: .revokeDevice)
+            onDeviceAddressSet()
+        }
+    }
+    
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getRevokeDevicePinVCConfig()
+    }
+    
     func openAuthorizedDeviceListController() {
         DispatchQueue.main.async {
             self.deviceListController = OstRevokeDLViewController
                 .newInstance(userId: self.userId,
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
+                                self?.showLoader(for: .revokeDevice)
                                 self?.onDeviceAddressSet()
                 })
             
             self.deviceListController!.presentVCWithNavigation()
         }
-    }
-    
-    
-    override public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.getPinViewController = nil
-        super.getPin(userId, delegate: delegate)
     }
     
     @objc override func showPinViewController() {
@@ -103,7 +89,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         OstWalletSdk.revokeDevice(userId: self.userId,
                                   deviceAddressToRevoke: revokeDeviceAddress!,
                                   delegate: self)
-        showLoader(for: .revokeDevice)
     }
     
     override func cleanUp() {

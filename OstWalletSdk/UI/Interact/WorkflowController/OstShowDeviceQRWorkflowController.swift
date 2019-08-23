@@ -16,7 +16,29 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     
     @objc
     init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .showDeviceQR)
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .showDeviceQR)
+    }
+    
+    override func vcIsMovingFromParent(_ notification: Notification) {
+        if nil != notification.object {
+            if ((notification.object! as? OstBaseViewController) === self.deviceQRVC) {
+                self.postFlowInterrupted(error: OstError("ui_i_wc_sdqrwc_vimfp_1", .userCanceled))
+            }
+        }
+    }
+    
+    override func performUserDeviceValidation() throws {
+        try super.performUserDeviceValidation()
+        
+        if !self.currentDevice!.isStatusRegistered {
+            throw OstError("ui_i_wc_sdqewc_pudv_1", OstErrorCodes.OstErrorCode.deviceNotRegistered)
+        }
+    }
+    
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
     }
     
     override func performUIActions() {
@@ -25,14 +47,6 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
             openShowDeviceQRViewController(qr: qr)
         }catch let err {
             self.postFlowInterrupted(error: err as! OstError)
-        }
-    }
-    
-    override func vcIsMovingFromParent(_ notification: Notification) {
-        if nil != notification.object {
-            if ((notification.object! as? OstBaseViewController) === self.deviceQRVC) {
-                self.postFlowInterrupted(error: OstError("ui_i_wc_sdqrwc_vimfp_1", .userCanceled))
-            }
         }
     }
     
@@ -79,7 +93,7 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
             return
         }
         
-        let workflowConfig = getControllerConfig()
+        let workflowConfig = OstContent.getShowQrControllerVCConfig()
         let unauthorizedAlertConfig = workflowConfig["unauthorized_alert"] as! [String: Any]
 
         showApiFailureMessage(title: unauthorizedAlertConfig["title"] as? String ?? "",
@@ -87,7 +101,7 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     }
     
     func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
-        let workflowConfig = getControllerConfig()
+        let workflowConfig = OstContent.getShowQrControllerVCConfig()
         let failureAlertConfig = workflowConfig["api_failure_alert"] as! [String: Any]
         showApiFailureMessage(title: failureAlertConfig["title"] as? String ?? "",
                               message: failureAlertConfig["message"] as? String ?? "")
@@ -101,12 +115,5 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
                                      actionButtonTapped: nil,
                                      cancelButtonTitle: nil, cancelButtonTapped: nil,
                                      onHideAnimationCompletion: nil)
-    }
-    
-    func getControllerConfig() -> [String: Any] {
-        let workflowConfig = OstContent.getInstance()
-            .getControllerConfig(for: "show_qr",
-                                 inWorkflow: OstContent.getWorkflowName(for: .showDeviceQR))
-        return workflowConfig
     }
 }

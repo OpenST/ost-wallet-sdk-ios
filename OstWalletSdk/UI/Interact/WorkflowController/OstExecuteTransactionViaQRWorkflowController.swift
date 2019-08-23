@@ -21,14 +21,6 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
         super.init(userId: userId, passphrasePrefixDelegate: nil, workflowType: .executeTransaction)
     }
     
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_etvqr_pudv_1", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
-        }
-    }
-    
     override func vcIsMovingFromParent(_ notification: Notification) {
         if nil != notification.object {
             if ((notification.object! as? OstBaseViewController) === self.executeTransactionQRScannerVC) {

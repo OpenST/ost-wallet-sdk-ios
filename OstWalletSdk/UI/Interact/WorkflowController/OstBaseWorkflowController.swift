@@ -36,6 +36,10 @@ import Foundation
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: self)
     }
     
+    deinit {
+        Logger.log(message: "deinit for :: \(String(describing: self)))", parameterToPrint: nil)
+    }
+    
     func perform() {
         do {
             //Set user and device
@@ -65,6 +69,19 @@ import Foundation
         if !self.currentUser!.isStatusActivated {
             throw OstError("ui_i_wc_bwc_pudv_1", .userNotActivated)
         }
+        if shouldCheckCurrentDeviceAuthorization() {
+            if !self.currentDevice!.isStatusAuthorized {
+                throw OstError("ui_i_wc_bwc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
+            }
+        }
+    }
+    
+    /// Should check for current device authorization
+    /// This method returns true. Incase workflow don't want to verify deivce authorization
+    /// override this method and return false
+    /// - Returns: Bool
+    func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return true
     }
     
     func performUIActions() {

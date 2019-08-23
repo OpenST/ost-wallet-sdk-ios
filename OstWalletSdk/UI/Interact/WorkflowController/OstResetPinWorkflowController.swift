@@ -22,21 +22,37 @@ import Foundation
         super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .resetPin)
     }
     
+    @objc override func vcIsMovingFromParent(_ notification: Notification) {
+        
+        if ( notification.object is OstPinViewController ) {
+            if nil != self.confirmNewPinViewController {
+                self.confirmNewPinViewController = nil
+                
+            }else if nil != self.setNewPinViewController {
+                self.setNewPinViewController = nil
+                
+            } else {
+                self.postFlowInterrupted(error: OstError("ui_i_wc_rpwc_vmfp_1", .userCanceled))
+                cleanUp()
+            }
+        }else {
+            self.getPinViewController?.removeViewController(flowEnded: true)
+            cleanUp()
+        }
+    }
+    
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
     override func performUIActions() {
         openGetPinViewController()
     }
     
     //MAKR: - Open View Controller
-    func openGetPinViewController() {
-        DispatchQueue.main.async {
-            if nil == self.getPinViewController {
-                self.getPinViewController = OstPinViewController
-                    .newInstance(pinInputDelegate: self,
-                                 pinVCConfig: OstContent.getPinForResetPinVCConfig())
-            }
-            
-            self.getPinViewController!.presentVCWithNavigation()
-        }
+    
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getPinForResetPinVCConfig()
     }
     
     func openSetNewPinViewController() {
@@ -58,26 +74,6 @@ import Foundation
                                  pinVCConfig: OstContent.getConfirmNewPinForResetPinVCConfig())
             }
             self.confirmNewPinViewController!.pushViewControllerOn(self.setNewPinViewController!)
-        }
-    }
-    
-    @objc override func vcIsMovingFromParent(_ notification: Notification) {
-        
-        if ( notification.object is OstPinViewController ) {
-            
-            if nil != self.confirmNewPinViewController {
-                self.confirmNewPinViewController = nil
-                
-            }else if nil != self.setNewPinViewController {
-                self.setNewPinViewController = nil
-                
-            } else {
-                self.postFlowInterrupted(error: OstError("ui_i_wc_rpwc_vmfp_1", .userCanceled))
-                cleanUp()
-            }
-        }else {
-            self.getPinViewController?.removeViewController(flowEnded: true)
-            cleanUp()
         }
     }
     

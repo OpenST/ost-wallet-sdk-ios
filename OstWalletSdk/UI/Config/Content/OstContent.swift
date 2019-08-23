@@ -285,6 +285,12 @@ extension OstContent {
         return viewConfig
     }
     
+    class func getShowQrControllerVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .showDeviceQR)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "show_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
     class func getLoaderText(for type: OstWorkflowType) -> String {
         
         let content = OstContent.getInstance()

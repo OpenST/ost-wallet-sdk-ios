@@ -17,14 +17,16 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     
     @objc
     init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .authorizeDeviceWithQRCode)
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .authorizeDeviceWithQRCode)
     }
     
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_adqrwc_pudv_1", .deviceNotAuthorized)
+    override func vcIsMovingFromParent(_ notification: Notification) {
+        if nil != notification.object {
+            if ((notification.object! as? OstBaseViewController) === self.authorizeDeviceQRScannerVC) {
+                self.postFlowInterrupted(error: OstError("ui_i_wc_adqrwc_vimfp_1", .userCanceled))
+            }
         }
     }
     
@@ -68,14 +70,6 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         showLoader(for: .authorizeDeviceWithQRCode)
     }
     
-    override func vcIsMovingFromParent(_ notification: Notification) {
-        if nil != notification.object {
-            if ((notification.object! as? OstBaseViewController) === self.authorizeDeviceQRScannerVC) {
-               self.postFlowInterrupted(error: OstError("ui_i_wc_adqrwc_vimfp_1", .userCanceled))
-            }
-        }
-    }
-
     override func cleanUp() {
         authorizeDeviceQRScannerVC?.removeViewController(flowEnded: true)
         authorizeDeviceQRScannerVC = nil
