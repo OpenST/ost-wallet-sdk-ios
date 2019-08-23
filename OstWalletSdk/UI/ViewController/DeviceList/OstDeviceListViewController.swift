@@ -106,9 +106,14 @@ import Foundation
         super.viewDidAppear(animated)
         
         if isApiCallInProgress {
-            progressIndicator = OstProgressIndicator(textCode: .fetchingDeviceList)
+            let loaderText = getInitialLoaderText()
+            progressIndicator = OstProgressIndicator(progressText: loaderText)
             progressIndicator?.show()
         }
+    }
+    
+    func getInitialLoaderText() -> String {
+        return ""
     }
     
     //MARK: - Add Subview
