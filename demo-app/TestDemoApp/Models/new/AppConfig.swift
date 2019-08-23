@@ -422,20 +422,6 @@ class AppConfig: NSObject {
                     "text": "Authorize Device"
                 ]
             ]
-        ],
-        
-        "execute_transaction_via_qr": [
-            "verify_transaction": [
-                "title_label": [
-                    "text": "Verify transction"
-                ],
-                "lead_label": [
-                    "text": ""
-                ],
-                "action_button": [
-                    "text": "Execute Transaction"
-                ]
-            ]
         ]
     ]
 }

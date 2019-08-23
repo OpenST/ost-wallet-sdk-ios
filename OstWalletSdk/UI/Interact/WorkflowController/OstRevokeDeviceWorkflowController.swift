@@ -37,6 +37,13 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
             self.getPinViewController = nil
             
             self.postFlowInterrupted(error: OstError("ui_i_wc_rdwc_vmfp_1", .userCanceled))
+        }else if (nil != self.getPinViewController
+            && nil != self.sdkPinAcceptDelegate
+            && nil != notification.object) {
+            
+            if (notification.object as? OstBaseViewController) === getPinViewController! {
+                getPinViewControllerDismissed()
+            }
         }
     }
     
@@ -97,5 +104,14 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         }
         self.deviceListController = nil
         super.cleanUp()
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+            && nil != deviceListController {
+            hideLoader()
+        }else {
+            super.flowInterrupted(workflowContext: workflowContext, error: error)
+        }
     }
 }

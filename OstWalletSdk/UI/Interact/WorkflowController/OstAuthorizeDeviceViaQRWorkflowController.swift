@@ -26,6 +26,11 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         if nil != notification.object {
             if ((notification.object! as? OstBaseViewController) === self.authorizeDeviceQRScannerVC) {
                 self.postFlowInterrupted(error: OstError("ui_i_wc_adqrwc_vimfp_1", .userCanceled))
+                
+            }else if (nil != self.getPinViewController && nil != self.sdkPinAcceptDelegate) {
+                if (notification.object as? OstBaseViewController) === getPinViewController! {
+                    self.sdkPinAcceptDelegate?.cancelFlow()
+                }
             }
         }
     }
@@ -104,6 +109,16 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
             }
             
             verfiyAuthDeviceVC.presentVC(animate: false)
+        }
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+            && nil != getPinViewController {
+            getPinViewController = nil
+            hideLoader()
+        }else {
+            super.flowInterrupted(workflowContext: workflowContext, error: error)
         }
     }
 }

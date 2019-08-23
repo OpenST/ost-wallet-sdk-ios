@@ -474,8 +474,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         else if  option.type  == .manageDevices {
             if option.isEnable {
                 
-                let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                let workflowId = OstWalletUI.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                          revokeDeviceAddress: "0xd011f09a68e7905444ef66b992912bbecdb6bef1",
+                                                          passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 return
             }else {
@@ -485,7 +486,9 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .initiateDeviceRecovery {
             if option.isEnable {
-                destinationVC = InitiateDeviceRecoveryViewController()
+                let workflowId = OstWalletUI.initaiteDeviceRecovery(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                    passphrasePrefixDelegate: CurrentUserModel.getInstance)
+                OstWalletUI.subscribe(workflowId: workflowId, listner: self)
             }else {
                 showInfoAlert(title: "Device is already authorized. You can use this function to authorize your new device.")
             }

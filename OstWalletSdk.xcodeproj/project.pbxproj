@@ -281,6 +281,7 @@
 		4B9433CD22F07AB700966372 /* OstProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94339F22F07AB700966372 /* OstProgressIndicator.swift */; };
 		4B97428E230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */; };
 		4B974290230E84E100174220 /* OstVerifyTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B97428F230E84E100174220 /* OstVerifyTransaction.swift */; };
+		4B9742A1230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9742A0230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
 		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
 		4BE90D8022FAAD32002886BC /* OstRevokeDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */; };
@@ -588,6 +589,7 @@
 		4B94339F22F07AB700966372 /* OstProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstProgressIndicator.swift; sourceTree = "<group>"; };
 		4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstExecuteTransactionViaQRWorkflowController.swift; sourceTree = "<group>"; };
 		4B97428F230E84E100174220 /* OstVerifyTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransaction.swift; sourceTree = "<group>"; };
+		4B9742A0230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceTableViewWithoutActionButton.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
 		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDLViewController.swift; sourceTree = "<group>"; };
@@ -1275,6 +1277,7 @@
 				4B94337A22F07AB700966372 /* OstBaseTableViewCell.swift */,
 				4B94337B22F07AB700966372 /* OstPaginationLoaderTableViewCell.swift */,
 				4BE90F4F22FBFB94002886BC /* OstEmptyDLTableViewCell.swift */,
+				4B9742A0230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift */,
 			);
 			path = TableCell;
 			sourceTree = "<group>";
@@ -1686,6 +1689,7 @@
 				00ABD38822A72BE90080C4BB /* BigUInt+BytesConvertible.swift in Sources */,
 				00ABD39A22A72BE90080C4BB /* SolidityType.swift in Sources */,
 				00ABD30822A72BE90080C4BB /* OstSessionDbQueries.swift in Sources */,
+				4B9742A1230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift in Sources */,
 				00ABD38222A72BE90080C4BB /* Bytes+SecureRandom.swift in Sources */,
 				00ABD37722A72BE90080C4BB /* EthereumTransactionObject.swift in Sources */,
 				00ABD3A922A72BE90080C4BB /* OstSolidityValue.swift in Sources */,

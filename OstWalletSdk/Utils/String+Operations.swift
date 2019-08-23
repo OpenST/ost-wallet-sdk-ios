@@ -144,6 +144,7 @@ extension String {
         let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
         var decimalPart = ""
         if (OstUtils.toInt(formattedDecimal) ?? 0) > 0 {
+            formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
             decimalPart = ".\(formattedDecimal)"
         }
         return "\(intPart)\(decimalPart)"

@@ -59,10 +59,10 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     // Transaction detail
     private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
     
-    // currency symbol
-    static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
+    // currency code
+    static let PAYLOAD_RULE_DATA_CURRENCY_CODE_ID_KEY = "cs"
     //symbol
-    private static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
+    static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -102,7 +102,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         
         readableDictionary[OstExecuteTransaction.WAIT_FOR_FINALIZATION] = "true"
         
-        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_CODE_ID_KEY] {
             readableDictionary[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
         }
         if let symbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_SYMBOL_ID_KEY] {

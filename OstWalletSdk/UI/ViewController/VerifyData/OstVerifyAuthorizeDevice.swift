@@ -39,7 +39,7 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
     let leadLabel: OstH2Label = OstH2Label()
     let actionButton: OstB1Button = OstB1Button()
     let cancelButton: OstB2Button = OstB2Button()
-    var deviceAddressView = OstDeviceTableViewCell(frame: .zero)
+    var deviceAddressView = OstDeviceTableViewWithoutActionButton(frame: .zero)
     
     var containerTopAnchor: NSLayoutConstraint? = nil
     var containerBottomAnchor: NSLayoutConstraint? = nil

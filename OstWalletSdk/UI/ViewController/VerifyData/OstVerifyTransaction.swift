@@ -53,7 +53,7 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
     var options: [String: Any]? = nil
     var ruleType: OstExecuteTransactionType? = nil
     
-    var transferAmount: String = ""
+    var btTransferAmount: String = ""
     var fiatTransferAmount: String = ""
     
     var balance: [String: Any?]? = nil
@@ -73,13 +73,21 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
     let decimals: Int = 5
     
     //MARK: - Getter
-    var currencySymbol: String {
+    var currencyCode: String {
         
-        if let cs = options?[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] as? String{
-            return cs
+        if let cc = options?[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_CODE_ID_KEY] as? String{
+            return cc
         }
         
         return OstConfig.getPricePointCurrencySymbol()
+    }
+    
+    var currencySymbol: String {
+        if let cs = options?[OstExecuteTransaction.PAYLOAD_RULE_DATA_SYMBOL_ID_KEY] as? String{
+            return cs
+        }
+        
+        return "$"
     }
     
     func convertToBaseUnit(for val: String) -> String {
@@ -299,12 +307,12 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         }
         
         if OstExecuteTransactionType.DirectTransfer.getQRText().caseInsensitiveCompare(ruleName!) == .orderedSame {
-            transferAmount = totalAmount.description
-            fiatTransferAmount = toFiat(value: convertToBaseUnit(for: transferAmount.description)) ?? ""
+            btTransferAmount = convertToBaseUnit(for: totalAmount.description)
+            fiatTransferAmount = toFiat(value: btTransferAmount) ?? ""
             
         }else if OstExecuteTransactionType.Pay.getQRText().caseInsensitiveCompare(ruleName!) == .orderedSame {
-            fiatTransferAmount = totalAmount.description
-            transferAmount = toBt(value: convertToBaseUnit(for: fiatTransferAmount)) ?? ""
+            fiatTransferAmount = convertToBaseUnit(for:totalAmount.description)
+            btTransferAmount = toBt(value: fiatTransferAmount) ?? ""
         }
     }
     
@@ -316,7 +324,7 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         if let ostToken: OstToken = token {
             let baseCurrency = ostToken.baseToken
             if let currencyPricePoint = pricePoint[baseCurrency] as? [String: Any],
-                let strValue = OstUtils.toString(currencyPricePoint[currencySymbol]) {
+                let strValue = OstUtils.toString(currencyPricePoint[currencyCode]) {
                 return Double(strValue)
             }
         }
@@ -353,7 +361,7 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
                 return nil
         }
         
-        let pricePoint = String(format: "%@", fiatPricePoint[currencySymbol] as! CVarArg)
+        let pricePoint = String(format: "%@", fiatPricePoint[currencyCode] as! CVarArg)
         
         let btValue = try? OstConversion.fiatToBt(ostToBtConversionFactor: conversionFactor,
                                                   btDecimal: btDecimal,
@@ -367,8 +375,8 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
     func showTransactionConfirmView() {
         hideLoaderCallback?()
 
-        let baseAmountVal = convertToBaseUnit(for: transferAmount).toDisplayTxValue(decimals: decimals)
-        let baseFiatAmountVal = convertToBaseUnit(for: fiatTransferAmount).toDisplayTxValue(decimals: decimals)
+        let baseAmountVal = btTransferAmount.toDisplayTxValue(decimals: decimals)
+        let baseFiatAmountVal = fiatTransferAmount.toDisplayTxValue(decimals: decimals)
         
         amountLabel.text = "\(baseAmountVal) \(token?.symbol ?? "")"
         fiatAmountLabel.text = "\(currencySymbol) \(baseFiatAmountVal)"
@@ -380,6 +388,5 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
             self?.view.backgroundColor = UIColor.color(0, 0, 0, 0.5)
             self?.view.layoutIfNeeded()
         }, completion: nil)
-        
     }
 }
