@@ -14,6 +14,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     
     var authorizeDeviceQRScannerVC: OstAuthorizeDeviceQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
+    var verfiyAuthDeviceVC: OstVerifyAuthorizeDevice? = nil
     
     @objc
     init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
@@ -79,6 +80,8 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         authorizeDeviceQRScannerVC?.removeViewController(flowEnded: true)
         authorizeDeviceQRScannerVC = nil
         validateDataDelegate = nil
+        verfiyAuthDeviceVC?.dismissVC()
+        verfiyAuthDeviceVC = nil
         super.cleanUp()
     }
     
@@ -97,7 +100,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     func openVerifyAuthDeviceVC(ostContextEntity: OstContextEntity) {
         DispatchQueue.main.async {
             self.hideLoader()
-            let verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
+            self.verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
                 .newInstance(device: ostContextEntity.entity as! OstDevice,
                              authorizeCallback: {[weak self] (_) in
 
@@ -108,7 +111,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
                     self?.validateDataDelegate?.cancelFlow()
             }
             
-            verfiyAuthDeviceVC.presentVC(animate: false)
+            self.verfiyAuthDeviceVC!.presentVC(animate: false)
         }
     }
     

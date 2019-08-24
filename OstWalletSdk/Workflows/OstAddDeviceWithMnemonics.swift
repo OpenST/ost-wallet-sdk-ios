@@ -14,7 +14,6 @@ import UIKit
 class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
     
     static private let ostAddDeviceWithMnemonicsQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithMnemonics", qos: .userInitiated)
-    private let workflowTransactionCountForPolling = 1
     private let mnemonicsManager: OstMnemonicsKeyManager
     
     /// Initialize.
@@ -143,7 +142,6 @@ class OstAddDeviceWithMnemonics: OstUserAuthenticatorWorkflow {
         
         OstDevicePollingService(userId: self.userId,
                                 deviceAddress: self.currentDevice!.address!,
-                                workflowTransactionCount: self.workflowTransactionCountForPolling,
                                 successStatus: OstDevice.Status.AUTHORIZED.rawValue,
                                 failureStatus: OstDevice.Status.REGISTERED.rawValue,
                                 successCallback: successCallback,

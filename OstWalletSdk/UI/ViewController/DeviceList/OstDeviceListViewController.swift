@@ -324,15 +324,12 @@ import Foundation
             self.deviceTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
-            if self.refreshControl.isRefreshing {
-                self.refreshControl.endRefreshing()
-            }
         }
-        else if !isApiCallInProgress && !isScrolling {
+        
+        if !isApiCallInProgress {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
-            self.deviceTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
     }
     
@@ -371,12 +368,11 @@ import Foundation
         let currentUser = OstWalletSdk.getUser(self.userId!)
         let currentDevice = currentUser!.getCurrentDevice()
         
-        meta = apiResponse!["meta"] as? [String: Any]
-        guard let resultType = apiResponse!["result_type"] as? String else {return}
-        guard let devices = apiResponse![resultType] as? [[String: Any]] else {return}
+        meta = apiResponse?["meta"] as? [String: Any]
+        let devices: [[String: Any]]? = OstJsonApi.getResultAsArray(apiData: apiResponse) as? [[String : Any]]
         
         var newDevices: [[String: Any]] = [[String: Any]]()
-        for device in devices {
+        for device in devices ?? [] {
             if (device["status"] as? String ?? "").caseInsensitiveCompare("AUTHORIZED") == .orderedSame {
                 if let deviceAddress = device["address"] as? String,
                     consumedDevices[deviceAddress] == nil {

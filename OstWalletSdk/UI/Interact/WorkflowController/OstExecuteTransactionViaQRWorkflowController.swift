@@ -15,6 +15,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     var executeTransactionQRScannerVC: OstTransactionQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
+    var verfiyAuthDeviceVC: OstVerifyTransaction? = nil
 
     @objc
     init(userId: String) {
@@ -71,7 +72,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
                 self.validateDataDelegate?.cancelFlow()
                 return
             }
-            let verfiyAuthDeviceVC = OstVerifyTransaction
+            self.verfiyAuthDeviceVC = OstVerifyTransaction
                 .newInstance(
                     userId: self.userId,
                     qrData: qrData,
@@ -92,7 +93,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
                     }
                 )
             
-            verfiyAuthDeviceVC.presentVC(animate: false)
+            self.verfiyAuthDeviceVC!.presentVC(animate: false)
         }
     }
     
@@ -100,6 +101,8 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
         executeTransactionQRScannerVC?.removeViewController(flowEnded: true)
         executeTransactionQRScannerVC = nil
         validateDataDelegate = nil
+        verfiyAuthDeviceVC?.dismissVC()
+        verfiyAuthDeviceVC = nil
         super.cleanUp()
     }
     

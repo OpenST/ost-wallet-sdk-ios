@@ -122,9 +122,7 @@ import Foundation
     }
     
     public func cancelFlow() {
-        progressIndicator?.showFailureAlert(withTitle: "Cancelled", onCompletion: {[weak self] (_) in
-            self?.cancelPinAcceptor();
-        })
+        self.cancelPinAcceptor();
     }
     
     func cleanUp() {

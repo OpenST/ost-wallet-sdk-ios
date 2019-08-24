@@ -56,7 +56,7 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
                 .newInstance(qrCode: qr,
                              for: self.userId,
                              checkStatusCallback: {[weak self] in
-                          self?.checkDeviceStatus()
+                                self?.checkDeviceStatus()
                 })
             
             self.deviceQRVC!.presentVCWithNavigation()
@@ -85,17 +85,25 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
             device = try? OstDevice(resultData!)
             deviceAddress = device?.address
         }
-     
-        if nil != deviceAddress &&  (device!.isStatusAuthorizing || device!.isStatusAuthorized) {
-            let storedDevice = try! OstDevice.getById(deviceAddress!)
-            flowComplete(workflowContext: getWorkflowContext(),
-                         ostContextEntity: OstContextEntity(entity: storedDevice!, entityType: .device))
-            return
+        
+        if nil != deviceAddress {
+            
+            if device!.isStatusAuthorized {
+                let storedDevice = try! OstDevice.getById(deviceAddress!)
+                postFlowComplete(entity: storedDevice!, type: .device) 
+                return
+            }else if device!.isStatusAuthorizing {
+                let storedDevice = try! OstDevice.getById(deviceAddress!)
+                requestAcknowledged(workflowContext: getWorkflowContext(),
+                                    ostContextEntity: OstContextEntity(entity: storedDevice!, entityType: .device))
+                pollingForAuthorizeDevice()
+                return
+            }
         }
         
         let workflowConfig = OstContent.getShowQrControllerVCConfig()
         let unauthorizedAlertConfig = workflowConfig["unauthorized_alert"] as! [String: Any]
-
+        
         showApiFailureMessage(title: unauthorizedAlertConfig["title"] as? String ?? "",
                               message: unauthorizedAlertConfig["message"] as? String ?? "")
     }
@@ -115,5 +123,23 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
                                      actionButtonTapped: nil,
                                      cancelButtonTitle: nil, cancelButtonTapped: nil,
                                      onHideAnimationCompletion: nil)
+    }
+    
+    /// Polling for device
+    func pollingForAuthorizeDevice() {
+        let successCallback: ((OstDevice) -> Void) = {[weak self] ostDevice in
+            self?.postFlowComplete(entity: ostDevice, type: .device)
+        }
+        
+        let failureCallback:  ((OstError) -> Void) = {[weak self] error in
+            self?.postFlowInterrupted(error: error)
+        }
+        
+        OstDevicePollingService(userId: self.userId,
+                                deviceAddress: self.currentDevice!.address!,
+                                successStatus: OstDevice.Status.AUTHORIZED.rawValue,
+                                failureStatus: OstDevice.Status.REGISTERED.rawValue,
+                                successCallback: successCallback,
+                                failureCallback:failureCallback).perform()
     }
 }

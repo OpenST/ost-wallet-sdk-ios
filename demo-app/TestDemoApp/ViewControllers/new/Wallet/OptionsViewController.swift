@@ -475,7 +475,6 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             if option.isEnable {
                 
                 let workflowId = OstWalletUI.revokeDevice(userId: CurrentUserModel.getInstance.ostUserId!,
-                                                          revokeDeviceAddress: "0xd011f09a68e7905444ef66b992912bbecdb6bef1",
                                                           passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 return

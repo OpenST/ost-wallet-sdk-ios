@@ -51,7 +51,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         if nil == revokeDeviceAddress {
             self.openAuthorizedDeviceListController()
         }else {
-            showInitialLoader(for: .revokeDevice)
             onDeviceAddressSet()
         }
     }
@@ -66,7 +65,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
                 .newInstance(userId: self.userId,
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
-                                self?.showLoader(for: .revokeDevice)
                                 self?.onDeviceAddressSet()
                 })
             
@@ -96,6 +94,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         OstWalletSdk.revokeDevice(userId: self.userId,
                                   deviceAddressToRevoke: revokeDeviceAddress!,
                                   delegate: self)
+        showLoader(for: .revokeDevice)
     }
     
     override func cleanUp() {

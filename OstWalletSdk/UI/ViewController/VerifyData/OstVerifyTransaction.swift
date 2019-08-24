@@ -255,17 +255,38 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
     //MARK: - Action
     @objc func actionButtonTapped(_ sender: Any) {
         if nil != qrData {
-            authorizeCallback?(qrData!)
+            sendAuthorizeCallback()
         }else {
-            cancelCallback?()
+            sendCanceCallback()
         }
-        
-        self.dismiss(animated: false, completion: nil)
     }
     
     @objc func cancelButtonTapped(_ sender: Any) {
+        sendCanceCallback()
+    }
+    
+    //MAKR: - Callbacks
+    func dismissVC() {
+         self.dismiss(animated: false, completion: nil)
+    }
+    
+    func sendCanceCallback() {
         cancelCallback?()
-        self.dismiss(animated: false, completion: nil)
+        dismissVC()
+    }
+    
+    func sendAuthorizeCallback() {
+        authorizeCallback?(qrData!)
+        dismissVC()
+    }
+    
+    func sendErrorCallback(_ error: OstError?) {
+        errorCallback?(error)
+        dismissVC()
+    }
+    
+    func sendHideLoaderCallback() {
+        hideLoaderCallback?()
     }
     
     //MARK: - OstJsonApiDelegate
@@ -285,12 +306,12 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         
         if !isDataCorrect {
             let error = OstError("ui_vc_vd_vt_ojas_1", OstErrorCodes.OstErrorCode.unknown)
-            errorCallback?(error)
+            sendErrorCallback(error)
         }
     }
     
     func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
-        errorCallback?(error)
+        sendErrorCallback(error)
     }
     
     //MAKR: - Processing

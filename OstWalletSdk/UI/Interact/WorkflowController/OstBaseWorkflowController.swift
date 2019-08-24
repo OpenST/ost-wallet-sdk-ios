@@ -108,6 +108,13 @@ import Foundation
         }
     }
     
+    func postFlowComplete(entity: Any, type: OstEntityType) {
+        DispatchQueue.main.async {
+            self.flowComplete(workflowContext: self.getWorkflowContext(),
+                              ostContextEntity: OstContextEntity(entity: entity, entityType: type))
+        }
+    }
+    
     @objc func cleanUpWorkflowController() {
         self.hideLoader();
         self.cleanUp();

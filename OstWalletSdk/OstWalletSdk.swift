@@ -17,7 +17,18 @@ import Foundation
     /// - Parameter apiEndPoint: API end point
     /// - Throws: OstError
     @objc
-    public class func initialize(apiEndPoint:String, config: [String: Any]? = nil) throws {
+    public class func initialize(apiEndPoint:String) throws {
+        try initialize(apiEndPoint: apiEndPoint, config: nil)
+    }
+    
+    /// Initialize SDK
+    ///
+    /// - Parameters:
+    ///   - apiEndPoint: API end point
+    ///   - config: Configure
+    /// - Throws: OstError
+    @objc
+    public class func initialize(apiEndPoint:String, config: [String: Any]?) throws {
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);

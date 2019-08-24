@@ -170,12 +170,15 @@ class OstVerifyAuthorizeDevice: OstBaseViewController {
         }else {
            cancelCallback?()
         }
-        
-        self.dismiss(animated: false, completion: nil)
+        dismissVC()
     }
     
     @objc func cancelButtonTapped(_ sender: Any) {
         cancelCallback?()
+        dismissVC()
+    }
+    
+    func dismissVC() {
         self.dismiss(animated: false, completion: nil)
     }
     
