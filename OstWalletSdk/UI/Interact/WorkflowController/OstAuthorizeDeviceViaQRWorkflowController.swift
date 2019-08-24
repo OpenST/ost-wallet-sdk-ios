@@ -75,16 +75,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         super.onPassphrasePrefixSet(passphrase: passphrase)
         showLoader(for: .authorizeDeviceWithQRCode)
     }
-    
-    override func cleanUp() {
-        authorizeDeviceQRScannerVC?.removeViewController(flowEnded: true)
-        authorizeDeviceQRScannerVC = nil
-        validateDataDelegate = nil
-        verfiyAuthDeviceVC?.dismissVC()
-        verfiyAuthDeviceVC = nil
-        super.cleanUp()
-    }
-    
+
     override func verifyData(workflowContext: OstWorkflowContext,
                              ostContextEntity: OstContextEntity,
                              delegate: OstValidateDataDelegate) {
@@ -114,7 +105,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
             self.verfiyAuthDeviceVC!.presentVC(animate: false)
         }
     }
-    
+
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
             && nil != getPinViewController {
@@ -123,5 +114,14 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         }else {
             super.flowInterrupted(workflowContext: workflowContext, error: error)
         }
+    }
+    
+    override func cleanUp() {
+        authorizeDeviceQRScannerVC?.removeViewController(flowEnded: true)
+        authorizeDeviceQRScannerVC = nil
+        validateDataDelegate = nil
+        verfiyAuthDeviceVC?.dismissVC()
+        verfiyAuthDeviceVC = nil
+        super.cleanUp()
     }
 }
