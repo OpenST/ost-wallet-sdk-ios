@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import BigInt
 import OstWalletSdk
 
 class IntroViewController: OstBaseViewController, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OWFlowCompleteDelegate, CanConfigureEconomyProtocol {

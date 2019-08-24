@@ -70,7 +70,8 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         return try? OstToken.getById(user.tokenId!)!
     }
     
-    let decimals: Int = 5
+    let btDecimals: Int = 5
+    let fiatDecimals: Int = 2
     
     //MARK: - Getter
     var currencyCode: String {
@@ -332,8 +333,9 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
             fiatTransferAmount = toFiat(value: btTransferAmount) ?? ""
             
         }else if OstExecuteTransactionType.Pay.getQRText().caseInsensitiveCompare(ruleName!) == .orderedSame {
-            fiatTransferAmount = convertToBaseUnit(for:totalAmount.description)
-            btTransferAmount = toBt(value: fiatTransferAmount) ?? ""
+            btTransferAmount = toBt(value: totalAmount.description) ?? ""
+            btTransferAmount = convertToBaseUnit(for: btTransferAmount)
+            fiatTransferAmount = convertToBaseUnit(for: totalAmount.description)
         }
     }
     
@@ -396,11 +398,11 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
     func showTransactionConfirmView() {
         hideLoaderCallback?()
 
-        let baseAmountVal = btTransferAmount.toDisplayTxValue(decimals: decimals)
-        let baseFiatAmountVal = fiatTransferAmount.toDisplayTxValue(decimals: decimals)
+        let btVal = btTransferAmount.toDisplayTxValue(decimals: btDecimals)
+        let fiatVal = fiatTransferAmount.toDisplayTxValue(decimals: fiatDecimals)
         
-        amountLabel.text = "\(baseAmountVal) \(token?.symbol ?? "")"
-        fiatAmountLabel.text = "\(currencySymbol) \(baseFiatAmountVal)"
+        amountLabel.text = "\(btVal) \(token?.symbol ?? "")"
+        fiatAmountLabel.text = "\(currencySymbol) \(fiatVal)"
         
         containerTopAnchor?.isActive = false
         containerBottomAnchor?.isActive = true
