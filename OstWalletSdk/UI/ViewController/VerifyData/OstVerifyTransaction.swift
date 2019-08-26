@@ -91,7 +91,12 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         return "$"
     }
     
-    func convertToBaseUnit(for val: String) -> String {
+    func convertToBaseUnit(for val: String, isUSDTx: Bool = false) -> String {
+        
+        if isUSDTx {
+            return OstUtils.fromAtto(val)
+        }
+        
         let ostVal = OstUtils.convertNum(amount: val,
                                          exponent: (-1 * OstUtils.toInt(token!.decimals!)!))
         return ostVal
@@ -335,7 +340,7 @@ class OstVerifyTransaction: OstBaseViewController, OstJsonApiDelegate {
         }else if OstExecuteTransactionType.Pay.getQRText().caseInsensitiveCompare(ruleName!) == .orderedSame {
             btTransferAmount = toBt(value: totalAmount.description) ?? ""
             btTransferAmount = convertToBaseUnit(for: btTransferAmount)
-            fiatTransferAmount = convertToBaseUnit(for: totalAmount.description)
+            fiatTransferAmount = convertToBaseUnit(for: totalAmount.description, isUSDTx: true)
         }
     }
     

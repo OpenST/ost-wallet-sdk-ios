@@ -166,7 +166,6 @@ extension OstWalletSdk {
         let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                                              "ddv": 1.0,
                                              "d":["da":currentDevice.address!]]
-        
         let qrCodePayloadString: String = try OstUtils.toJSONString(QRCodePaylaod)!
         
         if ( nil != qrCodePayloadString.qrCode) {
