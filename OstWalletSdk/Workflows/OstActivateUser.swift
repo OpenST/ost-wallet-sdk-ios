@@ -17,7 +17,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
     private let spendingLimit: String
     private var expireAfter: TimeInterval
     private var recoveryAddress: String? = nil
-    private var sessionData: OstSessionHelper.SessionData? = nil
+    private var multipleSessionData: OstSessionHelper.MultipleSessionData? = nil
     private var pinManager: OstPinManager? = nil
     
     /// Initialize.
@@ -120,11 +120,13 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         
         self.recoveryAddress = try self.pinManager?.getRecoveryOwnerAddress()
         
-        self.sessionData = try OstSessionHelper(
+        let noOfSessionsCount = OstConfig.noOfSessionsOnActivateUserCount()
+        
+        self.multipleSessionData = try OstSessionHelper(
             userId: self.userId,
             expiresAfter: self.expireAfter,
             spendingLimit: self.spendingLimit
-            ).getSessionData()
+            ).getMultipleSesssionData(sessionCount: noOfSessionsCount)
         
         try self.activateUser()
     }
@@ -134,6 +136,7 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
     /// - Throws: OstError
     private func activateUser() throws {
         let params = self.getActivateUserParams()
+        
         var ostError: OstError? = nil
         let group = DispatchGroup()
         var userEntity: OstUser? = nil
@@ -162,8 +165,8 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
         var params: [String: Any] = [:]
         params["spending_limit"] = self.spendingLimit
         params["recovery_owner_address"] = self.recoveryAddress!
-        params["expiration_height"] = self.sessionData!.expirationHeight
-        params["session_addresses"] = [self.sessionData!.sessionAddress]
+        params["expiration_height"] = self.multipleSessionData!.expirationHeight
+        params["session_addresses"] = self.multipleSessionData!.sessionAddresses
         params["device_address"] = self.currentDevice!.address!
         
         return params
@@ -196,16 +199,18 @@ class OstActivateUser: OstUserAuthenticatorWorkflow {
     func onPollingSuccess() {
         let queue = DispatchQueue(label: "com.ost.onPollingSuccess", qos: .userInitiated)
         queue.async {
-            if (self.sessionData?.sessionAddress != nil) {
-                try? OstAPISession(userId: self.userId)
-                    .getSession(
-                        sessionAddress: self.sessionData!.sessionAddress,
-                        onSuccess: nil,
-                        onFailure: nil
-                )
+            if (nil != self.multipleSessionData?.sessionAddresses) {
+                for sessionAddress in self.multipleSessionData!.sessionAddresses {
+                    try? OstAPISession(userId: self.userId)
+                        .getSession(
+                            sessionAddress: sessionAddress,
+                            onSuccess: nil,
+                            onFailure: nil
+                    )
+                }
             }
-            
-            try? self.syncDeviceManager()            
+
+            try? self.syncDeviceManager()
             try? self.syncCurrentDevice()
             self.postWorkflowComplete(entity: self.currentUser!)
         }
