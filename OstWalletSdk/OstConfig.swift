@@ -63,46 +63,51 @@ class OstConfig {
             }
         }
         
-        let generationTime = getConfigValueForBlockGenerationTime(appConfig: appConfig!) as? Int
-        if nil == generationTime || generationTime! < 1 {
-            throw OstError("w_c_lc_1", .invalidBlockGenerationTime)
+        if let generationTime = getConfigValueForBlockGenerationTime(appConfig: appConfig!) as? Int {
+            if generationTime < 1 {
+                throw OstError("w_c_lc_1", .invalidBlockGenerationTime)
+            }
+            blockGenerationTime = generationTime
         }
-        blockGenerationTime = generationTime
         
-        let maxRetryCount = getConfigValueForPinMaxRetryCount(appConfig: appConfig!) as? Int
-        if nil == maxRetryCount || maxRetryCount! < 1 {
-            throw OstError("w_c_lc_2", .invalidPinMaxRetryCount)
+        if let maxRetryCount = getConfigValueForPinMaxRetryCount(appConfig: appConfig!) as? Int {
+            if maxRetryCount < 1 {
+                throw OstError("w_c_lc_2", .invalidPinMaxRetryCount)
+            }
+            pinMaxRetryCount = maxRetryCount
         }
-        pinMaxRetryCount = maxRetryCount
         
-        let currencySymbol = getConfigValueForPricePointCurrencySymbol(appConfig: appConfig!) as? String
-        if nil == currencySymbol || currencySymbol!.isEmpty {
-            throw OstError("w_c_lc_3", .invalidPricePointCurrencySymbol)
+        if let currencySymbol = getConfigValueForPricePointCurrencySymbol(appConfig: appConfig!) as? String {
+            if currencySymbol.isEmpty {
+                throw OstError("w_c_lc_3", .invalidPricePointCurrencySymbol)
+            }
+            pricePointCurrencySymbol = currencySymbol
         }
-        pricePointCurrencySymbol = currencySymbol
-        
-        let timeoutDuration = getConfigValueForRequestTimeoutDuration(appConfig: appConfig!) as? Int
-        if nil == timeoutDuration || timeoutDuration! < 1 {
-            throw OstError("w_c_lc_4", .invalidRequestTimeoutDuration)
-        }
-        requestTimeoutDuration = timeoutDuration
        
-        let bufferTime = getConfigValueForSessionBufferTime(appConfig: appConfig!) as? Double
-        if nil == bufferTime || bufferTime! < 0 {
-            throw OstError("w_c_lc_5", .invalidSessionBufferTime)
+        if let timeoutDuration = getConfigValueForRequestTimeoutDuration(appConfig: appConfig!) as? Int {
+            if timeoutDuration < 1 {
+                throw OstError("w_c_lc_4", .invalidRequestTimeoutDuration)
+            }
+            requestTimeoutDuration = timeoutDuration
         }
-        sessionBufferTime = bufferTime
-        
+       
+        if let bufferTime = getConfigValueForSessionBufferTime(appConfig: appConfig!) as? Double {
+            if bufferTime < 0 {
+                throw OstError("w_c_lc_5", .invalidSessionBufferTime)
+            }
+            sessionBufferTime = bufferTime
+        }
+
         let canUseSeedPassword = getConfigValueForUseSeedPassword(appConfig: appConfig!) as? Bool
         useSeedPassword = canUseSeedPassword
         
-        let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) as? Int
-        if nil == noOfSessionsOnActivateUserCount
-            || noOfSessionsOnActivateUserCount! < 1
-            || noOfSessionsOnActivateUserCount! > 5 {
-            throw OstError("w_c_lc_6", .invalidNoOfSessionsOnActivateUser)
+        if let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) as? Int {
+            if noOfSessionsOnActivateUserCount < 1
+                || noOfSessionsOnActivateUserCount > 5 {
+                throw OstError("w_c_lc_6", .invalidNoOfSessionsOnActivateUser)
+            }
+            noOfSessionsOnActivateUser = noOfSessionsOnActivateUserCount
         }
-        noOfSessionsOnActivateUser = noOfSessionsOnActivateUserCount
     }
     
     
