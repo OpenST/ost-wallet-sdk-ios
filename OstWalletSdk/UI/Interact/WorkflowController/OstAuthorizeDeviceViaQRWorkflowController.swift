@@ -44,10 +44,13 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
         DispatchQueue.main.async {
             self.authorizeDeviceQRScannerVC = OstAuthorizeDeviceQRScanner
                 .newInstance(onSuccessScanning: {[weak self] (scannedData) in
-                    if nil != scannedData {
-                        self?.onScanndedDataReceived(scannedData!)
-                    }
-                    })
+                        if nil != scannedData {
+                            self?.onScanndedDataReceived(scannedData!)
+                        }
+                    }, onErrorScanning: {[weak self] (error) in
+                        let ostError = error ?? OstError("ui_i_wc_advqrwc_osqrfetvc_1", OstErrorCodes.OstErrorCode.unknown)
+                        self?.postFlowInterrupted(error: ostError)
+                })
             
             self.authorizeDeviceQRScannerVC?.presentVCWithNavigation()
         }
@@ -55,7 +58,7 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     
     func onScanndedDataReceived(_ data: String) {
         OstWalletSdk.performQRAction(userId: self.userId, payload: data, delegate: self)
-        showLoader(for: .authorizeDeviceWithQRCode)
+        showInitialLoader(for: .authorizeDeviceWithQRCode)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
@@ -108,9 +111,12 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
 
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && nil != getPinViewController {
+            && (nil != verfiyAuthDeviceVC || nil != getPinViewController ) {
+            
+            verfiyAuthDeviceVC = nil
             getPinViewController = nil
             hideLoader()
+            authorizeDeviceQRScannerVC?.scannerView?.startScanning()
         }else {
             super.flowInterrupted(workflowContext: workflowContext, error: error)
         }

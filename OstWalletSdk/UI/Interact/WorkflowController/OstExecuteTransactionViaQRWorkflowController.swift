@@ -15,7 +15,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     var executeTransactionQRScannerVC: OstTransactionQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
-    var verfiyAuthDeviceVC: OstVerifyTransaction? = nil
+    var verfiyAuthTxVC: OstVerifyTransaction? = nil
 
     @objc
     init(userId: String) {
@@ -43,7 +43,10 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
                         if nil != scannedData {
                             self?.onScanndedDataReceived(scannedData!)
                         }
-                    })
+                    }, onErrorScanning: {[weak self] (error) in
+                        let ostError = error ?? OstError("ui_i_wc_etvqrwc_osqrfetvc_1", OstErrorCodes.OstErrorCode.unknown)
+                        self?.postFlowInterrupted(error: ostError)
+                })
             
             self.executeTransactionQRScannerVC?.presentVCWithNavigation()
         }
@@ -51,7 +54,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     func onScanndedDataReceived(_ data: String) {
         OstWalletSdk.performQRAction(userId: self.userId, payload: data, delegate: self)
-        showLoader(for: .executeTransaction)
+        showInitialLoader(for: .executeTransaction)
     }
     
     override func verifyData(workflowContext: OstWorkflowContext,
@@ -72,7 +75,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
                 self.validateDataDelegate?.cancelFlow()
                 return
             }
-            self.verfiyAuthDeviceVC = OstVerifyTransaction
+            self.verfiyAuthTxVC = OstVerifyTransaction
                 .newInstance(
                     userId: self.userId,
                     qrData: qrData,
@@ -93,7 +96,20 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
                     }
                 )
             
-            self.verfiyAuthDeviceVC!.presentVC(animate: false)
+            self.verfiyAuthTxVC!.presentVC(animate: false)
+        }
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+            && (nil != verfiyAuthTxVC || nil != getPinViewController ) {
+        
+            verfiyAuthTxVC = nil
+            getPinViewController = nil
+            hideLoader()
+            executeTransactionQRScannerVC?.scannerView?.startScanning()
+        }else {
+            super.flowInterrupted(workflowContext: workflowContext, error: error)
         }
     }
     
@@ -101,8 +117,8 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
         executeTransactionQRScannerVC?.removeViewController(flowEnded: true)
         executeTransactionQRScannerVC = nil
         validateDataDelegate = nil
-        verfiyAuthDeviceVC?.dismissVC()
-        verfiyAuthDeviceVC = nil
+        verfiyAuthTxVC?.dismissVC()
+        verfiyAuthTxVC = nil
         super.cleanUp()
     }
     

@@ -12,9 +12,13 @@ import Foundation
 
 class OstAuthorizeDeviceQRScanner: OstBaseQRScannerViewController {
     
-    class func newInstance(onSuccessScanning: ((String?) -> Void)?) -> OstAuthorizeDeviceQRScanner {
+    class func newInstance(onSuccessScanning: ((String?) -> Void)?,
+                           onErrorScanning: ((OstError?) -> Void)?) -> OstAuthorizeDeviceQRScanner {
+        
         let vc = OstAuthorizeDeviceQRScanner()
         vc.onSuccessScanning = onSuccessScanning
+        vc.onErrorScanning = onErrorScanning
+        
         return vc
     }
     
@@ -33,17 +37,7 @@ class OstAuthorizeDeviceQRScanner: OstBaseQRScannerViewController {
             let qrData = qrDataString![0]
             onSuccessScanning?(qrData)
         }else {
-            showAlert(title: "Invalid QR-Code",
-                      message: "QR-Code scanned for authorize device is invalid. Please scan valid QR-Code to authorize device.",
-                      buttonTitle: "Scan Again",
-                      cancelButtonTitle: "Cancel",
-                      actionHandler: {[weak self] (alertAction) in
-                        
-                        self?.scannerView?.startScanning()
-            }) {[weak self] (alertAction) in
-                self?.onCancelScanning?()
-                self?.dismiss(animated: true, completion: nil)
-            }
+           onErrorScanning?(OstError("ui_vc_qrs_adqrs_qrcdr_1", .invalidQRCode))
         }
     }
     

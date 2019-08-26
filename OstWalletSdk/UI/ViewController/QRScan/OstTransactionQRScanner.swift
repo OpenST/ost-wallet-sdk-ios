@@ -14,10 +14,13 @@ import UIKit
 class OstTransactionQRScanner: OstBaseQRScannerViewController {
     
     class func newInstance(userId: String,
-                           onSuccessScanning: ((String?) -> Void)?) -> OstTransactionQRScanner {
+                           onSuccessScanning: ((String?) -> Void)?,
+                           onErrorScanning: ((OstError?) -> Void)?) -> OstTransactionQRScanner {
+        
         let vc = OstTransactionQRScanner()
         vc.userId = userId
         vc.onSuccessScanning = onSuccessScanning
+        vc.onErrorScanning = onErrorScanning
         return vc
     }
     
@@ -37,17 +40,7 @@ class OstTransactionQRScanner: OstBaseQRScannerViewController {
             let qrData = qrDataString![0]
             onSuccessScanning?(qrData)
         }else {
-            showAlert(title: "Invalid QR-Code",
-                      message: "QR-Code scanned for executing transaction is invalid. Please scan valid QR-Code to executing transaction.",
-                      buttonTitle: "Scan Again",
-                      cancelButtonTitle: "Cancel",
-                      actionHandler: {[weak self] (alertAction) in
-                        
-                        self?.scannerView?.startScanning()
-            }) {[weak self] (alertAction) in
-                self?.onCancelScanning?()
-                self?.dismiss(animated: true, completion: nil)
-            }
+            onErrorScanning?(OstError("ui_vc_qrs_adqrs_qrcdr_1", .invalidQRCode))
         }
     }
     

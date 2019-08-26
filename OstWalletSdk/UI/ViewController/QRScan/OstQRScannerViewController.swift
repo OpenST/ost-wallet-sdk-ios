@@ -16,6 +16,7 @@ class OstBaseQRScannerViewController: OstBaseViewController {
     
     var onSuccessScanning: ((String?) -> Void)? = nil
     var onCancelScanning: (() -> Void)? = nil
+    var onErrorScanning: ((OstError?) -> Void)? = nil
     
     var qrDataString: [String]? = nil
     var qrPayloadData: [String: Any?]? = nil
