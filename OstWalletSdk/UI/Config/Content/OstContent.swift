@@ -362,10 +362,10 @@ extension OstContent {
             return "show_add_device_qr"
             
         case .authorizeDeviceWithQRCode:
-            return "authorize_device_via_qr"
+            return "scan_qr_to_authorize_device"
         
         case .executeTransaction:
-            return "execute_transaction_via_qr"
+            return "scan_qr_to_execute_transaction"
         default:
             return ""
         }
