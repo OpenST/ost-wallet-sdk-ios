@@ -324,28 +324,25 @@ OstJsonApi.getPendingRecovery(
 ##### Sample Response
 ```json
 {
-    data =     {
-        devices =         (
-            {
-                address = 0x4ee1b0e180fd83be12246f1bb3aa0e95d74dc53a;
-                "api_signer_address" = 0x1c5e38da508ddad19776bc20f242d48ba07fda24;
-                "linked_address" = 0x0000000000000000000000000000000000000001;
-                status = REVOKING;
-                "updated_timestamp" = 1566893264;
-                "user_id" = "71c59448-ff77-484c-99d8-abea8a419836";
-            },
-            {
-                address = 0x534344126f7c20c5d5603d93f3495d3f58eb77d9;
-                "api_signer_address" = 0x0a27201f9f874fbd9cf6aecafe3d7057114e4159;
-                "linked_address" = "<null>";
-                status = RECOVERING;
-                "updated_timestamp" = 1566893264;
-                "user_id" = "71c59448-ff77-484c-99d8-abea8a419836";
-            }
-        );
-        "result_type" = devices;
-    };
-    success = 1;
+  "devices": [
+    {
+      "updated_timestamp": 1566902100,
+      "status": "REVOKING",
+      "api_signer_address": "0x903ad1a1017c14b8e6b0bb1dd32d3f65a8741732",
+      "linked_address": "0x73722b0c0a6b6418893737e0ca33dd567e33f6aa",
+      "address": "0x629e13063a2aa24e2fb2a49697ef871806071550",
+      "user_id": "71c59448-ff77-484c-99d8-abea8a419836"
+    },
+    {
+      "updated_timestamp": 1566902100,
+      "status": "RECOVERING",
+      "api_signer_address": "0x6f5b1b8df95cbc3bd8d18d6c378cef7c34644729",
+      "linked_address": "null",
+      "address": "0x33e736a4761bc07ed54b1ceb82e44dfb497f478c",
+      "user_id": "71c59448-ff77-484c-99d8-abea8a419836"
+    }
+  ],
+  "result_type": "devices"
 }
 ```
 
