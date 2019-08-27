@@ -68,6 +68,10 @@ import OstWalletSdk
  Developer need to pass object of OstJsonApiDelegate to get response.
  ```Swift
  class OstJsonApiResponseDelegate: OstJsonApiDelegate {
+ 
+    /// Success callback for API
+    ///
+    /// - Parameter data: Success API response
     func onOstJsonApiSuccess(data: [String : Any]?) {
         if let responseData = data {
             print(data as! AnyObject)
@@ -75,6 +79,11 @@ import OstWalletSdk
         //Perfrom any action
     }
     
+    /// Failure callback for API
+    ///
+    /// - Parameters:
+    ///   - error: OstError
+    ///   - errorData: Failure API response
     func onOstJsonApiError(error: OstError?, errorData: [String : Any]?) {
         //Perfrom any action
     }
