@@ -510,7 +510,7 @@ OstWalletSdk.updateBiometricPreference(
 ### 1. getAddDeviceQRCode
 This workflow will return the QRCode in the form of [CIImage object](https://developer.apple.com/documentation/coreimage/ciimage) that can be used to show on screen. This QRCode can then be scanned to add the new device.
 
-```
+```Swift
 OstWalletSdk.getAddDeviceQRCode(
     userId: String
 ) throws -> CIImage?

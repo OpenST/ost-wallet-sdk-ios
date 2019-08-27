@@ -218,6 +218,100 @@ OstWalletUI.updateBiometricPreference(
 ) -> String
 ```
 
+### Authorize Current Device With Mnemonics
+This workflow should be used to add a new device using 12 words recovery phrase.
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.authorizeCurrentDeviceWithMnemonics(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String
+```
+
+### Get Add Device QR-Code
+This workflow show QR-Code to scan from another authorized device
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletSdk.getAddDeviceQRCode(
+    userId: String
+) -> String
+```
+
+### Authorize Device via QR-Code
+This workflow can be used to authorize device by scanning device QR-Code. 
+
+QR-Code Sample:
+```json
+{
+    "dd":"AD",
+    "ddv":"1.1.0",
+    "d":{
+        "da": "0x7701af46018fc57c443b63e839eb24872755a2f8"
+    }
+}
+```
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletSdk.authorizeDeviceViaQR(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String 
+```
+
+### Execute Transaction Via QR-Code
+This workflow can be used to execute transaction via device by scanning device QR-Code.
+
+QR-Code Sample:
+```json
+{
+    "dd":"TX",
+    "ddv":"1.1.0",
+    "d":{
+            "rn":"direct transfer",
+            "ads":[
+                "0x7701af46018fc57c443b63e839eb24872755a2f8",
+                "0xed09dc167a72d939ecf3d3854ad0978fb13a8fe9"
+            ],
+            "ams":["1000000000000000000","1000000000000000000"],
+            "tid": 1140,
+            "o":{"cs":"USD"}
+        },
+    "m":{
+            "tn":"comment",
+            "tt":"user_to_user",
+            "td":"Thanks for comment"
+        }
+}
+```
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletSdk.executeTransactionViaQR(
+    userId: String,
+) -> String 
+```
+
 ### Subscribe 
 
 Subscribe to specified event of UI Workflow
