@@ -1,10 +1,14 @@
-//
-//  ScannerView.swift
-//  TestDemoApp
-//
-//  Created by aniket ayachit on 02/05/19.
-//  Copyright © 2019 aniket ayachit. All rights reserved.
-//
+/*
+ Copyright © 2019 OST.com Inc
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+import Foundation
 
 import UIKit
 import AVFoundation
@@ -37,14 +41,16 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     override func createViews() {
         self.addSubview(scannerContainer)
+        
+        backgroundColor = UIColor.clear
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func applyConstraints() {
-        guard let parent = scannerContainer.superview else {return}
-        scannerContainer.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-        scannerContainer.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-        scannerContainer.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-        scannerContainer.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+        scannerContainer.topAlignWithParent()
+        scannerContainer.leftAlignWithParent()
+        scannerContainer.rightAlignWithParent()
+        scannerContainer.bottomAlignWithParent()
     }
     
     private func addCaptureSession() {
@@ -58,9 +64,9 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
             captureSession = AVCaptureSession()
             captureSession?.addInput(input)
             // Do the rest of your work...
-        } catch let error as NSError {
+        } catch let error  {
             // Handle any errors
-            print(error)
+            Logger.log(message: "error while setting AVCaptureDeviceInput", parameterToPrint: error)
         }
         
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
@@ -77,7 +83,12 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     //MARK: - Methods
     func startScanning() {
-
+        if nil == OstBundle.getApplictionInfoPlistContent(for: "NSCameraUsageDescription") {
+            
+            self.showAlert(title: "Missing Permission",
+                           message: "Camera usage description is missing from 'Info.plist'. Please add description for 'NSCameraUsageDescription' to use QR-Scanning functionality.")
+        }else {
+            
             AVCaptureDevice.requestAccess(for: .video, completionHandler: {[weak self] (granted: Bool) in
                 DispatchQueue.main.async {
                     if granted {
@@ -86,21 +97,21 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
                         self?.cameraPermissionState?(.authorized)
                         
                     } else {
-                        self?.showAlertForAccessDenied()
+                        self?.showAlert(title: "Access Denied",
+                                        message: "Camera permission has been denied. Please grant access to scan QR-Code from device settings.")
                         self?.cameraPermissionState?(.denied)
                     }
                 }
             })
+        }
     }
     
-    func showAlertForAccessDenied() {
-        let alert = UIAlertController(title: "Access Denied",
-                                      message: "Camera permission has been denied. Please grant access to scan QR-Code from device settings.",
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { (_) in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-        }))
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         alert.show()
     }
     

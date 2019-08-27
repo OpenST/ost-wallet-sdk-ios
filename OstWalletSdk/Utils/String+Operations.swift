@@ -127,4 +127,37 @@ extension String {
         let addressRegex = "^(0x)[0-9a-fA-F]{40}$"
         return self.isMatch(addressRegex)
     }
+    
+    public  func toDisplayTxValue(decimals: Int) -> String {
+        var formattedDecimal: String = ""
+        let values = self.components(separatedBy: ".")
+        if values.count == 2 {
+            let decimalVal: String = values[1]
+            
+            let decimals = decimalVal.substringTill(decimals+1)
+            if !decimals.isEmpty {
+                formattedDecimal = decimals
+            }
+        }
+        
+        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
+        var decimalPart = ""
+        if (OstUtils.toInt(formattedDecimal) ?? 0) > 0 {
+            formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
+            decimalPart = ".\(formattedDecimal)"
+        }
+        let roundUpVal: Double = Double("\(intPart)\(decimalPart)")!
+        let floatRoundUpVal: CGFloat = CGFloat(roundUpVal)
+        let fialRoundUpVal = String(format: "%.\(decimals)f", floatRoundUpVal)
+        return OstUtils.trimTrailingZeros(fialRoundUpVal)
+    }
+    
+    public func substringTill(_ offset: Int) -> String {
+        if self.count < offset {
+            return self
+        }
+        let endIndex = index(self.startIndex, offsetBy: offset)
+        let substingVal = self[self.startIndex..<endIndex]
+        return String(substingVal)
+    }
 }

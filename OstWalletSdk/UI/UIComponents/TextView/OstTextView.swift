@@ -25,11 +25,28 @@ class OstTextView: OstBaseView, UITextViewDelegate {
         let view = UITextView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autocapitalizationType = .none
-        view.font = UIFont.systemFont(ofSize: 14)
+        view.backgroundColor = .clear
+        
+        let textViewTheme = OstTheme.getInstance().getTextViewConfig()
+        view.textColor = textViewTheme.getColor()
+        view.font = textViewTheme.getFont()
+        view.textAlignment = textViewTheme.getAlignment()
         
         return view
     }()
     
+    let placeholderLabel: OstLabel  = {
+        let view = OstLabel()
+        
+        let textViewTheme = OstTheme.getInstance().getTextViewConfig()
+        let placeholderConfig = OstLabelConfig(config: textViewTheme.config["placeholder"] as! [String: Any])
+
+        view.labelConfig = placeholderConfig
+        view.applyTheme()
+        
+        return view
+    }()
+ 
     let errorLabel: OstLabel = {
         let label = OstLabel()
         label.textAlignment = .left
@@ -51,6 +68,10 @@ class OstTextView: OstBaseView, UITextViewDelegate {
     func setErrorText(_ text: String?) {
         errorText = text
     }
+    
+    func setPlaceholderText(_ text: String) {
+        self.placeholderLabel.text = text
+    }
  
     //MARK: - Getter
     var text: String {
@@ -61,25 +82,49 @@ class OstTextView: OstBaseView, UITextViewDelegate {
         self.translatesAutoresizingMaskIntoConstraints = false
         weak var weakSelf = self
         textView.delegate = weakSelf
+        
+        configureTheme()
+    }
+    
+    func configureTheme() {
+        let textViewTheme = OstTheme.getInstance().getTextViewConfig()
+        textViewContainer.backgroundColor = textViewTheme.getBackgroundColor()
     }
     
     override func createViews() {
         self.addSubview(textViewContainer)
+        textViewContainer.addSubview(placeholderLabel)
         textViewContainer.addSubview(textView)
         self.addSubview(errorLabel)
     }
     
     override func applyConstraints() {
+        applyTextViewContainerConstraints()
+        applyTextViewConstraints()
+        applyPlaceholderLabelConstraints()
+        applyErrorLabelConstraints()
+    }
+    
+    func applyTextViewContainerConstraints() {
         textViewContainer.topAlignWithParent(multiplier: 1, constant: 5)
         textViewContainer.applyBlockElementConstraints(horizontalMargin: 0)
-        
+        textViewContainer.bottomAlign(toItem: textView, constant: -8)
+    }
+    
+    func applyTextViewConstraints() {
         textView.topAlignWithParent(multiplier: 1, constant: 5)
         textView.applyBlockElementConstraints(horizontalMargin: 8)
         textView.setH667Height(height: 133)
-        
-        textViewContainer.bottomAlign(toItem: textView, constant: -8)
-        
-        
+    }
+    
+    func applyPlaceholderLabelConstraints() {
+        placeholderLabel.topAlign(toItem: textView, constant:8)
+        placeholderLabel.leftAlign(toItem: textView,  constant:4)
+        placeholderLabel.rightAlign(toItem: textView, constant:-4)
+        placeholderLabel.bottomAlign(toItem: textView, multiplier: 1, constant: 0, relatedBy: .lessThanOrEqual)
+    }
+    
+    func applyErrorLabelConstraints() {
         errorLabel.placeBelow(toItem: textViewContainer, constant:4)
         errorLabel.leftAlign(toItem: textViewContainer, constant:4)
         errorLabel.rightAlign(toItem: textViewContainer)
@@ -92,5 +137,19 @@ class OstTextView: OstBaseView, UITextViewDelegate {
         if delegate?.responds(to: #selector(textViewDidChange(_:))) ?? false {
             delegate?.textViewDidChange?(textView)
         }
+        
+        self.placeholderLabel.isHidden = textView.text.count > 0
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return textView.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return textView.resignFirstResponder()
+    }
+    
+    override func endEditing(_ force: Bool) -> Bool {
+        return self.endEditing(force)
     }
 }

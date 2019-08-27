@@ -11,25 +11,30 @@
 import Foundation
 
 @objc class OstGetMnemonicsWorkflowController: OstBaseWorkflowController {
- 
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_u_wc_gmwc_pudv_1", .deviceNotAuthorized)
+  
+    @objc
+    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .getDeviceMnemonics)
+    }
+    
+    override func vcIsMovingFromParent(_ notification: Notification) {
+        if nil != notification.object {
+            if ((notification.object! as? OstBaseViewController) === self.getPinViewController) {
+                self.postFlowInterrupted(error: OstError("ui_i_wc_gmwc_vimfp_1", .userCanceled))
+            }
         }
     }
+
     override func performUIActions() {
         OstWalletSdk.getDeviceMnemonics(userId: self.userId,
                                         delegate: self)
+        showInitialLoader(for: .getDeviceMnemonics)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getDeviceMnemonicsPinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .getDeviceMnemonics)
     }
     
     override func pinProvided(pin: String) {
@@ -39,15 +44,7 @@ import Foundation
     
     @objc override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .fetchingDeviceMnemonics)
-    }
-    
-    override func vcIsMovingFromParent(_ notification: Notification) {
-        if nil != notification.object {
-            if ((notification.object! as? OstBaseViewController) === self.getPinViewController) {
-                self.postFlowInterrupted(error: OstError("ui_i_wc_gmwc_vimfp_1", .userCanceled))
-            }
-        }
+        showLoader(for: .getDeviceMnemonics)
     }
     
     override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {

@@ -15,7 +15,7 @@ import OstWalletSdk;
 extension OstSdkInteract {
     
     public func activateUser(userId: String,
-                             passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                             passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
                              presenter:UIViewController,
                              spendingLimit: String = OstUtils.toAtto("15"),
                              expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))
@@ -31,7 +31,7 @@ extension OstSdkInteract {
     }
     
     public func initateDeviceRecovery(userId: String,
-                                      passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                                      passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
                                       presenter:UIViewController,
                                       recoverDeviceAddress: String) -> OstWorkflowCallbacks {
         
@@ -47,7 +47,7 @@ extension OstSdkInteract {
     }
     
     public func resetPin(userId: String,
-                         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                         passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
                          presenter:UIViewController) -> OstWorkflowCallbacks {
         
         let callback = OstRestPinWorkflowController(
@@ -61,7 +61,7 @@ extension OstSdkInteract {
     }
     
     public func abortDeviceRecovery(userId: String,
-                                    passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                                    passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
                                     presenter:UIViewController) -> OstWorkflowDelegate {
         
         let callback = OstAbortDeviceRecoveryWorkflowController(
@@ -75,7 +75,7 @@ extension OstSdkInteract {
     }
     
     public func logoutAllSessions(userId: String,
-                                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+                                  passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
                                   presenter:UIViewController) -> OstWorkflowCallbacks {
         
         let callback = OstLogoutAllSessionWorkflowController (

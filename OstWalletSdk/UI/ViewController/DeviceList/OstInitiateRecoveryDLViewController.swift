@@ -34,4 +34,8 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
         pageConfig = OstContent.getInitiateDeviceVCConfig()
         super.configure()
     }
+    
+    override func getInitialLoaderText() -> String {
+        return OstContent.getInitialLoaderText(for: .initiateDeviceRecovery)
+    }
 }

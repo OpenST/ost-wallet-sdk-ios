@@ -20,39 +20,12 @@ import Foundation
     ///   - userId: Ost user id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     @objc 
-    override init(userId: String,
-                  passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+    init(userId: String,
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
-    }
-    
-    deinit {
-        print("OstAbortDeviceRecoveryWorkflowController :: I am deinit");
-    }
-
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentUser!.isStatusActivated {
-            throw OstError("ui_i_wc_adwc_pudv_1", .userNotActivated);
-        }
-    }
-    
-    override func performUIActions() {
-        DispatchQueue.main.async {
-            self.getPinViewController = OstPinViewController
-                .newInstance(pinInputDelegate: self,
-                             pinVCConfig: self.getPinVCConfig())
-            self.getPinViewController!.presentVCWithNavigation()
-        }
-    }
-    
-    override func getPinVCConfig() -> OstPinVCConfig {
-        return OstContent.getAbortRecoveryPinVCConfig()
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .abortDeviceRecovery)
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .abortDeviceRecovery);
     }
     
     @objc override func vcIsMovingFromParent(_ notification: Notification) {
@@ -61,6 +34,18 @@ import Foundation
             //The workflow has been cancled by user.
             self.postFlowInterrupted(error: OstError("ui_i_wc_auwc_vmfp_1", .userCanceled))
         }
+    }
+    
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    override func performUIActions() {
+        openGetPinViewController()
+    }
+    
+    override func getPinVCConfig() -> OstPinVCConfig {
+        return OstContent.getAbortRecoveryPinVCConfig()
     }
     
     override func pinProvided(pin: String) {
@@ -73,6 +58,6 @@ import Foundation
                                          userPin: self.userPin!,
                                          passphrasePrefix: passphrase,
                                          delegate: self)
-        showLoader(progressText: .stopDeviceRecovery)
+        showLoader(for: .abortDeviceRecovery)
     }
 }

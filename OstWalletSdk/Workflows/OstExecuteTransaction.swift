@@ -59,10 +59,10 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     // Transaction detail
     private static let META_PAYLOAD_TRANSACTION_DETAILS_KEY = "td"
     
-    // currency symbol
-    private static let PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY = "cs"
+    // currency code
+    static let PAYLOAD_RULE_DATA_CURRENCY_CODE_ID_KEY = "cs"
     //symbol
-    private static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
+    static let PAYLOAD_RULE_DATA_SYMBOL_ID_KEY = "s"
     
     /// Get execute transaction params from qr-code payload
     ///
@@ -102,7 +102,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         
         readableDictionary[OstExecuteTransaction.WAIT_FOR_FINALIZATION] = "true"
         
-        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_SYMBOL_ID_KEY] {
+        if let currencySymbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_CURRENCY_CODE_ID_KEY] {
             readableDictionary[OstExecuteTransaction.CURRENCY_CODE] = currencySymbol
         }
         if let symbol = options[OstExecuteTransaction.PAYLOAD_RULE_DATA_SYMBOL_ID_KEY] {
@@ -278,24 +278,11 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     
     /// Get session addresses from keymanager and fetch session data from db.
     private func getActiveSession() throws -> OstSession? {
-        var ostSession: OstSession?  = nil
-        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
-        
-        let sessionAddresses = try keyManager.getSessions()
-        for sessionAddress in sessionAddresses {
-            if let session: OstSession = try OstSession.getById(sessionAddress) {
-                if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
-                    let spendingLimit = BigInt(session.spendingLimit ?? "0")
-                    if spendingLimit >= self.transactionValueInWei! {
-                        ostSession = session
-                        break
-                    }
-                }else {
-                    try? keyManager.deleteSessionKey(sessionAddress: sessionAddress)
-                }
-            }
+        let availableSessions: [OstSession] = OstSession.getActiveSessions(userId: self.userId, minSpendingLimit: self.transactionValueInWei!);
+        if ( availableSessions.count > 0 ) {
+            return availableSessions[0];
         }
-        return ostSession
+        return nil
     }
     
     /// Generate EIP1077 hash.

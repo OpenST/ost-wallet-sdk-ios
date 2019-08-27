@@ -10,6 +10,7 @@
 
 import UIKit
 import OstWalletSdk
+
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
@@ -44,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var temp:[UIApplication.LaunchOptionsKey: Any]? = nil;
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        OstWalletUI.setThemeConfig(AppConfig.appThemeConfig)
+        OstWalletUI.setContentConfig(AppConfig.appContentConfig)
+        
         showIntroController(fetchUser: true)
         IQKeyboardManager.shared.enable = true
         temp = launchOptions;

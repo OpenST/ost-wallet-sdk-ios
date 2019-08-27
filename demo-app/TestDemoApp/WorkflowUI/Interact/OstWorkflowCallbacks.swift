@@ -11,12 +11,12 @@
 import Foundation
 import OstWalletSdk
 
-class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
+class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OWPassphrasePrefixAcceptDelegate, OstPinInputDelegate {
     
     /// Mark - Pin extension variables
     var userPin:String? = nil;
-    var sdkPinAcceptDelegate:OstPinAcceptDelegate? = nil;
-    var passphrasePrefixDelegate:OstPassphrasePrefixDelegate?;
+    var sdkPinAcceptDelegate: OstPinAcceptDelegate? = nil;
+    var passphrasePrefixDelegate:OWPassphrasePrefixDelegate?;
     var getPinViewController:OstGetPinViewController? = nil;
 
     /// Mark - Workflow callback vars.
@@ -43,7 +43,7 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         return OstSdkInteract.getInstance
     }
 
-    init(userId: String, passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+    init(userId: String, passphrasePrefixDelegate:OWPassphrasePrefixDelegate) {
         self.userId = userId;
         self.workflowId = UUID().uuidString;
         self.passphrasePrefixDelegate = passphrasePrefixDelegate;
@@ -67,7 +67,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
         DeviceAPI.registerDevice(params: apiParams, onSuccess: { (apiResponse) in
             delegate.deviceRegistered( apiResponse! );
         }) { (apiError) in
-            if ( "ALREADY_EXISTS".caseInsensitiveCompare((apiError!["code"] as? String ?? "")) == .orderedSame ) {
+            let code = (apiError?["code"] as? String) ?? ""
+            if ( "ALREADY_EXISTS".caseInsensitiveCompare(code) == .orderedSame ) {
                 var device = apiParams;
                 device["status"] = "REGISTERED";
                 delegate.deviceRegistered( device );

@@ -244,6 +244,9 @@ class OstProgressIndicator: OstBaseView {
             
         case .updateBiometricPreference:
             return ""
+            
+        default:
+            return ""
         }
     }
     
@@ -291,6 +294,9 @@ class OstProgressIndicator: OstBaseView {
             
         case .updateBiometricPreference:
             return "Biometric preference updated"
+            
+        default:
+            return ""
         }
     }
     
@@ -338,6 +344,9 @@ class OstProgressIndicator: OstBaseView {
             
         case .updateBiometricPreference:
             return "Biometric preference update failed. Please re-enter confirmation"
+            
+        default:
+            return ""
         }
     }
 }

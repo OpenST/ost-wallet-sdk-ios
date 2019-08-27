@@ -231,7 +231,55 @@ import UIKit
         return workflowController.workflowId
     }
     
+    /// Get add device qr code
+    ///
+    /// - Parameter userId: Ost user id
+    /// - Returns: Workflow id
+    @objc
+    public class func getAddDeviceQRCode (
+        userId: String
+        ) -> String {
+     
+        let workflowController = OstShowDeviceQRWorkflowController(userId: userId,
+                                                                   passphrasePrefixDelegate: nil)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
+    /// Scan QR-Code to authorize device
+    ///
+    /// - Parameters:
+    ///   - userId: Ost user id
+    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+    /// - Returns: Workflow id
+    @objc
+    public class func scanQRCodeToAuthorizeDevice(
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+        ) -> String {
+        
+        let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
+                                                                           passphrasePrefixDelegate: passphrasePrefixDelegate)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
+    
+    /// Scan QR-Code to execute transaction
+    ///
+    /// - Parameter userId: Ost user id
+    /// - Returns: Workflow id
+    @objc
+    public class func scanQRCodeToExecuteTransaction(
+        userId: String
+        ) -> String {
+        
+        let workflowController = OstExecuteTransactionViaQRWorkflowController(userId: userId)
+        
+        workflowController.perform()
+        return workflowController.workflowId
+    }
     
     /// Subscribe to receive workflow events.
     ///

@@ -30,7 +30,6 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
     }
 
     static private let ostRevokeDeviceQueue = DispatchQueue(label: "com.ost.sdk.OstRevokeDevice", qos: .userInitiated)
-    private let workflowTransactionCountForPolling = 1
     private let deviceAddressToRevoke: String
 
     private var deviceToRevoke: OstDevice? = nil
@@ -149,7 +148,6 @@ class OstRevokeDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinition
         
         OstDevicePollingService(userId: self.userId,
                                 deviceAddress: self.deviceAddressToRevoke,
-                                workflowTransactionCount: self.workflowTransactionCountForPolling,
                                 successStatus: OstDevice.Status.REVOKED.rawValue,
                                 failureStatus: OstDevice.Status.AUTHORIZED.rawValue,
                                 successCallback: successCallback,

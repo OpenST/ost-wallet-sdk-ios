@@ -165,18 +165,17 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
                    message: String? = nil,
                    buttonTitle: String = "Ok",
                    cancelButtonTitle: String? = nil,
-                   actionHandler: ((UIAlertAction) ->Void)? = nil) {
+                   actionHandler: ((UIAlertAction) ->Void)? = nil,
+                   cancelActionHandler: ((UIAlertAction) ->Void)? = nil) {
         
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: {(alertAction) in
-            actionHandler?(alertAction)
-        }))
+        alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: actionHandler))
         
         if nil != cancelButtonTitle && !cancelButtonTitle!.isEmpty {
-            alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .default, handler: cancelActionHandler))
         }
         
         self.present(alert, animated: true, completion: nil)

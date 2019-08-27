@@ -107,18 +107,15 @@ class OstSdkInteract {
         for eventListner in eventListners {
             switch eventType {
             case .flowComplete:
-                (eventListner.value as? OstFlowCompleteDelegate)?.flowComplete(workflowId: workflowId,
-                                                                               workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OWFlowCompleteDelegate)?.flowComplete(workflowContext: eventHandler.workflowContext!,
                                                                                contextEntity: eventHandler.contextEntity!)
                 
             case .flowInterrupted:
-                (eventListner.value as? OstFlowInterruptedDelegate)?.flowInterrupted(workflowId: workflowId,
-                                                                                     workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OWFlowInterruptedDelegate)?.flowInterrupted(workflowContext: eventHandler.workflowContext!,
                                                                                      error: eventHandler.error!)
                 
             case .requestAcknowledged:
-                (eventListner.value as? OstRequestAcknowledgedDelegate)?.requestAcknowledged(workflowId: workflowId,
-                                                                                          workflowContext: eventHandler.workflowContext!,
+                (eventListner.value as? OWRequestAcknowledgedDelegate)?.requestAcknowledged(workflowContext: eventHandler.workflowContext!,
                                                                                           contextEntity: eventHandler.contextEntity!)
             default:
                 continue

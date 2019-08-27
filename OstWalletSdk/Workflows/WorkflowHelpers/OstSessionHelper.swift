@@ -15,12 +15,12 @@ let CHAIN_BLOCK_TIME = "block_time"
 
 class OstSessionHelper: OstWorkflowHelperBase {
     typealias SessionData = (sessionAddress: String, expirationHeight: String)
+    typealias MultipleSessionData = (sessionAddresses: [String], expirationHeight: String)
     
     private let expiresAfter: TimeInterval
     private let spendingLimit: String
     
     private var chainInfo: [String: Any]? = nil
-    private var sessionAddress: String? = nil
     private var expirationHeight: Int = 0
     
     /// Initializer
@@ -42,15 +42,26 @@ class OstSessionHelper: OstWorkflowHelperBase {
     ///
     /// - Returns: Session data
     /// - Throws: OstError
-    func getSessionData() throws -> SessionData{
+    func getSessionData() throws -> SessionData {
         try fetchChainInfo()
         calcuateExpirationHeight()
-        try createSessionKeys()
-        let params = getSessionEntityParams()
-        try OstSession.storeEntity(params)
-
-        return (self.sessionAddress!, OstUtils.toString(self.expirationHeight)!)
+        let sessionAddress = try setupSessionEnity()
+        return (sessionAddress, OstUtils.toString(self.expirationHeight)!)
     }
+    
+    func getMultipleSesssionData(sessionCount: Int) throws -> MultipleSessionData {
+        try fetchChainInfo()
+        calcuateExpirationHeight()
+        
+        var sessionAddresses = [String]()
+        for _ in 0..<sessionCount {
+            let sessionAddress = try setupSessionEnity()
+            sessionAddresses.append(sessionAddress)
+        }
+        
+        return (sessionAddresses, OstUtils.toString(self.expirationHeight)!)
+    }
+    
 
     /// Fetch chain information from server
     ///
@@ -81,22 +92,36 @@ class OstSessionHelper: OstWorkflowHelperBase {
         self.expirationHeight = validForBlocks + currentBlockHeight;
     }
     
+    
+    /// Setup session entity.
+    ///
+    /// - Returns: Session Address
+    func setupSessionEnity() throws -> String {
+        let sessionAddress = try getNewSessionAddress()
+        let params = getSessionEntityParams(for: sessionAddress)
+        try OstSession.storeEntity(params)
+        
+        return sessionAddress
+    }
+    
     /// Create session keys
     ///
     /// - Throws: OstError
-    private func createSessionKeys() throws {
-        self.sessionAddress = try OstKeyManagerGateway
+    private func getNewSessionAddress() throws -> String {
+        let sessionAddress = try OstKeyManagerGateway
             .getOstKeyManager(userId: self.userId)
             .createSessionKey()
+        
+        return sessionAddress
     }
     
     /// Get session entity data
     ///
     /// - Returns: entity dictionary
-    private func getSessionEntityParams() -> [String: Any] {
+    private func getSessionEntityParams(for sessionAddress: String) -> [String: Any] {
         var params: [String: Any] = [:]
         params["user_id"] = self.userId
-        params["address"] = self.sessionAddress!
+        params["address"] = sessionAddress
         params["expiration_height"] = self.expirationHeight
         params["spending_limit"] = self.spendingLimit
         params["nonce"] = 0

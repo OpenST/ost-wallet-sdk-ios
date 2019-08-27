@@ -41,6 +41,12 @@
                     "color": "#0076FF"
                 }
             }
+        },
+        "loader": {
+            "text": "Activating User..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -58,6 +64,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Creating Session..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -88,6 +100,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Recovering Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -105,6 +123,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Aborting Recovery..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -136,6 +160,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Revoking Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -153,6 +183,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Updating Preference..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -200,6 +236,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Resetting Pin..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -229,6 +271,12 @@
             "bottom_label": {
                 "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
             }
+        },
+        "loader": {
+            "text": "Getting Mnemonics..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -260,7 +308,110 @@
             },
             "action_button": {
                 "text": "Authorize Device"
+            },
+            "placeholder": {
+                "text": "Enter Recovery Phrase..."
             }
+        },
+        "loader": {
+            "text": "Authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
+    },
+    "show_add_device_qr": {
+        "show_qr": {
+            "title_label": {
+                "text": "Scan QR to Authorize"
+            },
+            "lead_label": {
+                "text": "Please scan the QR Code from your old device to authorize this device"
+            },
+            "action_button": {
+                "text": "Verify Device Status"
+            },
+            "api_failure_alert": {
+                "title": "Unable to Fetch Device",
+                "message": "Unable to fetch device. Please try again."
+            },
+            "unauthorized_alert": {
+                "title": "Device not Authorized",
+                "message": "Please scan device QR-Code from authorized device and verify device status"
+            }
+        },
+        "loader": {
+            "text": "Verifying Device Status..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
+    },
+    
+    "authorize_device_via_qr": {
+        "scan_qr": {
+            "title_label": {
+                "text": "Scan QR Code"
+            }
+        },
+        "verify_device": {
+            "lead_label": {
+                "text": "Authorize New Device"
+            },
+            "accept_button": {
+                "text": "Authorize Device"
+            },
+            "reject_button": {
+                "text": "Deny Request"
+            }
+        },
+        "get_pin": {
+            "title_label": {
+                "text": "Authorize Device"
+            },
+            "lead_label": {
+                "text": "Enter your 6-digit PIN to authorize device"
+            },
+            "info_label":{
+                "text":  ""
+            },
+            "terms_and_condition_label": {
+                "text": ""
+            }
+        },
+        "loader": {
+            "text": "authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Verifying Device..."
+        }
+    },
+    
+    "execute_transaction_via_qr": {
+        "scan_qr": {
+            "title_label": {
+                "text": "Scan QR Code"
+            }
+        },
+        "verify_transaction": {
+            "lead_label": {
+                "text": "Transaction Details"
+            },
+            "info_label": {
+                "text": "This is a one-time transaction approval. Further purchases will be asked for a confirmation again."
+            },
+            "accept_button": {
+                "text": "Confirm Transaction"
+            },
+            "reject_button": {
+                "text": "Decline"
+            }
+        },
+        "loader": {
+            "text": "Executing Transaction..."
+        },
+        "initial_loader": {
+            "text": "Verifying Transaction..."
         }
     }
 }

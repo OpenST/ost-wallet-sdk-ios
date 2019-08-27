@@ -22,7 +22,7 @@ class OstActivateUserWorkflowController: OstWorkflowCallbacks {
     var confirmPinViewController:OstConfirmNewPinViewController?;
     
     init(userId: String,
-         passphrasePrefixDelegate:OstPassphrasePrefixDelegate,
+         passphrasePrefixDelegate:OWPassphrasePrefixDelegate,
          presenter:UIViewController,
          spendingLimit: String = OstUtils.toAtto("15"),
          expireAfterInSec: TimeInterval = TimeInterval(Double(14*24*60*60))

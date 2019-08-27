@@ -34,22 +34,33 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
 
         let viewConfig = OstContent.getAddDeviceViaMnemonicsVCConfig()
 
-        titleLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
-                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        titleLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
-        infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
-                                       placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        infoLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.infoLabel.getComponentName()],
+                                       placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
-        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.bottomLabel.getCompnentName()],
-                                     placeholders: viewConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        tcLabel.updateAttributedText(data: viewConfig[OstContent.OstComponentType.bottomLabel.getComponentName()],
+                                     placeholders: viewConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 
         setActionButtonText(pageConfig: viewConfig)
+        
+        textView.setPlaceholderText(getPlaceholderText(pageConfig: viewConfig))
 
         weak var weakSelf = self
         textView.delegate = weakSelf
         actionButton.addTarget(weakSelf, action: #selector(weakSelf!.recoverWalletButtonTapped(_:)), for: .touchUpInside)
 
         self.shouldFireIsMovingFromParent = true;
+    }
+    
+    func getPlaceholderText(pageConfig: [String: Any]) -> String {
+        if let placeholder = pageConfig["placeholder"] as? [String: Any],
+            let text = placeholder["text"] as? String {
+            return text
+        }
+        
+        return ""
     }
 
     func setActionButtonText(pageConfig: [String: Any]) {
@@ -61,6 +72,18 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
         }
 
         actionButton.setTitle(buttonTitle, for: .normal)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        _ = textView.resignFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = textView.becomeFirstResponder()
     }
 
     //MAKR: - Add Subviews

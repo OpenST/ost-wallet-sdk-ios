@@ -508,7 +508,7 @@ OstWalletSdk.updateBiometricPreference(
 ### 1. getAddDeviceQRCode
 This workflow will return the QRCode in the form of [CIImage object](https://developer.apple.com/documentation/coreimage/ciimage) that can be used to show on screen. This QRCode can then be scanned to add the new device.
 
-```
+```Swift
 OstWalletSdk.getAddDeviceQRCode(
     userId: String
 ) throws -> CIImage?
@@ -595,119 +595,37 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 
 | Parameter | Description |
 |---|---|
-| **userId** <br> **String**	| Unique identifier of the user stored in OST Platform |
+| **userId** <br> **String**    | Unique identifier of the user stored in OST Platform |
 
 
 **Returns**
 
 | Type                            | Description |
 |---------------------------------|---------------------------------------------------|
-| **Preference** <br> **Bool**  	| `true` if user has enabled biometric verfication. |
+| **Preference** <br> **Bool**      | `true` if user has enabled biometric verfication. |
 
-## OST JSON APIs
 
-### 1. getBalance
-
-Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
+### 6. getActiveSessions
+Get active sessions for given spending limit.
+If  passed spending limit is nil, return all active sessions.
 ```Swift
-OstJsonApi.getBalance(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
+OstWalletSdk.getActiveSessions(
+    userId: String, 
+    spendingLimit: String?
+) -> [OstSession]
 ```
 
-### 2. getPricePoint
-
-Api to get price points. 
-It will provide latest conversion rates of base token to fiat currency.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getPricePoint(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 3. getBalanceWithPricePoint
-
-Api to get user balance and price points. Balance of only current logged-in user can be fetched.
-It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getBalanceWithPricePoint(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 4. getTransaction
-
-Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_requestPayload: request payload. Such as next-page payload, filters etc._<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getTransaction(
-    forUserId userId: String,
-    params: [String: Any]?,
-    delegate: OstJsonApiDelegate) 
-```
-
-### 5. getPendingRecovery
-
-Api to get pending recovery.<br/><br/>
-**Parameters**<br/>
-&nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_delegate: Callback implementation object for application communication_<br/>
-
-```Swift
-OstJsonApi.getPendingRecovery(
-    forUserId userId: String,
-    delegate: OstJsonApiDelegate) 
-```
-
-<br>
-
-## Json Api Response Delegates
-
-### 1. onOstJsonApiSuccess
-
-```Swift
-/// Success callback for API
-///
-/// - Parameter data: Success API response
-func onOstJsonApiSuccess(data:[String:Any]?);
-```
-| Argument | Description |
+| Parameter | Description |
 |---|---|
-| **data** <br> **[String: Any]?**	|	Json api success response	|
+| **userId** <br> **String**    | Unique identifier of the user stored in OST Platform |
+| **spendingLimit** <br> **String**    | Transction amount |
 
 
-### 2. onOstJsonApiError
+**Returns**
 
-```Swift
-/// Failure callback for API
-///
-/// - Parameters:
-///   - error: OstError
-///   - errorData: Failure API response
-func onOstJsonApiError(error:OstError?, errorData:[String:Any]?);
-```
-| Argument | Description |
-|---|---|
-| **error** <br> **OstError?**	|	ostError object will have details about the error that interrupted the flow	|
-| **data** <br> **[String: Any]?**	|	Json api failure response	|
-
-<br>
+| Type                            | Description |
+|---------------------------------|---------------------------------------------------|
+| **OstSession** <br> **Array**      | List of active sessions |
 
 
 ## OstWorkflowDelegate Protocol
@@ -877,13 +795,10 @@ func verifyData(
 | **delegate** <br> **OstValidateDataDelegate**	| **delegate.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by calling **delegate.cancelFlow()**|
 
 
-
-
-
-
+## OST JSON APIs
+While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to OST Platform servers. Please refer [OstJsonApi](/documentation/OstJsonApi.md) for documentation.
 
 ## Classes
-
 
 1. OstApiError
 2. OstError

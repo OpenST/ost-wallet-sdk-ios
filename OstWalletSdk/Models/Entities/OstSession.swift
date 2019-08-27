@@ -73,6 +73,45 @@ public class OstSession: OstBaseEntity {
         params["updated_timestamp"] = OstUtils.toString(Date.timestamp())
         try OstSession.storeEntity(params)
     }
+    
+    class func getActiveSessions(userId: String, minSpendingLimit: BigInt) -> [OstSession] {
+        var applicableSessions: [OstSession] = [];
+        
+        
+        // Get sessions for key manager.
+        let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: userId)
+        var sessionAddresses:[String] = [];
+        do {
+            sessionAddresses = try keyManager.getSessions()
+        } catch {
+            // ignore the error.
+        }
+        
+        for sessionAddress in sessionAddresses {
+            do {
+                if let session: OstSession = try OstSession.getById(sessionAddress) {
+                    if (session.approxExpirationTimestamp > Date().timeIntervalSince1970) {
+                        let sessionSpendingLimit = BigInt(session.spendingLimit ?? "0")
+                        if sessionSpendingLimit >= minSpendingLimit {
+                            applicableSessions.append( session );
+                        }
+                    }
+                }
+            } catch {
+                // ignore this error.
+            }
+        }
+        
+        return applicableSessions.sorted(by: { (sessionA, sessionB) -> Bool in
+            var utsA:Double = sessionA.updatedTimestamp;
+            utsA = abs( utsA );
+            
+            var utsB:Double = sessionB.updatedTimestamp;
+            utsB = abs( utsB );
+            
+            return utsA < utsB;
+        });
+    }
 }
 
 public extension OstSession {
