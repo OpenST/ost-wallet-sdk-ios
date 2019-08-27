@@ -380,7 +380,7 @@
             }
         },
         "loader": {
-            "text": "authorizing Device..."
+            "text": "Authorizing Device..."
         },
         "initial_loader": {
             "text": "Verifying Device..."
