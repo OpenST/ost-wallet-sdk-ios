@@ -797,13 +797,10 @@ func verifyData(
 | **delegate** <br> **OstValidateDataDelegate**	| **delegate.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by calling **delegate.cancelFlow()**|
 
 
-
-
-
-
+## OST JSON APIs
+While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to OST Platform servers. Please refer [OstJsonApi](/documentation/OstJsonApi.md) for documentation.
 
 ## Classes
-
 
 1. OstApiError
 2. OstError
