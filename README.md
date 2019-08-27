@@ -597,14 +597,37 @@ OstWalletSdk.isBiometricEnabled(userId: String)
 
 | Parameter | Description |
 |---|---|
-| **userId** <br> **String**	| Unique identifier of the user stored in OST Platform |
+| **userId** <br> **String**    | Unique identifier of the user stored in OST Platform |
 
 
 **Returns**
 
 | Type                            | Description |
 |---------------------------------|---------------------------------------------------|
-| **Preference** <br> **Bool**  	| `true` if user has enabled biometric verfication. |
+| **Preference** <br> **Bool**      | `true` if user has enabled biometric verfication. |
+
+
+### 6. getActiveSessions
+Get active sessions for given spending limit.
+If  passed spending limit is nil, return all active sessions.
+```Swift
+OstWalletSdk.getActiveSessions(
+    userId: String, 
+    spendingLimit: String?
+) -> [OstSession]
+```
+
+| Parameter | Description |
+|---|---|
+| **userId** <br> **String**    | Unique identifier of the user stored in OST Platform |
+| **spendingLimit** <br> **String**    | Transction amount |
+
+
+**Returns**
+
+| Type                            | Description |
+|---------------------------------|---------------------------------------------------|
+| **OstSession** <br> **Array**      | List of active sessions |
 
 
 ## OstWorkflowDelegate Protocol

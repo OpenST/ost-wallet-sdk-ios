@@ -119,5 +119,4 @@ import Foundation
         }
         return OstSession.getActiveSessions(userId: userId, minSpendingLimit: minSpendingLimit);
     }
-    
 }
