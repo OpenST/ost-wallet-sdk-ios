@@ -45,7 +45,7 @@ class EconomyScannerViewController: OstBaseViewController {
         return view
     }()
     
-    var scanner: OWScannerView? = nil
+    var scanner: OstScannerView? = nil
     
     
     //MARK: - View LC
@@ -97,7 +97,7 @@ class EconomyScannerViewController: OstBaseViewController {
     }
 
     func addScannerView() {
-        let viewPreview = OWScannerView(completion: {[weak self] (values) in
+        let viewPreview = OstScannerView(completion: {[weak self] (values) in
             self?.scannerDataReceived(values: values)
         })
         viewPreview.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)

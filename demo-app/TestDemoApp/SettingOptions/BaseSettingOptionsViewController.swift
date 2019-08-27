@@ -11,7 +11,7 @@
 import Foundation
 import OstWalletSdk
 
-class BaseSettingOptionsViewController: OstBaseViewController, OWFlowCompleteDelegate, OWFlowInterruptedDelegate, OWRequestAcknowledgedDelegate, OstWorkflowUIDelegate {
+class BaseSettingOptionsViewController: OstBaseViewController, OstFlowCompleteDelegate, OstFlowInterruptedDelegate, OstRequestAcknowledgedDelegate {
     
     //MAKR: - Components
     let leadLabel: UILabel = {
@@ -57,14 +57,14 @@ class BaseSettingOptionsViewController: OstBaseViewController, OWFlowCompleteDel
     }
     
     //MARK: - Sdk Interact Delegate
-    @objc  func requestAcknowledged(workflowContext: OstWorkflowContext,
+    func requestAcknowledged(workflowId: String,
+                             workflowContext: OstWorkflowContext,
                              contextEntity: OstContextEntity) {
         
         progressIndicator?.showAcknowledgementAlert(forWorkflowType: workflowContext.workflowType)
     }
     
-    @objc  func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-        let workflowId = workflowContext.getWorkflowId();
+    func flowInterrupted(workflowId: String, workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode != .userCanceled {
             progressIndicator?.showFailureAlert(forWorkflowType: workflowContext.workflowType,
                                                 onCompletion: {[weak self] (_) in
@@ -81,8 +81,7 @@ class BaseSettingOptionsViewController: OstBaseViewController, OWFlowCompleteDel
         }
     }
 
-    @objc func flowComplete(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        let workflowId = workflowContext.getWorkflowId();
+    func flowComplete(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     

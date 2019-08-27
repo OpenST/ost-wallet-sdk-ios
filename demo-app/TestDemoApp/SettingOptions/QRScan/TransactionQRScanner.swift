@@ -75,9 +75,8 @@ class TransactionQRScanner: QRScannerViewController {
     
     
     //MARK: - Workflow Delegate
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
-        let workflowId = workflowContext.getWorkflowId()
-        super.requestAcknowledged(workflowContext: workflowContext, contextEntity: contextEntity)
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        super.requestAcknowledged(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
         showSuccessAlert(workflowId: workflowId, workflowContext: workflowContext, contextEntity: contextEntity)
     }
     

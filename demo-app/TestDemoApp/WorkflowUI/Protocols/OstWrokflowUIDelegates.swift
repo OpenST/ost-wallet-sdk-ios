@@ -11,11 +11,11 @@
 import Foundation;
 import OstWalletSdk;
 
-protocol OWPassphrasePrefixAcceptDelegate {
+protocol OstPassphrasePrefixAcceptDelegate {
     func setPassphrase(ostUserId:String, passphrase:String);
     func cancelFlow(error:[String:Any]?);
 }
 
-protocol OWPassphrasePrefixDelegate {
-    func getPassphrase(ostUserId:String, ostPassphrasePrefixAcceptDelegate: OWPassphrasePrefixAcceptDelegate);
+protocol OstPassphrasePrefixDelegate {
+    func getPassphrase(ostUserId:String, ostPassphrasePrefixAcceptDelegate: OstPassphrasePrefixAcceptDelegate);
 }

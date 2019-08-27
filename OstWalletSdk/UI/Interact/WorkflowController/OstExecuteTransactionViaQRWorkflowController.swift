@@ -18,8 +18,11 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     var verfiyAuthTxVC: OstVerifyTransaction? = nil
 
     @objc
-    init(userId: String) {
-        super.init(userId: userId, passphrasePrefixDelegate: nil, workflowType: .executeTransaction)
+    init(userId: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .executeTransaction)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {

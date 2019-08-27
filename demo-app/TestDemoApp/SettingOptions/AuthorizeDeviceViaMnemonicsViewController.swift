@@ -112,7 +112,7 @@ class AuthorizeDeviceViaMnemonicsViewController: BaseSettingOptionsSVViewControl
         return false
     }
     
-    override func requestAcknowledged(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+    override func requestAcknowledged(workflowId: String, workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
         progressIndicator?.hide()
         progressIndicator = nil
     }

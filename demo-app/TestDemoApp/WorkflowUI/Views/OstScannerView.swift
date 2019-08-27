@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class OWScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
+class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     
     //MARK: - Components
     private let scannerContainer: UIView = {
