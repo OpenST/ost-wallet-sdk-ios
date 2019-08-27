@@ -8,7 +8,7 @@
     - scan QR-Code to execute transaction
     - authorize current device with mnemonics
 * Api provided to fetch current device from OstPlatform.
-* Now supports getting active sessions from Sdk for given user.
+* Now supports getting active sessions from Sdk.
 
 ## Version 2.3.0
 ### Feature:
