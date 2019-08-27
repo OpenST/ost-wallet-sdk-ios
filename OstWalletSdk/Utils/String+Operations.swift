@@ -130,8 +130,7 @@ extension String {
     
     public  func toDisplayTxValue(decimals: Int) -> String {
         var formattedDecimal: String = ""
-        let commonStandardVal = self.replacingOccurrences(of: ",", with: ".")
-        let values = commonStandardVal.components(separatedBy: ".")
+        let values = self.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]
             
