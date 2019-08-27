@@ -134,7 +134,7 @@ extension String {
         if values.count == 2 {
             let decimalVal: String = values[1]
             
-            let decimals = decimalVal.substringTill(decimals)
+            let decimals = decimalVal.substringTill(decimals+1)
             if !decimals.isEmpty {
                 formattedDecimal = decimals
             }
@@ -146,7 +146,10 @@ extension String {
             formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
             decimalPart = ".\(formattedDecimal)"
         }
-        return "\(intPart)\(decimalPart)"
+        let roundUpVal: Double = Double("\(intPart)\(decimalPart)")!
+        let floatRoundUpVal: CGFloat = CGFloat(roundUpVal)
+        let fialRoundUpVal = String(format: "%.\(decimals)f", floatRoundUpVal)
+        return OstUtils.trimTrailingZeros(fialRoundUpVal)
     }
     
     public func substringTill(_ offset: Int) -> String {
