@@ -140,8 +140,6 @@ Copy paste this configuration file.
     <integer>3600</integer>
     <key>UseSeedPassword</key>
 	<false/>
-    <key>NoOfSessionsOnActivateUser</key>
-    <integer>1</integer>
  </dict>
  </plist>
 ```
