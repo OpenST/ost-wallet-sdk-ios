@@ -42,8 +42,8 @@ OST JSON APIs are a set of *asynchronous* methods that make API calls to OST Pla
 - Although it is **NOT RECOMMENDED**, but if your app needs to allow multiple users to login on same device, the app must:
   - ensure to pass the `userId` of the currently **logged-in and authenticated** user.
   - ensure that the user has not logged-out **before** processing/displaying the response.
-- App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating any JSON API.
-- App must perform [setupDevice](../README.md#setupdevice) workflow <em><b>before</b></em> initiating any JSON API.
+- App must [initialize](../README.md#vii-initialize-the-wallet-sdk) the sdk <em><b>before</b></em> initiating any JSON API.
+- App must perform [setupDevice](../README.md#1-setupdevice) workflow <em><b>before</b></em> initiating any JSON API.
 - All `OstJsonApi` methods expect `userId` as first parameter because all requests need to be signed by the user's API key.
 - It's always good to check if the device can make API calls by calling `OstWalletSdk.getCurrentDeviceForUserId` method.
   - Any device with status `REGISTERED`, `AUTHORIZING`, `AUTHORIZED`, `RECOVERING` or `REVOKING` can make the API call.
