@@ -313,12 +313,14 @@ QR-Code Sample:
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
 
 ```Swift
 OstWalletUI.scanQRCodeToExecuteTransaction(
     userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String 
 ```
 

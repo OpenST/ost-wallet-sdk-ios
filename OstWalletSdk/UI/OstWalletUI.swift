@@ -272,10 +272,12 @@ import UIKit
     /// - Returns: Workflow id
     @objc
     public class func scanQRCodeToExecuteTransaction(
-        userId: String
+        userId: String,
+        passphrasePrefixDelegate: OstPassphrasePrefixDelegate
         ) -> String {
         
-        let workflowController = OstExecuteTransactionViaQRWorkflowController(userId: userId)
+        let workflowController = OstExecuteTransactionViaQRWorkflowController(userId: userId,
+                                                                              passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         workflowController.perform()
         return workflowController.workflowId

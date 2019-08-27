@@ -453,7 +453,8 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             
         else if option.type == .transactionViaQR {
             if option.isEnable {
-                let workflowId = OstWalletUI.scanQRCodeToExecuteTransaction(userId: CurrentUserModel.getInstance.ostUserId!)
+                let workflowId = OstWalletUI.scanQRCodeToExecuteTransaction(userId: CurrentUserModel.getInstance.ostUserId!,
+                                                                            passphrasePrefixDelegate: CurrentUserModel.getInstance)
                 OstWalletUI.subscribe(workflowId: workflowId, listner: self)
                 
 //                destinationVC = TransactionQRScanner()
