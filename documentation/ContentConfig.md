@@ -40,8 +40,8 @@ OstWalletUI supports 8 workflows
 | view_mnemonics       | Get Mnemonic Phrase         |
 | show_add_device_qr   | Get current Device QR code  |
 | add_current_device_with_mnemonics | Authorize device using mnemonics |
-| authorize_device_via_qr           | Authorize device via QR          |
-| execute_transaction_via_qr        | Execute transaction via QR       |
+| scan_qr_to_authorize_device           | Authorize device by scanning QR    |
+| scan_qr_to_execute_transaction        | Execute transaction by scanning QR       |
 
 ## Supported Views
 ### Activate User Workflow Views
