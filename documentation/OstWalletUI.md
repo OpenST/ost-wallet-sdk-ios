@@ -250,7 +250,7 @@ OstWalletSdk.getAddDeviceQRCode(
 ) -> String
 ```
 
-### Authorize Device via QR-Code
+### Scan QR-Code To Authorize Device
 
 This workflow can be used to authorize device by scanning device QR-Code. 
 
@@ -272,13 +272,13 @@ QR-Code Sample:
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
 
 ```Swift
-OstWalletSdk.authorizeDeviceViaQR(
+OstWalletSdk.scanQRCodeToAuthorizeDevice(
     userId: String,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String 
 ```
 
-### Execute Transaction Via QR-Code
+### Scan QR-Code To Execute Transaction
 
 This workflow can be used to execute transaction via device by scanning device QR-Code.
 
@@ -317,7 +317,7 @@ QR-Code Sample:
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
 
 ```Swift
-OstWalletSdk.executeTransactionViaQR(
+OstWalletSdk.scanQRCodeToExecuteTransaction(
     userId: String,
 ) -> String 
 ```

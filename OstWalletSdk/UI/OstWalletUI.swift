@@ -247,14 +247,14 @@ import UIKit
         return workflowController.workflowId
     }
     
-    /// Authorize device via QR
+    /// Scan QR-Code to authorize device
     ///
     /// - Parameters:
     ///   - userId: Ost user id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     /// - Returns: Workflow id
     @objc
-    public class func authorizeDeviceViaQR(
+    public class func scanQRCodeToAuthorizeDevice(
         userId: String,
         passphrasePrefixDelegate: OstPassphrasePrefixDelegate
         ) -> String {
@@ -266,12 +266,12 @@ import UIKit
         return workflowController.workflowId
     }
     
-    /// Execute transaction via QR
+    /// Scan QR-Code to execute transaction
     ///
     /// - Parameter userId: Ost user id
     /// - Returns: Workflow id
     @objc
-    public class func executeTransactionViaQR(
+    public class func scanQRCodeToExecuteTransaction(
         userId: String
         ) -> String {
         
