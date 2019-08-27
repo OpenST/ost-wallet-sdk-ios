@@ -311,7 +311,7 @@ OstJsonApi.getPendingRecovery(
     delegate: jsonApiDelegate
 )
 
-/* After receiving error for this api request, check for follwing:
+/* After receiving error for this api request, check for following:
     if let err = error {
         if "UNPROCESSABLE_ENTITY".caseInsensitiveCompare(err.internalCode) == .orderedSame {
             print("User does not have any recovery in progress.")
