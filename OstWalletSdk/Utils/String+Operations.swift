@@ -135,30 +135,29 @@ extension String {
         formatter.locale = Locale.current // USA: Locale(identifier: "en_US")
         formatter.numberStyle = .decimal
         let number = formatter.number(from: self) ?? 0
-        let convertedVal = "\(number)"
+        let convertedVal = "\(number.decimalValue)"
         
         let values = convertedVal.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]
             
-            let decimals = decimalVal.substringTill(decimals+1)
-            if !decimals.isEmpty {
-                formattedDecimal = decimals
+            let trimDecimals = decimalVal.substringTill(decimals+1)
+            if !trimDecimals.isEmpty {
+                let floatVal: CGFloat = CGFloat(Double("0.\(trimDecimals)") ?? Double(0))
+                formattedDecimal = String(format: "%.\(decimals)f", floatVal)
+                formattedDecimal = formattedDecimal.components(separatedBy: ".")[1]
             }
         }
         
-        let intPart: String = (values[0] as String).isEmpty ? "0" : values[0]
         var decimalPart = ""
-        if (OstUtils.toInt(formattedDecimal) ?? 0) > 0 {
+        if (OstUtils.toDouble(formattedDecimal) ?? 0) > 0 {
             formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
             decimalPart = ".\(formattedDecimal)"
         }
-        let roundUpVal: Double = Double("\(intPart)\(decimalPart)") ?? Double(0)
-        let floatRoundUpVal: CGFloat = CGFloat(roundUpVal)
-        let fialRoundUpVal = String(format: "%.\(decimals)f", floatRoundUpVal)
+        let intDouble = (Double(values[0]) ?? 0).avoidNotation
+        let fialRoundUpVal = "\(intDouble)\(decimalPart)"
         
-        let stripedZeros = OstUtils.trimTrailingZeros(fialRoundUpVal)
-        return String(OstUtils.trimTrailing(Substring(stripedZeros), suffix: "."))
+        return String(OstUtils.trimTrailing(Substring(fialRoundUpVal), suffix: "."))
     }
     
     public func substringTill(_ offset: Int) -> String {
