@@ -64,7 +64,7 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     }()
     
     let deviceNameLabel: OstC1Label = {
-        let view = OstC1Label(text: "deviceNameLabel")
+        let view = OstC1Label(text: "")
         view.textAlignment = NSTextAlignment.left
         return view
     }()
@@ -76,7 +76,7 @@ class OstDeviceTableViewCell: OstBaseTableViewCell {
     }()
     
     let deviceAddressLabel: OstC1Label = {
-        let view = OstC1Label(text: "deviceAddressLabel")
+        let view = OstC1Label(text: "")
         view.textAlignment = NSTextAlignment.left
         return view
     }()

@@ -19,18 +19,25 @@ import Foundation
     
     private var pinAcceptDelegate: OstPinAcceptDelegate? = nil
     
+    var workflowType: OstWorkflowType
     /// Initialize
     ///
     /// - Parameters:
     ///   - userId: Ost use id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
-    override init(userId: String,
-                  passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+    init(userId: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate?,
+         workflowType: OstWorkflowType) {
         
+        self.workflowType = workflowType
         super.init(userId: userId,
                    passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         OstSdkInteract.getInstance.retainWorkflowCallback(callback: self)
+    }
+    
+    deinit {
+        Logger.log(message: "deinit for :: \(String(describing: self)))", parameterToPrint: nil)
     }
     
     func perform() {
@@ -62,10 +69,27 @@ import Foundation
         if !self.currentUser!.isStatusActivated {
             throw OstError("ui_i_wc_bwc_pudv_1", .userNotActivated)
         }
+        if shouldCheckCurrentDeviceAuthorization() {
+            if !self.currentDevice!.isStatusAuthorized {
+                throw OstError("ui_i_wc_bwc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
+            }
+        }
+    }
+    
+    /// Should check for current device authorization
+    /// This method returns true. Incase workflow don't want to verify deivce authorization
+    /// override this method and return false
+    /// - Returns: Bool
+    func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return true
     }
     
     func performUIActions() {
         fatalError("performUIActions did not override in \(String(describing: self))")
+    }
+    
+    override func getWorkflowContext() -> OstWorkflowContext {
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: workflowType)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
@@ -81,6 +105,13 @@ import Foundation
         DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(500)) {
             self.flowInterrupted(workflowContext: self.getWorkflowContext(),
                                  error: error)
+        }
+    }
+    
+    func postFlowComplete(entity: Any, type: OstEntityType) {
+        DispatchQueue.main.async {
+            self.flowComplete(workflowContext: self.getWorkflowContext(),
+                              ostContextEntity: OstContextEntity(entity: entity, entityType: type))
         }
     }
     

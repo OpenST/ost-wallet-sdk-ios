@@ -146,7 +146,7 @@ A user can control their Brand Tokens using their authorized devices. If they lo
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
-&nbsp;_recoverDeviceAddress: Device address which wants to recover. When nil is passed, the user is asked to choose a device. _<br/>
+&nbsp;_recoverDeviceAddress: Device address which wants to recover. When nil is passed, the user is asked to choose a device._<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -216,6 +216,112 @@ OstWalletUI.updateBiometricPreference(
     enable: Bool,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String
+```
+
+### Authorize Current Device With Mnemonics
+
+This workflow should be used to add a new device using 12 words recovery phrase.
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.authorizeCurrentDeviceWithMnemonics(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String
+```
+
+### Get Add Device QR-Code
+
+This workflow show QR-Code to scan from another authorized device
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.getAddDeviceQRCode(
+    userId: String
+) -> String
+```
+
+### Scan QR-Code To Authorize Device
+
+This workflow can be used to authorize device by scanning device QR-Code. 
+
+QR-Code Sample:
+```json
+{
+    "dd":"AD",
+    "ddv":"1.1.0",
+    "d":{
+        "da": "0x7701af46018fc57c443b63e839eb24872755a2f8"
+    }
+}
+```
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.scanQRCodeToAuthorizeDevice(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String 
+```
+
+### Scan QR-Code To Execute Transaction
+
+This workflow can be used to execute transaction.
+
+QR-Code Sample:
+```json
+{
+    "dd":"TX",
+    "ddv":"1.1.0",
+    "d":{
+            "rn":"direct transfer",
+            "ads":[
+                "0x7701af46018fc57c443b63e839eb24872755a2f8",
+                "0xed09dc167a72d939ecf3d3854ad0978fb13a8fe9"
+            ],
+            "ams":[
+                "1000000000000000000",
+                "1000000000000000000"
+            ],
+            "tid": 1140,
+            "o":{
+                    "cs":"USD",
+                    "s": "$"
+            }
+        },
+    "m":{
+            "tn":"comment",
+            "tt":"user_to_user",
+            "td":"Thanks for comment"
+        }
+}
+```
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.scanQRCodeToExecuteTransaction(
+    userId: String,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String 
 ```
 
 ### Subscribe 

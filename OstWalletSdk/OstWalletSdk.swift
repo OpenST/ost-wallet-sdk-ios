@@ -18,10 +18,21 @@ import Foundation
     /// - Throws: OstError
     @objc
     public class func initialize(apiEndPoint:String) throws {
+        try initialize(apiEndPoint: apiEndPoint, config: nil)
+    }
+    
+    /// Initialize SDK
+    ///
+    /// - Parameters:
+    ///   - apiEndPoint: API end point
+    ///   - config: Configure
+    /// - Throws: OstError
+    @objc
+    public class func initialize(apiEndPoint:String, config: [String: Any]?) throws {
         let sdkRef = OstSdkDatabase.sharedInstance
         sdkRef.runMigration()
         try setApiEndPoint(apiEndPoint:apiEndPoint);
-        try OstConfig.loadConfig()
+        try OstConfig.loadConfig(config: config)
     }
     
     /// Get api end point
@@ -94,5 +105,18 @@ import Foundation
         
         // Logger.log(message: "finalApiEndpoint", parameterToPrint: finalApiEndpoint);
         OstAPIBase.setAPIEndpoint(finalApiEndpoint);
-    }    
+    }
+    
+    /// Get session addresses from keymanager and fetch session data from db.
+    @objc
+    public class func getActiveSessions(userId: String, spendingLimit: String?) -> [OstSession] {
+        var minSpendingLimit:BigInt = BigInt(0);
+        if ( nil != spendingLimit ) {
+            let convertedVal = BigInt(spendingLimit!);
+            if ( nil != convertedVal ) {
+                minSpendingLimit = convertedVal!;
+            }
+        }
+        return OstSession.getActiveSessions(userId: userId, minSpendingLimit: minSpendingLimit);
+    }
 }

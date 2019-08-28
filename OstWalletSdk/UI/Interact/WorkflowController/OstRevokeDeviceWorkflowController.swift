@@ -26,18 +26,24 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
         
         self.revokeDeviceAddress = revokeDeviceAddress
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate);
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .revokeDevice);
     }
     
-    deinit {
-        print("OstRevokeDeviceWorkflowController :: I am deinit");
-    }
-    
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_rdwc_pudv_1", .deviceNotAuthorized)
+    override func vcIsMovingFromParent(_ notification: Notification) {
+        if (nil != self.deviceListController && notification.object is OstRevokeDLViewController) {
+            
+            self.getPinViewController = nil
+            self.deviceListController = nil
+            self.postFlowInterrupted(error: OstError("ui_i_wc_rdwc_vmfp_1", .userCanceled))
+        }else if (nil != self.getPinViewController
+            && nil != self.sdkPinAcceptDelegate
+            && nil != notification.object) {
+            
+            if (notification.object as? OstBaseViewController) === getPinViewController! {
+                getPinViewControllerDismissed()
+            }
         }
     }
     
@@ -53,19 +59,6 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         return OstContent.getRevokeDevicePinVCConfig()
     }
     
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .revokeDevice)
-    }
-    
-    override func vcIsMovingFromParent(_ notification: Notification) {
-        if (nil != self.deviceListController && notification.object is OstRevokeDLViewController) {
-            
-            self.getPinViewController = nil
-            
-            self.postFlowInterrupted(error: OstError("ui_i_wc_rdwc_vmfp_1", .userCanceled))
-        }
-    }
-    
     func openAuthorizedDeviceListController() {
         DispatchQueue.main.async {
             self.deviceListController = OstRevokeDLViewController
@@ -73,17 +66,10 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.onDeviceAddressSet()
-                                self?.showLoader(progressText: .revokingDevice)
                 })
             
             self.deviceListController!.presentVCWithNavigation()
         }
-    }
-    
-    
-    override public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
-        self.getPinViewController = nil
-        super.getPin(userId, delegate: delegate)
     }
     
     @objc override func showPinViewController() {
@@ -101,13 +87,14 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .revokingDevice)
+        showLoader(for: .revokeDevice)
     }
     
     func onDeviceAddressSet() {
         OstWalletSdk.revokeDevice(userId: self.userId,
                                   deviceAddressToRevoke: revokeDeviceAddress!,
                                   delegate: self)
+        showLoader(for: .revokeDevice)
     }
     
     override func cleanUp() {
@@ -116,5 +103,14 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         }
         self.deviceListController = nil
         super.cleanUp()
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+            && nil != deviceListController {
+            hideLoader()
+        }else {
+            super.flowInterrupted(workflowContext: workflowContext, error: error)
+        }
     }
 }

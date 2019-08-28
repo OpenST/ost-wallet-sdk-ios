@@ -127,4 +127,45 @@ extension String {
         let addressRegex = "^(0x)[0-9a-fA-F]{40}$"
         return self.isMatch(addressRegex)
     }
+    
+    public  func toDisplayTxValue(decimals: Int) -> String {
+        var formattedDecimal: String = ""
+        
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current // USA: Locale(identifier: "en_US")
+        formatter.numberStyle = .decimal
+        let number = formatter.number(from: self) ?? 0
+        let convertedVal = "\(number.decimalValue)"
+        
+        let values = convertedVal.components(separatedBy: ".")
+        if values.count == 2 {
+            let decimalVal: String = values[1]
+            
+            let trimDecimals = decimalVal.substringTill(decimals+1)
+            if !trimDecimals.isEmpty {
+                let floatVal: CGFloat = CGFloat(Double("0.\(trimDecimals)") ?? Double(0))
+                formattedDecimal = String(format: "%.\(decimals)f", floatVal)
+                formattedDecimal = formattedDecimal.components(separatedBy: ".")[1]
+            }
+        }
+        
+        var decimalPart = ""
+        if (OstUtils.toDouble(formattedDecimal) ?? 0) > 0 {
+            formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
+            decimalPart = ".\(formattedDecimal)"
+        }
+        let intDouble = (Double(values[0]) ?? 0).avoidNotation
+        let fialRoundUpVal = "\(intDouble)\(decimalPart)"
+        
+        return String(OstUtils.trimTrailing(Substring(fialRoundUpVal), suffix: "."))
+    }
+    
+    public func substringTill(_ offset: Int) -> String {
+        if self.count < offset {
+            return self
+        }
+        let endIndex = index(self.startIndex, offsetBy: offset)
+        let substingVal = self[self.startIndex..<endIndex]
+        return String(substingVal)
+    }
 }

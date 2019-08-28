@@ -57,14 +57,14 @@ class OstDeviceMnemonicsViewController: OstBaseScrollViewController {
         
         let deviceMnemonoicsVCConfig = OstContent.getShowDeviceMnemonicsVCConfig()
         
-        titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.titleLabel.getCompnentName()],
-                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        titleLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getComponentName()])
         
-        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.infoLabel.getCompnentName()],
-                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        leadLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.infoLabel.getComponentName()],
+                                        placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getComponentName()])
         
-        tcLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.bottomLabel.getCompnentName()],
-                                       placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getCompnentName()])
+        tcLabel.updateAttributedText(data: deviceMnemonoicsVCConfig[OstContent.OstComponentType.bottomLabel.getComponentName()],
+                                       placeholders: deviceMnemonoicsVCConfig[OstContent.OstComponentType.placeholders.getComponentName()])
     }
     
     

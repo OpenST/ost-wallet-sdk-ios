@@ -14,25 +14,37 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     var addDeviceViaMnemonicsViewController: OstAddDeviceViaMnemonicsViewController? = nil
     
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
+    @objc
+    init(userId: String,
+         passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
         
-        if !self.currentDevice!.isStatusRegistered {
-            throw OstError("ui_i_wc_advmwc_pudv_1", .deviceCanNotBeAuthorized)
-        }
-    }
-    override func performUIActions() {
-        openGetMnemonicsViewController()
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .authorizeDeviceWithMnemonics)
     }
     
     override func vcIsMovingFromParent(_ notification: Notification) {
         if nil != notification.object {
             if ((notification.object! as? OstBaseViewController) === self.addDeviceViaMnemonicsViewController) {
                 self.postFlowInterrupted(error: OstError("ui_i_wc_advmwc_vimfp_1", .userCanceled))
+            }else if (nil != self.getPinViewController
+                && nil != self.sdkPinAcceptDelegate) {
+                
+                if (notification.object as? OstBaseViewController) === getPinViewController! {
+                    sdkPinAcceptDelegate?.cancelFlow()
+                }
             }
         }
     }
     
+    override func shouldCheckCurrentDeviceAuthorization() -> Bool {
+        return false
+    }
+    
+    override func performUIActions() {
+        openGetMnemonicsViewController()
+    }
+
     func openGetMnemonicsViewController() {
         DispatchQueue.main.async {
             self.addDeviceViaMnemonicsViewController = OstAddDeviceViaMnemonicsViewController
@@ -51,9 +63,8 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
                                                          mnemonics: mnemonicsArray,
                                                          delegate: self)
         
-        showLoader(progressText: .unknown)
+        showLoader(for: .authorizeDeviceWithMnemonics)
     }
-    
     
     @objc override func showPinViewController() {
         self.getPinViewController?.pushViewControllerOn(self.addDeviceViaMnemonicsViewController!)
@@ -66,20 +77,26 @@ class OstAddDeviceViaMnemonicsWorkflowController: OstBaseWorkflowController {
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .authorizingDevice)
+        showLoader(for: .authorizeDeviceWithMnemonics)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
         return OstContent.getAddDeviceViaMnemonicsPinVCConfig()
     }
     
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .authorizeDeviceWithMnemonics)
-    }
-    
     override func cleanUp() {
         self.addDeviceViaMnemonicsViewController?.removeViewController(flowEnded: true)
         self.addDeviceViaMnemonicsViewController = nil
         super.cleanUp()
+    }
+    
+    override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
+        if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+            && nil != getPinViewController {
+            getPinViewController = nil
+            hideLoader()
+        }else {
+            super.flowInterrupted(workflowContext: workflowContext, error: error)
+        }
     }
 }

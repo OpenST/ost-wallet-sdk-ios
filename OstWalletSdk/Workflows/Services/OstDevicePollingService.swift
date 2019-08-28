@@ -17,20 +17,18 @@ class OstDevicePollingService: OstBasePollingService {
     private let failureStatus: String
     private let successCallback: ((OstDevice) -> Void)?
     private let deviceAddress: String
-    
+    private let workflowTransactionCountForPolling = 1
     /// Initialize
     ///
     /// - Parameters:
     ///   - userId: User id
     ///   - deviceAddress: Device address to poll
-    ///   - workflowTransactionCount: workflow transaction count
     ///   - successStatus: Entity success status
     ///   - failureStatus: Entity failure status
     ///   - successCallback: Success callback
     ///   - failureCallback: Failure callback
     init(userId: String,
          deviceAddress: String,
-         workflowTransactionCount: Int,
          successStatus: String,
          failureStatus: String,
          successCallback: ((OstDevice) -> Void)?,
@@ -43,7 +41,7 @@ class OstDevicePollingService: OstBasePollingService {
         super.init(userId: userId,
                    successStatus: successStatus,
                    failureStatus: failureStatus,
-                   workflowTransactionCount: workflowTransactionCount,
+                   workflowTransactionCount: workflowTransactionCountForPolling,
                    failureCallback: failureCallback)
     }
     

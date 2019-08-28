@@ -31,19 +31,9 @@ import Foundation
         self.spendingLimit = spendingLimit
         self.expireAfter = expireAfter
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
-    }
-    
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_aswc_pudv_2", OstErrorCodes.OstErrorCode.deviceNotAuthorized)
-        }
-    }
-    
-    @objc override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .addSession)
+        super.init(userId: userId,
+                   passphrasePrefixDelegate: passphrasePrefixDelegate,
+                   workflowType: .addSession)
     }
     
     override func performUIActions() {
@@ -51,6 +41,7 @@ import Foundation
                                 spendingLimit: self.spendingLimit,
                                 expireAfterInSec: self.expireAfter,
                                 delegate: self)
+        showInitialLoader(for: .addSession)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {
@@ -59,7 +50,7 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .creatingSession)
+        showLoader(for: .addSession)
     }
     
     /// Mark - OstPinAcceptDelegate

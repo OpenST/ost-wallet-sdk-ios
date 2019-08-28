@@ -42,6 +42,7 @@ class OstConfig {
     private static var pinMaxRetryCount: Int?
     private static var sessionBufferTime: Double?
     private static var useSeedPassword: Bool?
+    private static var noOfSessionsOnActivateUser: Int?
     
     //Defaults
     private static let blockGenerationTimeDefault = 3
@@ -50,65 +51,114 @@ class OstConfig {
     private static let pinMaxRetryCountDefault = 3
     private static let sessionBufferTimeDefault = Double(3600)
     private static let useSeedPasswordDefault = false
+    private static let noOfSessionsOnActivateUserDefault = 1
     
     
-    class func loadConfig() throws {
+    class func loadConfig(config: [String: Any]?) throws {
+        var appConfig: [String: Any]? = config
+        if nil == appConfig {
+            appConfig = OstBundle.getPlistFileData(fromFile: plistFileName, inBundle: OstBundle.getApplicationBundle())
+            if nil == appConfig {
+                appConfig = [:]
+            }
+        }
         
-        guard let generationTime = OstBundle
-            .getApplicationPlistContent(
-                for: "BlockGenerationTime",
-                fromFile: plistFileName
-            ) as? Int else {
+        if let generationTime = getConfigValueForBlockGenerationTime(appConfig: appConfig!) as? Int {
+            if generationTime < 1 {
                 throw OstError("w_c_lc_1", .invalidBlockGenerationTime)
-                
+            }
+            blockGenerationTime = generationTime
         }
-        blockGenerationTime = generationTime
         
-        guard let currencySymbol =  OstBundle
-            .getApplicationPlistContent(
-                for: "PricePointCurrencySymbol",
-                fromFile: plistFileName
-            ) as? String else {
+        if let maxRetryCount = getConfigValueForPinMaxRetryCount(appConfig: appConfig!) as? Int {
+            if maxRetryCount < 1 {
+                throw OstError("w_c_lc_2", .invalidPinMaxRetryCount)
+            }
+            pinMaxRetryCount = maxRetryCount
+        }
+        
+        if let currencySymbol = getConfigValueForPricePointCurrencySymbol(appConfig: appConfig!) as? String {
+            if currencySymbol.isEmpty {
                 throw OstError("w_c_lc_3", .invalidPricePointCurrencySymbol)
+            }
+            pricePointCurrencySymbol = currencySymbol
         }
-        pricePointCurrencySymbol = currencySymbol
-        
-        guard let timeoutDuration =  OstBundle
-            .getApplicationPlistContent(
-                for: "RequestTimeoutDuration",
-                fromFile: plistFileName
-            ) as? Int else {
+       
+        if let timeoutDuration = getConfigValueForRequestTimeoutDuration(appConfig: appConfig!) as? Int {
+            if timeoutDuration < 1 {
                 throw OstError("w_c_lc_4", .invalidRequestTimeoutDuration)
+            }
+            requestTimeoutDuration = timeoutDuration
         }
-        requestTimeoutDuration = timeoutDuration
-        
-        guard let maxRetryCount = OstBundle
-            .getApplicationPlistContent(
-                for: "PinMaxRetryCount",
-                fromFile: plistFileName
-            ) as? Int else {
-                throw OstError("w_c_lc_5", .invalidPinMaxRetryCount)
+       
+        if let bufferTime = getConfigValueForSessionBufferTime(appConfig: appConfig!) as? Double {
+            if bufferTime < 0 {
+                throw OstError("w_c_lc_5", .invalidSessionBufferTime)
+            }
+            sessionBufferTime = bufferTime
         }
-        pinMaxRetryCount = maxRetryCount
-        
-        guard let bufferTime = OstBundle
-            .getApplicationPlistContent(
-                for: "SessionBufferTime",
-                fromFile: plistFileName
-            ) as? Double else {
-                throw OstError("w_c_lc_6", .invalidSessionBufferTime)
-        }
-        sessionBufferTime = bufferTime
-        
-        ///TODO - Check with Aniket.
-        guard let canUseSeedPassword =  OstBundle
-            .getApplicationPlistContent(
-                for: "UseSeedPassword",
-                fromFile: plistFileName
-            ) as? Bool else {
-                throw OstError("w_c_lc_7", .invalidBlockGenerationTime)
-        }
+
+        let canUseSeedPassword = getConfigValueForUseSeedPassword(appConfig: appConfig!) as? Bool
         useSeedPassword = canUseSeedPassword
+        
+        if let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) as? Int {
+            if noOfSessionsOnActivateUserCount < 1
+                || noOfSessionsOnActivateUserCount > 5 {
+                throw OstError("w_c_lc_6", .invalidNoOfSessionsOnActivateUser)
+            }
+            noOfSessionsOnActivateUser = noOfSessionsOnActivateUserCount
+        }
+    }
+    
+    
+    //MARK: - Getter For Config
+    class func getConfigValueForBlockGenerationTime(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["BlockGenerationTime"] {
+            return val
+        }
+        return appConfig["BLOCK_GENERATION_TIME"]
+    }
+    
+    class func getConfigValueForPinMaxRetryCount(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["PinMaxRetryCount"] {
+            return val
+        }
+        return appConfig["PIN_MAX_RETRY_COUNT"]
+    }
+    
+    class func getConfigValueForPricePointCurrencySymbol(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["PricePointCurrencySymbol"] {
+            return val
+        }
+        return appConfig["PRICE_POINT_CURRENCY_SYMBOL"]
+    }
+    
+    class func getConfigValueForRequestTimeoutDuration(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["RequestTimeoutDuration"] {
+            return val
+        }
+        return appConfig["REQUEST_TIMEOUT_DURATION"]
+    }
+    
+    class func getConfigValueForSessionBufferTime(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["SessionBufferTime"] {
+            return val
+        }
+        return appConfig["SESSION_BUFFER_TIME"]
+    }
+    
+    class func getConfigValueForUseSeedPassword(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["UseSeedPassword"] {
+            return val
+        }
+        return appConfig["USE_SEED_PASSWORD"]
+    }
+    
+    class func getConfigValueForNoOfSessionsOnActivateUser(appConfig: [String: Any]) -> Any?{
+        if let val = appConfig["NoOfSessionsOnActivateUser"] {
+            return val
+        }
+        return appConfig["NO_OF_SESSIONS_ON_ACTIVATE_USER"]
     }
     
     //MARK: - Getter
@@ -134,5 +184,9 @@ class OstConfig {
     
     class func shouldUseSeedPassword() -> Bool {
         return useSeedPassword ?? useSeedPasswordDefault
+    }
+    
+    class func noOfSessionsOnActivateUserCount() -> Int {
+        return noOfSessionsOnActivateUser ?? noOfSessionsOnActivateUserDefault
     }
 }

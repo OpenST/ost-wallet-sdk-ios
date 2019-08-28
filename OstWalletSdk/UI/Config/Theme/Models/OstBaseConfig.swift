@@ -18,6 +18,7 @@ import Foundation
     let colorHex: String
     let fontWeight: String
     
+    let config: [String: Any]
     
     /// Initialize
     ///
@@ -29,6 +30,8 @@ import Foundation
         self.size = config["size"] as! NSNumber
         self.colorHex = config["color"] as! String
         self.fontWeight = config["system_font_weight"] as! String
+        
+        self.config = config
     }
     
     /// Get font for provided config
