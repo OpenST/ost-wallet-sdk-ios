@@ -130,7 +130,14 @@ extension String {
     
     public  func toDisplayTxValue(decimals: Int) -> String {
         var formattedDecimal: String = ""
-        let values = self.components(separatedBy: ".")
+        
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current // USA: Locale(identifier: "en_US")
+        formatter.numberStyle = .decimal
+        let number = formatter.number(from: self) ?? 0
+        let convertedVal = "\(number)"
+        
+        let values = convertedVal.components(separatedBy: ".")
         if values.count == 2 {
             let decimalVal: String = values[1]
             
@@ -146,10 +153,12 @@ extension String {
             formattedDecimal = OstUtils.trimTrailingZeros(formattedDecimal)
             decimalPart = ".\(formattedDecimal)"
         }
-        let roundUpVal: Double = Double("\(intPart)\(decimalPart)")!
+        let roundUpVal: Double = Double("\(intPart)\(decimalPart)") ?? Double(0)
         let floatRoundUpVal: CGFloat = CGFloat(roundUpVal)
         let fialRoundUpVal = String(format: "%.\(decimals)f", floatRoundUpVal)
-        return OstUtils.trimTrailingZeros(fialRoundUpVal)
+        
+        let stripedZeros = OstUtils.trimTrailingZeros(fialRoundUpVal)
+        return String(OstUtils.trimTrailing(Substring(stripedZeros), suffix: "."))
     }
     
     public func substringTill(_ offset: Int) -> String {
