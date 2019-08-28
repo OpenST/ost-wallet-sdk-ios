@@ -227,7 +227,7 @@ The following UI components are supported by Show QR-Code to Authorize Deivce.
 | lead_label                | label          |
 | action_button             | button text    |
 
-![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
+![copy-framework-file](images/ShowQR.png)
 
 ## Supported UI Components in Provide Mnemonics (provide_mnemonics)
 
@@ -241,7 +241,7 @@ The following UI components are supported by Provide Mnemonics.
 | action_button             | button text    |
 | placeholder               | label          |
 
-![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
+![copy-framework-file](images/ProvideMnemonics.png)
 
 ## Supported UI Components in Scan QR (scan_qr)
 
@@ -251,7 +251,7 @@ The following UI components are supported by Scan QR.
 | ------------------------- |:--------------:|
 | title_label               | label          |
 
-![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
+![copy-framework-file](images/ScanQR.png)
 
 ## Supported UI Components in Verify Device (verify_device)
 
@@ -263,7 +263,7 @@ The following UI components are supported by Verify Device.
 | accept_button             | button text    |
 | reject_button             | button text    |
 
-![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
+![copy-framework-file](images/VerifyDevice.png)
 
 ## Supported UI Components in Verify Transaction (verify_transaction)
 
@@ -276,4 +276,4 @@ The following UI components are supported by Verify Transaction.
 | accept_button             | button text    |
 | reject_button             | button text    |
 
-![copy-framework-file](images/ViewMnemonicsLabelTypes.png)
+![copy-framework-file](images/VerifyTX.png)
