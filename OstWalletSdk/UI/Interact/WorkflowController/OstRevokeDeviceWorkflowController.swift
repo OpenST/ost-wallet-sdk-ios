@@ -35,7 +35,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         if (nil != self.deviceListController && notification.object is OstRevokeDLViewController) {
             
             self.getPinViewController = nil
-            
+            self.deviceListController = nil
             self.postFlowInterrupted(error: OstError("ui_i_wc_rdwc_vmfp_1", .userCanceled))
         }else if (nil != self.getPinViewController
             && nil != self.sdkPinAcceptDelegate
