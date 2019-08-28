@@ -11,7 +11,7 @@
 import Foundation
 import UIKit
 
-class InsetLabel: UILabel {
+class OstInsetLabel: UILabel {
     
     var padding: CGFloat! {
         didSet {

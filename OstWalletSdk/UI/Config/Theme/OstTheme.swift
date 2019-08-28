@@ -141,8 +141,19 @@ import Foundation
         return UIColor.color(hex: tintColor)
     }
     
-    func getPinInput() -> [String: Any] {
+    /// Get pin input theme config
+    ///
+    /// - Returns: Dictionary
+    func getPinInputConfig() -> [String: Any] {
         return themeConfig["pin_input"] as! [String: Any]
+    }
+    
+    /// Get text view theme config
+    ///
+    /// - Returns: OstTextViewConfig
+    func getTextViewConfig() -> OstTextViewConfig {
+        let config = themeConfig["edit_text"] as! [String: Any]
+        return OstTextViewConfig(config: config)
     }
     
     /// get image from framework

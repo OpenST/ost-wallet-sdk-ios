@@ -8,10 +8,10 @@
                 "text": "Add a 6-digit PIN to secure your wallet"
             },
             "info_label":{
-                "text":  "PIN helps you recover your wallet if the phone is lost or stolen"
+                "text":  "Your PIN will help you to recover your wallet if your phone is lost or stolen"
             },
             "terms_and_condition_label": {
-                "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
+                "text": "Your PIN will be used to authorize sessions, transactions, redemptions and recover your wallet. {{terms_and_condition}}"
             },
             "placeholders": {
                 "terms_and_condition": {
@@ -26,13 +26,13 @@
                 "text": "Confirm PIN"
             },
             "lead_label": {
-                "text": "If you forget your PIN, you cannot recover your wallet"
+                "text": "If you forget your PIN, you may not be able to recover your wallet"
             },
             "info_label":{
-                "text":  "So please be sure to remember it"
+                "text":  "Please be sure to remember it!"
             },
             "terms_and_condition_label": {
-                "text": "Your PIN will be used to authorise sessions, transactions, redemptions and recover wallet. {{terms_and_condition}}"
+                "text": "Your PIN will be used to authorize sessions, transactions, redemptions and recover your wallet. {{terms_and_condition}}"
             },
             "placeholders": {
                 "terms_and_condition": {
@@ -41,6 +41,12 @@
                     "color": "#0076FF"
                 }
             }
+        },
+        "loader": {
+            "text": "Activating User..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -50,7 +56,7 @@
                 "text": "Create Session"
             },
             "lead_label": {
-                "text": "Add a 6-digit PIN to secure your wallet"
+                "text": "Enter your 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -58,6 +64,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Creating Session..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -67,7 +79,7 @@
                 "text": "Device Recovery"
             },
             "info_label": {
-                "text": "This is a list of all the devices that are authorized to access your wallet"
+                "text": "This is a list of all devices that are authorized to access your wallet"
             },
             "cell": {
                 "action_button": {
@@ -88,6 +100,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Recovering Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -97,7 +115,7 @@
                 "text": "Abort Recovery"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to abort recovery"
+                "text": "Enter your 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -105,6 +123,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Aborting Recovery..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -114,7 +138,7 @@
                 "text": "Revoke Device"
             },
             "info_label": {
-                "text": "This is a list of all the devices that are authorized to access your wallet"
+                "text": "This is a list of all devices that are authorized to access your wallet"
             },
             "cell": {
                 "action_button": {
@@ -128,7 +152,7 @@
                 "text": "Revoke Device"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
+                "text": "Enter your 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -136,6 +160,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Revoking Device..."
+        },
+        "initial_loader": {
+            "text": "Fetching Device List..."
         }
     },
     
@@ -145,7 +175,7 @@
                 "text": "Biometric Preference"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
+                "text": "Enter your 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -153,6 +183,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Updating Preference..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -174,7 +210,7 @@
         
         "set_new_pin": {
             "title_label": {
-                "text": "Add New Pin"
+                "text": "Add New PIN"
             },
             "lead_label": {
                 "text": "Add a 6-digit PIN to secure your wallet"
@@ -192,7 +228,7 @@
                 "text": "Confirm New Pin"
             },
             "lead_label": {
-                "text": "If you forget your PIN, you cannot recover your wallet"
+                "text": "If you forget your PIN, you may not be able to recover your wallet"
             },
             "info_label":{
                 "text":  ""
@@ -200,6 +236,12 @@
             "terms_and_condition_label": {
                 "text": ""
             }
+        },
+        "loader": {
+            "text": "Resetting Pin..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -209,7 +251,7 @@
                 "text": "View Mnemonics"
             },
             "lead_label": {
-                "text": "Enter your 6-digit PIN to authorize your action"
+                "text": "Enter your 6-digit PIN"
             },
             "info_label":{
                 "text":  ""
@@ -224,11 +266,17 @@
                 "text": "View Mnemonics"
             },
             "info_label": {
-                "text": "Write down your 12-word mnemonic phrase and store them securely"
+                "text": "Write down your 12-word mnemonic phrase and store it securely"
             },
             "bottom_label": {
-                "text": "You can write the phrases down in a piece of paper or save in a password manager. Don’t email them or screenshot them. The order of words are important too."
+                "text": "You can write the phrase down on a piece of paper or save it in a secure password manager. Don’t email them or screenshot them. The order of words is important."
             }
+        },
+        "loader": {
+            "text": "Getting Mnemonics..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
         }
     },
     
@@ -250,17 +298,120 @@
         
         "provide_mnemonics": {
             "title_label": {
-                "text": "Enter Recovery Phrase"
+                "text": "Enter Mnemonic Phrase"
             },
             "info_label": {
-                "text": "Please enter the 12-word recovery phrase that you wrote down."
+                "text": "Please enter your 12-word mnemonic phrase"
             },
             "bottom_label": {
-                "text": "If you don’t have the recovery phrase, try using PIN or a second authorized device."
+                "text": "If you don’t have your mnemonic phrase, try using your PIN or a second authorized device."
             },
             "action_button": {
                 "text": "Authorize Device"
+            },
+            "placeholder": {
+                "text": "Enter Mnemonic Phrase..."
             }
+        },
+        "loader": {
+            "text": "Authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
+    },
+    "show_add_device_qr": {
+        "show_qr": {
+            "title_label": {
+                "text": "Scan QR Code to Authorize"
+            },
+            "lead_label": {
+                "text": "Please scan QR Code from an authorized device to authorize this device."
+            },
+            "action_button": {
+                "text": "Verify Device Status"
+            },
+            "api_failure_alert": {
+                "title": "Unable to Fetch Device",
+                "message": "Unable to fetch device. Please try again."
+            },
+            "unauthorized_alert": {
+                "title": "Device Not Authorized",
+                "message": "Your device is not authorized. Please scan QR Code from an authorized device."
+            }
+        },
+        "loader": {
+            "text": "Verifying Device Status..."
+        },
+        "initial_loader": {
+            "text": "Initializing..."
+        }
+    },
+    
+    "scan_qr_to_authorize_device": {
+        "scan_qr": {
+            "title_label": {
+                "text": "Scan QR Code"
+            }
+        },
+        "verify_device": {
+            "lead_label": {
+                "text": "Authorize New Device"
+            },
+            "accept_button": {
+                "text": "Authorize Device"
+            },
+            "reject_button": {
+                "text": "Cancel"
+            }
+        },
+        "get_pin": {
+            "title_label": {
+                "text": "Authorize Device"
+            },
+            "lead_label": {
+                "text": "Enter your 6-digit PIN to authorize device"
+            },
+            "info_label":{
+                "text":  ""
+            },
+            "terms_and_condition_label": {
+                "text": ""
+            }
+        },
+        "loader": {
+            "text": "Authorizing Device..."
+        },
+        "initial_loader": {
+            "text": "Verifying Device..."
+        }
+    },
+    
+    "scan_qr_to_execute_transaction": {
+        "scan_qr": {
+            "title_label": {
+                "text": "Scan QR Code"
+            }
+        },
+        "verify_transaction": {
+            "lead_label": {
+                "text": "Transaction Details"
+            },
+            "info_label": {
+                "text": "Each transaction needs to be confirmed before it is executed."
+            },
+            "accept_button": {
+                "text": "Confirm Transaction"
+            },
+            "reject_button": {
+                "text": "Decline"
+            }
+        },
+        "loader": {
+            "text": "Executing Transaction..."
+        },
+        "initial_loader": {
+            "text": "Verifying Transaction..."
         }
     }
 }

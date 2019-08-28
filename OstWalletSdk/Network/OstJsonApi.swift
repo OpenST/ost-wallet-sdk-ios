@@ -200,5 +200,21 @@ import Foundation
             delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
         }
     }
+    
+    /// Get current device from server
+    ///
+    /// - Parameters:
+    ///   - userId: User Id
+    ///   - delegate: Callback
+    @objc public class func getCurrentDevice(forUserId userId:String,
+                                             delegate:OstJsonApiDelegate) {
+        do {
+            try OstAPIDevice(userId: userId)
+                .getCurrentDeviceJsonApi(onSuccess: self.getApiSuccessCallback(delegate: delegate),
+                                         onFailure: self.getApiErrorCallback(delegate: delegate));
+        } catch let error {
+            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
+        }
+    }
 }
 

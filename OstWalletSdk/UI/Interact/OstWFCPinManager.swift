@@ -15,7 +15,11 @@ extension OstWorkflowCallbacks {
     
     public func getPin(_ userId: String, delegate: OstPinAcceptDelegate) {
         self.sdkPinAcceptDelegate = delegate;
-        
+        self.getPinViewController = nil
+        openGetPinViewController()
+    }
+    
+    @objc public func openGetPinViewController() {
         DispatchQueue.main.async {
             self.getPinViewController = OstPinViewController
                 .newInstance(pinInputDelegate: self,
@@ -50,7 +54,7 @@ extension OstWorkflowCallbacks {
     }
     
     @objc public func pinProvided(pin: String) {
-        self.showLoader(progressText: .unknown);
+        self.showLoader(progressTextCode: .unknown);
         self.passphrasePrefixDelegate?.getPassphrase(ostUserId: self.userId,
                                                      workflowContext: getWorkflowContext(),
                                                      delegate: self);

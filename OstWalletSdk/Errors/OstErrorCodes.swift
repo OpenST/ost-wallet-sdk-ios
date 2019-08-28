@@ -130,8 +130,8 @@ import Foundation
         invalidPinMaxRetryCount,
         invalidPricePointCurrencySymbol,
         invalidRequestTimeoutDuration,
-        invalidSessionBufferTime;
-        
+        invalidSessionBufferTime,
+        invalidNoOfSessionsOnActivateUser;
         
         //Deprecated
         @available(*, deprecated, message: "userNotActivating has been deprecated and is not thrown anymore.")
@@ -307,6 +307,8 @@ import Foundation
             return "Invalid configuration 'RequestTimeoutDuration'. It must be Integer greater than zero.";
         case .invalidSessionBufferTime:
             return "Invalid configuration 'SessionBufferTime'. It must be long greater than or equal to zero";
+        case .invalidNoOfSessionsOnActivateUser:
+            return "Invalid configuration 'NoOfSessionsOnActivateUser'. It must be Integer greater than zero and less than six";
 
         case .noPendingRecovery:
             return "Could not find any pending device recovery request. For details on how to check the status of the recovery please vist https://dev.ost.com/platform/docs/sdk ";
@@ -403,6 +405,7 @@ import Foundation
         case .invalidPricePointCurrencySymbol: return "INVALID_PRICE_POINT_CURRENCY_SYMBOL";
         case .invalidRequestTimeoutDuration: return "INVALID_REQUEST_TIMEOUT_DURATION";
         case .invalidSessionBufferTime : return "INVALID_SESSION_BUFFER_TIME";
+        case .invalidNoOfSessionsOnActivateUser: return "INVALID_NO_OF_SESSIONS_ON_ACTIVATE_USER";
             
         ///Deprecated
         case .deviceAuthorized: return "DEVICE_AUTHORIZED";

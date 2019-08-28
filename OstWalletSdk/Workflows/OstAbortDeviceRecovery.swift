@@ -160,7 +160,6 @@ class OstAbortDeviceRecovery: OstWorkflowEngine {
         OstDevicePollingService(
             userId: self.userId,
             deviceAddress: self.recoveringDevice!.address!,
-            workflowTransactionCount: workflowTransactionCountForPolling,
             successStatus: OstDevice.Status.REGISTERED.rawValue,
             failureStatus: OstDevice.Status.AUTHORIZED.rawValue,
             successCallback: successCallback,

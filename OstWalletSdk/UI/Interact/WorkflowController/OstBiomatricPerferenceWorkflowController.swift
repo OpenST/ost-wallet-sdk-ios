@@ -27,15 +27,7 @@ import Foundation
         
         self.enable = enable
         
-        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate)
-    }
-    
-    override func performUserDeviceValidation() throws {
-        try super.performUserDeviceValidation()
-        
-        if !self.currentDevice!.isStatusAuthorized {
-            throw OstError("ui_i_wc_bpwc_pudv_1", .deviceNotAuthorized)
-        }
+        super.init(userId: userId, passphrasePrefixDelegate: passphrasePrefixDelegate, workflowType: .updateBiometricPreference)
     }
     
     override func pinProvided(pin: String) {
@@ -45,17 +37,14 @@ import Foundation
     
     override func onPassphrasePrefixSet(passphrase: String) {
         super.onPassphrasePrefixSet(passphrase: passphrase)
-        showLoader(progressText: .updatingBiometricPreference)
+        showLoader(for: .updateBiometricPreference)
     }
     
     override func performUIActions() {
         OstWalletSdk.updateBiometricPreference(userId: self.userId,
                                                enable: self.enable,
                                                delegate: self)
-    }
-    
-    override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: .updateBiometricPreference)
+        showInitialLoader(for: .updateBiometricPreference)
     }
     
     override func getPinVCConfig() -> OstPinVCConfig {

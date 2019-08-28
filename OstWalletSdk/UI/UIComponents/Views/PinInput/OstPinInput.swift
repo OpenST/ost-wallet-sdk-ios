@@ -79,7 +79,7 @@ class OstPinInput: UIView, UITextFieldDelegate {
             + (CGFloat(pinLength) * dotDiameter);
         self.setFixedWidth(constant: viewWidth);
         
-        let pinInputTheme = OstTheme.getInstance().getPinInput()
+        let pinInputTheme = OstTheme.getInstance().getPinInputConfig()
         self.dotEmptyColor = UIColor.color(hex: (pinInputTheme["empty_color"] as! String))
         self.dotFilledColor = UIColor.color(hex: (pinInputTheme["filled_color"] as! String))
     }

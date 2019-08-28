@@ -47,7 +47,7 @@ import Foundation
     ///   - userId: Ost use id
     ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     init(userId: String,
-         passphrasePrefixDelegate:OstPassphrasePrefixDelegate) {
+         passphrasePrefixDelegate:OstPassphrasePrefixDelegate?) {
         
         self.userId = userId;
         self.workflowId = UUID().uuidString;
@@ -122,9 +122,7 @@ import Foundation
     }
     
     public func cancelFlow() {
-        progressIndicator?.showFailureAlert(withTitle: "Cancelled", onCompletion: {[weak self] (_) in
-            self?.cancelPinAcceptor();
-        })
+        self.cancelPinAcceptor();
     }
     
     func cleanUp() {
@@ -132,16 +130,40 @@ import Foundation
         hideLoader()
     }
     
-    func showLoader(progressText: OstProgressIndicatorTextCode) {
+    func showLoader(for workflowType: OstWorkflowType) {
+        let progressText = OstContent.getLoaderText(for: workflowType)
+        showLoader(progressText: progressText)
+    }
+    
+    func showInitialLoader(for workflowType: OstWorkflowType) {
+        let progressText = OstContent.getInitialLoaderText(for: workflowType)
+        showLoader(progressText: progressText)
+    }
+    
+    func showLoader(progressText: String) {
         DispatchQueue.main.async {
             if ( nil != self.progressIndicator ) {
                 if ( nil != self.progressIndicator!.alert ) {
                     //progressIndicator is showing.
-                    self.progressIndicator?.textCode = progressText
+                    self.progressIndicator?.progressText = progressText
                     return;
                 }
             }
-            self.progressIndicator = OstProgressIndicator(textCode: progressText)
+            self.progressIndicator = OstProgressIndicator(progressText: progressText)
+            self.progressIndicator?.show()
+        }
+    }
+    
+    func showLoader(progressTextCode: OstProgressIndicatorTextCode) {
+        DispatchQueue.main.async {
+            if ( nil != self.progressIndicator ) {
+                if ( nil != self.progressIndicator!.alert ) {
+                    //progressIndicator is showing.
+                    self.progressIndicator?.textCode = progressTextCode
+                    return;
+                }
+            }
+            self.progressIndicator = OstProgressIndicator(textCode: progressTextCode)
             self.progressIndicator?.show()
         }
     }
