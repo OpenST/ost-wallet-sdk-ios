@@ -138,7 +138,15 @@ class OstAddDeviceViaMnemonicsViewController: OstBaseScrollViewController, UITex
 
     //MARK: - TextViewDelegate
     func textViewDidChange(_ textView: UITextView) {
-
+        
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if "\n".caseInsensitiveCompare(text) == .orderedSame {
+            _ = self.textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 
     func isValidInput() -> Bool {

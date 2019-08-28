@@ -152,4 +152,12 @@ class OstTextView: OstBaseView, UITextViewDelegate {
     override func endEditing(_ force: Bool) -> Bool {
         return self.endEditing(force)
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if delegate?.responds(to: #selector(textView(_:shouldChangeTextIn:replacementText:))) ?? false {
+            return delegate?.textView?(textView, shouldChangeTextIn: range, replacementText: text) ?? true
+        }
+        
+        return true
+    }
 }
