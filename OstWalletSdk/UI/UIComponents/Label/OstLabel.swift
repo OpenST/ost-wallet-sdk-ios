@@ -76,17 +76,17 @@ import Foundation
         self.isUserInteractionEnabled = true
         self.translatesAutoresizingMaskIntoConstraints = false
         
+        if nil == labelAttributedText {
+            self.text = self.labelText
+        }else {
+            self.attributedText = self.labelAttributedText!
+        }
+        
         if nil != labelConfig {
             self.textAlignment = labelConfig!.getAlignment()
             
             self.font = labelConfig!.getFont()
             self.textColor = self.labelConfig!.getColor()
-            
-            if nil == labelAttributedText {
-                self.text = self.labelText
-            }else {
-                self.attributedText = self.labelAttributedText!
-            }
         }
     }
     

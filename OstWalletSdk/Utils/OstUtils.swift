@@ -41,6 +41,19 @@ public class OstUtils {
         return nil
     }
     
+    class func toDouble(_ val: Any?) -> Double? {
+        if val == nil {
+            return nil
+        }
+        if (val is Double){
+            return (val as! Double)
+        }else if (val is String){
+            return Double(val as! String)
+        }
+        return nil
+    }
+    
+    
     class func toBool(_ val: Any) -> Bool? {
         
         if val is Bool {

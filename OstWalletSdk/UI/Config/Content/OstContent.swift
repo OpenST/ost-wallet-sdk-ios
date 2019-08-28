@@ -36,7 +36,7 @@ import Foundation
         bottomLabel,
         placeholders
         
-        func getCompnentName() -> String {
+        func getComponentName() -> String {
             switch self {
             case .titleLabel:
                 return "title_label"
@@ -116,7 +116,7 @@ import Foundation
                           forWorkflow workflow: String) -> [String: Any]? {
         
         let controllerConfig = getControllerConfig(for: controller, inWorkflow: workflow)
-        let component = controllerConfig[component.getCompnentName()]
+        let component = controllerConfig[component.getComponentName()]
         return component as? [String: Any]
     }
 }
@@ -166,82 +166,208 @@ extension OstContent {
     
     
     class func getCreatePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "create_pin", forWorkflow: "activate_user")
+        let workflowName = getWorkflowName(for: .activateUser)
+        let componentData = getComponentData(inController: "create_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirmPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "confirm_pin", forWorkflow: "activate_user")
+        let workflowName = getWorkflowName(for: .activateUser)
+        let componentData = getComponentData(inController: "confirm_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getUpdateBiometricPreferencePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "biometric_preference")
+        let workflowName = getWorkflowName(for: .updateBiometricPreference)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getRecoveryAccessPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "initiate_recovery")
+        let workflowName = getWorkflowName(for: .initiateDeviceRecovery)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getAddSessinoPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_session")
+        let workflowName = getWorkflowName(for: .addSession)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getAbortRecoveryPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "abort_recovery")
+        let workflowName = getWorkflowName(for: .abortDeviceRecovery)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getSetNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "set_new_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "set_new_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
     
     class func getConfirmNewPinForResetPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: "reset_pin")
+        let workflowName = getWorkflowName(for: .resetPin)
+        let componentData = getComponentData(inController: "confirm_new_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
-    }
-    
-    class func getRevokeDevicePinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "revoke_device")
-        return getPinVCConfigObj(componentData)
-    }
-    
-    class func getDeviceMnemonicsPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "view_mnemonics")
-        return getPinVCConfigObj(componentData)
-    }
-    
-    class func getInitiateDeviceVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "initiate_recovery")
-        return config
     }
     
     class func getRevokeDeviceVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: "revoke_device")
+        let workflowName = getWorkflowName(for: .revokeDevice)
+        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: workflowName)
         return config
     }
     
+    class func getRevokeDevicePinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .revokeDevice)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+
+    class func getInitiateDeviceVCConfig() -> [String: Any] {
+        let workflowName = getWorkflowName(for: .initiateDeviceRecovery)
+        let config = OstContent.getInstance().getControllerConfig(for: "device_list", inWorkflow: workflowName)
+        return config
+    }
+    
+    class func getDeviceMnemonicsPinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .getDeviceMnemonics)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+
     class func getShowDeviceMnemonicsVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: "view_mnemonics")
+        let workflowName = getWorkflowName(for: .getDeviceMnemonics)
+        let config = OstContent.getInstance().getControllerConfig(for: "show_mnemonics", inWorkflow: workflowName)
         return config
     }
     
     class func getAddDeviceViaMnemonicsVCConfig() -> [String: Any] {
-        let config = OstContent.getInstance().getControllerConfig(for: "provide_mnemonics", inWorkflow: "add_current_device_with_mnemonics")
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithMnemonics)
+        let config = OstContent.getInstance().getControllerConfig(for: "provide_mnemonics", inWorkflow: workflowName)
         return config
     }
     
     class func getAddDeviceViaMnemonicsPinVCConfig() -> OstPinVCConfig {
-        let componentData = getComponentData(inController: "get_pin", forWorkflow: "add_current_device_with_mnemonics")
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithMnemonics)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
+    }
+    
+    class func getShowDeviceQRVCConfig() -> [String: Any]{
+        let workflowName = getWorkflowName(for: .showDeviceQR)
+        let config = OstContent.getInstance().getControllerConfig(for: "show_qr", inWorkflow: workflowName)
+        return config
+    }
+    
+    class func getAuthorizeDeviceViaQRPinVCConfig() -> OstPinVCConfig {
+        let workflowName = getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+        return getPinVCConfigObj(componentData)
+    }
+    
+    class func getAuthorizeDeviceVerifyDataVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_device", inWorkflow: workflowName)
+        return viewConfig
+    }
+    
+    class func getExecuteTransactionVerifyDataVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .executeTransaction)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_transaction", inWorkflow: workflowName)
+        return viewConfig
+    }
+    
+    class func getShowQrControllerVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .showDeviceQR)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "show_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
+    class func getScanQRForAuthorizeDeviceVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
+    class func getScanQRForExecuteTransactionVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .executeTransaction)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+    
+    class func getLoaderText(for type: OstWorkflowType) -> String {
+        
+        let content = OstContent.getInstance()
+        let workflowName = getWorkflowName(for: type)
+        
+        let loaderConfig = content.getControllerConfig(for: "loader", inWorkflow: workflowName)
+        if let text = loaderConfig["text"] as? String {
+            
+            return text
+        }
+        return ""
+    }
+    
+    class func getInitialLoaderText(for type: OstWorkflowType) -> String {
+        
+        let content = OstContent.getInstance()
+        let workflowName = getWorkflowName(for: type)
+        
+        let loaderConfig = content.getControllerConfig(for: "initial_loader", inWorkflow: workflowName)
+        if let text = loaderConfig["text"] as? String {
+            
+            return text
+        }
+        return ""
+    }
+    
+    class func getWorkflowName(for workflowType: OstWorkflowType) -> String {
+        switch workflowType {
+        case .activateUser:
+            return "activate_user"
+            
+        case .addSession:
+            return "add_session"
+            
+        case .abortDeviceRecovery:
+            return "abort_recovery"
+            
+        case .getDeviceMnemonics:
+            return "view_mnemonics"
+            
+        case .initiateDeviceRecovery:
+            return "initiate_recovery"
+            
+        case .resetPin:
+            return "reset_pin"
+
+        case .revokeDevice:
+            return "revoke_device"
+            
+        case .updateBiometricPreference:
+            return "biometric_preference"
+            
+        case .authorizeDeviceWithMnemonics:
+            return "add_current_device_with_mnemonics"
+            
+        case .showDeviceQR:
+            return "show_add_device_qr"
+            
+        case .authorizeDeviceWithQRCode:
+            return "scan_qr_to_authorize_device"
+        
+        case .executeTransaction:
+            return "scan_qr_to_execute_transaction"
+        default:
+            return ""
+        }
     }
 }

@@ -24,7 +24,6 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
     }
     
     static private let ostAddDeviceWithQRDataQueue = DispatchQueue(label: "com.ost.sdk.OstAddDeviceWithQRData", qos: .userInitiated)
-    private let workflowTransactionCountForPolling = 1
     private let deviceAddress: String
     
     private var deviceToAdd: OstDevice? = nil
@@ -149,7 +148,6 @@ class OstAddDeviceWithQRData: OstUserAuthenticatorWorkflow, OstDataDefinitionWor
         
         OstDevicePollingService(userId: self.userId,
                                 deviceAddress: self.deviceAddress,
-                                workflowTransactionCount: self.workflowTransactionCountForPolling,
                                 successStatus: OstDevice.Status.AUTHORIZED.rawValue,
                                 failureStatus: OstDevice.Status.REGISTERED.rawValue,
                                 successCallback: successCallback,

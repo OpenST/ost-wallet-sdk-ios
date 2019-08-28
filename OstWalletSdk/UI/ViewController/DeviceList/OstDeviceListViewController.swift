@@ -76,11 +76,11 @@ import Foundation
     override func configure() {
         super.configure();
         
-        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getCompnentName()],
-                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        titleLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.titleLabel.getComponentName()],
+                                        placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getComponentName()])
         
-        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getCompnentName()],
-                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getCompnentName()])
+        leadLabel.updateAttributedText(data: pageConfig?[OstContent.OstComponentType.infoLabel.getComponentName()],
+                                       placeholders: pageConfig?[OstContent.OstComponentType.placeholders.getComponentName()])
         
         self.shouldFireIsMovingFromParent = true;
     }
@@ -106,9 +106,14 @@ import Foundation
         super.viewDidAppear(animated)
         
         if isApiCallInProgress {
-            progressIndicator = OstProgressIndicator(textCode: .fetchingDeviceList)
+            let loaderText = getInitialLoaderText()
+            progressIndicator = OstProgressIndicator(progressText: loaderText)
             progressIndicator?.show()
         }
+    }
+    
+    func getInitialLoaderText() -> String {
+        return ""
     }
     
     //MARK: - Add Subview
@@ -319,15 +324,12 @@ import Foundation
             self.deviceTableView.reloadData()
             self.isNewDataAvailable = false
             self.shouldLoadNextPage = true
-            if self.refreshControl.isRefreshing {
-                self.refreshControl.endRefreshing()
-            }
         }
-        else if !isApiCallInProgress && !isScrolling {
+        
+        if !isApiCallInProgress {
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
-            self.deviceTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
     }
     
@@ -366,12 +368,11 @@ import Foundation
         let currentUser = OstWalletSdk.getUser(self.userId!)
         let currentDevice = currentUser!.getCurrentDevice()
         
-        meta = apiResponse!["meta"] as? [String: Any]
-        guard let resultType = apiResponse!["result_type"] as? String else {return}
-        guard let devices = apiResponse![resultType] as? [[String: Any]] else {return}
+        meta = apiResponse?["meta"] as? [String: Any]
+        let devices: [[String: Any]]? = OstJsonApi.getResultAsArray(apiData: apiResponse) as? [[String : Any]]
         
         var newDevices: [[String: Any]] = [[String: Any]]()
-        for device in devices {
+        for device in devices ?? [] {
             if (device["status"] as? String ?? "").caseInsensitiveCompare("AUTHORIZED") == .orderedSame {
                 if let deviceAddress = device["address"] as? String,
                     consumedDevices[deviceAddress] == nil {

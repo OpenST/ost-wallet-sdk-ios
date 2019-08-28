@@ -23,7 +23,7 @@ public extension UIAlertController {
 }
 
 public extension UIViewController {
-    func presentVCWithNavigation() {
+    func presentVCWithNavigation(animate: Bool = true) {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
@@ -31,17 +31,17 @@ public extension UIViewController {
         win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
         let navC = UINavigationController(rootViewController: self)
-        vc.present(navC, animated: true, completion: nil)
+        vc.present(navC, animated: animate, completion: nil)
     }
     
-    func presentVC() {
+    func presentVC(animate: Bool = true) {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()
         vc.view.backgroundColor = .clear
         win.rootViewController = vc
         win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
-        vc.present(self, animated: true, completion: nil)
+        vc.present(self, animated: animate, completion: nil)
     }
     
     func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {

@@ -80,6 +80,26 @@ The following UI components properties supported by button:
 | background_color     | hex value(String)  |
 | system_font_weight   | string             |
 
+### EditText
+
+The following UI component properties supported by EditText:
+
+| Configuration Keys   | Type               |
+| -------------------- | :----------------: |
+| size                 | number             |
+| color                | hex value(String)  |
+| background_color     | hex value(String)  |
+| system_font_weight   | string             |
+| placeholder          | JSON Object        |
+
+The following are the placeholder properties
+
+| Configuration Keys   | Type               |
+| -------------------- | :----------------: |
+| size                 | number             |
+| color                | hex value(String)  |
+| system_font_weight   | string             |
+
  ### Navigation Bar
  
  The following UI components properties supported by navigation bar:
