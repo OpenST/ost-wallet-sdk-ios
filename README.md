@@ -30,8 +30,8 @@ We use open-source code from the projects listed below. The `Set-up` section bel
 ## Table of Contents
 
 - [Set-up](#set-up)
-  * [A). Installing iOS Wallet SDK using [Carthage](https://github.com/Carthage/Carthage)](#a--installing-ios-wallet-sdk-using--carthage--https---githubcom-carthage-carthage-)
-    + [i). Installing [Carthage](https://github.com/Carthage/Carthage)](#i--installing--carthage--https---githubcom-carthage-carthage-)
+  * [A). Installing iOS Wallet SDK using Carthage](#a--installing-ios-wallet-sdk-using--carthage--https---githubcom-carthage-carthage-)
+    + [i). Installing Carthage](#i--installing--carthage--https---githubcom-carthage-carthage-)
     + [ii). Installing wallet SDK using Carthage](#ii--installing-wallet-sdk-using-carthage)
     + [iii). Copying the `OstWalletSdk.framework` file in your Xcode project](#iii--copying-the--ostwalletsdkframework--file-in-your-xcode-project)
     + [iv). Adding the `OstWalletSdk` dependencies in your Xcode project](#iv--adding-the--ostwalletsdk--dependencies-in-your-xcode-project)
