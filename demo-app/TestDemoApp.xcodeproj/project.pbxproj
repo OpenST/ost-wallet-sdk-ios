@@ -375,7 +375,6 @@
 		4BF8FE362240FD1400519779 /* PaperWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE142240FD1400519779 /* PaperWalletView.swift */; };
 		4BF8FE372240FD1400519779 /* BaseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE152240FD1400519779 /* BaseWalletView.swift */; };
 		4BF8FE382240FD1400519779 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FE162240FD1400519779 /* ApplicationScheme.swift */; };
-		4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FE3C2241004600519779 /* OstWalletSdk.plist */; };
 		4BF8FF18224A5D6E00519779 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FF16224A5D6E00519779 /* LaunchScreen.storyboard */; };
 		4BFA11712286CF2700A9F5A4 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */; };
 		4BFA11722286CF2700A9F5A4 /* OstLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */; };
@@ -589,7 +588,6 @@
 		4BF8FE142240FD1400519779 /* PaperWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperWalletView.swift; sourceTree = "<group>"; };
 		4BF8FE152240FD1400519779 /* BaseWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWalletView.swift; sourceTree = "<group>"; };
 		4BF8FE162240FD1400519779 /* ApplicationScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationScheme.swift; sourceTree = "<group>"; };
-		4BF8FE3C2241004600519779 /* OstWalletSdk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OstWalletSdk.plist; sourceTree = "<group>"; };
 		4BF8FF17224A5D6E00519779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4BFA11702286CF2700A9F5A4 /* OstLinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLinkButton.swift; sourceTree = "<group>"; };
 		4BFA11762287388800A9F5A4 /* OstNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstNotification.swift; sourceTree = "<group>"; };
@@ -1029,7 +1027,6 @@
 				4BF8FDF52240FD1300519779 /* Main.storyboard */,
 				4BF8FDC22240FA7700519779 /* Assets.xcassets */,
 				4BF8FDC72240FA7700519779 /* Info.plist */,
-				4BF8FE3C2241004600519779 /* OstWalletSdk.plist */,
 				00361877229DA4760042377F /* AppUrlData.swift */,
 			);
 			path = TestDemoApp;
@@ -1343,7 +1340,6 @@
 				4B464ED422773ABB00F1F4AF /* Lato-Hairline.ttf in Resources */,
 				4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */,
 				4BF8FE202240FD1400519779 /* LICENSE in Resources */,
-				4BF8FE3D2241004700519779 /* OstWalletSdk.plist in Resources */,
 				4B464ECB22773ABB00F1F4AF /* Lato-Light.ttf in Resources */,
 				4B464EC822773ABB00F1F4AF /* Lato-BoldItalic.ttf in Resources */,
 				4B464EDA22773ABB00F1F4AF /* Lato-HairlineItalic.ttf in Resources */,

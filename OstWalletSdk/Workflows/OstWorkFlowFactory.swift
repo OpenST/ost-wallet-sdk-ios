@@ -159,10 +159,7 @@ extension OstWalletSdk {
         guard let currentDevice = user.getCurrentDevice() else {
             throw OstError("w_wff_gadqc_3", .deviceNotSet)
         }
-        
-        if !currentDevice.isStatusRegistered {
-            throw OstError("w_wff_gadqc_4", .deviceNotRegistered)
-        }
+      
         let QRCodePaylaod: [String : Any] = ["dd": OstQRCodeDataDefination.AUTHORIZE_DEVICE.rawValue,
                                              "ddv": 1.0,
                                              "d":["da":currentDevice.address!]]
@@ -171,7 +168,7 @@ extension OstWalletSdk {
         if ( nil != qrCodePayloadString.qrCode) {
             return qrCodePayloadString.qrCode!;
         }
-        throw OstError("w_wff_gadqc_5", .sdkError );
+        throw OstError("w_wff_gadqc_4", .sdkError );
     }
         
     /// Initiate device recovery.
