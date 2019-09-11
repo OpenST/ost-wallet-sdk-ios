@@ -105,7 +105,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 Add following entry in your `Cartfile`
 
 ```bash
-github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.1
+github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.2
 
 ```
 

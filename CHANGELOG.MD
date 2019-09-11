@@ -1,5 +1,10 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.2
+### Bug Fix:
+* Handling of invalid OstWalletSdk config added.
+* Error code string for `userCancelled` typo fix.
+
 ## Version 2.3.1
 ### Feature:
 * OstWalletUI now supports
