@@ -164,6 +164,7 @@ extension OstWorkflowEngine {
     func syncCurrentDevice() throws {
         var err: OstError? = nil
         let group = DispatchGroup()
+      print("debug print :: getting current deivce from server");
         group.enter()
         try OstAPIDevice(userId: self.userId).getCurrentDevice(onSuccess: { (device) in
             group.leave()

@@ -97,21 +97,27 @@ public class OstUser: OstBaseEntity {
     /// - Returns: OstCurrentDevice model object
     @objc public func getCurrentDevice() -> OstCurrentDevice? {
         // if current device address is not available return nil
+      print("debug print :: getting device address from keychain. userId: \(self.id)");
         guard let deviceAddress = OstKeyManagerGateway
             .getOstKeyManager(userId: self.id)
             .getDeviceAddress() else {
-                
+              
+      print("debug print :: device address not found in keychain");
             return nil
         }
-        
+      print("debug print :: device address found in keychain. deviceAddress: \(deviceAddress)");
         do {
             // Check if the device data is available for the given device address
+          print("debug print :: getting device from db");
             guard let device: OstDevice = try OstDeviceRepository.sharedDevice.getById(deviceAddress) as? OstDevice else {
+              print("debug print :: device not found in keychain");
                 return nil
             }
-            
+          
+          print("debug print :: device found in keychain. device: \(device.data as AnyObject)");
             // Create a OstCurrentDevice and return it
             let currentDevice = try OstCurrentDevice(device.data as [String : Any])
+          print("debug print :: device found in db");
             return currentDevice
         } catch {
             return nil

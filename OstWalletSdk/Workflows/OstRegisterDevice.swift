@@ -99,15 +99,18 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         
         if (self.currentDevice == nil
             || self.currentDevice!.isStatusRevoked) {
+          print("debug print :: create and register device");
             try self.createAndRegisterDevice()
             return
         }
         
         if (self.currentDevice!.isStatusCreated) {
+          print("debug print :: register device");
             self.registerDevice(self.currentDevice!.data)
             return
         }
-        
+      
+      print("debug print :: sync entities");
         try syncEntitesIfNeeded()
         self.postWorkflowComplete(entity: self.currentDevice!)
     }
@@ -122,6 +125,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     private func verifyDeviceRegistered() throws {
+      print("debug print :: syncing current device");
         try syncCurrentDevice()
         
         if (!self.currentDevice!.canMakeApiCall()) {
@@ -133,6 +137,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     private func syncEntitesIfNeeded() throws {
+      print("debug print :: fetching entities");
         if self.forceSync {
             try self.syncEntities()
         }else {
@@ -168,6 +173,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError.
     private func initUser() throws {
+      print("debug print :: initializing user");
         _  = try OstUser.initUser(forId: self.userId, withTokenId: self.tokenId)
     }
     
@@ -175,6 +181,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     private func initToken() throws {
+      print("debug print :: initializing token");
         _ = try OstToken.initToken(self.tokenId)
     }
     
@@ -182,11 +189,24 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Throws: OstError
     private func createAndRegisterDevice() throws {
-        
+        print("debug print :: creating OstKeyManager object");
         let keyManager: OstKeyManager = OstKeyManagerGateway.getOstKeyManager(userId: self.userId)
+      print("debug print :: creating deviceAddress");
         let deviceAddress = try keyManager.createDeviceKey()
+      print("debug print :: creating apiAddress");
         let apiAddress = try keyManager.createAPIKey()
-        
+      
+      if let deviceAddressFromKeychain = OstKeyManagerGateway.getOstKeyManager(userId: self.userId).getDeviceAddress() {
+        if deviceAddress.caseInsensitiveCompare(deviceAddressFromKeychain) == .orderedSame {
+          print("debug print :: deviceAddress present in keychain, deviceAddress: \(deviceAddress) and deviceAddressFromKeychain: \(deviceAddressFromKeychain)");
+        }else {
+          print("debug print :: deviceAddressFromKeychain not equal to deviceAddress, deviceAddress: \(deviceAddress) and deviceAddressFromKeychain: \(deviceAddressFromKeychain)");
+        }
+      }else {
+        print("debug print :: deviceAddressFromKeychain not found");
+      }
+      
+    print("debug print :: creating apiParams");
         var apiParam: [String: Any] = [:]
         apiParam["address"] = deviceAddress
         apiParam["api_signer_address"] = apiAddress
@@ -195,7 +215,14 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         
         apiParam["user_id"] = self.userId
         _ = try OstCurrentDevice.storeEntity(apiParam)
-        
+     
+      if let currentDeviceFromDB = try? OstUser.getById(self.userId)?.getCurrentDevice(),
+        let cd = currentDeviceFromDB {
+        print("debug print :: currentDevice present in db currentDevice: \(cd.data as AnyObject)");
+      }else {
+        print("debug print :: currentDevice not present in db");
+      }
+      
         apiParam["user_id"] = nil
         
         self.registerDevice(apiParam)
@@ -229,6 +256,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     ///
     /// - Parameter apiResponse: API response from server.
     public func deviceRegistered(_ apiResponse: [String : Any]) {
+      print("debug print :: deviceRegistered delegate called. apiResponse: \(apiResponse as AnyObject)");
         self.performState(OstRegisterDevice.DEVICE_REGISTERED, withObject: apiResponse)
     }
 }
