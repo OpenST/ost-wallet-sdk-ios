@@ -30,16 +30,16 @@ class OstAPIDevice: OstAPIBase {
     /// - Throws: OSTError
     func getCurrentDevice(onSuccess: ((OstDevice) -> Void)?, onFailure: ((OstError) -> Void)?) throws {
         // Get current user
-      print("debug print :: getting user from database. userId: \(self.userId)");
+      print("debug print :: getCurrentDeviceAPI :: getting user from database. userId: \(self.userId)");
         guard let user: OstUser = try OstUser.getById(self.userId) else {
-          print("debug print :: user not found");
+          print("debug print :: getCurrentDeviceAPI :: user not found");
             throw OstError("n_ad_gcd_1", .userEntityNotFound)
         }
       
-      print("debug print :: user found in db. user: \(user.data as AnyObject)");
+      print("debug print :: getCurrentDeviceAPI :: user found in db. user: \(user.data as AnyObject)");
       
         // Get current device
-      print("debug print :: getting current device from user obj");
+      print("debug print :: getCurrentDeviceAPI :: getting current device from user obj");
         guard let currentDevice = user.getCurrentDevice() else {
             throw OstError("n_ad_gcd_1", .deviceNotSet)
         }

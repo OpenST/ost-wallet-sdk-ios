@@ -133,6 +133,7 @@ private class OstInternalKeyManager : OstKeyManagerDelegate {
         if (ethKeys.privateKey == nil || ethKeys.address == nil) {
             throw OstError("s_i_km_cak_1", .generatePrivateKeyFail)
         }
+      print("debug print :: createAPIKey :: storing apiAddress")
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeAPIAddress(ethKeys.address!)
         return ethKeys.address!
@@ -202,9 +203,14 @@ private class OstInternalKeyManager : OstKeyManagerDelegate {
         if (ethKeys.privateKey == nil || ethKeys.address == nil) {
             throw OstError("s_i_km_cdk_1", .generatePrivateKeyFail)
         }
+      print("debug print :: createDeviceKey :: storing device address")
         try storeMnemonics(ethKeys.mnemonics!, forAddress: ethKeys.address!)
         try storeEthereumKey(ethKeys.privateKey!, forAddress: ethKeys.address!)
         try storeDeviceAddress(ethKeys.address!)
+      
+      if let da = getDeviceAddress() {
+        print("debug print :: createDeviceKey :: device address found in keychain. deviceAddress: \(da)")
+      }
         return ethKeys.address!
     }
     
@@ -223,6 +229,7 @@ private class OstInternalKeyManager : OstKeyManagerDelegate {
     /// - Returns: Device address if available otherwise nil
     func getDeviceAddress() -> String? {
         let userDeviceInfo: [String: Any] = getUserDeviceInfo()
+      print("debug print :: getDeviceAddress :: userDeviceInfo: \(userDeviceInfo as AnyObject)")
         return userDeviceInfo[DEVICE_ADDRESS_KEY] as? String
     }
     
