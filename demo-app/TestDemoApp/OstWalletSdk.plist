@@ -16,5 +16,7 @@
 	<integer>3600</integer>
 	<key>UseSeedPassword</key>
 	<true/>
+	<key>UseKeychainStoredValues</key>
+	<false/>
 </dict>
 </plist>

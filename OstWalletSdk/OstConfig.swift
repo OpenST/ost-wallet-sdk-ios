@@ -43,6 +43,7 @@ class OstConfig {
   private static var sessionBufferTime: Double?
   private static var useSeedPassword: Bool?
   private static var noOfSessionsOnActivateUser: Int?
+  private static var useKeychainStoredValues: Bool?
   
   //Defaults
   private static let blockGenerationTimeDefault = 3
@@ -52,7 +53,7 @@ class OstConfig {
   private static let sessionBufferTimeDefault = Double(3600)
   private static let useSeedPasswordDefault = false
   private static let noOfSessionsOnActivateUserDefault = 1
-  
+  private static let useKeychainStoredValuesDefault = false
   
   class func loadConfig(config: [String: Any]?) throws {
     var appConfig: [String: Any]? = config
@@ -126,6 +127,9 @@ class OstConfig {
     let canUseSeedPassword = getConfigValueForUseSeedPassword(appConfig: appConfig!) as? Bool
     useSeedPassword = canUseSeedPassword
     
+    let canUseKeychainStoredValues = getConfigValueForUseKeychinStoredValues(appConfig: appConfig!) as? Bool
+    useKeychainStoredValues = canUseKeychainStoredValues
+    
     if let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) {
       if noOfSessionsOnActivateUserCount is Int {
         let nosoauc = noOfSessionsOnActivateUserCount as! Int
@@ -183,6 +187,13 @@ class OstConfig {
     return appConfig["USE_SEED_PASSWORD"]
   }
   
+  class func getConfigValueForUseKeychinStoredValues(appConfig: [String: Any]) -> Any?{
+    if let val = appConfig["UseKeychainStoredValues"] {
+      return val
+    }
+    return appConfig["USE_KEYCHAIN_STORED_VALUES"]
+  }
+  
   class func getConfigValueForNoOfSessionsOnActivateUser(appConfig: [String: Any]) -> Any?{
     if let val = appConfig["NoOfSessionsOnActivateUser"] {
       return val
@@ -213,6 +224,10 @@ class OstConfig {
   
   class func shouldUseSeedPassword() -> Bool {
     return useSeedPassword ?? useSeedPasswordDefault
+  }
+  
+  class func shouldUseKeychainStoredValues() -> Bool {
+    return useKeychainStoredValues ?? useKeychainStoredValuesDefault
   }
   
   class func noOfSessionsOnActivateUserCount() -> Int {

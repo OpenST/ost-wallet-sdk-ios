@@ -114,28 +114,30 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     try self.initToken()
     try self.initUser()
     
-    guard let deviceAddressFromKeychain = OstKeyManagerGateway
+    if OstConfig.shouldUseKeychainStoredValues() {
+      guard let deviceAddressFromKeychain = OstKeyManagerGateway
         .getOstKeyManager(userId: self.userId)
         .getDeviceAddress() else {
           
-        return
-    }
-    
-    guard let apiAddressFromKeychain = OstKeyManagerGateway
+          return
+      }
+      
+      guard let apiAddressFromKeychain = OstKeyManagerGateway
         .getOstKeyManager(userId: self.userId)
         .getAPIAddress() else {
+          
+          return
+      }
+      
+      if currentDevice == nil
+        || (currentDevice!.address ?? "").caseInsensitiveCompare(deviceAddressFromKeychain) != .orderedSame {
         
-        return
-    }
-    
-    if currentDevice == nil
-      || (currentDevice!.address ?? "").caseInsensitiveCompare(deviceAddressFromKeychain) != .orderedSame {
-      
-      _ = try? storeDeviceEntity(deviceAddress: deviceAddressFromKeychain,
-                            apiAddress: apiAddressFromKeychain,
-                            status: OstUser.Status.CREATED.rawValue)
-      
-      self.isTempDeviceEntityCreated = true
+        _ = try? storeDeviceEntity(deviceAddress: deviceAddressFromKeychain,
+                                   apiAddress: apiAddressFromKeychain,
+                                   status: OstUser.Status.REGISTERED.rawValue)
+        
+        self.isTempDeviceEntityCreated = true
+      }
     }
   }
   
@@ -256,7 +258,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     apiParam["address"] = deviceAddress
     apiParam["api_signer_address"] = apiAddress
     apiParam["updated_timestamp"] = OstUtils.toString(Date.negativeTimestamp())
-    apiParam["status"] = OstUser.Status.CREATED.rawValue
+    apiParam["status"] = status
     
     apiParam["user_id"] = self.userId
     _ = try OstCurrentDevice.storeEntity(apiParam)
