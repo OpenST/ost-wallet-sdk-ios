@@ -127,8 +127,8 @@ class OstConfig {
     let canUseSeedPassword = getConfigValueForUseSeedPassword(appConfig: appConfig!) as? Bool
     useSeedPassword = canUseSeedPassword
     
-    let canUseKeychainStoredValues = getConfigValueForUseKeychinStoredValues(appConfig: appConfig!) as? Bool
-    enableIOSDeviceRestore = canUseKeychainStoredValues
+    let canUseEnableIOSDeviceRestore = getConfigValueForEnableIOSDeviceRestore(appConfig: appConfig!) as? Bool
+    enableIOSDeviceRestore = canUseEnableIOSDeviceRestore
     
     if let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) {
       if noOfSessionsOnActivateUserCount is Int {
@@ -187,11 +187,11 @@ class OstConfig {
     return appConfig["USE_SEED_PASSWORD"]
   }
   
-  class func getConfigValueForUseKeychinStoredValues(appConfig: [String: Any]) -> Any?{
-    if let val = appConfig["UseKeychainStoredValues"] {
+  class func getConfigValueForEnableIOSDeviceRestore(appConfig: [String: Any]) -> Any?{
+    if let val = appConfig["EnableIOSDeviceRestore"] {
       return val
     }
-    return appConfig["USE_KEYCHAIN_STORED_VALUES"]
+    return appConfig["ENABLE_IOS_DEVICE_RESTORE"]
   }
   
   class func getConfigValueForNoOfSessionsOnActivateUser(appConfig: [String: Any]) -> Any?{
