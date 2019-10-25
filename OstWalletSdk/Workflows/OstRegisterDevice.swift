@@ -114,7 +114,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
     try self.initToken()
     try self.initUser()
     
-    if OstConfig.shouldUseKeychainStoredValues() {
+    if OstConfig.shouldUseEnableIOSDeviceRestoreValues() {
       guard let deviceAddressFromKeychain = OstKeyManagerGateway
         .getOstKeyManager(userId: self.userId)
         .getDeviceAddress() else {

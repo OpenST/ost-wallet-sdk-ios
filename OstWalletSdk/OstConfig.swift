@@ -43,7 +43,7 @@ class OstConfig {
   private static var sessionBufferTime: Double?
   private static var useSeedPassword: Bool?
   private static var noOfSessionsOnActivateUser: Int?
-  private static var useKeychainStoredValues: Bool?
+  private static var enableIOSDeviceRestore: Bool?
   
   //Defaults
   private static let blockGenerationTimeDefault = 3
@@ -53,7 +53,7 @@ class OstConfig {
   private static let sessionBufferTimeDefault = Double(3600)
   private static let useSeedPasswordDefault = false
   private static let noOfSessionsOnActivateUserDefault = 1
-  private static let useKeychainStoredValuesDefault = false
+  private static let enableIOSDeviceRestoreDefault = false
   
   class func loadConfig(config: [String: Any]?) throws {
     var appConfig: [String: Any]? = config
@@ -128,7 +128,7 @@ class OstConfig {
     useSeedPassword = canUseSeedPassword
     
     let canUseKeychainStoredValues = getConfigValueForUseKeychinStoredValues(appConfig: appConfig!) as? Bool
-    useKeychainStoredValues = canUseKeychainStoredValues
+    enableIOSDeviceRestore = canUseKeychainStoredValues
     
     if let noOfSessionsOnActivateUserCount = getConfigValueForNoOfSessionsOnActivateUser(appConfig: appConfig!) {
       if noOfSessionsOnActivateUserCount is Int {
@@ -226,8 +226,8 @@ class OstConfig {
     return useSeedPassword ?? useSeedPasswordDefault
   }
   
-  class func shouldUseKeychainStoredValues() -> Bool {
-    return useKeychainStoredValues ?? useKeychainStoredValuesDefault
+  class func shouldUseEnableIOSDeviceRestoreValues() -> Bool {
+    return enableIOSDeviceRestore ?? enableIOSDeviceRestoreDefault
   }
   
   class func noOfSessionsOnActivateUserCount() -> Int {
