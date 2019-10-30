@@ -55,7 +55,7 @@ We use open-source code from the projects listed below. The `Set-up` section bel
   * [revokeDevice](#revokedevice)
   * [updateBiometricPreference](#updatebiometricpreference)
 - [Getters](#getters)
-  * [1. getAddDeviceQRCode](#1-getadddeviceqrcode)
+  * [getAddDeviceQRCode](#getadddeviceqrcode)
   * [getUser](#getuser)
   * [getToken](#gettoken)
   * [user.getCurrentDevice](#usergetcurrentdevice)
@@ -519,7 +519,7 @@ OstWalletSdk.updateBiometricPreference(
 
 ## Getters
 
-### 1. getAddDeviceQRCode
+### getAddDeviceQRCode
 This workflow will return the QRCode in the form of [CIImage object](https://developer.apple.com/documentation/coreimage/ciimage) that can be used to show on screen. This QRCode can then be scanned to add the new device.
 
 ```Swift
