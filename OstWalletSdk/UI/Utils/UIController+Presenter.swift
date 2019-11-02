@@ -10,18 +10,6 @@
 
 import Foundation
 
-public extension UIAlertController {
-    func show() {
-        let win = UIWindow(frame: UIScreen.main.bounds)
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.statusBar-1
-        win.makeKeyAndVisible()
-        vc.present(self, animated: true, completion: nil)
-    }
-}
-
 public extension UIViewController {
     
     func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {
