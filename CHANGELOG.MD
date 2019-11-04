@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.3
+### Bug Fix:
+* OstWalletSdkUI issue fixed for iOS 13. 
+
 ## Version 2.3.2
 ### Bug Fix:
 * Handling of invalid OstWalletSdk config added.
