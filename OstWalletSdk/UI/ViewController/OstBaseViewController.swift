@@ -191,6 +191,7 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
         let navC = UINavigationController(rootViewController: self)
+        navC.modalPresentationStyle = .overFullScreen
         vc.present(navC, animated: animate, completion: nil);
         self.parentWindow = win;
     }
@@ -202,6 +203,7 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         win.rootViewController = vc
         win.windowLevel = UIWindow.Level.statusBar-1
         win.makeKeyAndVisible()
+        self.modalPresentationStyle = .overFullScreen
         vc.present(self, animated: animate, completion: nil)
         self.parentWindow = win;
     }
