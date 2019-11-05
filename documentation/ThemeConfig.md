@@ -128,3 +128,5 @@ The following are the placeholder properties
 ![copy-framework-file](images/PinView.png)
 
 ![copy-framework-file](images/Card.png)
+
+![copy-framework-file](images/TextField.png)
