@@ -180,4 +180,42 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    var parentWindow:UIWindow? = nil;
+    func presentVCWithNavigation(animate: Bool = true) {
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        let vc = UIViewController()
+        vc.view.backgroundColor = .clear
+        win.rootViewController = vc
+        win.windowLevel = UIWindow.Level.statusBar-1
+        win.makeKeyAndVisible()
+        let navC = UINavigationController(rootViewController: self)
+        navC.modalPresentationStyle = .overFullScreen
+        vc.present(navC, animated: animate, completion: nil);
+        self.parentWindow = win;
+    }
+    
+    func presentVC(animate: Bool = true) {
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        let vc = UIViewController()
+        vc.view.backgroundColor = .clear
+        win.rootViewController = vc
+        win.windowLevel = UIWindow.Level.statusBar-1
+        win.makeKeyAndVisible()
+        self.modalPresentationStyle = .overFullScreen
+        vc.present(self, animated: animate, completion: nil)
+        self.parentWindow = win;
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag) {
+            if ( nil != completion ) {
+                completion!();
+            }
+            self.parentWindow = nil;
+            print("OstWalletUI :: OstBaseViewController :: self.parentWindow has been released!");
+        }
+    }
+    
 }

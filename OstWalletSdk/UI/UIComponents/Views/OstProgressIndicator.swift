@@ -32,7 +32,7 @@ class OstProgressIndicator: OstBaseView {
         }
     }
     
-    var alert: UIAlertController? = nil
+    var alert: OstUIAlertController? = nil
     
     //MARK: - Initializier
     init(progressText: String = "") {
@@ -54,7 +54,7 @@ class OstProgressIndicator: OstBaseView {
     func show() {
         
         let title = "\n\(progressText)"
-        alert = UIAlertController(title: title,
+        alert = OstUIAlertController(title: title,
                                   message: "",
                                   preferredStyle: .alert)
         
@@ -66,7 +66,7 @@ class OstProgressIndicator: OstBaseView {
         activ.centerXAnchor.constraint(equalTo: alert!.view.centerXAnchor).isActive = true
         activ.topAnchor.constraint(equalTo: alert!.view.topAnchor, constant: 15).isActive = true
         
-        alert?.show()
+        alert?.show();
     }
     
     @objc func hide(onCompletion: ((Bool) -> Void)? = nil) {
@@ -119,7 +119,7 @@ class OstProgressIndicator: OstBaseView {
                 return
             }
             
-            strongSelf.alert = UIAlertController(title: title,
+            strongSelf.alert = OstUIAlertController(title: title,
                                                  message: msg,
                                                  preferredStyle: .alert)
             
@@ -162,7 +162,7 @@ class OstProgressIndicator: OstBaseView {
                 return
             }
             
-            strongSelf.alert = UIAlertController(title: title,
+            strongSelf.alert = OstUIAlertController(title: title,
                                                  message: msg,
                                                  preferredStyle: .alert)
             
@@ -199,7 +199,7 @@ class OstProgressIndicator: OstBaseView {
                 return
             }
             
-            strongSelf.alert = UIAlertController(title: title,
+            strongSelf.alert = OstUIAlertController(title: title,
                                                  message: msg,
                                                  preferredStyle: .alert)
             

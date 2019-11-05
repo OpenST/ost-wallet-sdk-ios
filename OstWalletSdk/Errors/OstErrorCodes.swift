@@ -388,7 +388,7 @@ import Foundation
         //Generic errors.
         case .sdkError: return "SDK_ERROR";
         case .apiResponseError: return "API_RESPONSE_ERROR";
-        case .userCanceled: return "WORKFLOW_CANCELED";
+        case .userCanceled: return "WORKFLOW_CANCELLED";
         
         //New
         case .invalidRecoverDeviceAddress: return "INVALID_RECOVER_DEVICE_ADDRESS";
