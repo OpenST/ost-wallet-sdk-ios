@@ -10,39 +10,7 @@
 
 import Foundation
 
-public extension UIAlertController {
-    func show() {
-        let win = UIWindow(frame: UIScreen.main.bounds)
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.statusBar-1
-        win.makeKeyAndVisible()
-        vc.present(self, animated: true, completion: nil)
-    }
-}
-
 public extension UIViewController {
-    func presentVCWithNavigation(animate: Bool = true) {
-        let win = UIWindow(frame: UIScreen.main.bounds)
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.statusBar-1
-        win.makeKeyAndVisible()
-        let navC = UINavigationController(rootViewController: self)
-        vc.present(navC, animated: animate, completion: nil)
-    }
-    
-    func presentVC(animate: Bool = true) {
-        let win = UIWindow(frame: UIScreen.main.bounds)
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.statusBar-1
-        win.makeKeyAndVisible()
-        vc.present(self, animated: animate, completion: nil)
-    }
     
     func pushViewControllerOn(_ pusher: UIViewController, animated:Bool = true) {
         var navViewController:UINavigationController?;
