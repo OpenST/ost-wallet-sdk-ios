@@ -107,7 +107,7 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title,
+        let alert = OstUIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         

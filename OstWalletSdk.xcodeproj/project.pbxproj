@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0015A0F9236D18E5002AEBB7 /* OstUIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0015A0F8236D18E5002AEBB7 /* OstUIAlertController.swift */; };
 		001DFA1122FDD199006FF971 /* OstUIWorkflowContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001DFA1022FDD199006FF971 /* OstUIWorkflowContext.swift */; };
 		00ABD30122A72BE90080C4BB /* PricerRule.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 00ABD20B22A72BE90080C4BB /* PricerRule.abi.json */; };
 		00ABD30222A72BE90080C4BB /* TokenRules.abi.json in Resources */ = {isa = PBXBuildFile; fileRef = 00ABD20C22A72BE90080C4BB /* TokenRules.abi.json */; };
@@ -313,6 +314,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0015A0F8236D18E5002AEBB7 /* OstUIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIAlertController.swift; sourceTree = "<group>"; };
 		001DFA1022FDD199006FF971 /* OstUIWorkflowContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstUIWorkflowContext.swift; sourceTree = "<group>"; };
 		00ABD20B22A72BE90080C4BB /* PricerRule.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricerRule.abi.json; sourceTree = "<group>"; };
 		00ABD20C22A72BE90080C4BB /* TokenRules.abi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TokenRules.abi.json; sourceTree = "<group>"; };
@@ -1239,6 +1241,7 @@
 				4BE9101822FC0F0D002886BC /* OstDeviceMnemonicsViewController.swift */,
 				4BE9103C22FD59D2002886BC /* OstAddDeviceViaMnemonicsViewController.swift */,
 				4B4D9389230AE324004EFC9B /* OstDeviceQRViewController.swift */,
+				0015A0F8236D18E5002AEBB7 /* OstUIAlertController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1789,6 +1792,7 @@
 				4B9433A322F07AB700966372 /* OstH1Label.swift in Sources */,
 				4B9433B722F07AB700966372 /* OstWorkflowUIDelegate.swift in Sources */,
 				00ABD3B022A72BE90080C4BB /* sha256.c in Sources */,
+				0015A0F9236D18E5002AEBB7 /* OstUIAlertController.swift in Sources */,
 				00ABD33D22A72BE90080C4BB /* OstWorkflowStateManager.swift in Sources */,
 				00ABD36A22A72BE90080C4BB /* Web3.swift in Sources */,
 				4B4D938A230AE324004EFC9B /* OstDeviceQRViewController.swift in Sources */,
@@ -2003,7 +2007,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "2.3.3-alpha.1";
+				MARKETING_VERSION = 2.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2039,7 +2043,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "2.3.3-alpha.1";
+				MARKETING_VERSION = "2.3.4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ost.OstWalletSdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
