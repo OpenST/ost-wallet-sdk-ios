@@ -12,6 +12,7 @@ import Foundation
 
 class OstRuleModelRepository: OstBaseModelCacheRepository{
     static let sharedRule = OstRuleModelRepository()
+    static var tokenRules:[String:Set<String>] = [:];
     
     //MARK: - overrider
     
@@ -30,4 +31,45 @@ class OstRuleModelRepository: OstBaseModelCacheRepository{
     override func getEntity(_ data: [String : Any?]) throws -> OstRule {
         return try OstRule(data as [String : Any])
     }
+    
+    override func insertOrUpdateEntity(_ entity: OstBaseEntity, _ isSynchronous: Bool = false) {
+        super.insertOrUpdateEntity( entity, isSynchronous );
+        if ( nil == entity.parentId) {
+            // Just for peace of mind.
+            return;
+        }
+        
+        var ruleAddresses:Set<String>? = OstRuleModelRepository.tokenRules[entity.parentId!];
+        if ( nil == ruleAddresses) {
+            // Create a new set.
+            ruleAddresses = Set();
+        }
+        // Insert into set.
+        ruleAddresses!.insert(entity.id);
+        
+        OstRuleModelRepository.tokenRules[entity.parentId!] = ruleAddresses;
+    }
+
+
+    override func getByParentId(_ parentId: String) throws -> [OstBaseEntity]? {
+        
+        let ruleAddresses:Set<String>? = OstRuleModelRepository.tokenRules[parentId];
+        if ( nil == ruleAddresses ) {
+            // Get from DB.
+            return try super.getByParentId( parentId );
+        }
+        
+        var results:[OstBaseEntity] = [];
+        for ruleAddress in ruleAddresses! {
+            let rule = try self.getById( ruleAddress );
+            if ( nil == rule ) {
+                continue;
+            }
+            
+            results.append( rule! );
+        }
+        
+        return results;
+    }
+    
 }

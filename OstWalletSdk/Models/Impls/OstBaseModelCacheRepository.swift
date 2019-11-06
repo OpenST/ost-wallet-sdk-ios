@@ -12,7 +12,7 @@ import Foundation
 
 class OstBaseModelCacheRepository: OstBaseModelRepository {
     /// Max entity cache count
-    private static let MAX_CACHE_COUNT = 5
+    private static let MAX_CACHE_COUNT = 100
     
     /// Cache object
     private var entityCache: NSCache<NSString, OstBaseEntity>?
