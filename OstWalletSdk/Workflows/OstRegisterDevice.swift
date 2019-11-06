@@ -100,6 +100,7 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         try registerDeviceIfRequired()
       }catch let err {
         if (self.isTempDeviceEntityCreated) {
+          self.isTempDeviceEntityCreated = false
           try registerDeviceIfRequired()
         }else {
           throw err
@@ -132,11 +133,12 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
       if currentDevice == nil
         || (currentDevice!.address ?? "").caseInsensitiveCompare(deviceAddressFromKeychain) != .orderedSame {
         
-        _ = try? storeDeviceEntity(deviceAddress: deviceAddressFromKeychain,
+        let tempDeviceEntity = try? storeDeviceEntity(deviceAddress: deviceAddressFromKeychain,
                                    apiAddress: apiAddressFromKeychain,
                                    status: OstUser.Status.REGISTERED.rawValue)
-        
-        self.isTempDeviceEntityCreated = true
+        if nil != tempDeviceEntity {
+          self.isTempDeviceEntityCreated = true
+        }
       }
     }
   }
