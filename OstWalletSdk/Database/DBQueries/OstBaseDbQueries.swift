@@ -19,7 +19,8 @@ class OstBaseDbQueries {
     static let STATUS = "status"
     static let UTS = "uts"
     
-    static let queue = DispatchQueue(label: "db", qos: .background, attributes: .concurrent)
+    static let queue = DispatchQueue(label: "com.ost.sdk.db", qos: .background, attributes: .concurrent)
+    static let dbSelectQueue = DispatchQueue(label: "com.ost.sdk.db.select", qos: .userInitiated, attributes: .concurrent)
     weak var dbQueue: FMDatabaseQueue?
     weak var db: FMDatabase?
     
@@ -99,15 +100,24 @@ class OstBaseDbQueries {
     /// - Returns: Array<[String: Any?]>, Array of dictionary
     /// - Throws: OstError
     func executeQuery(_ query: String) throws -> Array<[String: Any?]>? {
-        do {
-            if let resultSet: FMResultSet = try db?.executeQuery(query, values: nil) ?? nil {
-                let result = getEntityDataFromResultSet(resultSet)
-                return result
+        var result:Array<[String: Any?]>? = nil;
+        var err:OstError? = nil;
+        
+        OstBaseDbQueries.dbSelectQueue.sync {
+            do {
+                if let resultSet: FMResultSet = try db?.executeQuery(query, values: nil) ?? nil {
+                    result = self.getEntityDataFromResultSet(resultSet)
+                }
+            } catch {
+                err = OstError("d_dbq_bdq_eq_1", .dbExecutionFailed)
             }
-            return nil
-        } catch {
-            throw OstError("d_dbq_bdq_eq_1", .dbExecutionFailed)
         }
+        
+        if nil != err {
+            throw err!
+        }
+        
+        return result;
     }
     
     /// Execute batch statements
