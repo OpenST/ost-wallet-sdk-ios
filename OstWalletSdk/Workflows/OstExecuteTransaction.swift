@@ -239,7 +239,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             try self.processForDirectTransfer()
             
         default:
-            throw OstError("w_et_odv_1", .rulesNotFound)
+            throw OstError("w_et_odv_2", .rulesNotFound)
         }
     }
  
