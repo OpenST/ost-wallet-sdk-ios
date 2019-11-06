@@ -134,8 +134,8 @@ class OstRegisterDevice: OstWorkflowEngine, OstDeviceRegisteredDelegate {
         || (currentDevice!.address ?? "").caseInsensitiveCompare(deviceAddressFromKeychain) != .orderedSame {
         
         let tempDeviceEntity = try? storeDeviceEntity(deviceAddress: deviceAddressFromKeychain,
-                                   apiAddress: apiAddressFromKeychain,
-                                   status: OstUser.Status.REGISTERED.rawValue)
+                                                      apiAddress: apiAddressFromKeychain,
+                                                      status: OstUser.Status.REGISTERED.rawValue)
         if nil != tempDeviceEntity {
           self.isTempDeviceEntityCreated = true
         }
