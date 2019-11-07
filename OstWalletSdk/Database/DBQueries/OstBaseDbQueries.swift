@@ -19,15 +19,21 @@ class OstBaseDbQueries {
     static let STATUS = "status"
     static let UTS = "uts"
     
-    static let queue = DispatchQueue(label: "com.ost.sdk.db", qos: .background, attributes: .concurrent)
+    static let dbUpdateQueue = DispatchQueue(label: "com.ost.sdk.db", qos: .background, attributes: .concurrent)
     static let dbSelectQueue = DispatchQueue(label: "com.ost.sdk.db.select", qos: .userInitiated, attributes: .concurrent)
     weak var dbQueue: FMDatabaseQueue?
     weak var db: FMDatabase?
-    
+  
+  static let _writeQueue: OperationQueue = OperationQueue()
+  static let _writeQueueLock: NSRecursiveLock = NSRecursiveLock()
+  
+  private let maxConcurrentOperationCount = 1
+  private var selectQueryCount = 0
     /// Initializer
     init() {
         db = getDb()
         dbQueue = getDbQueue()
+      OstBaseDbQueries._writeQueue.maxConcurrentOperationCount = 1
     }
     
     /// Get DB instance
@@ -102,7 +108,10 @@ class OstBaseDbQueries {
     func executeQuery(_ query: String) throws -> Array<[String: Any?]>? {
         var result:Array<[String: Any?]>? = nil;
         var err:OstError? = nil;
-        
+        selectQueryCount += 1
+      if selectQueryCount == 1 {
+        OstBaseDbQueries._writeQueueLock.lock()
+      }
         OstBaseDbQueries.dbSelectQueue.sync {
             do {
                 if let resultSet: FMResultSet = try db?.executeQuery(query, values: nil) ?? nil {
@@ -117,6 +126,10 @@ class OstBaseDbQueries {
             throw err!
         }
         
+      selectQueryCount -= 1
+      if selectQueryCount == 0 {
+        OstBaseDbQueries._writeQueueLock.unlock()
+      }
         return result;
     }
     
@@ -135,10 +148,21 @@ class OstBaseDbQueries {
     ///   - values: Value that needs to be updated
     /// - Returns: `true` if succcessful otherwise `false`
     func executeUpdate(_ query: String, values: [String: Any], onUpdate:@escaping ((Bool) -> Void)){
-        dbQueue?.inTransaction({ (fmdb, nil) in
+//      OstBaseDbQueries.dbUpdateQueue.sync {
+      OstBaseDbQueries._writeQueue.addOperation {
+        OstBaseDbQueries._writeQueueLock.lock()
+//        self.dbQueue?.inDatabase({ (fmdb) in
+        self.dbQueue?.inTransaction({ (fmdb, nil) in
+        
             let updateResult:Bool  = fmdb.executeUpdate(query, withParameterDictionary: values)
+            if !updateResult {
+              
+            }
             onUpdate(updateResult)
-        })
+          OstBaseDbQueries._writeQueueLock.unlock()
+          })
+      }
+//  }
     }
     
     // MARK: - Database Structure

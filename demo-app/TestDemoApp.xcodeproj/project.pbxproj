@@ -104,6 +104,7 @@
 		4B09CB5C22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
 		4B09CB5D22D4C93800A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
 		4B09CB5E22D4C93D00A8A6A0 /* UserCrashlyticsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */; };
+		4B0FA4782374000F0058EDAE /* SequesnceGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FA4772374000F0058EDAE /* SequesnceGetter.swift */; };
 		4B214A67228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A68228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
 		4B214A69228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */; };
@@ -471,6 +472,7 @@
 		20EFB1C45B196BB4EA3DD063 /* Pods-TestDemoAppStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppStaging.debug.xcconfig"; path = "Target Support Files/Pods-TestDemoAppStaging/Pods-TestDemoAppStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		24D470A056BA15EB3989E949 /* Pods-TestDemoAppTestnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDemoAppTestnet.release.xcconfig"; path = "Target Support Files/Pods-TestDemoAppTestnet/Pods-TestDemoAppTestnet.release.xcconfig"; sourceTree = "<group>"; };
 		4B09CB5B22D4C58000A8A6A0 /* UserCrashlyticsSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCrashlyticsSetting.swift; sourceTree = "<group>"; };
+		4B0FA4772374000F0058EDAE /* SequesnceGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequesnceGetter.swift; sourceTree = "<group>"; };
 		4B214A66228A94AC006825FE /* OstLogoutAllSessionWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstLogoutAllSessionWorkflowController.swift; sourceTree = "<group>"; };
 		4B214A70228B4F9E006825FE /* OstSuccessNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstSuccessNotification.swift; sourceTree = "<group>"; };
 		4B214A74228B4FAB006825FE /* OstErroNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstErroNotification.swift; sourceTree = "<group>"; };
@@ -1068,6 +1070,7 @@
 				4BF8FDED2240FD1300519779 /* Users.swift */,
 				4BF8FDEE2240FD1300519779 /* CurrentUser.swift */,
 				4BF8FDEF2240FD1300519779 /* BaseModel.swift */,
+				4B0FA4772374000F0058EDAE /* SequesnceGetter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1555,6 +1558,7 @@
 				0041A6662280CE14007A52A8 /* OstPinInput.swift in Sources */,
 				4BF8FE212240FD1400519779 /* IconGenerator.swift in Sources */,
 				002EAF4C2272154800B48F1D /* OstButtonTheamer.swift in Sources */,
+				4B0FA4782374000F0058EDAE /* SequesnceGetter.swift in Sources */,
 				4BF8FE282240FD1400519779 /* UserActionsViewController.swift in Sources */,
 				4BF8FE2A2240FD1400519779 /* UserCell.swift in Sources */,
 				4B464F232278C99F00F1F4AF /* OptionsViewController.swift in Sources */,
