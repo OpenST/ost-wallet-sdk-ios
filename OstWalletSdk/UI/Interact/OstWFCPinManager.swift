@@ -30,7 +30,7 @@ extension OstWorkflowCallbacks {
     }
     
     @objc func showPinViewController() {
-        self.getPinViewController?.presentVCWithNavigation()
+      self.getPinViewController?.presentVCWithNavigation()
     }
     
     @objc func getPinVCConfig() -> OstPinVCConfig {
@@ -54,7 +54,7 @@ extension OstWorkflowCallbacks {
     }
     
     @objc public func pinProvided(pin: String) {
-        self.showLoader(progressTextCode: .unknown);
+        self.showLoader(for: getWorkflowType());
         self.passphrasePrefixDelegate?.getPassphrase(ostUserId: self.userId,
                                                      workflowContext: getWorkflowContext(),
                                                      delegate: self);
@@ -63,6 +63,10 @@ extension OstWorkflowCallbacks {
     @objc func getWorkflowContext() -> OstWorkflowContext {
         fatalError("getWorkflowContext is not override in \(String(describing: self))")
     }
+  
+    @objc func getWorkflowType() -> OstWorkflowType {
+         fatalError("getWorkflowType is not override in \(String(describing: self))")
+     }
     
     @objc public func setPassphrase(ostUserId: String, passphrase: String) {
         self.sdkPinAcceptDelegate = nil;

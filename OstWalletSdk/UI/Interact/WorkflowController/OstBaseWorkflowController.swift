@@ -89,8 +89,12 @@ import Foundation
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: workflowType)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: getWorkflowType())
     }
+  
+  override func getWorkflowType() -> OstWorkflowType {
+    return workflowType
+  }
     
     override func getPinVCConfig() -> OstPinVCConfig {
         fatalError("getPinVCConfig did not override in \(String(describing: self))")

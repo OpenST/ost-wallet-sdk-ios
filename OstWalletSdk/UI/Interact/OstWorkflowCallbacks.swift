@@ -20,21 +20,8 @@ import Foundation
     /// Mark - Workflow callback vars.
     public let workflowId: String
     let userId: String
-    
-    var uiWindow: UIWindow? = nil
-    
-    func getWindow() -> UIWindow {
-        if nil == uiWindow {
-            let win = UIWindow(frame: UIScreen.main.bounds)
-            win.windowLevel = UIWindow.Level.alert + 1
-            win.makeKeyAndVisible()
-            uiWindow = win
-            return win
-        }
-        
-        return uiWindow!
-    }
-    
+  
+    var loaderPresenter: OstPresenterHelper? = nil
     var progressIndicator: OstProgressIndicator? = nil
     
     private var interact: OstSdkInteract {
@@ -130,15 +117,45 @@ import Foundation
         hideLoader()
     }
     
+  func getLoader(for workflowType: OstWorkflowType) -> OstWorkflowLoader {
+     let loaderManager = OstResourceProvider.getLoaderManger()
+     let loader: OstWorkflowLoader = loaderManager.getLoader(workflowType: workflowType)
+     return loader
+   }
+   
     func showLoader(for workflowType: OstWorkflowType) {
-        let progressText = OstContent.getLoaderText(for: workflowType)
-        showLoader(progressText: progressText)
+//        let progressText = OstContent.getLoaderText(for: workflowType)
+//        showLoader(progressText: progressText)
+      let loader: OstWorkflowLoader
+      if nil == loaderPresenter {
+        loader = getLoader(for: workflowType)
+        presentLoader(loader)
+      }else {
+        loader = loaderPresenter!.vc!
+      }
+      
+      loader.onPostAuthentication()
     }
     
     func showInitialLoader(for workflowType: OstWorkflowType) {
-        let progressText = OstContent.getInitialLoaderText(for: workflowType)
-        showLoader(progressText: progressText)
+//        let progressText = OstContent.getInitialLoaderText(for: workflowType)
+//        showLoader(progressText: progressText)
+      let loader: OstWorkflowLoader
+      if nil == loaderPresenter {
+        loader = getLoader(for: workflowType)
+        presentLoader(loader)
+      }else {
+        loader = loaderPresenter!.vc!
+      }
+      
+      loader.onInitLoader()
     }
+  
+  func presentLoader(_ loader: OstWorkflowLoader) {
+    let presenter = OstPresenterHelper()
+    presenter.present(loader: loader)
+    self.loaderPresenter = presenter
+  }
     
     func showLoader(progressText: String) {
         DispatchQueue.main.async {
@@ -171,6 +188,7 @@ import Foundation
     func hideLoader() {
         progressIndicator?.hide()
         progressIndicator = nil
-        uiWindow = nil
+        loaderPresenter?.dismiss(animated: true)
+        loaderPresenter = nil
     }
 }

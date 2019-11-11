@@ -11,7 +11,13 @@
 import UIKit
 
 @objc public class OstWalletUI: NSObject {
-    
+  
+  /// Set loader manager for OstWalletUI
+  /// - Parameter manager: OstLoaderDelegate object.
+    @objc
+    public class func setLoaderManager(_ manager: OstLoaderDelegate) {
+      OstResourceProvider.setApplicationLoaderMangaer(manager)
+    }
 
     /// Set theme config for OstWalletUI
     ///
