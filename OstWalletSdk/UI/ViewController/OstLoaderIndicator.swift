@@ -60,7 +60,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
   
   @objc
   open func onAcknowledge() {
-    let text = OstContent.getLoaderText(for: self.workflowType!)
+    let text = "Session Request ack..."//OstContent.getLoaderText(for: self.workflowType!)
     updateTitle(text)
   }
   
@@ -70,6 +70,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
                  loaderComplectionDelegate: OstLoaderCompletionDelegate) {
     
     activityIndicator?.stopAnimating()
+    loaderComplectionDelegate.dismissWorkflow()
   }
   
   @objc
@@ -77,5 +78,6 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
                  error: OstError,
                  loaderComplectionDelegate: OstLoaderCompletionDelegate) {
     activityIndicator?.stopAnimating()
+    loaderComplectionDelegate.dismissWorkflow()
   }
 }

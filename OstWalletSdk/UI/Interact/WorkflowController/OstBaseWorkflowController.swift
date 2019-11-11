@@ -119,11 +119,6 @@ import Foundation
         }
     }
     
-    @objc func cleanUpWorkflowController() {
-        self.hideLoader();
-        self.cleanUp();
-    }
-    
     override func cleanUp() {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
@@ -153,16 +148,31 @@ import Foundation
     //MARK: - OstWorkflowUIDelegaete
     override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        cleanUpWorkflowController()
+        
+        if shouldWaitForFinalization() {
+           showOnAcknowledgeLoader()
+        }else {
+            cleanUpWorkflowController()
+        }
     }
     
     override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        cleanUpWorkflowController()
+        if nil == loaderPresenter {
+            cleanUpWorkflowController()
+        }else {
+            showOnSuccess(workflowContext: workflowContext,
+                          contextEntity: ostContextEntity)
+        }
     }
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowContext: workflowContext, error: error)
-        cleanUpWorkflowController()
+        if nil == loaderPresenter {
+            cleanUpWorkflowController()
+        }else {
+            showOnFailure(workflowContext: workflowContext,
+                          error: error)
+        }
     }
 }
