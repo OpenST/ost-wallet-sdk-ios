@@ -54,7 +54,7 @@ class OstDeviceManagerSignerBase {
         let encodedABIHex = try getEncodedABI()
         
         guard let toAddress = getToAddress() else {
-            throw OstError("w_a_ab_a_1", .toAddressNotFound)
+            throw OstError("s_ecki_dms_dmsb_gap_3", .toAddressNotFound)
         }
         
         let typedDataInput: [String: Any] = try GnosisSafe().getSafeTxData(verifyingContract: self.deviceManager!.address!,
@@ -80,12 +80,12 @@ class OstDeviceManagerSignerBase {
         
         if (nil == signature
             || signature!.isEmpty) {
-            throw OstError("q_a_ab_a_2", .signatureGenerationFailed)
+            throw OstError("s_ecki_dms_dmsb_gap_4", .signatureGenerationFailed)
         }
         
         if (nil == signerAddress
             || signerAddress!.isEmpty) {
-            throw OstError("q_a_ab_a_2", .signerAddressNotFound)
+            throw OstError("s_ecki_dms_dmsb_gap_5", .signerAddressNotFound)
         }
         
         let rawCallData: String = getRawCallData()
