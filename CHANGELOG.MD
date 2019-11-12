@@ -3,6 +3,8 @@
 ## Version 2.3.4
 ### Feature:
 * Developer can decide whether use existing keys or create new keys for User on application reinstall by setting `EnableIOSDeviceRestore` flag in `OstWalletSdk.plist`.
+### Bug Fix:
+* Fetching data from database fix.
 
 ## Version 2.3.3
 ### Bug Fix:
