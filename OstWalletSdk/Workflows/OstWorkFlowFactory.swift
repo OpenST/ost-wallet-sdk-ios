@@ -11,6 +11,33 @@
 import Foundation
 
 extension OstWalletSdk {
+//
+//  static let updateQueue = DispatchQueue(label: "updateData")
+//  static var userId: String? = nil
+//  class func updateInLoop(userId: String, loopCall: Bool = true) {
+//    if nil == OstWalletSdk.userId || loopCall {
+//      OstWalletSdk.userId = userId
+//      OstWalletSdk.updateQueue.asyncAfter(deadline: .now()+1) {
+//        if let user = try? OstUser.getById(userId) {
+//          if let currentDevice = user!.getCurrentDevice() {
+//            var data = currentDevice.data
+//            let time  = Date.negativeTimestamp()
+//            data["updated_timestamp"] = OstUtils.toString(time)
+//            do {
+//              try OstCurrentDevice.storeEntity(data)
+//              print("data updated: \(time)")
+//            }catch let error {
+//              print("error occured while storing data: \(error.localizedDescription)")
+//            }
+//          }
+//        }
+//        updateInLoop(userId: OstWalletSdk.userId!, loopCall: true)
+//      }
+//    }else if OstWalletSdk.userId != userId {
+//      OstWalletSdk.userId = userId
+//    }
+//   }
+//
     //MARK: - Workflow
     
     /// setup device for user.
