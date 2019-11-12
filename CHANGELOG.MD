@@ -1,8 +1,15 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.4
+### Feature:
+* Developer can decide whether use existing keys or create new keys for User on application reinstall by setting `EnableIOSDeviceRestore` flag in `OstWalletSdk.plist`.
+### Bug Fix:
+* Fetching data from database fix.
+
 ## Version 2.3.3
 ### Bug Fix:
 * OstWalletSdkUI issue fixed for iOS 13. 
+
 
 ## Version 2.3.2
 ### Bug Fix:

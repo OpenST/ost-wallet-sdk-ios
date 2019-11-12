@@ -20,6 +20,7 @@ public class OstUser: OstBaseEntity {
     /// User status
     enum Status: String {
         case CREATED = "CREATED"
+        case REGISTERED = "REGISTERED"
         case ACTIVATING = "ACTIVATING"
         case ACTIVATED = "ACTIVATED"
     }

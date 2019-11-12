@@ -55,7 +55,7 @@ We use open-source code from the projects listed below. The `Set-up` section bel
   * [revokeDevice](#revokedevice)
   * [updateBiometricPreference](#updatebiometricpreference)
 - [Getters](#getters)
-  * [1. getAddDeviceQRCode](#1-getadddeviceqrcode)
+  * [getAddDeviceQRCode](#getadddeviceqrcode)
   * [getUser](#getuser)
   * [getToken](#gettoken)
   * [user.getCurrentDevice](#usergetcurrentdevice)
@@ -105,8 +105,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 Add following entry in your `Cartfile`
 
 ```bash
-github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.3
-
+github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.4
 ```
 
 Now to actually install everything run the following in your terminal:
@@ -190,6 +189,8 @@ Copy paste this configuration file.
     <integer>3600</integer>
     <key>UseSeedPassword</key>
 	<false/>
+    <key>EnableIOSDeviceRestore</key>
+	<false/>
  </dict>
  </plist>
 ```
@@ -201,6 +202,7 @@ Copy paste this configuration file.
 5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
 6. SessionBufferTime: Buffer expiration time for session keys in seconds. Default value is 3600 seconds.
 7. UseSeedPassword: The seed password is salt to PBKDF2 used to generate seed from the mnemonic. When `UseSeedPassword` set to true, different deterministic salts are used for different keys.
+8. EnableIOSDeviceRestore: When `EnableIOSDeviceRestore` set to true, After reinstallation, SDK check for available device key in Keychain for given `user id`.
 
 **These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
 
@@ -516,7 +518,7 @@ OstWalletSdk.updateBiometricPreference(
 
 ## Getters
 
-### 1. getAddDeviceQRCode
+### getAddDeviceQRCode
 This workflow will return the QRCode in the form of [CIImage object](https://developer.apple.com/documentation/coreimage/ciimage) that can be used to show on screen. This QRCode can then be scanned to add the new device.
 
 ```Swift
