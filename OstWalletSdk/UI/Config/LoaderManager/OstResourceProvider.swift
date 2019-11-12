@@ -14,7 +14,7 @@ class OstResourceProvider: NSObject {
   static var appLoaderMangerObj: OstLoaderDelegate? = nil
   
   @objc
-  class func setApplicationLoaderMangaer(_ manager: OstLoaderDelegate) {
+  class func setApplicationLoaderManager(_ manager: OstLoaderDelegate) {
     appLoaderMangerObj = manager
   }
   
