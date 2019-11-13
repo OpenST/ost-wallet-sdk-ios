@@ -155,11 +155,19 @@ import Foundation
     }
     
     @objc
+    func getWorkflowConfig(for workflowType: OstWorkflowType) -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: workflowType)
+        let workflowConfig = OstContent.getInstance().getWorkflowConfig(for: workflowName)
+        return workflowConfig
+    }
+    
+    @objc
     func showInitialLoader(for workflowType: OstWorkflowType) {
         //        let progressText = OstContent.getInitialLoaderText(for: workflowType)
         //        showLoader(progressText: progressText)
         let loader = getLoader()
-        loader.onInitLoader()
+        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
+        loader.onInitLoader(workflowConfig: workflowConfig)
     }
     
     @objc
@@ -167,13 +175,15 @@ import Foundation
         //        let progressText = OstContent.getLoaderText(for: workflowType)
         //        showLoader(progressText: progressText)
         let loader = getLoader()
-        loader.onPostAuthentication()
+        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
+        loader.onPostAuthentication(workflowConfig: workflowConfig)
     }
     
     @objc
     func showOnAcknowledgeLoader() {
         let loader = getLoader()
-        loader.onAcknowledge()
+        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
+        loader.onAcknowledge(workflowConfig: workflowConfig)
     }
     
     @objc

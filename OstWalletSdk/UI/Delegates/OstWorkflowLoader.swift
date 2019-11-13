@@ -13,13 +13,13 @@ import Foundation
 @objc public protocol OstWorkflowLoader where Self: UIViewController {
   
   @objc
-  func onInitLoader()
+  func onInitLoader(workflowConfig: [String: Any])
   
   @objc
-  func onPostAuthentication()
+  func onPostAuthentication(workflowConfig: [String: Any])
   
   @objc
-  func onAcknowledge()
+  func onAcknowledge(workflowConfig: [String: Any])
   
   @objc
   func onSuccess(workflowContext: OstWorkflowContext,
