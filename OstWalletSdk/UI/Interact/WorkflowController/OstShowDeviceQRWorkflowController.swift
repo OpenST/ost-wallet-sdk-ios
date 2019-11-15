@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDelegate, OstAlertCompletionDelegate {
+class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDelegate {
 
     var deviceQRVC: OstDeviceQRViewController? = nil
     
@@ -116,11 +116,10 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     }
     
     func showApiFailureMessage(title: String, message: String) {
-        let loader = getLoader()
-        loader.onAlert(title: title,
-                       message: message,
-                       buttonText: "Ok",
-                       alertDelegate: self)
+        hideLoader()
+        let alert = OstUIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.show()
     }
     
     @objc

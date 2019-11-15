@@ -22,7 +22,6 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     
     fileprivate var workflowType: OstWorkflowType? = nil
     fileprivate var activityIndicator: UIActivityIndicatorView? = nil
-    fileprivate var alertDelegateRef: OstAlertCompletionDelegate? = nil
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -84,20 +83,5 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
                         loaderComplectionDelegate: OstLoaderCompletionDelegate) {
         activityIndicator?.stopAnimating()
         loaderComplectionDelegate.dismissWorkflow()
-    }
-    
-    @objc
-    open func onAlert(title: String,
-                      message: String?,
-                      buttonText: String,
-                      alertDelegate: OstAlertCompletionDelegate) {
-        
-        activityIndicator?.stopAnimating()
-        self.title = title
-        self.message = message
-        alertDelegateRef = alertDelegate
-        self.addAction(UIAlertAction(title: buttonText, style: .cancel, handler: {[weak self] (_) in
-            self?.alertDelegateRef?.dismiss()
-        }))
     }
 }

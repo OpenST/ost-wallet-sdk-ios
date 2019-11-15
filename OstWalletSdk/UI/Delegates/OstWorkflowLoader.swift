@@ -32,10 +32,4 @@ import Foundation
                    error: OstError,
                    workflowConfig: [String: Any],
                    loaderComplectionDelegate: OstLoaderCompletionDelegate)
-    
-    @objc
-    func onAlert(title: String,
-                 message: String?,
-                 buttonText: String,
-                 alertDelegate: OstAlertCompletionDelegate)
 }
