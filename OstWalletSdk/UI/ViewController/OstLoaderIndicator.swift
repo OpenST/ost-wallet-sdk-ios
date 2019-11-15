@@ -22,6 +22,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     
     fileprivate var workflowType: OstWorkflowType? = nil
     fileprivate var activityIndicator: UIActivityIndicatorView? = nil
+    fileprivate var alertDelegateRef: OstAlertCompletionDelegate? = nil
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
         let activ = UIActivityIndicatorView(style: .gray)
         activ.color = UIColor.color(22, 141, 193)
         activ.startAnimating()
+        activ.hidesWhenStopped =  true
         activ.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activ)
         activ.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -68,6 +70,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     @objc
     open func onSuccess(workflowContext: OstWorkflowContext,
                         contextEntity: OstContextEntity,
+                        workflowConfig: [String : Any],
                         loaderComplectionDelegate: OstLoaderCompletionDelegate) {
         
         activityIndicator?.stopAnimating()
@@ -77,8 +80,24 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     @objc
     open func onFailure(workflowContext: OstWorkflowContext,
                         error: OstError,
+                        workflowConfig: [String : Any],
                         loaderComplectionDelegate: OstLoaderCompletionDelegate) {
         activityIndicator?.stopAnimating()
         loaderComplectionDelegate.dismissWorkflow()
+    }
+    
+    @objc
+    open func onAlert(title: String,
+                      message: String?,
+                      buttonText: String,
+                      alertDelegate: OstAlertCompletionDelegate) {
+        
+        activityIndicator?.stopAnimating()
+        self.title = title
+        self.message = message
+        alertDelegateRef = alertDelegate
+        self.addAction(UIAlertAction(title: buttonText, style: .cancel, handler: {[weak self] (_) in
+            self?.alertDelegateRef?.dismiss()
+        }))
     }
 }

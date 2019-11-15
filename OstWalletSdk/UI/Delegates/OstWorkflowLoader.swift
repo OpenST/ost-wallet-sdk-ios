@@ -11,23 +11,31 @@
 import Foundation
 
 @objc public protocol OstWorkflowLoader where Self: UIViewController {
-  
-  @objc
-  func onInitLoader(workflowConfig: [String: Any])
-  
-  @objc
-  func onPostAuthentication(workflowConfig: [String: Any])
-  
-  @objc
-  func onAcknowledge(workflowConfig: [String: Any])
-  
-  @objc
-  func onSuccess(workflowContext: OstWorkflowContext,
-                      contextEntity: OstContextEntity,
-                      loaderComplectionDelegate: OstLoaderCompletionDelegate)
-  
-  @objc
-  func onFailure(workflowContext: OstWorkflowContext,
-                      error: OstError,
-                      loaderComplectionDelegate: OstLoaderCompletionDelegate)
+    
+    @objc
+    func onInitLoader(workflowConfig: [String: Any])
+    
+    @objc
+    func onPostAuthentication(workflowConfig: [String: Any])
+    
+    @objc
+    func onAcknowledge(workflowConfig: [String: Any])
+    
+    @objc
+    func onSuccess(workflowContext: OstWorkflowContext,
+                   contextEntity: OstContextEntity,
+                   workflowConfig: [String: Any],
+                   loaderComplectionDelegate: OstLoaderCompletionDelegate)
+    
+    @objc
+    func onFailure(workflowContext: OstWorkflowContext,
+                   error: OstError,
+                   workflowConfig: [String: Any],
+                   loaderComplectionDelegate: OstLoaderCompletionDelegate)
+    
+    @objc
+    func onAlert(title: String,
+                 message: String?,
+                 buttonText: String,
+                 alertDelegate: OstAlertCompletionDelegate)
 }

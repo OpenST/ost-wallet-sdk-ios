@@ -10,7 +10,7 @@
 
 import Foundation
 
-class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDelegate {
+class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDelegate, OstAlertCompletionDelegate {
 
     var deviceQRVC: OstDeviceQRViewController? = nil
     
@@ -116,13 +116,16 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     }
     
     func showApiFailureMessage(title: String, message: String) {
-        progressIndicator?.showAlert(withTitle: title,
-                                     message: message,
-                                     duration: 0,
-                                     actionButtonTitle: "Ok",
-                                     actionButtonTapped: nil,
-                                     cancelButtonTitle: nil, cancelButtonTapped: nil,
-                                     onHideAnimationCompletion: nil)
+        let loader = getLoader()
+        loader.onAlert(title: title,
+                       message: message,
+                       buttonText: "Ok",
+                       alertDelegate: self)
+    }
+    
+    @objc
+    func dismiss() {
+        hideLoader()
     }
     
     /// Polling for device

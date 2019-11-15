@@ -15,3 +15,9 @@ import Foundation
   @objc
   func dismissWorkflow()
 }
+
+@objc public protocol OstAlertCompletionDelegate: AnyObject {
+  
+  @objc
+  func dismiss()
+}

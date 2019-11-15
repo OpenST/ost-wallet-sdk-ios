@@ -190,8 +190,10 @@ import Foundation
     func showOnFailure(workflowContext: OstWorkflowContext,
                        error: OstError) {
         let loader = getLoader()
+        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
         loader.onFailure(workflowContext: workflowContext,
                          error: error,
+                         workflowConfig: workflowConfig,
                          loaderComplectionDelegate: self)
     }
     
@@ -199,8 +201,10 @@ import Foundation
     func showOnSuccess(workflowContext: OstWorkflowContext,
                        contextEntity: OstContextEntity) {
         let loader = getLoader()
+        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
         loader.onSuccess(workflowContext: workflowContext,
                          contextEntity: contextEntity,
+                         workflowConfig: workflowConfig,
                          loaderComplectionDelegate: self)
     }
     
