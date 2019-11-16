@@ -63,6 +63,7 @@ class OstRevokeDeviceWorkflowController: OstBaseWorkflowController {
         DispatchQueue.main.async {
             self.deviceListController = OstRevokeDLViewController
                 .newInstance(userId: self.userId,
+                             workflowRef: self,
                              callBack: {[weak self] (device) in
                                 self?.revokeDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.onDeviceAddressSet()

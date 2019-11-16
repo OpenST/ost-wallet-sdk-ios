@@ -15,18 +15,22 @@ import Foundation
 class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
     
     public class func newInstance(userId: String,
+                                  workflowRef: OstWorkflowCallbacks,
                                   callBack: @escaping (([String: Any]?) -> Void)) -> OstInitiateRecoveryDLViewController {
         let instance = OstInitiateRecoveryDLViewController()
         setEssentials(instance: instance,
                       userId: userId,
+                      workflowRef: workflowRef,
                       callBack: callBack)
         return instance;
     }
     
     class func setEssentials(instance: OstInitiateRecoveryDLViewController,
                              userId: String,
+                             workflowRef: OstWorkflowCallbacks,
                              callBack: @escaping (([String: Any]?) -> Void)) {
         instance.onCellSelected = callBack
+        instance.workflowRef = workflowRef
         instance.userId = userId
     }
     
@@ -35,7 +39,7 @@ class OstInitiateRecoveryDLViewController: OstDeviceListViewController {
         super.configure()
     }
     
-    override func getInitialLoaderText() -> String {
-        return OstContent.getInitialLoaderText(for: .initiateDeviceRecovery)
+    override func getWorkflowType() -> OstWorkflowType {
+        return .initiateDeviceRecovery
     }
 }

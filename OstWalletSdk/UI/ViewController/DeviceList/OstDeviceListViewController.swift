@@ -25,6 +25,7 @@ import Foundation
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return tableView
@@ -73,6 +74,8 @@ import Foundation
     
     var canShowEmptyScreen: Bool = false
     
+    weak var workflowRef: OstWorkflowCallbacks? = nil
+    
     override func configure() {
         super.configure();
         
@@ -106,14 +109,15 @@ import Foundation
         super.viewDidAppear(animated)
         
         if isApiCallInProgress {
-            let loaderText = getInitialLoaderText()
-            progressIndicator = OstProgressIndicator(progressText: loaderText)
-            progressIndicator?.show()
+//            let loaderText = getInitialLoaderText()
+//            progressIndicator = OstProgressIndicator(progressText: loaderText)
+//            progressIndicator?.show()
+            workflowRef?.showInitialLoader(for: getWorkflowType())
         }
     }
     
-    func getInitialLoaderText() -> String {
-        return ""
+    func getWorkflowType() -> OstWorkflowType {
+        fatalError("getWorkflowType did not override")
     }
     
     //MARK: - Add Subview
@@ -197,7 +201,7 @@ import Foundation
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: OstBaseTableViewCell
@@ -393,8 +397,9 @@ import Foundation
         }
         
         self.isNewDataAvailable = true
-        progressIndicator?.hide()
-    
+//        progressIndicator?.hide()
+        workflowRef?.hideLoader()
+        
         reloadDataIfNeeded()
     }
     
