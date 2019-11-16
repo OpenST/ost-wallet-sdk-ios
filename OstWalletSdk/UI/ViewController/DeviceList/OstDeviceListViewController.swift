@@ -33,6 +33,7 @@ import Foundation
     
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = .white
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
         //        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
@@ -49,7 +50,6 @@ import Foundation
     }()
     
     var paginatingCell: OstPaginationLoaderTableViewCell? = nil
-    var progressIndicator: OstProgressIndicator? = nil
     
     //MARK: - Variables
     var isNewDataAvailable: Bool = false
@@ -109,9 +109,6 @@ import Foundation
         super.viewDidAppear(animated)
         
         if isApiCallInProgress {
-//            let loaderText = getInitialLoaderText()
-//            progressIndicator = OstProgressIndicator(progressText: loaderText)
-//            progressIndicator?.show()
             workflowRef?.showInitialLoader(for: getWorkflowType())
         }
     }
@@ -397,7 +394,6 @@ import Foundation
         }
         
         self.isNewDataAvailable = true
-//        progressIndicator?.hide()
         workflowRef?.hideLoader()
         
         reloadDataIfNeeded()
