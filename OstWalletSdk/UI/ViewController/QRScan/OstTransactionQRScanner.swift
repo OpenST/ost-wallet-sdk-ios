@@ -40,7 +40,7 @@ class OstTransactionQRScanner: OstBaseQRScannerViewController {
             let qrData = qrDataString![0]
             onSuccessScanning?(qrData)
         }else {
-            onErrorScanning?(OstError("ui_vc_qrs_adqrs_qrcdr_1", .invalidQRCode))
+            onErrorScanning?(OstError("ui_vc_qrs_tqrs_qrcdr_1", .invalidQRCode))
         }
     }
     

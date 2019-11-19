@@ -63,4 +63,10 @@ import Foundation
             deviceMnemonicsViewController.presentVCWithNavigation()
         }
     }
+    
+    override func showOnSuccess(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+        hideLoader()
+        //ShowOnSuccess got consumed in this workflow.
+        //No need to broadcast to show success alert as we are the one who is showing mnemonics.
+    }
 }
