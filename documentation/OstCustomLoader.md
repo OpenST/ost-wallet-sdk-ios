@@ -88,9 +88,9 @@ class LoaderViewController: UIViewController, OstWorkflowLoader {
     func onSuccess(workflowContext: OstWorkflowContext,
                    contextEntity: OstContextEntity,
                    workflowConfig: [String : Any],
-                   loaderComplectionDelegate: OstLoaderCompletionDelegate) {
+                   loaderCompletionDelegate: OstLoaderCompletionDelegate) {
     
-        ostLoaderCompletionDelegate = loaderComplectionDelegate
+        ostLoaderCompletionDelegate = loaderCompletionDelegate
     
         showSuccessAlert(workflowContext: workflowContext,
                          contextEntity: contextEntity)
@@ -99,9 +99,9 @@ class LoaderViewController: UIViewController, OstWorkflowLoader {
     func onFailure(workflowContext: OstWorkflowContext,
                    error: OstError,
                    workflowConfig: [String : Any],
-                   loaderComplectionDelegate: OstLoaderCompletionDelegate) {
+                   loaderCompletionDelegate: OstLoaderCompletionDelegate) {
     
-        ostLoaderCompletionDelegate = loaderComplectionDelegate
+        ostLoaderCompletionDelegate = loaderCompletionDelegate
     
         showFailureAlert(workflowContext: workflowContext,
                          error: error)
