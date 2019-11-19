@@ -165,18 +165,26 @@ import Foundation
     func showInitialLoader(for workflowType: OstWorkflowType) {
         //        let progressText = OstContent.getInitialLoaderText(for: workflowType)
         //        showLoader(progressText: progressText)
-        let loader = getLoader()
-        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
-        loader.onInitLoader(workflowConfig: workflowConfig)
+        DispatchQueue.main.async {[weak self] in
+            if let strongSelf = self {
+                let loader = strongSelf.getLoader()
+                let workflowConfig = strongSelf.getWorkflowConfig(for: strongSelf.getWorkflowType())
+                loader.onInitLoader(workflowConfig: workflowConfig)
+            }
+        }
     }
     
     @objc
     func showLoader(for workflowType: OstWorkflowType) {
         //        let progressText = OstContent.getLoaderText(for: workflowType)
         //        showLoader(progressText: progressText)
-        let loader = getLoader()
-        let workflowConfig = getWorkflowConfig(for:  getWorkflowType())
-        loader.onPostAuthentication(workflowConfig: workflowConfig)
+        DispatchQueue.main.async {[weak self] in
+            if let strongSelf = self {
+                let loader = strongSelf.getLoader()
+                let workflowConfig = strongSelf.getWorkflowConfig(for:  strongSelf.getWorkflowType())
+                loader.onPostAuthentication(workflowConfig: workflowConfig)
+            }
+        }
     }
     
     @objc
