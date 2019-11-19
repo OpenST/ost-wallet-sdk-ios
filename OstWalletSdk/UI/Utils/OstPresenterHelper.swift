@@ -21,6 +21,7 @@ class OstPresenterHelper: NSObject {
       vc.view.backgroundColor = .clear
       win.rootViewController = vc
       win.windowLevel = UIWindow.Level.statusBar-1
+        loader.modalPresentationStyle = .overFullScreen
       win.makeKeyAndVisible()
       vc.present(loader, animated: true, completion: nil)
       self.windowObj = win;
