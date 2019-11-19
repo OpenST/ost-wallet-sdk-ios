@@ -12,24 +12,42 @@ import Foundation
 
 @objc public protocol OstWorkflowLoader where Self: UIViewController {
     
+    /// Initialization loader callback to update loader
+    /// - Parameter workflowConfig: Workflow related config, which is set in setContentConfig() method
     @objc
     func onInitLoader(workflowConfig: [String: Any])
     
+    /// Pin provided callback to update loader
+    /// - Parameter workflowConfig: Workflow related config, which is set in setContentConfig() method
     @objc
     func onPostAuthentication(workflowConfig: [String: Any])
     
+    /// Workflow acknowledge callback to update loader
+    /// - Parameter workflowConfig: Workflow related config, which is set in setContentConfig() method
     @objc
     func onAcknowledge(workflowConfig: [String: Any])
     
+    /// Workflow success callback to show success message on loader
+    /// - Parameters:
+    ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
+    ///   - contextEntity: Context Entity
+    ///   - workflowConfig: Workflow related config, which is set in setContentConfig() method.
+    ///   - loaderCompletionDelegate: Loader complection delegate
     @objc
     func onSuccess(workflowContext: OstWorkflowContext,
                    contextEntity: OstContextEntity,
                    workflowConfig: [String: Any],
-                   loaderComplectionDelegate: OstLoaderCompletionDelegate)
+                   loaderCompletionDelegate: OstLoaderCompletionDelegate)
     
+    /// Workflow failure callback to show error message on loader
+    /// - Parameters:
+    ///   - workflowContext: A context that describes the workflow for which the callback was triggered.
+    ///   - error: Error Entity
+    ///   - workflowConfig: Workflow related config, which is set in setContentConfig() method.
+    ///   - loaderComplectionDelegate: Loader complection delegate
     @objc
     func onFailure(workflowContext: OstWorkflowContext,
                    error: OstError,
                    workflowConfig: [String: Any],
-                   loaderComplectionDelegate: OstLoaderCompletionDelegate)
+                   loaderCompletionDelegate: OstLoaderCompletionDelegate)
 }

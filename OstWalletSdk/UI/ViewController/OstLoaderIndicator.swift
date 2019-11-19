@@ -70,18 +70,18 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     open func onSuccess(workflowContext: OstWorkflowContext,
                         contextEntity: OstContextEntity,
                         workflowConfig: [String : Any],
-                        loaderComplectionDelegate: OstLoaderCompletionDelegate) {
+                        loaderCompletionDelegate: OstLoaderCompletionDelegate) {
         
         activityIndicator?.stopAnimating()
-        loaderComplectionDelegate.dismissWorkflow()
+        loaderCompletionDelegate.dismissWorkflow()
     }
     
     @objc
     open func onFailure(workflowContext: OstWorkflowContext,
                         error: OstError,
                         workflowConfig: [String : Any],
-                        loaderComplectionDelegate: OstLoaderCompletionDelegate) {
+                        loaderCompletionDelegate: OstLoaderCompletionDelegate) {
         activityIndicator?.stopAnimating()
-        loaderComplectionDelegate.dismissWorkflow()
+        loaderCompletionDelegate.dismissWorkflow()
     }
 }

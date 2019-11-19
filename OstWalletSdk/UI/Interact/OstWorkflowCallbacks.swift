@@ -202,7 +202,7 @@ import Foundation
         loader.onFailure(workflowContext: workflowContext,
                          error: error,
                          workflowConfig: workflowConfig,
-                         loaderComplectionDelegate: self)
+                         loaderCompletionDelegate: self)
     }
     
     @objc
@@ -213,7 +213,7 @@ import Foundation
         loader.onSuccess(workflowContext: workflowContext,
                          contextEntity: contextEntity,
                          workflowConfig: workflowConfig,
-                         loaderComplectionDelegate: self)
+                         loaderCompletionDelegate: self)
     }
     
     @objc

@@ -11,7 +11,8 @@
 import Foundation
 
 @objc public protocol OstLoaderCompletionDelegate: AnyObject {
-  
-  @objc
-  func dismissWorkflow()
+    
+    /// Dismiss workflow
+    @objc
+    func dismissWorkflow()
 }
