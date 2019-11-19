@@ -49,7 +49,7 @@ import OstWalletSdk
 
 class LoaderViewController: UIViewController, OstWorkflowLoader {
 
-    var ostLoaderComplectionDelegate: OstLoaderCompletionDelegate? = nil
+    var ostLoaderCompletionDelegate: OstLoaderCompletionDelegate? = nil
       
     //MARK: - OstWorkflowLoader
     func onInitLoader(workflowConfig: [String: Any]) {
@@ -90,7 +90,7 @@ class LoaderViewController: UIViewController, OstWorkflowLoader {
                    workflowConfig: [String : Any],
                    loaderComplectionDelegate: OstLoaderCompletionDelegate) {
     
-        ostLoaderComplectionDelegate = loaderComplectionDelegate
+        ostLoaderCompletionDelegate = loaderComplectionDelegate
     
         showSuccessAlert(workflowContext: workflowContext,
                          contextEntity: contextEntity)
@@ -101,14 +101,14 @@ class LoaderViewController: UIViewController, OstWorkflowLoader {
                    workflowConfig: [String : Any],
                    loaderComplectionDelegate: OstLoaderCompletionDelegate) {
     
-        ostLoaderComplectionDelegate = loaderComplectionDelegate
+        ostLoaderCompletionDelegate = loaderComplectionDelegate
     
         showFailureAlert(workflowContext: workflowContext,
                          error: error)
     }
     
     func dismissLoader() {
-        ostLoaderComplectionDelegate?.dismissWorkflow()
+        ostLoaderCompletionDelegate?.dismissWorkflow()
     }
 }
 ```
