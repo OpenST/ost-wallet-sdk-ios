@@ -141,11 +141,16 @@ import Foundation
     //MARK: - Loader
     @objc
     func getLoader() -> OstWorkflowLoader {
-        
-        let loader: OstWorkflowLoader
+        var loader: OstWorkflowLoader
         if nil == loaderPresenter {
-            let loaderManager = OstResourceProvider.getLoaderManger()
-            loader = loaderManager.getLoader(workflowType: getWorkflowType())
+			let workflowType = getWorkflowType()
+            var loaderManager = OstResourceProvider.getLoaderManger()
+			if let workflowLoader = loaderManager.getLoader(workflowType: workflowType) {
+				loader = workflowLoader
+			}else {
+				loaderManager = OstResourceProvider.getOstLoaderManager()
+				loader = loaderManager.getLoader(workflowType: workflowType)!
+			}
             presentLoader(loader)
         }else {
             loader = loaderPresenter!.vc!
@@ -163,8 +168,6 @@ import Foundation
     
     @objc
     func showInitialLoader(for workflowType: OstWorkflowType) {
-        //        let progressText = OstContent.getInitialLoaderText(for: workflowType)
-        //        showLoader(progressText: progressText)
         DispatchQueue.main.async {[weak self] in
             if let strongSelf = self {
                 let loader = strongSelf.getLoader()
@@ -176,8 +179,6 @@ import Foundation
     
     @objc
     func showLoader(for workflowType: OstWorkflowType) {
-        //        let progressText = OstContent.getLoaderText(for: workflowType)
-        //        showLoader(progressText: progressText)
         DispatchQueue.main.async {[weak self] in
             if let strongSelf = self {
                 let loader = strongSelf.getLoader()
@@ -222,34 +223,6 @@ import Foundation
         presenter.present(loader: loader)
         self.loaderPresenter = presenter
     }
-    
-    //    func showLoader(progressText: String) {
-    //        DispatchQueue.main.async {
-    //            if ( nil != self.progressIndicator ) {
-    //                if ( nil != self.progressIndicator!.alert ) {
-    //                    //progressIndicator is showing.
-    //                    self.progressIndicator?.progressText = progressText
-    //                    return;
-    //                }
-    //            }
-    //            self.progressIndicator = OstProgressIndicator(progressText: progressText)
-    //            self.progressIndicator?.show()
-    //        }
-    //    }
-    //
-    //    func showLoader(progressTextCode: OstProgressIndicatorTextCode) {
-    //        DispatchQueue.main.async {
-    //            if ( nil != self.progressIndicator ) {
-    //                if ( nil != self.progressIndicator!.alert ) {
-    //                    //progressIndicator is showing.
-    //                    self.progressIndicator?.textCode = progressTextCode
-    //                    return;
-    //                }
-    //            }
-    //            self.progressIndicator = OstProgressIndicator(textCode: progressTextCode)
-    //            self.progressIndicator?.show()
-    //        }
-    //    }
     
     @objc
     func hideLoader() {

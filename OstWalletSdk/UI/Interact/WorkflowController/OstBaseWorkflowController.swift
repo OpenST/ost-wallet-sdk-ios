@@ -171,6 +171,7 @@ import Foundation
         super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
         if nil == loaderPresenter {
             cleanUpWorkflowController()
+			removeListner()
         }else {
             showOnSuccess(workflowContext: workflowContext,
                           contextEntity: ostContextEntity)
@@ -181,6 +182,7 @@ import Foundation
         super.flowInterrupted(workflowContext: workflowContext, error: error)
         if nil == loaderPresenter {
             cleanUpWorkflowController()
+			removeListner()
         }else {
             showOnFailure(workflowContext: workflowContext,
                           error: error)

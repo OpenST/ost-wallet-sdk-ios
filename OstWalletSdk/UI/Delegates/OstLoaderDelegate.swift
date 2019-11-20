@@ -15,7 +15,7 @@ import Foundation
   /// Get custom loader to show while workflow is in progress
   /// - Parameter workflowType: OstWorkflowType
   @objc
-  func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader
+  func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader?
   
   /// Check whether workflow should wait till finalization
   /// - Parameter workflowType: OstWorkflowType

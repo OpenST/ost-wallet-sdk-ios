@@ -15,7 +15,7 @@ class OstLoaderManager: NSObject, OstLoaderDelegate {
   static let shared: OstLoaderDelegate = OstLoaderManager();
   
   @objc
-  func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader {
+  func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader? {
     return OstLoaderIndicator.getInstance(workflowType: workflowType)
   }
    
