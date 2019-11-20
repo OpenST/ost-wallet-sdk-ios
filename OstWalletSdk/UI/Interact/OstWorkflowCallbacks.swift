@@ -141,7 +141,7 @@ import Foundation
     //MARK: - Loader
     @objc
     func getLoader() -> OstWorkflowLoader {
-        var loader: OstWorkflowLoader
+        let loader: OstWorkflowLoader
         if nil == loaderPresenter {
 			let workflowType = getWorkflowType()
             var loaderManager = OstResourceProvider.getLoaderManger()
