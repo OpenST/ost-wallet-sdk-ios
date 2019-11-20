@@ -64,6 +64,13 @@ import Foundation
         }
         self.currentDevice = userDevice
     }
+	
+	@objc override
+    func vcIsMovingFromParent(_ notification: Notification) {
+        if ( nil != notification.object && notification.object! as? OstBaseViewController === self.getPinViewController ) {
+			self.postFlowInterrupted(error: OstError("ui_i_wc_bwc_vimfp_1", .userCanceled))
+        }
+    }
     
     func performUserDeviceValidation() throws {
         if !self.currentUser!.isStatusActivated {
@@ -109,6 +116,10 @@ import Foundation
         DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(500)) {
             self.flowInterrupted(workflowContext: self.getWorkflowContext(),
                                  error: error)
+			
+			if error.messageTextCode == .userCanceled {
+				self.dismissWorkflow()
+			}
         }
     }
     
