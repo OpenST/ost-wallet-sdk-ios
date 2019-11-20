@@ -255,7 +255,7 @@ import Foundation
     func hideLoader() {
         progressIndicator?.hide()
         progressIndicator = nil
-        loaderPresenter?.dismiss(animated: true)
+        loaderPresenter?.dismiss(animated: false)
         loaderPresenter = nil
     }
     
