@@ -6,12 +6,14 @@ Developer can add application loader instead of OstWalletSdk default loader whil
 
 #### 1. Create Loader Manager Object
 
+OstWalletSdk uses `default loader` if developer returns `nil` from `getLoader`.
+
 ```Swift
 import OstWalletSdk
 
 class LoaderManager: OstLoaderDelegate {
 
-    func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader {
+    func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader? {
         //Returns view controller of application loader, confirms `OstWorkflowLoader` protocol
     }
     

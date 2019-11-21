@@ -23,6 +23,7 @@ class OstResourceProvider: NSObject {
 		return (nil != appLoaderMangerObj) ? appLoaderMangerObj! : OstLoaderManager.shared
 	}
 	
+	@objc
 	class func getOstLoaderManager() -> OstLoaderDelegate {
 		return OstLoaderManager.shared
 	}

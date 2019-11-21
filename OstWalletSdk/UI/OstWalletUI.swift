@@ -12,11 +12,18 @@ import UIKit
 
 @objc public class OstWalletUI: NSObject {
   
-  /// Set loader manager for OstWalletUI
-  /// - Parameter manager: OstLoaderDelegate object.
+	/// Set loader manager for OstWalletUI
+	/// - Parameter manager: OstLoaderDelegate object.
     @objc
     public class func setLoaderManager(_ manager: OstLoaderDelegate) {
       OstResourceProvider.setApplicationLoaderManager(manager)
+    }
+	
+	/// Get application assigned loader manager for OstWalletUI
+	/// - Returns manager: OstLoaderDelegate object. returns nil if developer does not assign loader manager
+    @objc
+    public class func getLoaderManager() -> OstLoaderDelegate? {
+      return OstResourceProvider.appLoaderMangerObj
     }
 
     /// Set theme config for OstWalletUI

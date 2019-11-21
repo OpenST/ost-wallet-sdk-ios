@@ -313,7 +313,7 @@ extension OstContent {
             
             return text
         }
-        return ""
+        return "Processing..."
     }
     
     class func getInitialLoaderText(for type: OstWorkflowType) -> String {
@@ -326,7 +326,20 @@ extension OstContent {
             
             return text
         }
-        return ""
+        return "Initializing..."
+    }
+	
+	class func getAcknowledgeText(for type: OstWorkflowType) -> String {
+        
+        let content = OstContent.getInstance()
+        let workflowName = getWorkflowName(for: type)
+        
+        let loaderConfig = content.getControllerConfig(for: "acknowledge", inWorkflow: workflowName)
+        if let text = loaderConfig["text"] as? String {
+            
+            return text
+        }
+        return "Waiting for confirmation..."
     }
     
     class func getWorkflowName(for workflowType: OstWorkflowType) -> String {

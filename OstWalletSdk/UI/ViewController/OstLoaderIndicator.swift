@@ -62,7 +62,7 @@ public class OstLoaderIndicator: UIAlertController, OstWorkflowLoader {
     
     @objc
     public func onAcknowledge(workflowConfig: [String : Any]) {
-        let text = "Waiting for confirmation..."
+        let text = OstContent.getAcknowledgeText(for: self.workflowType!)
         updateTitle(text)
     }
     
