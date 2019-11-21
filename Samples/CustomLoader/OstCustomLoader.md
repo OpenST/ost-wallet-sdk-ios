@@ -36,5 +36,5 @@ To modify Icons, open `CustomLoader/OstLoaderAssets.xcassets` and replace `OstSu
 Developer can modify success message by modifying `SUCCESS_MESSAGE` value in `CustomLoader/OstSdkMessages.json` file
 
 ### 4. Modify loader text:
-To modify loader text, update language for key `initial_loader`, `loader` and `acknowledge` in ost_content_config. <br/>
+To modify loader text, update language for key `text` under `initial_loader`, `loader` and `acknowledge` in ost_content_config. <br/>
 ost_content_config is a file, which you set for `setContentConfig` function. 
