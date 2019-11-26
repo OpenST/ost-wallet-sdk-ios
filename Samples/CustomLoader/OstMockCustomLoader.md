@@ -1,9 +1,9 @@
 # Mock Custom Loader Useage
 
 ## Setup
-1. Custom Loader code has been written in `Swift` language, after adding into `Objective-C` application, xcode may ask to add `<PRODUCT_NAME>_-Bridging-Header.h` .
+1. Custom Loader code has been written in `Swift` language, after adding into `Objective-C` application, xcode may ask to add `<PRODUCT_NAME>-Bridging-Header.h` .
 2. Drag `CustomLoader` folder into application bundle
-3. Open `AppDelegate.swift` or `AppDelegate.m` and add loader manager initialization command
+4. Open `AppDelegate.swift` or `AppDelegate.m` and add loader manager initialization command
 
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -13,6 +13,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 
 ```Objective-C
+#import "<PRODUCT_NAME>-Swift.h"
+#import <OstWalletSdk/OstWalletSdk-Swift.h>
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	OstMockLoaderManager *mockLoader = [[OstMockLoaderManager alloc]init];
