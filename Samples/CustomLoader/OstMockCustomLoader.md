@@ -1,4 +1,4 @@
-# Custom Loader Useage
+# Mock Custom Loader Useage
 
 ## Setup
 1. Custom Loader code has been written in `Swift` language, after adding into `Objective-C` application, xcode may ask to add `<PRODUCT_NAME>_-Bridging-Header.h` .
