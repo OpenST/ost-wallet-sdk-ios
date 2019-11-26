@@ -5,13 +5,14 @@
 2. Drag `CustomLoader` folder into application bundle
 4. Open `AppDelegate.swift` or `AppDelegate.m` and add loader manager initialization command
 
+<b>Swift:</b>
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 	let mockLoader = OstMockLoaderManager()
 	OstWalletUI.setLoaderManager(mockLoader)
 }
 ```
-
+<b>Objective-C:</b>
 ```Objective-C
 #import "<PRODUCT_NAME>-Swift.h"
 #import <OstWalletSdk/OstWalletSdk-Swift.h>
