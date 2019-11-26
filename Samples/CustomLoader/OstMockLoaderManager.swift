@@ -17,7 +17,7 @@ public class OstMockLoaderManager: NSObject, OstLoaderDelegate {
     //MARK: - OstLoaderDelegate
 	@objc
   public func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader? {
-        return  nil
+        return  OstMockLoaderViewController()
     }
     
 	@objc
