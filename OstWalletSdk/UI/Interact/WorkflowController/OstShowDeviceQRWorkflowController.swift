@@ -116,13 +116,15 @@ class OstShowDeviceQRWorkflowController: OstBaseWorkflowController, OstJsonApiDe
     }
     
     func showApiFailureMessage(title: String, message: String) {
-        progressIndicator?.showAlert(withTitle: title,
-                                     message: message,
-                                     duration: 0,
-                                     actionButtonTitle: "Ok",
-                                     actionButtonTapped: nil,
-                                     cancelButtonTitle: nil, cancelButtonTapped: nil,
-                                     onHideAnimationCompletion: nil)
+        hideLoader()
+        let alert = OstUIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.show()
+    }
+    
+    @objc
+    func dismiss() {
+        hideLoader()
     }
     
     /// Polling for device

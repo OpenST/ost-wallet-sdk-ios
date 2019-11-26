@@ -129,8 +129,8 @@ class OstSdkInteract {
                 
             }
         }
-        if eventType == .flowComplete || eventType == .flowInterrupted {
-            removeEventListners(forWorkflowId: workflowId)
-        }
+//        if eventType == .flowComplete || eventType == .flowInterrupted {
+//            removeEventListners(forWorkflowId: workflowId)
+//        }
     }
 }

@@ -12,18 +12,22 @@ import Foundation
 
 @objc class OstRevokeDLViewController: OstDeviceListViewController {
     public class func newInstance(userId: String,
+                                  workflowRef: OstWorkflowCallbacks,
                                   callBack: @escaping (([String: Any]?) -> Void)) -> OstRevokeDLViewController {
         let instance = OstRevokeDLViewController()
         setEssentials(instance: instance,
                       userId: userId,
+                      workflowRef: workflowRef,
                       callBack: callBack)
         return instance;
     }
     
     class func setEssentials(instance: OstRevokeDLViewController,
                              userId: String,
+                             workflowRef: OstWorkflowCallbacks,
                              callBack: @escaping (([String: Any]?) -> Void)) {
         instance.onCellSelected = callBack
+        instance.workflowRef = workflowRef
         instance.userId = userId
     }
     
@@ -32,7 +36,7 @@ import Foundation
         super.configure()
     }
     
-    override func getInitialLoaderText() -> String {
-        return OstContent.getInitialLoaderText(for: .revokeDevice)
+    override func getWorkflowType() -> OstWorkflowType {
+        return .revokeDevice
     }
 }

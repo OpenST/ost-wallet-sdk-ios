@@ -64,6 +64,13 @@ import Foundation
         }
         self.currentDevice = userDevice
     }
+	
+	@objc override
+    func vcIsMovingFromParent(_ notification: Notification) {
+        if ( nil != notification.object && notification.object! as? OstBaseViewController === self.getPinViewController ) {
+			self.postFlowInterrupted(error: OstError("ui_i_wc_bwc_vimfp_1", .userCanceled))
+        }
+    }
     
     func performUserDeviceValidation() throws {
         if !self.currentUser!.isStatusActivated {
@@ -89,8 +96,12 @@ import Foundation
     }
     
     override func getWorkflowContext() -> OstWorkflowContext {
-        return OstWorkflowContext(workflowId: self.workflowId, workflowType: workflowType)
+        return OstWorkflowContext(workflowId: self.workflowId, workflowType: getWorkflowType())
     }
+  
+  override func getWorkflowType() -> OstWorkflowType {
+    return workflowType
+  }
     
     override func getPinVCConfig() -> OstPinVCConfig {
         fatalError("getPinVCConfig did not override in \(String(describing: self))")
@@ -105,6 +116,10 @@ import Foundation
         DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(500)) {
             self.flowInterrupted(workflowContext: self.getWorkflowContext(),
                                  error: error)
+			
+			if error.messageTextCode == .userCanceled {
+				self.dismissWorkflow()
+			}
         }
     }
     
@@ -113,11 +128,6 @@ import Foundation
             self.flowComplete(workflowContext: self.getWorkflowContext(),
                               ostContextEntity: OstContextEntity(entity: entity, entityType: type))
         }
-    }
-    
-    @objc func cleanUpWorkflowController() {
-        self.hideLoader();
-        self.cleanUp();
     }
     
     override func cleanUp() {
@@ -149,16 +159,33 @@ import Foundation
     //MARK: - OstWorkflowUIDelegaete
     override func requestAcknowledged(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.requestAcknowledged(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        cleanUpWorkflowController()
+        
+        if shouldWaitForFinalization() {
+           showOnAcknowledgeLoader()
+        }else {
+            cleanUpWorkflowController()
+        }
     }
     
     override func flowComplete(workflowContext: OstWorkflowContext, ostContextEntity: OstContextEntity) {
         super.flowComplete(workflowContext: workflowContext, ostContextEntity: ostContextEntity)
-        cleanUpWorkflowController()
+        if nil == loaderPresenter {
+            cleanUpWorkflowController()
+			removeListner()
+        }else {
+            showOnSuccess(workflowContext: workflowContext,
+                          contextEntity: ostContextEntity)
+        }
     }
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowContext: workflowContext, error: error)
-        cleanUpWorkflowController()
+        if nil == loaderPresenter {
+            cleanUpWorkflowController()
+			removeListner()
+        }else {
+            showOnFailure(workflowContext: workflowContext,
+                          error: error)
+        }
     }
 }

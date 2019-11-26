@@ -23,7 +23,9 @@ import Foundation
         if nil != notification.object {
             if ((notification.object! as? OstBaseViewController) === self.getPinViewController) {
                 self.postFlowInterrupted(error: OstError("ui_i_wc_gmwc_vimfp_1", .userCanceled))
-            }
+            }else if (nil != (notification.object! as? OstDeviceMnemonicsViewController)) {
+				dismissWorkflow()
+			}
         }
     }
 
@@ -62,5 +64,12 @@ import Foundation
             
             deviceMnemonicsViewController.presentVCWithNavigation()
         }
+    }
+    
+    override func showOnSuccess(workflowContext: OstWorkflowContext, contextEntity: OstContextEntity) {
+		cleanUpPinViewController()
+		hideLoader()
+        //ShowOnSuccess got consumed in this workflow.
+        //No need to broadcast to show success alert as we are the one who is showing mnemonics.
     }
 }

@@ -25,6 +25,7 @@ import Foundation
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return tableView
@@ -32,6 +33,7 @@ import Foundation
     
     var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = .white
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
         //        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Users...")
         refreshControl.tintColor = UIColor.color(22, 141, 193)
@@ -48,7 +50,6 @@ import Foundation
     }()
     
     var paginatingCell: OstPaginationLoaderTableViewCell? = nil
-    var progressIndicator: OstProgressIndicator? = nil
     
     //MARK: - Variables
     var isNewDataAvailable: Bool = false
@@ -72,6 +73,8 @@ import Foundation
     let MIN_REQUIRED_DEVICE_LIST = 5
     
     var canShowEmptyScreen: Bool = false
+    
+    weak var workflowRef: OstWorkflowCallbacks? = nil
     
     override func configure() {
         super.configure();
@@ -106,14 +109,12 @@ import Foundation
         super.viewDidAppear(animated)
         
         if isApiCallInProgress {
-            let loaderText = getInitialLoaderText()
-            progressIndicator = OstProgressIndicator(progressText: loaderText)
-            progressIndicator?.show()
+            workflowRef?.showInitialLoader(for: getWorkflowType())
         }
     }
     
-    func getInitialLoaderText() -> String {
-        return ""
+    func getWorkflowType() -> OstWorkflowType {
+        fatalError("getWorkflowType did not override")
     }
     
     //MARK: - Add Subview
@@ -197,7 +198,7 @@ import Foundation
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: OstBaseTableViewCell
@@ -393,8 +394,8 @@ import Foundation
         }
         
         self.isNewDataAvailable = true
-        progressIndicator?.hide()
-    
+        workflowRef?.hideLoader()
+        
         reloadDataIfNeeded()
     }
     

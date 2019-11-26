@@ -19,7 +19,8 @@ class OstDeviceMnemonicsViewController: OstBaseScrollViewController {
         
         instance.mnemonics = mnemonics
         instance.onClose = onClose
-        
+		instance.shouldFireIsMovingFromParent = true
+		
         return instance
      }
     

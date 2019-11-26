@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.5
+### Feature
+* Developer can display application loader for OstWalletUI workflow.
+
 ## Version 2.3.4
 ### Feature:
 * Developer can decide whether use existing keys or create new keys for User on application reinstall by setting `EnableIOSDeviceRestore` flag in `OstWalletSdk.plist`.
