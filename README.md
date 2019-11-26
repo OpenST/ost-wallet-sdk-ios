@@ -44,7 +44,7 @@ We use open-source code from the projects listed below. The `Set-up` section bel
   * [setupDevice](#setupdevice)
   * [activateUser](#activateuser)
   * [addSession](#addsession)
-  * [perfromQRAction](#perfromqraction)
+  * [performQRAction](#performqraction)
   * [getDeviceMnemonics](#getdevicemnemonics)
   * [executeTransaction](#executetransaction)
   * [authorizeCurrentDeviceWithMnemonics](#authorizecurrentdevicewithmnemonics)
@@ -105,7 +105,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 Add following entry in your `Cartfile`
 
 ```bash
-github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.4
+github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.5
 ```
 
 Now to actually install everything run the following in your terminal:
@@ -318,11 +318,11 @@ OstWalletSdk.addSession(
 | **delegate** <br> **OstWorkflowDelegate**	| An instance of a class that implements the callback function available in `OstWorkflowDelegate` protocol. These callback functions are needed for communication between app and wallet SDK. Implement `flowComplete` and `flowInterrupt` callback functions to get the workflow status. Details about other callback function can be found in [OstWorkflowDelegate protocol reference](#ostworkflowdelegate-protocol). |
 
 
-### perfromQRAction
+### performQRAction
 This workflow will perform operations after reading data from a QR-Code. This workflow can be used to add a new device and to execute transactions.
 
 ```
-OstWalletSdk.perfromQRAction(
+OstWalletSdk.performQRAction(
     userId: String,
     payload: String,
     delegate: OstWorkflowDelegate
