@@ -193,8 +193,9 @@ class OstMockLoaderViewController: UIViewController, OstWorkflowLoader {
 		guard let parent = progressImageView.superview else {return}
 
 		progressImageView.topAnchor.constraint(equalTo: progressContainerView.topAnchor, constant: 10).isActive = true
-		progressImageView.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: 10).isActive = true
-		progressImageView.rightAnchor.constraint(equalTo: parent.rightAnchor, constant: -10).isActive = true
+		progressImageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+    		progressImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+	 	progressImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     func messageLabelConstraints() {
