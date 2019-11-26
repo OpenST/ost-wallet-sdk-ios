@@ -1,6 +1,6 @@
 # OST Wallet SDK Changelog
 
-## Version 2.4.0
+## Version 2.3.5
 ### Feature
 * Developer can display application loader for OstWalletUI workflow.
 

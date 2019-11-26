@@ -1,6 +1,6 @@
 # OstWalletUI Custom Loader
 
-Developer can add application loader instead of OstWalletSdk default loader while using OstWalletUI.
+A developer can add an application loader instead of the OstWalletSdk default loader while using OstWalletUI.
 
 ## Setup
 
@@ -13,13 +13,13 @@ import OstWalletSdk
 
 class LoaderManager: OstLoaderDelegate {
 
-    func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader? {
-        //Returns view controller of application loader, confirms `OstWorkflowLoader` protocol
-    }
-    
-    func waitForFinalization(workflowType: OstWorkflowType) -> Bool {
-        //Returns boolean flag, which determine whether loader should be shown till workflow completion. 
-    }
+  func getLoader(workflowType: OstWorkflowType) -> OstWorkflowLoader? {
+    //Returns view controller of application loader, confirms `OstWorkflowLoader` protocol
+  }
+   
+  func waitForFinalization(workflowType: OstWorkflowType) -> Bool {
+    //Returns boolean flag, which determine whether loader should be shown till workflow completion. 
+  }
 }
 ```
 #### 2. Set Loader Manager Object
@@ -34,13 +34,13 @@ OstWalletUI.setLoaderManager(loaderManagerObj)
 
 #### 3. Create View Controller Application Loader
 
-Loader Controller should confirms `OstWorkflowLoader` protocol.
+Loader Controller should confirm `OstWorkflowLoader` protocol.
 
 * onInitLoader: Delegate gets called when OstWalletUI is processing
-* onPostAuthentication: OstWalletUI call this delegate after user enters pin
-* onAcknowledge: Delegate gets called after request is submitted for confirmation
+* onPostAuthentication: OstWalletUI call this delegate after a user enters the pin
+* onAcknowledge: Delegate gets called after a request is submitted for confirmation
 * onSuccess: This method gets called after confirmation.
-* onFailure: After failure of confirmation, sdk calls onFailure
+* onFailure: After the failure of confirmation, SDK calls onFailure
 
 >**Note**<br/>
 >Developer should call `dismissWorkflow` of `OstLoaderCompletionDelegate` to close Loader UI.<br/>
@@ -51,66 +51,66 @@ import OstWalletSdk
 
 class LoaderViewController: UIViewController, OstWorkflowLoader {
 
-    var ostLoaderCompletionDelegate: OstLoaderCompletionDelegate? = nil
-      
-    //MARK: - OstWorkflowLoader
-    func onInitLoader(workflowConfig: [String: Any]) {
-        var loaderString: String = "Initializing..."
+  var ostLoaderCompletionDelegate: OstLoaderCompletionDelegate? = nil
     
-        if let initLoaderData = workflowConfig["initial_loader"] as? [String: String],
-            let text = initLoaderData["text"] {
-            
-            loaderString = text
-        }
-        //Set loader text(loaderString)
+  //MARK: - OstWorkflowLoader
+  func onInitLoader(workflowConfig: [String: Any]) {
+    var loaderString: String = "Initializing..."
+   
+    if let initLoaderData = workflowConfig["initial_loader"] as? [String: String],
+      let text = initLoaderData["text"] {
+       
+      loaderString = text
     }
+    //Set loader text(loaderString)
+  }
 
-    func onPostAuthentication(workflowConfig: [String: Any]) {
-        var loaderString: String = "Processing..."
-    
-        if let initLoaderData = workflowConfig["loader"] as? [String: String],
-            let text = initLoaderData["text"] {
-            
-            loaderString = text
-        }   
-        //Set loader text(loaderString)
-    }
+  func onPostAuthentication(workflowConfig: [String: Any]) {
+    var loaderString: String = "Processing..."
+   
+    if let initLoaderData = workflowConfig["loader"] as? [String: String],
+      let text = initLoaderData["text"] {
+       
+      loaderString = text
+    }  
+    //Set loader text(loaderString)
+  }
 
-    func onAcknowledge(workflowConfig: [String: Any]) {
-        var loaderString: String = "Waiting for confirmation..."
-        
-        if let initLoaderData = workflowConfig["acknowledge"] as? [String: String],
-            let text = initLoaderData["text"] {
-            
-            loaderString = text
-        } 
-        //Set loader text(loaderString)
-    }
+  func onAcknowledge(workflowConfig: [String: Any]) {
+    var loaderString: String = "Waiting for confirmation..."
+     
+    if let initLoaderData = workflowConfig["acknowledge"] as? [String: String],
+      let text = initLoaderData["text"] {
+       
+      loaderString = text
+    } 
+    //Set loader text(loaderString)
+  }
 
-    func onSuccess(workflowContext: OstWorkflowContext,
-                   contextEntity: OstContextEntity,
-                   workflowConfig: [String : Any],
-                   loaderCompletionDelegate: OstLoaderCompletionDelegate) {
-    
-        ostLoaderCompletionDelegate = loaderCompletionDelegate
-    
-        showSuccessAlert(workflowContext: workflowContext,
-                         contextEntity: contextEntity)
-    }
+  func onSuccess(workflowContext: OstWorkflowContext,
+          contextEntity: OstContextEntity,
+          workflowConfig: [String : Any],
+          loaderCompletionDelegate: OstLoaderCompletionDelegate) {
+   
+    ostLoaderCompletionDelegate = loaderCompletionDelegate
+   
+    showSuccessAlert(workflowContext: workflowContext,
+             contextEntity: contextEntity)
+  }
 
-    func onFailure(workflowContext: OstWorkflowContext,
-                   error: OstError,
-                   workflowConfig: [String : Any],
-                   loaderCompletionDelegate: OstLoaderCompletionDelegate) {
-    
-        ostLoaderCompletionDelegate = loaderCompletionDelegate
-    
-        showFailureAlert(workflowContext: workflowContext,
-                         error: error)
-    }
-    
-    func dismissLoader() {
-        ostLoaderCompletionDelegate?.dismissWorkflow()
-    }
+  func onFailure(workflowContext: OstWorkflowContext,
+          error: OstError,
+          workflowConfig: [String : Any],
+          loaderCompletionDelegate: OstLoaderCompletionDelegate) {
+   
+    ostLoaderCompletionDelegate = loaderCompletionDelegate
+   
+    showFailureAlert(workflowContext: workflowContext,
+             error: error)
+  }
+   
+  func dismissLoader() {
+    ostLoaderCompletionDelegate?.dismissWorkflow()
+  }
 }
 ```
