@@ -26,6 +26,7 @@ class OstTextView: OstBaseView, UITextViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autocapitalizationType = .none
         view.backgroundColor = .clear
+        view.autocorrectionType = .no
         
         let textViewTheme = OstTheme.getInstance().getTextViewConfig()
         view.textColor = textViewTheme.getColor()

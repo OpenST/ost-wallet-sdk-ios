@@ -83,6 +83,7 @@ import UIKit
         DispatchQueue.main.async {
             self.deviceListController = OstInitiateRecoveryDLViewController
                 .newInstance(userId: self.userId,
+                             workflowRef: self,
                              callBack: {[weak self] (device) in
                                 self?.recoverDeviceAddress = (device?["address"] as? String) ?? ""
                                 self?.openGetPinViewController()
