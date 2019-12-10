@@ -323,6 +323,13 @@ import UIKit
         OstSdkInteract.getInstance.unsubscribe(forWorkflowId: workflowId,
                                                listner: listner)
     }
+	
+	/// Get theme config for application
+	/// - Returns: Theme config dictionary. default is sdk them config.
+	@objc
+	public class func getThemeConfig() -> [String: Any] {
+		return OstTheme.getInstance().themeConfig
+	}
 }
 
 public extension OstWalletUI {
