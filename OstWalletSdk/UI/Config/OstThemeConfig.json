@@ -98,5 +98,9 @@
             "alignment": "left",
             "system_font_weight": "regular"
         }
-    }
+    },
+
+	"cell_separator": {
+	  "color": "#DBDBDB"
+	}
 }
