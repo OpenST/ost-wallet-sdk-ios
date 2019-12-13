@@ -102,5 +102,12 @@
 
 	"cell_separator": {
 	  "color": "#DBDBDB"
+	},
+	
+	"cl1": {
+	  "size": 14,
+	  "color": "#007aff",
+	  "system_font_weight": "medium",
+	  "alignment": "left",
 	}
 }
