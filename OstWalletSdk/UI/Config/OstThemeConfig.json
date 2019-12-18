@@ -104,14 +104,14 @@
 	  "color": "#DBDBDB"
 	},
 	
-	"cl1": {
+	"link": {
 	  "size": 15,
 	  "color": "#007aff",
 	  "system_font_weight": "medium",
 	  "alignment": "left",
 	},
 	
-	"st": {
+	"status": {
 	  "size": 15,
 	  "color": "#0F9D58",
 	  "system_font_weight": "regular",
