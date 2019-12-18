@@ -71,6 +71,10 @@
     "navigation_bar": {
         "tint_color": "#ffffff"
     },
+	
+	"navigation_bar_header": {
+	  "tint_color": "#438bad"
+	},
     
     "icons": {
         "close": {
