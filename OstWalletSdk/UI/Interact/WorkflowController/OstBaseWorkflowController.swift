@@ -130,6 +130,11 @@ import Foundation
         }
     }
     
+	@objc
+	override public func cancelFlow() {
+		postFlowInterrupted(error: OstError(internalCode: "ui_i_wc_obwc_cf_1", errorCode: .userCanceled));
+	}
+	
     override func cleanUp() {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
