@@ -104,12 +104,13 @@ The following are the placeholder properties
  
  The following UI components properties supported by navigation bar:
  
-| Configurable component | Value to Modify                 | 
-| ---------------------- | :-----------------------------: |
-| bar logo               | nav_bar_logo_image.asset_name   |
-| bar tint color         | navigation_bar.tint_color       |
-| close icon tint color  | icons.close.tint_color          |
-| close icon tint color  | icons.back.tint_color           |
+| Configurable component | Value to Modify                   | 
+| ---------------------- | :--------------------------------:|
+| bar logo               | nav_bar_logo_image.asset_name     |
+| bar tint color         | navigation_bar.tint_color         |
+| bar title color        | navigation_bar_header.tint_color  |
+| close icon tint color  | icons.close.tint_color            |
+| close icon tint color  | icons.back.tint_color             |
 
  ### Pin Input(pin_input)
  
