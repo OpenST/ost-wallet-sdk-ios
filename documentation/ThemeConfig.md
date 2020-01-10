@@ -43,7 +43,7 @@ Here, we refer follwing components as 'Label':
 The following UI components properties supported by label:
 
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | font                 | string             |
 | color                | hex value(String)  |
@@ -73,7 +73,7 @@ Here, we refer follwing components as 'Button':
 The following UI components properties supported by button:
 
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | font                 | string             |
 | color                | hex value(String)  |
@@ -85,7 +85,7 @@ The following UI components properties supported by button:
 The following UI component properties supported by EditText:
 
 | Configuration Keys   | Type               |
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | color                | hex value(String)  |
 | background_color     | hex value(String)  |
@@ -95,7 +95,7 @@ The following UI component properties supported by EditText:
 The following are the placeholder properties
 
 | Configuration Keys   | Type               |
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | color                | hex value(String)  |
 | system_font_weight   | string             |
@@ -105,7 +105,7 @@ The following are the placeholder properties
  The following UI components properties supported by navigation bar:
  
 | Configurable component | Value to Modify                   | 
-| ---------------------- | :--------------------------------:|
+| ---------------------- | :--------------------------------|
 | bar logo               | nav_bar_logo_image.asset_name     |
 | bar tint color         | navigation_bar.tint_color         |
 | bar title color        | navigation_bar_header.tint_color  |
@@ -117,7 +117,7 @@ The following are the placeholder properties
  The following UI components properties supported by pin component:
  
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | empty_color          | hex value(String)  |
 | filled_color         | hex value(String)  |
  
@@ -126,7 +126,7 @@ The following are the placeholder properties
  The following UI components properties supported by cell separator:
  
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | color                | hex value(String)  |
 
  ### Link
@@ -134,7 +134,7 @@ The following are the placeholder properties
  The following UI components properties supported by link:
  
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | color                | hex value(String)  |
 | system_font_weight   | string             |
@@ -145,7 +145,7 @@ The following are the placeholder properties
 The following UI components properties supported by status:
 
 | Configuration Keys   | Type               | 
-| -------------------- | :----------------: |
+| -------------------- | :---------------- |
 | size                 | number             |
 | color                | hex value(String)  |
 | system_font_weight   | string             |
