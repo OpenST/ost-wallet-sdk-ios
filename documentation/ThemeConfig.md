@@ -120,6 +120,35 @@ The following are the placeholder properties
 | empty_color          | hex value(String)  |
 | filled_color         | hex value(String)  |
  
+ ### Cell Separator
+ 
+ The following UI components properties supported by cell separator:
+ 
+| Configuration Keys   | Type               | 
+| -------------------- | :----------------: |
+| color                | hex value(String)  |
+
+ ### Link
+ 
+ The following UI components properties supported by link:
+ 
+| Configuration Keys   | Type               | 
+| -------------------- | :----------------: |
+| size                 | number             |
+| color                | hex value(String)  |
+| system_font_weight   | string             |
+| alignment            | string             |
+
+ ### status
+
+The following UI components properties supported by status:
+
+| Configuration Keys   | Type               | 
+| -------------------- | :----------------: |
+| size                 | number             |
+| color                | hex value(String)  |
+| system_font_weight   | string             |
+| alignment            | string             |
 
 ## UI Components 
 
