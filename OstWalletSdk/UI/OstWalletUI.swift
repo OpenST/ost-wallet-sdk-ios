@@ -324,8 +324,8 @@ import UIKit
                                                listner: listner)
     }
 	
-	/// Get theme config for application
-	/// - Returns: Theme config dictionary. default is sdk them config.
+	/// Get currently applied theme config
+	/// - Returns: Theme config dictionary. default is sdk theme config.
 	@objc
 	public class func getThemeConfig() -> [String: Any] {
 		return OstTheme.getInstance().themeConfig

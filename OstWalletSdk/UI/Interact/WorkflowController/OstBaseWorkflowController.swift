@@ -185,7 +185,7 @@ import Foundation
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowContext: workflowContext, error: error)
-        if nil == loaderPresenter {
+        if nil == loaderPresenter && !shouldShowFailureAlert() {
             cleanUpWorkflowController()
 			removeListner()
         }else {
@@ -193,4 +193,8 @@ import Foundation
                           error: error)
         }
     }
+	
+	func shouldShowFailureAlert() -> Bool {
+		return false
+	}
 }
