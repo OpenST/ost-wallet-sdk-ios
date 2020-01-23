@@ -15,6 +15,8 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     var authorizeDeviceQRScannerVC: OstAuthorizeDeviceQRScanner? = nil
     var validateDataDelegate: OstValidateDataDelegate? = nil
     var verfiyAuthDeviceVC: OstVerifyAuthorizeDevice? = nil
+	
+	var showFailureAlert = false;
     
     @objc
     init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
@@ -49,12 +51,19 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
                         }
                     }, onErrorScanning: {[weak self] (error) in
                         let ostError = error ?? OstError("ui_i_wc_advqrwc_osqrfetvc_1", OstErrorCodes.OstErrorCode.unknown)
-                        self?.postFlowInterrupted(error: ostError)
+						self?.showFailureAlert = true
+						self?.postFlowInterrupted(error: ostError);
                 })
             
             self.authorizeDeviceQRScannerVC?.presentVCWithNavigation()
         }
     }
+	
+	override func shouldShowFailureAlert() -> Bool {
+		let storedVal = self.showFailureAlert
+		self.showFailureAlert = false
+		return storedVal
+	}
     
     func onScanndedDataReceived(_ data: String) {
         OstWalletSdk.performQRAction(userId: self.userId, payload: data, delegate: self)

@@ -41,6 +41,16 @@ let themeConfig = try JSONSerialization.jsonObject(with: contentData, options: [
 OstWalletUI.setThemeConfig(themeConfig)
 ```
 
+### Get Theme Config
+
+Get currently applied theme config from sdk.
+```Swift
+/// Get theme config for application
+/// - Returns: Theme config dictionary. default is sdk theme config.
+OstWalletUI.getThemeConfig()
+```
+
+
 ### Set Content Config
 
 Content for OstWalletUI can be initialized by calling `setContentConfig` API. To define custom content config, please refer [ContentConfig](./ContentConfig.md) documentation. 
