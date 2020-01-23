@@ -4,6 +4,7 @@
 ### Feature
 * Theme config getter method added in SDK.
 * Notifying custom loader about invalid QR code scanned.
+* customization options added in `OstThemeConfig`
 
 
 ## Version 2.3.5
