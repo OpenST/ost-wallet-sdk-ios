@@ -130,6 +130,11 @@ import Foundation
         }
     }
     
+	@objc
+	override public func cancelFlow() {
+		postFlowInterrupted(error: OstError(internalCode: "ui_i_wc_obwc_cf_1", errorCode: .userCanceled));
+	}
+	
     override func cleanUp() {
         self.passphrasePrefixDelegate = nil;
         NotificationCenter.default.removeObserver(self);
@@ -180,7 +185,7 @@ import Foundation
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         super.flowInterrupted(workflowContext: workflowContext, error: error)
-        if nil == loaderPresenter {
+        if nil == loaderPresenter && !shouldShowFailureAlert() {
             cleanUpWorkflowController()
 			removeListner()
         }else {
@@ -188,4 +193,8 @@ import Foundation
                           error: error)
         }
     }
+	
+	func shouldShowFailureAlert() -> Bool {
+		return false
+	}
 }
