@@ -11,6 +11,7 @@
 import Foundation
 
 enum OstQRCodeDataDefination: String {
+	case AUTHORIZE_SESSION = "AS"
     case AUTHORIZE_DEVICE = "AD"
     case TRANSACTION = "TX"
     case REVOKE_DEVICE = "RD"
@@ -162,7 +163,12 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                          transactionMeta: metaParam,
                                          options: executeTxPayloadParams.options,
                                          delegate: self.delegate!)
-            
+		
+		case OstQRCodeDataDefination.AUTHORIZE_SESSION.rawValue:
+			let autorizeSessionParams = try OstAddSessionWithQRData.getAddSessionParamsFromQRPayload(self.payloadData!)
+			return OstAddSessionWithQRData(userId: userId,
+										   addSessionQRStruct: autorizeSessionParams,
+										   delegate: self.delegate!)
         default:
             throw OstError("w_p_gwfo_1", .invalidQRCode);
         }

@@ -284,6 +284,11 @@
 		4B974290230E84E100174220 /* OstVerifyTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B97428F230E84E100174220 /* OstVerifyTransaction.swift */; };
 		4B9742A1230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9742A0230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift */; };
 		4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B983CEA22C240D500B9E6D4 /* TrustKit.framework */; };
+		4BE5CF2123E2ADB6001BCB66 /* OstAddSessionWithQRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2023E2ADB6001BCB66 /* OstAddSessionWithQRData.swift */; };
+		4BE5CF2323E2DBC9001BCB66 /* OstAddSessionQRHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2223E2DBC9001BCB66 /* OstAddSessionQRHelper.swift */; };
+		4BE5CF2523E2F928001BCB66 /* OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2423E2F928001BCB66 /* OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift */; };
+		4BE5CF2723E2FAA0001BCB66 /* OstAuthorizeSessionQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2623E2FAA0001BCB66 /* OstAuthorizeSessionQRScanner.swift */; };
+		4BE5CF2923E30F00001BCB66 /* OstVerifyAuthorizeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2823E30F00001BCB66 /* OstVerifyAuthorizeSession.swift */; };
 		4BE90CB422F848CC002886BC /* OstPinVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */; };
 		4BE90D8022FAAD32002886BC /* OstRevokeDLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */; };
 		4BE90D8422FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE90D8322FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift */; };
@@ -600,6 +605,11 @@
 		4B97428F230E84E100174220 /* OstVerifyTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyTransaction.swift; sourceTree = "<group>"; };
 		4B9742A0230FD20D00174220 /* OstDeviceTableViewWithoutActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstDeviceTableViewWithoutActionButton.swift; sourceTree = "<group>"; };
 		4B983CEA22C240D500B9E6D4 /* TrustKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TrustKit.framework; path = Carthage/Build/iOS/TrustKit.framework; sourceTree = "<group>"; };
+		4BE5CF2023E2ADB6001BCB66 /* OstAddSessionWithQRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddSessionWithQRData.swift; sourceTree = "<group>"; };
+		4BE5CF2223E2DBC9001BCB66 /* OstAddSessionQRHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAddSessionQRHelper.swift; sourceTree = "<group>"; };
+		4BE5CF2423E2F928001BCB66 /* OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift; sourceTree = "<group>"; };
+		4BE5CF2623E2FAA0001BCB66 /* OstAuthorizeSessionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstAuthorizeSessionQRScanner.swift; sourceTree = "<group>"; };
+		4BE5CF2823E30F00001BCB66 /* OstVerifyAuthorizeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstVerifyAuthorizeSession.swift; sourceTree = "<group>"; };
 		4BE90CB322F848CC002886BC /* OstPinVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstPinVCConfig.swift; sourceTree = "<group>"; };
 		4BE90D7F22FAAD32002886BC /* OstRevokeDLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDLViewController.swift; sourceTree = "<group>"; };
 		4BE90D8322FAC2C4002886BC /* OstRevokeDeviceWorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstRevokeDeviceWorkflowController.swift; sourceTree = "<group>"; };
@@ -837,6 +847,7 @@
 				00ABD26422A72BE90080C4BB /* Services */,
 				00ABD26C22A72BE90080C4BB /* OstRegisterDevice.swift */,
 				00ABD26D22A72BE90080C4BB /* Interfaces */,
+				4BE5CF2023E2ADB6001BCB66 /* OstAddSessionWithQRData.swift */,
 			);
 			path = Workflows;
 			sourceTree = "<group>";
@@ -855,6 +866,7 @@
 			children = (
 				00ABD25822A72BE90080C4BB /* OstWorkflowHelperBase.swift */,
 				00ABD25922A72BE90080C4BB /* OstSessionHelper.swift */,
+				4BE5CF2223E2DBC9001BCB66 /* OstAddSessionQRHelper.swift */,
 			);
 			path = WorkflowHelpers;
 			sourceTree = "<group>";
@@ -1167,6 +1179,7 @@
 				4B4D939F230BE351004EFC9B /* OstAuthorizeDeviceQRScanner.swift */,
 				4B4D93A0230BE351004EFC9B /* OstTransactionQRScanner.swift */,
 				4B4D93A1230BE351004EFC9B /* OstQRScannerViewController.swift */,
+				4BE5CF2623E2FAA0001BCB66 /* OstAuthorizeSessionQRScanner.swift */,
 			);
 			path = QRScan;
 			sourceTree = "<group>";
@@ -1176,6 +1189,7 @@
 			children = (
 				4B4D93F6230C2A5E004EFC9B /* OstVerifyAuthorizeDevice.swift */,
 				4B97428F230E84E100174220 /* OstVerifyTransaction.swift */,
+				4BE5CF2823E30F00001BCB66 /* OstVerifyAuthorizeSession.swift */,
 			);
 			path = VerifyData;
 			sourceTree = "<group>";
@@ -1380,6 +1394,7 @@
 				4B4D938B230AEC27004EFC9B /* OstShowDeviceQRWorkflowController.swift */,
 				4B4D93B4230C0619004EFC9B /* OstAuthorizeDeviceViaQRWorkflowController.swift */,
 				4B97428D230E762900174220 /* OstExecuteTransactionViaQRWorkflowController.swift */,
+				4BE5CF2423E2F928001BCB66 /* OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift */,
 			);
 			path = WorkflowController;
 			sourceTree = "<group>";
@@ -1603,6 +1618,7 @@
 				4B9433C522F07AB700966372 /* UIVIew+NSLayoutConstraintHelper.swift in Sources */,
 				00ABD31022A72BE90080C4BB /* OstSdkDatabase.swift in Sources */,
 				00ABD34D22A72BE90080C4BB /* OstBasePollingService.swift in Sources */,
+				4BE5CF2723E2FAA0001BCB66 /* OstAuthorizeSessionQRScanner.swift in Sources */,
 				00ABD3C122A72BE90080C4BB /* OstDeviceRepository.swift in Sources */,
 				00ABD33F22A72BE90080C4BB /* OstWorkflowContext.swift in Sources */,
 				00ABD33322A72BE90080C4BB /* OstAPISalt.swift in Sources */,
@@ -1622,6 +1638,7 @@
 				00ABD32722A72BE90080C4BB /* OstAPITokenHolder.swift in Sources */,
 				00ABD36822A72BE90080C4BB /* EthereumTransaction.swift in Sources */,
 				00ABD35C22A72BE90080C4BB /* TokenRule.swift in Sources */,
+				4BE5CF2323E2DBC9001BCB66 /* OstAddSessionQRHelper.swift in Sources */,
 				4B9433BD22F07AB700966372 /* OstWorkflowCallbacks.swift in Sources */,
 				4B9433BC22F07AB700966372 /* OstTheme.swift in Sources */,
 				00ABD30D22A72BE90080C4BB /* OstTokenDbQueries.swift in Sources */,
@@ -1679,6 +1696,7 @@
 				4B9433C322F07AB700966372 /* OstSdkInteract.swift in Sources */,
 				00ABD37822A72BE90080C4BB /* EthereumValue.swift in Sources */,
 				00ABD37F22A72BE90080C4BB /* Bytes+HexString.swift in Sources */,
+				4BE5CF2923E30F00001BCB66 /* OstVerifyAuthorizeSession.swift in Sources */,
 				00ABD3BA22A72BE90080C4BB /* OstBaseModelRepository.swift in Sources */,
 				00ABD3B822A72BE90080C4BB /* OstTokenRepository.swift in Sources */,
 				00ABD31522A72BE90080C4BB /* OstInternalKeyManager.swift in Sources */,
@@ -1861,6 +1879,8 @@
 				00ABD3A622A72BE90080C4BB /* EIP1077.swift in Sources */,
 				00ABD3C322A72BE90080C4BB /* OstCurrentDevice.swift in Sources */,
 				00ABD31E22A72BE90080C4BB /* OstAuthorizeDeviceWithMnemonicsSigner.swift in Sources */,
+				4BE5CF2123E2ADB6001BCB66 /* OstAddSessionWithQRData.swift in Sources */,
+				4BE5CF2523E2F928001BCB66 /* OstAuthorizeExteranSessionViaQRCodeWorkflowController.swift in Sources */,
 				00ABD3BE22A72BE90080C4BB /* OstTokenHolderRepository.swift in Sources */,
 				4B9433A122F07AB700966372 /* OstLabel.swift in Sources */,
 				00ABD31B22A72BE90080C4BB /* OstPinManager.swift in Sources */,

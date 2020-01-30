@@ -462,7 +462,7 @@ private extension OstInternalKeyManager {
     /// - Returns: Pin hash
     /// - Throws: OstError
     func getPinHash() throws -> String {
-        var userDeviceInfo: [String: Any] = getUserDeviceInfo()
+        let userDeviceInfo: [String: Any] = getUserDeviceInfo()
         guard let pinData = userDeviceInfo[RECOVERY_PIN_HASH] as? Data else {
             throw OstError("o_s_i_km_gph_1", .recoveryPinNotFoundInKeyManager)
         }

@@ -10,7 +10,7 @@
 
 import Foundation
 
-@objc public enum OstEntityType:Int {
+@objc public enum OstEntityType: Int {
     case device,
     user,
     array,

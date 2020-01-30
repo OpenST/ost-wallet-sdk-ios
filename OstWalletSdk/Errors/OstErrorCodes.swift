@@ -124,6 +124,8 @@ import Foundation
         saltApiFailed,
         
         noPendingRecovery,
+		
+		invaldApiSignerAddress,
         
         //NEW - CONFIGURATION
         invalidBlockGenerationTime,
@@ -315,7 +317,9 @@ import Foundation
         case .deviceCanNotBeAuthorized:
             return "Unable to authorize this device. Please ensure the device is 'Registered' for this user with OST platform. Only a registered device can be authorized.";
             
-            
+		case .invaldApiSignerAddress:
+			return "Incorrect Api signer address. Please inspect the value being sent is correct and not null, rectify and re-submit.";
+
             
             
             
@@ -398,6 +402,7 @@ import Foundation
         case .invalidNewUserPassphrase: return "INVALID_NEW_USER_PASSPHRASE";
         case .invalidPassphrasePrefix: return "INVALID_PASSPHRASE_PREFIX";
         case .noPendingRecovery: return "NO_PENDING_RECOVERY";
+		case .invaldApiSignerAddress: return "INVALID_API_SIGNER_ADDRESS";
 
         //NEW - CONFIGURATION
         case .invalidBlockGenerationTime: return "INVALID_BLOCK_GENERATION_TIME";
