@@ -13,7 +13,7 @@ import Foundation
 class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowController {
 	var authorizeSessionQRScannerVC: OstAuthorizeSessionQRScanner? = nil
 	var validateDataDelegate: OstValidateDataDelegate? = nil
-	var verfiyAuthDeviceVC: OstVerifyAuthorizeDevice? = nil
+	var verfiyAuthSessionVC: OstVerifyAuthorizeSession? = nil
 	
 	var showFailureAlert = false;
 
@@ -101,26 +101,26 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
 	func openVerifyAuthSessionVC(ostContextEntity: OstContextEntity) {
         DispatchQueue.main.async {
             self.hideLoader()
-            self.verfiyAuthDeviceVC = OstVerifyAuthorizeDevice
-                .newInstance(device: ostContextEntity.entity as! OstDevice,
+            self.verfiyAuthSessionVC = OstVerifyAuthorizeSession
+                .newInstance(session: ostContextEntity.entity as! OstSession,
                              authorizeCallback: {[weak self] (_) in
 
-                                self?.showLoader(for: .authorizeDeviceWithQRCode)
+                                self?.showLoader(for: .authorizeSessionWithQRCode)
                                 self?.validateDataDelegate?.dataVerified()
 
                 }) {[weak self] in
                     self?.validateDataDelegate?.cancelFlow()
             }
             
-            self.verfiyAuthDeviceVC!.presentVC(animate: false)
+            self.verfiyAuthSessionVC!.presentVC(animate: false)
         }
     }
 	
 	override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
 		   if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-			   && (nil != verfiyAuthDeviceVC || nil != getPinViewController ) {
+			   && (nil != verfiyAuthSessionVC || nil != getPinViewController ) {
 			   
-			   verfiyAuthDeviceVC = nil
+			   verfiyAuthSessionVC = nil
 			   getPinViewController = nil
 			   hideLoader()
 			   authorizeSessionQRScannerVC?.scannerView?.startScanning()
@@ -133,8 +133,8 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
         authorizeSessionQRScannerVC?.removeViewController(flowEnded: true)
         authorizeSessionQRScannerVC = nil
         validateDataDelegate = nil
-        verfiyAuthDeviceVC?.dismissVC()
-        verfiyAuthDeviceVC = nil
+        verfiyAuthSessionVC?.dismissVC()
+        verfiyAuthSessionVC = nil
         super.cleanUp()
     }
 }

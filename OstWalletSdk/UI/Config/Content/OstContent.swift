@@ -287,7 +287,7 @@ extension OstContent {
 	
 	class func getAuthorizeSessionVerifyDataVCConfig() -> [String: Any] {
         let workflowName = OstContent.getWorkflowName(for: .authorizeSessionWithQRCode)
-        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_device", inWorkflow: workflowName)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_session", inWorkflow: workflowName)
         return viewConfig
     }
     

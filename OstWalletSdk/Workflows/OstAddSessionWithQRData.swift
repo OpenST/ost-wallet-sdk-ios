@@ -85,6 +85,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 	
 	private let addSessionQRStruct: OstAddSessionQRStruct
 	private var sessionDevice: OstDevice?
+	private var session: OstSession?
 	
 	/// Initialize
 	/// - Parameters:
@@ -124,9 +125,10 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
         }
 		
 		try fetchDevice()
+		try fetchSession()
     }
 	
-    /// Fetch device to validate mnemonics
+    /// Fetch device
     ///
     /// - Throws: OstError
     private func fetchDevice() throws {
@@ -151,7 +153,36 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
         }
         
 		if (self.sessionDevice!.userId!.caseInsensitiveCompare(self.currentDevice!.userId!) != .orderedSame){
-			throw OstError("w_adwqrd_fd_2", .unknown)
+			throw OstError("w_adwqrd_fd_1", .unknown)
+		}
+    }
+	
+	/// Fetch session
+    ///
+    /// - Throws: OstError
+    private func fetchSession() throws {
+        if nil == self.session {
+            var error: OstError? = nil
+            let group = DispatchGroup()
+            group.enter()
+            try OstAPISession(userId: userId)
+				.getSession(sessionAddress:  self.addSessionQRStruct.sessionAddress,
+							onSuccess: { (ostSession) in
+											self.session = ostSession
+											group.leave()
+								}) { (ostError) in
+									error = ostError
+									group.leave()
+							}
+            group.wait()
+            
+            if (nil != error) {
+                throw error!
+            }
+        }
+        
+		if (nil != self.session){
+			throw OstError("w_adwqrd_fs_1", .unknown)
 		}
     }
 	
@@ -176,7 +207,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 			"spending_limit": self.addSessionQRStruct.spendingLimit,
 			"expiration_height": self.addSessionQRStruct.expiryTime,
 			"nonce": "0",
-			"approx_expiration_timestamp": "0"
+			"approx_expiration_timestamp": self.addSessionQRStruct.expiryTime
 		])
         return OstContextEntity(entity: sessionEntity, entityType: .session)
     }
@@ -192,6 +223,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 	func validateApiDependentParams() throws {
 		try self.validateParams()
 		try self.fetchDevice()
+		try self.fetchSession()
 		//validate signature
 	}
 	

@@ -11,7 +11,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 import Foundation
 
 class OstVerifyAuthorizeSession: OstBaseViewController {
-	class func newInstance(device: OstSession,
+	class func newInstance(session: OstSession,
 						   authorizeCallback: ((OstSession) -> Void)?,
 						   cancelCallback: (() -> Void)?) -> OstVerifyAuthorizeSession {
 		
@@ -19,7 +19,7 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 		
 		vc.authorizeCallback = authorizeCallback
 		vc.cancelCallback = cancelCallback
-		vc.session = device
+		vc.session = session
 		
 		return vc
 	}
@@ -45,7 +45,7 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 	var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.alignment = UIStackView.Alignment.center
+        view.alignment = UIStackView.Alignment.leading
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -74,9 +74,13 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 		let spendingLimit = getSessionDetailView(heading: "Spending Amount", text: session!.spendingLimit!.description)
 		stackView.addArrangedSubview(spendingLimit)
 		
-		let expirationTime = getSessionDetailView(heading: "Expiry Date", text: String(session!.approxExpirationTimestamp))
-		stackView.addArrangedSubview(expirationTime)
+		let date = Date(timeIntervalSince1970: session!.approxExpirationTimestamp)
+		let dateFormatterGet = DateFormatter()
+		dateFormatterGet.dateFormat = "dd-MM-yyyy HH:mm:ss"
 		
+		let expirationTime = getSessionDetailView(heading: "Expiry Date",
+												  text: dateFormatterGet.string(from: date))
+		stackView.addArrangedSubview(expirationTime)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -150,6 +154,7 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
         addContainerViewConstraints()
         addLeadLabelConstraints()
 		addSessionDetailsContainerConstraints()
+		addStackViewConstraints()
         addActionButtonConstraints()
         addCancelButtonConstraints()
     }
@@ -177,7 +182,7 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 		stackView.topAlignWithParent(multiplier: 1, constant: 25)
 		stackView.leftAlignWithParent()
 		stackView.rightAlignWithParent()
-		stackView.bottomAlignWithParent(multiplier: 1, constant: 25)
+		stackView.bottomAlignWithParent()
 	}
     
     func addActionButtonConstraints() {
@@ -201,8 +206,8 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
         
 		let container = UIView()
         
-        let headingLabel = OstC1Label()
-        let textLabel = OstC2Label()
+        let headingLabel = OstC2Label()
+        let textLabel = OstC1Label()
         
         headingLabel.text = heading
         textLabel.text = text
@@ -214,10 +219,10 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
         headingLabel.leftAlignWithParent()
         headingLabel.rightAlignWithParent()
         
-		textLabel.placeBelow(toItem: headingLabel)
+		textLabel.placeBelow(toItem: headingLabel, constant: 5)
 		textLabel.leftAlignWithParent()
 		textLabel.rightAlignWithParent()
-		textLabel.bottomAlignWithParent(multiplier: 1, constant: 20)
+		textLabel.bottomAlignWithParent(multiplier: 1, constant: -20)
         
         return container
     }

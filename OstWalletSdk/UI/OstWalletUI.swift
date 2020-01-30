@@ -297,6 +297,19 @@ import UIKit
         workflowController.perform()
         return workflowController.workflowId
     }
+	
+	@objc
+	public class func scanQRCodeToAuthorizeSession(
+		userId: String,
+		passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+		) -> String {
+		
+		let workflowController = OstAuthorizeExteranSessionViaQRCodeWorkflowController(userId: userId,
+																					 passphrasePrefixDelegate: passphrasePrefixDelegate)
+		
+		workflowController.perform()
+		return workflowController.workflowId
+	}
     
     /// Subscribe to receive workflow events.
     ///

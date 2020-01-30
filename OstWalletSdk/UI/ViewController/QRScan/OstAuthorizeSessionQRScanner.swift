@@ -23,12 +23,23 @@ class OstAuthorizeSessionQRScanner: OstBaseQRScannerViewController {
     }
 	
 	override func configure() {
-		let pageConfig = OstContent.getScanQRForAuthorizeDeviceVCConfig()
+		let pageConfig = OstContent.getScanQRForAuthorizeSessionVCConfig()
 		titleLabel.updateAttributedText(data: pageConfig[OstContent.OstComponentType.titleLabel.getComponentName()],
 										placeholders: pageConfig[OstContent.OstComponentType.placeholders.getComponentName()])
 		   
 		super.configure()
 	}
+	
+	override func onQRCodeDataReceived(_ data:[String]?) {
+		   super.onQRCodeDataReceived(data)
+		   
+		   if isValidQR() {
+			   let qrData = qrDataString![0]
+			   onSuccessScanning?(qrData)
+		   }else {
+			  onErrorScanning?(OstError("ui_vc_qrs_asqrs_qrcdr_1", .invalidQRCode))
+		   }
+	   }
 	
 	func isValidQR() -> Bool {
         if (nil != qrDataString)
