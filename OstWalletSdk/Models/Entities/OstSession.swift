@@ -242,3 +242,26 @@ extension OstSession {
     }
 }
 
+
+public extension OstSession {
+	func toLowestUnitSpendingLimit() -> String? {
+		if let user = try? OstUser.getById(self.userId ?? ""),
+			let tokenId = user?.tokenId,
+			let spendingLimt = self.spendingLimit {
+			
+			return try? OstConversion.toLowestUnit(spendingLimt.description, tokenId: tokenId)
+		}
+		return nil
+	}
+	
+	func toHeighestUnitSpendingLimit() -> String? {
+		if let user = try? OstUser.getById(self.userId ?? ""),
+			let tokenId = user?.tokenId,
+			let spendingLimt = self.spendingLimit {
+			
+			return try? OstConversion.toHighestUnit(spendingLimt.description, tokenId: tokenId)
+		}
+		return nil
+	}
+}
+

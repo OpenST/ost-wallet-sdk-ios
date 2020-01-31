@@ -68,19 +68,28 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		let address = getSessionDetailView(heading: "Session Address", text: session!.address!)
-		stackView.addArrangedSubview(address)
+		let addressView = getSessionDetailView(heading: "Session Address", text: session!.address!)
+		stackView.addArrangedSubview(addressView)
 		
-		let spendingLimit = getSessionDetailView(heading: "Spending Amount", text: session!.spendingLimit!.description)
-		stackView.addArrangedSubview(spendingLimit)
+		let spendingLimit = session!.toHeighestUnitSpendingLimit() ?? session!.spendingLimit!.description
+		var tokenSymbol = ""
+		if let user = try? OstUser.getById(session!.userId ?? ""),
+			let tokenId = user?.tokenId,
+			let token = try? OstToken.getById(tokenId) {
+			
+			tokenSymbol = token?.symbol ?? ""
+		}
+		
+		let spendingLimitView = getSessionDetailView(heading: "Spending Amount", text: "\(spendingLimit) \(tokenSymbol)")
+		stackView.addArrangedSubview(spendingLimitView)
 		
 		let date = Date(timeIntervalSince1970: session!.approxExpirationTimestamp)
 		let dateFormatterGet = DateFormatter()
 		dateFormatterGet.dateFormat = "dd-MM-yyyy HH:mm:ss"
 		
-		let expirationTime = getSessionDetailView(heading: "Expiry Date",
+		let expirationTimeView = getSessionDetailView(heading: "Expiry Date",
 												  text: dateFormatterGet.string(from: date))
-		stackView.addArrangedSubview(expirationTime)
+		stackView.addArrangedSubview(expirationTimeView)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -180,8 +189,8 @@ class OstVerifyAuthorizeSession: OstBaseViewController {
 	
 	func addStackViewConstraints() {
 		stackView.topAlignWithParent(multiplier: 1, constant: 25)
-		stackView.leftAlignWithParent()
-		stackView.rightAlignWithParent()
+		stackView.leftAlignWithParent(multiplier: 1, constant: 5)
+		stackView.rightAlignWithParent(multiplier: 1, constant: -5)
 		stackView.bottomAlignWithParent()
 	}
     
