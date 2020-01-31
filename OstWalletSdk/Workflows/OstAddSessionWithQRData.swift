@@ -161,12 +161,12 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
         try super.validateParams()
 
 		if !self.addSessionQRStruct.deviceAddress.isValidAddress {
-            throw OstError("w_aswqrd_vp_1", .unknown);
+            throw OstError("w_aswqrd_vp_1", .invalidQRCode);
         }
 		
 		if !self.addSessionQRStruct.sessionAddress.isValidAddress{
 			//todo: INVALID_SESSION_ADDRESS
-            throw OstError("w_aswqrd_vp_2", .unknown);
+            throw OstError("w_aswqrd_vp_2", .invalidQRCode);
         }
 		
 		try validateDevice()
