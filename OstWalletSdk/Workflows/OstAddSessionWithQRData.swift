@@ -50,40 +50,53 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 	static  let PAYLOAD_EXPIRY_TIME_KEY = "et"
 	
 	class func getAddSessionParamsFromQRPayload(_ payload: [String: Any?]) throws -> OstAddSessionQRStruct {
+		let error: OstError
 		guard let sessionData: [String: String] = payload[OstAddSessionWithQRData.PAYLOAD_SESSION_DATA_KEY] as? [String: String] else {
-            throw OstError("w_aswqrd_gadpfqrp_1", .invalidQRCode)
+            error = OstError("w_aswqrd_gadpfqrp_1", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "Session data (sd) in null");
+			throw error
         }
 		
 		guard let signature: String = payload[OstAddSessionWithQRData.PAYLOAD_SIGNATURE_KEY] as? String else {
-            throw OstError("w_aswqrd_gadpfqrp_2", .invalidQRCode)
+            error = OstError("w_aswqrd_gadpfqrp_2", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "Signature (sig) in null");
+			throw error
         }
 		if signature.isEmpty {
             throw OstError("w_aswqrd_gadpfqrp_3", .invalidQRCode)
         }
 		
 		guard let deviceAddress: String = sessionData[OstAddSessionWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY] else {
-            throw OstError("w_aswqrd_gadpfqrp_4", .invalidQRCode)
+            error = OstError("w_aswqrd_gadpfqrp_4", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "device address (da) in null");
+			throw error
         }
         if deviceAddress.isEmpty {
             throw OstError("w_aswqrd_gadpfqrp_5", .invalidQRCode)
         }
 		
 		guard let sessionAddress: String = sessionData[OstAddSessionWithQRData.PAYLOAD_SESSION_ADDRESS_KEY] else {
-			throw OstError("w_aswqrd_gadpfqrp_6", .invalidQRCode)
+			error = OstError("w_aswqrd_gadpfqrp_6", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "session address (sa) in null");
+			throw error
 		}
 		if sessionAddress.isEmpty {
 			throw OstError("w_aswqrd_gadpfqrp_7", .invalidQRCode)
 		}
 		
 		guard let expiryTime: String = sessionData[OstAddSessionWithQRData.PAYLOAD_EXPIRY_TIME_KEY] else {
-			throw OstError("w_aswqrd_gadpfqrp_8", .invalidQRCode)
+			error = OstError("w_aswqrd_gadpfqrp_8", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "expiry time (et) in null");
+			throw error
 		}
 		if expiryTime.isEmpty {
 			throw OstError("w_aswqrd_gadpfqrp_9", .invalidQRCode)
 		}
        
 		guard let spendingLimit: String = sessionData[OstAddSessionWithQRData.PAYLOAD_SPENDING_LIMIT_KEY] else {
-			throw OstError("w_aswqrd_gadpfqrp_10", .invalidQRCode)
+			error = OstError("w_aswqrd_gadpfqrp_10", .invalidQRCode)
+			error.addErrorInfo(key:"reason", val: "spending limit (sp) in null");
+			throw error
 		}
 		if spendingLimit.isEmpty {
 			throw OstError("w_aswqrd_gadpfqrp_11", .invalidQRCode)
@@ -164,8 +177,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 		try? self.fetchDevice()
 			
 		if (nil == sessionDevice) {
-			//OstErrorCodes.OstErrorCode.INVALID_DEVICE_ADDRESS
-			let error = OstError(internalCode: "w_oaswqrd_vd_1", errorCode: OstErrorCodes.OstErrorCode.unknown)
+			let error = OstError(internalCode: "w_oaswqrd_vd_1", errorCode: OstErrorCodes.OstErrorCode.invalidQRCode)
 			error.addErrorInfo(key: "qr_device_address", val: addSessionQRStruct.deviceAddress)
 			error.addErrorInfo(key: "userId", val: userId)
 			error.addErrorInfo(key: "reason", val: "Device with specified address does not exist for this user")
@@ -175,8 +187,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 		
 		// Ensure device is in registered state.
 		if (!sessionDevice!.isStatusRegistered) {
-			//OstErrorCodes.OstErrorCode.INVALID_DEVICE_ADDRESS
-			let error = OstError(internalCode: "w_oaswqrd_vadp_2", errorCode: OstErrorCodes.OstErrorCode.unknown)
+			let error = OstError(internalCode: "w_oaswqrd_vadp_2", errorCode: OstErrorCodes.OstErrorCode.invalidQRCode)
 			error.addErrorInfo(key: "qr_device_address", val: addSessionQRStruct.deviceAddress)
 			error.addErrorInfo(key: "userId", val: userId)
 			error.addErrorInfo(key: "device_status", val: sessionDevice!.status ?? "")
@@ -301,7 +312,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 		let message = getMessageToSign()
 		
 		guard let externalSignerAddress = sessionDevice?.apiSignerAddress else {
-			let error = OstError(internalCode: "w_oaswqrd_esdsbas_1", errorCode: OstErrorCodes.OstErrorCode.invalidQRCode)
+			let error = OstError(internalCode: "w_oaswqrd_esdsbas_1", errorCode: OstErrorCodes.OstErrorCode.signerAddressNotFound)
 			error.addErrorInfo(key: "qr_external_device_api_signer", val: "null")
 			throw error
 		}
@@ -309,8 +320,8 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 		let signerAddress = getPersonalSignAddress(signature: addSessionQRStruct.signature, of: message)
 		
 		if externalSignerAddress.caseInsensitiveCompare(signerAddress) != .orderedSame {
-			//INVALID_SIGNATURE
-			throw OstError(internalCode: "w_oaswqrd_esdsbas_2", errorCode: OstErrorCodes.OstErrorCode.signerAddressNotFound)
+			
+			throw OstError(internalCode: "w_oaswqrd_esdsbas_2", errorCode: OstErrorCodes.OstErrorCode.invalidSignature)
 		}
 	}
 	

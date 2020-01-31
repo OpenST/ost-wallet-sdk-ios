@@ -126,6 +126,8 @@ import Foundation
         noPendingRecovery,
 		
 		invaldApiSignerAddress,
+		invalidSignature,
+		
         
         //NEW - CONFIGURATION
         invalidBlockGenerationTime,
@@ -320,7 +322,9 @@ import Foundation
 		case .invaldApiSignerAddress:
 			return "Incorrect Api signer address. Please inspect the value being sent is correct and not null, rectify and re-submit.";
 
-            
+		case .invalidSignature:
+			return "The QR code does not contain valid signature.";
+
             
             
         ///Deprecated
@@ -403,6 +407,7 @@ import Foundation
         case .invalidPassphrasePrefix: return "INVALID_PASSPHRASE_PREFIX";
         case .noPendingRecovery: return "NO_PENDING_RECOVERY";
 		case .invaldApiSignerAddress: return "INVALID_API_SIGNER_ADDRESS";
+		case .invalidSignature: return "INVALID_SIGNATURE";
 
         //NEW - CONFIGURATION
         case .invalidBlockGenerationTime: return "INVALID_BLOCK_GENERATION_TIME";
