@@ -15,6 +15,7 @@ enum OptionType {
     viewMnemonics,
     biomerticStatus,
     authorizeViaQR,
+	authorizeSessionViaQR,
     authorizeViaMnemonics,
     showDeviceQR,
     manageDevices,
