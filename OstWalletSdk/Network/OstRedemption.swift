@@ -12,6 +12,26 @@ import Foundation
 
 
 class OstRedemption: OstAPIBase{
+    
+    /// Get Redemptions for user
+   /// - Parameters:
+   ///   - params: Fetch redemptions params
+   ///   - onSuccess: Success callback
+   ///   - onFailure: Failure callback
+   /// - Throws: OSTError
+   func getRedemptions(params:[String : Any]?,
+                       onSuccess:@escaping (([String: Any]?) -> Void),
+                       onFailure:@escaping (([String: Any]?) -> Void)) throws {
+       resourceURL =   "/users/" + userId + "/redemptions/";
+       var apiParams:[String : Any] = params ?? [:];
+       
+       // Sign API resource
+       try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
+
+       get(params: apiParams as [String : AnyObject],
+           onSuccess:onSuccess,
+           onFailure:onFailure);
+   }
 
     /// Get Single Redemption for user
     ///
@@ -21,7 +41,7 @@ class OstRedemption: OstAPIBase{
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
-    func getRedemptionDetail(id:String,
+    func getRedemptionDetails(id:String,
                               params:[String : Any]?,
                               onSuccess:@escaping (([String: Any]?) -> Void),
                               onFailure:@escaping (([String: Any]?) -> Void)) throws {
@@ -65,7 +85,7 @@ class OstRedemption: OstAPIBase{
     ///   - onSuccess: Success callback
     ///   - onFailure: Failure callback
     /// - Throws: OSTError
-    func getRedeemableSkuDetail(id: String,
+    func getRedeemableSkuDetails(id: String,
                                 params:[String : Any]?,
                                 onSuccess:@escaping (([String: Any]?) -> Void),
                                 onFailure:@escaping (([String: Any]?) -> Void)) throws {
