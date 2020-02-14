@@ -275,7 +275,7 @@ import Foundation
         ///  - skuId: sku Id
        ///   - params: redeemable sku details params
        ///   - delegate: Callback
-    @objc public class func getRedeemableSkus(userId:String, skuId: String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
+    @objc public class func getRedeemableSkuDetails(userId:String, skuId: String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
        do {
         try OstRedemption.init(userId: userId)
             .getRedeemableSkuDetails(id: skuId, params: params,
