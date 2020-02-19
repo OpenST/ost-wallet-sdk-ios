@@ -13,49 +13,6 @@ import Foundation
 
 class OstRedemption: OstAPIBase{
     
-    /// Get Redemptions for user
-   /// - Parameters:
-   ///   - params: Fetch redemptions params
-   ///   - onSuccess: Success callback
-   ///   - onFailure: Failure callback
-   /// - Throws: OSTError
-   func getRedemptions(params:[String : Any]?,
-                       onSuccess:@escaping (([String: Any]?) -> Void),
-                       onFailure:@escaping (([String: Any]?) -> Void)) throws {
-       resourceURL =   "/users/" + userId + "/redemptions/";
-       var apiParams:[String : Any] = params ?? [:];
-       
-       // Sign API resource
-       try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
-
-       get(params: apiParams as [String : AnyObject],
-           onSuccess:onSuccess,
-           onFailure:onFailure);
-   }
-
-    /// Get Single Redemption for user
-    ///
-    /// - Parameters:
-    ///   - id : redemption id
-    ///   - params: Fetch single redemption params
-    ///   - onSuccess: Success callback
-    ///   - onFailure: Failure callback
-    /// - Throws: OSTError
-    func getRedemptionDetails(id:String,
-                              params:[String : Any]?,
-                              onSuccess:@escaping (([String: Any]?) -> Void),
-                              onFailure:@escaping (([String: Any]?) -> Void)) throws {
-        resourceURL =   "/users/" + self.userId + "/redemptions/" + id;
-        var apiParams:[String : Any] = params ?? [:];
-        
-        // Sign API resource
-        try OstAPIHelper.sign(apiResource: resourceURL, andParams: &apiParams, withUserId: self.userId)
-
-        get(params: apiParams as [String : AnyObject],
-            onSuccess:onSuccess,
-            onFailure:onFailure);
-    }
-    
     /// Get Sku list for redemption
     ///
     /// - Parameters:

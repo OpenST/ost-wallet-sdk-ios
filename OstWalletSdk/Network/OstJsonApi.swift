@@ -217,39 +217,6 @@ import Foundation
         }
     }
     
-    /// Get user redemptions from server
-    ///
-    /// - Parameters:
-    ///   - userId: User Id
-    ///   - params: redemptions params
-    ///   - delegate: Callback
-    @objc public class func getRedemptions(userId:String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
-        do {
-            try OstRedemption.init(userId: userId)
-                .getRedemptions(params: params,
-                                onSuccess: self.getApiSuccessCallback(delegate: delegate),
-                                onFailure: self.getApiErrorCallback(delegate: delegate))
-        } catch let error {
-            delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
-        }
-    }
-    
-    /// Get single user redemption details from server
-   ///
-   /// - Parameters:
-   ///   - userId: User Id
-   ///   - redemptionId :redemption Id
-   ///   - params: redemption params
-   ///   - delegate: Callback
-    @objc public class func getRedemptionDetails(userId:String, redemptionId:String, params:[String:Any]?, delegate:OstJsonApiDelegate) {
-       do {
-        try OstRedemption.init(userId: userId)
-            .getRedeemableSkuDetails(id: redemptionId, params: params, onSuccess:self.getApiSuccessCallback(delegate:delegate),
-                                     onFailure: self.getApiErrorCallback(delegate: delegate))
-       } catch let error {
-           delegate.onOstJsonApiError(error: (error as! OstError), errorData: nil);
-       }
-    }
     
     /// Get  user redeemable skus  from server
       ///
