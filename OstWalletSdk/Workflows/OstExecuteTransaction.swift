@@ -30,6 +30,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     static let CURRENCY_CODE = "currency_code"
     static let SYMBOL = "symbol"
     static let WAIT_FOR_FINALIZATION = "wait_for_finalization"
+	static let REDEMPTION_DETAILS = "redemption_details"
     
     private let ABI_METHOD_NAME_DIRECT_TRANSFER = "directTransfers"
     private let ABI_METHOD_NAME_PAY = "pay"
@@ -141,6 +142,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
     private let ruleName: String
     private let transactionMeta: [String: String]
     private let options: [String: Any]
+	private let redemptionDetails: [String: Any]?
     private var currencyCode: String = OstConfig.getPricePointCurrencySymbol()
     
     private var rule: OstRule? = nil
@@ -172,6 +174,7 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
         self.amounts = amounts
         self.ruleName = ruleName
         self.options = options
+		self.redemptionDetails = options[OstExecuteTransaction.REDEMPTION_DETAILS] as? [String: Any];
         self.transactionMeta = transactionMeta
         if let lCurrencyCode = options[OstExecuteTransaction.CURRENCY_CODE] {
             self.currencyCode = OstUtils.toString(lCurrencyCode)!.uppercased()
@@ -315,6 +318,9 @@ class OstExecuteTransaction: OstWorkflowEngine, OstDataDefinitionWorkflow {
             params["signer"] = self.activeSession!.address!
             params["signature"] = self.signature!
             params["meta_property"] = self.transactionMeta
+			if (nil != self.redemptionDetails) {
+				params["redemption_details"] = self.redemptionDetails
+			}
             
             try? self.activeSession!.incrementNonce()
             
