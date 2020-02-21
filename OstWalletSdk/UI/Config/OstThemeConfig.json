@@ -122,11 +122,10 @@
 	  "alignment": "left",
 	},
 	
-	"form_field": {
-   	  "alignment":"left",
-          "size":15,
-          "system_font_weight":"regular",
-          "color":"#484848",
-          "border_radius": 5
-        },
+    "form_field": {
+        "size":15,
+        "system_font_weight":"regular",
+        "color":"#484848",
+        "border_color": "#484848"
+    }
 }
