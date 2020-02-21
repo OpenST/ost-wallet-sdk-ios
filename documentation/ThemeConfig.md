@@ -161,7 +161,7 @@ The following UI components properties supported by status:
 | color                | hex value(String)  |
 | system_font_weight   | string             |
 | alignment            | string             |
-| border_color         | string             |
+| border_color         | hex value(String)  |
 
 ## UI Components 
 
