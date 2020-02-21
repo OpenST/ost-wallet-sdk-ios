@@ -151,6 +151,18 @@ The following UI components properties supported by status:
 | system_font_weight   | string             |
 | alignment            | string             |
 
+ ### form_field
+
+The following UI components properties supported by status:
+
+| Configuration Keys   | Type               | 
+| -------------------- | :---------------- |
+| size                 | number             |
+| color                | hex value(String)  |
+| system_font_weight   | string             |
+| alignment            | string             |
+| border_color         | string             |
+
 ## UI Components 
 
 ![copy-framework-file](images/NavBar.png)
