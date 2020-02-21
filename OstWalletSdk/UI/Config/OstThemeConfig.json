@@ -112,14 +112,14 @@
 	  "size": 15,
 	  "color": "#007aff",
 	  "system_font_weight": "medium",
-	  "alignment": "left",
+	  "alignment": "left"
 	},
 	
 	"status": {
 	  "size": 15,
 	  "color": "#0F9D58",
 	  "system_font_weight": "regular",
-	  "alignment": "left",
+	  "alignment": "left"
 	},
 	
     "form_field": {
