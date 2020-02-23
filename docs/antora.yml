@@ -1,5 +1,5 @@
-name: ost_wallet_sdk_ios
+name: ost-wallet-sdk-ios
 title: Ost Wallet SDK iOS
-version: '1.0'
+version: '1.5'
 nav:
 - modules/ROOT/nav.adoc
