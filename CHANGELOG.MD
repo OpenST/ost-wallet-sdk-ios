@@ -2,6 +2,10 @@
 
 ## Version 2.3.6
 ### Feature
+* `getRedeemableSkus` and `getRedeemableSkuDetails` apis added in `OstJsonApi`.
+
+## Version 2.3.6
+### Feature
 * Theme config getter method added in SDK.
 * Notifying custom loader about invalid QR code scanned.
 * customization options added in `OstThemeConfig`
