@@ -26,7 +26,7 @@ OST JSON APIs are a set of *asynchronous* methods that make API calls to OST Pla
     - [Usage](#usage-4)
     - [Sample Response](#sample-response-4)
     - [Sample Error](#sample-error)
- - [Get Redeemable Sku Details](#get-redeemable-sku-details)
+  - [Get Redeemable Sku Details](#get-redeemable-sku-details)
     - [Usage](#usage-8)
     - [Sample Response](#sample-response-8)  
 	   
@@ -37,7 +37,7 @@ OST JSON APIs are a set of *asynchronous* methods that make API calls to OST Pla
   - [Get Devices](#get-devices)
     - [Usage](#usage-6)
     - [Sample Response](#sample-response-6)
- - [Get Redeemable Skus](#get-redeemable-skus)
+  - [Get Redeemable Skus](#get-redeemable-skus)
     - [Usage](#usage-7)
     - [Sample Response](#sample-response-7)
 
