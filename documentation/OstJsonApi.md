@@ -375,14 +375,14 @@ API to get redeemable sku details.
 
 <a id="usage-8"></a>
 ##### Usage
-```javascript
+```swift
 /*
   Please update userId as per your needs. 
   Since this userId does not belong to your economy, you will get an error if you do not change it.
 */
 let userId = "71c59448-ff77-484c-99d8-abea8a419836";
 let skuDetailId = "2";
-let extraParams = {};
+let extraParams = nil;
 
 let jsonApiDelegate = OstJsonApiResponseDelegate()
 
@@ -715,7 +715,7 @@ API to get redeemable skus.
   Since this userId does not belong to your economy, you will get an error if you do not change it.
 */
 let userId = "71c59448-ff77-484c-99d8-abea8a419836";
-let nextPagePayload = null;
+let nextPagePayload = nil;
 
 let jsonApiDelegate = OstJsonApiResponseDelegate()
 
