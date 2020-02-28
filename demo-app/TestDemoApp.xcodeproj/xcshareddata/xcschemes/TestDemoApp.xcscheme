@@ -27,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4BF8FDB72240FA7600519779"
+            BuildableName = "TestDemoApp.app"
+            BlueprintName = "TestDemoApp"
+            ReferencedContainer = "container:TestDemoApp.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -49,17 +58,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4BF8FDB72240FA7600519779"
-            BuildableName = "TestDemoApp.app"
-            BlueprintName = "TestDemoApp"
-            ReferencedContainer = "container:TestDemoApp.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -81,8 +79,6 @@
             ReferencedContainer = "container:TestDemoApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

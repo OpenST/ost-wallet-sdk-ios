@@ -119,5 +119,4 @@ class OstAPIUser: OstAPIBase {
             onSuccess: onSuccess,
             onFailure:onFailure);
     }
-
 }
