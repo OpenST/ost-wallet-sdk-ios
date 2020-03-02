@@ -259,39 +259,44 @@ import UIKit
         workflowController.perform()
         return workflowController.workflowId
     }
-    
-    /// Scan QR-Code to authorize device
-    ///
-    /// - Parameters:
-    ///   - userId: Ost user id
-    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
-    /// - Returns: Workflow id
+  
+	
+	/// Scan QR-Code to authorize device
+	/// - Parameters:
+	///   - userId: Ost user id
+	///   - addDevicePayload: QR payload for add device
+	///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
     @objc
     public class func scanQRCodeToAuthorizeDevice(
         userId: String,
+		addDevicePayload: String? = nil,
         passphrasePrefixDelegate: OstPassphrasePrefixDelegate
         ) -> String {
         
         let workflowController = OstAuthorizeDeviceViaQRWorkflowController(userId: userId,
+																		   addDevicePayload: addDevicePayload,
                                                                            passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         workflowController.perform()
         return workflowController.workflowId
     }
     
-    /// Scan QR-Code to execute transaction
-    ///
-    /// - Parameters:
-    ///   - userId: Ost user id
-    ///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
-    /// - Returns: Workflow id
+	/// Scan QR-Code to execute transaction
+	///
+	/// - Parameters:
+	///   - userId: Ost user id
+	///   - executeTransactionPayload: QR payload for tranasction
+	///   - passphrasePrefixDelegate: Callback to get passphrase prefix from application
+	/// - Returns: Workflow id
     @objc
     public class func scanQRCodeToExecuteTransaction(
         userId: String,
+		executeTransactionPayload: String? = nil,
         passphrasePrefixDelegate: OstPassphrasePrefixDelegate
         ) -> String {
         
         let workflowController = OstExecuteTransactionViaQRWorkflowController(userId: userId,
+																			  executeTransactionPayload: executeTransactionPayload,
                                                                               passphrasePrefixDelegate: passphrasePrefixDelegate)
         
         workflowController.perform()

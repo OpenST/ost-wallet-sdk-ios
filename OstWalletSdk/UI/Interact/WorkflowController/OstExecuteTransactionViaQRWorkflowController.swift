@@ -17,9 +17,13 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     var validateDataDelegate: OstValidateDataDelegate? = nil
     var verfiyAuthTxVC: OstVerifyTransaction? = nil
 
+	let executeTransactionPayload: String?
     @objc
     init(userId: String,
+		 executeTransactionPayload: String? = nil,
          passphrasePrefixDelegate: OstPassphrasePrefixDelegate) {
+		
+		self.executeTransactionPayload = executeTransactionPayload
         super.init(userId: userId,
                    passphrasePrefixDelegate: passphrasePrefixDelegate,
                    workflowType: .executeTransaction)
@@ -34,7 +38,11 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     }
     
     override func performUIActions() {
-        openScanQRForExecuteTransctionVC()
+		if (nil == executeTransactionPayload ) {
+			openScanQRForExecuteTransctionVC()
+		}else {
+			onScanndedDataReceived(executeTransactionPayload!)
+		}
     }
     
     func openScanQRForExecuteTransctionVC() {
@@ -105,7 +113,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && (nil != verfiyAuthTxVC || nil != getPinViewController ) {
+            &&  nil != executeTransactionQRScannerVC {
         
             verfiyAuthTxVC = nil
             getPinViewController = nil
