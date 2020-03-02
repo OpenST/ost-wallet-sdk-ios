@@ -17,7 +17,14 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
 	
 	var showFailureAlert = false;
 
-	@objc init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+	let qrPayload: String?
+	
+	@objc init(userId: String,
+			   qrPayload: String? = nil,
+			   passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+		
+		self.qrPayload = qrPayload
+			
 		super.init(userId: userId,
 				   passphrasePrefixDelegate: passphrasePrefixDelegate,
 				   workflowType: .authorizeSessionWithQRCode)
@@ -37,7 +44,12 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
     }
 	
 	override func performUIActions() {
-		openQRScannerForAuthorizeSessionVC()
+		if (nil != self.qrPayload) {
+			self.onScanndedDataReceived(self.qrPayload!);
+			
+		}else {
+			self.openQRScannerForAuthorizeSessionVC()
+		}
 	}
 	
 	override func shouldShowFailureAlert() -> Bool {
@@ -64,8 +76,8 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
     }
 	
 	func onScanndedDataReceived(_ data: String) {
+		showInitialLoader(for: .authorizeDeviceWithQRCode)
         OstWalletSdk.performQRAction(userId: self.userId, payload: data, delegate: self)
-        showInitialLoader(for: .authorizeDeviceWithQRCode)
     }
 	
 	override func getPinVCConfig() -> OstPinVCConfig {
@@ -73,7 +85,12 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
     }
 	
 	@objc override func showPinViewController() {
-		   self.getPinViewController?.pushViewControllerOn(self.authorizeSessionQRScannerVC!)
+		if (nil == self.authorizeSessionQRScannerVC) {
+            self.getPinViewController?.presentVCWithNavigation()
+			
+		}else {
+			self.getPinViewController?.pushViewControllerOn(self.authorizeSessionQRScannerVC!)
+		}
 	}
 	
 	override func pinProvided(pin: String) {
@@ -117,9 +134,8 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
     }
 	
 	override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-		   if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-			   && (nil != verfiyAuthSessionVC || nil != getPinViewController ) {
-			   
+		   if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled && nil != authorizeSessionQRScannerVC  {
+			
 			   verfiyAuthSessionVC = nil
 			   getPinViewController = nil
 			   hideLoader()

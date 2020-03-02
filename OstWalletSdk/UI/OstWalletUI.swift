@@ -301,11 +301,15 @@ import UIKit
 	@objc
 	public class func scanQRCodeToAuthorizeSession(
 		userId: String,
+		qrPayload: String? = nil,
 		passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 		) -> String {
 		
-		let workflowController = OstAuthorizeExteranSessionViaQRCodeWorkflowController(userId: userId,
-																					 passphrasePrefixDelegate: passphrasePrefixDelegate)
+		let workflowController = OstAuthorizeExteranSessionViaQRCodeWorkflowController(
+			userId: userId,
+			qrPayload: qrPayload,
+			passphrasePrefixDelegate: passphrasePrefixDelegate
+		)
 		
 		workflowController.perform()
 		return workflowController.workflowId

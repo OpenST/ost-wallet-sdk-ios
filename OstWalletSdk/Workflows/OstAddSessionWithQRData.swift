@@ -203,7 +203,7 @@ class OstAddSessionWithQRData: OstAddSession, OstDataDefinitionWorkflow {
 			let error = OstError(internalCode: "w_oaswqrd_vs_1", errorCode: OstErrorCodes.OstErrorCode.unknown)
 			error.addErrorInfo(key: "qr_session_address", val: addSessionQRStruct.sessionAddress)
 			error.addErrorInfo(key: "userId", val: userId)
-			error.addErrorInfo(key: "session_status", val: session!.status)
+			error.addErrorInfo(key: "session_status", val: session!.status ?? "")
 			error.addErrorInfo(key: "reason", val: "Session can not be authorized.");
 		}
 	}
