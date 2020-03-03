@@ -105,7 +105,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 Add following entry in your `Cartfile`
 
 ```bash
-github "ostdotcom/ost-wallet-sdk-ios"  == 2.3.6
+github "ostdotcom/ost-wallet-sdk-ios"  == 2.4.0
 ```
 
 Now to actually install everything run the following in your terminal:
