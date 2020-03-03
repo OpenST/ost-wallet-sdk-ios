@@ -288,6 +288,7 @@ QR-Code Sample:
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_addDevicePayload: QR-Code payload. Passing value will skip QR-code scanner._<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -295,6 +296,7 @@ QR-Code Sample:
 ```Swift
 OstWalletUI.scanQRCodeToAuthorizeDevice(
     userId: String,
+    addDevicePayload: String? = nil,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String 
 ```
@@ -334,6 +336,7 @@ QR-Code Sample:
 
 **Parameters**<br/>
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_executeTransactionPayload: QR-Code payload. Passing value will skip QR-code scanner._<br/>
 &nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
@@ -341,6 +344,31 @@ QR-Code Sample:
 ```Swift
 OstWalletUI.scanQRCodeToExecuteTransaction(
     userId: String,
+    executeTransactionPayload: String? = nil,
+    passphrasePrefixDelegate: OstPassphrasePrefixDelegate
+) -> String 
+```
+
+### Scan QR-Code To Authorize Session
+
+This workflow can be used to authorize session by scanning session QR-Code. 
+
+QR-Code Sample:
+```json
+as|2.0.0|2a421359d02132e8161cda9518aeaa62647b648e|5369b4d7e0e53e1159d6379b989a8429a7b2dd59|1|1583308559|4d40c46a7302974134a67ce77bdfae0e1f78ee518e87b6cda861ffc5847dfaca11a653651c6cdfadf0224574f6f07e1a78aabacdfed66d8c78e1fb2c9bc750161c
+```
+
+**Parameters**<br/>
+&nbsp;_userId: OST Platform user id provided by application server_<br/>
+&nbsp;_qrPayload: QR-Code payload. Passing value will skip QR-code scanner._<br/>
+&nbsp;_passphrasePrefixDelegate: Callback implementation object to get passphrase prefix from application_<br/>
+
+&nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
+
+```Swift
+OstWalletUI.scanQRCodeToAuthorizeSession(
+    userId: String,
+    qrPayload: String? = nil,
     passphrasePrefixDelegate: OstPassphrasePrefixDelegate
 ) -> String 
 ```
