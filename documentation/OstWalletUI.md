@@ -354,7 +354,7 @@ OstWalletUI.scanQRCodeToExecuteTransaction(
 This workflow can be used to authorize session by scanning session QR-Code. 
 
 QR-Code Sample:
-```json
+```
 as|2.0.0|2a421359d02132e8161cda9518aeaa62647b648e|5369b4d7e0e53e1159d6379b989a8429a7b2dd59|1|1583308559|4d40c46a7302974134a67ce77bdfae0e1f78ee518e87b6cda861ffc5847dfaca11a653651c6cdfadf0224574f6f07e1a78aabacdfed66d8c78e1fb2c9bc750161c
 ```
 
