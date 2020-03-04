@@ -113,6 +113,7 @@ class OstExecuteTransactionViaQRWorkflowController: OstBaseWorkflowController {
     
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+			&& (nil != verfiyAuthTxVC || nil != getPinViewController)
             &&  nil != executeTransactionQRScannerVC {
         
             verfiyAuthTxVC = nil

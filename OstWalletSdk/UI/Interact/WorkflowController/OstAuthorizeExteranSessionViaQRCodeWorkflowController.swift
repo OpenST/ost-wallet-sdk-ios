@@ -134,7 +134,9 @@ class OstAuthorizeExteranSessionViaQRCodeWorkflowController: OstBaseWorkflowCont
     }
 	
 	override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
-		   if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled && nil != authorizeSessionQRScannerVC  {
+		   if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
+			&& (nil != verfiyAuthSessionVC || nil != getPinViewController)
+			&& nil != authorizeSessionQRScannerVC  {
 			
 			   verfiyAuthSessionVC = nil
 			   getPinViewController = nil

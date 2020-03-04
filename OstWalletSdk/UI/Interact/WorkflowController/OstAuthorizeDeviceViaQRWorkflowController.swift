@@ -135,7 +135,8 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
 
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && nil != authorizeDeviceQRScannerVC {
+            && (nil != verfiyAuthDeviceVC || nil != getPinViewController)
+			&& nil != authorizeDeviceQRScannerVC {
             
             verfiyAuthDeviceVC = nil
             getPinViewController = nil
