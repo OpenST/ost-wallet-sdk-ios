@@ -1,5 +1,16 @@
 # OST Wallet SDK Changelog
 
+## Version 2.4.0
+### Feature
+* `getRedeemableSkus` and `getRedeemableSkuDetails` apis added in `OstJsonApi`.
+
+## Version 2.3.6
+### Feature
+* Theme config getter method added in SDK.
+* Notifying custom loader about invalid QR code scanned.
+* customization options added in `OstThemeConfig`
+
+
 ## Version 2.3.5
 ### Feature
 * Developer can display application loader for OstWalletUI workflow.
