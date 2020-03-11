@@ -18,8 +18,14 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
 	
 	var showFailureAlert = false;
     
+	let addDevicePayload: String?
+	
     @objc
-    init(userId: String, passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+    init(userId: String,
+		 addDevicePayload: String? = nil,
+		 passphrasePrefixDelegate: OstPassphrasePrefixDelegate?) {
+		
+		self.addDevicePayload = addDevicePayload;
         super.init(userId: userId,
                    passphrasePrefixDelegate: passphrasePrefixDelegate,
                    workflowType: .authorizeDeviceWithQRCode)
@@ -39,7 +45,12 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     }
     
     override func performUIActions() {
-        openScanQRForAuthorizeDeviceVC()
+		if (nil == addDevicePayload) {
+			openScanQRForAuthorizeDeviceVC()
+		}else {
+			self.onScanndedDataReceived(self.addDevicePayload!)
+		}
+        
     }
     
     func openScanQRForAuthorizeDeviceVC() {
@@ -75,7 +86,11 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
     }
     
     @objc override func showPinViewController() {
-        self.getPinViewController?.pushViewControllerOn(self.authorizeDeviceQRScannerVC!)
+		if (nil == authorizeDeviceQRScannerVC) {
+			self.getPinViewController?.presentVCWithNavigation()
+		}else {
+			self.getPinViewController?.pushViewControllerOn(self.authorizeDeviceQRScannerVC!)
+		}
     }
     
     override func pinProvided(pin: String) {
@@ -120,7 +135,8 @@ class OstAuthorizeDeviceViaQRWorkflowController: OstBaseWorkflowController {
 
     override func flowInterrupted(workflowContext: OstWorkflowContext, error: OstError) {
         if error.messageTextCode == OstErrorCodes.OstErrorCode.userCanceled
-            && (nil != verfiyAuthDeviceVC || nil != getPinViewController ) {
+            && (nil != verfiyAuthDeviceVC || nil != getPinViewController)
+			&& nil != authorizeDeviceQRScannerVC {
             
             verfiyAuthDeviceVC = nil
             getPinViewController = nil

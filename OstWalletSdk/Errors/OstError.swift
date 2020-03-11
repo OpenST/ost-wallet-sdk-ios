@@ -114,6 +114,11 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	func addErrorInfo(key: String, val: Any) {
+		self.errorInfo = self.errorInfo ?? [:]
+		self.errorInfo![key] = val
+	}
 }
 
 extension String {

@@ -101,7 +101,9 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
             vc.delegate = delegate as OstBaseDelegate
             vc.showVC()
             
-        }
+		}else if workflowContext.workflowType == .authorizeSessionWithQRCode{
+			delegate.dataVerified()
+		}
     }
     
     func flowComplete(workflowContext: OstWorkflowContext,
