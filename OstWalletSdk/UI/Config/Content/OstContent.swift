@@ -272,10 +272,22 @@ extension OstContent {
         let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
         return getPinVCConfigObj(componentData)
     }
+	
+	class func getAuthorizeSessionViaQRPinVCConfig() -> OstPinVCConfig {
+		   let workflowName = getWorkflowName(for: .authorizeSessionWithQRCode)
+		   let componentData = getComponentData(inController: "get_pin", forWorkflow: workflowName)
+		   return getPinVCConfigObj(componentData)
+	}
     
     class func getAuthorizeDeviceVerifyDataVCConfig() -> [String: Any] {
         let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
         let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_device", inWorkflow: workflowName)
+        return viewConfig
+    }
+	
+	class func getAuthorizeSessionVerifyDataVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeSessionWithQRCode)
+        let viewConfig = OstContent.getInstance().getControllerConfig(for: "verify_session", inWorkflow: workflowName)
         return viewConfig
     }
     
@@ -293,6 +305,12 @@ extension OstContent {
     
     class func getScanQRForAuthorizeDeviceVCConfig() -> [String: Any] {
         let workflowName = OstContent.getWorkflowName(for: .authorizeDeviceWithQRCode)
+        let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
+        return workflowConfig
+    }
+	
+	class func getScanQRForAuthorizeSessionVCConfig() -> [String: Any] {
+        let workflowName = OstContent.getWorkflowName(for: .authorizeSessionWithQRCode)
         let workflowConfig = OstContent.getInstance().getControllerConfig(for: "scan_qr", inWorkflow: workflowName)
         return workflowConfig
     }
@@ -379,6 +397,8 @@ extension OstContent {
         
         case .executeTransaction:
             return "scan_qr_to_execute_transaction"
+		case .authorizeSessionWithQRCode:
+            return "scan_qr_to_authorize_session"
         default:
             return ""
         }

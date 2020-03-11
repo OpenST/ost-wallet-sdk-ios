@@ -17,7 +17,6 @@ public class OstConversion {
         return try OstUtils.getNumberComponents( number );
     }
     
-    
     public class func fiatToBt(ostToBtConversionFactor: String,
                         btDecimal: Int,
                         fiatDecimal: Int,
@@ -40,5 +39,23 @@ public class OstConversion {
         let btAmount = numerator/denominator
         return btAmount
     }
+	
+	public class func toLowestUnit(_ number: String, tokenId: String) throws -> String {
+		guard let token = try OstToken.getById(tokenId) else {
+			throw OstError(internalCode: "u_oc_thu_1", errorCode: OstErrorCodes.OstErrorCode.invalidTokenId)
+		}
+		let decimals = token.decimals ?? 1
+		
+		return OstUtils.convertNum(amount: number, exponent: decimals)
+	}
+	
+	public class func toHighestUnit(_ number: String, tokenId: String) throws -> String {
+		guard let token = try OstToken.getById(tokenId) else {
+			throw OstError(internalCode: "u_oc_thu_1", errorCode: OstErrorCodes.OstErrorCode.invalidTokenId)
+		}
+		let decimals = token.decimals ?? 1
+		
+		return OstUtils.convertNum(amount: number, exponent: -1 * decimals)
+	}
 }
 

@@ -340,6 +340,7 @@
 		4BA4CBA82285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
 		4BA4CBA92285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */; };
 		4BCC1B4F224B8003008B58A1 /* LogoutAllSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */; };
+		4BE5CF2B23E46D58001BCB66 /* AuthorizeSessionQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5CF2A23E46D58001BCB66 /* AuthorizeSessionQRScanner.swift */; };
 		4BF8FDBC2240FA7600519779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBB2240FA7600519779 /* AppDelegate.swift */; };
 		4BF8FDBE2240FA7600519779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8FDBD2240FA7600519779 /* ViewController.swift */; };
 		4BF8FDC32240FA7700519779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8FDC22240FA7700519779 /* Assets.xcassets */; };
@@ -548,6 +549,7 @@
 		4BA4CBA22285826000A623ED /* EconomyScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EconomyScannerViewController.swift; sourceTree = "<group>"; };
 		4BA4CBA62285FB7E00A623ED /* BaseSettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingOptionsViewController.swift; sourceTree = "<group>"; };
 		4BCC1B4E224B8003008B58A1 /* LogoutAllSessions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAllSessions.swift; sourceTree = "<group>"; };
+		4BE5CF2A23E46D58001BCB66 /* AuthorizeSessionQRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeSessionQRScanner.swift; sourceTree = "<group>"; };
 		4BF8FDB82240FA7600519779 /* TestDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8FDBB2240FA7600519779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BF8FDBD2240FA7600519779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -930,6 +932,7 @@
 				4B464F41227A0CA200F1F4AF /* QRScannerViewController.swift */,
 				4B4EB86E228E87B8001605DE /* AuthorizeDeviceQRScanner.swift */,
 				4B4EB872228F49D5001605DE /* TransactionQRScanner.swift */,
+				4BE5CF2A23E46D58001BCB66 /* AuthorizeSessionQRScanner.swift */,
 			);
 			path = QRScan;
 			sourceTree = "<group>";
@@ -1664,6 +1667,7 @@
 				4BF8FE342240FD1400519779 /* ShowQRView.swift in Sources */,
 				4B464EE822773B8800F1F4AF /* BaseSettingOptionsSVViewController.swift in Sources */,
 				4B464EF422782AE300F1F4AF /* BaseCollectionViewCell.swift in Sources */,
+				4BE5CF2B23E46D58001BCB66 /* AuthorizeSessionQRScanner.swift in Sources */,
 				4BA4CB12227DF42200A623ED /* Conversion+Helper.swift in Sources */,
 				4B464EBC2273122700F1F4AF /* OstSdkInteractDelegate.swift in Sources */,
 				4BA4CBA72285FB7E00A623ED /* BaseSettingOptionsViewController.swift in Sources */,
