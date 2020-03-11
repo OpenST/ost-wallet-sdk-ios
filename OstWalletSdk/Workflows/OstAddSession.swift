@@ -15,9 +15,9 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
     static private let ostAddSessionQueue = DispatchQueue(label: "com.ost.sdk.OstAddSession", qos: .userInitiated)
     private let workflowTransactionCountForPolling = 1
     private let spendingLimit: String
-    private let expireAfter: TimeInterval;
+    private var expireAfter: TimeInterval;
     
-    private var sessionData: OstSessionHelper.SessionData? = nil
+    var sessionData: OstSessionHelper.SessionData? = nil
     
     /// Initializer
     ///
@@ -67,7 +67,7 @@ class OstAddSession: OstUserAuthenticatorWorkflow {
     }
     
     /// Authorize session
-    private func authorizeSession() throws {
+    func authorizeSession() throws {
         
         let authorizeSessionSigner = OstKeyManagerGateway
             .getOstAuthorizeSessionSigner(userId: self.userId,

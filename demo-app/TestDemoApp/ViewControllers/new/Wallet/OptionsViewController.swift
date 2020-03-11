@@ -299,6 +299,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         if  nil == userDevice || !currentUser.isCurrentDeviceStatusAuthrozied {
             authorizeViaQR.isEnable = false
         }
+		
+		let authorizeSessionViaQR = OptionVM(type: .authorizeSessionViaQR, name: "Authorize Session via QR", isEnable: true)
+			   if  nil == userDevice || !currentUser.isCurrentDeviceStatusAuthrozied {
+				   authorizeViaQR.isEnable = false
+			   }
         
         let authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize This Device via Mnemonics", isEnable: true)
         if  nil == userDevice
@@ -362,7 +367,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let logoutApp = OptionVM(type: .logout, name: "Logout", isEnable: true)
 
         
-        let dOptions = [authorizeViaQR, authorizeViaMnemonics, optionBiomertic, showDeviceQR, manageDevices,
+        let dOptions = [authorizeViaQR, authorizeSessionViaQR, authorizeViaMnemonics, optionBiomertic, showDeviceQR, manageDevices,
                         transactionViaQR, initialRecovery, abortRecoveryOption!, revokeAllSession, logoutApp]
         
         deviceOptions = dOptions
@@ -436,6 +441,14 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
                 showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
             }
         }
+			
+			else if option.type == .authorizeSessionViaQR {
+				if option.isEnable {
+					destinationVC = AuthorizeSessionQRScanner()
+				}else {
+					showInfoAlert(title: "Device is not authorized. Authorize your device to use this function.")
+				}
+			}
             
         else if option.type == .transactionViaQR {
             if option.isEnable {
