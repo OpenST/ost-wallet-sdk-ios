@@ -19,8 +19,8 @@ class OstBaseQRScannerViewController: OstBaseViewController {
     var onErrorScanning: ((OstError?) -> Void)? = nil
     
     var qrDataString: [String]? = nil
-    var qrPayloadData: [String: Any?]? = nil
-    var qrMeta: [String: Any?]? = nil
+//    var qrPayloadData: [String: Any?]? = nil
+//    var qrMeta: [String: Any?]? = nil
     
     override func configure() {
         super.configure()
@@ -70,13 +70,8 @@ class OstBaseQRScannerViewController: OstBaseViewController {
             return nil
         }
         
-        let jsonObj:[String:Any?]?;
-        do {
-            jsonObj = try OstUtils.toJSONObject(qr) as? [String : Any?];
-        } catch {
-            return nil
-        }
-        
+		let jsonObj: [String:Any?]? = try? OstPerform.getJsonObject(qr)
+		
         if ( nil == jsonObj) {
             return nil
         }
@@ -97,10 +92,10 @@ class OstBaseQRScannerViewController: OstBaseViewController {
         guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
             return nil
         }
-        self.qrPayloadData = payloadData
-        
-        let payloadMeta = jsonObj!["m"] as? [String: Any?]
-        self.qrMeta = payloadMeta
+//        self.qrPayloadData = payloadData
+//
+//        let payloadMeta = jsonObj!["m"] as? [String: Any?]
+//        self.qrMeta = payloadMeta
         
         return payloadData
     }

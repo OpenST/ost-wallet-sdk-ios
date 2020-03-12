@@ -244,8 +244,12 @@ class OstProgressIndicator: OstBaseView {
             
         case .updateBiometricPreference:
             return ""
+			
         case .showDeviceQR:
             return ""
+			
+		case .authorizeSessionWithQRCode:
+			return "Authorization request received"
         }
     }
     
@@ -295,6 +299,8 @@ class OstProgressIndicator: OstBaseView {
             return "Biometric preference updated"
         case .showDeviceQR:
             return ""
+		case .authorizeSessionWithQRCode:
+			return "Session authorized successfully"
         }
     }
     
@@ -344,6 +350,8 @@ class OstProgressIndicator: OstBaseView {
             return "Biometric preference update failed. Please re-enter confirmation"
         case .showDeviceQR:
             return ""
+		case .authorizeSessionWithQRCode:
+			return "Session authorized failed"
         }
     }
 }

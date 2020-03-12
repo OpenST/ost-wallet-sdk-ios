@@ -11,6 +11,7 @@
 import Foundation
 
 enum OstQRCodeDataDefination: String {
+	case AUTHORIZE_SESSION = "AS"
     case AUTHORIZE_DEVICE = "AD"
     case TRANSACTION = "TX"
     case REVOKE_DEVICE = "RD"
@@ -25,7 +26,10 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
     private var meta: [String: Any?]? = nil
     private var executeTxPayloadParams: OstExecuteTransaction.ExecuteTransactionPayloadParams? = nil
     private var dataDefinationWorkflow: OstDataDefinitionWorkflow?
+	
+	static let V2_QR_SEPERATOR = "|"
     
+	var QRData: [String: Any?]? = nil
     /// Initializer
     ///
     /// - Parameters:
@@ -94,33 +98,26 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
             throw OstError("w_p_vp_2", .invalidQRCode);
         }
         
-        let jsonObj:[String:Any?]?;
-        do {
-            jsonObj = try OstUtils.toJSONObject(self.payloadString!) as? [String : Any?];
-        } catch {
-            throw OstError("w_p_vp_3", .invalidQRCode);
-        }
-        
-        if ( nil == jsonObj) {
-            throw OstError("w_p_vp_4", .invalidQRCode);
-        }
+		let jsonObj:[String:Any?] = try OstPerform.getJsonObject(self.payloadString!)
+		self.QRData = jsonObj
+		
         //Make sure data defination is present and is correct data-defination.
-        guard let dataDefination = (jsonObj!["dd"] as? String)?.uppercased() else {
-            throw OstError("w_p_vp_5", .invalidQRCode);
+        guard let dataDefination = (jsonObj["dd"] as? String)?.uppercased() else {
+            throw OstError("w_p_vp_3", .invalidQRCode);
         }
         self.dataDefination = dataDefination;
         
-        guard let _ = OstUtils.toString(jsonObj!["ddv"] as Any?)?.uppercased() else {
-            throw OstError("w_p_vp_6", .invalidQRCode);
+        guard let _ = OstUtils.toString(jsonObj["ddv"] as Any?)?.uppercased() else {
+            throw OstError("w_p_vp_4", .invalidQRCode);
         }
         
         //Make sure payload data is present.
-        guard let payloadData = jsonObj!["d"] as? [String: Any?] else {
-            throw OstError("w_p_vp_7", .invalidQRCode);
+        guard let payloadData = jsonObj["d"] as? [String: Any?] else {
+            throw OstError("w_p_vp_5", .invalidQRCode);
         }
         self.payloadData = payloadData;
         
-        if let payloadMeta = jsonObj!["m"] as? [String: Any?] {
+        if let payloadMeta = jsonObj["m"] as? [String: Any?] {
             self.meta = payloadMeta
         }
         
@@ -162,7 +159,14 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
                                          transactionMeta: metaParam,
                                          options: executeTxPayloadParams.options,
                                          delegate: self.delegate!)
-            
+		
+		case OstQRCodeDataDefination.AUTHORIZE_SESSION.rawValue:
+			let autorizeSessionParams = try OstAddSessionWithQRData.getAddSessionParamsFromQRPayload(self.payloadData!)
+			return OstAddSessionWithQRData(userId: userId,
+										   addSessionQRStruct: autorizeSessionParams,
+										   qrVersion: QRData!["ddv"] as! String,
+										   qrData: QRData!,
+										   delegate: self.delegate!)
         default:
             throw OstError("w_p_gwfo_1", .invalidQRCode);
         }
@@ -192,4 +196,61 @@ class OstPerform: OstWorkflowEngine, OstValidateDataDelegate {
     override func getWorkflowContext() -> OstWorkflowContext {
         return OstWorkflowContext(workflowId: self.workflowId, workflowType: .performQRAction)
     }
+}
+
+extension OstPerform {
+	class func getJsonObject(_ payloadString: String) throws -> [String: Any?] {
+		var jsonObj: [String:Any?]? = nil
+		
+		if let v2JsonObj: [String: Any?] = self.getJsonObjectFromV2QR(payloadString) {
+			jsonObj = v2JsonObj
+		}
+		
+		if (nil == jsonObj) {
+			do {
+				jsonObj = try OstUtils.toJSONObject(payloadString) as? [String : Any?];
+			} catch {
+				throw OstError("w_p_gjo_1", .invalidQRCode);
+			}
+		}
+        
+		if (nil == jsonObj) {
+			throw OstError("w_p_gjo_2", .invalidQRCode);
+		}
+		return jsonObj!
+	}
+	
+	class func getJsonObjectFromV2QR(_ v2QrString: String) -> [String: Any?]? {
+		let parts: [String] = v2QrString.components(separatedBy: OstPerform.V2_QR_SEPERATOR)
+		
+		if ( parts.count < 7 ) {
+            //Does not have sufficient parts.
+			return nil;
+        }
+			
+		if OstQRCodeDataDefination.AUTHORIZE_SESSION.rawValue.caseInsensitiveCompare(parts[0]) != .orderedSame {
+			return nil
+		}
+		
+		var jsonData: [String: Any] = [:]
+		jsonData["dd"] = parts[0]
+		jsonData["ddv"] = parts[1]
+		
+		let sessionData = [
+			OstAddSessionWithQRData.PAYLOAD_DEVICE_ADDRESS_KEY : parts[2].addHexPrefix(),
+			OstAddSessionWithQRData.PAYLOAD_SESSION_ADDRESS_KEY : parts[3].addHexPrefix(),
+			OstAddSessionWithQRData.PAYLOAD_SPENDING_LIMIT_KEY : parts[4],
+			OstAddSessionWithQRData.PAYLOAD_EXPIRY_TIME_KEY : parts[5]
+		]
+		
+		jsonData["d"] = [
+			OstAddSessionWithQRData.PAYLOAD_SESSION_DATA_KEY: sessionData,
+			OstAddSessionWithQRData.PAYLOAD_SIGNATURE_KEY: parts[6]
+		]
+		
+		jsonData["qr_v2_input"] = v2QrString
+		
+		print("jsonData : ", jsonData);
+		return jsonData
+	}
 }
