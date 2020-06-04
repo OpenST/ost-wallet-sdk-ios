@@ -302,7 +302,7 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
 		
 		let authorizeSessionViaQR = OptionVM(type: .authorizeSessionViaQR, name: "Authorize Session via QR", isEnable: true)
 			   if  nil == userDevice || !currentUser.isCurrentDeviceStatusAuthrozied {
-				   authorizeViaQR.isEnable = false
+				   authorizeSessionViaQR.isEnable = false
 			   }
         
         let authorizeViaMnemonics = OptionVM(type: .authorizeViaMnemonics, name: "Authorize This Device via Mnemonics", isEnable: true)

@@ -254,20 +254,50 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     
     func hideLoader() {
         progressIndicator?.hide()
+		UIAlertControllerManager.shared.showingAlertController = nil;
         progressIndicator = nil
         uiWindow = nil
     }
 }
 
+class UIAlertControllerManager {
+	static let shared = UIAlertControllerManager();
+	
+	private var _showingAlertController: UIAlertController? = nil;
+	var showingAlertController: UIAlertController? {
+		set(newVal) {
+			_showingAlertController = newVal;
+		}
+		get {
+			return _showingAlertController;
+		}
+	}
+	
+	init() {
+		
+	}
+}
+
 public extension UIAlertController {
     func show() {
-        let win = UIWindow(frame: UIScreen.main.bounds)
-        let vc = UIViewController()
-        vc.view.backgroundColor = .clear
-        win.rootViewController = vc
-        win.windowLevel = UIWindow.Level.alert + 1
-        win.makeKeyAndVisible()
-        vc.present(self, animated: true, completion: nil)
+		
+		let showAlert: (() -> Void) = {
+				 let win = UIWindow(frame: UIScreen.main.bounds)
+					   let vc = UIViewController()
+					   vc.view.backgroundColor = .clear
+					   win.rootViewController = vc
+					   win.windowLevel = UIWindow.Level.alert + 1
+					   win.makeKeyAndVisible()
+					   vc.present(self, animated: true, completion: nil)
+			UIAlertControllerManager.shared.showingAlertController = self;
+			}
+		
+			if let showingAC = UIAlertControllerManager.shared.showingAlertController {
+				showingAC.dismiss(animated: false, completion:nil);
+				UIAlertControllerManager.shared.showingAlertController = nil;
+			}
+		
+			showAlert();
     }
 }
 

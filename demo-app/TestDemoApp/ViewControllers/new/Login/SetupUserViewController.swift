@@ -440,6 +440,7 @@ class SetupUserViewController: OstBaseScrollViewController, UITextFieldDelegate,
         if nil == economyScanner {
             economyScanner = EconomyScannerViewController()
         }
+		economyScanner!.modalPresentationStyle = .overFullScreen
         self.navigationController?.present(economyScanner!, animated: flag, completion: nil)
     }
     
