@@ -182,6 +182,7 @@ class BaseWalletWorkflowView: BaseWalletView, OstFlowCompleteDelegate, OstFlowIn
       }
       ostPinAcceptProtocol.pinEntered(pinTextField.text!, passphrasePrefix: currentUser.userPinSalt!);
       alert.dismiss(animated: true, completion: nil);
+		alert.hide();
     }
     alert.addAction(action);
     self.walletViewController?.present(alert, animated: true, completion: nil);

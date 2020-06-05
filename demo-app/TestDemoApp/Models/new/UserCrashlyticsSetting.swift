@@ -109,9 +109,11 @@ class UserCrashlyticsSetting {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Opt in", style: .cancel, handler: {[weak self] (_) in
             self?.updateCrashReportPreference(true)
+			alert.hide();
         }))
         alert.addAction(UIAlertAction(title: "Opt out", style: .default, handler: {[weak self] (_) in
             self?.updateCrashReportPreference(false)
+			alert.hide();
         }))
         alert.show()
     }

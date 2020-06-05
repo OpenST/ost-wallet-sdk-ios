@@ -140,6 +140,7 @@ class BaseAPI {
                 CurrentUserModel.getInstance.logoutUser()
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.showIntroController()
+				alert.hide();
             }))
             alert.show()
         }

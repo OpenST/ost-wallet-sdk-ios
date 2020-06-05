@@ -353,12 +353,14 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
         let directTransafer = UIAlertAction(title: "Direct Transfer - Amount in BT", style: .default, handler: { (UIAlertAction) in
             self.currencyTextField.text = "BT";
             self.isDirectTransfer = true
+			actionSheet.hide();
         });
         actionSheet.addAction(directTransafer);
 
         let pricer = UIAlertAction(title: "Pricer - Amount in USD", style: .default, handler: { (UIAlertAction) in
             self.currencyTextField.text = "USD";
             self.isDirectTransfer = false
+			actionSheet.hide();
         });
         actionSheet.addAction(pricer);
         
@@ -377,12 +379,14 @@ class SendTokensToUserView: BaseWalletWorkflowView, UITextFieldDelegate {
         let directTransafer = UIAlertAction(title: "Atto BT [10^(-18)]", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = "Atto BT";
             self.isEthTx = false
+			actionSheet.hide();
         });
         actionSheet.addAction(directTransafer);
         
         let pricer = UIAlertAction(title: "Eth [1]", style: .default, handler: { (UIAlertAction) in
             self.spendingUnitTextField.text = "Eth";
             self.isEthTx = true
+			actionSheet.hide();
         });
         actionSheet.addAction(pricer);
         

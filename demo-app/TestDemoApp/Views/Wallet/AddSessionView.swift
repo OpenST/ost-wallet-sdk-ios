@@ -202,6 +202,7 @@ class AddSessionView: BaseWalletWorkflowView, UITextFieldDelegate {
         return UIAlertAction(title: displayText, style: .default, handler: { (UIAlertAction) in
             self.expiresAfterSelectedIndex = indx;
             self.expiresAfterTextField.text = displayText;
+			UIAlertControllerManager.removeWindow();
         })
     }
     

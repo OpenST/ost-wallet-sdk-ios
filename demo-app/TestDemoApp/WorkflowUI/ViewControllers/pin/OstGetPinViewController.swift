@@ -227,6 +227,7 @@ class OstGetPinViewController: OstBaseScrollViewController {
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: {[weak self] (action) in
             _ = self?.pinInput.becomeFirstResponder()
             alertController.dismiss(animated: true, completion: nil)
+			alertController.hide();
         }) )
         
         self.present(alertController, animated: true, completion: nil)

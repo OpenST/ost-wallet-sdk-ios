@@ -437,7 +437,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             self?.tokenSpendingUnitTextField.text = CurrentEconomy.getInstance.tokenSymbol ?? "";
             self?.isUsdTx = false
             self?.updateUserBalanceUI()
-            
+			actionSheet.hide();
         });
         actionSheet.addAction(directTransafer);
         
@@ -446,6 +446,7 @@ class SendTokensViewController: BaseSettingOptionsSVViewController, UITextFieldD
             self?.tokenSpendingUnitTextField.text = "USD";
             self?.isUsdTx = true
             self?.updateUserBalanceUI()
+			actionSheet.hide();
         });
         actionSheet.addAction(pricer);
         

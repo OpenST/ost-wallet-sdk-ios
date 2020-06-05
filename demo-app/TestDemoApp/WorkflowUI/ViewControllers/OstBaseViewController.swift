@@ -162,10 +162,13 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
         
         alert.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: {(alertAction) in
             actionHandler?(alertAction)
+			alert.hide();
         }))
         
         if nil != cancelButtonTitle && !cancelButtonTitle!.isEmpty {
-            alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .default, handler: {(_) in
+				alert.hide();
+			}))
         }
         
         self.present(alert, animated: true, completion: nil)

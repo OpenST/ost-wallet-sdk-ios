@@ -597,10 +597,16 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if nil != actionButtonTitle && !actionButtonTitle!.isEmpty {
-            alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: actionButtonTapped))
+			alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: { (action) in
+				alert.hide();
+				actionButtonTapped?(action);
+			}))
         }
         
-        alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: cancelButtonTapped))
+        alert.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: { (action) in
+			alert.hide();
+			cancelButtonTapped?(action);
+		}))
         alert.show()
     }
     
@@ -612,8 +618,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
             CurrentUserModel.getInstance.logout()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.showIntroController()
+			alert.hide();
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(_) in
+			alert.hide();
+		}))
         
         alert.show()
     }
@@ -623,8 +632,11 @@ class OptionsViewController: OstBaseViewController, UITableViewDelegate, UITable
         let alert = UIAlertController(title: "Are you sure you want to revoke all sessions? You will need re-authenticate to spend tokens.", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Revoke Sessions", style: .default, handler: {[weak self] (_) in
             self?.logoutSessions()
+			alert.hide();
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(_) in
+			alert.hide();
+		}))
         alert.show()
     }
     

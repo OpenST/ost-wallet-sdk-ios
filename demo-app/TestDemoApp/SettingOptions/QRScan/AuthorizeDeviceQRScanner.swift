@@ -23,6 +23,7 @@ class AuthorizeDeviceQRScanner: QRScannerViewController {
             
             alert.addAction(UIAlertAction(title: "Scan Again", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
+				alert.hide();
             }))
             self.present(alert, animated: true, completion: nil)
         }

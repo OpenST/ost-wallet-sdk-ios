@@ -157,7 +157,9 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
             let alert = UIAlertController(title: "Something went wrong",
                                       message: error.errorMessage,
                                       preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(_) in
+				alert.hide();
+            }))
             self?.present(alert, animated: true, completion: nil)
         }
     }
@@ -188,7 +190,9 @@ class ShowQRCodeViewController: BaseSettingOptionsViewController {
                     let alert = UIAlertController(title: "Device not Authorized",
                                                   message: "Please authorize this device from your other authorized device",
                                                   preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(_) in
+						alert.hide();
+					}))
                     self?.present(alert, animated: false, completion: nil)
                 }
             }

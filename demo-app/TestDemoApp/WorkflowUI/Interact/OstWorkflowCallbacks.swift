@@ -253,8 +253,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
     }
     
     func hideLoader() {
+		progressIndicator?.hide();
         progressIndicator?.hide()
-		UIAlertControllerManager.shared.showingAlertController = nil;
         progressIndicator = nil
         uiWindow = nil
     }
@@ -263,8 +263,8 @@ class OstWorkflowCallbacks: NSObject, OstWorkflowDelegate, OstPassphrasePrefixAc
 class UIAlertControllerManager {
 	static let shared = UIAlertControllerManager();
 	
-	private var _showingAlertController: UIAlertController? = nil;
-	var showingAlertController: UIAlertController? {
+	private var _showingAlertController: UIWindow? = nil;
+	var showingAlertController: UIWindow? {
 		set(newVal) {
 			_showingAlertController = newVal;
 		}
@@ -273,14 +273,19 @@ class UIAlertControllerManager {
 		}
 	}
 	
+	class func removeWindow() {
+		UIAlertControllerManager.shared.showingAlertController?.removeFromSuperview();
+		UIAlertControllerManager.shared.showingAlertController = nil;
+	}
+	
 	init() {
 		
 	}
 }
 
-public extension UIAlertController {
+extension UIAlertController {
     func show() {
-		
+	
 		let showAlert: (() -> Void) = {
 				 let win = UIWindow(frame: UIScreen.main.bounds)
 					   let vc = UIViewController()
@@ -289,16 +294,21 @@ public extension UIAlertController {
 					   win.windowLevel = UIWindow.Level.alert + 1
 					   win.makeKeyAndVisible()
 					   vc.present(self, animated: true, completion: nil)
-			UIAlertControllerManager.shared.showingAlertController = self;
+				UIAlertControllerManager.shared.showingAlertController = win;
 			}
 		
-			if let showingAC = UIAlertControllerManager.shared.showingAlertController {
-				showingAC.dismiss(animated: false, completion:nil);
-				UIAlertControllerManager.shared.showingAlertController = nil;
-			}
-		
+			UIAlertControllerManager.removeWindow();
 			showAlert();
     }
+	
+	open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+		UIAlertControllerManager.removeWindow();
+		super.dismiss(animated: flag, completion: completion);
+	}
+	
+	func hide() {
+		UIAlertControllerManager.removeWindow();
+	}
 }
 
 public extension UIViewController {

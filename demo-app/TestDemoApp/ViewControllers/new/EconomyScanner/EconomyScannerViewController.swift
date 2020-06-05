@@ -154,9 +154,11 @@ class EconomyScannerViewController: OstBaseViewController {
             
             alert.addAction(UIAlertAction(title: "Scan", style: .default, handler: {[weak self] (_) in
                 self?.scanner?.startScanning()
+				alert.hide();
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] (_) in
                 self?.closeButtonTapped(nil)
+				alert.hide();
             }))
             self?.present(alert, animated: true, completion: nil)
         }

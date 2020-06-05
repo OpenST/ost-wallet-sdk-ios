@@ -28,10 +28,12 @@ class TransactionQRScanner: QRScannerViewController {
             
             alert.addAction(UIAlertAction(title: "Scan Again", style: .default, handler: {[weak self] (alertAction) in
                 self?.scanner?.startScanning()
+				alert.hide();
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {[weak self] (alertAction) in
                 self?.navigationController?.popViewController(animated: true)
+				alert.hide();
             }))
             self.present(alert, animated: true, completion: nil)
         }

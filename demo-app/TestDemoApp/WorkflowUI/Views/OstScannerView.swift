@@ -98,9 +98,12 @@ class OstScannerView: OstBaseView, AVCaptureMetadataOutputObjectsDelegate {
                                       message: "Camera permission has been denied. Please grant access to scan QR-Code from device settings.",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { (_) in
+			alert.hide();
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         }))
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: {(_) in
+			alert.hide();
+		}))
         alert.show()
     }
     

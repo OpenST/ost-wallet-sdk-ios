@@ -20,7 +20,9 @@ class ScanQRCodeView: BaseWalletWorkflowView, AVCaptureMetadataOutputObjectsDele
         if (captureDevice == nil) {
             
             let alert = UIAlertController(title: "Please check camera permission.", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(_) in
+				alert.hide();
+			}) )
             self.walletViewController?.present(alert, animated: true, completion: nil)
             
             return

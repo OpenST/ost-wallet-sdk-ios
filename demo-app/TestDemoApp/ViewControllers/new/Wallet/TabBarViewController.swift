@@ -205,7 +205,9 @@ class TabBarViewController: UITabBarController {
     func showInvalidUrlAlert() {
         self.clearAppUrlData();
         let alert = UIAlertController(title: "Invalid Url", message: "The url link is invalid.", preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(_) in
+			alert.hide();
+		}));
         self.present( alert, animated: true, completion: nil);
         
     }
@@ -213,7 +215,9 @@ class TabBarViewController: UITabBarController {
     func showLogoutAlert() {
         self.clearAppUrlData();
         let alert = UIAlertController(title: "", message: "You appear to be logged in to another economy, please log out of the application and try connecting again.", preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(_) in
+			alert.hide();
+		}));
         self.present( alert, animated: true, completion: nil);
     }
     

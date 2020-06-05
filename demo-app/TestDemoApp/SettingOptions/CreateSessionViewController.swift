@@ -205,6 +205,7 @@ class CreateSessionViewController: BaseSettingOptionsSVViewController, UITextFie
             self?.isShowingActionSheet = false;
             self?.expiresAfterSelectedIndex = indx;
             self?.expiresAfterTextField.text = displayText;
+			UIAlertControllerManager.removeWindow();
         })
     }
     

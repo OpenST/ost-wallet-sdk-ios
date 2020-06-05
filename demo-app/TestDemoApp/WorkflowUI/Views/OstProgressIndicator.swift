@@ -143,6 +143,7 @@ class OstProgressIndicator: OstBaseView {
                 strongSelf.alert?.addAction(UIAlertAction(title: btnTitle, style: .default, handler: {[weak self] (actionButton) in
                     actionButtonTapped?(nil)
                     self?.hide()
+					self?.alert?.hide();
                 }))
             }
             

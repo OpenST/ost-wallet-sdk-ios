@@ -137,7 +137,9 @@ class ManageDeviceViewController: BaseSettingOptionsViewController, UITableViewD
         let device = tableDataArray[indexPath.row]
         if ((device["address"] as? String) ?? "").caseInsensitiveCompare(CurrentUserModel.getInstance.currentDevice?.address ?? "") == .orderedSame {
             let alert =  UIAlertController(title: "This is current device.", message: "To see more devices here, you can authorize another device and then perform device management actions here", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: {(_) in
+				alert.hide();
+			}))
             self.present(alert, animated: true, completion: nil)
         }
     }

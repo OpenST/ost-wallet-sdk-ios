@@ -103,7 +103,9 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
             //Show invalid url alert.
             //Note: Also update message in TabBarViewController if needed.
             let alert = UIAlertController(title: "Invalid Url", message: "The url link is invalid.", preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(_) in
+				alert.hide();
+			}));
             vc.present( alert, animated: true, completion: nil);
 
             if ( vc == self ) {
@@ -173,12 +175,14 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
                 CurrentEconomy.getInstance.economyDetails = economyPayload! as [String : Any];
                 canConfigureVc?.newEconomySet(payload: economyPayload!);
                 canConfigureVc?.clearAppUrlData();
+				alert.hide();
             }));
             
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: {[weak vc] (_) in
                 let canConfigureVc = vc as? CanConfigureEconomyProtocol;
                 canConfigureVc?.newEconomyNotSet();
                 canConfigureVc?.clearAppUrlData();
+				alert.hide();
             }));
             vc.present( alert, animated: true, completion: nil);
             return;
@@ -188,7 +192,9 @@ class IntroViewController: OstBaseViewController, OstFlowInterruptedDelegate, Os
         //-- Show alert to logout.
         //-- clear app url data.
         let alert = UIAlertController(title: "", message: "You appear to be logged in to another economy, please log out of the application and try connecting again.", preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(_) in
+			alert.hide();
+		}));
 
         vc.present( alert, animated: true, completion: nil);
         self.clearAppUrlData();
