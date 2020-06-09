@@ -11,6 +11,8 @@ import UIKit
 class OstBaseViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     public var navigationThemer: OstNavigation =  OstTheme.blueNavigation
+	
+	var containerWindow: UIWindow? = nil
     
     var shouldFireIsMovingFromParent = false;
     deinit {
@@ -56,6 +58,8 @@ class OstBaseViewController: UIViewController, UINavigationControllerDelegate, U
                 ) {
                 //Trigger a notification.
                 NotificationCenter.default.post(name: .ostVCIsMovingFromParent, object: self);
+				
+				containerWindow = nil;
             }
         }
     }

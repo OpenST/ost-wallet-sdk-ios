@@ -319,7 +319,11 @@ public extension UIViewController {
         win.rootViewController = vc
         win.windowLevel = UIWindow.Level.alert + 1
         win.makeKeyAndVisible()
+		
+		(self as? OstBaseViewController)?.containerWindow = win;
+		
         let navC = UINavigationController(rootViewController: self)
+		navC.modalPresentationStyle = .fullScreen
         vc.present(navC, animated: true, completion: nil)
     }
 }

@@ -21,9 +21,9 @@ class CurrentEconomy: OstBaseModel {
     }
     
 	private override init() {
-		var testEconomy: String? = "{\"token_id\": 1400,\"token_name\":\"Popcorn\",\"token_symbol\":\"POP\",\"url_id\":\"55c0c94b98ef6362e7d2d10fe60572819d7d31e54f8017aaba95eb225cc1bff7\",\"mappy_api_endpoint\":\"https://demo-mappy.ost.com/demo/\",\"saas_api_endpoint\":\"https://api.ost.com/testnet/v2/\",\"view_api_endpoint\":\"https://view.ost.com/testnet/\"}"
-		if let economy = testEconomy,
-//        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
+//		var testEconomy: String? = "{\"token_id\": 1400,\"token_name\":\"Popcorn\",\"token_symbol\":\"POP\",\"url_id\":\"55c0c94b98ef6362e7d2d10fe60572819d7d31e54f8017aaba95eb225cc1bff7\",\"mappy_api_endpoint\":\"https://demo-mappy.ost.com/demo/\",\"saas_api_endpoint\":\"https://api.ost.com/testnet/v2/\",\"view_api_endpoint\":\"https://view.ost.com/testnet/\"}"
+//		if let economy = testEconomy,
+        if let economy = UserDefaults.standard.string(forKey: CurrentEconomy.userDefaultsId),
              let qrJsonData = CurrentEconomy.getQRJsonData(economy) {
             _economyDetails = qrJsonData as [String : Any]
         }
