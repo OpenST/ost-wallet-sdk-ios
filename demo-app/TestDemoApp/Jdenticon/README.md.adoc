@@ -1,0 +1,14 @@
+= Jdenticon Swift
+
+Swift library for generating highly recognizable identicons.
+
+image::https://jdenticon.com/hosted/github-samples.png[Sample identicons]
+
+This is based on the https://github.com/dmester/jdenticon[JavaScript Jdenticon library].
+
+'''
+
+== License
+
+Jdenticon Swift is available under the MIT License.
+See the LICENSE file for more info.
