@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -306,6 +306,12 @@
 		4BED027A2375A26A00BBBF20 /* OstResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BED02792375A26A00BBBF20 /* OstResourceProvider.swift */; };
 		4BED027C2375A81900BBBF20 /* OstPresenterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BED027B2375A81900BBBF20 /* OstPresenterHelper.swift */; };
 		4BED027E2375ACA800BBBF20 /* OstLoaderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BED027D2375ACA800BBBF20 /* OstLoaderIndicator.swift */; };
+		CF44A53B2626451C00FFDD4C /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = CF44A53A2626451C00FFDD4C /* BigInt */; };
+		CF44A5402626453F00FFDD4C /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CF44A53F2626453F00FFDD4C /* CryptoSwift */; };
+		CF44A545262645EE00FFDD4C /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = CF44A544262645EE00FFDD4C /* FMDB */; };
+		CF44A54A2626461600FFDD4C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CF44A5492626461600FFDD4C /* Alamofire */; };
+		CF44A54F2626463A00FFDD4C /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = CF44A54E2626463A00FFDD4C /* TrustKit */; };
+		CFC7F1B8264CB742000F1DD6 /* EthereumKit in Frameworks */ = {isa = PBXBuildFile; productRef = CFC7F1B7264CB742000F1DD6 /* EthereumKit */; };
 		EC38BE1C22413992006F8DA2 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */; };
 		EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01022413C93006F8DA2 /* CryptoSwift.framework */; };
 		EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC38C01122413C93006F8DA2 /* EthereumKit.framework */; };
@@ -646,11 +652,17 @@
 			files = (
 				4B983CEB22C240D500B9E6D4 /* TrustKit.framework in Frameworks */,
 				EC38C01722413C94006F8DA2 /* CryptoSwift.framework in Frameworks */,
+				CFC7F1B8264CB742000F1DD6 /* EthereumKit in Frameworks */,
 				EC38C01822413C94006F8DA2 /* EthereumKit.framework in Frameworks */,
+				CF44A5402626453F00FFDD4C /* CryptoSwift in Frameworks */,
+				CF44A53B2626451C00FFDD4C /* BigInt in Frameworks */,
 				EC38C01922413C94006F8DA2 /* SipHash.framework in Frameworks */,
 				EC38C01A22413C94006F8DA2 /* FMDB.framework in Frameworks */,
 				EC38C01B22413C94006F8DA2 /* BigInt.framework in Frameworks */,
 				EC38C01C22413C94006F8DA2 /* CryptoEthereumSwift.framework in Frameworks */,
+				CF44A54A2626461600FFDD4C /* Alamofire in Frameworks */,
+				CF44A54F2626463A00FFDD4C /* TrustKit in Frameworks */,
+				CF44A545262645EE00FFDD4C /* FMDB in Frameworks */,
 				EC38C01D22413C94006F8DA2 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1526,6 +1538,14 @@
 			dependencies = (
 			);
 			name = OstWalletSdk;
+			packageProductDependencies = (
+				CF44A53A2626451C00FFDD4C /* BigInt */,
+				CF44A53F2626453F00FFDD4C /* CryptoSwift */,
+				CF44A544262645EE00FFDD4C /* FMDB */,
+				CF44A5492626461600FFDD4C /* Alamofire */,
+				CF44A54E2626463A00FFDD4C /* TrustKit */,
+				CFC7F1B7264CB742000F1DD6 /* EthereumKit */,
+			);
 			productName = OstWalletSdk;
 			productReference = EC38BE1222413992006F8DA2 /* OstWalletSdk.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1575,6 +1595,14 @@
 				en,
 			);
 			mainGroup = EC38BE0822413992006F8DA2;
+			packageReferences = (
+				CF44A5392626451C00FFDD4C /* XCRemoteSwiftPackageReference "BigInt" */,
+				CF44A53E2626453F00FFDD4C /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				CF44A543262645EE00FFDD4C /* XCRemoteSwiftPackageReference "fmdb" */,
+				CF44A5482626461600FFDD4C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				CF44A54D2626463A00FFDD4C /* XCRemoteSwiftPackageReference "TrustKit" */,
+				CFC7F1B6264CB742000F1DD6 /* XCRemoteSwiftPackageReference "EthereumKitSPM" */,
+			);
 			productRefGroup = EC38BE1322413992006F8DA2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2191,6 +2219,90 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CF44A5392626451C00FFDD4C /* XCRemoteSwiftPackageReference "BigInt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/attaswift/BigInt";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+		CF44A53E2626453F00FFDD4C /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CF44A543262645EE00FFDD4C /* XCRemoteSwiftPackageReference "fmdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ccgus/fmdb";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.7.5;
+			};
+		};
+		CF44A5482626461600FFDD4C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.8.1;
+			};
+		};
+		CF44A54D2626463A00FFDD4C /* XCRemoteSwiftPackageReference "TrustKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/datatheorem/TrustKit";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.6.1;
+			};
+		};
+		CFC7F1B6264CB742000F1DD6 /* XCRemoteSwiftPackageReference "EthereumKitSPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cuhte3/EthereumKitSPM";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CF44A53A2626451C00FFDD4C /* BigInt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF44A5392626451C00FFDD4C /* XCRemoteSwiftPackageReference "BigInt" */;
+			productName = BigInt;
+		};
+		CF44A53F2626453F00FFDD4C /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF44A53E2626453F00FFDD4C /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+		CF44A544262645EE00FFDD4C /* FMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF44A543262645EE00FFDD4C /* XCRemoteSwiftPackageReference "fmdb" */;
+			productName = FMDB;
+		};
+		CF44A5492626461600FFDD4C /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF44A5482626461600FFDD4C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		CF44A54E2626463A00FFDD4C /* TrustKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF44A54D2626463A00FFDD4C /* XCRemoteSwiftPackageReference "TrustKit" */;
+			productName = TrustKit;
+		};
+		CFC7F1B7264CB742000F1DD6 /* EthereumKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFC7F1B6264CB742000F1DD6 /* XCRemoteSwiftPackageReference "EthereumKitSPM" */;
+			productName = EthereumKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EC38BE0922413992006F8DA2 /* Project object */;
 }
